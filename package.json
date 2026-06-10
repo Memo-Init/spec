@@ -1,0 +1,20 @@
+{
+    "name": "memo-init-spec",
+    "version": "0.1.0",
+    "description": "memo-init Specification — induktive RFC-Spec des Memo-Systems + Sub-Spec Workbench",
+    "type": "module",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22"
+    },
+    "scripts": {
+        "generate-refs": "node scripts/generate-refs.mjs",
+        "generate-docs-payload": "node scripts/generate-docs-payload.mjs",
+        "generate-manifest": "node scripts/generate-manifest.mjs",
+        "generate-llms-txt": "node scripts/generate-llms-txt.mjs",
+        "build": "npm run generate-refs && npm run generate-docs-payload && npm run generate-manifest && npm run generate-llms-txt"
+    },
+    "devDependencies": {
+        "ajv": "^8.20.0"
+    }
+}
