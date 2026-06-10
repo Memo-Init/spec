@@ -1,0 +1,48 @@
+name: Generate spec artifacts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'spec/**/*.md'
+      - 'data/refs.manual.json'
+      - 'data/refs.schema.json'
+      - 'scripts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # PAT so the artifact push re-triggers the notify-* workflows
+          # (a push made with the default GITHUB_TOKEN does not trigger other workflows).
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run generators
+        run: npm run build
+
+      - name: Commit regenerated artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add generated/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: regenerate spec artifacts"
+            git push
+          else
+            echo "no artifact changes"
+          fi
