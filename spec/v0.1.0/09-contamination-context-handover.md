@@ -1,0 +1,104 @@
+# 09. Contamination, Empty Context and Handover
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [08-phases-and-prds.md](./08-phases-and-prds.md) |
+| Related | [10-proactive-research.md](./10-proactive-research.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [13-orchestration.md](./13-orchestration.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the contamination signal catalog, the empty-context rule, and the `HANDOVER.md` structure. The illustrative anecdotes (the "fridge memo", the contaminated handover example) are **informative**.
+
+---
+
+## Purpose
+
+A memo or a session handover written from a degraded context carries its mis-weighting forward into the next document. The cause is **context rot** (quality decay of LLM output as input length grows); the consequence is **contamination** (a document written out of a rotten context). These two terms are distinct and MUST NOT be used interchangeably: context rot is the cause, contamination is the effect.
+
+The robust place to repair contamination is a **fresh context** — the writing context is, by definition, the contaminated one and cannot clean itself. The system therefore does not rely on discipline; it provides a deterministic detector, an empty-context rule, and a handover artifact that points at primary sources instead of re-narrating them.
+
+---
+
+## Contamination Detector (five signals)
+
+A document MUST be checked for contamination signals **before** its content is reviewed. The signals are form- and behavior-based, deterministic, and require no LLM interpretation.
+
+| Signal | ID | Description | Trigger threshold |
+|--------|----|-------------|-------------------|
+| Form break | `S1` | Headings do not follow the template structure; mandatory sections are missing; naming conventions are violated (e.g. an insider word used as a topic heading). | 1 violation = hit |
+| Compute shortcut | `S2` | A compute- or time-intensive rule marked non-skippable is abbreviated to finish faster (e.g. 1 test instead of 3 per schema across ~100 schemas). | 1 abbreviation of a non-skippable rule = hit |
+| Weighting drift | `S3` | Small symptoms are inflated; the actual main problem ("elephant in the room") is buried under side topics or absent. | Heuristic; MUST be justified explicitly when reported |
+| Narrative over pointer | `S4` | Much re-narrated conclusion, little reference to a primary artifact (file, commit, issue). | < 1 pointer per 5 claims = hit |
+| Naming sprawl | `S5` | Several handover files with different names for the same thing (`HANDOVER.md`, `WIEDEREINSTIEG.md`, `PAUSE-STANDPUNKT.md` side by side); metadata drift in header fields. | 2+ handover files = hit; 1 metadata drift = hit |
+
+### Overall verdict
+
+| Finding | Action |
+|---------|--------|
+| 0 signals | No alarm. The document is treated as non-contaminated. |
+| 1 signal (`S3` or `S4`) | Hint: a possible contamination signal was found — review the content. |
+| 1 signal (`S1`, `S2`, or `S5`) | Warning: a contamination hit (form break / compute shortcut / naming sprawl). The concrete location MUST be named with a re-verification proposal. |
+| 2+ signals | Alarm: high probability of contaminated output. Re-verification of all claims against primary sources is mandatory. |
+
+The detector MUST report only on findings — clean documents produce no noise. Consumers of the detector are the revision-2 check (a memo's first revision is scanned at revision 2) and the handover re-entry (Stage B reads `HANDOVER.md`).
+
+---
+
+## The Empty-Context Rule
+
+When work spans more than one session, or when a context is detected as full or contaminated, the system MUST move to a fresh (empty) context rather than continuing on the degraded one.
+
+- An evaluator (PRD evaluator, phase evaluator) MUST run in a fresh context with no carry-over from the implementation process. It receives only the artifact under review (the PRD document plus the produced files), never the conversation that produced them. See [13-orchestration.md](./13-orchestration.md).
+- When `memo-init` is invoked on an already-full context, prior knowledge MUST be carried only as an explicit assumption marked for re-verification, and a reset SHOULD be recommended; alternatively a handover (Stage A) is appropriate.
+- The AI cannot execute the context reset itself. The reset recommendation is a **user action** — the system emits the recommendation, the user performs it.
+
+This rule is the structural reason evaluators are the first candidates to become repo-scoped agents with isolated context (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
+
+---
+
+## HANDOVER.md — In-Session Memo Handover
+
+When a session must be handed over (overflow, drifting assumptions, scope change), the handover artifact is a single file named `HANDOVER.md`. This is the only valid name. Variant names (`WIEDEREINSTIEG.md`, `PAUSE-STANDPUNKT.md`, `UEBERGABE.md`, any other) are forbidden as output names — naming sprawl is itself signal `S5`.
+
+The file lives in the memo directory: `.memo/{NNN}-{slug}/HANDOVER.md` (not in `rollout/`).
+
+### Mandatory header
+
+A `HANDOVER.md` MUST contain all six header fields:
+
+| Field | Source |
+|-------|--------|
+| `Session-ID` | The session identifier (environment variable) |
+| `Transcript-Path` | The deterministic transcript path for the session |
+| `Context-Fill` | A proxy assessment (empty / medium / full) plus byte and message count; exact percentage is not required |
+| `Reason` | Overflow / assumption error / discussion needed |
+| `Contamination-Self-Assessment` | The Stage-A author explicitly names the likely mis-weighted spots |
+| `Created` | Timestamp |
+
+The header MUST include a note to the successor that the file was written from a possibly contaminated context, that all statements are hypotheses, and that primary sources beat the handover.
+
+### Three zones (strictly separated)
+
+The three zones MUST be kept strictly apart — mixing them is the actual contamination channel.
+
+**Zone 1 — Facts with evidence pointer.** Every statement MUST carry a concrete pointer (file path, commit hash, issue number) in the form "state X, evidenced by file/commit/issue Y". Evaluation numbers are allowed only when the data basis is named. Each verified statement carries a `[FAKT]` tag.
+
+**Zone 2 — Explicit assumptions and open questions.** Every statement carries an `[ANNAHME]` tag. Open questions are a numbered list. This zone MUST NOT be mixed into Zone 1. Recommendations and suggestions belong here, never in Zone 1.
+
+**Zone 3 — Primary-source references.** A list of files, commits, and issues the successor MUST check themselves, in the form "path/commit/issue — what to check there". There MUST be at least one entry per Zone-1 statement. Rollout state files are listed explicitly, distinguishing the generate state from the execute state.
+
+### Re-entry discipline (fresh context)
+
+The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**. Every action-guiding claim is marked `[zu verifizieren]` until a primary source confirms it; on confirmation it becomes `[verifiziert: {source}]`, on contradiction `[widerlegt: {primary source} shows {reality}]`. The state-type separation is critical: a generate-state marked "completed" MUST NOT be passed on as "work finished" (that is contamination). See [13-orchestration.md](./13-orchestration.md) and the state-recovery model.
+
+> **Follow-up (specified, not yet implemented):** the `questions-json` hybrid that hardens the question format against the recurring LLM mis-format is specified in [07-revisions-and-questions.md](./07-revisions-and-questions.md); its live skill implementation is follow-up work, not part of the bootstrap.
+
+---
+
+## Related
+
+- [10-proactive-research.md](./10-proactive-research.md) — proactive research in early revisions, the natural producer of `context/` material the handover points at.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels (`[FAKT]` … `[UNBEKANNT]`) the handover zones reuse.
+- [13-orchestration.md](./13-orchestration.md) — state files, crash recovery, and the fresh-context evaluator that consumes the empty-context rule.
+- [00-overview.md](./00-overview.md) — conformance language and the context-rot vs contamination glossary.

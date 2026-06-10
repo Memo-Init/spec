@@ -1,0 +1,32 @@
+{
+    "schemaVersion": "refs/1.0.0",
+    "spec": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "v0.1.0",
+        "historicalVersions": [ "0.1.0" ],
+        "specDir": "spec/v0.1.0"
+    },
+    "docs": {
+        "canonical": "https://memo-init.github.io",
+        "entryPoints": {
+            "newcomer": "/quickstart/",
+            "memoAuthor": "/specification/overview/",
+            "toolMaintainer": "/specification/workbench/",
+            "decisionMaker": "/about/"
+        }
+    },
+    "github": {
+        "organization": "https://github.com/Memo-Init",
+        "specRepo": "https://github.com/Memo-Init/spec"
+    },
+    "llmsFiles": {
+        "indexUrl": "https://memo-init.github.io/llms.txt",
+        "fullUrl": "https://memo-init.github.io/llms-full.txt"
+    },
+    "robotsTxt": {
+        "publishedLlmsFiles": [
+            "/llms.txt",
+            "/llms-full.txt"
+        ]
+    }
+}
