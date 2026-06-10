@@ -1,0 +1,2189 @@
+# memo-init Specification v0.1.0
+
+A planning-first scaffold that turns long, dictated transcripts into discrete,
+executable work orders and governs the human-AI interaction around them. This file
+concatenates the full core specification followed by the workbench sub-spec.
+
+Source: https://github.com/Memo-Init/spec
+
+
+========================================
+# Core Specification
+========================================
+
+# 00. Overview
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | — (specification entry point) |
+| Related | [01-philosophy.md](./01-philosophy.md), [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [18-multidimensionality.md](./18-multidimensionality.md) |
+
+> **Informative.** This document provides the conceptual foundation, mission, terminology, and document index. It is written in prose and does not itself carry normative requirements. The **Conformance** block below is normative for the whole specification.
+
+This is the entry point for the memo-init specification, version `v0.1.0` (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the chapters that make up the specification.
+
+---
+
+## Conformance
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
+
+Some chapters of this specification are intentionally written in prose without normative keywords because they describe philosophy, motivation, or conceptual background (this overview, `01-philosophy.md`). Such chapters are marked **Informative** near their top. All other chapters use normative language and assume this conformance interpretation; they are marked **Normative**.
+
+References:
+
+- [RFC2119](https://www.rfc-editor.org/rfc/rfc2119) — Key words for use in RFCs to Indicate Requirement Levels
+- [RFC8174](https://www.rfc-editor.org/rfc/rfc8174) — Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words
+- [BCP 14](https://www.rfc-editor.org/info/bcp14) — Best Current Practice 14 (combined RFC2119 + RFC8174)
+
+---
+
+## What memo-init Is
+
+The memo system transforms long, unstructured input — typically dictated voice transcripts — into discrete, executable work orders, and governs the human-AI interaction that clarifies open questions **before** implementation begins. The developer plans; the AI implements autonomously and self-evaluating.
+
+A **memo** is a versioned strategy document. It starts as a first revision, iterates through revisions until the developer finalizes it, and then drives a rollout that produces real artifacts (code, repositories, documentation). The memo is the single highest authority over its own rollout.
+
+### Current state and target state
+
+| | |
+|---|---|
+| **Current state** | The memo system exists as a tool collection in a workbench layer (`cli/memo-toolkit/`) plus a set of global rules. It is in daily productive use and has produced well over a hundred memos in real projects. It has no public home — no repository, no specification, no website. |
+| **Target state** | A minimal, public organization that documents the verified system: a specification (this document), an org profile, a website, the memo viewer, a deterministic prompt generator, and a versioned skills/agents core. The result is understandable without knowing the author personally, modeled after an existing public reference organization. |
+
+### Mission
+
+Make planning-first agentic engineering reproducible. The memo system gives an AI a **scaffold** for turning long transcripts into dedicated work orders and describes the human-AI interaction for resolving open questions — before implementation is handed over to run as autonomously as possible.
+
+### Motivation
+
+Publishing this specification secures authorship of the underlying ideas and keeps the intellectual property documented in the open, independent of any individual employment context.
+
+---
+
+## Verified System, Not Aspiration
+
+This specification documents the **real, verified** system. The induction from the source memo was preceded by a verification pass that compared the mental model against the actual toolkit code and found seven deviations between the two. Where the two disagreed, this specification follows the **verified code**, not the earlier mental model.
+
+| # | Earlier description | Verified reality | This spec |
+|---|---------------------|------------------|-----------|
+| 1 | 3 input paths | 4 transcript types (adds `plan-start`) | documents 4 types ([03-input-paths.md](./03-input-paths.md)) |
+| 2 | "four tests" | 9 finalization gates + 5 quality skills | documents real gates ([11-quality-and-finalization.md](./11-quality-and-finalization.md)) |
+| 3 | 3 evidence levels | 6 evidence levels | documents 6 levels |
+| 4 | 1 PR per memo | 1 PR per affected repo | documents per-repo PRs ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
+| 5 | "categorization" as a pipeline step | 5 distinct pipeline steps | documents 5 steps ([04-input-pipeline.md](./04-input-pipeline.md)) |
+| 6 | "never uploaded" (a rule) | structural (no git folder under `.memo/`) | structural guarantee ([06-memo-structure.md](./06-memo-structure.md)) |
+| 7 | "relative paths only" | public-context scoping | git security ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
+
+Where a chapter describes behavior that the source memo flags as follow-up work, this specification states it as **specified-but-not-yet-implemented**: the specification text is binding, but the corresponding live-code change in the toolkit skills is a separate, future task and is not part of this baseline.
+
+---
+
+## Guardrail Philosophy (Summary)
+
+Planning is the most important activity in agentic engineering. The memo system exists to build **guardrails** — the metaphor is a highway: clear lanes that keep autonomous execution on the road. The memo-SOP (Standard Operating Procedure) defines those guardrails. The full treatment is in [01-philosophy.md](./01-philosophy.md); the canonical entry skill that explains the whole process is described in [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md).
+
+---
+
+## Organization and Repository Fan-Out
+
+The memo-init specification is induced (written up) from the local toolkit source and published across a small organization of repositories. The diagram below — reproduced verbatim from the source memo — shows the organization, the repository fan-out, and the spec→site automation pipeline.
+
+```mermaid
+flowchart TD
+    subgraph ORG["GitHub-Org: memo-init"]
+        SPEC["spec\nRFC + Sub-Spec Workbench"]
+        GH[".github\nBadgeTable-Profil"]
+        SITE["memo-init.github.io\nAstro+Starlight"]
+        VIEW["viewer\nMemo-Viewer (core-artig)"]
+        PG["prompt-generator\ndeterministischer Start-Prompt"]
+        CORE["core\nSkills (Basis) + Agents (Evaluatoren zuerst)"]
+    end
+
+    SPEC -->|"refs / docs-payload / manifest / llms.txt"| GEN["generated/*"]
+    GEN -->|"dispatch: refs-updated"| GH
+    GEN -->|"dispatch: spec-updated"| SITE
+    SITE -->|"deploy.yml"| PAGES["GitHub Pages + /llms.txt"]
+    SPEC -. Abhängigkeit .-> VIEW
+    PG -->|"deterministischer START-Prompt"| AGENTS["AGENTS.md-Agenten"]
+    CORE -. liefert Agents + Skills .-> AGENTS
+
+    subgraph SRC["Quelle des Spec-Inhalts (lokal)"]
+        TK["cli/memo-toolkit/\nskills + docs"]
+    end
+    TK -.induktiv verschriftlicht.-> SPEC
+```
+
+> Diagram orientation is `flowchart TD` (the default). The node labels are kept verbatim from the source diagram; their meaning is given in the surrounding chapters of this specification.
+
+The six repositories are bootstrapped from an existing public reference organization. Their roles:
+
+| Repository | Role |
+|------------|------|
+| `spec` | This RFC-style specification plus the workbench sub-spec and the generators that publish it. |
+| `.github` | Organization profile, generated via a badge-table tool. Must be named `.github`. |
+| `memo-init.github.io` | Static website (Astro + Starlight) that serves the docs and `llms.txt`. |
+| `viewer` | The memo viewer, extracted from the toolkit editor. Core-like: depends directly on the spec. |
+| `prompt-generator` | The deterministic start-prompt compositor. |
+| `core` | Skills (the base layer) and agents (evaluators first). |
+
+---
+
+## Document Index (v0.1.0 Core Chapters)
+
+| Document | Title | Mode |
+|----------|-------|------|
+| `00-overview.md` | Overview | Informative |
+| `01-philosophy.md` | Guardrail Philosophy & Interaction Model | Informative |
+| `02-memo-sop-entrypoint.md` | Memo-SOP as the Canonical Entry Point | Normative |
+| `03-input-paths.md` | Input Paths — Four Transcript Types | Normative |
+| `04-input-pipeline.md` | The Five-Step Input Pipeline | Normative |
+| `05-memo-strategies.md` | Memo Strategies (Workflow Shape) | Normative |
+| `06-memo-structure.md` | Memo Structure & Local Guarantee | Normative |
+| `07-revisions-and-questions.md` | Revisions & the Question Format | Normative |
+| `08-phases-and-prds.md` | Phases, PRDs & the Dependency Tree | Normative |
+| `09-contamination-context-handover.md` | Contamination, Empty Context & Handover | Normative |
+| `10-proactive-research.md` | Proactive Research | Normative |
+| `11-quality-and-finalization.md` | Quality Gates & Finalization | Normative |
+| `12-rollout.md` | Rollout — Generate / Execute / Evaluate | Normative |
+| `13-orchestration.md` | Orchestration, State & Recovery | Normative |
+| `14-agents-skills-tasks.md` | Agents, Skills & Tasks | Normative |
+| `15-prompt-generator.md` | Prompt Generator | Normative |
+| `16-git-security-versioning.md` | Security, Git Flow & Versioning | Normative |
+| `17-git-workflow-and-ids.md` | Git Workflow & Memo IDs | Normative |
+| `18-multidimensionality.md` | Multidimensionality — One Memo, Many Repos | Normative |
+
+A separate, independently versioned **workbench/** sub-spec documents the project-level organization (project structure, requirements profiles, tools registry, strands, wiki, trash). See [README.md](./README.md) for the full reading order and the pointer to the sub-spec.
+
+---
+
+## Related
+
+- [01-philosophy.md](./01-philosophy.md) — the guardrail analogy and interaction model.
+- [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md) — the canonical entry skill.
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — how memos become phases and PRDs.
+- [18-multidimensionality.md](./18-multidimensionality.md) — one memo coordinating many repos.
+- [README.md](./README.md) — chapter index and reading order.
+
+---
+
+# 01. Guardrail Philosophy & Interaction Model
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md) |
+| Related | [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md), [04-input-pipeline.md](./04-input-pipeline.md), [12-rollout.md](./12-rollout.md) |
+
+> **Informative.** This chapter describes the philosophy and interaction model behind the memo system. It is written in prose; the normative requirements that operationalize it live in the chapters it points to.
+
+---
+
+## Planning Is the Most Important Activity
+
+In agentic engineering, planning is the single most important activity. An autonomous agent can write a great deal of code quickly, but code written without a plan tends to be code that has to be repaired. The memo system is built on the conviction that the developer's leverage is highest **before** implementation — in shaping the work order — and that the cost of a missing decision grows the further into a rollout it is discovered.
+
+The success definition for the whole system follows directly from this: success is that, after implementation, the software works immediately, with as little repair as possible. Every measure in the system is subordinate to that goal.
+
+---
+
+## The Guardrail (Highway) Analogy
+
+The memo system does not try to drive the car. It builds **guardrails** — the kind that line a highway. Within the guardrails, autonomous execution can move fast and stay on the road; outside them, it drifts into invented behavior, dropped context, and rework.
+
+A guardrail is a constraint that is cheap to set up and expensive to omit:
+
+- A complete topic list is a guardrail against silently dropping a requirement.
+- A preserved context block is a guardrail against the agent interpreting instead of knowing.
+- A phase dependency tree is a guardrail against executing work in an order that cannot succeed.
+- A finalization gate is a guardrail against starting a rollout on an under-specified memo.
+
+The guardrails are not bureaucracy. Each one exists because its absence has, in practice, produced a concrete failure.
+
+---
+
+## The Memo-SOP Defines the Guardrails
+
+The guardrails are not ad hoc. They are defined by the **memo-SOP** — the Standard Operating Procedure that describes the complete path from a dictated transcript to an executed rollout. The SOP is the single source of truth for what the guardrails are, in what order they apply, and which one is in force at any given moment. The canonical entry point that explains the SOP — and that an agent re-enters after a context reset — is described in [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md).
+
+---
+
+## Expect Long, Dense Initial Transcripts
+
+The system is designed around a specific expectation: the **initial input is a long, dense, dictated transcript**, not a tidy bullet list. A developer thinking out loud produces hours of reasoning, background, and half-formed decisions in a single pass.
+
+Two consequences follow, both treated as guardrails:
+
+1. **Nothing in the transcript may be silently dropped.** The input pipeline ([04-input-pipeline.md](./04-input-pipeline.md)) exists precisely because long transcripts are easy to truncate, mis-transcribe, or summarize away. Every linked file MUST be read in full before any response; every topic MUST be extracted; all context MUST be preserved.
+2. **The default input language is spoken language.** The transcript is the natural artifact of dictation. The system meets the developer where the thinking happens rather than forcing premature structure.
+
+---
+
+## The Interaction Model
+
+The division of labor is explicit:
+
+| Actor | Responsibility |
+|-------|----------------|
+| **Developer** | Plans. Provides long input, answers open questions, decides design trade-offs, and triggers finalization. |
+| **AI** | Implements. Processes input, drafts and revises the memo, runs quality checks autonomously, and — after finalization — executes the rollout as autonomously as possible. |
+
+Two rules anchor this model:
+
+- **The AI never finalizes autonomously.** Finalization is exclusively developer-triggered. Experience shows the AI finalizes chronically too early; making finalization the one step that requires an explicit human trigger is a deliberate guardrail. See [11-quality-and-finalization.md](./11-quality-and-finalization.md).
+- **After finalization, the AI does not ask permission for each step.** The memo was worked out jointly; once the rollout begins, everything is already agreed. The only legitimate interruption is a genuine design decision. See [12-rollout.md](./12-rollout.md).
+
+The throughline is that the human invests effort up front, inside the guardrails, so that the machine can run the rest with minimal supervision and a high probability that the result works on the first try.
+
+---
+
+## Related
+
+- [00-overview.md](./00-overview.md) — mission and verified-system framing.
+- [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md) — the SOP that defines the guardrails.
+- [04-input-pipeline.md](./04-input-pipeline.md) — the pipeline that protects long transcripts.
+- [12-rollout.md](./12-rollout.md) — autonomous execution within the guardrails.
+
+---
+
+# 02. Memo-SOP as the Canonical Entry Point
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md), [01-philosophy.md](./01-philosophy.md) |
+| Related | [03-input-paths.md](./03-input-paths.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md) |
+
+> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
+
+---
+
+## The Single Source of Truth
+
+`memo-sop` is the **canonical entry skill** of the memo system. It is the one document that explains the entire process end to end: the path from a dictated transcript to an executed rollout, the state transitions along the way, the hierarchy of every other skill, and the terminal-output standards. Every other memo skill references it and follows its process.
+
+An agent that needs to understand the memo workflow MUST load `memo-sop` first. It is the document that explains everything; the other skills are children of it.
+
+On the published website, `memo-sop` SHOULD be the first documentation entry after the landing page, because it is the door through which a reader enters the system.
+
+---
+
+## The Re-Entry Point
+
+The memo workflow spans sessions. A long rollout may cross a context reset, a crash, or a closed terminal. `memo-sop` is the **re-entry point**: after any loss of session context, an agent re-orients by reading `memo-sop` together with the on-disk task list and state files (see [13-orchestration.md](./13-orchestration.md)).
+
+Because finalized memos are optimized for in-context learning, an empty agent context MUST be able to read the canonical entry point and the memo's own entry-points and resume work without prior conversation history. Re-entry MUST NOT depend on the contents of the lost session.
+
+---
+
+## The Four Verbs
+
+The SOP organizes the whole system under four verbs. Exactly three of them are public entry points that the developer triggers directly; one is internal and runs autonomously.
+
+| Verb | Visibility | Meaning |
+|------|------------|---------|
+| **Initialize** | public | Create a memo / place a transcript. |
+| **Revise** | internal / autonomous | Iterate the memo in a Generate → Execute → Evaluate loop, without a per-step trigger. |
+| **Finalize** | public | Close the memo. MUST be developer-triggered; the AI MUST NOT finalize autonomously. |
+| **Execute / Plan** | public | Work a finalized memo through a plan. |
+
+The public entry points validate strictly and set the switches — like the public functions of a module — while the remaining skills are private process steps. Their trigger words are chosen to be mutually exclusive: no single trigger activates two entry points at once.
+
+---
+
+## The End-to-End Path
+
+The SOP documents the complete path in six stages. The stages are listed here for orientation; each is specified in detail in the chapter named in the last column.
+
+| Stage | Name | What happens | Specified in |
+|-------|------|--------------|--------------|
+| 1 | Dictate transcript | The developer produces a transcript (speech → file or URL). | [03-input-paths.md](./03-input-paths.md) |
+| 2 | The four transcript types | A type header determines the follow-up flow. | [03-input-paths.md](./03-input-paths.md) |
+| 3 | Input processing | The mandatory five-step pipeline runs before any memo work. | [04-input-pipeline.md](./04-input-pipeline.md) |
+| 4 | Revision loop | A revision enters the Generate → Execute → Evaluate loop. | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
+| 5 | Strict AI→software handover | Open questions are parsed from a machine-readable schema. | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
+| 6 | Finalization → plan → execution | The finalized memo drives a rollout. | [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md) |
+
+The "one way" framing of the SOP means there is a single execution path. The historical distinction between an older rollout mechanism and a newer planning system no longer applies: a finalized memo is worked through exactly one plan, and a plan is formed from one or more memos.
+
+---
+
+## Public / Private Skill Architecture
+
+The SOP classifies every skill as either a public entry point or a private process step. The goal is **few** public skills, easy to find, each with distinct trigger words; everything else stays private.
+
+| Class | Role | Examples |
+|-------|------|----------|
+| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-plan` (Execute/Plan) |
+| **Private** | Internal process steps, invoked by the public entry points. | the revision-loop skills, the quality skills, the rollout machinery |
+
+This is a documentation-level classification. Implementing or renaming the public entry-point skills is itself follow-up work; the classification is binding, but it is not the build order.
+
+---
+
+## Related
+
+- [01-philosophy.md](./01-philosophy.md) — why the SOP defines the guardrails.
+- [03-input-paths.md](./03-input-paths.md) — the four transcript types the SOP routes on.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the developer-triggered finalize verb.
+- [13-orchestration.md](./13-orchestration.md) — state and crash recovery behind re-entry.
+
+---
+
+# 03. Input Paths — Four Transcript Types
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md) |
+| Related | [04-input-pipeline.md](./04-input-pipeline.md), [05-memo-strategies.md](./05-memo-strategies.md), [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
+
+> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
+
+---
+
+## Four Transcript Types
+
+Every input to the memo system arrives as a **transcript**. The transcript server produces exactly four transcript types. The first line of the transcript — a mandatory default header — declares the type, and the type determines the follow-up flow. An implementation MUST recognize all four types and MUST reject a transcript whose first line matches none of them.
+
+The type names are English. The type historically named `frei` in the toolkit code is renamed to `free` in this specification and system. This rename is a tracked change in the parser and is **specified-but-not-yet-implemented**: the specification fixes the name `free`, while the corresponding code rename in the parser is follow-up work.
+
+| Type | Purpose | Follow-up flow |
+|------|---------|----------------|
+| `memo-init` | Start a new memo. | Input pipeline → `memo-init` (a new memo; its location is determined there). |
+| `revision` | Feedback on an existing revision. | Input pipeline → `memo-revision-*` (generate → execute → evaluate). |
+| `free` | Free transcription, no memo intent. | Input pipeline only. No revision, no memo. |
+| `plan-start` | Start or extend a plan. | Input pipeline → `memo-plan-*` (create plan, select memos). |
+
+---
+
+## Type Carries Identity Only for `revision`
+
+Only the `revision` type carries a memo number and revision fields, because only a revision is bound to an existing memo. The other three types — `memo-init`, `free`, and `plan-start` — deliberately carry **no** memo number and **no** revision field.
+
+The absence of those fields for `memo-init`, `free`, and `plan-start` is correct and MUST NOT trigger a hard error. An implementation MUST extract memo number, memo name, revision id, and memo path **only** for the `revision` type.
+
+---
+
+## Context Mode per Type
+
+Each type implies a context mode — whether the follow-up runs in the current conversation thread or in a fresh, empty context.
+
+| Type | Context mode | Rationale |
+|------|--------------|-----------|
+| `memo-init` | empty context | A new memo starts unbiased; its place is decided fresh. |
+| `revision` | in-thread | Feedback is applied to a memo already under discussion. |
+| `free` | in-thread | A free transcription is consumed where it was spoken. |
+| `plan-start` | empty context | A plan is assembled from finalized memos without prior bias. |
+
+---
+
+## The `free` Type
+
+`free` is a system rename of the toolkit code type `frei`. A `free` transcript runs through the input pipeline (completeness → transcription-error scan → topic extraction → context preservation) and then stops. It produces neither a revision nor a memo. It is the path for capturing dictated thinking that is not yet a work order.
+
+---
+
+## Deterministic Activation
+
+When the input is a transcript-server URL, the default header in the response **is** the activation: once the header is parsed, the pipeline and the type-dependent follow-up run autonomously, with no further developer prompt between fetch and pipeline start. This deterministic activation is specified in [04-input-pipeline.md](./04-input-pipeline.md). Other input forms (for example, dictated files pasted directly) MAY still ask a clarifying question; only the URL mode runs autonomously.
+
+---
+
+## Related
+
+- [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline every type runs through, and the URL-header activation.
+- [05-memo-strategies.md](./05-memo-strategies.md) — the strategy dimension, orthogonal to the transcript type.
+- [07-revisions-and-questions.md](./07-revisions-and-questions.md) — what the `revision` flow produces.
+
+---
+
+# 04. The Five-Step Input Pipeline
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [03-input-paths.md](./03-input-paths.md) |
+| Related | [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md), [05-memo-strategies.md](./05-memo-strategies.md), [10-proactive-research.md](./10-proactive-research.md) |
+
+> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
+
+---
+
+## A Mandatory, Strictly Ordered Pipeline
+
+Before any memo is created and before any revision is written, every input MUST pass through a five-step processing pipeline. The pipeline is mandatory and strictly sequential: no step may be skipped, and no step may begin before the previous step is complete. It runs both before `memo-init` and before every `memo-revision-generate`.
+
+```
+1. Completeness check        → ALL files read?
+2. Transcription-error scan  → ALL errors corrected?
+3. Topic extraction          → ALL topics listed?
+4. Context preservation      → ALL context documented?
+5. Research                  → research-worthy topics derived, proactive research triggered?
+   → ready for memo-init or memo-revision-generate
+```
+
+---
+
+## Step 1 — Completeness Check
+
+All linked files MUST be read in full **before** any response. When the input contains file paths, links, or references, an implementation MUST read all of them before any analysis, answer, or revision. If multiple files are sent, all of them MUST be loaded before processing begins.
+
+This step exists because long dictated transcripts are easy to truncate: a developer saves a voice memo as a file and sends its path, and a partial read silently loses requirements. The completeness check is the first guardrail and admits no exception.
+
+---
+
+## Step 2 — Transcription-Error Scan
+
+An implementation MUST proactively check the input against the known transcription-error pattern table and MUST report every detected correction to the developer before continuing — even for short inputs.
+
+| Transcribed | Correct term |
+|-------------|--------------|
+| VIA | WIRE |
+| PRD | PAD |
+| Cloud | Claude |
+| Excalithor | Excalidraw |
+| Finanzierung | Finalisierung |
+| Repair | Prepare |
+
+The table is extensible; new patterns MAY be added over time. The requirement is that the scan always runs and that corrections are surfaced, not silently applied.
+
+---
+
+## Step 3 — Topic Extraction
+
+Before any writing begins, an implementation MUST produce a **complete** list of all topics and points in the input. Every point counts; nothing is too small to omit. The topic list then serves as a checklist during writing. Writing MUST NOT begin until the topic list is complete and all transcription errors are resolved.
+
+---
+
+## Step 4 — Context Preservation
+
+Context MUST NOT be dropped. Reasons and background explanations from the developer MUST be preserved in the memo. A finalized memo is a closed document: context that is omitted cannot be retrieved after the fact, and without it the agent must later interpret instead of know — which leads to errors. Redundancy in service of context preservation is acceptable.
+
+---
+
+## Step 5 — Research
+
+From the complete topic list (Step 3) and the preserved context (Step 4), an implementation MUST derive which topics are research-worthy — external sources, technical claims, architecture decisions, and codebase references that must be verified — and MUST trigger proactive research for them before handing over to `memo-init` or `memo-revision-generate`. A topic is skipped only if the developer has left a comment on that topic that deselects research for it. The canonical definition of research and the per-revision research duty are specified in [10-proactive-research.md](./10-proactive-research.md).
+
+---
+
+## Category Tags Appear Only in `memo-init`
+
+Category tags (for example, `[Docs]`, `[Code]`, `[GitHub]`) classify entries by the skill family that produces them. They are applied **only** during `memo-init`, where each entry receives its tag. The input pipeline itself does not emit category tags; tagging is a property of memo creation, not of input processing.
+
+---
+
+## Deterministic Activation via the memo-view URL Header
+
+When the input is a transcript-server URL of the form `http://localhost:3333/transcripts/{id}`, the pipeline is activated deterministically by the response's default header. The flow is:
+
+1. **Fetch.** Read the transcript over HTTP. The content type MUST be `text/markdown` or `text/plain`; an unreachable server, a non-2xx status, or an unexpected content type is a hard error.
+2. **Parse the default header.** The first line MUST match one of the four type headers ([03-input-paths.md](./03-input-paths.md)). A header that matches none is a hard error. A transcript whose schema marker is absent or unsupported is a hard error and is not processed; there is no auto-migration. A legacy *binding* (an older heading convention) is tolerated and merely marked, not rejected.
+3. **Run the pipeline autonomously.** Once the header is parsed, the five steps run with no further developer prompt. The header **is** the activation.
+
+The skill that performs this reads **only** — it never issues writes to the server. After the pipeline, the type-dependent follow-up ([03-input-paths.md](./03-input-paths.md)) runs, also without an intervening prompt. Only the URL mode runs fully autonomously; other input forms MAY still ask.
+
+---
+
+## Related
+
+- [03-input-paths.md](./03-input-paths.md) — the four transcript types and their follow-up flows.
+- [10-proactive-research.md](./10-proactive-research.md) — the canonical research definition behind Step 5.
+- [05-memo-strategies.md](./05-memo-strategies.md) — the strategy chosen when the pipeline hands over to `memo-init`.
+
+---
+
+# 05. Memo Strategies (Workflow Shape)
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [03-input-paths.md](./03-input-paths.md) |
+| Related | [06-memo-structure.md](./06-memo-structure.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md) |
+
+> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
+
+---
+
+## Two Orthogonal Dimensions
+
+A memo has two independent classification dimensions. They MUST NOT be conflated.
+
+- **Memo type** — the *endpoint*: where the SOP stops. A Strategy memo ends after finalization (analysis only, no code). An Implementation memo runs all the way through to code. A Sorting memo ends in a triage with sub-memos.
+- **Memo strategy** — the *workflow shape*: how the work is approached on the way to that endpoint.
+
+The strategy is orthogonal to the type. A memo declares both. This chapter specifies the strategy dimension; the type endpoints are covered in [11-quality-and-finalization.md](./11-quality-and-finalization.md) and [08-phases-and-prds.md](./08-phases-and-prds.md).
+
+---
+
+## The Four Strategies
+
+| Strategy | Meaning | Maps to type |
+|----------|---------|--------------|
+| **Research** | Research only, filed as standalone research artifacts. | Strategy |
+| **Implementation** | A follow-up memo references the research and turns it into work. | Implementation |
+| **Mixture** | Research and implementation combined; some parts executed, some archived. | Sorting |
+| **Iterative** | Decide the shape **while** doing — settle what it should look like and already complete parts of it in the same motion. | (genuinely new) |
+
+---
+
+## The `Memo-Strategie` Header Field
+
+Every memo declares its strategy in a `Memo-Strategie` header field. The strategy SHOULD be set early — ideally at initialization — because it shapes how revisions are planned and how research is filed. The field is mutable across revisions in the same way the type is, but a deliberate early choice is preferred over late discovery.
+
+For example, the bootstrap memo from which this specification is induced declares `Memo-Strategie: Iterative` — it fixes the shape of the organization and its repositories while already producing parts of that shape (this specification text) in the same pass.
+
+---
+
+## Iterative Is Genuinely New
+
+The first three strategies describe arrangements that already existed implicitly: pure research, research-then-implement, and mixed-then-sorted. The **Iterative** strategy is genuinely new. It names the case where the work cannot be fully planned before it starts because the act of doing reveals the shape.
+
+Under the Iterative strategy:
+
+- The memo is expected to interleave shaping decisions and concrete output, rather than completing all decisions before any output.
+- A decision and the piece of work it enables MAY land in the same revision.
+- The memo remains the authority over its own rollout; "deciding while doing" does not relax finalization. The Iterative strategy changes *when* parts are produced, not *whether* the finalization gate applies.
+
+Naming this strategy makes the interleaving explicit and reviewable, instead of leaving it as an undocumented deviation from a plan-everything-first assumption.
+
+---
+
+## Related
+
+- [03-input-paths.md](./03-input-paths.md) — the transcript type that opens a memo and where the strategy is first set.
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — how the memo type's endpoint shapes phases and PRDs.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the finalization gate that applies regardless of strategy.
+
+---
+
+# 06. Memo Structure & Local Guarantee
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [05-memo-strategies.md](./05-memo-strategies.md) |
+| Related | [07-revisions-and-questions.md](./07-revisions-and-questions.md), [12-rollout.md](./12-rollout.md), [16-git-security-versioning.md](./16-git-security-versioning.md) |
+
+> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
+
+---
+
+## Numbering
+
+Memos are numbered with **zero-padded** identifiers (for example, `001`, `017`, `138`). Each memo lives in a directory named `{NNN}-{slug}`. The numeric prefix is stable for the life of the memo and is the basis for the memo ID used in git references (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)).
+
+---
+
+## Directory Layout
+
+A memo directory contains a fixed set of sub-folders, each with a single responsibility:
+
+| Folder | Responsibility |
+|--------|----------------|
+| `revisions/` | The revision files `REV-XX.md` (zero-padded, two digits). The current memo content. |
+| `transcripts/` | The dictated transcripts that fed the memo. |
+| `rollout/` | Rollout artifacts: state files for crash recovery and the standing lessons-learned file. |
+| `validation/` | Validation outputs produced during finalization and rollout. |
+
+A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. Revisions MUST NOT be edited in place; each change produces a new file (see [07-revisions-and-questions.md](./07-revisions-and-questions.md)).
+
+---
+
+## Local, Never Uploaded — a Structural Guarantee
+
+Memo content is **local** and is **never uploaded**. In this specification, "never uploaded" is not a behavioral rule that an agent is asked to remember and honor — it is a **structural guarantee**: the `.memo/` tree contains no git repository, so there is no mechanism by which its content could be pushed.
+
+This is the verified correction of an earlier framing. The earlier model stated "never uploaded" as a rule one had to follow; the verified system makes it structural. A structural guarantee cannot be forgotten under time pressure the way a rule can.
+
+The consequences:
+
+- The `.memo/` tree MUST NOT be a git repository and MUST NOT be tracked by a parent repository.
+- The single legitimate exit point from local memo content to a remote is a deliberate, separate act — for instance, a published specification chapter or a GitHub issue — never an accidental push of memo internals. The git-security gate ([16-git-security-versioning.md](./16-git-security-versioning.md)) backs this up by scanning anything that does cross the boundary.
+
+The practical effect is that hours of dictated reasoning, half-formed decisions, and private context can be preserved verbatim in the memo without any risk of exposure, which in turn is what makes context preservation ([04-input-pipeline.md](./04-input-pipeline.md)) safe to apply without self-censorship.
+
+---
+
+## Related
+
+- [07-revisions-and-questions.md](./07-revisions-and-questions.md) — the three-area revision structure and the question format.
+- [12-rollout.md](./12-rollout.md) — the `rollout/` folder and the lessons-learned file.
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — the security gate at the one exit point.
+
+---
+
+# 07. Revisions & the Question Format
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [06-memo-structure.md](./06-memo-structure.md) |
+| Related | [04-input-pipeline.md](./04-input-pipeline.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) |
+
+> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
+
+---
+
+## The Three-Area Revision Structure
+
+A revision file (`REV-XX.md`) is organized into three areas. An implementation MUST produce all three.
+
+1. **`## Vorwort` (preamble)** — what changed since the previous revision and what the reader should watch next. The preamble is the human-facing summary of the delta.
+2. **Chapters** — the body of the memo, one `##`-level chapter per topic, each carrying its category tag.
+3. **`## Offene Fragen` / `## Beantwortete Fragen` (open / answered questions)** — the machine-readable question areas. Open questions are the strict handover surface from the AI to the downstream machinery; answered questions record the decisions and where they were made.
+
+The question areas are the **strict AI→software handover**: this is the defined transition from a human-readable revision to machine processing in the plan. Because they are parsed, their format is normative.
+
+---
+
+## The Valid Question Format
+
+Each question is an H3 block. The format below is the one the viewer's question parser accepts; an implementation MUST author questions exactly this way.
+
+```
+### F{N} — Title
+
+**Hintergrund:** background prose, one line.
+
+**Frage:** the question prose, one line.
+
+**AI-Empfehlung:** the recommendation prose, one line.
+
+**Typ:** multi
+
+A) first option
+B) second option
+C) third option
+```
+
+Normative rules:
+
+- **Heading.** Each question MUST begin with `### F{N} — Title`. Heading matching is case-insensitive (`### F1`, `### f1`, `### F1 —` all parse identically), and the id is normalized.
+- **Fields.** `**Hintergrund:**`, `**Frage:**`, and `**AI-Empfehlung:**` are field lines, each on its own line, separated by blank lines.
+- **Options are BARE lines.** Options MUST be written as bare lines `A)`, `B)`, `C)` — one discrete line per option. The parser also tolerates `A:`, `A.`, the loose parenthesized forms `(A)`, and an optional leading `Option ` prefix, but the bare `A) ...` discrete-line form is the canonical authoring shape.
+- **Bold markers do NOT parse.** A bold marker `**A)**` does **not** parse as an option. This is a frequent authoring mistake; it produces a question that reaches the render gate with zero options.
+- **No letter tokens in prose.** Bare letter tokens such as `DB.` or a stray `(A)` inside the `Hintergrund`/`Frage` prose MUST be avoided. The parser strips metadata field lines before scanning, so back-references like `**User-Entscheidung:** A — …` in answered questions do not become phantom options — but free-floating letter tokens in question prose can still mis-parse.
+- **Type.** `**Typ:** multi` marks a question whose options are independently selectable (multiple checkable options). Its absence means a single-choice question.
+
+Answered questions are written as a single-line variant — `### F{N} — Title — **AI:** … **User:** … **Beantwortet in:** REV-XX` — from which the parser strips the trailing meta to recover the bare title.
+
+---
+
+## The Recurring Mis-Format Is an Authoring Error, Not a Viewer Bug
+
+It is a verified clarification that the recurring failure to format questions correctly is **not** a memo-viewer bug. The viewer's parser is correct. The failure is a **recurring LLM authoring error** — an estimated validity rate of roughly 40–60 percent (an *estimate*, not a measurement), most likely because the exact format is incompletely captured in the authoring skills. The characteristic breakers are bold option markers `**A)**` and stray letter tokens (`DB.`) in the prose.
+
+The remedy has two parts:
+
+1. **Fix the authoring skills** so the exact format is fully specified at the point of authoring. This is **specified-but-not-yet-implemented**: the specification fixes the format here; correcting the authoring skills is follow-up work.
+2. **Strong validation via a hybrid** (see next section).
+
+---
+
+## The Strong-Validation Hybrid
+
+To make the handover robust against the authoring error, the question handover uses a **hybrid**: a lenient human-readable markdown F-format alongside a deterministic, parse-safe JSON block.
+
+- **Lenient markdown F-format.** The `### F{N}` markdown described above is forgiving by design — it tolerates several option-marker variants so that imperfect authoring still parses where possible.
+- **Deterministic `questions-json` block.** A fenced ```` ```questions-json ```` code block carries the questions as a JSON array of question objects. This block is parse-safe and deterministic.
+
+```questions-json
+[
+  {
+    "id": "F1",
+    "title": "Example question",
+    "hintergrund": "background",
+    "frage": "the question",
+    "aiRecommendation": "the recommendation",
+    "typ": "single",
+    "options": [
+      { "key": "A", "label": "first option", "kind": "option" },
+      { "key": "B", "label": "second option", "kind": "option" }
+    ],
+    "answered": false
+  }
+]
+```
+
+Authority rule: **when a `questions-json` block is present, it is authoritative.** The parser (`parseQuestionJsonBlock`) treats it as the source of truth, and the human-readable markdown is rendered from it deterministically (`renderQuestionsMarkdown`), so the two cannot drift. A malformed block never crashes the parse path: it yields a not-found result with an error string that the validator can translate into a validation code, rather than throwing. When no `questions-json` block exists, the lenient markdown parse applies.
+
+This hybrid is the strong validation: authoring may remain forgiving in markdown, but a memo that carries the JSON block gets a deterministic, machine-authoritative question set for the AI→software handover.
+
+---
+
+## Revisions Are Append-Only
+
+A revision MUST NOT be edited in place. Each change produces a new `REV-XX.md` file. In-place edits have caused data loss in practice; the append-only rule is a guardrail against it. The revision number is zero-padded and two digits.
+
+---
+
+## Related
+
+- [04-input-pipeline.md](./04-input-pipeline.md) — input processing that runs before each revision is generated.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the gate that requires the open-questions area to be empty.
+- [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the authoring skills that the format fix targets.
+
+---
+
+# 08. Phases, PRDs & the Dependency Tree
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
+| Related | [05-memo-strategies.md](./05-memo-strategies.md), [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md), [18-multidimensionality.md](./18-multidimensionality.md) |
+
+> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
+
+---
+
+## Topics → PRDs → Phases
+
+A finalized memo is decomposed in two steps.
+
+1. **Topics → PRDs.** The memo's topics become **PRDs** (product requirement documents). The governing constraint is that **one PRD fits into one context**: a PRD MUST be self-contained and sized so that a single agent working in a fresh, empty context can implement it without needing to hold the rest of the memo in mind.
+2. **PRDs → Phases.** PRDs are grouped into **phases**. A phase is a set of PRDs that are executed together as one unit of the rollout.
+
+This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the execution batches.
+
+---
+
+## `## Phase-Hints` — the Dependency Tree
+
+A finalized memo carries a `## Phase-Hints` section that declares the relationships between phases. This section **is** the dependency tree of the rollout. Each phase entry declares two relations:
+
+- `depends-on` — phases that MUST complete before this phase may start.
+- `can-parallel-with` — phases that MAY run concurrently with this phase.
+
+The two relations are **symmetric** and MUST be authored consistently: if phase P2 declares `can-parallel-with: P9`, then phase P9 MUST declare `can-parallel-with: P2`. An implementation reads `## Phase-Hints` to derive execution order; absent an explicit hint, phases run sequentially (the memo retains authority over ordering).
+
+A `## Phase-Hints` table has the shape:
+
+| phase-id | depends-on | can-parallel-with | rationale |
+|----------|-----------|-------------------|-----------|
+| P1 | — | — | foundation, sequential |
+| P2 | P1 | P7, P8, P9 | independent of the viewer / prompt-generator / core strands |
+| … | … | … | … |
+
+The `rationale` column documents *why* a relation holds, so the dependency tree is reviewable rather than asserted.
+
+---
+
+## The Bootstrap-Scope Clause
+
+A memo's rollout produces only what the memo's scope declares. For the bootstrap memo from which this specification is induced, the scope is explicit and central, and it generalizes to a rule worth stating here:
+
+> A rollout produces the artifacts its memo declares. Where a chapter specifies new behavior for an existing live system, the rollout produces the **specification text** for that behavior; the corresponding **live-code change** is follow-up work in a separate memo, not part of the current rollout.
+
+For the bootstrap specifically: the rollout produces the **organization, the repositories, and the specification text**. Chapters that describe new behavior of the existing toolkit skills — the standing lessons-learned file ([12-rollout.md](./12-rollout.md)), the worktree-cleanup enforcement ([16-git-security-versioning.md](./16-git-security-versioning.md)), the question hybrid ([07-revisions-and-questions.md](./07-revisions-and-questions.md)), and the requirements→quality-gates wiring ([11-quality-and-finalization.md](./11-quality-and-finalization.md)) — deliver only their specification text in this rollout. Their implementation in the live skills is follow-up work. No live skill is modified by the bootstrap rollout.
+
+Stating the scope clause in the phase chapter keeps the dependency tree honest: a phase that the memo defines as "write the spec text" MUST NOT silently expand into "change the live skill," because that would change the work the dependency tree was planned against.
+
+---
+
+## Related
+
+- [05-memo-strategies.md](./05-memo-strategies.md) — the type endpoint (Strategy / Implementation / Sorting) that decides whether PRDs are produced at all.
+- [12-rollout.md](./12-rollout.md) — how phases and PRDs are executed.
+- [13-orchestration.md](./13-orchestration.md) — the state model that tracks phase and PRD progress.
+- [18-multidimensionality.md](./18-multidimensionality.md) — phases that span multiple repositories.
+
+---
+
+# 09. Contamination, Empty Context and Handover
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [08-phases-and-prds.md](./08-phases-and-prds.md) |
+| Related | [10-proactive-research.md](./10-proactive-research.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [13-orchestration.md](./13-orchestration.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the contamination signal catalog, the empty-context rule, and the `HANDOVER.md` structure. The illustrative anecdotes (the "fridge memo", the contaminated handover example) are **informative**.
+
+---
+
+## Purpose
+
+A memo or a session handover written from a degraded context carries its mis-weighting forward into the next document. The cause is **context rot** (quality decay of LLM output as input length grows); the consequence is **contamination** (a document written out of a rotten context). These two terms are distinct and MUST NOT be used interchangeably: context rot is the cause, contamination is the effect.
+
+The robust place to repair contamination is a **fresh context** — the writing context is, by definition, the contaminated one and cannot clean itself. The system therefore does not rely on discipline; it provides a deterministic detector, an empty-context rule, and a handover artifact that points at primary sources instead of re-narrating them.
+
+---
+
+## Contamination Detector (five signals)
+
+A document MUST be checked for contamination signals **before** its content is reviewed. The signals are form- and behavior-based, deterministic, and require no LLM interpretation.
+
+| Signal | ID | Description | Trigger threshold |
+|--------|----|-------------|-------------------|
+| Form break | `S1` | Headings do not follow the template structure; mandatory sections are missing; naming conventions are violated (e.g. an insider word used as a topic heading). | 1 violation = hit |
+| Compute shortcut | `S2` | A compute- or time-intensive rule marked non-skippable is abbreviated to finish faster (e.g. 1 test instead of 3 per schema across ~100 schemas). | 1 abbreviation of a non-skippable rule = hit |
+| Weighting drift | `S3` | Small symptoms are inflated; the actual main problem ("elephant in the room") is buried under side topics or absent. | Heuristic; MUST be justified explicitly when reported |
+| Narrative over pointer | `S4` | Much re-narrated conclusion, little reference to a primary artifact (file, commit, issue). | < 1 pointer per 5 claims = hit |
+| Naming sprawl | `S5` | Several handover files with different names for the same thing (`HANDOVER.md`, `WIEDEREINSTIEG.md`, `PAUSE-STANDPUNKT.md` side by side); metadata drift in header fields. | 2+ handover files = hit; 1 metadata drift = hit |
+
+### Overall verdict
+
+| Finding | Action |
+|---------|--------|
+| 0 signals | No alarm. The document is treated as non-contaminated. |
+| 1 signal (`S3` or `S4`) | Hint: a possible contamination signal was found — review the content. |
+| 1 signal (`S1`, `S2`, or `S5`) | Warning: a contamination hit (form break / compute shortcut / naming sprawl). The concrete location MUST be named with a re-verification proposal. |
+| 2+ signals | Alarm: high probability of contaminated output. Re-verification of all claims against primary sources is mandatory. |
+
+The detector MUST report only on findings — clean documents produce no noise. Consumers of the detector are the revision-2 check (a memo's first revision is scanned at revision 2) and the handover re-entry (Stage B reads `HANDOVER.md`).
+
+---
+
+## The Empty-Context Rule
+
+When work spans more than one session, or when a context is detected as full or contaminated, the system MUST move to a fresh (empty) context rather than continuing on the degraded one.
+
+- An evaluator (PRD evaluator, phase evaluator) MUST run in a fresh context with no carry-over from the implementation process. It receives only the artifact under review (the PRD document plus the produced files), never the conversation that produced them. See [13-orchestration.md](./13-orchestration.md).
+- When `memo-init` is invoked on an already-full context, prior knowledge MUST be carried only as an explicit assumption marked for re-verification, and a reset SHOULD be recommended; alternatively a handover (Stage A) is appropriate.
+- The AI cannot execute the context reset itself. The reset recommendation is a **user action** — the system emits the recommendation, the user performs it.
+
+This rule is the structural reason evaluators are the first candidates to become repo-scoped agents with isolated context (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
+
+---
+
+## HANDOVER.md — In-Session Memo Handover
+
+When a session must be handed over (overflow, drifting assumptions, scope change), the handover artifact is a single file named `HANDOVER.md`. This is the only valid name. Variant names (`WIEDEREINSTIEG.md`, `PAUSE-STANDPUNKT.md`, `UEBERGABE.md`, any other) are forbidden as output names — naming sprawl is itself signal `S5`.
+
+The file lives in the memo directory: `.memo/{NNN}-{slug}/HANDOVER.md` (not in `rollout/`).
+
+### Mandatory header
+
+A `HANDOVER.md` MUST contain all six header fields:
+
+| Field | Source |
+|-------|--------|
+| `Session-ID` | The session identifier (environment variable) |
+| `Transcript-Path` | The deterministic transcript path for the session |
+| `Context-Fill` | A proxy assessment (empty / medium / full) plus byte and message count; exact percentage is not required |
+| `Reason` | Overflow / assumption error / discussion needed |
+| `Contamination-Self-Assessment` | The Stage-A author explicitly names the likely mis-weighted spots |
+| `Created` | Timestamp |
+
+The header MUST include a note to the successor that the file was written from a possibly contaminated context, that all statements are hypotheses, and that primary sources beat the handover.
+
+### Three zones (strictly separated)
+
+The three zones MUST be kept strictly apart — mixing them is the actual contamination channel.
+
+**Zone 1 — Facts with evidence pointer.** Every statement MUST carry a concrete pointer (file path, commit hash, issue number) in the form "state X, evidenced by file/commit/issue Y". Evaluation numbers are allowed only when the data basis is named. Each verified statement carries a `[FAKT]` tag.
+
+**Zone 2 — Explicit assumptions and open questions.** Every statement carries an `[ANNAHME]` tag. Open questions are a numbered list. This zone MUST NOT be mixed into Zone 1. Recommendations and suggestions belong here, never in Zone 1.
+
+**Zone 3 — Primary-source references.** A list of files, commits, and issues the successor MUST check themselves, in the form "path/commit/issue — what to check there". There MUST be at least one entry per Zone-1 statement. Rollout state files are listed explicitly, distinguishing the generate state from the execute state.
+
+### Re-entry discipline (fresh context)
+
+The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**. Every action-guiding claim is marked `[zu verifizieren]` until a primary source confirms it; on confirmation it becomes `[verifiziert: {source}]`, on contradiction `[widerlegt: {primary source} shows {reality}]`. The state-type separation is critical: a generate-state marked "completed" MUST NOT be passed on as "work finished" (that is contamination). See [13-orchestration.md](./13-orchestration.md) and the state-recovery model.
+
+> **Follow-up (specified, not yet implemented):** the `questions-json` hybrid that hardens the question format against the recurring LLM mis-format is specified in [07-revisions-and-questions.md](./07-revisions-and-questions.md); its live skill implementation is follow-up work, not part of the bootstrap.
+
+---
+
+## Related
+
+- [10-proactive-research.md](./10-proactive-research.md) — proactive research in early revisions, the natural producer of `context/` material the handover points at.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels (`[FAKT]` … `[UNBEKANNT]`) the handover zones reuse.
+- [13-orchestration.md](./13-orchestration.md) — state files, crash recovery, and the fresh-context evaluator that consumes the empty-context rule.
+- [00-overview.md](./00-overview.md) — conformance language and the context-rot vs contamination glossary.
+
+---
+
+# 10. Proactive Research
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+| Related | [07-revisions-and-questions.md](./07-revisions-and-questions.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [04-input-pipeline.md](./04-input-pipeline.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for when proactive research is mandatory, where large research output is stored, and how research effort tapers across revisions. Examples are **informative**.
+
+---
+
+## Purpose
+
+A memo is a planning artifact, and planning is the most important part of agile engineering. A plan built on unverified assumptions inherits every error those assumptions carry. Proactive research front-loads verification: instead of writing assumptions and discovering later that they were wrong, the system researches the open points early, while the cost of a course correction is still low.
+
+Research is also the last step of the input pipeline (see [04-input-pipeline.md](./04-input-pipeline.md)): after completeness, transcription-error scan, topic extraction, and context preservation, the pipeline derives research topics. This chapter governs how that research is conducted across a memo's revision lifecycle.
+
+---
+
+## Mandatory in Revisions 1 and 2
+
+Proactive research **MUST** be performed in revisions 1 and 2 of every memo that contains assumptions, architecture decisions, or claims about existing code.
+
+- In revision 1, the AI MUST research the topics derived by the input pipeline before committing claims to the memo. Statements that cannot be verified MUST be tagged at the appropriate evidence level (`[ANNAHME]`, `[VERMUTUNG]`, `[UNBEKANNT]`) rather than presented as fact. See the evidence levels in [11-quality-and-finalization.md](./11-quality-and-finalization.md).
+- In revision 2, the AI MUST close the highest-value open research points derived from the user's feedback on revision 1. Revision 2 is also the point at which the contamination detector scans revision 1 (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)).
+- Research SHOULD be conducted in subagents with empty context when the volume is large, so that the main memo context is not polluted by raw research material.
+
+A memo that reaches finalization with a `[Research offen]` (research open) tag still present MUST NOT pass the finalization gate (see [11-quality-and-finalization.md](./11-quality-and-finalization.md)).
+
+---
+
+## Large Research Goes to `context/`
+
+When research produces a substantial body of material — synthesis documents, scraped documentation, claim checks, blueprints — that material MUST be stored as a separate file in the memo's `context/` folder, not inlined into the revision body.
+
+```
+.memo/{NNN}-{slug}/
+  context/
+    research-synthese.md         <- large research output, referenced by the memo
+    research-synthese-rev02.md
+  revisions/
+    REV-01.md                    <- references context/ files, does not inline them
+```
+
+- The revision body MUST reference the `context/` file rather than re-narrating its conclusions. This keeps the revision a pointer to primary material instead of a contamination surface (the same pointer principle that governs `HANDOVER.md`).
+- `context/` files are ancillary files of the memo and MUST be listed in the memo's `## Ancillary Files` section with a relative path.
+- `context/` research material is a primary source for the rollout: the rollout entry points (see [13-orchestration.md](./13-orchestration.md)) read it as the verified factual basis when starting from an empty context.
+
+---
+
+## Taper From Revision 3 Onward
+
+From revision 3 on, proactive research effort **SHOULD** taper. By that point the memo's factual basis is established, the open questions are answered, and further revisions are about refinement, balance, and coherence rather than new discovery.
+
+| Revision | Research posture |
+|----------|------------------|
+| Rev 1 | Mandatory — research the pipeline-derived topics; tag what cannot be verified |
+| Rev 2 | Mandatory — close the high-value open points from feedback; run the contamination detector on Rev 1 |
+| Rev 3+ | Tapered — research only on demand, when a new assumption is introduced or a reviewer flags a gap |
+
+Tapering is a `SHOULD`, not a `MUST`: a late-introduced assumption or a coherence finding MAY legitimately reopen a research thread in a later revision. The intent is to avoid endless re-research of a settled basis, not to forbid verification when it is genuinely needed.
+
+---
+
+## Related
+
+- [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline whose final step derives the research topics this chapter consumes.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the pointer principle (`context/` reference over re-narration) and the revision-2 contamination scan.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels research output is tagged with, and the `[Research offen]` finalization gate.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 11. Quality Gates and Finalization
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [10-proactive-research.md](./10-proactive-research.md) |
+| Related | [12-rollout.md](./12-rollout.md), [09-contamination-context-handover.md](./09-contamination-context-handover.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the nine finalization gates, the five quality skills, and the six evidence levels. The requirement-generated-gate wiring is **specified here but not yet implemented in code** (it is follow-up work, see below).
+
+---
+
+## Purpose
+
+Finalization is the readiness gate between strategy and implementation. A memo is finalized exactly once, by an explicit user trigger, after every quality gate has been run. The AI **MUST NOT** finalize autonomously: experience shows the AI chronically finalizes too early, so finalization is the single workflow entry point that requires an explicit user trigger. There is no autonomous path into finalization.
+
+Finalization produces a new revision containing a finalization report with a Go / No-Go / Conditional-Go verdict. A single FAIL or BLOCKED gate is enough for NO-GO.
+
+---
+
+## The Five Quality Skills
+
+Five quality skills back the gates. Four run autonomously over the memo body; the fifth scans for security exposure.
+
+| Quality skill | Checks |
+|---------------|--------|
+| `memo-evidence` | Tags every substantive statement by evidence level (six levels, below); derives research needs |
+| `memo-balance` | Detects over-engineering (+2) and under-engineering (−2) per chapter |
+| `memo-coherence` | Finds gaps, contradictions, redundancies, and logical issues across chapters |
+| `memo-references` | Verifies every file path, line number, and code snippet; fixes broken references |
+| `git-security` | Scans for secrets, absolute paths, mock credentials, `.env` files, and personal data |
+
+The four memo-* quality skills run **autonomously** — they MUST NOT ask follow-up questions; findings are written into the memo. `git-security` runs autonomously and reports only when it BLOCKS.
+
+---
+
+## The Six Evidence Levels
+
+`memo-evidence` assigns exactly one tag per substantive statement. The six levels are ordered from strongest to weakest evidence:
+
+| Tag | Level | Meaning | Requires |
+|-----|-------|---------|----------|
+| `[FAKT]` | Fact | Verified fact with an identifiable source | Link, docs reference, or verifiable source |
+| `[GEMESSEN]` | Measured | Benchmark or measurement confirmed | Test result, benchmark, or metric |
+| `[ANNAHME]` | Assumption | Based on documentation but not verified in this context | Documentation reference, not tested locally |
+| `[ABGELEITET]` | Derived | Logical conclusion from verified facts | A clear logical chain from verified premises |
+| `[VERMUTUNG]` | Conjecture | Hypothesis without evidence | Nothing — the default for unsubstantiated claims |
+| `[UNBEKANNT]` | Unknown | No data available, cannot even hypothesize | An acknowledged knowledge gap |
+
+`memo-evidence` produces a classification summary (count and share per level) and a `Forschungsbedarf` (research-needs) section deriving how each `[ANNAHME]`, `[VERMUTUNG]`, and `[UNBEKANNT]` could be verified. The three handover zones (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)) reuse these tags.
+
+---
+
+## The Nine Finalization Gates
+
+`memo-finalize` runs nine gates plus a user-confirmation gate. The gates are consolidated into **one** summary query presented to the user — the system MUST NOT ask one question per gate.
+
+| # | Gate | Result values | What it checks |
+|---|------|---------------|----------------|
+| 0 | Input completeness | PASS / BLOCKED | Every input required by a referenced skill is present in the memo or its context block. BLOCKED counts as FAIL. |
+| 1 | Facts / assumptions classified (`memo-evidence`) | PASS / FAIL | All substantive statements are tagged; the classification summary is present. |
+| 2 | Research needs derived | PASS / FAIL | Research needs are listed; no `[Research offen]` tag remains; each open point has a user decision. |
+| 3 | Code references verified (`memo-references`) | PASS / FAIL / N/A | No `[REF-BROKEN]` markers remain; N/A if the memo has no code references. |
+| 4 | Over-/under-engineering (`memo-balance`) | PASS / WARN / FAIL | No unaddressed +2 / −2 chapter; critical under-engineering (security, data integrity) resolved. |
+| 5 | AI feedback given (`memo-coherence`) | PASS / WARN / FAIL | Coherence check performed; critical contradictions addressed. |
+| 6 | Ralph-Loop suitability | PASS / WARN / N/A | If a Ralph-Loop is planned, its PRDs are self-contained with machine-testable acceptance criteria; N/A otherwise. |
+| 7 | Open questions empty | PASS / FAIL | The `## Offene Fragen` section holds no unresolved `### F{N}` entries, or remaining entries are explicitly marked "deliberately open". |
+| 8 | Third-party software veto (token-tracking) | PASS / WARN | Forbidden token-tracking packages appear only in an anti-pattern context, never as a positive recommendation. |
+| 9 | Rollout entry points | PASS / WARN / FAIL | The `## Rollout-Entry-Points` section exists with at least one concrete (non-placeholder) numbered path entry; filesystem existence is a WARN, not a FAIL, because some paths are created by the rollout itself. |
+
+A tenth row, `git-security`, and an eleventh row, user confirmation, complete the report. After a GO or CONDITIONAL GO the skill MUST break and ask the user whether to start the rollout — this is the single point in the whole workflow where the system actively asks whether to continue.
+
+### Verdict
+
+| Verdict | Condition |
+|---------|-----------|
+| GO | All gates PASS |
+| CONDITIONAL GO | Only WARN gates (no FAIL, no BLOCKED); accepted risks listed |
+| NO-GO | Any FAIL or BLOCKED; failed gates and missing inputs listed |
+
+On GO the memo status becomes "Finalisiert"; on CONDITIONAL GO, "Bedingt finalisiert"; on NO-GO the status is unchanged.
+
+---
+
+## Requirement-Generated Quality Gates
+
+Requirements (specified in the workbench sub-spec under `.memo/requirements/`) describe constraints from the perspective of a programming language and a repository, both global and project-specific. A requirement **MAY** declare its own quality gate, which is then checked at finalization alongside the nine standard gates. This lets a project bind a reproducible, data-backed constraint to the finalization process instead of leaving it as prose in instructions.
+
+> **Follow-up (specified, not yet implemented):** the wiring that lets a requirement generate a finalization gate is fixed here as spec text. The live code that reads `.memo/requirements/` and injects the generated gate into `memo-finalize` is follow-up work (a separate memo), not part of this bootstrap. No live skill is changed by adopting this chapter.
+
+---
+
+## Related
+
+- [10-proactive-research.md](./10-proactive-research.md) — the research that closes `[ANNAHME]` / `[VERMUTUNG]` items before gate 1 and gate 2 are checked.
+- [12-rollout.md](./12-rollout.md) — the rollout that begins only after a GO / CONDITIONAL GO verdict.
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — `git-security` as a fixed gate and a fixed part of the git flow.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 12. Rollout
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [11-quality-and-finalization.md](./11-quality-and-finalization.md) |
+| Related | [13-orchestration.md](./13-orchestration.md), [14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the rollout trigger, the Generate→Execute→Evaluate pattern, the hands-off goal, and the standing lessons-learned file. The lessons-learned file is **specified here but not yet implemented in the live skills** (it is follow-up work, see below).
+
+---
+
+## Purpose
+
+The rollout turns a finalized memo into implemented code. It begins only **after** finalization (memo status "Finalisiert" or "Bedingt finalisiert") and only for memos of type Implementation — strategy memos end at finalization. The rollout is the autonomous half of the workflow: after the user confirms, it runs to completion without intermediate stops.
+
+---
+
+## Generate → Execute → Evaluate at Every Level
+
+Every level of the rollout follows the same three-phase pattern (Generate → Execute → Evaluate). The pattern is applied recursively: the rollout as a whole, each phase, and each revision use it.
+
+| Level | Generate | Execute | Evaluate |
+|-------|----------|---------|----------|
+| Rollout | Create all phases and PRDs from the memo | Run every phase | Validate the whole result against the original memo |
+| Phase | Create one phase with its PRDs | Run the phase with an agent team | Check the interplay of all PRDs in the phase |
+| Revision | Plan the revision | Write the revision | Verify all feedback was incorporated |
+
+At the rollout level, **Generate** produces the PRDs and validates them bidirectionally against the memo; **Execute** iterates over the phases, delegating each to a phase agent team; **Evaluate** checks memo conformity (nothing added, nothing forgotten), runs Playwright for UI PRDs, verifies symlinks, and runs the tests. A FAIL at any phase stops the rollout and informs the user; on PASS the next phase starts immediately.
+
+The rollout MUST begin by displaying a **duty-of-care contract** (eight commitments: implement only what the memo says, self-test every agent result, run Playwright on UI changes, start the server/script on code changes, verify symlinks on restructuring, never accept "the agent says done" as verification, report "done" only after software validation, surface problems immediately) and a tool check (Playwright MCP, Bash/Git, Tasks, sub-agents). A missing tool aborts the rollout. After the user confirms the contract, the rollout runs autonomously.
+
+---
+
+## Hands-Off Goal
+
+The design goal is **hands-off after finalization**: once a memo is finalized, the user touches nothing further. The entire rollout — generate, execute, evaluate, across all phases and PRDs — runs without further user interaction except at genuine blockers.
+
+The autonomy rules are strict:
+
+- There MUST be no stop between Generate, Execute, and Evaluate. The system MUST NOT ask "shall I start Execute?" or "shall I start Evaluate?".
+- The system stops only on FAIL (after the bounded retries) or on a hard blocker (missing tool, a revision blocker that is a genuine design decision).
+- Everything else is handled autonomously.
+
+This mirrors the empty-context discipline (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)): the user's judgement is spent up front, at finalization; the rollout then executes a settled plan.
+
+---
+
+## The Standing Lessons-Learned File
+
+The rollout **MUST** always provision a standing lessons-learned file at `rollout/lessons-learned.md` for continuous improvement. It is provisioned regardless of outcome, so that each rollout leaves behind a record of what was learned — recurring failure modes, surprising integration points, corrections that should feed back into the skills or the memo SOP.
+
+```
+.memo/{NNN}-{slug}/
+  rollout/
+    state.json
+    execution-state.json
+    phase-{N}-state.json
+    evaluate-state.json
+    lessons-learned.md       <- standing file, always provisioned
+```
+
+The lessons-learned file is distinct from the per-rollout state files: state files track machine progress for crash recovery (see [13-orchestration.md](./13-orchestration.md)); the lessons-learned file accumulates human-meaningful improvement notes across the rollout.
+
+> **Follow-up (specified, not yet implemented):** this is a **new** requirement — no such file exists in today's rollout skills (verified). It is fixed here as spec text; provisioning it from the live rollout skills is follow-up work (a separate memo), not part of this bootstrap.
+
+---
+
+## Related
+
+- [13-orchestration.md](./13-orchestration.md) — the orchestrator, agent team, state files, crash recovery, and Tasks that execute the rollout.
+- [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the evaluators that run the Evaluate phase in isolated context.
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow that governs commits during the rollout and after a rollout stop.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 13. Orchestration
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [12-rollout.md](./12-rollout.md) |
+| Related | [14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [09-contamination-context-handover.md](./09-contamination-context-handover.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the **real verified system**.
+
+---
+
+## Purpose
+
+A rollout phase is executed by an **agent team**, not by a single linear pass. An orchestrator coordinates the team, persists progress to state files, and recovers exactly from a crash. This chapter defines the team roles, the state-file set, and the recovery procedure.
+
+---
+
+## Orchestrator and Agent Team
+
+Each phase is run by a team with four roles. The Lead is the coordinator; no agent works without an assignment from the Lead.
+
+| Role | Task | Context | Tools |
+|------|------|---------|-------|
+| Lead | Coordinates the phase, creates Tasks, monitors, stops on problems | Memo + phase + PRDs | Task create/update, SendMessage |
+| Worker (1 per PRD) | Implements one PRD in its own worktree; loads skills via tags | Own context + PRD | Edit, Write, Bash, Git |
+| Evaluator | Checks a Worker result with **fresh context** | Fresh + PRD + output | Read, Bash (tests), Grep |
+| Phase Evaluator | Checks the interplay of all PRDs after all Workers finish | Fresh + all outputs | Read, Bash, Grep |
+
+The Lead starts Workers in parallel where PRD dependencies allow, runs an Evaluator (fresh context, no carry-over) per finished Worker, iterates Worker↔Evaluator at most twice on FAIL, then runs the Phase Evaluator on the integrated result. Evaluators **MUST** receive a fresh context — they know nothing of the implementation process and see only the PRD plus the produced files (the empty-context rule, see [09-contamination-context-handover.md](./09-contamination-context-handover.md)). The first roles to migrate to repo-scoped agents are exactly these evaluators (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
+
+---
+
+## State Files
+
+All state files live in the memo's `rollout/` subfolder: `.memo/{NNN}-{slug}/rollout/`. They persist machine progress so a crashed rollout can resume exactly.
+
+| Skill | State file | Content |
+|-------|-----------|---------|
+| Rollout generate | `rollout/state.json` | Phases, PRDs, validation status |
+| Rollout execute | `rollout/execution-state.json` | Current phase, per-phase status, eval results |
+| Phase execute | `rollout/phase-{N}-state.json` | Worker status, eval status, merge status per PRD |
+| Rollout evaluate | `rollout/evaluate-state.json` | Conformity, Playwright, symlink, and test results |
+
+All state files use a consistent set of status values: `pending`, `in_progress` (also written `in-progress`), `completed`, `failed`. A per-PRD eval status is `PASS`, `FAIL`, or `null`. Changed files are recorded with a `+` / `~` / `-` prefix (new / modified / deleted).
+
+The state-type separation is critical: `state.json` is the **generate** state (PRDs created) and `execution-state.json` is the **execute** state (work done). A handover that passes a generate-state "completed" as "work finished" is contaminated. State files MUST NOT be deleted automatically — they remain as the rollout's protocol.
+
+---
+
+## Crash Recovery
+
+A crash (power loss, API error, bug, closed terminal) loses the active session and any running subagent work; the Task list and the state files survive on disk. Running worktrees are not cleaned up automatically by the crash.
+
+The recovery procedure is deterministic:
+
+1. **Read the Task list.** Identify the Task with status `in_progress`.
+2. **Read the state files.** Determine: which phase is active (`execution-state.json.current_phase`), which PRD was active (`phase-{N}-state.json` Worker with `worker_status: "in_progress"`), whether the rollout already reached evaluate (`evaluate-state.json` existence), and which PRDs are already done.
+3. **Inform the user.** Report the reconstructed standpoint ("Phase N, PRD X was in_progress — shall I continue?").
+4. **Continue.** After user confirmation, resume where the work stopped. Completed PRDs MUST NOT be repeated.
+
+Each `phase-{N}-state.json` carries a `recoveryPoint` plaintext field describing the resume position. A **stale guard** runs before each Worker assignment: it compares the target worktree's HEAD against the phase `headCommit`; on a clean mismatch it restores the correct state automatically, and only escalates to the user when it cannot resolve unambiguously (uncommitted local changes, diverged history, ambiguous branches). There is no silent continuation on a wrong state.
+
+---
+
+## Tasks Throughout
+
+Tasks are used throughout the rollout, not only as bookkeeping — they are the recovery anchor (step 1 of recovery) and the visible progress surface. The rollout orchestrator and each phase MUST create their Tasks **before** the first Worker starts.
+
+- The rollout creates a root Task plus three child Tasks (Generate, Execute, Evaluate) chained by `blockedBy` to enforce order.
+- A phase creates, before execution, one implement-Task and one evaluate-Task per PRD plus one phase-evaluate Task; statuses move `pending` → `in_progress` → `completed` as work proceeds.
+- Task subjects use a `↳` prefix for visual nesting; the prefix is part of the subject string.
+
+Because Tasks persist to disk, they are the first thing a recovering agent reads — the in-progress Task points at the interrupted unit of work, and the state files fill in the detail.
+
+---
+
+## Related
+
+- [12-rollout.md](./12-rollout.md) — the Generate→Execute→Evaluate rollout that this orchestration executes, and the standing lessons-learned file.
+- [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the migration of the fresh-context evaluators to repo-scoped agents.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context rule the evaluators obey and the handover used on a contaminated interruption.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 14. Agents, Skills and Tasks
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [13-orchestration.md](./13-orchestration.md) |
+| Related | [15-prompt-generator.md](./15-prompt-generator.md), [12-rollout.md](./12-rollout.md), [09-contamination-context-handover.md](./09-contamination-context-handover.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the skill-vs-agent distinction and the first-migration boundary. The agent **migration itself is follow-up work** — adopting this chapter changes no live skill.
+
+---
+
+## Purpose
+
+The system is moving toward **Agents as a base layer** on which skills build. This is not an abolition of skills: skills remain, and they remain the foundation for most procedures. Only the **beginning** — the foundation layer — is converted to agents. The guiding principle is "best result, not most efficient path": agents buy isolated context and standing operating rules where those matter most.
+
+Agents are already used in the system today — phase execution (Lead / Worker / Evaluator, worktrees, fresh context), rollout execution, phase generation, schema grading, and the persona audit all run as agent teams (verified). This chapter formalizes the direction and fixes the first migration boundary.
+
+---
+
+## Skill vs Agent
+
+The two primitives differ in context and scope.
+
+| Aspect | Skill | Agent |
+|--------|-------|-------|
+| Definition | A procedure executed in the **caller's context** | A definition with **repo-scoped operating rules** and an **isolated context** |
+| Context | Shares the caller's context (and its contamination) | Fresh, isolated context per invocation |
+| Rules | A procedure to follow | `AGENTS.md` — standing operating rules for the repo |
+| Invocation | Loaded by tag/trigger into the current conversation | Spawned with a generated start-prompt as a per-invocation order |
+
+A **skill** is the right shape when the procedure should run inside the caller's reasoning and share its context — formatting rules, repository conventions, documentation style. An **agent** is the right shape when the work must run in a clean room — independent evaluation, grading, security scanning — where carry-over from the caller's context would compromise the result.
+
+`AGENTS.md` holds the **standing rules** (who the agent is, how it behaves, its repo-scoped constraints). The generated **start-prompt** (see [15-prompt-generator.md](./15-prompt-generator.md)) is the **per-invocation order** — the specific task for this run, composed deterministically. The two are complementary: standing rules plus a per-invocation order.
+
+---
+
+## First Migration: Only Evaluators
+
+The first migration converts **only the evaluators** to agents. Evaluators are the natural first case because the empty-context rule already requires them to run in a fresh, isolated context (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)) — they are agents in everything but form.
+
+**Migrating to agents first (evaluators):**
+
+- the `*-evaluate` skills (`memo-revision-evaluate`, `memo-phase-evaluate`, `memo-rollout-evaluate`, `prd-evaluate`)
+- the quality evaluators `memo-evidence`, `memo-balance`, `memo-coherence`, `memo-references`
+- the grading skills `grade-score-single` / `grade-score-batch`
+- `git-security`
+- the persona audit (`workbench-persona-audit`)
+
+**Staying skills (the base layer they build on):**
+
+- the `node-*` family (formatting, class architecture, validation, error codes, testing, environment manager, server design)
+- `domain-dunesql`
+- `repo-readme` and `repo-docs-writing`
+- pointer skills (on-demand routers to vendored rules)
+
+These stay skills because they are procedures meant to run inside the caller's context — they shape how the caller writes code or docs, and an isolated context would sever them from the work they govern.
+
+> **Follow-up (specified, not yet implemented):** this chapter fixes the migration boundary as spec text. The actual conversion of the evaluators into `AGENTS.md`-backed agents, and the `core` repo that gives them a home, is follow-up work. Adopting this chapter changes no live skill.
+
+---
+
+## Related
+
+- [15-prompt-generator.md](./15-prompt-generator.md) — the deterministic compositor that produces an agent's per-invocation start-prompt.
+- [12-rollout.md](./12-rollout.md) — the rollout whose Evaluate phase is run by the migrated evaluators.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context rule that makes evaluators the natural first migration.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 15. Prompt Generator
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) |
+| Related | [13-orchestration.md](./13-orchestration.md), [12-rollout.md](./12-rollout.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the prompt-generator contract, the three placeholder modes, and the validation discipline. It documents the **real verified engine** (177/177 tests green, zero runtime dependencies).
+
+---
+
+## Purpose
+
+A sub-agent's starting point must be exactly reproducible. Non-deterministic prompt generation drifts a little with every unit, and after hundreds of units nobody can say which sub-agent started from which mission. The prompt generator makes the starting point reproducible: **same payload, same prompt, same hash, every time**. It is the producer of the deterministic initial prompt of an `AGENTS.md` agent (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
+
+The engine is deliberately small in code and maximal in validation, with no runtime dependencies.
+
+---
+
+## What It Is
+
+A **deterministic prompt compositor**: a template plus typed placeholders go in; a substituted prompt plus metadata come out. There is **no LLM call** — pure composition plus validation. Every finding at any stage is a **hard throw** with an AI-readable `PGEN-XXX` error code; there are no partial results, no empty strings, no torso prompts (a surviving `{{...}}` token fails the run), and no silent defaults.
+
+The metadata records, for the template and the composed prompt and each placeholder, the **length** and a **sha256 hash** — the hash is what makes a starting point auditably reproducible.
+
+---
+
+## API
+
+The module exposes one class with one public static method:
+
+```
+await PromptGenerator.generate( { template, placeholders, limits } ) → { prompt, metadata }
+```
+
+| Key | Type | Required | Description |
+|-----|------|----------|-------------|
+| `template` | object | Yes | `{ type: 'string', value }` or `{ type: 'file', filePath }`. Type `function` is not allowed for templates. The resolved template MUST contain at least one `{{KEY}}` token (key grammar `^[A-Z][A-Z0-9_]*$`). |
+| `placeholders` | object | Yes | One entry per template token, at least one entry. Each entry is an object with an explicit `type` — shorthand values are rejected. |
+| `limits` | object | No | Optional `{ maxPromptLength, maxPlaceholderValueLength }` (positive integers); omitted keys fall back to the exported defaults. |
+
+The return value is `{ prompt, metadata }`: `prompt` is the fully composed string, guaranteed free of unresolved `{{...}}` tokens and within the length limits; `metadata` carries a provenance record (`source`, `length`, `hash`, and `filePath` / `functionName` where applicable) for the template, the composed prompt, and every placeholder.
+
+The package entry additionally exports the frozen `ERROR_CODES` registry and the two default-limit constants. Validation runs as a fixed six-stage pipeline (payload validation → template resolution → bidirectional coverage check → per-placeholder source resolution → composition guard → torso check + length limits); any stage finding is a hard throw with a `PGEN-` code.
+
+---
+
+## Three Modes
+
+Placeholders resolve from one of three typed sources:
+
+| Mode | Source | Contract |
+|------|--------|----------|
+| `string` | A direct literal value | Non-empty, no null bytes |
+| `file` | A file read completely as UTF-8 | Missing, empty/whitespace-only, or invalidly encoded file is a hard error (`PGEN-020/021/052`) |
+| `function` | A callable invoked once with `args` as its single object parameter | MUST return **exactly** `{ status: true, text }` with a non-empty string `text` — shape, status, and text are each double-checked (`PGEN-031/032/033`) |
+
+### The anonymous-function mode is central
+
+The function mode is the central one: it lets a placeholder compute a dynamic value at composition time while staying inside the deterministic contract. The function — anonymous or named — receives `args` and MUST return exactly `{ status: true, text }`; a `false` status, a `'true'` string, a missing status, a wrong shape, or a non-string text each fail the run with a coded throw. This is how dynamic content enters a reproducible prompt without breaking determinism: the function is pure with respect to its `args`, so the same `args` yield the same `text` yield the same hash.
+
+---
+
+## Phase-Evaluator Use Case
+
+The phase-evaluator order is built with a function placeholder. A function loads the phase's PRD plan (JSON), filters by phase, and emits the concrete order — for example "call PRDs 3, 10, 15 and evaluate them". The function returns `{ status: true, text }` with that order as `text`, and the generator composes it into the start-prompt deterministically.
+
+> **Note on `buildStepPlan`:** this pattern is demonstrated as `buildStepPlan` in the engine's README and test fixtures, but it is **not** an importable `src/` export. The package entry exports only `PromptGenerator`, `ERROR_CODES`, and the two default-limit constants (verified). A consumer adopting the pattern MUST rebuild the function locally rather than importing it.
+
+---
+
+## Determinism and Agent Handover
+
+The generator is a pure function over its payload: no silent defaults, no LLM call, fully hashable. Because the composed prompt and every placeholder carry a sha256 in the metadata, a start-prompt is auditable — two runs with the same payload are provably identical.
+
+This is exactly what the agent layer needs: the generator produces the **deterministic initial prompt** of an `AGENTS.md` agent (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)). The `AGENTS.md` file holds the standing operating rules; the generated start-prompt is the per-invocation order. The starting point is essential — and the generator makes it reproducible.
+
+---
+
+## Related
+
+- [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the `AGENTS.md` agents whose per-invocation start-prompt this generator produces.
+- [13-orchestration.md](./13-orchestration.md) — the phase orchestration whose evaluator order is composed via the function-placeholder pattern.
+- [12-rollout.md](./12-rollout.md) — the rollout in which deterministic start-prompts drive sub-agent work.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 16. Git, Security and Versioning
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [15-prompt-generator.md](./15-prompt-generator.md) |
+| Related | [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [13-orchestration.md](./13-orchestration.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the deterministic git flow, the mandatory worktree cleanup, the `git-security` gate, and the issue rules. The worktree-cleanup enforcement is **specified here and partially present in the live skills** — the full enforcement is follow-up work (see below).
+
+---
+
+## Purpose
+
+After a rollout stop, the system has historically handed work over to an uncontrolled commit-and-push — "it runs out of control". This chapter fixes a **deterministic git flow** so that what happens to a repository after a stop is specified, not improvised. Security is a fixed part of that flow, not an afterthought.
+
+---
+
+## The Problem and the Fix
+
+The problem: when the rollout stops (overflow, hard blocker, user stop), the AI is left to commit and push on its own judgement, and the result is unpredictable — half-finished branches, surprise pushes, worktrees left on disk.
+
+The fix: the git flow is **deterministic**. Worktrees are the standard isolation mechanism; their resolution is mandatory; `git-security` is a fixed gate; and the issue rules are part of the same area. Commit is not push — a commit is an orientation marker for a future session, and a push is never executed automatically (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)).
+
+---
+
+## Worktrees with Mandatory Cleanup
+
+The standard flow uses **git worktrees**: the Lead creates a worktree per Worker (add), the Worker works in isolation, and the result is later committed and merged.
+
+The resolution and cleanup of a worktree is a **non-skippable part of the work** — no litter on disk. The rules:
+
+- After a successful merge, the worktree **MUST** be removed immediately: `git worktree remove <worktree-path>`. No zombie folder is left behind.
+- If `git worktree remove` fails (e.g. a dirty worktree), the Lead **MUST** escalate — a worktree is never simply left lying around.
+- On plan re-entry, a visibility audit checks all worktrees, unmerged branches, uncommitted trees, and stashes read-only for built-but-invisible work; clean fully-merged worktrees are removed (`git worktree prune` for stale administrative entries), and unmerged/uncommitted work is presented to the user with its content.
+
+The single-active-worktree invariant holds per phase: the Lead verifies the target worktree's branch before each Worker assignment and does not assign a Worker until the branch is correct (the stale guard, see [13-orchestration.md](./13-orchestration.md)).
+
+> **Follow-up (specified, not yet implemented):** the cleanup primitives are verified to exist in the live skills (`git worktree remove` in phase execution, `git worktree prune` in plan execution). This chapter raises them to an explicit, non-skippable rule. Bringing every skill fully in line with that rule is follow-up work, not part of this bootstrap.
+
+---
+
+## git-security as a Fixed Part
+
+`git-security` is a fixed, non-optional part of the git flow. It is a standalone security check that runs autonomously and reports only when it BLOCKS.
+
+It MUST run:
+
+- before any commit (a Worker runs `git-security` before every commit),
+- before any issue creation, and
+- as a finalization gate (see [11-quality-and-finalization.md](./11-quality-and-finalization.md)).
+
+It scans staged files and issue text for secrets (API keys, passwords, tokens — including mock credentials), absolute paths, `.env` files, and personal data. A finding returns BLOCKED and stops the commit or issue. Because every repository is treated as public by default, the check applies the public-context standard: only relative paths, no usernames or sensitive system paths, no real credentials in any `.example.env`.
+
+---
+
+## Issue Rules
+
+Issues are part of this same security-governed area. An issue **MUST** be:
+
+- **Neutral** — no private data, no personal information, no internal absolute paths.
+- **Memo-ID referenced** — the issue references its work package by memo ID (`M{NNN}-{PP}` for a phase), so the trail is searchable (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)).
+- **Free of secrets** — the same `git-security` scan that gates commits also scans issue text before creation.
+
+Work packages are addressed by ID rather than by absolute path; this reduces path exposure and keeps the public issue trail clean.
+
+---
+
+## Related
+
+- [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — the memo-ID scheme, the phase/issue/commit/PR mapping, and the commit-is-not-push rule.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — `git-security` as the tenth finalization gate.
+- [13-orchestration.md](./13-orchestration.md) — the worktree lifecycle, the stale guard, and the visibility audit on re-entry.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 17. Git Workflow and Memo IDs
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [16-git-security-versioning.md](./16-git-security-versioning.md) |
+| Related | [18-multidimensionality.md](./18-multidimensionality.md), [13-orchestration.md](./13-orchestration.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the memo-ID scheme and the phase/issue/commit/PR mapping. It documents the **canonical ID schema** of the real system.
+
+---
+
+## Purpose
+
+Git is used here as **backup and findability**, not as a deployment trigger. The memo ID gives every work package a stable identifier across three levels (memo → phase → PRD), and a fixed mapping ties that ID to issues, commits, and pull requests. The whole point is that one can search through the trail of work by following references.
+
+---
+
+## The Memo ID
+
+The canonical identifier for a work package is:
+
+```
+M{NNN}-{PP}-{RR}
+```
+
+| Segment | Meaning | Example |
+|---------|---------|---------|
+| `M` | Fixed prefix | `M` |
+| `{NNN}` | 3-digit memo number | `024` |
+| `{PP}` | 2-digit phase number | `05` |
+| `{RR}` | 2-digit PRD number within the phase | `02` |
+
+The ID addresses three reference levels:
+
+| Level | Format | Example | Meaning |
+|-------|--------|---------|---------|
+| PRD (full) | `M{NNN}-{PP}-{RR}` | `M024-05-02` | Memo 024, phase 5, PRD 2 |
+| Phase | `M{NNN}-{PP}` | `M024-05` | Memo 024, phase 5 |
+| Memo | `M{NNN}` | `M024` | Memo 024 |
+
+The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{NNN}-{PP}` with a leading zero; an old `PRD-{NNN}` becomes the full `M{NNN}-{PP}-{RR}`. Addressing work by ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](./16-git-security-versioning.md)).
+
+---
+
+## The Mapping
+
+A fixed mapping ties the ID to git artifacts:
+
+| Unit | Maps to | Rule |
+|------|---------|------|
+| 1 Phase | 1 Issue | Each phase has exactly one issue (`M{NNN}-{PP}` reference) |
+| 1 Commit | 1 PRD | A commit corresponds to one PRD |
+| 1 PR | 1 affected repo | One pull request per affected repository, not one per memo |
+| Branch | per memo | `memo-{NNN}-{slug}` |
+
+### Commit message
+
+A commit message follows:
+
+```
+M{NNN}-{PP}-{RR} {Text} #{Issue}
+```
+
+and **MUST** be ≤ 50 characters. The `#{Issue}` reference creates the automatic link back to the phase issue. The `M{NNN}-{PP}-{RR}` prefix makes every commit self-locating in the memo → phase → PRD trail.
+
+### Pull requests across repos
+
+Because one memo can coordinate several repositories (see [18-multidimensionality.md](./18-multidimensionality.md)), the unit of a pull request is the **affected repo**, not the memo. A memo touching three repos produces three pull requests, each on its own `memo-{NNN}-{slug}` branch in that repo.
+
+---
+
+## References for Findability
+
+The mapping exists so that the work can be searched through: from a commit one reaches the issue (`#{Issue}`), from the issue one reaches the phase (`M{NNN}-{PP}`), from the phase one reaches the memo (`M{NNN}`), and the memo's `context/` and `rollout/` hold the primary material. Every reference is a pointer one can follow — the same pointer principle that governs handovers (see [13-orchestration.md](./13-orchestration.md)).
+
+---
+
+## Commit Is Not Push
+
+A **commit is not a push.** A commit is backup and an orientation marker for a future session — it lets a later context reconstruct what was actually done. A push is a separate, deliberate act and is **never executed automatically**; pushing to GitHub is always a user-initiated step. This separation is what keeps the deterministic git flow (see [16-git-security-versioning.md](./16-git-security-versioning.md)) from "running out of control" after a rollout stop.
+
+---
+
+## Related
+
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow, worktree cleanup, `git-security` gate, and issue rules.
+- [18-multidimensionality.md](./18-multidimensionality.md) — one memo coordinating multiple repos, the reason a PR is per-repo.
+- [13-orchestration.md](./13-orchestration.md) — the rollout that produces the commits and the per-phase issues.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 18. Multidimensionality
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) |
+| Related | [16-git-security-versioning.md](./16-git-security-versioning.md), [13-orchestration.md](./13-orchestration.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the multi-repo coordination scope, the project-internal default, and the no-monorepo rule.
+
+---
+
+## Purpose
+
+A single memo can coordinate work across **multiple repositories** at once. This is the multidimensional property of the memo system: the memo is the planning unit, and a planning unit naturally spans every repository a feature touches. The bootstrap memo of this very specification is an example — it coordinates the spec repo, the org-profile repo, the website repo, the viewer repo, the prompt-generator repo, and the core repo simultaneously.
+
+This chapter fixes the recommended boundary of that coordination so the multi-repo reach does not blur the context it operates in.
+
+---
+
+## One Memo, Many Repos
+
+A memo **MAY** coordinate several repositories. Each affected repository receives its own pull request (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)); the memo's phases and PRDs span the repositories, and the dependency tree (`## Phase-Hints`) expresses which cross-repo work can run in parallel and which must wait.
+
+This is what lets a feature be planned once and executed coherently across its full footprint, instead of being split into disconnected per-repo plans that drift apart.
+
+---
+
+## Project-Internal Default
+
+Multi-repo coordination is **recommended only within the project and its repositories**. A memo lives in a project (`projects/{name}/.memo/`) and SHOULD coordinate only the repositories of that project (`projects/{name}/repos/`).
+
+- Crossing the project boundary — a memo coordinating repositories that belong to a different project — is **possible** but is the exception, not the default. Exceptions MAY be made when a genuine cross-project dependency exists.
+- The reason for the restriction is **context**: a memo that reaches across projects blurs the context it is reasoning in, and a blurred context is the precondition for contamination (see [13-orchestration.md](./13-orchestration.md) and the context-rot model). Keeping coordination project-internal keeps the context sharp.
+
+The system thinks in **projects** rather than in loose repositories: the project is the boundary of a coherent context, and the memo coordinates inside it.
+
+---
+
+## No Monorepo, One Domain per Repo
+
+The multi-repo model is explicitly **not** a monorepo. Each repository owns **one domain**.
+
+- A memo coordinating several repositories MUST NOT be read as a license to merge them into a monorepo. The repositories stay separate; the memo coordinates across the separation.
+- One domain per repository keeps each repository's purpose clear and its dependency surface small. A repository that accreted several domains would re-create exactly the context-blurring the project-internal default is meant to avoid.
+
+The coordination happens at the **memo** level (the planning unit), not at the repository level (the code unit). The memo is multidimensional; each repository remains single-domain.
+
+---
+
+## Related
+
+- [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — the per-repo pull request and the memo-ID trail that ties the repositories together.
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow applied independently in each affected repository.
+- [13-orchestration.md](./13-orchestration.md) — the phase orchestration that spans the repositories a memo coordinates.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+========================================
+# Workbench Sub-Spec
+========================================
+
+# 00. Workbench Sub-Spec — Overview
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | — (sub-spec entry point) |
+| Related | [01-project-structure.md](./01-project-structure.md), [02-requirements.md](./02-requirements.md), [03-tools-registry.md](./03-tools-registry.md), [04-strands.md](./04-strands.md), [05-wiki.md](./05-wiki.md), [06-trash.md](./06-trash.md) |
+
+> **Informative.** This document introduces the workbench sub-spec, its scope, and its independent versioning. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
+
+This is the entry point for the **workbench sub-spec** of the memo-init specification. The workbench is the meta-orchestration layer that holds all projects, their tools, and their shared conventions. This sub-spec documents the project-level organization — folder structures, requirements profiles, the tools registry, strands, the two wiki types, and the trash policy — that surrounds the per-memo workflow described in the core specification.
+
+---
+
+## The Workbench Is Its Own Sub-Spec
+
+The workbench is documented as an **independent sub-spec**, not as additional chapters of the core specification. The reason is one of concern separation:
+
+- The **core specification** (`spec/vX.Y.Z/00..18`) describes a single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. It reasons about *one memo at a time*.
+- The **workbench sub-spec** (this document) describes the *environment* in which memos live — how projects are laid out on disk, which tools and requirements a memo can pull in, how a single memo splits its work into named strands, and how knowledge and deleted material are kept. It reasons about *the project and the workbench around the memo*.
+
+Keeping these concerns in separate documents lets each evolve at its own pace.
+
+---
+
+## Independent Versioning
+
+This sub-spec is **versioned independently** from the core specification. A change to the workbench's project structure or its requirements model does not force a core-spec version bump, and a core-spec version bump does not retroactively re-version the workbench sub-spec.
+
+- The core specification lives under a version directory (`spec/vX.Y.Z/`); the workbench sub-spec lives under `spec/workbench/` and carries its own version line.
+- The authoritative, machine-readable version numbers for both the core spec and any sub-spec are recorded in `data/refs.manual.json`. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data (see core-spec chapter on versioning).
+- A reader landing on a workbench chapter should treat it as describing the workbench at its own version, cross-referencing the core spec only where a chapter explicitly does so.
+
+---
+
+## Thinking in Projects, Not Repositories
+
+The defining mental shift of the workbench is that the unit of organization is the **project**, not the repository.
+
+- A repository is a single-domain code unit. A project is a coherent context that may contain several repositories, plus its memos, its context documents, its scripts, and its tooling.
+- A memo lives inside a project and coordinates the project's repositories (see core-spec multidimensionality chapter). The project is therefore the boundary of a sharp, coherent context.
+- The workbench level does **not** develop code. It organizes, plans, and structures. Code development happens inside `projects/{name}/repos/`.
+
+This distinction is what [01-project-structure.md](./01-project-structure.md) makes concrete.
+
+---
+
+## What the Workbench Level Checks
+
+The workbench level has two recurring verification concerns, both about *the environment* rather than about *code correctness*:
+
+1. **Folder structures.** Each project under `projects/` is expected to follow the mandatory layout. The workbench audit walks the structure and reports missing or unexpected folders and files.
+2. **Tool reachability.** Globally linked command-line tools must resolve and respond. The workbench checks that the helpers it relies on are installed and reachable before a memo assumes them.
+
+These checks are descriptive of the real audit performed at the workbench level; the normative details of the structure being checked live in [01-project-structure.md](./01-project-structure.md).
+
+---
+
+## Global Helpers
+
+The workbench exposes a small set of **global** command-line helpers that are available to every project. Two that are specific to the workbench level:
+
+| Helper | Role |
+|--------|------|
+| `get-sheet` | Retrieve data from external spreadsheets for use inside a project. |
+| `depwatch` | Supply-chain security watchdog — looks up and scans dependencies before they are installed. |
+
+These helpers are global because they serve cross-project concerns (data ingestion, dependency safety) rather than the logic of any single project. A project **MAY** rely on a global helper being reachable; the workbench tool-reachability check exists precisely so that reliance is verified rather than assumed.
+
+---
+
+## Sub-Spec Document Index
+
+| Document | Title | Mode |
+|----------|-------|------|
+| `00-overview.md` | Workbench Sub-Spec — Overview | Informative |
+| `01-project-structure.md` | Project Structure & Local Guarantee | Normative |
+| `02-requirements.md` | Requirements Profiles (`.memo/requirements/`) | Normative |
+| `03-tools-registry.md` | Tools Registry (`.memo/tools/`) | Normative (Recommendation) |
+| `04-strands.md` | Strands — One Memo, Many Topics | Normative |
+| `05-wiki.md` | Wiki Types — Project Wiki & Memo Wiki | Normative |
+| `06-trash.md` | Trash — No Deletion, Only `.trash/` | Normative |
+
+---
+
+## Related
+
+- [01-project-structure.md](./01-project-structure.md) — the mandatory project layout and the local guarantee.
+- [02-requirements.md](./02-requirements.md) — requirements profiles as data.
+- [03-tools-registry.md](./03-tools-registry.md) — the per-memo tools registry.
+- [04-strands.md](./04-strands.md) — splitting one memo into named strands.
+- [05-wiki.md](./05-wiki.md) — project wiki versus the timeline-aware memo wiki.
+- [06-trash.md](./06-trash.md) — the no-deletion trash policy.
+
+---
+
+# 01. Project Structure & Local Guarantee
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md) |
+| Related | [02-requirements.md](./02-requirements.md), [03-tools-registry.md](./03-tools-registry.md), [04-strands.md](./04-strands.md), [06-trash.md](./06-trash.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
+
+This chapter is **normative** for the mandatory project layout, the local-only root, the single egress point, and the local guarantee.
+
+---
+
+## Purpose
+
+Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. A predictable layout is what lets the workbench audit check structure mechanically (see [00-overview.md](./00-overview.md)) and what lets a memo assume where its context, repositories, and scripts are without searching.
+
+---
+
+## The `projects/{name}/` Structure
+
+A project directory **MUST** contain the following folders and files. Folder names are load-bearing identifiers and are reproduced verbatim.
+
+| Path | Required | Purpose |
+|------|----------|---------|
+| `.claude/` | Yes | Claude Code settings and project-local skills. |
+| `.memo/` | Yes | Memos and their data siblings (`requirements/`, `tools/`); see [02-requirements.md](./02-requirements.md) and [03-tools-registry.md](./03-tools-registry.md). |
+| `.trash/` | Yes | Recoverable trash; deletion target (see [06-trash.md](./06-trash.md)). |
+| `context/` | Yes | Technical documents, specifications, deep-research output. |
+| `repos/` | Yes | The project's git repositories (one domain per repository). |
+| `scripts/` | Yes | `dev.sh`, `cleanup.sh`, `health-check.sh`. |
+| `proofs/` | Yes | Proofs captured when a view changes. |
+| `snapshots/` | Yes | Application snapshots. |
+| `ABOUT.md` | Yes | Project documentation for humans. |
+| `CLAUDE.md` | Yes | The runbook for the AI. |
+| `.playwright/` | Yes | Browser-automation session, scripts, and output. |
+| `.wiki/` | Optional | LLM-generated project wiki (see [05-wiki.md](./05-wiki.md)). |
+
+A project **MUST NOT** omit a required folder. A project **MAY** add the optional `.wiki/`. The workbench audit reports any missing required path as a structural finding and any unexpected top-level entry for review.
+
+Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (the F4=C layout; see [02-requirements.md](./02-requirements.md)).
+
+---
+
+## The Root Is Always Local
+
+The workbench root and every project root are **local-only**. There is **no** git repository at the project root and **none** under `.memo/`.
+
+- The absence of a git folder at these levels is a **structural** guarantee, not merely a rule a contributor is asked to follow. Material that has no enclosing repository cannot be pushed.
+- Memos, requirements profiles, tools registries, context documents, proofs, and snapshots therefore stay on the developer's machine by construction. They **MUST NOT** be moved under a tracked repository at the project or `.memo/` level.
+- Code that is meant to be shared lives in `repos/`, where each repository is its own git unit. Everything outside `repos/` stays local.
+
+---
+
+## The Only Egress Point Is GitHub Issues
+
+A project's only sanctioned channel from the local environment to the outside world — besides the code in `repos/` — is **GitHub Issues**.
+
+- When information needs to leave the local context (to coordinate work, file a bug, or reference a phase), it leaves as a GitHub Issue, written in neutral, public-safe language and referenced by memo ID.
+- Issue text **MUST NOT** carry private data, absolute machine paths, secrets, or personal information. The git-security check applies to issue text exactly as it applies to staged code (see the core-spec git-security chapter).
+- This single, narrow egress point is what keeps the local guarantee meaningful: there is one well-understood door, and it is guarded.
+
+---
+
+## The Local Guarantee
+
+Taken together, the three properties above form the **local guarantee**:
+
+1. The root is local (no enclosing repository) — *structural*.
+2. The only egress is GitHub Issues — *narrow and guarded*.
+3. Everything shareable is isolated in `repos/` — *explicit*.
+
+A project **MUST** preserve all three. The guarantee is the precondition for working with sensitive, half-formed, or personal material in memos and research without risk of accidental publication. Breaking any one of the three (for example, by initializing a repository at the project root) voids the guarantee and **MUST NOT** be done.
+
+---
+
+## Related
+
+- [00-overview.md](./00-overview.md) — projects-not-repositories framing and the workbench-level checks.
+- [02-requirements.md](./02-requirements.md) — the `requirements/` sibling under `.memo/`.
+- [03-tools-registry.md](./03-tools-registry.md) — the `tools/` sibling under `.memo/`.
+- [06-trash.md](./06-trash.md) — why deletion routes through `.trash/`.
+
+---
+
+# 02. Requirements Profiles (`.memo/requirements/`)
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [01-project-structure.md](./01-project-structure.md) |
+| Related | [03-tools-registry.md](./03-tools-registry.md), [04-strands.md](./04-strands.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
+
+This chapter is **normative** for the requirements-profile location, the two viewpoints, the global/project split, dynamic pulling, the finalization check, and self-generated quality gates.
+
+---
+
+## Problem
+
+Today, requirements live only as **prose** scattered across the global rules file and individual skills. Prose requirements are unspecific and not reproducible: there is no machine-readable record of, for example, which formatting rules apply to a particular programming language or which repository conventions a given repository must satisfy. Two memos touching the same language can apply the rules inconsistently because there is nothing authoritative to pull from.
+
+---
+
+## Solution — Requirements Profiles as Data
+
+A project **SHOULD** express its requirements as **data** under `.memo/requirements/`. A requirements profile is a structured file (JSON or YAML) that names a set of requirements and the viewpoint they apply to. Because it is data, it can be pulled dynamically, diffed, and checked mechanically — unlike prose.
+
+### Location (F4=C)
+
+Requirements profiles live in `.memo/requirements/`, a **sibling** of the memos under `.memo/` (the F4=C layout). The memos themselves remain directly under `.memo/`; the `requirements/` folder sits alongside them, not inside any single memo. This keeps requirements shared across all memos of the project rather than trapped in one.
+
+---
+
+## Two Viewpoints
+
+A requirements profile **MUST** declare a **viewpoint** — the axis along which its requirements apply. There are two viewpoints:
+
+| Viewpoint | Applies to | Example requirement |
+|-----------|------------|---------------------|
+| `programming-language` | A specific language used in the project | 4-space indentation, no semicolons, `.mjs` ES modules for Node.js |
+| `repo` | A specific repository or repository class | README must exist, MIT license, CI green on `main` |
+
+A profile **MUST NOT** mix viewpoints in a single profile; each profile is scoped to one viewpoint so that a consumer can pull exactly the relevant set.
+
+---
+
+## Global and Project-Specific
+
+Requirements exist at two levels:
+
+- **Global** profiles express requirements that apply across every project (for example, the workbench-wide Node.js formatting rules). They originate from the global rules and are the shared baseline.
+- **Project-specific** profiles live in the project's own `.memo/requirements/` and express requirements unique to that project. A project-specific profile **MAY** extend or tighten a global one; it **MUST NOT** silently weaken a global rule without an explicit, recorded override.
+
+When both levels apply, the consumer reads the global baseline and then the project-specific profile on top.
+
+---
+
+## Dynamic Pulling and the Finalization Check
+
+Requirements are **pulled dynamically** rather than copied into each memo:
+
+- During memo authoring, the relevant profiles (by language and by repository in scope) are read from `.memo/requirements/` at the time they are needed, so a memo always sees the current requirements rather than a stale snapshot.
+- At **finalization**, the applicable requirements profiles **MUST** be checked against the memo. A memo that violates an applicable requirement **MUST NOT** pass finalization until the violation is resolved or an explicit override is recorded. This ties the data-level requirements into the finalization gate (see the core-spec quality-and-finalization chapter).
+
+---
+
+## Self-Generated Quality Gates
+
+A requirements profile **MAY** generate its **own** quality gates. When a profile declares a checkable requirement, that requirement can be surfaced as an additional gate that finalization runs alongside the standard gates (see the core-spec quality-and-finalization chapter). This lets a project add enforceable, project-specific checks without modifying the core gate set: the data declares the rule, and the rule becomes a gate.
+
+The wiring of profile-declared requirements into live finalization gates is specified here as the intended behavior; the corresponding implementation in the toolkit skills is follow-up work, consistent with the core-spec's specified-but-not-yet-implemented convention.
+
+---
+
+## Example Profile Shape
+
+The following is an **illustrative**, non-normative example of a `programming-language` profile. The exact field set is fixed by the requirements schema in the spec `data/` folder; this example only shows the intent.
+
+```yaml
+viewpoint: programming-language
+target: nodejs
+version: ">=22"
+requirements:
+  - id: REQ-NODE-FMT-001
+    rule: "4-space indentation, no semicolons"
+    severity: error
+    gate: true
+  - id: REQ-NODE-MOD-001
+    rule: "ES modules only, .mjs extension"
+    severity: error
+    gate: true
+  - id: REQ-NODE-LOOP-001
+    rule: "no for/while loops; use array methods"
+    severity: warning
+    gate: false
+```
+
+```json
+{
+  "viewpoint": "repo",
+  "target": "spec",
+  "requirements": [
+    { "id": "REQ-REPO-LIC-001", "rule": "MIT LICENSE present", "severity": "error", "gate": true },
+    { "id": "REQ-REPO-CI-001", "rule": "CI green on main", "severity": "warning", "gate": true }
+  ]
+}
+```
+
+A profile that sets `gate: true` on a requirement asks finalization to enforce it as a quality gate; `gate: false` makes the requirement advisory.
+
+---
+
+## Related
+
+- [01-project-structure.md](./01-project-structure.md) — the `.memo/requirements/` location as a sibling of the memos.
+- [03-tools-registry.md](./03-tools-registry.md) — the parallel data folder describing available tools.
+- [04-strands.md](./04-strands.md) — per-strand requirements draw from these profiles.
+- [00-overview.md](./00-overview.md) — sub-spec scope and independent versioning.
+
+---
+
+# 03. Tools Registry (`.memo/tools/`)
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [01-project-structure.md](./01-project-structure.md) |
+| Related | [02-requirements.md](./02-requirements.md), [04-strands.md](./04-strands.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
+
+This chapter is **normative** for the tools-registry location and the checklist mechanic. The registry itself is a **RECOMMENDATION**, not a requirement.
+
+---
+
+## Problem
+
+There is currently no per-memo record of **which** skills or tools each phase of a memo needs. A memo lists phases and PRDs, but the tools those phases assume are implicit, scattered across the author's memory and the skill catalog. When a rollout starts, missing or unreachable tools surface late instead of being noticed at planning time.
+
+---
+
+## Solution — A Registry of Available Tools
+
+A project **MAY** maintain a **tools registry** under `.memo/tools/`. The registry **describes the available tools** — their names, what they do, and what a memo needs to know to decide whether a phase depends on them. Like the requirements profiles, the registry is data under `.memo/`, sitting as a sibling of the memos (see [01-project-structure.md](./01-project-structure.md)).
+
+The registry is a **descriptive index**, not a runtime. It records *that* a tool exists and *what* it is for, so a memo author can consult it while planning.
+
+---
+
+## Recommendation, Not a Requirement
+
+The tools registry is a **RECOMMENDATION**. A project **SHOULD** maintain it because it improves planning, but a project **MAY** omit it, and a memo **MUST NOT** be blocked solely because no tools registry is present. This is the deliberate difference from the requirements profiles of [02-requirements.md](./02-requirements.md), which are enforced at finalization: the tools registry aids planning but does not gate it.
+
+---
+
+## The Checklist Mechanic
+
+The registry's value is realized as a **checklist during memo creation**:
+
+- While a memo is being authored, the author consults the registry and, for each phase, notes which registered tools the phase depends on. This turns "which tools does this work need?" from an implicit assumption into an explicit, reviewable checklist.
+- The checklist makes tool reachability a planning-time concern. Combined with the workbench-level tool-reachability check (see [00-overview.md](./00-overview.md)), a memo can confirm its required tools resolve *before* the rollout assumes them.
+- Per-strand tool selections (see [04-strands.md](./04-strands.md)) draw from this same registry, so each strand can declare the tools it needs.
+
+---
+
+## Do Not Copy Skills Into the Registry
+
+The registry **MUST NOT** contain copies of skills, skill bodies, or tool source. It records **references and descriptions** only.
+
+- Copying a skill into the registry would create a second, drifting copy of something that already has a single source of truth (the skills core). The registry points at tools; it does not embed them.
+- A registry entry **SHOULD** be a short, stable descriptor: name, purpose, and where the tool actually lives. When the underlying tool changes, the descriptor — not a duplicated body — is what is updated.
+
+---
+
+## Related
+
+- [01-project-structure.md](./01-project-structure.md) — the `.memo/tools/` location.
+- [02-requirements.md](./02-requirements.md) — the enforced data sibling, contrasted with this recommended one.
+- [04-strands.md](./04-strands.md) — strands draw per-strand tools from this registry.
+- [00-overview.md](./00-overview.md) — the workbench-level tool-reachability check.
+
+---
+
+# 04. Strands — One Memo, Many Topics
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [02-requirements.md](./02-requirements.md), [03-tools-registry.md](./03-tools-registry.md) |
+| Related | [01-project-structure.md](./01-project-structure.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
+
+This chapter is **normative** for the strand concept, per-strand requirements and tools, and the rule that a strand is a tag rather than part of the numeric memo ID (F7=B).
+
+---
+
+## Purpose
+
+A single memo frequently works **several distinct topics** across its phases. The bootstrap memo of this specification, for example, simultaneously advances a strategy/verification topic, a spec-authoring topic, a workbench sub-spec topic, and a repository-bootstrap topic. Treating all of that as one undifferentiated stream of phases loses the structure: different topics need different requirements and different tools.
+
+A **strand** names one such topic inside a memo, so the memo's work can be reasoned about per topic without splitting the memo itself.
+
+---
+
+## What a Strand Is
+
+A strand is a **named topic** that a memo works across one or more phases.
+
+- A memo **MAY** declare several strands. A memo with a single, cohesive topic **MAY** have just one (implicit) strand.
+- Each strand **SHOULD** carry its own **requirements** (drawn from the requirements profiles of [02-requirements.md](./02-requirements.md)) and its own **tools** (drawn from the tools registry of [03-tools-registry.md](./03-tools-registry.md)). A spec-authoring strand needs documentation requirements and doc tools; a code-bootstrap strand needs the language formatting profile and the test tools. Declaring these per strand keeps each topic's expectations sharp.
+- Strands give a vocabulary for talking about *parts* of a memo. A phase belongs to a strand; a strand spans the phases that advance its topic.
+
+---
+
+## Example Strands
+
+The strands of this specification's own bootstrap memo are the canonical example:
+
+| Strand | Topic |
+|--------|-------|
+| A | Strategy / Verification |
+| B | Spec-Authoring |
+| C | Workbench Sub-Spec |
+| D | Bootstrap |
+
+Strand A establishes the verified factual base and the strategy. Strand B authors the core specification chapters. Strand C authors this workbench sub-spec. Strand D bootstraps the organization and its repositories. Each strand has different requirements (documentation rules for B and C; repository and code rules for D) and different tools.
+
+---
+
+## A Strand Is a Tag, Not Part of the Memo ID (F7=B)
+
+A strand is a **tag or label**, not a component of the numeric memo identifier.
+
+- The memo ID stays **stable** and numeric (the `M{NNN}-{PP}-{RR}` form defined in the core-spec git-workflow chapter). A strand **MUST NOT** be encoded into the numeric memo ID, and adding or renaming a strand **MUST NOT** change the memo's ID.
+- A strand is attached as a label — for example, "strand C" or a short strand name — and used to group phases, requirements, and tools. Because it is only a label, strands can be added, renamed, or merged as understanding of the memo's topics evolves, without disturbing any identifier that other artifacts (commits, issues, branches) reference.
+- This is the F7=B decision: the strand provides organizational grouping; the numeric ID provides stable identity. The two concerns are kept separate.
+
+---
+
+## Related
+
+- [02-requirements.md](./02-requirements.md) — per-strand requirements draw from these profiles.
+- [03-tools-registry.md](./03-tools-registry.md) — per-strand tools draw from this registry.
+- [01-project-structure.md](./01-project-structure.md) — strands live inside a memo under `.memo/`.
+- [00-overview.md](./00-overview.md) — sub-spec scope.
+
+---
+
+# 05. Wiki Types — Project Wiki & Memo Wiki
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [01-project-structure.md](./01-project-structure.md) |
+| Related | [06-trash.md](./06-trash.md), [04-strands.md](./04-strands.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
+
+This chapter is **normative** for the distinction between the two wiki types and for the memo-ID stamping that makes the memo wiki timeline-aware.
+
+---
+
+## Purpose
+
+A project accumulates knowledge that outlives any single memo. That knowledge needs a home that is more durable than a memo revision but less rigid than the specification. The workbench recognizes **two kinds of wiki**, each with a different relationship to time, and they **MUST NOT** be conflated.
+
+---
+
+## The Project Wiki (`.wiki/`)
+
+The **project wiki** is the LLM-generated knowledge base under `.wiki/` (see [01-project-structure.md](./01-project-structure.md)). It is built and maintained from the project's context documents and finalized memos.
+
+- The project wiki **assumes its data is current.** A page states what is true now; it does not, by itself, carry the timeline that would let a reader judge whether a statement has since gone stale.
+- It is optimized for **answering questions** about the project as it stands. A query against the project wiki returns the present-tense understanding.
+- The project wiki is **local-only** and is never pushed (consistent with the local guarantee of [01-project-structure.md](./01-project-structure.md)).
+
+This currency assumption is the project wiki's strength (simple, present-tense answers) and its limitation (staleness is not self-evident).
+
+---
+
+## The Memo Wiki (NEW) — Timeline-Aware
+
+The **memo wiki** is the new, timeline-aware counterpart. Where the project wiki assumes currency, the memo wiki makes time **explicit**.
+
+- Every fact recorded in the memo wiki **MUST** carry the **memo ID** of the memo it originated from (the `M{NNN}-...` identifier; see the core-spec git-workflow chapter and [04-strands.md](./04-strands.md)).
+- Because each fact is stamped with its originating memo, **staleness is detectable.** A reader can see which memo a statement came from, locate later memos that touched the same subject, and judge whether the statement still holds. A fact whose memo has been superseded is visibly suspect rather than silently wrong.
+- The memo wiki is therefore a **timeline of knowledge** keyed by memo. It does not assume currency; it records provenance and lets currency be **inferred** from the memo timeline.
+
+A memo-wiki entry **MUST NOT** record a fact without its originating memo ID — an unstamped fact would reintroduce exactly the silent-staleness problem the memo wiki exists to solve.
+
+---
+
+## When to Use Which
+
+| Need | Wiki |
+|------|------|
+| A present-tense answer about the project as it stands | Project wiki (`.wiki/`) |
+| A fact with provenance, where staleness must be detectable | Memo wiki |
+| Knowledge that must be cross-checked against the memo timeline | Memo wiki |
+
+The two coexist: the project wiki gives fast present-tense answers; the memo wiki gives auditable, time-stamped provenance. A project **SHOULD** keep them distinct so the currency assumption of one never silently contaminates the provenance discipline of the other.
+
+---
+
+## Related
+
+- [01-project-structure.md](./01-project-structure.md) — the optional `.wiki/` folder and the local guarantee.
+- [06-trash.md](./06-trash.md) — superseded wiki material is trashed, not deleted.
+- [04-strands.md](./04-strands.md) — strands and memo IDs that the memo wiki stamps onto facts.
+- [00-overview.md](./00-overview.md) — sub-spec scope.
+
+---
+
+# 06. Trash — No Deletion, Only `.trash/`
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [01-project-structure.md](./01-project-structure.md) |
+| Related | [05-wiki.md](./05-wiki.md), [00-overview.md](./00-overview.md) |
+
+> Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
+
+This chapter is **normative** for the no-deletion policy, the `.trash/` target, and the prohibition on destructive removal.
+
+---
+
+## Purpose
+
+Work in a project is exploratory and often half-formed. Material that looks discardable today may be needed tomorrow, and an irreversible deletion in an autonomous loop is a class of mistake that cannot be undone. The workbench therefore replaces deletion with **recoverable trashing**.
+
+---
+
+## No Deletion — Only `.trash/`
+
+Removing material from a project **MUST** route through the project-local `.trash/` folder (see [01-project-structure.md](./01-project-structure.md)).
+
+- "Removing" a file or folder means **moving** it into `.trash/`, not erasing it. The material remains on disk, recoverable, until a human decides otherwise.
+- `.trash/` is **manual**. It is emptied by a person, deliberately — never automatically by a script, a cleanup routine, or an autonomous loop. Automatic emptying would re-create the irreversible-loss risk the policy exists to remove.
+- Because `.trash/` lives inside the local project (under the local guarantee of [01-project-structure.md](./01-project-structure.md)), trashed material never leaves the machine and is never pushed.
+
+Superseded knowledge — for example, an outdated wiki page (see [05-wiki.md](./05-wiki.md)) — is trashed, not deleted, so its provenance can still be recovered if needed.
+
+---
+
+## `rm -rf` Is Forbidden
+
+Destructive recursive removal is **forbidden**.
+
+- `rm -rf` (and equivalent destructive, recursive, irreversible removals) **MUST NOT** be used on project material. Such a command erases without recovery and bypasses the `.trash/` safety net entirely.
+- Tooling that needs to "delete" **MUST** instead move the target into `.trash/` (a timestamped move), preserving recoverability.
+- This prohibition is absolute for project content: there is no scenario in normal project work that requires an irreversible recursive delete, because the recoverable move accomplishes the same intent safely.
+
+---
+
+## Related
+
+- [01-project-structure.md](./01-project-structure.md) — the `.trash/` folder and the local guarantee that contains it.
+- [05-wiki.md](./05-wiki.md) — superseded wiki pages are trashed, not deleted.
+- [00-overview.md](./00-overview.md) — sub-spec scope.
