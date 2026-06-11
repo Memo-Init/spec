@@ -140,6 +140,7 @@ The six repositories are bootstrapped from an existing public reference organiza
 | `16-git-security-versioning.md` | Security, Git Flow & Versioning | Normative |
 | `17-git-workflow-and-ids.md` | Git Workflow & Memo IDs | Normative |
 | `18-multidimensionality.md` | Multidimensionality — One Memo, Many Repos | Normative |
+| `19-internal-vs-external-communication.md` | Internal vs. External Communication | Normative |
 
 A separate, independently versioned **workbench/** sub-spec documents the project-level organization (project structure, requirements profiles, tools registry, strands, wiki, trash). See [README.md](./README.md) for the full reading order and the pointer to the sub-spec.
 

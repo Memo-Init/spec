@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-10T23:29:45.902Z",
+    "generated_at": "2026-06-11T03:44:50.689Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -192,6 +192,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "specification"
+        },
+        {
+            "filename": "19-internal-vs-external-communication.md",
+            "slug": "internal-vs-external-communication",
+            "title": "Internal vs. External Communication",
+            "description": "This chapter is **normative** for the boundary between inward-facing inputs and outward-facing artifacts, and for the review that an artifact MUST pass before it is published.",
+            "order": 19,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "specification"
         }
     ],
     "workbench": {
@@ -269,10 +279,10 @@
         ]
     },
     "stats": {
-        "total_files": 26,
-        "core_files": 19,
+        "total_files": 27,
+        "core_files": 20,
         "workbench_files": 7,
-        "normative_files": 23,
+        "normative_files": 24,
         "informative_files": 3
     }
 }

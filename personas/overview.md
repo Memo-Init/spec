@@ -2,7 +2,7 @@
 
 This document introduces the memo-init persona system and consolidates the three personas, shows their relationships at a glance, and makes the key trade-off decisions explicit. It is an **internal calibration tool**: persona names never appear on the website or in the spec — only navigation labels do. Use this document when a concrete question (landing copy, docs structure, trust signals, entry points) has to be weighed between persona needs.
 
-The personas are derived directly from the memo's own motivation (Memo 001, Kap 1): a solo engineer keeping his methodology as personal IP, publishing it to secure authorship, with FlowMCP as the role model for what a clean public org looks like. Three personas cover the real audience — the author who runs the system, the engineer who adopts the method, and the leader who evaluates it for a team. (Memo 001, Kap 23 specifies 3–5; three strong ones are defined here.)
+The personas are derived directly from the memo's own motivation (Memo 001, Kap 1): a solo engineer keeping his methodology as personal IP, publishing it to secure authorship, modeled on a clean, well-run public org as the structural benchmark. Three personas cover the real audience — the author who runs the system, the engineer who adopts the method, and the leader who evaluates it for a team. (Memo 001, Kap 23 specifies 3–5; three strong ones are defined here.)
 
 ---
 

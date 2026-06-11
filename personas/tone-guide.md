@@ -1,7 +1,7 @@
 # memo-init Tone-Guide
 
 > **Internal calibration document.** A lens for every piece of content (Hero, Overview, Philosophy, Memo-SOP, Input, Strategies, Quality, Rollout, Orchestration, Agents, Prompt-Generator, Git & Security, Workbench, Spec chapters).
-> Derived from the memo's own evidence discipline (Memo 001: FAKT / ANNAHME / VERMUTUNG) and its honest framing of estimates and deviations. FlowMCP's tone-guide is the structural role model.
+> Derived from the memo's own evidence discipline (Memo 001: FAKT / ANNAHME / VERMUTUNG) and its honest framing of estimates and deviations. A prior project's tone-guide serves as the structural model.
 
 ## Base tonality
 
@@ -51,7 +51,7 @@ The memo system's signature is honesty about what is known. This carries directl
 | "For Decision Makers" | "Overview" (Anders finds it himself) |
 | "For Developers" | "Philosophy" + "Rollout" (Priya finds it herself) |
 | "~50% valid" (stated as fact) | "estimated ~40–60%, an estimate, not measured" |
-| "Production-grade, battle-tested" (no evidence) | "Run daily across ~138 memos on FlowMCP" — a concrete, verifiable claim |
+| "Production-grade, battle-tested" (no evidence) | "Run daily across ~138 memos in production use" — a concrete, verifiable claim |
 | "Set it and forget it" | "Hands-off after finalization, with verify/rollback on risky live-system steps" |
 | API key hardcoded in a snippet (`api_key="sk-..."`) | `api_key=process.env.X` + a note; never a real or mock secret |
 
@@ -83,4 +83,4 @@ Rationale: TD reads better on all screen sizes, especially mobile. LR diagrams c
 
 ## Audit trail
 
-Source: Memo 001 REV-04 (evidence discipline, scope-separation rule, honest framing of estimates/deviations). Structural role model: `flowmcp-spec/personas/tone-guide.md`.
+Source: Memo 001 REV-04 (evidence discipline, scope-separation rule, honest framing of estimates/deviations). Structural model: an earlier project's persona tone-guide.

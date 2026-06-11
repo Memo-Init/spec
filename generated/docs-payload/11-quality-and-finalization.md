@@ -6,7 +6,7 @@ spec_file: "11-quality-and-finalization.md"
 order: 11
 section: "Specification"
 normative: true
-generated_at: "2026-06-11T03:38:25.870Z"
+generated_at: "2026-06-11T03:44:50.158Z"
 generated_from: "spec/v0.1.0/11-quality-and-finalization.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/11-quality-and-finalization.md."

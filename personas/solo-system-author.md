@@ -12,7 +12,7 @@
 | Age | 38 |
 | Gender | male |
 | Location | Berlin, Germany (originally from a small town in southern Germany) |
-| Profession | Independent software engineer / system author — works solo on a personal workbench spanning many projects (FlowMCP and others) |
+| Profession | Independent software engineer / system author — works solo on a personal workbench spanning many independent projects |
 | Education | Diploma in computer science, mostly self-taught beyond the basics; long autodidact streak |
 | Languages | German (native), English (fluent, all code and docs) |
 
@@ -20,7 +20,7 @@
 
 ## Biography
 
-Aaron has spent years building tools instead of just using them — CLIs, schema engines, a memo-driven planning system layered on top of an AI coding agent. He works alone on a single workbench that holds dozens of projects, and over roughly 138 memos on FlowMCP he hardened a personal method: dictate a long voice transcript, let it become a structured memo, finalize it behind quality gates, then roll it out hands-off. The method is not academic to him — it is how he ships every day. He is now facing a possible employment situation, and the realization that his methodology is valuable IP made the next step obvious: publish it. A public org, a public RFC-style spec, and a website secure authorship and make the system explainable without anyone needing to know him personally. memo-init is that publication, and FlowMCP is its role model for what a clean public org looks like.
+Aaron has spent years building tools instead of just using them — CLIs, schema engines, a memo-driven planning system layered on top of an AI coding agent. He works alone on a single workbench that holds dozens of projects, and over ~138 memos across his earlier projects he hardened a personal method: dictate a long voice transcript, let it become a structured memo, finalize it behind quality gates, then roll it out hands-off. The method is not academic to him — it is how he ships every day. He is now facing a possible employment situation, and the realization that his methodology is valuable IP made the next step obvious: publish it. A public org, a public RFC-style spec, and a website secure authorship and make the system explainable without anyone needing to know him personally. memo-init is that publication, and it follows a clean, well-run public org as its structural model.
 
 ---
 
@@ -102,7 +102,7 @@ Aaron has spent years building tools instead of just using them — CLIs, schema
 2. Evidence discipline: FAKT / ANNAHME / VERMUTUNG tags that force honesty about what is known.
 3. Deterministic artifacts — the prompt generator producing a hashable, LLM-free start prompt.
 4. A spec that is versioned per directory and never hardcodes the active version.
-5. A clean public org modeled on FlowMCP, understandable without knowing the author.
+5. A clean, well-run public org as the structural model, understandable without knowing the author.
 
 ---
 

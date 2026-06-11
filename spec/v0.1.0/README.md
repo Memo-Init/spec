@@ -8,7 +8,7 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 
 ---
 
-## Core Chapters (00–18)
+## Core Chapters (00–19)
 
 | Document | Title | Mode |
 |----------|-------|------|
@@ -31,8 +31,9 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 | [16-git-security-versioning.md](./16-git-security-versioning.md) | Security, Git Flow & Versioning | Normative |
 | [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) | Git Workflow & Memo IDs | Normative |
 | [18-multidimensionality.md](./18-multidimensionality.md) | Multidimensionality — One Memo, Many Repos | Normative |
+| [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) | Internal vs. External Communication | Normative |
 
-> Chapters 09–18 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer.
+> Chapters 09–19 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer.
 
 ---
 
@@ -47,9 +48,9 @@ For a first read, follow the numeric order — the chapters are arranged so each
 5. **Hygiene & research** — [09-contamination-context-handover.md](./09-contamination-context-handover.md), [10-proactive-research.md](./10-proactive-research.md).
 6. **Finalize & roll out** — [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md).
 7. **Substrate** — [14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [15-prompt-generator.md](./15-prompt-generator.md).
-8. **Git & boundaries** — [16-git-security-versioning.md](./16-git-security-versioning.md), [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [18-multidimensionality.md](./18-multidimensionality.md).
+8. **Git & boundaries** — [16-git-security-versioning.md](./16-git-security-versioning.md), [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [18-multidimensionality.md](./18-multidimensionality.md), [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md).
 
-Readers who only need the rules of authoring a memo can read 03–08; readers building tooling against the system should additionally read 11–17.
+Readers who only need the rules of authoring a memo can read 03–08; readers building tooling against the system should additionally read 11–19.
 
 ---
 

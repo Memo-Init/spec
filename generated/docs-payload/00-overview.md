@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-06-11T03:38:25.870Z"
+generated_at: "2026-06-11T03:44:50.158Z"
 generated_from: "spec/v0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/00-overview.md."
@@ -147,6 +147,7 @@ The six repositories are bootstrapped from an existing public reference organiza
 | `16-git-security-versioning.md` | Security, Git Flow & Versioning | Normative |
 | `17-git-workflow-and-ids.md` | Git Workflow & Memo IDs | Normative |
 | `18-multidimensionality.md` | Multidimensionality — One Memo, Many Repos | Normative |
+| `19-internal-vs-external-communication.md` | Internal vs. External Communication | Normative |
 
 A separate, independently versioned **workbench/** sub-spec documents the project-level organization (project structure, requirements profiles, tools registry, strands, wiki, trash). See [README.md](./README.md) for the full reading order and the pointer to the sub-spec.
 
