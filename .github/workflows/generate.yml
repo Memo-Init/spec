@@ -22,7 +22,7 @@ jobs:
         with:
           # PAT so the artifact push re-triggers the notify-* workflows
           # (a push made with the default GITHUB_TOKEN does not trigger other workflows).
-          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          token: ${{ secrets.PUBLISH_SPEC_CHANGES }}
 
       - name: Use Node.js
         uses: actions/setup-node@v4

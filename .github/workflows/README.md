@@ -16,16 +16,16 @@ spec (push to spec/** or data/refs.*)
 | `notify-docs-site.yml` | push to `spec/**`, `generated/**` | `repository_dispatch: spec-updated` → website rebuild |
 | `notify-org-profile.yml` | push to `data/refs.manual.json`, `generated/refs.resolved.json` | `repository_dispatch: refs-updated` → org profile regen |
 
-## Required secret: `REPO_DISPATCH_TOKEN`
+## Required secret: `PUBLISH_SPEC_CHANGES`
 
 A fine-grained Personal Access Token, stored as a repository (or org) secret named
-`REPO_DISPATCH_TOKEN`, with:
+`PUBLISH_SPEC_CHANGES`, with:
 
 - **Repository access:** `Memo-Init/spec`, `Memo-Init/memo-init.github.io`, `Memo-Init/.github`
 - **Permissions:** `Contents: read and write` and `Metadata: read` (Contents write is needed both
   for `generate.yml` to push artifacts and for the dispatch targets to accept the event).
 
-The token is referenced only as `${{ secrets.REPO_DISPATCH_TOKEN }}` — never commit a token value.
+The token is referenced only as `${{ secrets.PUBLISH_SPEC_CHANGES }}` — never commit a token value.
 Without the secret the workflows are inert (no fan-out); the repos still build standalone.
 
 > The default `GITHUB_TOKEN` is deliberately **not** used for the artifact push, because a push made

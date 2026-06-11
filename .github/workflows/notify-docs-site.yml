@@ -18,7 +18,7 @@ jobs:
       - name: Dispatch spec-updated
         run: |
           curl -sf -X POST \
-            -H "Authorization: Bearer ${{ secrets.REPO_DISPATCH_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.PUBLISH_SPEC_CHANGES }}" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/Memo-Init/memo-init.github.io/dispatches \
