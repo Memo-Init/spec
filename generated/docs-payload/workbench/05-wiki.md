@@ -6,17 +6,12 @@ spec_file: "05-wiki.md"
 order: 5
 section: "Workbench"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/workbench/05-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/05-wiki.md."
 ---
 
-| Field | Value |
-|-------|-------|
-| Status | Draft |
-| Depends on | [01-project-structure.md](/specification/project-structure/) |
-| Related | [06-trash.md](/specification/trash/), [04-strands.md](/specification/strands/), [00-overview.md](/specification/overview/) |
 
 > Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
 

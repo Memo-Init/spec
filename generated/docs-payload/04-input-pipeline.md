@@ -6,17 +6,12 @@ spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/04-input-pipeline.md."
 ---
 
-| | |
-|---|---|
-| Status | Draft |
-| Depends on | [03-input-paths.md](/specification/input-paths/) |
-| Related | [02-memo-sop-entrypoint.md](/specification/memo-sop-entrypoint/), [05-memo-strategies.md](/specification/memo-strategies/), [10-proactive-research.md](/specification/proactive-research/) |
 
 > **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance).
 

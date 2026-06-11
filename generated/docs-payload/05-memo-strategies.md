@@ -6,17 +6,12 @@ spec_file: "05-memo-strategies.md"
 order: 5
 section: "Specification"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/05-memo-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/05-memo-strategies.md."
 ---
 
-| | |
-|---|---|
-| Status | Draft |
-| Depends on | [03-input-paths.md](/specification/input-paths/) |
-| Related | [06-memo-structure.md](/specification/memo-structure/), [08-phases-and-prds.md](/specification/phases-and-prds/), [11-quality-and-finalization.md](/specification/quality-and-finalization/) |
 
 > **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance).
 

@@ -6,17 +6,12 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/02-memo-sop-entrypoint.md."
 ---
 
-| | |
-|---|---|
-| Status | Draft |
-| Depends on | [00-overview.md](/specification/overview/), [01-philosophy.md](/specification/philosophy/) |
-| Related | [03-input-paths.md](/specification/input-paths/), [11-quality-and-finalization.md](/specification/quality-and-finalization/), [12-rollout.md](/specification/rollout/), [13-orchestration.md](/specification/orchestration/) |
 
 > **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance).
 

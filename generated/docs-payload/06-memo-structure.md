@@ -6,17 +6,12 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
 ---
 
-| | |
-|---|---|
-| Status | Draft |
-| Depends on | [05-memo-strategies.md](/specification/memo-strategies/) |
-| Related | [07-revisions-and-questions.md](/specification/revisions-and-questions/), [12-rollout.md](/specification/rollout/), [16-git-security-versioning.md](/specification/git-security-versioning/) |
 
 > **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance).
 

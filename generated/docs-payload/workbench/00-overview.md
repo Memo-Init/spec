@@ -6,17 +6,12 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/workbench/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/00-overview.md."
 ---
 
-| Field | Value |
-|-------|-------|
-| Status | Draft |
-| Depends on | — (sub-spec entry point) |
-| Related | [01-project-structure.md](/specification/project-structure/), [02-requirements.md](/specification/requirements/), [03-tools-registry.md](/specification/tools-registry/), [04-strands.md](/specification/strands/), [05-wiki.md](/specification/wiki/), [06-trash.md](/specification/trash/) |
 
 > **Informative.** This document introduces the workbench sub-spec, its scope, and its independent versioning. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
 

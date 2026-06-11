@@ -6,17 +6,12 @@ spec_file: "18-multidimensionality.md"
 order: 18
 section: "Specification"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/18-multidimensionality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/18-multidimensionality.md."
 ---
 
-| Field | Value |
-|-------|-------|
-| Status | Draft |
-| Depends on | [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) |
-| Related | [16-git-security-versioning.md](/specification/git-security-versioning/), [13-orchestration.md](/specification/orchestration/), [08-phases-and-prds.md](/specification/phases-and-prds/), [00-overview.md](/specification/overview/) |
 
 > Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
 

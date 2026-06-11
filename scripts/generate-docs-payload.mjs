@@ -37,6 +37,21 @@ const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 
+// Strip the top metadata table (Status / Depends on / Related) that each source
+// chapter carries directly under its H1. The reading order should be content-first;
+// the same metadata is preserved in the chapter's bottom "## Related" footer, which
+// is intentionally left untouched (Memo 002, Kap 1). The leading table block can use
+// either a "| Field | Value |" or a borderless "| | |" header — both are handled by
+// matching the first table block at the body start and removing it ONLY when it
+// contains a "Status" row. That guard prevents stripping a leading content table.
+const stripTopMetadataTable = ( { content } ) => {
+    return content.replace(
+        /^\s*\|[^\n]*\|[ \t]*\n\|[ \t:\-|]+\|[ \t]*\n(?:\|[^\n]*\|[ \t]*\n)+/,
+        ( match ) => /\|\s*Status\s*\|/.test( match ) ? '' : match
+    )
+}
+
+
 const resolveCommit = ( { cwd } ) => {
     try {
         return execSync( 'git rev-parse HEAD', { cwd } )
@@ -154,9 +169,12 @@ const generateFile = async ( { filename, sourceDir, targetDir, section, sourceRe
     const frontmatter = buildFrontmatter( { filename, title, description, order, section, normative, sourceRelBase, sourceCommit, now } )
 
     // Rewrite intra-spec links, then strip the leading H1 (the docs site renders
-    // the page title from the frontmatter, so the body H1 would be a duplicate).
+    // the page title from the frontmatter, so the body H1 would be a duplicate),
+    // then strip the top metadata table so the reading order is content-first
+    // (Memo 002, Kap 1) — the bottom "## Related" footer keeps the metadata.
     const bodyRewritten = rewriteSpecLinks( { content } )
-    const body = bodyRewritten.replace( /^#\s+.+?\n+/, '' )
+    const bodyNoH1 = bodyRewritten.replace( /^#\s+.+?\n+/, '' )
+    const body = stripTopMetadataTable( { content: bodyNoH1 } )
 
     const output = frontmatter + '\n' + body
 

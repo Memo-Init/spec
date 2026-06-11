@@ -6,17 +6,12 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/01-philosophy.md."
 ---
 
-| | |
-|---|---|
-| Status | Draft |
-| Depends on | [00-overview.md](/specification/overview/) |
-| Related | [02-memo-sop-entrypoint.md](/specification/memo-sop-entrypoint/), [04-input-pipeline.md](/specification/input-pipeline/), [12-rollout.md](/specification/rollout/) |
 
 > **Informative.** This chapter describes the philosophy and interaction model behind the memo system. It is written in prose; the normative requirements that operationalize it live in the chapters it points to.
 

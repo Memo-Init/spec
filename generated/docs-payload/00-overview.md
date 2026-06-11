@@ -6,17 +6,12 @@ spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/00-overview.md."
 ---
 
-| | |
-|---|---|
-| Status | Draft |
-| Depends on | — (specification entry point) |
-| Related | [01-philosophy.md](/specification/philosophy/), [02-memo-sop-entrypoint.md](/specification/memo-sop-entrypoint/), [08-phases-and-prds.md](/specification/phases-and-prds/), [18-multidimensionality.md](/specification/multidimensionality/) |
 
 > **Informative.** This document provides the conceptual foundation, mission, terminology, and document index. It is written in prose and does not itself carry normative requirements. The **Conformance** block below is normative for the whole specification.
 

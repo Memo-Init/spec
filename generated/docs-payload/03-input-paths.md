@@ -6,17 +6,12 @@ spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/03-input-paths.md."
 ---
 
-| | |
-|---|---|
-| Status | Draft |
-| Depends on | [02-memo-sop-entrypoint.md](/specification/memo-sop-entrypoint/) |
-| Related | [04-input-pipeline.md](/specification/input-pipeline/), [05-memo-strategies.md](/specification/memo-strategies/), [07-revisions-and-questions.md](/specification/revisions-and-questions/) |
 
 > **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance).
 

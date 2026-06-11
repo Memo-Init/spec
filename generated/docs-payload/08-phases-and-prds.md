@@ -6,17 +6,12 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/08-phases-and-prds.md."
 ---
 
-| | |
-|---|---|
-| Status | Draft |
-| Depends on | [07-revisions-and-questions.md](/specification/revisions-and-questions/) |
-| Related | [05-memo-strategies.md](/specification/memo-strategies/), [12-rollout.md](/specification/rollout/), [13-orchestration.md](/specification/orchestration/), [18-multidimensionality.md](/specification/multidimensionality/) |
 
 > **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance).
 

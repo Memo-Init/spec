@@ -6,17 +6,12 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-06-10T23:29:45.219Z"
+generated_at: "2026-06-11T03:38:25.870Z"
 generated_from: "spec/v0.1.0/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/09-contamination-context-handover.md."
 ---
 
-| Field | Value |
-|-------|-------|
-| Status | Draft |
-| Depends on | [08-phases-and-prds.md](/specification/phases-and-prds/) |
-| Related | [10-proactive-research.md](/specification/proactive-research/), [11-quality-and-finalization.md](/specification/quality-and-finalization/), [13-orchestration.md](/specification/orchestration/), [00-overview.md](/specification/overview/) |
 
 > Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
 
