@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-12T00:37:30.876Z",
+    "generated_at": "2026-06-12T00:45:53.010Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -202,6 +202,36 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "specification"
+        },
+        {
+            "filename": "20-flow-full-vs-update-revisions.md",
+            "slug": "flow-full-vs-update-revisions",
+            "title": "Flow: Full vs. Update Revisions",
+            "description": "This chapter is **normative** for the end-to-end memo flow from input to rollout and for the distinction between **Full** and **Update** revisions. The diagram is the canonical reference; the rules...",
+            "order": 20,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "specification"
+        },
+        {
+            "filename": "21-human-computer-interaction.md",
+            "slug": "human-computer-interaction",
+            "title": "Human-Computer Interaction",
+            "description": "This chapter is **normative** for the human-computer interaction model: where the user interacts, where Claude works autonomously, and the **finalization blocker** that keeps the gate closed while...",
+            "order": 21,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "specification"
+        },
+        {
+            "filename": "22-tree-cli-recommended-way.md",
+            "slug": "tree-cli-recommended-way",
+            "title": "Recommended Way: Self-Describing Command Tree (Branch/Leaf)",
+            "description": "This chapter is **normative** for the recommended shape of an agent-facing CLI: a self-describing command tree of **branches** and **leaves** whose help text is a re-implementable spec, plus the...",
+            "order": 22,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "specification"
         }
     ],
     "workbench": {
@@ -279,10 +309,10 @@
         ]
     },
     "stats": {
-        "total_files": 27,
-        "core_files": 20,
+        "total_files": 30,
+        "core_files": 23,
         "workbench_files": 7,
-        "normative_files": 24,
+        "normative_files": 27,
         "informative_files": 3
     }
 }

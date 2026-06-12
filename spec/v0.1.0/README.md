@@ -8,7 +8,7 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 
 ---
 
-## Core Chapters (00–19)
+## Core Chapters (00–22)
 
 | Document | Title | Mode |
 |----------|-------|------|
@@ -32,8 +32,11 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 | [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) | Git Workflow & Memo IDs | Normative |
 | [18-multidimensionality.md](./18-multidimensionality.md) | Multidimensionality — One Memo, Many Repos | Normative |
 | [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) | Internal vs. External Communication | Normative |
+| [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md) | Flow — Full vs. Update Revisions | Normative |
+| [21-human-computer-interaction.md](./21-human-computer-interaction.md) | Human-Computer Interaction | Normative |
+| [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md) | Recommended Way — Self-Describing Command Tree | Normative |
 
-> Chapters 09–19 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer.
+> Chapters 09–22 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer.
 
 ---
 
@@ -49,8 +52,9 @@ For a first read, follow the numeric order — the chapters are arranged so each
 6. **Finalize & roll out** — [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md).
 7. **Substrate** — [14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [15-prompt-generator.md](./15-prompt-generator.md).
 8. **Git & boundaries** — [16-git-security-versioning.md](./16-git-security-versioning.md), [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [18-multidimensionality.md](./18-multidimensionality.md), [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md).
+9. **Diagrams & recommended CLI** — [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md), [21-human-computer-interaction.md](./21-human-computer-interaction.md), [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md). The flow and interaction diagrams and the self-describing command-tree CLI.
 
-Readers who only need the rules of authoring a memo can read 03–08; readers building tooling against the system should additionally read 11–19.
+Readers who only need the rules of authoring a memo can read 03–08; readers building tooling against the system should additionally read 11–22.
 
 ---
 

@@ -1,0 +1,109 @@
+---
+title: "Recommended Way: Self-Describing Command Tree (Branch/Leaf)"
+description: "This chapter is **normative** for the recommended shape of an agent-facing CLI: a self-describing command tree of **branches** and **leaves** whose help text is a re-implementable spec, plus the..."
+spec_version: "0.1.0"
+spec_file: "22-tree-cli-recommended-way.md"
+order: 22
+section: "Specification"
+normative: true
+generated_at: "2026-06-12T00:45:52.499Z"
+generated_from: "spec/v0.1.0/22-tree-cli-recommended-way.md"
+generator: "scripts/generate-docs-payload.mjs"
+edit_warning: "This file is auto-generated. Source: spec/v0.1.0/22-tree-cli-recommended-way.md."
+---
+
+
+> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
+
+This chapter is **normative** for the recommended shape of an agent-facing CLI: a self-describing command tree of **branches** and **leaves** whose help text is a re-implementable spec, plus the self-correction and tool-embedding rules that keep an agent grounded in that help. Code snippets follow the project Node style (4-space indentation, no semicolons, single quotes).
+
+---
+
+## Purpose
+
+The recommended way to expose tools to an agent is a **self-describing command tree**: a small tree of **branches** ("bags of tools") and **leaves** (tools that do something). Each leaf carries strongly typed input and output whose field descriptions **encode behavior**, not just types. The tree compiles to a CLI, and a `describe()` rendering produces the help an agent reads. The design goal is that the help alone is a sufficient specification — robust enough that the code could be re-implemented from it.
+
+---
+
+## Branch / Leaf Data Model — Normative
+
+The tree has exactly two node kinds.
+
+- A **branch** is a bag of tools: a `description` plus `children`. It groups related leaves (e.g. a `calendar` branch with `add`, `list`, `get` leaves).
+- A **leaf** does something: a `description`, a Zod `input` **and** `output`, and an `execute` function. The Zod field `description`s MUST encode the behavior rules the agent should follow — not only the type.
+
+> A leaf MUST define both `input` and `output` as Zod schemas. The field `description`s on those schemas MUST carry the behavioral rules (what to do, what to avoid), so that the schema is itself part of the specification — not merely a type guard.
+
+```javascript
+// BRANCH: bag of tools. description + children.
+const branch = {
+    'description': 'What this domain/group is for (+ behaviour rules)',
+    'children': { 'leafName': leaf }
+}
+
+// LEAF: does something. description + zod in/out (descriptions encode behaviour) + execute.
+const leaf = {
+    'description': 'What it does, how to call it, behaviour rules',
+    'input': z.object( { 'id': z.string().describe( 'behaviour-encoding doc' ) } ),
+    'output': z.object( { 'ok': z.boolean() } ),
+    'execute': async ( { id } ) => ( { 'ok': true } )
+}
+
+const isBranch = ( node ) => node[ 'children' ] !== undefined
+const isLeaf = ( node ) => node[ 'execute' ] !== undefined
+```
+
+The two predicates distinguish the node kinds structurally: a node with `children` is a branch; a node with `execute` is a leaf. The primitive also maps to the code structure — each domain is a folder.
+
+---
+
+## `describe()` and the Ancestor Path
+
+`describe()` renders the **help tree** for a node — the text emitted for `--describe` and for re-injection. The help for a leaf is not read in isolation: the relevant context is the **ancestor path**, the help collected from the leaf back up to the root.
+
+> When help is rendered for re-injection, the system SHOULD collect the **ancestor path** — the help of the target leaf and of every branch from that leaf up to the root — so the agent reads the leaf in the context of the group and the tree it belongs to ("all the way back up").
+
+---
+
+## Help-as-Spec — Normative
+
+The central design rule governs the quality bar for help text.
+
+> The help text MUST be robust enough that the code could be **re-implemented from the help as a specification**. A leaf's `description`, its Zod field `description`s, and the branch help above it together MUST capture the full behavior — not just call syntax.
+
+This rule is what makes the tree self-describing: because the help is a spec, the same text serves the human reader, the CLI `--describe` output, and the re-injected agent context.
+
+---
+
+## Self-Correction: Hook Re-injection and the Token Timer
+
+The agent is kept grounded in the help by **re-injecting** it — and this is **not primarily error-driven**. Re-injection is triggered by a Claude-Code hook and by a token-usage timer, not (only) by a thrown error.
+
+- **Hook re-injection** — a `PreToolUse` hook **intercepts** the tool call, **cancels** the full request, and **resends** it with the re-injected help (the ancestor path) added to the context.
+- **Token-usage timer** — a timer measures tokens since the last use of a tool; on inactivity it forces re-injection of the **whole ancestor path** for that tool (not just the leaf's own help).
+
+The corrected understanding (versus the first reconstruction) is summarized below.
+
+| First assumption | Verified reality |
+|------------------|------------------|
+| Self-correction is "on error" in CLI code (an error throws, a path is collected) | The mechanism runs via **Claude-Code hooks + a token-usage timer** that **intercepts, cancels, and resends** the tool call with re-injected help — not primarily error-driven |
+| Only `input` is a Zod schema | **Input and output** are Zod; field `description`s **encode behavior rules**, not just types |
+| Ancestor-path re-injection happens only on error | Ancestor-path re-injection fires on **timer/interception** ("all the way back up") — confirmed, but triggered more broadly |
+
+---
+
+## Tool-Embedding Requirement — Normative
+
+The help is only useful if it is in the agent's context when the agent acts.
+
+> In **all** phases — research as well as implementation — the system MUST load the tool's help / `describe()` output into the agent's context. Tool embedding is a high-priority requirement: an agent MUST NOT be asked to use a tool without its help present in context.
+
+This requirement is what binds the rest of the chapter together: the branch/leaf tree and its help-as-spec only deliver their value when the help is embedded in every phase the agent works through.
+
+---
+
+## Related
+
+- [13-orchestration.md](/specification/orchestration/) — the orchestration and state layer the tool tree is invoked from.
+- [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the agents that consume the embedded tool help.
+- [00-overview.md](/specification/overview/) — conformance language.
