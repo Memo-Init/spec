@@ -6,7 +6,7 @@ spec_file: "02-requirements.md"
 order: 2
 section: "Workbench"
 normative: true
-generated_at: "2026-06-12T17:41:43.238Z"
+generated_at: "2026-06-12T19:13:01.811Z"
 generated_from: "spec/workbench/02-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/02-requirements.md."
@@ -111,6 +111,23 @@ requirements:
 ```
 
 A profile that sets `gate: true` on a requirement asks finalization to enforce it as a quality gate; `gate: false` makes the requirement advisory.
+
+---
+
+## Implementation Sync Status (Memo 005, P3)
+
+The implementation under `.memo/requirements/` and `repos/core/lib/requirements/`
+currently diverges from this normative chapter at three points, tracked here so the
+divergence is explicit rather than silent:
+
+- Finalization enforcement: this chapter requires a hard block; the toolkit gate
+  (memo-finalize) is advisory-only (F11=A). Reconciliation is scheduled in Memo 005
+  Phase P6 (transition gate).
+- Scope model: this chapter specifies two viewpoints (programming-language | repo);
+  the implementation uses a three-axis scope (repos / categories / tags). The when-axis
+  for conditional requirements is scheduled in Memo 005 Phase P4.
+- gate flag: the example profile shape uses a per-requirement `gate` flag not present
+  in the current requirement schema.
 
 ---
 

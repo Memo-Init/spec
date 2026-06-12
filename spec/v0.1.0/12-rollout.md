@@ -20,7 +20,7 @@ The rollout turns a finalized memo into implemented code. It begins only **after
 
 ## Generate → Execute → Evaluate at Every Level
 
-Every level of the rollout follows the same three-phase pattern (Generate → Execute → Evaluate). The pattern is applied recursively: the rollout as a whole, each phase, and each revision use it.
+Every level of the rollout follows the same three-phase pattern (Generate → Execute → Evaluate). The pattern is applied recursively: the rollout as a whole, each phase, and each revision use it. At the rollout level, a fourth closing step — **Land** (Landing the Plane) — runs after Evaluate: it leaves the workspace in a startable "next-morning" state (worktrees cleaned, branches merged or documented, commits prepared and presented, open ends named, a machine-readable `landing-readiness.json` written). See the **Landing the Plane** section below.
 
 | Level | Generate | Execute | Evaluate |
 |-------|----------|---------|----------|
@@ -47,6 +47,34 @@ The autonomy rules are strict:
 This mirrors the empty-context discipline (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)): the user's judgement is spent up front, at finalization; the rollout then executes a settled plan.
 
 ---
+
+## Landing the Plane (Closing Step)
+
+After Evaluate, the rollout MUST **land the plane**: it leaves the workspace better than it
+found it, in a state a fresh context can resume the next morning without questions. This is
+the precondition of the "interlocking brick" principle — a new memo only docks cleanly onto a
+workspace the previous memo left correctly.
+
+**Pilot role split.** The **user is the pilot**: commits and pushes remain the user's release
+(a hard rule — the rollout MUST NOT commit or push on its own). The system **prepares** the
+landing: everything presented, cleanable with few questions. Pending pilot actions are listed
+machine-readably.
+
+**"Every problem is our problem" (non-overreach boundary).** The system leaves the workspace
+better than found and treats a stranger problem encountered on the way as its own — it
+investigates, understands, and resolves it. The boundary: it MUST NOT overreach into other
+memos by rewriting them; it helps and resolves, and deposits a finding as a hint.
+
+**Landing checklist (L1–L5):** worktrees cleaned; branches merged or documented; commits
+prepared/presented (never committed); open ends named (follow-ups, blocker resolutions,
+needs-review remnants, deferred items); machine-readable end-state (`landing-readiness.json`).
+A `verdict: OPEN` (named open ends) is not a failure — honest landing names open ends rather
+than hiding them; the run does not stop, the pilot decides at the next break.
+
+> **Follow-up (specified here, live skill done in this memo):** Landing is implemented in
+> `memo-rollout-execute` and the checklist artifact `docs/landing-checklist.md` (Memo 005, P8).
+> Neither the Anthropic harness nor the "long-running agents" talk has a landing phase
+> (negative finding) — this is a deliberate design decision of this system.
 
 ## The Standing Lessons-Learned File
 
