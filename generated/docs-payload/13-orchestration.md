@@ -6,7 +6,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T19:31:39.914Z"
+generated_at: "2026-06-12T20:53:10.474Z"
 generated_from: "spec/v0.1.0/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/13-orchestration.md."
