@@ -107,6 +107,23 @@ A profile that sets `gate: true` on a requirement asks finalization to enforce i
 
 ---
 
+## Implementation Sync Status (Memo 005, P3)
+
+The implementation under `.memo/requirements/` and `repos/core/lib/requirements/`
+currently diverges from this normative chapter at three points, tracked here so the
+divergence is explicit rather than silent:
+
+- Finalization enforcement: this chapter requires a hard block; the toolkit gate
+  (memo-finalize) is advisory-only (F11=A). Reconciliation is scheduled in Memo 005
+  Phase P6 (transition gate).
+- Scope model: this chapter specifies two viewpoints (programming-language | repo);
+  the implementation uses a three-axis scope (repos / categories / tags). The when-axis
+  for conditional requirements is scheduled in Memo 005 Phase P4.
+- gate flag: the example profile shape uses a per-requirement `gate` flag not present
+  in the current requirement schema.
+
+---
+
 ## Related
 
 - [01-project-structure.md](./01-project-structure.md) — the `.memo/requirements/` location as a sibling of the memos.
