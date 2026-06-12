@@ -1,4 +1,4 @@
-# 08. Phases, PRDs & the Dependency Tree
+# 08. Phases & PRDs
 
 | | |
 |---|---|

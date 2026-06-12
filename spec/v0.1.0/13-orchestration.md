@@ -8,7 +8,7 @@
 
 > Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
 
-This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the **real verified system**.
+This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the system as actually built.
 
 ---
 

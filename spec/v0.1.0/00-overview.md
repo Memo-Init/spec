@@ -37,7 +37,7 @@ A **memo** is a versioned strategy document. It starts as a first revision, iter
 | | |
 |---|---|
 | **Current state** | The memo system exists as a tool collection in a workbench layer (`cli/memo-toolkit/`) plus a set of global rules. It is in daily productive use and has produced well over a hundred memos in real projects. It has no public home — no repository, no specification, no website. |
-| **Target state** | A minimal, public organization that documents the verified system: a specification (this document), an org profile, a website, the memo viewer, a deterministic prompt generator, and a versioned skills/agents core. The result is understandable without knowing the author personally, modeled after an existing public reference organization. |
+| **Target state** | A minimal, public organization that documents the system: a specification (this document), an org profile, a website, the memo viewer, a deterministic prompt generator, and a versioned skills/agents core. The result is understandable without knowing the author personally, modeled after an existing public reference organization. |
 
 ### Mission
 
@@ -49,21 +49,21 @@ Publishing this specification secures authorship of the underlying ideas and kee
 
 ---
 
-## Verified System, Not Aspiration
+## System Facts
 
-This specification documents the **real, verified** system. The induction from the source memo was preceded by a verification pass that compared the mental model against the actual toolkit code and found seven deviations between the two. Where the two disagreed, this specification follows the **verified code**, not the earlier mental model.
+This specification documents the real system as it runs. The following facts anchor the chapters that follow:
 
-| # | Earlier description | Verified reality | This spec |
-|---|---------------------|------------------|-----------|
-| 1 | 3 input paths | 4 transcript types (adds `plan-start`) | documents 4 types ([03-input-paths.md](./03-input-paths.md)) |
-| 2 | "four tests" | 9 finalization gates + 5 quality skills | documents real gates ([11-quality-and-finalization.md](./11-quality-and-finalization.md)) |
-| 3 | 3 evidence levels | 6 evidence levels | documents 6 levels |
-| 4 | 1 PR per memo | 1 PR per affected repo | documents per-repo PRs ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
-| 5 | "categorization" as a pipeline step | 5 distinct pipeline steps | documents 5 steps ([04-input-pipeline.md](./04-input-pipeline.md)) |
-| 6 | "never uploaded" (a rule) | structural (no git folder under `.memo/`) | structural guarantee ([06-memo-structure.md](./06-memo-structure.md)) |
-| 7 | "relative paths only" | public-context scoping | git security ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
+| Aspect | Fact |
+|--------|------|
+| Input | 4 transcript types, including `plan-start` ([03-input-paths.md](./03-input-paths.md)) |
+| Finalization | 9 finalization gates plus 5 quality skills ([11-quality-and-finalization.md](./11-quality-and-finalization.md)) |
+| Evidence | 6 evidence levels |
+| Pull requests | 1 PR per affected repository ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
+| Input pipeline | 5 distinct pipeline steps ([04-input-pipeline.md](./04-input-pipeline.md)) |
+| Local guarantee | Structural — no git folder under `.memo/` ([06-memo-structure.md](./06-memo-structure.md)) |
+| Public context | Public-context scoping in git security ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
 
-Where a chapter describes behavior that the source memo flags as follow-up work, this specification states it as **specified-but-not-yet-implemented**: the specification text is binding, but the corresponding live-code change in the toolkit skills is a separate, future task and is not part of this baseline.
+Where a chapter describes behavior that is planned but not yet built, this specification states it as **specified-but-not-yet-implemented**: the specification text is binding, but the corresponding live-code change in the toolkit skills is a separate, future task and is not part of this baseline.
 
 ---
 
@@ -75,34 +75,34 @@ Planning is the most important activity in agentic engineering. The memo system 
 
 ## Organization and Repository Fan-Out
 
-The memo-init specification is induced (written up) from the local toolkit source and published across a small organization of repositories. The diagram below — reproduced verbatim from the source memo — shows the organization, the repository fan-out, and the spec→site automation pipeline.
+The memo-init specification is induced (written up) from the local toolkit source and published across a small organization of repositories. The diagram below shows the organization, the repository fan-out, and the spec→site automation pipeline.
 
 ```mermaid
 flowchart TD
-    subgraph ORG["GitHub-Org: memo-init"]
-        SPEC["spec\nRFC + Sub-Spec Workbench"]
-        GH[".github\nBadgeTable-Profil"]
-        SITE["memo-init.github.io\nAstro+Starlight"]
-        VIEW["viewer\nMemo-Viewer (core-artig)"]
-        PG["prompt-generator\ndeterministischer Start-Prompt"]
-        CORE["core\nSkills (Basis) + Agents (Evaluatoren zuerst)"]
+    subgraph ORG["GitHub org: memo-init"]
+        SPEC["spec\nRFC + workbench sub-spec"]
+        GH[".github\norg profile"]
+        SITE["memo-init.github.io\nAstro + Starlight"]
+        VIEW["viewer\nmemo viewer"]
+        PG["prompt-generator\ndeterministic start prompt"]
+        CORE["core\nskills + agents"]
     end
 
     SPEC -->|"refs / docs-payload / manifest / llms.txt"| GEN["generated/*"]
     GEN -->|"dispatch: refs-updated"| GH
     GEN -->|"dispatch: spec-updated"| SITE
     SITE -->|"deploy.yml"| PAGES["GitHub Pages + /llms.txt"]
-    SPEC -. Abhängigkeit .-> VIEW
-    PG -->|"deterministischer START-Prompt"| AGENTS["AGENTS.md-Agenten"]
-    CORE -. liefert Agents + Skills .-> AGENTS
+    SPEC -. dependency .-> VIEW
+    PG -->|"deterministic start prompt"| AGENTS["AGENTS.md agents"]
+    CORE -. provides agents + skills .-> AGENTS
 
-    subgraph SRC["Quelle des Spec-Inhalts (lokal)"]
+    subgraph SRC["Spec source (local)"]
         TK["cli/memo-toolkit/\nskills + docs"]
     end
-    TK -.induktiv verschriftlicht.-> SPEC
+    TK -.induced into prose.-> SPEC
 ```
 
-> Diagram orientation is `flowchart TD` (the default). The node labels are kept verbatim from the source diagram; their meaning is given in the surrounding chapters of this specification.
+> Diagram orientation is `flowchart TD` (the default). The node meanings are given in the surrounding chapters of this specification.
 
 The six repositories are bootstrapped from an existing public reference organization. Their roles:
 

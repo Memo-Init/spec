@@ -1,12 +1,12 @@
 ---
-title: "Input Paths — Four Transcript Types"
+title: "Input Paths"
 description: "Every input to the memo system arrives as a **transcript**. The transcript server produces exactly four transcript types. The first line of the transcript — a mandatory default header — declares the..."
 spec_version: "0.1.0"
 spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/v0.1.0/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/03-input-paths.md."

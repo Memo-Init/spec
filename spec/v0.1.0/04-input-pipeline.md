@@ -1,4 +1,4 @@
-# 04. The Five-Step Input Pipeline
+# 04. Input Pipeline
 
 | | |
 |---|---|

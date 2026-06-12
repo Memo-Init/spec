@@ -1,12 +1,12 @@
 ---
-title: "The Five-Step Input Pipeline"
+title: "Input Pipeline"
 description: "Before any memo is created and before any revision is written, every input MUST pass through a five-step processing pipeline. The pipeline is mandatory and strictly sequential: no step may be..."
 spec_version: "0.1.0"
 spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/v0.1.0/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/04-input-pipeline.md."

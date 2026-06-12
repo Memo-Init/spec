@@ -1,4 +1,4 @@
-# 06. Memo Structure & Local Guarantee
+# 06. Memo Structure
 
 | | |
 |---|---|
@@ -35,7 +35,7 @@ A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. 
 
 Memo content is **local** and is **never uploaded**. In this specification, "never uploaded" is not a behavioral rule that an agent is asked to remember and honor — it is a **structural guarantee**: the `.memo/` tree contains no git repository, so there is no mechanism by which its content could be pushed.
 
-This is the verified correction of an earlier framing. The earlier model stated "never uploaded" as a rule one had to follow; the verified system makes it structural. A structural guarantee cannot be forgotten under time pressure the way a rule can.
+Making this structural rather than a rule matters: a structural guarantee cannot be forgotten under time pressure the way a rule can.
 
 The consequences:
 

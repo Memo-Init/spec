@@ -1,12 +1,12 @@
 ---
-title: "Memo-SOP as the Canonical Entry Point"
+title: "Memo-SOP"
 description: "`memo-sop` is the **canonical entry skill** of the memo system. It is the one document that explains the entire process end to end: the path from a dictated transcript to an executed rollout, the..."
 spec_version: "0.1.0"
 spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/v0.1.0/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/02-memo-sop-entrypoint.md."

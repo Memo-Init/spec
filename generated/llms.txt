@@ -50,7 +50,7 @@ A **memo** is a versioned strategy document. It starts as a first revision, iter
 | | |
 |---|---|
 | **Current state** | The memo system exists as a tool collection in a workbench layer (`cli/memo-toolkit/`) plus a set of global rules. It is in daily productive use and has produced well over a hundred memos in real projects. It has no public home — no repository, no specification, no website. |
-| **Target state** | A minimal, public organization that documents the verified system: a specification (this document), an org profile, a website, the memo viewer, a deterministic prompt generator, and a versioned skills/agents core. The result is understandable without knowing the author personally, modeled after an existing public reference organization. |
+| **Target state** | A minimal, public organization that documents the system: a specification (this document), an org profile, a website, the memo viewer, a deterministic prompt generator, and a versioned skills/agents core. The result is understandable without knowing the author personally, modeled after an existing public reference organization. |
 
 ### Mission
 
@@ -62,21 +62,21 @@ Publishing this specification secures authorship of the underlying ideas and kee
 
 ---
 
-## Verified System, Not Aspiration
+## System Facts
 
-This specification documents the **real, verified** system. The induction from the source memo was preceded by a verification pass that compared the mental model against the actual toolkit code and found seven deviations between the two. Where the two disagreed, this specification follows the **verified code**, not the earlier mental model.
+This specification documents the real system as it runs. The following facts anchor the chapters that follow:
 
-| # | Earlier description | Verified reality | This spec |
-|---|---------------------|------------------|-----------|
-| 1 | 3 input paths | 4 transcript types (adds `plan-start`) | documents 4 types ([03-input-paths.md](./03-input-paths.md)) |
-| 2 | "four tests" | 9 finalization gates + 5 quality skills | documents real gates ([11-quality-and-finalization.md](./11-quality-and-finalization.md)) |
-| 3 | 3 evidence levels | 6 evidence levels | documents 6 levels |
-| 4 | 1 PR per memo | 1 PR per affected repo | documents per-repo PRs ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
-| 5 | "categorization" as a pipeline step | 5 distinct pipeline steps | documents 5 steps ([04-input-pipeline.md](./04-input-pipeline.md)) |
-| 6 | "never uploaded" (a rule) | structural (no git folder under `.memo/`) | structural guarantee ([06-memo-structure.md](./06-memo-structure.md)) |
-| 7 | "relative paths only" | public-context scoping | git security ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
+| Aspect | Fact |
+|--------|------|
+| Input | 4 transcript types, including `plan-start` ([03-input-paths.md](./03-input-paths.md)) |
+| Finalization | 9 finalization gates plus 5 quality skills ([11-quality-and-finalization.md](./11-quality-and-finalization.md)) |
+| Evidence | 6 evidence levels |
+| Pull requests | 1 PR per affected repository ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
+| Input pipeline | 5 distinct pipeline steps ([04-input-pipeline.md](./04-input-pipeline.md)) |
+| Local guarantee | Structural — no git folder under `.memo/` ([06-memo-structure.md](./06-memo-structure.md)) |
+| Public context | Public-context scoping in git security ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
 
-Where a chapter describes behavior that the source memo flags as follow-up work, this specification states it as **specified-but-not-yet-implemented**: the specification text is binding, but the corresponding live-code change in the toolkit skills is a separate, future task and is not part of this baseline.
+Where a chapter describes behavior that is planned but not yet built, this specification states it as **specified-but-not-yet-implemented**: the specification text is binding, but the corresponding live-code change in the toolkit skills is a separate, future task and is not part of this baseline.
 
 ---
 
@@ -88,34 +88,34 @@ Planning is the most important activity in agentic engineering. The memo system 
 
 ## Organization and Repository Fan-Out
 
-The memo-init specification is induced (written up) from the local toolkit source and published across a small organization of repositories. The diagram below — reproduced verbatim from the source memo — shows the organization, the repository fan-out, and the spec→site automation pipeline.
+The memo-init specification is induced (written up) from the local toolkit source and published across a small organization of repositories. The diagram below shows the organization, the repository fan-out, and the spec→site automation pipeline.
 
 ```mermaid
 flowchart TD
-    subgraph ORG["GitHub-Org: memo-init"]
-        SPEC["spec\nRFC + Sub-Spec Workbench"]
-        GH[".github\nBadgeTable-Profil"]
-        SITE["memo-init.github.io\nAstro+Starlight"]
-        VIEW["viewer\nMemo-Viewer (core-artig)"]
-        PG["prompt-generator\ndeterministischer Start-Prompt"]
-        CORE["core\nSkills (Basis) + Agents (Evaluatoren zuerst)"]
+    subgraph ORG["GitHub org: memo-init"]
+        SPEC["spec\nRFC + workbench sub-spec"]
+        GH[".github\norg profile"]
+        SITE["memo-init.github.io\nAstro + Starlight"]
+        VIEW["viewer\nmemo viewer"]
+        PG["prompt-generator\ndeterministic start prompt"]
+        CORE["core\nskills + agents"]
     end
 
     SPEC -->|"refs / docs-payload / manifest / llms.txt"| GEN["generated/*"]
     GEN -->|"dispatch: refs-updated"| GH
     GEN -->|"dispatch: spec-updated"| SITE
     SITE -->|"deploy.yml"| PAGES["GitHub Pages + /llms.txt"]
-    SPEC -. Abhängigkeit .-> VIEW
-    PG -->|"deterministischer START-Prompt"| AGENTS["AGENTS.md-Agenten"]
-    CORE -. liefert Agents + Skills .-> AGENTS
+    SPEC -. dependency .-> VIEW
+    PG -->|"deterministic start prompt"| AGENTS["AGENTS.md agents"]
+    CORE -. provides agents + skills .-> AGENTS
 
-    subgraph SRC["Quelle des Spec-Inhalts (lokal)"]
+    subgraph SRC["Spec source (local)"]
         TK["cli/memo-toolkit/\nskills + docs"]
     end
-    TK -.induktiv verschriftlicht.-> SPEC
+    TK -.induced into prose.-> SPEC
 ```
 
-> Diagram orientation is `flowchart TD` (the default). The node labels are kept verbatim from the source diagram; their meaning is given in the surrounding chapters of this specification.
+> Diagram orientation is `flowchart TD` (the default). The node meanings are given in the surrounding chapters of this specification.
 
 The six repositories are bootstrapped from an existing public reference organization. Their roles:
 
@@ -169,7 +169,7 @@ A separate, independently versioned **workbench/** sub-spec documents the projec
 
 ---
 
-# 01. Guardrail Philosophy & Interaction Model
+# 01. Philosophy
 
 | | |
 |---|---|
@@ -248,7 +248,7 @@ The throughline is that the human invests effort up front, inside the guardrails
 
 ---
 
-# 02. Memo-SOP as the Canonical Entry Point
+# 02. Memo-SOP
 
 | | |
 |---|---|
@@ -332,7 +332,7 @@ This is a documentation-level classification. Implementing or renaming the publi
 
 ---
 
-# 03. Input Paths — Four Transcript Types
+# 03. Input Paths
 
 | | |
 |---|---|
@@ -400,7 +400,7 @@ When the input is a transcript-server URL, the default header in the response **
 
 ---
 
-# 04. The Five-Step Input Pipeline
+# 04. Input Pipeline
 
 | | |
 |---|---|
@@ -496,7 +496,7 @@ The skill that performs this reads **only** — it never issues writes to the se
 
 ---
 
-# 05. Memo Strategies (Workflow Shape)
+# 05. Memo Strategies
 
 | | |
 |---|---|
@@ -560,7 +560,7 @@ Naming this strategy makes the interleaving explicit and reviewable, instead of 
 
 ---
 
-# 06. Memo Structure & Local Guarantee
+# 06. Memo Structure
 
 | | |
 |---|---|
@@ -597,7 +597,7 @@ A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. 
 
 Memo content is **local** and is **never uploaded**. In this specification, "never uploaded" is not a behavioral rule that an agent is asked to remember and honor — it is a **structural guarantee**: the `.memo/` tree contains no git repository, so there is no mechanism by which its content could be pushed.
 
-This is the verified correction of an earlier framing. The earlier model stated "never uploaded" as a rule one had to follow; the verified system makes it structural. A structural guarantee cannot be forgotten under time pressure the way a rule can.
+Making this structural rather than a rule matters: a structural guarantee cannot be forgotten under time pressure the way a rule can.
 
 The consequences:
 
@@ -616,7 +616,7 @@ The practical effect is that hours of dictated reasoning, half-formed decisions,
 
 ---
 
-# 07. Revisions & the Question Format
+# 07. Revisions
 
 | | |
 |---|---|
@@ -729,7 +729,7 @@ A revision MUST NOT be edited in place. Each change produces a new `REV-XX.md` f
 
 ---
 
-# 08. Phases, PRDs & the Dependency Tree
+# 08. Phases & PRDs
 
 | | |
 |---|---|
@@ -794,7 +794,7 @@ Stating the scope clause in the phase chapter keeps the dependency tree honest: 
 
 ---
 
-# 09. Contamination, Empty Context and Handover
+# 09. Contamination & Handover
 
 | Field | Value |
 |-------|-------|
@@ -977,7 +977,7 @@ Tapering is a `SHOULD`, not a `MUST`: a late-introduced assumption or a coherenc
 
 ---
 
-# 11. Quality Gates and Finalization
+# 11. Quality Gates
 
 | Field | Value |
 |-------|-------|
@@ -1169,7 +1169,7 @@ The lessons-learned file is distinct from the per-rollout state files: state fil
 
 > Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
 
-This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the **real verified system**.
+This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the system as actually built.
 
 ---
 
@@ -1411,7 +1411,7 @@ This is exactly what the agent layer needs: the generator produces the **determi
 
 ---
 
-# 16. Git, Security and Versioning
+# 16. Git & Security
 
 | Field | Value |
 |-------|-------|
@@ -1646,7 +1646,7 @@ The coordination happens at the **memo** level (the planning unit), not at the r
 
 ---
 
-# 19. Internal vs. External Communication
+# 19. Communication
 
 | Field | Value |
 |-------|-------|
@@ -1722,7 +1722,7 @@ The test is direction, not secrecy: an internal name is not removed because it i
 # Workbench Sub-Spec
 ========================================
 
-# 00. Workbench Sub-Spec — Overview
+# 00. Workbench Overview
 
 | Field | Value |
 |-------|-------|
@@ -1818,7 +1818,7 @@ These helpers are global because they serve cross-project concerns (data ingesti
 
 ---
 
-# 01. Project Structure & Local Guarantee
+# 01. Project Structure
 
 | Field | Value |
 |-------|-------|
@@ -1859,7 +1859,7 @@ A project directory **MUST** contain the following folders and files. Folder nam
 
 A project **MUST NOT** omit a required folder. A project **MAY** add the optional `.wiki/`. The workbench audit reports any missing required path as a structural finding and any unexpected top-level entry for review.
 
-Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (the F4=C layout; see [02-requirements.md](./02-requirements.md)).
+Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (see [02-requirements.md](./02-requirements.md)).
 
 ---
 
@@ -1904,7 +1904,7 @@ A project **MUST** preserve all three. The guarantee is the precondition for wor
 
 ---
 
-# 02. Requirements Profiles (`.memo/requirements/`)
+# 02. Requirements Profiles
 
 | Field | Value |
 |-------|-------|
@@ -1928,9 +1928,9 @@ Today, requirements live only as **prose** scattered across the global rules fil
 
 A project **SHOULD** express its requirements as **data** under `.memo/requirements/`. A requirements profile is a structured file (JSON or YAML) that names a set of requirements and the viewpoint they apply to. Because it is data, it can be pulled dynamically, diffed, and checked mechanically — unlike prose.
 
-### Location (F4=C)
+### Location
 
-Requirements profiles live in `.memo/requirements/`, a **sibling** of the memos under `.memo/` (the F4=C layout). The memos themselves remain directly under `.memo/`; the `requirements/` folder sits alongside them, not inside any single memo. This keeps requirements shared across all memos of the project rather than trapped in one.
+Requirements profiles live in `.memo/requirements/`, a **sibling** of the memos under `.memo/`. The memos themselves remain directly under `.memo/`; the `requirements/` folder sits alongside them, not inside any single memo. This keeps requirements shared across all memos of the project rather than trapped in one.
 
 ---
 
@@ -2022,7 +2022,7 @@ A profile that sets `gate: true` on a requirement asks finalization to enforce i
 
 ---
 
-# 03. Tools Registry (`.memo/tools/`)
+# 03. Tools Registry
 
 | Field | Value |
 |-------|-------|
@@ -2084,7 +2084,7 @@ The registry **MUST NOT** contain copies of skills, skill bodies, or tool source
 
 ---
 
-# 04. Strands — One Memo, Many Topics
+# 04. Strands
 
 | Field | Value |
 |-------|-------|
@@ -2094,7 +2094,7 @@ The registry **MUST NOT** contain copies of skills, skill bodies, or tool source
 
 > Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
 
-This chapter is **normative** for the strand concept, per-strand requirements and tools, and the rule that a strand is a tag rather than part of the numeric memo ID (F7=B).
+This chapter is **normative** for the strand concept, per-strand requirements and tools, and the rule that a strand is a tag rather than part of the numeric memo ID.
 
 ---
 
@@ -2131,13 +2131,13 @@ Strand A establishes the verified factual base and the strategy. Strand B author
 
 ---
 
-## A Strand Is a Tag, Not Part of the Memo ID (F7=B)
+## A Strand Is a Tag, Not Part of the Memo ID
 
 A strand is a **tag or label**, not a component of the numeric memo identifier.
 
 - The memo ID stays **stable** and numeric (the `M{NNN}-{PP}-{RR}` form defined in the core-spec git-workflow chapter). A strand **MUST NOT** be encoded into the numeric memo ID, and adding or renaming a strand **MUST NOT** change the memo's ID.
 - A strand is attached as a label — for example, "strand C" or a short strand name — and used to group phases, requirements, and tools. Because it is only a label, strands can be added, renamed, or merged as understanding of the memo's topics evolves, without disturbing any identifier that other artifacts (commits, issues, branches) reference.
-- This is the F7=B decision: the strand provides organizational grouping; the numeric ID provides stable identity. The two concerns are kept separate.
+- The strand provides organizational grouping; the numeric ID provides stable identity. The two concerns are kept separate.
 
 ---
 
@@ -2150,7 +2150,7 @@ A strand is a **tag or label**, not a component of the numeric memo identifier.
 
 ---
 
-# 05. Wiki Types — Project Wiki & Memo Wiki
+# 05. Wiki Types
 
 | Field | Value |
 |-------|-------|
@@ -2215,7 +2215,7 @@ The two coexist: the project wiki gives fast present-tense answers; the memo wik
 
 ---
 
-# 06. Trash — No Deletion, Only `.trash/`
+# 06. Trash
 
 | Field | Value |
 |-------|-------|

@@ -1,12 +1,12 @@
 ---
-title: "Memo Structure & Local Guarantee"
+title: "Memo Structure"
 description: "Memos are numbered with **zero-padded** identifiers (for example, `001`, `017`, `138`). Each memo lives in a directory named `{NNN}-{slug}`. The numeric prefix is stable for the life of the memo and..."
 spec_version: "0.1.0"
 spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
@@ -42,7 +42,7 @@ A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. 
 
 Memo content is **local** and is **never uploaded**. In this specification, "never uploaded" is not a behavioral rule that an agent is asked to remember and honor — it is a **structural guarantee**: the `.memo/` tree contains no git repository, so there is no mechanism by which its content could be pushed.
 
-This is the verified correction of an earlier framing. The earlier model stated "never uploaded" as a rule one had to follow; the verified system makes it structural. A structural guarantee cannot be forgotten under time pressure the way a rule can.
+Making this structural rather than a rule matters: a structural guarantee cannot be forgotten under time pressure the way a rule can.
 
 The consequences:
 

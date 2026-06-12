@@ -1,4 +1,4 @@
-# 11. Quality Gates and Finalization
+# 11. Quality Gates
 
 | Field | Value |
 |-------|-------|

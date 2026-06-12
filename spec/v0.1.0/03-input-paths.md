@@ -1,4 +1,4 @@
-# 03. Input Paths — Four Transcript Types
+# 03. Input Paths
 
 | | |
 |---|---|

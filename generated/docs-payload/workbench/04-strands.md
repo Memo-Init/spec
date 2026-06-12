@@ -1,12 +1,12 @@
 ---
-title: "Strands — One Memo, Many Topics"
-description: "This chapter is **normative** for the strand concept, per-strand requirements and tools, and the rule that a strand is a tag rather than part of the numeric memo ID (F7=B)."
+title: "Strands"
+description: "This chapter is **normative** for the strand concept, per-strand requirements and tools, and the rule that a strand is a tag rather than part of the numeric memo ID."
 spec_version: "0.1.0"
 spec_file: "04-strands.md"
 order: 4
 section: "Workbench"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/workbench/04-strands.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/04-strands.md."
@@ -15,7 +15,7 @@ edit_warning: "This file is auto-generated. Source: spec/workbench/04-strands.md
 
 > Normative language (MUST/SHOULD/MAY) follows BCP 14 [RFC2119] [RFC8174]. RFC 2119 keywords are used.
 
-This chapter is **normative** for the strand concept, per-strand requirements and tools, and the rule that a strand is a tag rather than part of the numeric memo ID (F7=B).
+This chapter is **normative** for the strand concept, per-strand requirements and tools, and the rule that a strand is a tag rather than part of the numeric memo ID.
 
 ---
 
@@ -52,13 +52,13 @@ Strand A establishes the verified factual base and the strategy. Strand B author
 
 ---
 
-## A Strand Is a Tag, Not Part of the Memo ID (F7=B)
+## A Strand Is a Tag, Not Part of the Memo ID
 
 A strand is a **tag or label**, not a component of the numeric memo identifier.
 
 - The memo ID stays **stable** and numeric (the `M{NNN}-{PP}-{RR}` form defined in the core-spec git-workflow chapter). A strand **MUST NOT** be encoded into the numeric memo ID, and adding or renaming a strand **MUST NOT** change the memo's ID.
 - A strand is attached as a label — for example, "strand C" or a short strand name — and used to group phases, requirements, and tools. Because it is only a label, strands can be added, renamed, or merged as understanding of the memo's topics evolves, without disturbing any identifier that other artifacts (commits, issues, branches) reference.
-- This is the F7=B decision: the strand provides organizational grouping; the numeric ID provides stable identity. The two concerns are kept separate.
+- The strand provides organizational grouping; the numeric ID provides stable identity. The two concerns are kept separate.
 
 ---
 

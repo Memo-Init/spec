@@ -1,4 +1,4 @@
-# 16. Git, Security and Versioning
+# 16. Git & Security
 
 | Field | Value |
 |-------|-------|

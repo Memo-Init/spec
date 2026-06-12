@@ -1,12 +1,12 @@
 ---
 title: "Orchestration"
-description: "This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the **real verified system**."
+description: "This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the system as actually built."
 spec_version: "0.1.0"
 spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/v0.1.0/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/13-orchestration.md."
@@ -15,7 +15,7 @@ edit_warning: "This file is auto-generated. Source: spec/v0.1.0/13-orchestration
 
 > Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
 
-This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the **real verified system**.
+This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the system as actually built.
 
 ---
 

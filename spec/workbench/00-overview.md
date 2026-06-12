@@ -1,4 +1,4 @@
-# 00. Workbench Sub-Spec — Overview
+# 00. Workbench Overview
 
 | Field | Value |
 |-------|-------|

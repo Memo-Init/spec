@@ -1,4 +1,4 @@
-# 05. Memo Strategies (Workflow Shape)
+# 05. Memo Strategies
 
 | | |
 |---|---|

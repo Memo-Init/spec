@@ -1,12 +1,12 @@
 ---
-title: "Wiki Types — Project Wiki & Memo Wiki"
+title: "Wiki Types"
 description: "This chapter is **normative** for the distinction between the two wiki types and for the memo-ID stamping that makes the memo wiki timeline-aware."
 spec_version: "0.1.0"
 spec_file: "05-wiki.md"
 order: 5
 section: "Workbench"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/workbench/05-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/05-wiki.md."

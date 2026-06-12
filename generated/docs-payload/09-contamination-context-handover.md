@@ -1,12 +1,12 @@
 ---
-title: "Contamination, Empty Context and Handover"
+title: "Contamination & Handover"
 description: "This chapter is **normative** for the contamination signal catalog, the empty-context rule, and the `HANDOVER.md` structure. The illustrative anecdotes (the \"fridge memo\", the contaminated handover..."
 spec_version: "0.1.0"
 spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/v0.1.0/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/09-contamination-context-handover.md."

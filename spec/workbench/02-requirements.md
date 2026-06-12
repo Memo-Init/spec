@@ -1,4 +1,4 @@
-# 02. Requirements Profiles (`.memo/requirements/`)
+# 02. Requirements Profiles
 
 | Field | Value |
 |-------|-------|
@@ -22,9 +22,9 @@ Today, requirements live only as **prose** scattered across the global rules fil
 
 A project **SHOULD** express its requirements as **data** under `.memo/requirements/`. A requirements profile is a structured file (JSON or YAML) that names a set of requirements and the viewpoint they apply to. Because it is data, it can be pulled dynamically, diffed, and checked mechanically — unlike prose.
 
-### Location (F4=C)
+### Location
 
-Requirements profiles live in `.memo/requirements/`, a **sibling** of the memos under `.memo/` (the F4=C layout). The memos themselves remain directly under `.memo/`; the `requirements/` folder sits alongside them, not inside any single memo. This keeps requirements shared across all memos of the project rather than trapped in one.
+Requirements profiles live in `.memo/requirements/`, a **sibling** of the memos under `.memo/`. The memos themselves remain directly under `.memo/`; the `requirements/` folder sits alongside them, not inside any single memo. This keeps requirements shared across all memos of the project rather than trapped in one.
 
 ---
 

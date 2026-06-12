@@ -1,4 +1,4 @@
-# 02. Memo-SOP as the Canonical Entry Point
+# 02. Memo-SOP
 
 | | |
 |---|---|

@@ -1,12 +1,12 @@
 ---
-title: "Quality Gates and Finalization"
+title: "Quality Gates"
 description: "This chapter is **normative** for the nine finalization gates, the five quality skills, and the six evidence levels. The requirement-generated-gate wiring is **specified here but not yet implemented..."
 spec_version: "0.1.0"
 spec_file: "11-quality-and-finalization.md"
 order: 11
 section: "Specification"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/v0.1.0/11-quality-and-finalization.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/11-quality-and-finalization.md."

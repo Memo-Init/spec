@@ -1,12 +1,12 @@
 ---
-title: "Workbench Sub-Spec — Overview"
+title: "Workbench Overview"
 description: "This is the entry point for the **workbench sub-spec** of the memo-init specification. The workbench is the meta-orchestration layer that holds all projects, their tools, and their shared..."
 spec_version: "0.1.0"
 spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/workbench/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/00-overview.md."

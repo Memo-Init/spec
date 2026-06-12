@@ -1,4 +1,4 @@
-# 09. Contamination, Empty Context and Handover
+# 09. Contamination & Handover
 
 | Field | Value |
 |-------|-------|

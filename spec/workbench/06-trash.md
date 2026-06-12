@@ -1,4 +1,4 @@
-# 06. Trash — No Deletion, Only `.trash/`
+# 06. Trash
 
 | Field | Value |
 |-------|-------|

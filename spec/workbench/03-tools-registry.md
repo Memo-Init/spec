@@ -1,4 +1,4 @@
-# 03. Tools Registry (`.memo/tools/`)
+# 03. Tools Registry
 
 | Field | Value |
 |-------|-------|

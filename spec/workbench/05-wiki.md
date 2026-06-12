@@ -1,4 +1,4 @@
-# 05. Wiki Types — Project Wiki & Memo Wiki
+# 05. Wiki Types
 
 | Field | Value |
 |-------|-------|

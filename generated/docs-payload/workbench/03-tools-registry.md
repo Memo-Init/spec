@@ -1,12 +1,12 @@
 ---
-title: "Tools Registry (`.memo/tools/`)"
+title: "Tools Registry"
 description: "This chapter is **normative** for the tools-registry location and the checklist mechanic. The registry itself is a **RECOMMENDATION**, not a requirement."
 spec_version: "0.1.0"
 spec_file: "03-tools-registry.md"
 order: 3
 section: "Workbench"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/workbench/03-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/03-tools-registry.md."

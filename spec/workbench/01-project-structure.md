@@ -1,4 +1,4 @@
-# 01. Project Structure & Local Guarantee
+# 01. Project Structure
 
 | Field | Value |
 |-------|-------|
@@ -39,7 +39,7 @@ A project directory **MUST** contain the following folders and files. Folder nam
 
 A project **MUST NOT** omit a required folder. A project **MAY** add the optional `.wiki/`. The workbench audit reports any missing required path as a structural finding and any unexpected top-level entry for review.
 
-Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (the F4=C layout; see [02-requirements.md](./02-requirements.md)).
+Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (see [02-requirements.md](./02-requirements.md)).
 
 ---
 

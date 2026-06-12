@@ -1,4 +1,4 @@
-# 19. Internal vs. External Communication
+# 19. Communication
 
 | Field | Value |
 |-------|-------|

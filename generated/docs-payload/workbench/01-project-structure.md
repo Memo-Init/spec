@@ -1,12 +1,12 @@
 ---
-title: "Project Structure & Local Guarantee"
+title: "Project Structure"
 description: "This chapter is **normative** for the mandatory project layout, the local-only root, the single egress point, and the local guarantee."
 spec_version: "0.1.0"
 spec_file: "01-project-structure.md"
 order: 1
 section: "Workbench"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/workbench/01-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/01-project-structure.md."
@@ -46,7 +46,7 @@ A project directory **MUST** contain the following folders and files. Folder nam
 
 A project **MUST NOT** omit a required folder. A project **MAY** add the optional `.wiki/`. The workbench audit reports any missing required path as a structural finding and any unexpected top-level entry for review.
 
-Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (the F4=C layout; see [02-requirements.md](/specification/requirements/)).
+Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (see [02-requirements.md](/specification/requirements/)).
 
 ---
 

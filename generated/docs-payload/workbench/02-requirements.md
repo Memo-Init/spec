@@ -1,12 +1,12 @@
 ---
-title: "Requirements Profiles (`.memo/requirements/`)"
+title: "Requirements Profiles"
 description: "This chapter is **normative** for the requirements-profile location, the two viewpoints, the global/project split, dynamic pulling, the finalization check, and self-generated quality gates."
 spec_version: "0.1.0"
 spec_file: "02-requirements.md"
 order: 2
 section: "Workbench"
 normative: true
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/workbench/02-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/02-requirements.md."
@@ -29,9 +29,9 @@ Today, requirements live only as **prose** scattered across the global rules fil
 
 A project **SHOULD** express its requirements as **data** under `.memo/requirements/`. A requirements profile is a structured file (JSON or YAML) that names a set of requirements and the viewpoint they apply to. Because it is data, it can be pulled dynamically, diffed, and checked mechanically — unlike prose.
 
-### Location (F4=C)
+### Location
 
-Requirements profiles live in `.memo/requirements/`, a **sibling** of the memos under `.memo/` (the F4=C layout). The memos themselves remain directly under `.memo/`; the `requirements/` folder sits alongside them, not inside any single memo. This keeps requirements shared across all memos of the project rather than trapped in one.
+Requirements profiles live in `.memo/requirements/`, a **sibling** of the memos under `.memo/`. The memos themselves remain directly under `.memo/`; the `requirements/` folder sits alongside them, not inside any single memo. This keeps requirements shared across all memos of the project rather than trapped in one.
 
 ---
 

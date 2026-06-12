@@ -1,4 +1,4 @@
-# 01. Guardrail Philosophy & Interaction Model
+# 01. Philosophy
 
 | | |
 |---|---|

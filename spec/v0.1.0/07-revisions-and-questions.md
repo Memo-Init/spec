@@ -1,4 +1,4 @@
-# 07. Revisions & the Question Format
+# 07. Revisions
 
 | | |
 |---|---|

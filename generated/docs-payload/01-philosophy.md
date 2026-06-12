@@ -1,12 +1,12 @@
 ---
-title: "Guardrail Philosophy & Interaction Model"
+title: "Philosophy"
 description: "In agentic engineering, planning is the single most important activity. An autonomous agent can write a great deal of code quickly, but code written without a plan tends to be code that has to be..."
 spec_version: "0.1.0"
 spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-06-11T17:49:04.330Z"
+generated_at: "2026-06-12T00:03:53.287Z"
 generated_from: "spec/v0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/01-philosophy.md."
