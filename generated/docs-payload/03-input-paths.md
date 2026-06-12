@@ -6,7 +6,7 @@ spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T14:04:50.687Z"
+generated_at: "2026-06-12T17:41:43.238Z"
 generated_from: "spec/v0.1.0/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/03-input-paths.md."

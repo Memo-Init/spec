@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-06-12T14:04:50.687Z"
+generated_at: "2026-06-12T17:41:43.238Z"
 generated_from: "spec/v0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/01-philosophy.md."
@@ -72,6 +72,27 @@ Two rules anchor this model:
 - **After finalization, the AI does not ask permission for each step.** The memo was worked out jointly; once the rollout begins, everything is already agreed. The only legitimate interruption is a genuine design decision. See [12-rollout.md](/specification/rollout/).
 
 The throughline is that the human invests effort up front, inside the guardrails, so that the machine can run the rest with minimal supervision and a high probability that the result works on the first try.
+
+---
+
+## Prioritization Is the Developer's Decision
+
+A direct consequence of the interaction model: the AI MUST NOT decide what is important. Prioritizing, down-ranking, or setting a threshold on the work order is the developer's exclusive responsibility. **Every item is equally important unless the developer says otherwise.** If a dictated transcript contains fifteen things, all fifteen are worked through, each one as important as the next. The AI MAY ask questions (asking is explicitly encouraged) and MAY raise essential technical objections, but it MUST NOT silently drop, down-rank, or unilaterally threshold any item.
+
+The reasoning chain is operational, not stylistic:
+
+1. **Implementation cost starts at memo-init.** Removing or unevenly weighting a work item mid-stream raises the cost of every feature already implemented — the dropped small feature must later be redone, including fresh research.
+2. **In aggregate, small features matter as much as large ones.**
+3. **Importance is not surveyable during the process** — only in hindsight, in review, from accumulated experience.
+4. **Context limitation.** The AI works from an in-memory context that always starts empty. The developer carries the experience of well over a hundred memos; the AI would have to read on the order of a hundred-and-thirty memos (tens of hours, a large share of the weekly budget) merely to make one informed small-feature prioritization. There is, as yet, no context large enough for that. (The wiki system works toward this but does not yet replace it.)
+
+## No Quick Wins
+
+The system does not chase "quick wins." Provider prompts tend to push quick wins because they do not assume plan-based work; the memo system does. **We work plans and we land planes** (see the landing discipline in the rollout). A quick win pulled out of sequence is a prioritization decision in disguise — and prioritization is the developer's decision (above).
+
+## Work It In Instead of Deferring
+
+Problems that surface during a run are **worked in** during the running phase, not exported into a follow-up memo. A follow-up memo is expensive: it costs the developer hours, forces the research to be redone from scratch, and adds revision rounds — turning a small button-color change into a phantom multi-day effort. Plans MAY be arbitrarily long; the AI MAY keep working a problem as long as needed and has the resources to do so. The hard limits are unchanged (no commits or pushes without approval); "work it in" never means "act outside the guardrails." Concerns that are not genuine blockers go into the rollout preface, not into a stop. See the rollout chapter for the preface/concern channel.
 
 ---
 
