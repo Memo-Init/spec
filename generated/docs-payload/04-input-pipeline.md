@@ -6,7 +6,7 @@ spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T00:03:53.287Z"
+generated_at: "2026-06-12T00:37:30.245Z"
 generated_from: "spec/v0.1.0/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/04-input-pipeline.md."

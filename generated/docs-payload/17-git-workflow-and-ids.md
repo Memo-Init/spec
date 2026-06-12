@@ -6,7 +6,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T00:03:53.287Z"
+generated_at: "2026-06-12T00:37:30.245Z"
 generated_from: "spec/v0.1.0/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/17-git-workflow-and-ids.md."
@@ -49,6 +49,40 @@ The ID addresses three reference levels:
 | Memo | `M{NNN}` | `M024` | Memo 024 |
 
 The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{NNN}-{PP}` with a leading zero; an old `PRD-{NNN}` becomes the full `M{NNN}-{PP}-{RR}`. Addressing work by ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](/specification/git-security-versioning/)).
+
+---
+
+## Question IDs (Memo-Level References)
+
+Open questions raised during a memo's revision loop are referenced by a stable **question ID**. The default schema is:
+
+```
+M{NNN}-F{N}
+```
+
+| Segment | Meaning | Example |
+|---------|---------|---------|
+| `M{NNN}` | 3-digit memo number | `M003` |
+| `F` | Fixed question marker | `F` |
+| `{N}` | Question number within the memo | `4` |
+
+The answer to a question is noted with the schema `M{NNN}-F{N}=<choice>` (for example `M003-F4=A`), where `<choice>` is the selected option. When a question is scoped to a specific PRD rather than the whole memo, the ID **MAY** be extended:
+
+```
+M{NNN}-P{PP}-PRD{RR}-F{N}
+```
+
+(for example `M003-P02-PRD05-F4`). A reference **MUST** use one of these two forms so that every question is findable by full-text search. The single regex that matches both forms is:
+
+```
+M\d{3}(-P\d+)?(-PRD\d+)?-F\d+
+```
+
+A reference **MUST NOT** be written in free prose (for example "question 4 = C") — the regex-findable ID replaces unstructured notation so the question trail can be searched the same way the commit trail can.
+
+The question-ID schema is a **memo-level default** that **complements** the canonical work-package ID `M{NNN}-{PP}-{RR}` defined above; it does **not** replace the phase/PRD ID. The two address different things: the work-package ID addresses a unit of work, the question ID addresses a decision point within the memo that produced it.
+
+Question IDs are **inward-facing** by definition: they live in the memo's revision loop and **MUST NOT** appear in outward-facing artifacts (issues, READMEs, commit messages, published text). For the inward/outward boundary and the rule that keeps internal references out of published artifacts, see [19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/).
 
 ---
 
@@ -96,4 +130,5 @@ A **commit is not a push.** A commit is backup and an orientation marker for a f
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the deterministic git flow, worktree cleanup, `git-security` gate, and issue rules.
 - [18-multidimensionality.md](/specification/multidimensionality/) — one memo coordinating multiple repos, the reason a PR is per-repo.
 - [13-orchestration.md](/specification/orchestration/) — the rollout that produces the commits and the per-phase issues.
+- [19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/) — why question IDs stay inward-facing and never appear in published artifacts.
 - [00-overview.md](/specification/overview/) — conformance language.

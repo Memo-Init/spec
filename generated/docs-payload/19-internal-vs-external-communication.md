@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T00:03:53.287Z"
+generated_at: "2026-06-12T00:37:30.245Z"
 generated_from: "spec/v0.1.0/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/19-internal-vs-external-communication.md."
@@ -71,8 +71,53 @@ The test is direction, not secrecy: an internal name is not removed because it i
 
 ---
 
+## Code Comments Are Outward-Facing
+
+Code is, by definition, outward-facing: it is published the moment the repository is. Code comments therefore follow the same rule as any other outward-facing artifact.
+
+- A code comment **MUST NOT** carry internal references — question IDs (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)), memo references, or process metadata that only resolves inside the working session.
+- Handover information for a later step does **not** belong in a code comment. It belongs in the memo system, where the inward-facing material lives. A comment that says "see the decision in &lt;internal reference&gt;" is calibrated for an audience the code does not address, and it leaks the inward direction into published text.
+
+A comment **MAY** explain *what the code does and why*, for the next reader of the code — that is outward-facing and legitimate. It **MUST NOT** be used as a back-channel into the internal process.
+
+---
+
+## Issue Minimalism
+
+Issues are a special case of an outward-facing artifact: they are readable by a stranger, yet they exist to coordinate work. The rule is **minimalism** — an issue is opened only as far as is minimally necessary, scoped to the matter itself, not to the internal process behind it.
+
+- An issue **SHOULD** describe the problem and the expected outcome, not the inward working steps that led to it.
+- An issue **MAY** carry a memo ID (`M{NNN}` / `M{NNN}-{PP}`, see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)) as a compact, opaque pointer that makes the work findable internally without exposing the internal reasoning. The memo ID is a handle, not a leak: a stranger cannot resolve it, and it carries no internal content.
+
+The fewer issues are opened, and the less each one exposes of the inward process, the smaller the outward-facing surface.
+
+---
+
+## The PRD Message Channel (Concern Channel)
+
+Handover information for a *later* PRD — a concern, a caveat, a note that the next step should account for — **MUST NOT** be parked in a code comment. There is a dedicated place for it in the memo system, and it is found through the **commit ID**.
+
+The mechanism is: a commit corresponds to one PRD (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)), so the commit ID is the anchor that ties a later reader back to the inward-facing record where the concern was deposited. A future session that reads the commit trail reaches the concern through that anchor — not through a comment scattered in the code. This keeps the inward channel (concerns, handover notes) separate from the outward channel (the code itself).
+
+This is one concept, not two: the "PRD message channel" and the "concern channel" name the same dedicated, commit-ID-anchored place in the memo system.
+
+---
+
+## Leak Prohibition
+
+Beyond private data (paths, secrets, personal identifiers — see [16-git-security-versioning.md](/specification/git-security-versioning/)), an outward-facing artifact **MUST NOT** carry any of the following inward-facing leaks:
+
+- **Pseudo-secrets** — fabricated credential-shaped strings that read as real secrets even when they are not.
+- **Internal answer codes** — a question-answer notation such as a bare `F<n>=<choice>` (the *schema* is documented in [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/), but a concrete inward answer code is a leak in published text).
+- **Process metadata** — inward self-assessments and status phrases (for example a "verified, not aspirational" style annotation) that describe the internal working state rather than the artifact's subject.
+- **Mixed-language labels** — a label in the inward working language placed on a page written in the outward publication language. One language per artifact (see [00-overview.md](/specification/overview/)); a stray inward-language label reads as insider noise.
+
+The test is the same as everywhere in this chapter: direction, not secrecy. Each of these is removed because it is calibrated for the inward audience, not because it is confidential.
+
+---
+
 ## Related
 
 - [00-overview.md](/specification/overview/) — conformance language and the self-explanatory-to-a-stranger requirement.
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the security review that keeps private data out of public artifacts.
-- [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) — commit messages as outward-facing artifacts in the deterministic git flow.
+- [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) — commit messages as outward-facing artifacts, the inward-facing question-ID schema, and the commit ID that anchors the PRD message channel.

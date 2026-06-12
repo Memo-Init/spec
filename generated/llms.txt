@@ -752,6 +752,19 @@ This decomposition is what makes a long memo executable: the memo is the authori
 
 ---
 
+## Declared Context (Required Context Standard)
+
+A PRD is implemented by an agent in a fresh, empty context, so the PRD **MUST** declare the context that agent needs. The declaration is a dedicated section — a "Required Context" table listing, per entry, the source and its path — and it is **mandatory** for every PRD.
+
+The standard has two parts:
+
+- **Declare, don't assume.** Each PRD **MUST** state which material is required to implement it, as a `| source | path |` table. An agent in an empty context can then assemble exactly what it needs without holding the rest of the memo in mind.
+- **Reference, don't repeat.** Research and supporting material **MUST** be deposited as a file in the memo's `context/` directory, and the PRD **MUST** reference that file rather than copying its content into the PRD body. The PRD stays self-contained through the *pointer*, not through duplication — the same empty-context principle that governs handovers (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)).
+
+Depositing the material once in `context/` and pointing every consumer at it keeps a single source of truth: when the research changes, the deposited file changes, and the PRDs that point at it inherit the change without a fan-out of copies to maintain.
+
+---
+
 ## `## Phase-Hints` — the Dependency Tree
 
 A finalized memo carries a `## Phase-Hints` section that declares the relationships between phases. This section **is** the dependency tree of the rollout. Each phase entry declares two relations:
@@ -790,6 +803,7 @@ Stating the scope clause in the phase chapter keeps the dependency tree honest: 
 - [05-memo-strategies.md](./05-memo-strategies.md) — the type endpoint (Strategy / Implementation / Sorting) that decides whether PRDs are produced at all.
 - [12-rollout.md](./12-rollout.md) — how phases and PRDs are executed.
 - [13-orchestration.md](./13-orchestration.md) — the state model that tracks phase and PRD progress.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context principle behind the required-context standard and the pointer-not-copy rule.
 - [18-multidimensionality.md](./18-multidimensionality.md) — phases that span multiple repositories.
 
 ---
@@ -1537,6 +1551,40 @@ The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{N
 
 ---
 
+## Question IDs (Memo-Level References)
+
+Open questions raised during a memo's revision loop are referenced by a stable **question ID**. The default schema is:
+
+```
+M{NNN}-F{N}
+```
+
+| Segment | Meaning | Example |
+|---------|---------|---------|
+| `M{NNN}` | 3-digit memo number | `M003` |
+| `F` | Fixed question marker | `F` |
+| `{N}` | Question number within the memo | `4` |
+
+The answer to a question is noted with the schema `M{NNN}-F{N}=<choice>` (for example `M003-F4=A`), where `<choice>` is the selected option. When a question is scoped to a specific PRD rather than the whole memo, the ID **MAY** be extended:
+
+```
+M{NNN}-P{PP}-PRD{RR}-F{N}
+```
+
+(for example `M003-P02-PRD05-F4`). A reference **MUST** use one of these two forms so that every question is findable by full-text search. The single regex that matches both forms is:
+
+```
+M\d{3}(-P\d+)?(-PRD\d+)?-F\d+
+```
+
+A reference **MUST NOT** be written in free prose (for example "question 4 = C") — the regex-findable ID replaces unstructured notation so the question trail can be searched the same way the commit trail can.
+
+The question-ID schema is a **memo-level default** that **complements** the canonical work-package ID `M{NNN}-{PP}-{RR}` defined above; it does **not** replace the phase/PRD ID. The two address different things: the work-package ID addresses a unit of work, the question ID addresses a decision point within the memo that produced it.
+
+Question IDs are **inward-facing** by definition: they live in the memo's revision loop and **MUST NOT** appear in outward-facing artifacts (issues, READMEs, commit messages, published text). For the inward/outward boundary and the rule that keeps internal references out of published artifacts, see [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md).
+
+---
+
 ## The Mapping
 
 A fixed mapping ties the ID to git artifacts:
@@ -1581,6 +1629,7 @@ A **commit is not a push.** A commit is backup and an orientation marker for a f
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow, worktree cleanup, `git-security` gate, and issue rules.
 - [18-multidimensionality.md](./18-multidimensionality.md) — one memo coordinating multiple repos, the reason a PR is per-repo.
 - [13-orchestration.md](./13-orchestration.md) — the rollout that produces the commits and the per-phase issues.
+- [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) — why question IDs stay inward-facing and never appear in published artifacts.
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -1712,11 +1761,56 @@ The test is direction, not secrecy: an internal name is not removed because it i
 
 ---
 
+## Code Comments Are Outward-Facing
+
+Code is, by definition, outward-facing: it is published the moment the repository is. Code comments therefore follow the same rule as any other outward-facing artifact.
+
+- A code comment **MUST NOT** carry internal references — question IDs (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)), memo references, or process metadata that only resolves inside the working session.
+- Handover information for a later step does **not** belong in a code comment. It belongs in the memo system, where the inward-facing material lives. A comment that says "see the decision in &lt;internal reference&gt;" is calibrated for an audience the code does not address, and it leaks the inward direction into published text.
+
+A comment **MAY** explain *what the code does and why*, for the next reader of the code — that is outward-facing and legitimate. It **MUST NOT** be used as a back-channel into the internal process.
+
+---
+
+## Issue Minimalism
+
+Issues are a special case of an outward-facing artifact: they are readable by a stranger, yet they exist to coordinate work. The rule is **minimalism** — an issue is opened only as far as is minimally necessary, scoped to the matter itself, not to the internal process behind it.
+
+- An issue **SHOULD** describe the problem and the expected outcome, not the inward working steps that led to it.
+- An issue **MAY** carry a memo ID (`M{NNN}` / `M{NNN}-{PP}`, see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)) as a compact, opaque pointer that makes the work findable internally without exposing the internal reasoning. The memo ID is a handle, not a leak: a stranger cannot resolve it, and it carries no internal content.
+
+The fewer issues are opened, and the less each one exposes of the inward process, the smaller the outward-facing surface.
+
+---
+
+## The PRD Message Channel (Concern Channel)
+
+Handover information for a *later* PRD — a concern, a caveat, a note that the next step should account for — **MUST NOT** be parked in a code comment. There is a dedicated place for it in the memo system, and it is found through the **commit ID**.
+
+The mechanism is: a commit corresponds to one PRD (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)), so the commit ID is the anchor that ties a later reader back to the inward-facing record where the concern was deposited. A future session that reads the commit trail reaches the concern through that anchor — not through a comment scattered in the code. This keeps the inward channel (concerns, handover notes) separate from the outward channel (the code itself).
+
+This is one concept, not two: the "PRD message channel" and the "concern channel" name the same dedicated, commit-ID-anchored place in the memo system.
+
+---
+
+## Leak Prohibition
+
+Beyond private data (paths, secrets, personal identifiers — see [16-git-security-versioning.md](./16-git-security-versioning.md)), an outward-facing artifact **MUST NOT** carry any of the following inward-facing leaks:
+
+- **Pseudo-secrets** — fabricated credential-shaped strings that read as real secrets even when they are not.
+- **Internal answer codes** — a question-answer notation such as a bare `F<n>=<choice>` (the *schema* is documented in [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), but a concrete inward answer code is a leak in published text).
+- **Process metadata** — inward self-assessments and status phrases (for example a "verified, not aspirational" style annotation) that describe the internal working state rather than the artifact's subject.
+- **Mixed-language labels** — a label in the inward working language placed on a page written in the outward publication language. One language per artifact (see [00-overview.md](./00-overview.md)); a stray inward-language label reads as insider noise.
+
+The test is the same as everywhere in this chapter: direction, not secrecy. Each of these is removed because it is calibrated for the inward audience, not because it is confidential.
+
+---
+
 ## Related
 
 - [00-overview.md](./00-overview.md) — conformance language and the self-explanatory-to-a-stranger requirement.
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the security review that keeps private data out of public artifacts.
-- [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — commit messages as outward-facing artifacts in the deterministic git flow.
+- [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — commit messages as outward-facing artifacts, the inward-facing question-ID schema, and the commit ID that anchors the PRD message channel.
 
 ========================================
 # Workbench Sub-Spec

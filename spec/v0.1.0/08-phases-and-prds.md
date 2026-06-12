@@ -21,6 +21,19 @@ This decomposition is what makes a long memo executable: the memo is the authori
 
 ---
 
+## Declared Context (Required Context Standard)
+
+A PRD is implemented by an agent in a fresh, empty context, so the PRD **MUST** declare the context that agent needs. The declaration is a dedicated section — a "Required Context" table listing, per entry, the source and its path — and it is **mandatory** for every PRD.
+
+The standard has two parts:
+
+- **Declare, don't assume.** Each PRD **MUST** state which material is required to implement it, as a `| source | path |` table. An agent in an empty context can then assemble exactly what it needs without holding the rest of the memo in mind.
+- **Reference, don't repeat.** Research and supporting material **MUST** be deposited as a file in the memo's `context/` directory, and the PRD **MUST** reference that file rather than copying its content into the PRD body. The PRD stays self-contained through the *pointer*, not through duplication — the same empty-context principle that governs handovers (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)).
+
+Depositing the material once in `context/` and pointing every consumer at it keeps a single source of truth: when the research changes, the deposited file changes, and the PRDs that point at it inherit the change without a fan-out of copies to maintain.
+
+---
+
 ## `## Phase-Hints` — the Dependency Tree
 
 A finalized memo carries a `## Phase-Hints` section that declares the relationships between phases. This section **is** the dependency tree of the rollout. Each phase entry declares two relations:
@@ -59,4 +72,5 @@ Stating the scope clause in the phase chapter keeps the dependency tree honest: 
 - [05-memo-strategies.md](./05-memo-strategies.md) — the type endpoint (Strategy / Implementation / Sorting) that decides whether PRDs are produced at all.
 - [12-rollout.md](./12-rollout.md) — how phases and PRDs are executed.
 - [13-orchestration.md](./13-orchestration.md) — the state model that tracks phase and PRD progress.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context principle behind the required-context standard and the pointer-not-copy rule.
 - [18-multidimensionality.md](./18-multidimensionality.md) — phases that span multiple repositories.

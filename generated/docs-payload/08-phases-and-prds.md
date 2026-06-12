@@ -6,7 +6,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T00:03:53.287Z"
+generated_at: "2026-06-12T00:37:30.245Z"
 generated_from: "spec/v0.1.0/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/08-phases-and-prds.md."
@@ -25,6 +25,19 @@ A finalized memo is decomposed in two steps.
 2. **PRDs → Phases.** PRDs are grouped into **phases**. A phase is a set of PRDs that are executed together as one unit of the rollout.
 
 This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the execution batches.
+
+---
+
+## Declared Context (Required Context Standard)
+
+A PRD is implemented by an agent in a fresh, empty context, so the PRD **MUST** declare the context that agent needs. The declaration is a dedicated section — a "Required Context" table listing, per entry, the source and its path — and it is **mandatory** for every PRD.
+
+The standard has two parts:
+
+- **Declare, don't assume.** Each PRD **MUST** state which material is required to implement it, as a `| source | path |` table. An agent in an empty context can then assemble exactly what it needs without holding the rest of the memo in mind.
+- **Reference, don't repeat.** Research and supporting material **MUST** be deposited as a file in the memo's `context/` directory, and the PRD **MUST** reference that file rather than copying its content into the PRD body. The PRD stays self-contained through the *pointer*, not through duplication — the same empty-context principle that governs handovers (see [09-contamination-context-handover.md](/specification/contamination-context-handover/)).
+
+Depositing the material once in `context/` and pointing every consumer at it keeps a single source of truth: when the research changes, the deposited file changes, and the PRDs that point at it inherit the change without a fan-out of copies to maintain.
 
 ---
 
@@ -66,4 +79,5 @@ Stating the scope clause in the phase chapter keeps the dependency tree honest: 
 - [05-memo-strategies.md](/specification/memo-strategies/) — the type endpoint (Strategy / Implementation / Sorting) that decides whether PRDs are produced at all.
 - [12-rollout.md](/specification/rollout/) — how phases and PRDs are executed.
 - [13-orchestration.md](/specification/orchestration/) — the state model that tracks phase and PRD progress.
+- [09-contamination-context-handover.md](/specification/contamination-context-handover/) — the empty-context principle behind the required-context standard and the pointer-not-copy rule.
 - [18-multidimensionality.md](/specification/multidimensionality/) — phases that span multiple repositories.

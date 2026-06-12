@@ -6,7 +6,7 @@ spec_file: "03-tools-registry.md"
 order: 3
 section: "Workbench"
 normative: true
-generated_at: "2026-06-12T00:03:53.287Z"
+generated_at: "2026-06-12T00:37:30.245Z"
 generated_from: "spec/workbench/03-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/03-tools-registry.md."
