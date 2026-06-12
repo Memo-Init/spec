@@ -22,14 +22,16 @@ A rollout phase is executed by an **agent team**, not by a single linear pass. A
 
 Each phase is run by a team with four roles. The Lead is the coordinator; no agent works without an assignment from the Lead.
 
-| Role | Task | Context | Tools |
-|------|------|---------|-------|
-| Lead | Coordinates the phase, creates Tasks, monitors, stops on problems | Memo + phase + PRDs | Task create/update, SendMessage |
-| Worker (1 per PRD) | Implements one PRD in its own worktree; loads skills via tags | Own context + PRD | Edit, Write, Bash, Git |
-| Evaluator | Checks a Worker result with **fresh context** | Fresh + PRD + output | Read, Bash (tests), Grep |
-| Phase Evaluator | Checks the interplay of all PRDs after all Workers finish | Fresh + all outputs | Read, Bash, Grep |
+| Role | Task | Context | Tools | Model |
+|------|------|---------|-------|-------|
+| Lead | Coordinates the phase, creates Tasks, monitors, stops on problems | Memo + phase + PRDs | Task create/update, SendMessage | Opus |
+| Worker (1 per PRD) | Implements one PRD in its own worktree; loads skills via tags | Own context + PRD | Edit, Write, Bash, Git | Opus |
+| Evaluator | Checks a Worker result with **fresh context** | Fresh + PRD + output | Read, Bash (tests), Grep | Opus (default); **Sonnet optional** for validation |
+| Phase Evaluator | Checks the interplay of all PRDs after all Workers finish | Fresh + all outputs | Read, Bash, Grep | Opus (default); **Sonnet optional** for validation |
 
 The Lead starts Workers in parallel where PRD dependencies allow, runs an Evaluator (fresh context, no carry-over) per finished Worker, iterates Worker↔Evaluator at most twice on FAIL, then runs the Phase Evaluator on the integrated result. Evaluators **MUST** receive a fresh context — they know nothing of the implementation process and see only the PRD plus the produced files (the empty-context rule, see [09-contamination-context-handover.md](./09-contamination-context-handover.md)). The first roles to migrate to repo-scoped agents are exactly these evaluators (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
+
+The **Model** column reflects the Max-plan strategy: Opus is the default for every role, because it is the proven workhorse. For the two validation roles (Evaluator, Phase Evaluator) a **Sonnet** run is an explicit option — a cheaper validation pass where the task does not need Opus depth. It is an option, never a requirement; the choice stays with the operator and is governed by the resource budget, not by the harness.
 
 ---
 
