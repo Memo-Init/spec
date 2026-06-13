@@ -1,25 +1,17 @@
 ---
 title: "Flow: Full vs. Update Revisions"
-description: "This chapter is **normative** for the end-to-end memo flow from input to rollout and for the distinction between **Full** and **Update** revisions. The diagram is the canonical reference; the rules..."
+description: "The memo flow runs from the first input to the rollout in one continuous shape: input processing produces the seed, `memo-init` writes the first full revision, a revision loop iterates until the memo..."
 spec_version: "0.1.0"
 spec_file: "20-flow-full-vs-update-revisions.md"
 order: 20
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T20:53:10.474Z"
+generated_at: "2026-06-13T16:57:06.087Z"
 generated_from: "spec/v0.1.0/20-flow-full-vs-update-revisions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/20-flow-full-vs-update-revisions.md."
 ---
 
-
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the end-to-end memo flow from input to rollout and for the distinction between **Full** and **Update** revisions. The diagram is the canonical reference; the rules below it bind the revision and presentation behavior.
-
----
-
-## Purpose
 
 The memo flow runs from the first input to the rollout in one continuous shape: input processing produces the seed, `memo-init` writes the first full revision, a revision loop iterates until the memo is settled, and finalization opens the gate to the rollout. This chapter fixes the **revision shape** within that loop — when a revision is a self-contained **Full** snapshot the user sees, and when it is an incremental **Update** delta — and how the two reconcile via consolidation.
 
@@ -27,18 +19,18 @@ The memo flow runs from the first input to the rollout in one continuous shape: 
 
 ## The Flow Diagram
 
-The following flowchart is the canonical reference for the flow. It is reproduced verbatim from the source memo (Memo 004, Kap 6).
+The following flowchart is the canonical reference for the flow.
 
 ```mermaid
 flowchart TD
     A[memo-input-processing] --> B[memo-init: REV-01 Full]
     B --> C{Revisions-Loop}
-    C -->|Full| D[REV-XX.md — volle Präsentation an User]
-    C -->|Update| E[REV-XX-update.md — Delta, dem User erklärt]
-    E --> F[consolidate: Full + Updates -> neue Full]
+    C -->|Full| D[REV-XX.md — full presentation to user]
+    C -->|Update| E[REV-XX-update.md — delta, explained to user]
+    E --> F[consolidate: Full + Updates -> new Full]
     D --> C
     F --> C
-    C -->|abgeschlossen| G[memo-finalize: Gate]
+    C -->|complete| G[memo-finalize: Gate]
     G --> H[Rollout: Generate -> Execute -> Evaluate]
     style D fill:#dff0d8
     style E fill:#fcf8e3
@@ -46,7 +38,7 @@ flowchart TD
 
 ---
 
-## Full vs. Update — Normative Definitions
+## Full vs. Update Definitions
 
 A revision is one of exactly two shapes.
 
@@ -65,7 +57,7 @@ When the most recent revision is an Update, the standalone snapshot has drifted:
 
 > Before finalization or PRD creation, if the most recent revision is an Update, the system MUST consolidate — producing a new Full revision that is a current, standalone snapshot — so that no downstream step (finalization, rollout) ever reads from a non-standalone state.
 
-Consolidation is the `F` node in the diagram: `consolidate: Full + Updates -> neue Full`. After consolidation, the loop continues from a clean Full baseline.
+Consolidation is the `F` node in the diagram: `consolidate: Full + Updates -> new Full`. After consolidation, the loop continues from a clean Full baseline.
 
 ---
 

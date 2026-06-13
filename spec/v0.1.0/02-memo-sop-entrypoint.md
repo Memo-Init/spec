@@ -6,8 +6,6 @@
 | Depends on | [00-overview.md](./00-overview.md), [01-philosophy.md](./01-philosophy.md) |
 | Related | [03-input-paths.md](./03-input-paths.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md) |
 
-> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
-
 ---
 
 ## The Single Source of Truth
@@ -17,6 +15,8 @@
 An agent that needs to understand the memo workflow MUST load `memo-sop` first. It is the document that explains everything; the other skills are children of it.
 
 On the published website, `memo-sop` SHOULD be the first documentation entry after the landing page, because it is the door through which a reader enters the system.
+
+Initialization and the revision loop are a **bidirectional conversation** between the developer and the AI — an alignment process, not a one-way command. The developer states intent, the AI reflects its interpretation back, and the two iterate until the memo expresses a shared understanding. Significant initial energy goes into proper initialization: a well-aligned memo at the start is what makes the later autonomous stages safe to run without a per-step trigger.
 
 ---
 
@@ -47,6 +47,19 @@ The public entry points validate strictly and set the switches — like the publ
 
 The SOP documents the complete path in six stages. The stages are listed here for orientation; each is specified in detail in the chapter named in the last column.
 
+```mermaid
+flowchart TD
+    S1[1. Dictate transcript<br/>speech to file or URL]
+    S2[2. Transcript type<br/>header selects flow]
+    S3[3. Input processing<br/>mandatory five-step pipeline]
+    S4[4. Revision loop<br/>Generate to Execute to Evaluate]
+    S5[5. Strict AI to software handover<br/>open questions parsed from schema]
+    S6[6. Finalization to plan to execution<br/>finalized memo drives a rollout]
+    S1 --> S2 --> S3 --> S4 --> S5
+    S5 -->|open questions remain| S4
+    S5 -->|all questions answered| S6
+```
+
 | Stage | Name | What happens | Specified in |
 |-------|------|--------------|--------------|
 | 1 | Dictate transcript | The developer produces a transcript (speech → file or URL). | [03-input-paths.md](./03-input-paths.md) |
@@ -56,7 +69,7 @@ The SOP documents the complete path in six stages. The stages are listed here fo
 | 5 | Strict AI→software handover | Open questions are parsed from a machine-readable schema. | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
 | 6 | Finalization → plan → execution | The finalized memo drives a rollout. | [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md) |
 
-The "one way" framing of the SOP means there is a single execution path. The historical distinction between an older rollout mechanism and a newer planning system no longer applies: a finalized memo is worked through exactly one plan, and a plan is formed from one or more memos.
+A finalized memo can be carried into execution by two valid, parallel models. The **rollout model** works a single finalized memo straight through its phases in one autonomous run. The **planning model** assembles one or more finalized memos into a plan and executes phase by phase across them. Both are contemporary, complementary approaches: the rollout model fits a self-contained memo, while the planning model fits work that spans several memos. The choice of model does not change the six stages above — it changes only how stage 6 is carried out.
 
 ---
 
@@ -66,10 +79,10 @@ The SOP classifies every skill as either a public entry point or a private proce
 
 | Class | Role | Examples |
 |-------|------|----------|
-| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-plan` (Execute/Plan) |
+| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-plan` (Plan), `memo-rollout` (Rollout) |
 | **Private** | Internal process steps, invoked by the public entry points. | the revision-loop skills, the quality skills, the rollout machinery |
 
-This is a documentation-level classification. Implementing or renaming the public entry-point skills is itself follow-up work; the classification is binding, but it is not the build order.
+This classification drives **progressive disclosure**: public memos and skills are the visible UI entry points, shown so a reader can find the doors into the system; internal memos and skills are linked from the public ones but not displayed up front. A reader sees the few entry points first and reaches the private process steps only by following a link.
 
 ---
 

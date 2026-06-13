@@ -2,13 +2,13 @@
 
 This directory holds version `v0.1.0` of the memo-init specification, an RFC-style description of the memo system: a planning-first scaffold that turns long, dictated transcripts into discrete, executable work orders and governs the human-AI interaction around them.
 
-This specification documents the **real, verified** system. Where a chapter describes behavior that the source memo flags as follow-up work, the chapter states it as specified-but-not-yet-implemented: the text is binding, the corresponding live-code change is a separate future task.
+This specification documents the system as a normative, RFC-style description: the text is binding for conforming implementations.
 
 The entry point is [00-overview.md](./00-overview.md), which also carries the normative **Conformance** block (BCP 14 / RFC 2119 / RFC 8174) that governs the MUST / SHOULD / MAY keywords used throughout.
 
 ---
 
-## Core Chapters (00–22)
+## Core Chapters (00–29)
 
 | Document | Title | Mode |
 |----------|-------|------|
@@ -35,8 +35,15 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 | [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md) | Flow — Full vs. Update Revisions | Normative |
 | [21-human-computer-interaction.md](./21-human-computer-interaction.md) | Human-Computer Interaction | Normative |
 | [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md) | Recommended Way — Self-Describing Command Tree | Normative |
+| [23-requirements.md](./23-requirements.md) | Requirements | Normative |
+| [24-tools-registry.md](./24-tools-registry.md) | Tools Registry | Normative |
+| [25-strands.md](./25-strands.md) | Strands | Normative |
+| [26-memo-history.md](./26-memo-history.md) | Memo History | Normative |
+| [27-landing-the-plane.md](./27-landing-the-plane.md) | Landing the Plane | Normative |
+| [28-drift.md](./28-drift.md) | Drift | Normative |
+| [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) | Behavioral Guardrails | Normative |
 
-> Chapters 09–22 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer.
+> Chapters 09–29 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer.
 
 ---
 
@@ -53,13 +60,14 @@ For a first read, follow the numeric order — the chapters are arranged so each
 7. **Substrate** — [14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [15-prompt-generator.md](./15-prompt-generator.md).
 8. **Git & boundaries** — [16-git-security-versioning.md](./16-git-security-versioning.md), [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [18-multidimensionality.md](./18-multidimensionality.md), [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md).
 9. **Diagrams & recommended CLI** — [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md), [21-human-computer-interaction.md](./21-human-computer-interaction.md), [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md). The flow and interaction diagrams and the self-describing command-tree CLI.
+10. **Cross-cutting concerns & substrate** — [23-requirements.md](./23-requirements.md) (structured requirement capture and profiles), [24-tools-registry.md](./24-tools-registry.md) (per-memo tool inventory), [25-strands.md](./25-strands.md) (parallel work tracks within a memo), [26-memo-history.md](./26-memo-history.md) (audit trail and decision record), [27-landing-the-plane.md](./27-landing-the-plane.md) (graceful completion and handoff), [28-drift.md](./28-drift.md) (detecting and correcting specification drift), [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) (runtime constraints on agent behavior).
 
-Readers who only need the rules of authoring a memo can read 03–08; readers building tooling against the system should additionally read 11–22.
+Readers who only need the rules of authoring a memo can read 03–08; readers building tooling against the system should additionally read 11–29.
 
 ---
 
 ## Workbench Sub-Spec
 
-A separate, **independently versioned** `workbench/` sub-spec documents the project-level organization that sits above individual memos: project-versus-repo structure and the local guarantee, requirements profiles (`.memo/requirements/`), the tools registry (`.memo/tools/`), per-memo strands, the two wiki types, and the trash discipline. The core chapters above describe the memo; the `workbench/` sub-spec describes the project the memo lives in.
+A separate, **independently versioned** `workbench/` sub-spec documents the project-level organization that sits above individual memos: project-versus-repo structure, the local guarantee, and the trash discipline. Requirements profiles, the tools registry, strands, and memo history have been promoted to top-level core chapters (23–26) and are no longer workbench-sub-spec content. The core chapters above describe the memo; the `workbench/` sub-spec describes the project structure the memo lives in.
 
 See `workbench/00-overview.md` for the sub-spec entry point.

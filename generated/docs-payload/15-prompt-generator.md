@@ -1,25 +1,17 @@
 ---
 title: "Prompt Generator"
-description: "This chapter is **normative** for the prompt-generator contract, the three placeholder modes, and the validation discipline. It documents the **real verified engine** (177/177 tests green, zero..."
+description: "A sub-agent's starting point must be exactly reproducible. Non-deterministic prompt generation drifts a little with every unit, and after hundreds of units nobody can say which sub-agent started from..."
 spec_version: "0.1.0"
 spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T20:53:10.474Z"
+generated_at: "2026-06-13T16:57:06.087Z"
 generated_from: "spec/v0.1.0/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/15-prompt-generator.md."
 ---
 
-
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the prompt-generator contract, the three placeholder modes, and the validation discipline. It documents the **real verified engine** (177/177 tests green, zero runtime dependencies).
-
----
-
-## Purpose
 
 A sub-agent's starting point must be exactly reproducible. Non-deterministic prompt generation drifts a little with every unit, and after hundreds of units nobody can say which sub-agent started from which mission. The prompt generator makes the starting point reproducible: **same payload, same prompt, same hash, every time**. It is the producer of the deterministic initial prompt of an `AGENTS.md` agent (see [14-agents-skills-tasks.md](/specification/agents-skills-tasks/)).
 
@@ -75,7 +67,17 @@ The function mode is the central one: it lets a placeholder compute a dynamic va
 
 The phase-evaluator order is built with a function placeholder. A function loads the phase's PRD plan (JSON), filters by phase, and emits the concrete order — for example "call PRDs 3, 10, 15 and evaluate them". The function returns `{ status: true, text }` with that order as `text`, and the generator composes it into the start-prompt deterministically.
 
-> **Note on `buildStepPlan`:** this pattern is demonstrated as `buildStepPlan` in the engine's README and test fixtures, but it is **not** an importable `src/` export. The package entry exports only `PromptGenerator`, `ERROR_CODES`, and the two default-limit constants (verified). A consumer adopting the pattern MUST rebuild the function locally rather than importing it.
+---
+
+## Skills Integration
+
+The prompt generator does not operate in isolation: it couples bidirectionally to the skill layer.
+
+**Requirements as input.** The requirement text defined in the Requirements chapter (see [23-requirements.md](/specification/requirements/)) flows into prompt generation as payload content. A skill assembles the structured requirement payload and passes it to `PromptGenerator.generate()` as placeholders; the generator composes the final prompt deterministically from that input.
+
+**Skills as callers.** A skill MAY invoke the generator directly. The skill supplies the template and placeholders; the generator returns `{ prompt, metadata }`. The composed prompt then drives a sub-agent invocation. This means the generator is not a standalone CLI tool but a composable primitive that the skill layer orchestrates.
+
+**Flow direction.** Requirements → skill → generator → agent start-prompt. The generator is the boundary between human-authored requirement text and the deterministic per-invocation prompt that a sub-agent receives.
 
 ---
 

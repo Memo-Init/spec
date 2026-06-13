@@ -6,10 +6,6 @@
 | Depends on | [03-input-paths.md](./03-input-paths.md) |
 | Related | [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md), [05-memo-strategies.md](./05-memo-strategies.md), [10-proactive-research.md](./10-proactive-research.md) |
 
-> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
-
----
-
 ## A Mandatory, Strictly Ordered Pipeline
 
 Before any memo is created and before any revision is written, every input MUST pass through a five-step processing pipeline. The pipeline is mandatory and strictly sequential: no step may be skipped, and no step may begin before the previous step is complete. It runs both before `memo-init` and before every `memo-revision-generate`.
@@ -60,11 +56,22 @@ Before any writing begins, an implementation MUST produce a **complete** list of
 
 Context MUST NOT be dropped. Reasons and background explanations from the developer MUST be preserved in the memo. A finalized memo is a closed document: context that is omitted cannot be retrieved after the fact, and without it the agent must later interpret instead of know — which leads to errors. Redundancy in service of context preservation is acceptable.
 
+Every memo MUST contain a dedicated **context area** (`## Context` or equivalent section). This area holds background, motivation, constraints, and design rationale that must not be scattered across other sections or omitted at finalization. The context area:
+
+- MUST be populated during `memo-init` and updated during each revision.
+- MUST capture the developer's stated reasons, not just the decision outcome.
+- MAY contain references to linked files, prior decisions, or external sources.
+- MUST NOT be merged into the requirements or implementation sections.
+
 ---
 
 ## Step 5 — Research
 
 From the complete topic list (Step 3) and the preserved context (Step 4), an implementation MUST derive which topics are research-worthy — external sources, technical claims, architecture decisions, and codebase references that must be verified — and MUST trigger proactive research for them before handing over to `memo-init` or `memo-revision-generate`. A topic is skipped only if the developer has left a comment on that topic that deselects research for it. The canonical definition of research and the per-revision research duty are specified in [10-proactive-research.md](./10-proactive-research.md).
+
+**Result storage.** Research results MUST be stored in the memo folder as a persistent knowledge base (e.g., `context/` subfolder or dedicated research files). Results are cumulative across revisions: a finding recorded in one revision MUST remain available to subsequent revisions and to downstream PRD generation. An implementation MUST NOT re-derive findings that are already stored.
+
+**Sub-agent coordination.** When research is distributed across multiple sub-agents, the coordinating agent MUST assign non-overlapping topic scopes before dispatch. Sub-agents MUST record their findings and assumptions in the shared knowledge base before signaling completion. A sub-agent MUST NOT begin a topic that another agent has already claimed or completed. This requirement exists to prevent duplicated token expenditure across agent teams.
 
 ---
 

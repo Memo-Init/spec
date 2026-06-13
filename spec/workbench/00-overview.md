@@ -1,10 +1,10 @@
-# 00. Workbench Overview
+# 00. Overview
 
 | Field | Value |
 |-------|-------|
 | Status | Draft |
 | Depends on | — (sub-spec entry point) |
-| Related | [01-project-structure.md](./01-project-structure.md), [02-requirements.md](./02-requirements.md), [03-tools-registry.md](./03-tools-registry.md), [04-strands.md](./04-strands.md), [05-wiki.md](./05-wiki.md), [06-trash.md](./06-trash.md) |
+| Related | [01-project-structure.md](./01-project-structure.md), [06-trash.md](./06-trash.md), [Requirements](./23-requirements.md), [Tools Registry](./24-tools-registry.md), [Strands](./25-strands.md), [Memo History](./26-memo-history.md) |
 
 > **Informative.** This document introduces the workbench sub-spec, its scope, and its independent versioning. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
 
@@ -58,12 +58,13 @@ These checks are descriptive of the real audit performed at the workbench level;
 
 ## Global Helpers
 
-The workbench exposes a small set of **global** command-line helpers that are available to every project. Two that are specific to the workbench level:
+The workbench exposes a small set of **global** command-line helpers that are available to every project. The following are specific to the workbench level:
 
 | Helper | Role |
 |--------|------|
 | `get-sheet` | Retrieve data from external spreadsheets for use inside a project. |
 | `depwatch` | Supply-chain security watchdog — looks up and scans dependencies before they are installed. |
+| `flowmcp` | Service-tool router — search, list, and call external API tools without per-project installation. |
 
 These helpers are global because they serve cross-project concerns (data ingestion, dependency safety) rather than the logic of any single project. A project **MAY** rely on a global helper being reachable; the workbench tool-reachability check exists precisely so that reliance is verified rather than assumed.
 
@@ -71,23 +72,11 @@ These helpers are global because they serve cross-project concerns (data ingesti
 
 ## Sub-Spec Document Index
 
+The workbench sub-spec contains the following chapters. Requirements, Tools Registry, Strands, and Memo History have been promoted to core chapters and are linked from there: [Requirements](./23-requirements.md), [Tools Registry](./24-tools-registry.md), [Strands](./25-strands.md), [Memo History](./26-memo-history.md).
+
 | Document | Title | Mode |
 |----------|-------|------|
 | `00-overview.md` | Workbench Sub-Spec — Overview | Informative |
 | `01-project-structure.md` | Project Structure & Local Guarantee | Normative |
-| `02-requirements.md` | Requirements Profiles (`.memo/requirements/`) | Normative |
-| `03-tools-registry.md` | Tools Registry (`.memo/tools/`) | Normative (Recommendation) |
-| `04-strands.md` | Strands — One Memo, Many Topics | Normative |
-| `05-wiki.md` | Wiki Types — Project Wiki & Memo Wiki | Normative |
 | `06-trash.md` | Trash — No Deletion, Only `.trash/` | Normative |
 
----
-
-## Related
-
-- [01-project-structure.md](./01-project-structure.md) — the mandatory project layout and the local guarantee.
-- [02-requirements.md](./02-requirements.md) — requirements profiles as data.
-- [03-tools-registry.md](./03-tools-registry.md) — the per-memo tools registry.
-- [04-strands.md](./04-strands.md) — splitting one memo into named strands.
-- [05-wiki.md](./05-wiki.md) — project wiki versus the timeline-aware memo wiki.
-- [06-trash.md](./06-trash.md) — the no-deletion trash policy.

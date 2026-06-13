@@ -6,40 +6,32 @@
 | Depends on | [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md) |
 | Related | [00-overview.md](./00-overview.md) |
 
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the human-computer interaction model: where the user interacts, where Claude works autonomously, and the **finalization blocker** that keeps the gate closed while any question is open. The diagram is the canonical reference.
-
----
-
-## Purpose
-
 The interaction model fixes the **two points** where the user touches the system — input and feedback/finalization — and the autonomous span in between. Before finalization, the user's judgement steers the memo: input, feedback, answering questions. After the finalization gate, the rollout runs autonomously to completion. The model also fixes the hard rule that closes the gate: **as long as any question is open, finalization is blocked.**
 
 ---
 
 ## The Interaction Diagram
 
-The following flowchart is the canonical reference for the interaction model. It is reproduced verbatim from the source memo (Memo 004, Kap 7), including the `:::` class assignments and the `classDef` lines.
+The following flowchart is the canonical reference for the interaction model, including the `:::` class assignments and the `classDef` lines.
 
 ```mermaid
 flowchart TD
-    U1[User: Sprache/Text-Input - oft Transcript-URL]:::user --> C1[Claude: memo-input-processing 5 Schritte]:::ai
-    C1 --> D1{Memo existiert?}:::gate
-    D1 -->|nein| C2[Claude: memo-init - REV-01 Full + Research]:::ai
-    D1 -->|ja| C3[Claude: revision-generate - prepare + Research]:::ai
-    C2 --> P1[Claude präsentiert Full-Revision]:::ai
+    U1[User: voice/text input - often transcript URL]:::user --> C1[Claude: memo-input-processing 5 steps]:::ai
+    C1 --> D1{Memo exists?}:::gate
+    D1 -->|no| C2[Claude: memo-init - REV-01 Full + Research]:::ai
+    D1 -->|yes| C3[Claude: revision-generate - prepare + Research]:::ai
+    C2 --> P1[Claude presents Full revision]:::ai
     C3 --> C4[revision-execute: REV-XX]:::ai
     C4 --> C5[revision-evaluate: Auto-Check]:::ai
     C5 --> P1
-    P1 --> U2{User: Feedback oder Fragen im Viewer beantworten}:::user
-    U2 -->|weiteres Feedback| C3
-    U2 -->|will finalisieren| Q{BLOCKER: ALLE Fragen beantwortet?}:::gate
-    Q -->|nein - offene Fragen| U2
-    Q -->|ja| G1[memo-finalize: Gate - User bestätigt]:::gate
-    G1 --> B1[BREAK - Sorgfaltspflichtvertrag]:::gate
-    B1 --> C6[Claude autonom: Rollout Generate-Execute-Evaluate]:::ai
-    C6 --> U3[User: Ergebnis reviewen]:::user
+    P1 --> U2{User: answer feedback or questions in the viewer}:::user
+    U2 -->|more feedback| C3
+    U2 -->|wants to finalize| Q{BLOCKER: ALL questions answered?}:::gate
+    Q -->|no - open questions| U2
+    Q -->|yes| G1[memo-finalize: Gate - user confirms]:::gate
+    G1 --> B1[BREAK - duty-of-care contract]:::gate
+    B1 --> C6[Claude autonomous: Rollout Generate-Execute-Evaluate]:::ai
+    C6 --> U3[User: review result]:::user
     classDef user fill:#cfe2ff,stroke:#084298
     classDef ai fill:#d1e7dd,stroke:#0f5132
     classDef gate fill:#fff3cd,stroke:#664d03
@@ -58,15 +50,15 @@ Only **Full** revisions are presented to the user (see [20-flow-full-vs-update-r
 
 ---
 
-## The Finalization Blocker — Normative
+## The Finalization Blocker
 
 The finalization gate is guarded by a hard blocker on open questions.
 
 > Finalization MUST be refused while **any** question is open. The gate MUST open only once **all** questions are answered. An implementation MUST NOT allow `memo-finalize` to proceed while one or more open questions remain.
 
-In the diagram this is the `Q{BLOCKER: ALLE Fragen beantwortet?}` node: when questions remain open (`nein - offene Fragen`) control returns to the user to answer them; only on `ja` does control pass to the finalization gate, where the user confirms.
+In the diagram this is the `Q{BLOCKER: ALL questions answered?}` node: when questions remain open (`no - open questions`) control returns to the user to answer them; only on `yes` does control pass to the finalization gate, where the user confirms.
 
-After confirmation, the `BREAK - Sorgfaltspflichtvertrag` (duty-of-care contract) is shown, and from there the rollout (Generate → Execute → Evaluate) runs **autonomously, without further questions** (see [12-rollout.md](./12-rollout.md)). The user's next interaction is only to review the result.
+After confirmation, the `BREAK - duty-of-care contract` is shown, and from there the rollout (Generate → Execute → Evaluate) runs **autonomously, without further questions** (see [12-rollout.md](./12-rollout.md)). The user's next interaction is only to review the result.
 
 ---
 

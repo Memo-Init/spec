@@ -6,13 +6,23 @@
 | Depends on | [05-memo-strategies.md](./05-memo-strategies.md) |
 | Related | [07-revisions-and-questions.md](./07-revisions-and-questions.md), [12-rollout.md](./12-rollout.md), [16-git-security-versioning.md](./16-git-security-versioning.md) |
 
-> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance).
-
 ---
 
 ## Numbering
 
 Memos are numbered with **zero-padded** identifiers (for example, `001`, `017`, `138`). Each memo lives in a directory named `{NNN}-{slug}`. The numeric prefix is stable for the life of the memo and is the basis for the memo ID used in git references (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)).
+
+### Project Prefix
+
+When multiple projects share the same git repository, numeric memo IDs can collide. To prevent this, each project MAY declare a short **project prefix** (a concise, uppercase identifier, for example `CORE`, `API`, `WEB`). The prefix is stored in the project's `.memo/config.json`:
+
+```json
+{
+  "projectPrefix": "CORE"
+}
+```
+
+When a prefix is set, memo IDs in git commit messages and cross-project references SHOULD be written as `{PREFIX}-{NNN}` (for example, `CORE-017`). The `M` shorthand (from chapter 17) is optional and applies within a single project context. Within a single-project `.memo/` tree no prefix is required; the prefix is only mandatory when referencing memos across project boundaries in a shared repository.
 
 ---
 

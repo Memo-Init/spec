@@ -1,29 +1,21 @@
 ---
 title: "Agents, Skills and Tasks"
-description: "This chapter is **normative** for the skill-vs-agent distinction and the first-migration boundary. The agent **migration itself is follow-up work** — adopting this chapter changes no live skill."
+description: "The system is moving toward **Agents as a base layer** on which skills build. This is not an abolition of skills: skills remain, and they remain the foundation for most procedures. Only the..."
 spec_version: "0.1.0"
 spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T20:53:10.474Z"
+generated_at: "2026-06-13T16:57:06.087Z"
 generated_from: "spec/v0.1.0/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/14-agents-skills-tasks.md."
 ---
 
 
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the skill-vs-agent distinction and the first-migration boundary. The agent **migration itself is follow-up work** — adopting this chapter changes no live skill.
-
----
-
-## Purpose
-
 The system is moving toward **Agents as a base layer** on which skills build. This is not an abolition of skills: skills remain, and they remain the foundation for most procedures. Only the **beginning** — the foundation layer — is converted to agents. The guiding principle is "best result, not most efficient path": agents buy isolated context and standing operating rules where those matter most.
 
-Agents are already used in the system today — phase execution (Lead / Worker / Evaluator, worktrees, fresh context), rollout execution, phase generation, schema grading, and the persona audit all run as agent teams (verified). This chapter formalizes the direction and fixes the first migration boundary.
+Agents are already used in the system today — phase execution (Lead / Worker / Evaluator, worktrees, fresh context), rollout execution, phase generation, schema grading, and the persona audit all run as agent teams. This chapter formalizes the skill-vs-agent distinction and the first migration boundary.
 
 ---
 
@@ -44,11 +36,11 @@ A **skill** is the right shape when the procedure should run inside the caller's
 
 ---
 
-## First Migration: Only Evaluators
+## Migration Boundary
 
-The first migration converts **only the evaluators** to agents. Evaluators are the natural first case because the empty-context rule already requires them to run in a fresh, isolated context (see [09-contamination-context-handover.md](/specification/contamination-context-handover/)) — they are agents in everything but form.
+Evaluators are the natural first candidates for agent form because the empty-context rule already requires them to run in a fresh, isolated context (see [09-contamination-context-handover.md](/specification/contamination-context-handover/)) — they are agents in everything but form.
 
-**Migrating to agents first (evaluators):**
+**Migrating to agent form (evaluators):**
 
 - the `*-evaluate` skills (`memo-revision-evaluate`, `memo-phase-evaluate`, `memo-rollout-evaluate`, `prd-evaluate`)
 - the quality evaluators `memo-evidence`, `memo-balance`, `memo-coherence`, `memo-references`
@@ -64,8 +56,6 @@ The first migration converts **only the evaluators** to agents. Evaluators are t
 - pointer skills (on-demand routers to vendored rules)
 
 These stay skills because they are procedures meant to run inside the caller's context — they shape how the caller writes code or docs, and an isolated context would sever them from the work they govern.
-
-> **Follow-up (specified, not yet implemented):** this chapter fixes the migration boundary as spec text. The actual conversion of the evaluators into `AGENTS.md`-backed agents, and the `core` repo that gives them a home, is follow-up work. Adopting this chapter changes no live skill.
 
 ---
 

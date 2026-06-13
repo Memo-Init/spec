@@ -6,14 +6,6 @@
 | Depends on | [16-git-security-versioning.md](./16-git-security-versioning.md) |
 | Related | [18-multidimensionality.md](./18-multidimensionality.md), [13-orchestration.md](./13-orchestration.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [00-overview.md](./00-overview.md) |
 
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the memo-ID scheme and the phase/issue/commit/PR mapping. It documents the **canonical ID schema** of the real system.
-
----
-
-## Purpose
-
 Git is used here as **backup and findability**, not as a deployment trigger. The memo ID gives every work package a stable identifier across three levels (memo → phase → PRD), and a fixed mapping ties that ID to issues, commits, and pull requests. The whole point is that one can search through the trail of work by following references.
 
 ---
@@ -23,23 +15,26 @@ Git is used here as **backup and findability**, not as a deployment trigger. The
 The canonical identifier for a work package is:
 
 ```
-M{NNN}-{PP}-{RR}
+{CTX}-M{NNN}-{PP}-{RR}
 ```
 
 | Segment | Meaning | Example |
 |---------|---------|---------|
-| `M` | Fixed prefix | `M` |
+| `{CTX}` | Short project/context prefix (2–6 uppercase letters). Distinguishes memos from different projects or areas that share the same repo or search space. | `FMC`, `MEMO`, `WIKI` |
+| `M` | Fixed memo marker | `M` |
 | `{NNN}` | 3-digit memo number | `024` |
 | `{PP}` | 2-digit phase number | `05` |
 | `{RR}` | 2-digit PRD number within the phase | `02` |
+
+The `{CTX}` prefix is **REQUIRED** when memos from more than one project can appear in the same search space (shared repository, shared issue tracker, or shared commit log). When a project runs in a fully isolated repository with no cross-project overlap, `{CTX}` **MAY** be omitted and the short form `M{NNN}-{PP}-{RR}` is used. A project **MUST** choose its prefix once and apply it consistently — mixing prefixed and unprefixed forms within one project is not permitted.
 
 The ID addresses three reference levels:
 
 | Level | Format | Example | Meaning |
 |-------|--------|---------|---------|
-| PRD (full) | `M{NNN}-{PP}-{RR}` | `M024-05-02` | Memo 024, phase 5, PRD 2 |
-| Phase | `M{NNN}-{PP}` | `M024-05` | Memo 024, phase 5 |
-| Memo | `M{NNN}` | `M024` | Memo 024 |
+| PRD (full) | `{CTX}-M{NNN}-{PP}-{RR}` | `FMC-M024-05-02` | FlowMCP memo 024, phase 5, PRD 2 |
+| Phase | `{CTX}-M{NNN}-{PP}` | `FMC-M024-05` | FlowMCP memo 024, phase 5 |
+| Memo | `{CTX}-M{NNN}` | `FMC-M024` | FlowMCP memo 024 |
 
 The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{NNN}-{PP}` with a leading zero; an old `PRD-{NNN}` becomes the full `M{NNN}-{PP}-{RR}`. Addressing work by ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](./16-git-security-versioning.md)).
 
@@ -95,14 +90,16 @@ A fixed mapping ties the ID to git artifacts:
 A commit message follows:
 
 ```
-M{NNN}-{PP}-{RR} {Text} #{Issue}
+{CTX}-M{NNN}-{PP}-{RR} {Text} #{Issue}
 ```
 
-and **MUST** be ≤ 50 characters. The `#{Issue}` reference creates the automatic link back to the phase issue. The `M{NNN}-{PP}-{RR}` prefix makes every commit self-locating in the memo → phase → PRD trail.
+The subject line (first line) **MUST** be ≤ 50 characters. The 50-character count covers the entire first line — including the ID prefix, the text, and the `#{Issue}` reference. No component is exempt. If a single-line message cannot fit within 50 characters, keep the subject line at or below the limit and add detail in the body (separated from the subject by a blank line); the body has no character limit. The `#{Issue}` reference creates the automatic link back to the phase issue. The `{CTX}-M{NNN}-{PP}-{RR}` prefix makes every commit self-locating in the memo → phase → PRD trail.
 
 ### Pull requests across repos
 
 Because one memo can coordinate several repositories (see [18-multidimensionality.md](./18-multidimensionality.md)), the unit of a pull request is the **affected repo**, not the memo. A memo touching three repos produces three pull requests, each on its own `memo-{NNN}-{slug}` branch in that repo.
+
+All PRs for a memo are merged together as the final step of the rollout — the "landing the plane" moment (see [13-orchestration.md](./13-orchestration.md)). The orchestrator **MUST NOT** merge a repo's PR in isolation before the other affected repos are ready; concurrent merge keeps the multi-repo state consistent. If a PR must be merged earlier for a dependency reason, the deviation **MUST** be noted in the memo's rollout log.
 
 ---
 

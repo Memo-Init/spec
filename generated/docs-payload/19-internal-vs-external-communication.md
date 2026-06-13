@@ -1,25 +1,17 @@
 ---
 title: "Communication"
-description: "This chapter is **normative** for the boundary between inward-facing inputs and outward-facing artifacts, and for the review that an artifact MUST pass before it is published."
+description: "The system ingests its own working material — long dictated transcripts and the memos derived from them — as an **internal working basis**. That material is written for the author and the agent, in..."
 spec_version: "0.1.0"
 spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T20:53:10.474Z"
+generated_at: "2026-06-13T16:57:06.087Z"
 generated_from: "spec/v0.1.0/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/19-internal-vs-external-communication.md."
 ---
 
-
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the boundary between inward-facing inputs and outward-facing artifacts, and for the review that an artifact MUST pass before it is published.
-
----
-
-## Purpose
 
 The system ingests its own working material — long dictated transcripts and the memos derived from them — as an **internal working basis**. That material is written for the author and the agent, in the author's own register, and it freely carries internal references, working assumptions, and shorthand. Treating that same material as if it were ready for an outside reader is a category error: it produces artifacts that read as if written for insiders, calibrated against context an outside reader does not share.
 
@@ -27,12 +19,12 @@ This chapter fixes the line between the two directions so that internal calibrat
 
 ---
 
-## Inward-Facing by Default
+## Outward-Facing by Default
 
-All transcript-derived input is **inward-facing** by default. A transcript and the memo it produces are the system's internal working basis: they exist to plan and to drive a rollout, not to be read by an outside audience.
+Everything outside `.memo/` is **outward-facing** by default. The working assumption is minimalism: the AI's default posture is "can I say more?" — not "can I remove this?" Internal is the declared exception, not the starting point.
 
-- Inward-facing material **MAY** carry internal references, working register, and insider shorthand. It is calibrated for the author and the agent, not for a stranger.
-- An inward-facing artifact **MUST NOT** be published unchanged. Being inward-facing by default means the burden is on the publisher to prove an artifact is fit to go outward — not the other way around.
+- Material inside `.memo/` **MAY** carry internal references, working register, and insider shorthand. It is calibrated for the author and the agent, not for a stranger.
+- Outside `.memo/`, an artifact is outward-facing unless explicitly declared otherwise. The burden is on the author to justify keeping something internal — not to prove an artifact is fit to go out.
 
 ---
 
@@ -87,7 +79,7 @@ A comment **MAY** explain *what the code does and why*, for the next reader of t
 Issues are a special case of an outward-facing artifact: they are readable by a stranger, yet they exist to coordinate work. The rule is **minimalism** — an issue is opened only as far as is minimally necessary, scoped to the matter itself, not to the internal process behind it.
 
 - An issue **SHOULD** describe the problem and the expected outcome, not the inward working steps that led to it.
-- An issue **MAY** carry a memo ID (`M{NNN}` / `M{NNN}-{PP}`, see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)) as a compact, opaque pointer that makes the work findable internally without exposing the internal reasoning. The memo ID is a handle, not a leak: a stranger cannot resolve it, and it carries no internal content.
+- An issue **SHOULD NOT** expose internal process references or working-session pointers. The commit ID (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)) is the anchor that ties a published artifact back to inward-facing context without leaking that context outward.
 
 The fewer issues are opened, and the less each one exposes of the inward process, the smaller the outward-facing surface.
 

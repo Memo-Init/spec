@@ -1,25 +1,17 @@
 ---
 title: "Git & Security"
-description: "This chapter is **normative** for the deterministic git flow, the mandatory worktree cleanup, the `git-security` gate, and the issue rules. The worktree-cleanup enforcement is **specified here and..."
+description: "After a rollout stop, the system has historically handed work over to an uncontrolled commit-and-push — \"it runs out of control\". This chapter fixes a **deterministic git flow** so that what happens..."
 spec_version: "0.1.0"
 spec_file: "16-git-security-versioning.md"
 order: 16
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T20:53:10.474Z"
+generated_at: "2026-06-13T16:57:06.087Z"
 generated_from: "spec/v0.1.0/16-git-security-versioning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/16-git-security-versioning.md."
 ---
 
-
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the deterministic git flow, the mandatory worktree cleanup, the `git-security` gate, and the issue rules. The worktree-cleanup enforcement is **specified here and partially present in the live skills** — the full enforcement is follow-up work (see below).
-
----
-
-## Purpose
 
 After a rollout stop, the system has historically handed work over to an uncontrolled commit-and-push — "it runs out of control". This chapter fixes a **deterministic git flow** so that what happens to a repository after a stop is specified, not improvised. Security is a fixed part of that flow, not an afterthought.
 
@@ -45,8 +37,6 @@ The resolution and cleanup of a worktree is a **non-skippable part of the work**
 
 The single-active-worktree invariant holds per phase: the Lead verifies the target worktree's branch before each Worker assignment and does not assign a Worker until the branch is correct (the stale guard, see [13-orchestration.md](/specification/orchestration/)).
 
-> **Follow-up (specified, not yet implemented):** the cleanup primitives are verified to exist in the live skills (`git worktree remove` in phase execution, `git worktree prune` in plan execution). This chapter raises them to an explicit, non-skippable rule. Bringing every skill fully in line with that rule is follow-up work, not part of this bootstrap.
-
 ---
 
 ## git-security as a Fixed Part
@@ -68,7 +58,7 @@ It scans staged files and issue text for secrets (API keys, passwords, tokens �
 Issues are part of this same security-governed area. An issue **MUST** be:
 
 - **Neutral** — no private data, no personal information, no internal absolute paths.
-- **Memo-ID referenced** — the issue references its work package by memo ID (`M{NNN}-{PP}` for a phase), so the trail is searchable (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)).
+- **Work-package referenced** — the issue references its work package by a traceable ID, so the trail is searchable (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)).
 - **Free of secrets** — the same `git-security` scan that gates commits also scans issue text before creation.
 
 Work packages are addressed by ID rather than by absolute path; this reduces path exposure and keeps the public issue trail clean.

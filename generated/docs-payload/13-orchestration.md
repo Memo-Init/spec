@@ -1,27 +1,33 @@
 ---
 title: "Orchestration"
-description: "This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the system as actually built."
+description: "A rollout phase is executed by an **agent team**, not by a single linear pass. An orchestrator coordinates the team, persists progress to state files, and recovers exactly from a crash. This chapter..."
 spec_version: "0.1.0"
 spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T20:53:10.474Z"
+generated_at: "2026-06-13T16:57:06.087Z"
 generated_from: "spec/v0.1.0/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/13-orchestration.md."
 ---
 
 
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the orchestrator/agent-team roles, the state files, the crash-recovery procedure, and Task usage. The state-file schemas reflect the system as actually built.
+A rollout phase is executed by an **agent team**, not by a single linear pass. An orchestrator coordinates the team, persists progress to state files, and recovers exactly from a crash. This chapter defines the recursive execution pattern, the team roles, the state-file set, and the recovery procedure. For the Tasks primitive itself — structure, creation contract, and disk layout — see [14-agents-skills-tasks.md](/specification/agents-skills-tasks/); this chapter covers how Tasks are used during orchestration and recovery.
 
 ---
 
-## Purpose
+## Generate → Execute → Evaluate at Every Level
 
-A rollout phase is executed by an **agent team**, not by a single linear pass. An orchestrator coordinates the team, persists progress to state files, and recovers exactly from a crash. This chapter defines the team roles, the state-file set, and the recovery procedure.
+Orchestration follows one recursive three-phase pattern — **Generate → Execute → Evaluate** — applied at every level of the work. The rollout as a whole, each phase, and each revision all use it; at the rollout level a fourth closing step, **Land** (see [27-landing-the-plane.md](/specification/landing-the-plane/)), runs after Evaluate.
+
+| Level | Generate | Execute | Evaluate |
+|-------|----------|---------|----------|
+| Rollout | Create all phases and PRDs from the memo | Run every phase | Validate the whole result against the original memo |
+| Phase | Create one phase with its PRDs | Run the phase with an agent team | Check the interplay of all PRDs in the phase |
+| Revision | Plan the revision | Write the revision | Verify all feedback was incorporated |
+
+Because the pattern is identical at each level, the same orchestration roles, state files, and recovery procedure defined below apply recursively. The rollout-level application of the pattern is described in [12-rollout.md](/specification/rollout/).
 
 ---
 
@@ -29,16 +35,16 @@ A rollout phase is executed by an **agent team**, not by a single linear pass. A
 
 Each phase is run by a team with four roles. The Lead is the coordinator; no agent works without an assignment from the Lead.
 
-| Role | Task | Context | Tools | Model |
-|------|------|---------|-------|-------|
-| Lead | Coordinates the phase, creates Tasks, monitors, stops on problems | Memo + phase + PRDs | Task create/update, SendMessage | Opus |
-| Worker (1 per PRD) | Implements one PRD in its own worktree; loads skills via tags | Own context + PRD | Edit, Write, Bash, Git | Opus |
-| Evaluator | Checks a Worker result with **fresh context** | Fresh + PRD + output | Read, Bash (tests), Grep | Opus (default); **Sonnet optional** for validation |
-| Phase Evaluator | Checks the interplay of all PRDs after all Workers finish | Fresh + all outputs | Read, Bash, Grep | Opus (default); **Sonnet optional** for validation |
+| Role | Task | Context | Tools | Model capability |
+|------|------|---------|-------|-----------------|
+| Lead | Coordinates the phase, creates Tasks, monitors, stops on problems | Memo + phase + PRDs | Task create/update, SendMessage | Strongest reasoning model available |
+| Worker (1 per PRD) | Implements one PRD in its own worktree; loads skills via tags | Own context + PRD | Edit, Write, Bash, Git | Standard capable model; upgrade to strongest for complex PRDs |
+| Evaluator | Checks a Worker result with **fresh context** | Fresh + PRD + output | Read, Bash (tests), Grep | Validated model; a lighter model is acceptable for straightforward validation |
+| Phase Evaluator | Checks the interplay of all PRDs after all Workers finish | Fresh + all outputs | Read, Bash, Grep | Validated model; a lighter model is acceptable for straightforward validation |
 
 The Lead starts Workers in parallel where PRD dependencies allow, runs an Evaluator (fresh context, no carry-over) per finished Worker, iterates Worker↔Evaluator at most twice on FAIL, then runs the Phase Evaluator on the integrated result. Evaluators **MUST** receive a fresh context — they know nothing of the implementation process and see only the PRD plus the produced files (the empty-context rule, see [09-contamination-context-handover.md](/specification/contamination-context-handover/)). The first roles to migrate to repo-scoped agents are exactly these evaluators (see [14-agents-skills-tasks.md](/specification/agents-skills-tasks/)).
 
-The **Model** column reflects the Max-plan strategy: Opus is the default for every role, because it is the proven workhorse. For the two validation roles (Evaluator, Phase Evaluator) a **Sonnet** run is an explicit option — a cheaper validation pass where the task does not need Opus depth. It is an option, never a requirement; the choice stays with the operator and is governed by the resource budget, not by the harness.
+The **Model capability** column expresses role requirements, not product names. The Lead requires the strongest reasoning model because it holds the most context and makes coordination decisions. Workers default to a standard capable model; complex or highly interdependent PRDs warrant the strongest available. Evaluators and Phase Evaluators need a validated, capable model — a lighter option is permissible when the validation task is clearly bounded. Model selection is the operator's responsibility and is governed by resource budget; the harness does not enforce a specific product.
 
 ---
 

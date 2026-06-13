@@ -1,23 +1,15 @@
-# 22. Recommended Way: Self-Describing Command Tree (Branch/Leaf)
+# 22. Self-Describing Command Tree (Branch/Leaf)
 
 | Field | Value |
 |-------|-------|
 | Status | Draft |
 | Related | [13-orchestration.md](./13-orchestration.md), [14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [00-overview.md](./00-overview.md) |
 
-> Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](./00-overview.md) (Conformance Language). RFC 2119 / BCP 14 keywords are used.
-
-This chapter is **normative** for the recommended shape of an agent-facing CLI: a self-describing command tree of **branches** and **leaves** whose help text is a re-implementable spec, plus the self-correction and tool-embedding rules that keep an agent grounded in that help. Code snippets follow the project Node style (4-space indentation, no semicolons, single quotes).
+The recommended way to expose tools to an agent is a **self-describing command tree**: a small tree of **branches** ("bags of tools") and **leaves** (tools that do something). Each leaf carries strongly typed input and output whose field descriptions **encode behavior**, not just types. The tree compiles to a CLI, and a `describe()` rendering produces the help an agent reads. The design goal is that the help alone is a sufficient specification — robust enough that the code could be re-implemented from it. Code snippets follow the project Node style (4-space indentation, no semicolons, single quotes).
 
 ---
 
-## Purpose
-
-The recommended way to expose tools to an agent is a **self-describing command tree**: a small tree of **branches** ("bags of tools") and **leaves** (tools that do something). Each leaf carries strongly typed input and output whose field descriptions **encode behavior**, not just types. The tree compiles to a CLI, and a `describe()` rendering produces the help an agent reads. The design goal is that the help alone is a sufficient specification — robust enough that the code could be re-implemented from it.
-
----
-
-## Branch / Leaf Data Model — Normative
+## Branch / Leaf Data Model
 
 The tree has exactly two node kinds.
 
@@ -57,7 +49,7 @@ The two predicates distinguish the node kinds structurally: a node with `childre
 
 ---
 
-## Help-as-Spec — Normative
+## Help-as-Spec
 
 The central design rule governs the quality bar for help text.
 
@@ -84,7 +76,7 @@ The corrected understanding (versus the first reconstruction) is summarized belo
 
 ---
 
-## Tool-Embedding Requirement — Normative
+## Tool-Embedding Requirement
 
 The help is only useful if it is in the agent's context when the agent acts.
 

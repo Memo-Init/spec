@@ -32,38 +32,9 @@ The memo system transforms long, unstructured input — typically dictated voice
 
 A **memo** is a versioned strategy document. It starts as a first revision, iterates through revisions until the developer finalizes it, and then drives a rollout that produces real artifacts (code, repositories, documentation). The memo is the single highest authority over its own rollout.
 
-### Current state and target state
-
-| | |
-|---|---|
-| **Current state** | The memo system exists as a tool collection in a workbench layer (`cli/memo-toolkit/`) plus a set of global rules. It is in daily productive use and has produced well over a hundred memos in real projects. It has no public home — no repository, no specification, no website. |
-| **Target state** | A minimal, public organization that documents the system: a specification (this document), an org profile, a website, the memo viewer, a deterministic prompt generator, and a versioned skills/agents core. The result is understandable without knowing the author personally, modeled after an existing public reference organization. |
-
 ### Mission
 
 Make planning-first agentic engineering reproducible. The memo system gives an AI a **scaffold** for turning long transcripts into dedicated work orders and describes the human-AI interaction for resolving open questions — before implementation is handed over to run as autonomously as possible.
-
-### Motivation
-
-Publishing this specification secures authorship of the underlying ideas and keeps the intellectual property documented in the open, independent of any individual employment context.
-
----
-
-## System Facts
-
-This specification documents the real system as it runs. The following facts anchor the chapters that follow:
-
-| Aspect | Fact |
-|--------|------|
-| Input | 4 transcript types, including `plan-start` ([03-input-paths.md](./03-input-paths.md)) |
-| Finalization | 9 finalization gates plus 5 quality skills ([11-quality-and-finalization.md](./11-quality-and-finalization.md)) |
-| Evidence | 6 evidence levels |
-| Pull requests | 1 PR per affected repository ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
-| Input pipeline | 5 distinct pipeline steps ([04-input-pipeline.md](./04-input-pipeline.md)) |
-| Local guarantee | Structural — no git folder under `.memo/` ([06-memo-structure.md](./06-memo-structure.md)) |
-| Public context | Public-context scoping in git security ([16-git-security-versioning.md](./16-git-security-versioning.md)) |
-
-Where a chapter describes behavior that is planned but not yet built, this specification states it as **specified-but-not-yet-implemented**: the specification text is binding, but the corresponding live-code change in the toolkit skills is a separate, future task and is not part of this baseline.
 
 ---
 
@@ -75,7 +46,7 @@ Planning is the most important activity in agentic engineering. The memo system 
 
 ## Organization and Repository Fan-Out
 
-The memo-init specification is induced (written up) from the local toolkit source and published across a small organization of repositories. The diagram below shows the organization, the repository fan-out, and the spec→site automation pipeline.
+The memo-init specification is published across a small organization of repositories. The diagram below shows the organization, the repository fan-out, and the spec→site automation pipeline.
 
 ```mermaid
 flowchart TD
@@ -95,11 +66,6 @@ flowchart TD
     SPEC -. dependency .-> VIEW
     PG -->|"deterministic start prompt"| AGENTS["AGENTS.md agents"]
     CORE -. provides agents + skills .-> AGENTS
-
-    subgraph SRC["Spec source (local)"]
-        TK["cli/memo-toolkit/\nskills + docs"]
-    end
-    TK -.induced into prose.-> SPEC
 ```
 
 > Diagram orientation is `flowchart TD` (the default). The node meanings are given in the surrounding chapters of this specification.
@@ -114,35 +80,6 @@ The six repositories are bootstrapped from an existing public reference organiza
 | `viewer` | The memo viewer, extracted from the toolkit editor. Core-like: depends directly on the spec. |
 | `prompt-generator` | The deterministic start-prompt compositor. |
 | `core` | Skills (the base layer) and agents (evaluators first). |
-
----
-
-## Document Index (v0.1.0 Core Chapters)
-
-| Document | Title | Mode |
-|----------|-------|------|
-| `00-overview.md` | Overview | Informative |
-| `01-philosophy.md` | Guardrail Philosophy & Interaction Model | Informative |
-| `02-memo-sop-entrypoint.md` | Memo-SOP as the Canonical Entry Point | Normative |
-| `03-input-paths.md` | Input Paths — Four Transcript Types | Normative |
-| `04-input-pipeline.md` | The Five-Step Input Pipeline | Normative |
-| `05-memo-strategies.md` | Memo Strategies (Workflow Shape) | Normative |
-| `06-memo-structure.md` | Memo Structure & Local Guarantee | Normative |
-| `07-revisions-and-questions.md` | Revisions & the Question Format | Normative |
-| `08-phases-and-prds.md` | Phases, PRDs & the Dependency Tree | Normative |
-| `09-contamination-context-handover.md` | Contamination, Empty Context & Handover | Normative |
-| `10-proactive-research.md` | Proactive Research | Normative |
-| `11-quality-and-finalization.md` | Quality Gates & Finalization | Normative |
-| `12-rollout.md` | Rollout — Generate / Execute / Evaluate | Normative |
-| `13-orchestration.md` | Orchestration, State & Recovery | Normative |
-| `14-agents-skills-tasks.md` | Agents, Skills & Tasks | Normative |
-| `15-prompt-generator.md` | Prompt Generator | Normative |
-| `16-git-security-versioning.md` | Security, Git Flow & Versioning | Normative |
-| `17-git-workflow-and-ids.md` | Git Workflow & Memo IDs | Normative |
-| `18-multidimensionality.md` | Multidimensionality — One Memo, Many Repos | Normative |
-| `19-internal-vs-external-communication.md` | Internal vs. External Communication | Normative |
-
-A separate, independently versioned **workbench/** sub-spec documents the project-level organization (project structure, requirements profiles, tools registry, strands, wiki, trash). See [README.md](./README.md) for the full reading order and the pointer to the sub-spec.
 
 ---
 

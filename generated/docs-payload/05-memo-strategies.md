@@ -6,14 +6,12 @@ spec_file: "05-memo-strategies.md"
 order: 5
 section: "Specification"
 normative: true
-generated_at: "2026-06-12T20:53:10.474Z"
+generated_at: "2026-06-13T16:57:06.087Z"
 generated_from: "spec/v0.1.0/05-memo-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/05-memo-strategies.md."
 ---
 
-
-> **Normative.** Normative language (MUST/SHOULD/MAY) follows the conventions defined in [00-overview.md](/specification/overview/) (Conformance).
 
 ---
 
@@ -21,7 +19,7 @@ edit_warning: "This file is auto-generated. Source: spec/v0.1.0/05-memo-strategi
 
 A memo has two independent classification dimensions. They MUST NOT be conflated.
 
-- **Memo type** — the *endpoint*: where the SOP stops. A Strategy memo ends after finalization (analysis only, no code). An Implementation memo runs all the way through to code. A Sorting memo ends in a triage with sub-memos.
+- **Memo type** — the *endpoint*: where the SOP stops. A Strategy memo ends after finalization (analysis only, no code). An Implementation memo runs all the way through to code. A Sorting memo ends in a triage that distributes work across separate strands or threads (though the preferred pattern is ONE memo with multiple threads rather than splitting into separate memos).
 - **Memo strategy** — the *workflow shape*: how the work is approached on the way to that endpoint.
 
 The strategy is orthogonal to the type. A memo declares both. This chapter specifies the strategy dimension; the type endpoints are covered in [11-quality-and-finalization.md](/specification/quality-and-finalization/) and [08-phases-and-prds.md](/specification/phases-and-prds/).
@@ -33,23 +31,23 @@ The strategy is orthogonal to the type. A memo declares both. This chapter speci
 | Strategy | Meaning | Maps to type |
 |----------|---------|--------------|
 | **Research** | Research only, filed as standalone research artifacts. | Strategy |
-| **Implementation** | A follow-up memo references the research and turns it into work. | Implementation |
+| **Implementation** | A separate memo references the research and turns it into concrete work. | Implementation |
 | **Mixture** | Research and implementation combined; some parts executed, some archived. | Sorting |
-| **Iterative** | Decide the shape **while** doing — settle what it should look like and already complete parts of it in the same motion. | (genuinely new) |
+| **Iterative** | Decide the shape **while** doing — settle what it should look like and already complete parts of it in the same motion. | Implementation / Sorting |
 
 ---
 
-## The `Memo-Strategie` Header Field
+## The `Memo-Strategy` Header Field
 
-Every memo declares its strategy in a `Memo-Strategie` header field. The strategy SHOULD be set early — ideally at initialization — because it shapes how revisions are planned and how research is filed. The field is mutable across revisions in the same way the type is, but a deliberate early choice is preferred over late discovery.
+Every memo declares its strategy in a `Memo-Strategy` header field. The strategy SHOULD be set early — ideally at initialization — because it shapes how revisions are planned and how research is filed. The field is mutable across revisions in the same way the type is, but a deliberate early choice is preferred over late discovery.
 
-For example, the bootstrap memo from which this specification is induced declares `Memo-Strategie: Iterative` — it fixes the shape of the organization and its repositories while already producing parts of that shape (this specification text) in the same pass.
+For example, a memo that fixes the shape of a project while already producing deliverables in the same pass would declare `Memo-Strategy: Iterative`.
 
 ---
 
-## Iterative Is Genuinely New
+## Why Iterative
 
-The first three strategies describe arrangements that already existed implicitly: pure research, research-then-implement, and mixed-then-sorted. The **Iterative** strategy is genuinely new. It names the case where the work cannot be fully planned before it starts because the act of doing reveals the shape.
+The **Iterative** strategy is useful when the work cannot be fully planned before it starts because the act of doing reveals the shape. A typical case: a frontend feature where the designer produces mockups and the implementer begins wiring components in the same memo pass — the final UI shape is not decided upfront but emerges from the parallel motion. This avoids a blocking hand-off between a design phase and an implementation phase.
 
 Under the Iterative strategy:
 
@@ -57,7 +55,7 @@ Under the Iterative strategy:
 - A decision and the piece of work it enables MAY land in the same revision.
 - The memo remains the authority over its own rollout; "deciding while doing" does not relax finalization. The Iterative strategy changes *when* parts are produced, not *whether* the finalization gate applies.
 
-Naming this strategy makes the interleaving explicit and reviewable, instead of leaving it as an undocumented deviation from a plan-everything-first assumption.
+Naming this strategy makes the interleaving explicit and reviewable, rather than leaving it as an undocumented deviation from a plan-everything-first assumption.
 
 ---
 

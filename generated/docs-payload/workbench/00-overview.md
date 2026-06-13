@@ -1,12 +1,12 @@
 ---
-title: "Workbench Overview"
+title: "Overview"
 description: "This is the entry point for the **workbench sub-spec** of the memo-init specification. The workbench is the meta-orchestration layer that holds all projects, their tools, and their shared..."
 spec_version: "0.1.0"
 spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-12T20:53:10.474Z"
+generated_at: "2026-06-13T16:57:06.087Z"
 generated_from: "spec/workbench/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/00-overview.md."
@@ -65,12 +65,13 @@ These checks are descriptive of the real audit performed at the workbench level;
 
 ## Global Helpers
 
-The workbench exposes a small set of **global** command-line helpers that are available to every project. Two that are specific to the workbench level:
+The workbench exposes a small set of **global** command-line helpers that are available to every project. The following are specific to the workbench level:
 
 | Helper | Role |
 |--------|------|
 | `get-sheet` | Retrieve data from external spreadsheets for use inside a project. |
 | `depwatch` | Supply-chain security watchdog — looks up and scans dependencies before they are installed. |
+| `flowmcp` | Service-tool router — search, list, and call external API tools without per-project installation. |
 
 These helpers are global because they serve cross-project concerns (data ingestion, dependency safety) rather than the logic of any single project. A project **MAY** rely on a global helper being reachable; the workbench tool-reachability check exists precisely so that reliance is verified rather than assumed.
 
@@ -78,23 +79,11 @@ These helpers are global because they serve cross-project concerns (data ingesti
 
 ## Sub-Spec Document Index
 
+The workbench sub-spec contains the following chapters. Requirements, Tools Registry, Strands, and Memo History have been promoted to core chapters and are linked from there: [Requirements](/specification/requirements/), [Tools Registry](/specification/tools-registry/), [Strands](/specification/strands/), [Memo History](/specification/memo-history/).
+
 | Document | Title | Mode |
 |----------|-------|------|
 | `00-overview.md` | Workbench Sub-Spec — Overview | Informative |
 | `01-project-structure.md` | Project Structure & Local Guarantee | Normative |
-| `02-requirements.md` | Requirements Profiles (`.memo/requirements/`) | Normative |
-| `03-tools-registry.md` | Tools Registry (`.memo/tools/`) | Normative (Recommendation) |
-| `04-strands.md` | Strands — One Memo, Many Topics | Normative |
-| `05-wiki.md` | Wiki Types — Project Wiki & Memo Wiki | Normative |
 | `06-trash.md` | Trash — No Deletion, Only `.trash/` | Normative |
 
----
-
-## Related
-
-- [01-project-structure.md](/specification/project-structure/) — the mandatory project layout and the local guarantee.
-- [02-requirements.md](/specification/requirements/) — requirements profiles as data.
-- [03-tools-registry.md](/specification/tools-registry/) — the per-memo tools registry.
-- [04-strands.md](/specification/strands/) — splitting one memo into named strands.
-- [05-wiki.md](/specification/wiki/) — project wiki versus the timeline-aware memo wiki.
-- [06-trash.md](/specification/trash/) — the no-deletion trash policy.
