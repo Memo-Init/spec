@@ -6,7 +6,7 @@
 | Depends on | [10-proactive-research.md](./10-proactive-research.md) |
 | Related | [12-rollout.md](./12-rollout.md), [09-contamination-context-handover.md](./09-contamination-context-handover.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [23-requirements.md](./23-requirements.md), [00-overview.md](./00-overview.md) |
 
-Quality is enforced by gates, and finalization is the readiness gate between strategy and implementation. This chapter defines the five quality skills, the six evidence levels, the finalization gate set (including the completeness gate that guards the revision-to-finalization transition), the verdict logic, and how requirement-derived checks bind as finalization gates.
+Quality is enforced by gates, and finalization is the readiness gate between strategy and implementation. This chapter defines the five quality skills, the six evidence levels, the finalization gate set (grouped into Block A/B/C, including the completeness gate that guards the revision-to-finalization transition and the decision-extractor gate that feeds the rollout-handover document), the binary verdict logic, and how requirement-derived checks bind as finalization gates.
 
 ---
 
@@ -14,7 +14,7 @@ Quality is enforced by gates, and finalization is the readiness gate between str
 
 Finalization is the act of declaring a memo ready to leave strategy and enter implementation. A memo is finalized exactly once, by an explicit user trigger, after every quality gate has been run. The AI **MUST NOT** finalize autonomously: experience shows the AI chronically finalizes too early, so finalization is the single workflow entry point that requires an explicit user trigger. There is no autonomous path into finalization.
 
-Finalization produces a new revision containing a finalization report with a GO / NO-GO / CONDITIONAL GO verdict. A single FAIL or BLOCKED gate is enough for NO-GO. The gate set, verdict logic, and resulting status values are defined in the sections below.
+Finalization produces a new revision containing a finalization report with a **binary** verdict: `rollout-ready` or `NOT-ready`. There is no conditional intermediate verdict — a single FAIL or BLOCKED gate is enough for `NOT-ready`. WARN gates do not force a conditional verdict; the user accepts each WARN explicitly in the one consolidated query, and every accepted WARN is recorded as an accepted risk. The gate set, verdict logic, and resulting status values are defined in the sections below.
 
 ---
 
@@ -53,33 +53,56 @@ The four memo-* quality skills run **autonomously** — they MUST NOT ask follow
 
 ## The Finalization Gates
 
-`memo-finalize` runs the gates below plus a user-confirmation gate. The gates are consolidated into **one** summary query presented to the user — the system MUST NOT ask one question per gate.
+`memo-finalize` runs the gates below plus a user-confirmation gate. The gates are grouped into **three blocks** — Block A (memo quality), Block B (decision completeness), Block C (environment / repo hygiene) — and consolidated into **one** summary query presented to the user. The system MUST NOT ask one question per gate.
 
-| # | Gate | Result values | What it checks |
-|---|------|---------------|----------------|
-| 0 | Input completeness | PASS / BLOCKED | Every input required by a referenced skill is present in the memo or its context block. BLOCKED counts as FAIL. |
-| 1 | Facts / assumptions classified (`memo-evidence`) | PASS / FAIL | All substantive statements are tagged; the classification summary is present. |
-| 2 | Research needs derived | PASS / FAIL | Research needs are listed; no `[Research open]` tag remains; each open point has a user decision. |
-| 3 | Code references verified (`memo-references`) | PASS / FAIL / N/A | No `[REF-BROKEN]` markers remain; N/A if the memo has no code references. |
-| 4 | Over-/under-engineering (`memo-balance`) | PASS / WARN / FAIL | No unaddressed +2 / −2 chapter; critical under-engineering (security, data integrity) resolved. |
-| 5 | AI feedback given (`memo-coherence`) | PASS / WARN / FAIL | Coherence check performed; critical contradictions addressed. |
-| 6 | Ralph-Loop suitability | PASS / WARN / N/A | If a Ralph-Loop is planned, its PRDs are self-contained with machine-testable acceptance criteria; N/A otherwise. |
-| 7 | Open questions empty | PASS / FAIL | The `## Open Questions` section holds no unresolved `### F{N}` entries, or remaining entries are explicitly marked "deliberately open". |
-| 8 | Third-party software veto (token-tracking) | PASS / WARN | Forbidden token-tracking packages appear only in an anti-pattern context, never as a positive recommendation. |
-| 9 | Rollout entry points | PASS / WARN / FAIL | The `## Rollout Entry Points` section exists with at least one concrete (non-placeholder) numbered path entry; filesystem existence is a WARN, not a FAIL, because some paths are created by the rollout itself. |
-| 10 | Completeness across revisions | PASS / FAIL | Every information item and topic present in any preceding revision (Rev 1..N) is preserved in the finalized revision; no topic is silently lost during the revision-to-finalization transition. |
+### Block A — Memo Quality
 
-A row for `git-security` and a final row for user confirmation complete the report. After a GO or CONDITIONAL GO the skill MUST break and ask the user whether to start the rollout — this is the single point in the whole workflow where the system actively asks whether to continue.
+| Gate | Result values | What it checks |
+|------|---------------|----------------|
+| Input completeness | PASS / BLOCKED | Every input required by a referenced skill is present in the memo or its context block. BLOCKED counts as FAIL. |
+| Facts / assumptions classified (`memo-evidence`) | PASS / FAIL | All substantive statements are tagged; the classification summary is present. |
+| Research needs derived | PASS / FAIL | Research needs are listed; no `[Research open]` tag remains; each open point has a user decision. |
+| Code references verified (`memo-references`) | PASS / FAIL / N/A | No `[REF-BROKEN]` markers remain; N/A if the memo has no code references. |
+| Over-/under-engineering (`memo-balance`) | PASS / WARN / FAIL | No unaddressed +2 / −2 chapter; critical under-engineering (security, data integrity) resolved. |
+| AI feedback given (`memo-coherence`) | PASS / WARN / FAIL | Coherence check performed; critical contradictions addressed. |
+| Ralph-Loop suitability | PASS / WARN / N/A | If a Ralph-Loop is planned, its PRDs are self-contained with machine-testable acceptance criteria; N/A otherwise. |
+| Open questions empty | PASS / FAIL | The `## Open Questions` section holds no unresolved `### F{N}` entries, or remaining entries are explicitly marked "deliberately open". |
+| Third-party software veto (token-tracking) | PASS / WARN | Forbidden token-tracking packages appear only in an anti-pattern context, never as a positive recommendation. |
+| Rollout entry points | PASS / WARN / FAIL | The `## Rollout Entry Points` section exists with at least one concrete (non-placeholder) numbered path entry; filesystem existence is a WARN, not a FAIL, because some paths are created by the rollout itself. |
+| Completeness across revisions | PASS / FAIL | Every information item and topic present in any preceding revision (Rev 1..N) is preserved in the finalized revision; no topic is silently lost during the revision-to-finalization transition. See [The Completeness Gate](#the-completeness-gate). |
+| `git-security` | PASS / FAIL | Real run over the memo body and the planned artifacts; secrets, absolute paths, mock credentials, `.env` files, or personal data make it FAIL. |
+| `repo-readme` (advisory) | PASS / WARN | Affected repos carry a README; missing README is a WARN here (hard enforcement lives in the git-push gate). |
+
+### Block B — Decision Completeness
+
+Block B exists to keep PRD-level questions from surfacing minutes **after** rollout start. Every finding goes into the one consolidated query — never to runtime.
+
+| Gate | Result values | What it checks |
+|------|---------------|----------------|
+| PRD derivability + decision extractor | PASS / FAIL + decision list | Per phase, the PRD scope is derivable without a new architecture decision. This gate is not a bare coverage boolean: it **extracts and names** the concrete clarified architecture/design decisions (from answered `F{N}` questions, phase hints, and triage) into a structured per-phase decision list. That list is carried into the rollout via the rollout-handover document (below), so the empty rollout context never has to re-decide. |
+| Phase hints binding | PASS / FAIL | The phase hints are symmetric and complete; `executionOrder` is frozen and written to the marker, so runtime never sees parallel candidates without a default. |
+| Requirements coverage (forward check) | PASS / FAIL | Every memo chapter is assigned to at least one phase. |
+
+### Block C — Environment / Repo Hygiene
+
+Per affected repo (derived from entry points and phase planning), the finalize gate runs a stand check (clean tree, no open branches, no stale worktrees, no stashes), tool availability, a dependency smoke test, and a one-time budget snapshot. Findings are never silently mutated — each disposition goes into the one consolidated query, decided at the transition rather than at runtime.
+
+A final row for user confirmation completes the report. There is **no** break-and-ask step after finalization: the transition into rollout is the marker write (and the rollout-handover document), not a question. The single point where the system actively asks is the one consolidated query (Block A/B/C summary), which happens before the verdict — not after it.
+
+### The Rollout-Handover Document
+
+On a `rollout-ready` verdict, `memo-finalize` writes a **rollout-handover document** at a fixed path (`.memo/<id>/rollout-handover.md`, referenced from the readiness marker via its `handover` field). It carries the per-phase decisions extracted by the decision-extractor gate, the `executionOrder`, the accepted risks, and the rollout entry points. It is **written at finalization and read at rollout start** — this is how the clarified decisions cross into the empty rollout context so no decision has to be re-made (re-asked) there. Writing is NO-OVERWRITE: an existing handover document is versioned or confirmed, never silently replaced. The read side belongs to the rollout (see [12-rollout.md](./12-rollout.md)).
 
 ### Verdict
 
+The verdict is **binary**.
+
 | Verdict | Condition |
 |---------|-----------|
-| GO | All gates PASS |
-| CONDITIONAL GO | Only WARN gates (no FAIL, no BLOCKED); accepted risks listed |
-| NO-GO | Any FAIL or BLOCKED; failed gates and missing inputs listed |
+| `rollout-ready` | All gates PASS across Block A/B/C; each WARN was explicitly accepted by the user in the consolidated query and recorded as an accepted risk. |
+| `NOT-ready` | Any FAIL or BLOCKED; failed gates and missing inputs listed. |
 
-On GO the memo status becomes "Finalized"; on CONDITIONAL GO, "Conditionally finalized"; on NO-GO the status is unchanged.
+There is no conditional intermediate verdict. WARN gates do not produce a separate verdict — they are accepted (and recorded as accepted risks) or they become fix items. On `rollout-ready` the memo status becomes "Finalized" and the readiness marker plus the rollout-handover document are written; on `NOT-ready` the status is unchanged.
 
 ---
 
@@ -102,7 +125,7 @@ Requirement-derived checks bind as finalization gates: a requirement **MAY** dec
 ## Related
 
 - [10-proactive-research.md](./10-proactive-research.md) — the research that closes `[ASSUMPTION]` / `[CONJECTURE]` items before gate 1 and gate 2 are checked.
-- [12-rollout.md](./12-rollout.md) — the rollout that begins only after a GO / CONDITIONAL GO verdict.
+- [12-rollout.md](./12-rollout.md) — the rollout that begins only after a `rollout-ready` verdict, and reads the rollout-handover document written at finalization.
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — `git-security` as a fixed gate and a fixed part of the git flow.
 - [23-requirements.md](./23-requirements.md) — the requirement model behind requirement-derived gates.
 - [00-overview.md](./00-overview.md) — conformance language.
