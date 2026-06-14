@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-06-13T16:57:32.494Z"
+generated_at: "2026-06-14T10:20:38.810Z"
 generated_from: "spec/v0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/01-philosophy.md."
