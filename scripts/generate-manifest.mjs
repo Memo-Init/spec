@@ -58,15 +58,28 @@ const slugFromFilename = ( { filename } ) => {
 }
 
 
-// Sidebar mapping: 00-01 are the introduction (overview + philosophy), the rest
-// are the normative specification chapters. Workbench files form their own group.
+// Sidebar mapping: 00-01 are the introduction (overview + philosophy); the
+// remaining chapters are grouped into one-word topic categories (Memo 011 Kap 5).
+// Workbench files form their own group. Chapters not listed in the memo mapping
+// (currently 14, 15) fall through to DEFAULT_GROUP — a deliberate choice so no
+// chapter is ever left unmapped (PRD-005 "Vollständigkeit" assertion).
+const DEFAULT_GROUP = 'foundations'
+const SIDEBAR_GROUP_BY_ORDER = {
+    3: 'input', 4: 'input', 5: 'input', 6: 'input', 7: 'input',
+    8: 'execution', 12: 'execution', 13: 'execution', 22: 'execution', 27: 'execution',
+    10: 'finalization', 11: 'finalization',
+    23: 'requirements',
+    24: 'tools', 26: 'tools',
+    9: 'behavior', 16: 'behavior', 17: 'behavior', 19: 'behavior', 21: 'behavior', 28: 'behavior', 29: 'behavior',
+    2: 'foundations', 18: 'foundations', 20: 'foundations', 25: 'foundations'
+}
 const sidebarGroupFromFilename = ( { filename, group } ) => {
     if( group === 'workbench' ) return 'workbench'
     const match = filename.match( /^(\d{2})-/ )
-    if( !match ) return 'specification'
+    if( !match ) return DEFAULT_GROUP
     const order = parseInt( match[ 1 ], 10 )
     if( order <= 1 ) return 'introduction'
-    return 'specification'
+    return SIDEBAR_GROUP_BY_ORDER[ order ] ?? DEFAULT_GROUP
 }
 
 

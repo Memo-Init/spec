@@ -31,7 +31,7 @@
             "order": 2,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "foundations"
         },
         {
             "filename": "03-input-paths.md",
@@ -41,7 +41,7 @@
             "order": 3,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "input"
         },
         {
             "filename": "04-input-pipeline.md",
@@ -51,7 +51,7 @@
             "order": 4,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "input"
         },
         {
             "filename": "05-memo-strategies.md",
@@ -61,7 +61,7 @@
             "order": 5,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "input"
         },
         {
             "filename": "06-memo-structure.md",
@@ -71,7 +71,7 @@
             "order": 6,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "input"
         },
         {
             "filename": "07-revisions-and-questions.md",
@@ -81,7 +81,7 @@
             "order": 7,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "input"
         },
         {
             "filename": "08-phases-and-prds.md",
@@ -91,7 +91,7 @@
             "order": 8,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "execution"
         },
         {
             "filename": "09-contamination-context-handover.md",
@@ -101,7 +101,7 @@
             "order": 9,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "behavior"
         },
         {
             "filename": "10-proactive-research.md",
@@ -111,7 +111,7 @@
             "order": 10,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "finalization"
         },
         {
             "filename": "11-quality-and-finalization.md",
@@ -121,7 +121,7 @@
             "order": 11,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "finalization"
         },
         {
             "filename": "12-rollout.md",
@@ -131,7 +131,7 @@
             "order": 12,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "execution"
         },
         {
             "filename": "13-orchestration.md",
@@ -141,7 +141,7 @@
             "order": 13,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "execution"
         },
         {
             "filename": "14-agents-skills-tasks.md",
@@ -151,7 +151,7 @@
             "order": 14,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "foundations"
         },
         {
             "filename": "15-prompt-generator.md",
@@ -161,7 +161,7 @@
             "order": 15,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "foundations"
         },
         {
             "filename": "16-git-security-versioning.md",
@@ -171,7 +171,7 @@
             "order": 16,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "behavior"
         },
         {
             "filename": "17-git-workflow-and-ids.md",
@@ -181,7 +181,7 @@
             "order": 17,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "behavior"
         },
         {
             "filename": "18-multidimensionality.md",
@@ -191,7 +191,7 @@
             "order": 18,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "foundations"
         },
         {
             "filename": "19-internal-vs-external-communication.md",
@@ -201,7 +201,7 @@
             "order": 19,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "behavior"
         },
         {
             "filename": "20-flow-full-vs-update-revisions.md",
@@ -211,7 +211,7 @@
             "order": 20,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "foundations"
         },
         {
             "filename": "21-human-computer-interaction.md",
@@ -221,7 +221,7 @@
             "order": 21,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "behavior"
         },
         {
             "filename": "22-tree-cli-recommended-way.md",
@@ -231,7 +231,7 @@
             "order": 22,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "execution"
         },
         {
             "filename": "23-requirements.md",
@@ -241,7 +241,7 @@
             "order": 23,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "requirements"
         },
         {
             "filename": "24-tools-registry.md",
@@ -251,7 +251,7 @@
             "order": 24,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "tools"
         },
         {
             "filename": "25-strands.md",
@@ -261,7 +261,7 @@
             "order": 25,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "foundations"
         },
         {
             "filename": "26-memo-history.md",
@@ -271,7 +271,7 @@
             "order": 26,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "tools"
         },
         {
             "filename": "27-landing-the-plane.md",
@@ -281,7 +281,7 @@
             "order": 27,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "execution"
         },
         {
             "filename": "28-drift.md",
@@ -291,7 +291,7 @@
             "order": 28,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "behavior"
         },
         {
             "filename": "29-behavioral-guardrails.md",
@@ -301,7 +301,7 @@
             "order": 29,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "specification"
+            "sidebar_group": "behavior"
         }
     ],
     "workbench": {
