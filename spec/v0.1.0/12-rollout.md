@@ -50,10 +50,22 @@ The rollout **MUST** always provision a standing lessons-learned file at `rollou
     execution-state.json
     phase-{N}-state.json
     evaluate-state.json
+    gotchas.md               <- living file, shared during the run
     lessons-learned.md       <- standing file, always provisioned
 ```
 
 The lessons-learned file is distinct from the per-rollout state files: state files track machine progress for crash recovery (see [13-orchestration.md](./13-orchestration.md)); the lessons-learned file accumulates human-meaningful improvement notes across the rollout.
+
+## The Living Gotchas File
+
+The rollout **MUST** also provision a living gotchas file at `rollout/gotchas.md`. Where the lessons-learned file is a closing record, the gotchas file is an **active, shared scratchpad** maintained *during* the run: when a Worker discovers a rule that the rollout's agents keep re-deriving — a build quirk, a path convention, an ordering constraint — it **SHOULD** be written to `gotchas.md` once so that later Workers read it instead of re-discovering it. Without this, many agents independently re-learn the same handful of rules, spending subagent time on knowledge that one note would have carried.
+
+The two files are deliberately separate and **MUST NOT** be conflated:
+
+| File | When written | Audience | Purpose |
+|------|--------------|----------|---------|
+| `gotchas.md` | continuously, *during* the run | the rollout's own later Workers | active rules to apply right now, so the same rule is learned once, not many times |
+| `lessons-learned.md` | at the close of the rollout | the next rollout, the skills, the SOP | retrospective improvement notes that feed back beyond this run |
 
 ---
 

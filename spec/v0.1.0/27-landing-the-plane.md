@@ -24,7 +24,7 @@ The landing produces a single document with a fixed, deterministic structure. Th
 - **STATUS** — the one-line verdict of where the run ended: complete, partially complete, or open. A `verdict: OPEN` is not a failure; honest landing names open ends rather than hiding them.
 - **WHAT WAS DONE** — a table with one row per repository, recording what changed in each. The per-repo table is the canonical record of the rollout's footprint across the workspace.
 - **PILOT TASKS** — a numbered list of the actions left for the pilot to take. Each task carries a recommendation, so the pilot is not merely told what is pending but advised on how to act on it.
-- **OPEN ENDS** — what is not finished, grouped into three categories: items deferred by decision, items blocked on an external dependency, and items that need review before they can close.
+- **OPEN ENDS** — what is not finished, grouped into three categories: items deferred by decision, items blocked on an external dependency, and items that need review before they can close. These landing categories are per-open-end and applied at the close of the rollout; they are distinct from the per-unit three exits of Worker output during execution (set / justified-omit / blocked, see [13-orchestration.md](./13-orchestration.md)) and MUST NOT be conflated with them.
 - **MACHINE-READABLE** — a `landing-readiness.json` marker capturing the end-state in structured form, so an orchestrator or a fresh context can read the landing without parsing prose.
 - **RE-ENTRY** — the exact command to resume, written out literally so the next session can copy it and continue without rediscovering how to restart.
 

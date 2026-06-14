@@ -120,6 +120,8 @@ A rollout produces only what its memo's scope declares. A phase MUST deliver exa
 
 Stating this in the phase chapter keeps the dependency tree honest — `depends-on` and `can-parallel-with` are only meaningful if each phase's actual output matches its declared output.
 
+Scope discipline governs *which* work-packages a phase delivers; the discipline for *each unit a work-package produces* — that every required unit ends as **set**, **justified-omit**, or **blocked** and is never guessed — is the three-exit Worker-output rule defined in [13-orchestration.md](/specification/orchestration/).
+
 ---
 
 ## Related

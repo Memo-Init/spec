@@ -48,6 +48,34 @@ The **Model capability** column expresses role requirements, not product names. 
 
 ---
 
+## Parallelism Dials
+
+"Starts Workers in parallel where dependencies allow" sets the *condition* for concurrency but no *bound*. Unbounded fan-out is the costly failure mode: spawning many tens of agents at once burns budget and review capacity faster than it returns finished work. The Lead's concurrency is therefore governed by named dials.
+
+- **Worker concurrency.** The Lead **SHOULD** run a **default of 8** Workers concurrently, **MUST NOT** exceed a **maximum of 16**, and **SHOULD** fall back to **4** under resource pressure (a slow or rate-limited environment). Concurrency **MUST NOT** be set into the **30–75** range — that band is the documented over-fan-out failure mode and is excluded as an upper bound.
+- **Derive from cores.** When choosing the concurrency for a host, the Lead **SHOULD** derive it as `min(16, cores - 2)` — capped at the maximum of 16, and leaving two cores for the orchestrator and the host so the machine stays responsive.
+- **Batch + review gate.** Work **MUST** be released in batches of at most **10 units**, each batch followed by a **review gate** before the next batch starts. The gate keeps unreviewed work from accumulating beyond what an Evaluator can keep pace with.
+- **Pre-flight check.** Before a Worker is spawned, the Lead **MUST** run a pre-flight **reachability check with a timeout** on the resources that Worker needs; an unreachable or timing-out dependency aborts the spawn rather than producing a Worker that stalls.
+- **Background vs fresh context.** Mechanical sweeps (repetitive, non-reasoning edits applied across many artifacts) **SHOULD** run as **background Workers**; a **fresh, isolated context** is reserved for work that requires reasoning. Spending a fresh context on a mechanical sweep wastes the most expensive resource on the cheapest work.
+
+These dials bound the "in parallel where dependencies allow" rule above; the dependency tree (see [08-phases-and-prds.md](/specification/phases-and-prds/)) decides *which* Workers may run together, and these dials decide *how many* at once.
+
+---
+
+## Worker Output Discipline — the Three Exits
+
+Every required unit a Worker is asked to produce — each field, file, or value its PRD demands — **MUST** terminate in exactly one of three exits, and **MUST NOT** be guessed:
+
+- **set** — the unit is produced with a real, verified value.
+- **justified-omit** — the unit is deliberately left out, with a stated reason for the omission.
+- **blocked** — the unit cannot be produced now, with the blocker named.
+
+A guessed value is none of these and is forbidden: it is the output-discipline form of the anti-cheat rule that machine evidence, not a claim, ends a unit of work. A Worker that cannot reach `set` **MUST** choose `justified-omit` or `blocked` explicitly rather than emit a plausible-looking guess.
+
+These three exits are **distinct from** the **OPEN ENDS** categories of the landing step (see [27-landing-the-plane.md](/specification/landing-the-plane/): *deferred by decision*, *blocked on an external dependency*, *needs review*) and **MUST NOT** be conflated with them. The three exits are a **per-unit Worker-output** rule applied *during execution* — they classify each thing a Worker was asked to produce. OPEN ENDS are a **per-open-end landing** category applied *at the close of the rollout* — they classify what the finished run leaves unresolved. A unit that exits `blocked` during execution may, if still unresolved at landing, surface as an OPEN END; the two vocabularies describe different stages and are not interchangeable.
+
+---
+
 ## State Files
 
 All state files live in the memo's `rollout/` subfolder: `.memo/{NNN}-{slug}/rollout/`. They persist machine progress so a crashed rollout can resume exactly.

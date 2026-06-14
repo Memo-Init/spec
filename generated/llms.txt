@@ -861,6 +861,8 @@ A rollout produces only what its memo's scope declares. A phase MUST deliver exa
 
 Stating this in the phase chapter keeps the dependency tree honest — `depends-on` and `can-parallel-with` are only meaningful if each phase's actual output matches its declared output.
 
+Scope discipline governs *which* work-packages a phase delivers; the discipline for *each unit a work-package produces* — that every required unit ends as **set**, **justified-omit**, or **blocked** and is never guessed — is the three-exit Worker-output rule defined in [13-orchestration.md](./13-orchestration.md).
+
 ---
 
 ## Related
@@ -1251,10 +1253,22 @@ The rollout **MUST** always provision a standing lessons-learned file at `rollou
     execution-state.json
     phase-{N}-state.json
     evaluate-state.json
+    gotchas.md               <- living file, shared during the run
     lessons-learned.md       <- standing file, always provisioned
 ```
 
 The lessons-learned file is distinct from the per-rollout state files: state files track machine progress for crash recovery (see [13-orchestration.md](./13-orchestration.md)); the lessons-learned file accumulates human-meaningful improvement notes across the rollout.
+
+## The Living Gotchas File
+
+The rollout **MUST** also provision a living gotchas file at `rollout/gotchas.md`. Where the lessons-learned file is a closing record, the gotchas file is an **active, shared scratchpad** maintained *during* the run: when a Worker discovers a rule that the rollout's agents keep re-deriving — a build quirk, a path convention, an ordering constraint — it **SHOULD** be written to `gotchas.md` once so that later Workers read it instead of re-discovering it. Without this, many agents independently re-learn the same handful of rules, spending subagent time on knowledge that one note would have carried.
+
+The two files are deliberately separate and **MUST NOT** be conflated:
+
+| File | When written | Audience | Purpose |
+|------|--------------|----------|---------|
+| `gotchas.md` | continuously, *during* the run | the rollout's own later Workers | active rules to apply right now, so the same rule is learned once, not many times |
+| `lessons-learned.md` | at the close of the rollout | the next rollout, the skills, the SOP | retrospective improvement notes that feed back beyond this run |
 
 ---
 
@@ -1308,6 +1322,34 @@ Each phase is run by a team with four roles. The Lead is the coordinator; no age
 The Lead starts Workers in parallel where PRD dependencies allow, runs an Evaluator (fresh context, no carry-over) per finished Worker, iterates Worker↔Evaluator at most twice on FAIL, then runs the Phase Evaluator on the integrated result. Evaluators **MUST** receive a fresh context — they know nothing of the implementation process and see only the PRD plus the produced files (the empty-context rule, see [09-contamination-context-handover.md](./09-contamination-context-handover.md)). The first roles to migrate to repo-scoped agents are exactly these evaluators (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
 
 The **Model capability** column expresses role requirements, not product names. The Lead requires the strongest reasoning model because it holds the most context and makes coordination decisions. Workers default to a standard capable model; complex or highly interdependent PRDs warrant the strongest available. Evaluators and Phase Evaluators need a validated, capable model — a lighter option is permissible when the validation task is clearly bounded. Model selection is the operator's responsibility and is governed by resource budget; the harness does not enforce a specific product.
+
+---
+
+## Parallelism Dials
+
+"Starts Workers in parallel where dependencies allow" sets the *condition* for concurrency but no *bound*. Unbounded fan-out is the costly failure mode: spawning many tens of agents at once burns budget and review capacity faster than it returns finished work. The Lead's concurrency is therefore governed by named dials.
+
+- **Worker concurrency.** The Lead **SHOULD** run a **default of 8** Workers concurrently, **MUST NOT** exceed a **maximum of 16**, and **SHOULD** fall back to **4** under resource pressure (a slow or rate-limited environment). Concurrency **MUST NOT** be set into the **30–75** range — that band is the documented over-fan-out failure mode and is excluded as an upper bound.
+- **Derive from cores.** When choosing the concurrency for a host, the Lead **SHOULD** derive it as `min(16, cores - 2)` — capped at the maximum of 16, and leaving two cores for the orchestrator and the host so the machine stays responsive.
+- **Batch + review gate.** Work **MUST** be released in batches of at most **10 units**, each batch followed by a **review gate** before the next batch starts. The gate keeps unreviewed work from accumulating beyond what an Evaluator can keep pace with.
+- **Pre-flight check.** Before a Worker is spawned, the Lead **MUST** run a pre-flight **reachability check with a timeout** on the resources that Worker needs; an unreachable or timing-out dependency aborts the spawn rather than producing a Worker that stalls.
+- **Background vs fresh context.** Mechanical sweeps (repetitive, non-reasoning edits applied across many artifacts) **SHOULD** run as **background Workers**; a **fresh, isolated context** is reserved for work that requires reasoning. Spending a fresh context on a mechanical sweep wastes the most expensive resource on the cheapest work.
+
+These dials bound the "in parallel where dependencies allow" rule above; the dependency tree (see [08-phases-and-prds.md](./08-phases-and-prds.md)) decides *which* Workers may run together, and these dials decide *how many* at once.
+
+---
+
+## Worker Output Discipline — the Three Exits
+
+Every required unit a Worker is asked to produce — each field, file, or value its PRD demands — **MUST** terminate in exactly one of three exits, and **MUST NOT** be guessed:
+
+- **set** — the unit is produced with a real, verified value.
+- **justified-omit** — the unit is deliberately left out, with a stated reason for the omission.
+- **blocked** — the unit cannot be produced now, with the blocker named.
+
+A guessed value is none of these and is forbidden: it is the output-discipline form of the anti-cheat rule that machine evidence, not a claim, ends a unit of work. A Worker that cannot reach `set` **MUST** choose `justified-omit` or `blocked` explicitly rather than emit a plausible-looking guess.
+
+These three exits are **distinct from** the **OPEN ENDS** categories of the landing step (see [27-landing-the-plane.md](./27-landing-the-plane.md): *deferred by decision*, *blocked on an external dependency*, *needs review*) and **MUST NOT** be conflated with them. The three exits are a **per-unit Worker-output** rule applied *during execution* — they classify each thing a Worker was asked to produce. OPEN ENDS are a **per-open-end landing** category applied *at the close of the rollout* — they classify what the finished run leaves unresolved. A unit that exits `blocked` during execution may, if still unresolved at landing, surface as an OPEN END; the two vocabularies describe different stages and are not interchangeable.
 
 ---
 
@@ -2535,7 +2577,7 @@ The landing produces a single document with a fixed, deterministic structure. Th
 - **STATUS** — the one-line verdict of where the run ended: complete, partially complete, or open. A `verdict: OPEN` is not a failure; honest landing names open ends rather than hiding them.
 - **WHAT WAS DONE** — a table with one row per repository, recording what changed in each. The per-repo table is the canonical record of the rollout's footprint across the workspace.
 - **PILOT TASKS** — a numbered list of the actions left for the pilot to take. Each task carries a recommendation, so the pilot is not merely told what is pending but advised on how to act on it.
-- **OPEN ENDS** — what is not finished, grouped into three categories: items deferred by decision, items blocked on an external dependency, and items that need review before they can close.
+- **OPEN ENDS** — what is not finished, grouped into three categories: items deferred by decision, items blocked on an external dependency, and items that need review before they can close. These landing categories are per-open-end and applied at the close of the rollout; they are distinct from the per-unit three exits of Worker output during execution (set / justified-omit / blocked, see [13-orchestration.md](./13-orchestration.md)) and MUST NOT be conflated with them.
 - **MACHINE-READABLE** — a `landing-readiness.json` marker capturing the end-state in structured form, so an orchestrator or a fresh context can read the landing without parsing prose.
 - **RE-ENTRY** — the exact command to resume, written out literally so the next session can copy it and continue without rediscovering how to restart.
 
