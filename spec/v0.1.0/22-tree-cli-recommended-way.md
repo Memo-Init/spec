@@ -16,7 +16,7 @@ The tree has exactly two node kinds.
 - A **branch** is a bag of tools: a `description` plus `children`. It groups related leaves (e.g. a `calendar` branch with `add`, `list`, `get` leaves).
 - A **leaf** does something: a `description`, a Zod `input` **and** `output`, and an `execute` function. The Zod field `description`s MUST encode the behavior rules the agent should follow — not only the type.
 
-> A leaf MUST define both `input` and `output` as Zod schemas. The field `description`s on those schemas MUST carry the behavioral rules (what to do, what to avoid), so that the schema is itself part of the specification — not merely a type guard.
+> A leaf MUST define both `input` **and** `output` as Zod schemas — the `output` schema is mandatory, not optional decoration. The field `description`s on **both** schemas MUST carry the behavioral rules (what to do, what to avoid) via `.describe(...)`, so that the schema is itself part of the specification — not merely a type guard. Both the `input` and the `output` shape MUST be surfaced by `describe()` (see below), so the agent reads the behaviour-encoding docs for what it sends **and** what it gets back.
 
 ```javascript
 // BRANCH: bag of tools. description + children.
@@ -43,7 +43,40 @@ The two predicates distinguish the node kinds structurally: a node with `childre
 
 ## `describe()` and the Ancestor Path
 
-`describe()` renders the **help tree** for a node — the text emitted for `--describe` and for re-injection. The help for a leaf is not read in isolation: the relevant context is the **ancestor path**, the help collected from the leaf back up to the root.
+`describe()` renders the **help tree** for a node — the output emitted for `--describe` and for re-injection. The help for a leaf is not read in isolation: the relevant context is the **ancestor path**, the help collected from the leaf back up to the root.
+
+> `describe()` MUST emit **machine-readable structured output** (an object, not only prose), reachable via a stable `--describe` flag, so the same rendering serves the human reader, the CLI, and the re-injected agent context.
+
+A leaf entry produced by `describe()` MUST carry `description`, the rendered `input` shape (field -> doc), the rendered `output` shape (field -> doc), and a call `example`. A branch entry MUST carry its `description` plus the `describe()` of each child.
+
+```javascript
+// describe( node ) renders the machine-readable help for a node.
+const describe = ( node ) => {
+    if( isBranch( node ) ) {
+        const children = Object.entries( node[ 'children' ] )
+            .map( ( [ name, child ] ) => ( { name, 'help': describe( child ) } ) )
+
+        return { 'kind': 'branch', 'description': node[ 'description' ], children }
+    }
+
+    return {
+        'kind': 'leaf',
+        'description': node[ 'description' ],
+        'input': describeShape( { 'schema': node[ 'input' ] } ),
+        'output': describeShape( { 'schema': node[ 'output' ] } ),
+        'example': node[ 'example' ]
+    }
+}
+
+// describeShape renders a Zod schema as field -> behaviour-doc pairs,
+// so the behaviour-encoding description() text reaches the help.
+const describeShape = ( { schema } ) => {
+    const shape = schema[ '_def' ][ 'shape' ]()
+
+    return Object.fromEntries( Object.entries( shape )
+        .map( ( [ key, field ] ) => ( [ key, field[ '_def' ][ 'description' ] ] ) ) )
+}
+```
 
 > When help is rendered for re-injection, the system SHOULD collect the **ancestor path** — the help of the target leaf and of every branch from that leaf up to the root — so the agent reads the leaf in the context of the group and the tree it belongs to ("all the way back up").
 
@@ -56,6 +89,28 @@ The central design rule governs the quality bar for help text.
 > The help text MUST be robust enough that the code could be **re-implemented from the help as a specification**. A leaf's `description`, its Zod field `description`s, and the branch help above it together MUST capture the full behavior — not just call syntax.
 
 This rule is what makes the tree self-describing: because the help is a spec, the same text serves the human reader, the CLI `--describe` output, and the re-injected agent context.
+
+---
+
+## Shared Result Envelope
+
+Every leaf returns the **same envelope shape**, so an agent can branch on the result without per-tool special-casing.
+
+> Every leaf MUST return a result envelope `{ status, error, fix }`. `status` is a boolean. On failure (`status: false`), `error` MUST state what went wrong and `fix` MUST be a **separate machine-readable field** carrying the concrete repair step — the next action the agent can take. The repair hint MUST NOT be prose mixed into `error`. On success (`status: true`), the payload is spread alongside `status` and `error`/`fix` are omitted.
+
+```javascript
+// ok and fail produce the one envelope shape every leaf returns.
+const ok = ( payload ) => ( { 'status': true, ...payload } )
+const fail = ( { error, fix } ) => ( { 'status': false, error, fix } )
+
+// On a missing required input the leaf returns a fix the agent can act on.
+const example = fail( {
+    'error': 'Missing required parameter: id',
+    'fix': 'Call --describe on this leaf and resend with input.id set'
+} )
+```
+
+The `fix` field is what lets the **self-correction** mechanism below act mechanically: an agent (or a hook) reads `fix` and resends, rather than re-deriving the repair from a free-text error.
 
 ---
 
