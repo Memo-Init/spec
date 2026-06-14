@@ -50,3 +50,11 @@ The rule: never report "done" without verification — actually running the code
 When work is uncomfortable, large, or risky, the tempting move is for the agent to quietly defer it — to declare it out of scope, leave it for "later", or fold it into a follow-up that may never come.
 
 The rule: deferring work is the USER's decision, not the agent's. The agent does not unilaterally postpone work that the memo authorized. If something genuinely should be deferred, that is surfaced to the user as a choice (framed per C2), and the user decides. The agent's default, per C3, is to do the work — not to find reasons not to.
+
+**Default = work into the current memo; a follow-up memo only via an explicit user question.** This is the normative form of C7 and of the philosophy "Work It In Instead of Deferring" ([01-philosophy.md](./01-philosophy.md)):
+
+- By default, all surfaced work MUST be worked into the current memo during its running phase.
+- The agent MUST NOT unilaterally export work into a follow-up memo, a sub-memo, or any deferred container.
+- A follow-up memo is created ONLY when the user explicitly chooses it. The choice is recorded as a memo question entry (`### F{N}`); until that question is answered in favor of a split, the work stays in the current memo.
+
+A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
