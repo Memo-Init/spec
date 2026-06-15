@@ -475,6 +475,7 @@ The skill that performs this reads **only** — it never issues writes to the se
 - [03-input-paths.md](./03-input-paths.md) — the four transcript types and their follow-up flows.
 - [10-proactive-research.md](./10-proactive-research.md) — the canonical research definition behind Step 5.
 - [05-memo-strategies.md](./05-memo-strategies.md) — the strategy chosen when the pipeline hands over to `memo-init`.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the topic primitive defined as the head of the executable chain.
 
 ---
 
@@ -603,6 +604,7 @@ The practical effect is that hours of dictated reasoning, half-formed decisions,
 - [07-revisions-and-questions.md](./07-revisions-and-questions.md) — the three-area revision structure and the question format.
 - [12-rollout.md](./12-rollout.md) — the `rollout/` folder and the lessons-learned file.
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the security gate at the one exit point.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the memo, revision, and block primitives summarized.
 
 ---
 
@@ -763,9 +765,43 @@ A finalized memo becomes executable work through a chain of decompositions: topi
 A finalized memo is decomposed in two steps.
 
 1. **Topics → PRDs.** The memo's topics become **PRDs** (product requirement documents). The governing constraint is that **one PRD fits into one context**: a PRD MUST be self-contained and sized so that a single agent working in a fresh, empty context can implement it without needing to hold the rest of the memo in mind.
-2. **PRDs → Phases.** PRDs are grouped into **phases**. A phase is a set of PRDs that are executed together as one unit of the rollout.
+2. **PRDs → Phases.** PRDs are grouped into **phases**. A phase is a **sequential, mandatory unit** of the rollout: it bundles PRDs that **MUST** be executed together and in order, and it **MUST** declare its dependencies on other phases. The `depends-on` relation is not optional decoration — it is a **mandatory characteristic** of a phase, because a phase that depends on another may not start until that other has completed (the `## Phase-Hints` dependency tree below). A phase is therefore not merely a "batch": it is a sequenced, dependency-bearing unit.
 
-This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the execution batches.
+This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the sequential, dependency-bearing execution units. Following the `depends-on` edges across phases traces out the **strands** of the memo — a strand is the **dependency closure over phases**, the chain that *emerges* when the `## Phase-Hints` edges are walked transitively (see [25-strands.md](./25-strands.md)). Strands are derived from these phase dependencies, never assigned thematically; many phases typically resolve into one or two large strands.
+
+---
+
+## What a PRD is (the corrected definition)
+
+"PRD" stands for **Product Requirements Document**, but in this spec the term carries a sharper, working meaning: a PRD is a **chunk of work-packages** sized to fit one context. We **chunk work-packages** so each fits into a single fresh, empty context; a work-package too large to fit one context is **split (chunked)** into several PRDs.
+
+This yields three rules that govern how PRDs map onto features and threads:
+
+- **Multiple PRDs may form one feature.** A feature is not one PRD by definition. A theoretically large feature is chunked across **multiple PRDs**, each self-contained, and the feature emerges from their combination — the memo, not any single PRD, remains the authority over the whole feature.
+- **Every PRD runs in exactly one thread.** A PRD is implemented by **one** agent in **one thread** with a fresh, empty context. A PRD is never split across threads; if work would need more than one thread, that is the signal to chunk it into more PRDs (one thread each), not to run a single PRD across several.
+- **PRDs are derived from blocks and follow phase/strand.** PRDs are not free-floating: they are derived from the memo's blocks and take their order from the phase they belong to and the strand that phase resolves into (the `depends-on` closure above).
+
+In short: a PRD is the unit we chunk *down to* so it fits one context and runs in one thread, and a feature is what we compose *up from* one or more such PRDs.
+
+---
+
+## PRD-Cap and Smart-Zone
+
+The "one PRD fits into one context" rule above is qualitative; this section makes it numeric. The qualitative rule still governs — a PRD that does not fit a single fresh context is mis-sized regardless of its token count — and the numbers below **concretize** it rather than replace it.
+
+- **Cap = one third (1/3) of the context window, per PRD.** A PRD's declared context plus its working headroom MUST stay within **1/3 of the context window**. The cap is measured **per PRD, not per phase**: a phase may bundle several PRDs whose combined size far exceeds 1/3, because each PRD is implemented in its own fresh, empty thread — the cap applies to each thread's PRD individually.
+- **Smart-Zone = one quarter (1/4) of the context window.** Below roughly **1/4** of the window, attention has not yet degraded — this is the **smart zone**, the band a PRD SHOULD aim to sit inside. The cap (1/3) is the hard ceiling; the smart-zone (1/4) is the target band where the agent works at full quality. The headroom between 1/4 and 1/3 is deliberate slack, not budget to plan against.
+
+At a 1M context window these fractions are concretely:
+
+| marker | fraction | tokens at 1M | meaning |
+|--------|----------|--------------|---------|
+| Smart-Zone | 1/4 | ~250k | target band — attention not yet degraded |
+| Cap | 1/3 | ~333k | hard ceiling per PRD — must not be exceeded |
+
+The smart-zone (1/4) marker is also the heuristic that `memo-reset-recommend` uses as the *reason* behind its token threshold: when context fill leaves the smart zone, a reset becomes worth recommending at a phase boundary. The reset algorithm itself lives in `memo-reset-recommend` (see [13-orchestration.md](./13-orchestration.md)); this chapter only declares the smart-zone marker it consumes.
+
+> **Known drift (follow-up, not fixed here).** Some generation skills (`memo-rollout-generate`, `memo-phase-generate`) still hard-code a `140000`-token cap, and `memo-prd-generate` mentions `1M`; neither matches the 1/3 cap defined here. This spec section is the **canonical source** for the cap; aligning the generation-skill numbers to it is follow-up work in a separate PRD/memo and is deliberately not changed here.
 
 ---
 
@@ -873,6 +909,8 @@ Scope discipline governs *which* work-packages a phase delivers; the discipline 
 - [15-prompt-generator.md](./15-prompt-generator.md) — produces a PRD's first prompt from its declared Required-Context.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context principle behind the required-context standard and the pointer-not-copy rule.
 - [18-multidimensionality.md](./18-multidimensionality.md) — phases that span multiple repositories.
+- [25-strands.md](./25-strands.md) — a strand is the dependency closure over the phases defined here; it emerges from the `## Phase-Hints` edges.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the Topic → work-package → Phase → PRD chain in one place.
 
 ---
 
@@ -972,7 +1010,7 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 - [10-proactive-research.md](./10-proactive-research.md) — proactive research in early revisions, the natural producer of `context/` material the handover points at.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels (`[FACT]` … `[UNKNOWN]`) the handover zones reuse.
 - [13-orchestration.md](./13-orchestration.md) — state files, crash recovery, and the fresh-context evaluator that consumes the empty-context rule.
-- [00-overview.md](./00-overview.md) — conformance language and the context-rot vs contamination glossary.
+- [30-primitives.md](./30-primitives.md) — the central glossary, including the context-rot vs contamination distinction defined inline above (the cause vs the effect).
 
 ---
 
@@ -1336,6 +1374,18 @@ The **Model capability** column expresses role requirements, not product names. 
 - **Background vs fresh context.** Mechanical sweeps (repetitive, non-reasoning edits applied across many artifacts) **SHOULD** run as **background Workers**; a **fresh, isolated context** is reserved for work that requires reasoning. Spending a fresh context on a mechanical sweep wastes the most expensive resource on the cheapest work.
 
 These dials bound the "in parallel where dependencies allow" rule above; the dependency tree (see [08-phases-and-prds.md](./08-phases-and-prds.md)) decides *which* Workers may run together, and these dials decide *how many* at once.
+
+---
+
+## Workflows vs Agents
+
+The parallelism dials above describe *how many* units run concurrently once parallel work is chosen, but they do not decide *which orchestration mechanism* drives that work. There are two mechanisms — **dynamic workflows** (harness-driven parallel sub-agent fan-out) and **agents** (the native Lead/Worker/Evaluator agent team of this chapter) — and the policy below decides where each one applies.
+
+- **Dynamic workflows are research-only.** A dynamic workflow — a harness-driven parallel fan-out of sub-agents — is permitted **only** for genuine **research**, where independent sub-agents gather information in parallel and report back. The Default for a research fan-out is **2-4 parallel sub-agents**. This is the *single* place a workflow-style fan-out is allowed; it is documented in [research-workflow](../../../core/skills/research/research-workflow/SKILL.md).
+- **Everything else uses agents.** All non-research orchestration — phase execution above all — uses the **agent team** (Lead/Worker/Evaluator/Phase Evaluator), because agents are native to Claude Code and integrate better than a generic workflow runner. Phase execution (`memo-phase-execute`) is therefore **agent-based** and **MUST NOT** run as a dynamic-workflow mode.
+- **Added parallelism in phase execution requires evidence.** The "in parallel where dependencies allow" rule (above) stays the dependency-gated Default for the agent phase. Increasing that parallelism — for example wiring the Parallelism Dials into `memo-phase-execute` — is **NOT** done on the strength of the spec dials alone; it requires real, measured **evidence** first.
+
+This policy locates **when** the Parallelism Dials apply rather than removing them: the dials remain the Soll bounds for concurrent work, and this section decides where workflow fan-out is even permitted (research, 2-4 parallel) versus where agents govern (everything else, dependency-gated).
 
 ---
 
@@ -1720,13 +1770,13 @@ A fixed mapping ties the ID to git artifacts:
 
 ### Commit message
 
-A commit message follows:
+A commit message follows the canonical bracket-prefix form:
 
 ```
-{CTX}-M{NNN}-{PP}-{RR} {Text} #{Issue}
+[PREFIX] M{NNN}-{PP}-{RR} {Text} #{Issue}
 ```
 
-The subject line (first line) **MUST** be ≤ 50 characters. The 50-character count covers the entire first line — including the ID prefix, the text, and the `#{Issue}` reference. No component is exempt. If a single-line message cannot fit within 50 characters, keep the subject line at or below the limit and add detail in the body (separated from the subject by a blank line); the body has no character limit. The `#{Issue}` reference creates the automatic link back to the phase issue. The `{CTX}-M{NNN}-{PP}-{RR}` prefix makes every commit self-locating in the memo → phase → PRD trail.
+The `[PREFIX]` is the project's context prefix in brackets (the same prefix as `{CTX}` above, read once from the project config). The subject line (first line) **MUST** be ≤ 50 characters. The 50-character count covers the entire first line — including the `[PREFIX]` bracket, the ID, the text, and the `#{Issue}` reference. No component is exempt. If a single-line message cannot fit within 50 characters, keep the subject line at or below the limit and add detail in the body (separated from the subject by a blank line); the body has no character limit. The `#{Issue}` reference creates the automatic link back to the phase issue. The `[PREFIX] M{NNN}-{PP}-{RR}` prefix makes every commit self-locating in the memo → phase → PRD trail.
 
 ### Pull requests across repos
 
@@ -2371,6 +2421,7 @@ A requirement set thereby doubles as an **eval set**: it is the explicit definit
 - [24-tools-registry.md](./24-tools-registry.md) — the parallel data folder; `check.kind: tool` requirements point into the tools registry for the tool and tactic that verify them.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the finalization gate that runs applicable requirement checks and binds them.
 - [00-overview.md](./00-overview.md) — spec scope, conformance, and the document index.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the requirement primitive summarized as cross-cutting.
 
 ---
 
@@ -2433,6 +2484,15 @@ What the wiki is **not** is the timeline of how that knowledge was reached. The 
 
 ---
 
+## Related
+
+- [23-requirements.md](./23-requirements.md) — the parallel data folder; `check.kind: tool` requirements point into this registry for the tool and tactic that verify them.
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — the phases and work-packages whose tool dependencies the registry records.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the tool primitive summarized.
+- [00-overview.md](./00-overview.md) — spec scope and the document index.
+
+---
+
 # 25. Strands
 
 | Field | Value |
@@ -2441,35 +2501,36 @@ What the wiki is **not** is the timeline of how that knowledge was reached. The 
 | Depends on | [23-requirements.md](./23-requirements.md), [24-tools-registry.md](./24-tools-registry.md) |
 | Related | [08-phases-and-prds.md](./08-phases-and-prds.md), [06-memo-structure.md](./06-memo-structure.md), [00-overview.md](./00-overview.md) |
 
-A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Often that chain is not one undifferentiated stream: distinct **processing paths** run through the memo — one path drives the core code, another the documentation, another a sub-spec. A **strand** names one such processing path: a dependency-linked run of phases and PRDs that advances one coherent area of work. Unlike the phases themselves, a strand may span **several topics**, because it is defined by the *way the work is processed*, not by the topic it touches.
+A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Often that chain is not one undifferentiated stream: following the `depends-on` edges between phases (the `## Phase-Hints` dependency tree of [08-phases-and-prds.md](./08-phases-and-prds.md)) traces out distinct dependency chains through the memo. A **strand** is what **emerges** when you follow that dependency graph: the **dependency closure** over the phases that are transitively linked by `depends-on`. A strand is therefore *computed*, not *declared* — it is not a thematic grouping the author assigns, but the chain that the dependency edges produce. Because dependency chains tend to converge, a memo with **many phases** typically resolves into **few (often one or two large) strands**. Unlike the phases themselves, a strand may span **several topics**, because it is defined by the *dependency path the work takes*, not by the topic it touches.
 
 ---
 
 ## What a Strand Is
 
-A strand is a **processing path**: a sequence of phases and PRDs, linked by dependencies, that drives one coherent area of work forward. It **MAY** span several topics.
+A strand is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in the memo's `## Phase-Hints` section (see [08-phases-and-prds.md](./08-phases-and-prds.md)). It is **emergent**, not authored — an implementation *derives* a strand by walking the dependency graph, rather than the author *assigning* phases to a thematic group. A strand **MAY** span several topics, precisely because it is defined by the dependency path the work takes and not by the topic it touches.
 
-- **The flow.** A memo's **topics** are merged into **PRDs**; PRDs are sequenced into **phases**; phases and PRDs, ordered by their dependencies, form a **path** — and that path is a strand. (Topics → PRDs → Phases, per [08-phases-and-prds.md](./08-phases-and-prds.md).)
+- **Emergent, not declared.** A strand is **computed** from the dependency edges: it is the set of phases reachable from one another through `depends-on` (and the PRDs those phases carry). It is **NOT** a thematic bundle the author hand-picks. Two phases belong to the same strand because the dependency graph links them, not because they share a topic.
+- **Many phases, few strands.** Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**, not one strand per phase. The mapping phase→strand is therefore **many-to-one and emergent**, never a fixed 1:1 assignment.
+- **Trivial case.** A memo of a single PRD yields one PRD → one phase → one strand. In that degenerate case there is nothing to re-order, so the tracer-bullet decision (below, and at finalization — see the finalize gate) does not apply.
 - **What a strand carries.** A strand carries its **PRDs**. The PRDs carry the **requirements** (drawn from the registry of [23-requirements.md](./23-requirements.md)) and the **tools** (drawn from [24-tools-registry.md](./24-tools-registry.md)). A strand therefore carries requirements and tools **through its PRDs**, not directly.
 - **Optional strand spec.** A strand **MAY** carry its own **strand spec** — **RECOMMENDED** for larger strands, never mandatory. The strand spec is sharpened through an interview pass (a question catalogue) when the strand is large enough to warrant it.
-- **Phases belong to a strand.** A phase advances exactly one strand; a strand spans the phases that drive its path forward.
 
 ---
 
 ## Example Strands
 
-A memo that simultaneously runs four processing paths is the canonical example:
+A memo whose `## Phase-Hints` dependency graph resolves into four independent chains illustrates the emergent strands that result:
 
-| Strand | Topic |
-|--------|-------|
-| A | Strategy / Verification |
-| B | Spec-Authoring |
-| C | Sub-Spec |
-| D | Bootstrap |
+| Strand (emergent) | Phases in the closure | What the chain happens to touch |
+|-------------------|-----------------------|----------------------------------|
+| A | the strategy/verification phases and everything that `depends-on` them | Strategy / Verification |
+| B | the spec-authoring phases linked by `depends-on` | Spec-Authoring |
+| C | the sub-spec phases linked by `depends-on` | Sub-Spec |
+| D | the bootstrap phases linked by `depends-on` | Bootstrap |
 
-Strand A establishes the verified factual base and the strategy. Strand B authors the core chapters. Strand C authors the sub-spec. Strand D bootstraps the organization and its repositories. Each strand runs a different path; its PRDs carry the requirements and tools that path needs — documentation rules for the B and C paths, repository and code rules for the D path.
+These strands are not assigned; they **fall out** of the dependency tree. Chain A is the closure rooted in the phases that establish the verified factual base and the strategy. Chain B is the closure over the phases that author the core chapters; chain C the sub-spec; chain D the organization-and-repository bootstrap. The topic column merely *names* what each emergent chain happens to touch — it is a description after the fact, not the basis on which the strand was formed. Each chain's PRDs carry the requirements and tools that path needs — documentation rules where the chain authors docs, repository and code rules where it bootstraps.
 
-A smaller, mixed memo illustrates the same idea: a memo that combines `core` code work with `docs/frontend` work runs as **two strands** — a core strand and a frontend strand — because the two paths are processed differently even though they live in one memo.
+A smaller, mixed memo shows the same emergence: if the `core` code phases and the `docs/frontend` phases share no `depends-on` edge, the dependency graph resolves into **two strands** — not because the author grouped them by theme, but because the two dependency chains never converge. Had a phase depended across the two, the closure would have merged them into one strand.
 
 ---
 
@@ -2490,6 +2551,7 @@ A strand is a **tag or label**, not a component of the numeric memo identifier, 
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the source of the phase/PRD path a strand runs along.
 - [06-memo-structure.md](./06-memo-structure.md) — strands live inside a memo under `.memo/`.
 - [00-overview.md](./00-overview.md) — specification scope.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the strand primitive summarized as cross-cutting.
 </content>
 </invoke>
 
@@ -2687,6 +2749,16 @@ The slogan for the protocol: fix where it COMES FROM, then close the gate it wou
 
 When drift is discovered while a phase is running, the rule is: do NOT abort the phase to chase it. Aborting mid-phase fragments the work and tends to spawn new partial copies. Instead, record the finding and eliminate the drift immediately AFTER the current phase completes, as a dedicated step with its own fresh context. This keeps the in-flight phase coherent while guaranteeing the drift is resolved before the next phase can read the still-wrong source. The orchestration chapter owns the gate that enforces step 4; the phases-and-prds chapter owns this post-phase elimination step.
 
+## Known Drift — Strand Model: Declared (code) vs Emergent (spec)
+
+A live, recorded instance of drift exists between the specification and the implementation of the **strand** model. It is documented here as a known, follow-up-tracked divergence rather than silently patched — fixing it correctly is a code refactor that belongs to a dedicated follow-up memo, not to the spec-text change that surfaced it.
+
+- **The unit.** "What a strand *is*."
+- **Spec source-of-truth (corrected).** [25-strands.md](./25-strands.md) now defines a strand as the **dependency closure over phases** — an **emergent**, computed chain derived by walking the `## Phase-Hints` `depends-on` edges (see [08-phases-and-prds.md](./08-phases-and-prds.md)). A strand is *derived*, never *declared*; many phases resolve into one or two large strands.
+- **Code (drifted).** `repos/core/lib/strands/StrandModel.mjs` still treats a strand as a **declared** artifact: a `.memo/strands/<tag>.strand.json` file with explicit `phases:[...]` and `prds:[...]` arrays (the header comment and schema declare exactly this). Three such declared files exist today: `.memo/strands/block-requirements.strand.json`, `.memo/strands/kommunikation-ui.strand.json`, `.memo/strands/verdrahtung.strand.json`.
+- **Why it is drift, not a bug.** The unit "what a strand is" is replicated across the spec and the code (D1), the two copies now disagree — spec says emergent/computed, code says declared/hand-authored (D3) — and a new author reading `StrandModel.mjs` would faithfully reproduce the declared model (D4). Per the detection rule (**D1 AND D3**), this escalates to the drift protocol.
+- **Resolution (follow-up, NOT this change).** The SSOT is the spec ([25-strands.md](./25-strands.md)), already corrected to the emergent model. The remaining protocol step — propagating the corrected unit into the code, i.e. refactoring `StrandModel.mjs` to **compute** the closure from the phase `depends-on` graph instead of reading a declared file, and migrating/retiring the three declared `*.strand.json` files — is **explicit follow-up work for a dedicated memo**. It is deliberately out of scope for the spec-text change (PRD-009, Memo 014 Kap 7) that recorded this drift; that change repairs the source and files this note, leaving the code propagation to the follow-up so the refactor happens in a clean context rather than being smuggled into a text edit.
+
 ---
 
 # 29. Behavioral Guardrails
@@ -2749,6 +2821,197 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 - A follow-up memo is created ONLY when the user explicitly chooses it. The choice is recorded as a memo question entry (`### F{N}`); until that question is answered in favor of a split, the work stays in the current memo.
 
 A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
+
+---
+
+# 30. Primitives
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [08-phases-and-prds.md](./08-phases-and-prds.md), [23-requirements.md](./23-requirements.md), [25-strands.md](./25-strands.md) |
+| Related | [00-overview.md](./00-overview.md), [04-input-pipeline.md](./04-input-pipeline.md), [06-memo-structure.md](./06-memo-structure.md), [07-revisions-and-questions.md](./07-revisions-and-questions.md), [24-tools-registry.md](./24-tools-registry.md) |
+
+This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail chapter that specifies it in full: the top level stays brief and points down, the depth lives in the owning chapter. Where this chapter and a detail chapter both speak about a primitive, the detail chapter is authoritative on its own subject and this chapter MUST stay consistent with it. The chapter also carries the system's only entity/relationship diagram and the two complementary concept views — the user view and the factory view — joined at finalization.
+
+There are exactly **ten** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strang, Requirement, Tool**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere.
+
+---
+
+## Concept Map
+
+The diagram below shows how the primitives relate. It is the corrected model: a memo holds topics; topics are realized as work-packages, which are bundled into sequential phases; phases carry PRDs. A **strand** is not a structural sibling of these — it is the *emergent* dependency closure over phases (it is computed by walking the `depends-on` edges, never authored). A **requirement** is likewise cross-cutting: it is a check that applies to work through the PRDs. A **block** is a structure node inside the memo, carrying its own `B\d{3}` id, from which PRDs are derived. A **goal** sits *above* a single memo, spanning the memo sequence.
+
+```mermaid
+flowchart TD
+    GOAL["Goal<br/>(spans many memos)"]
+    MEMO["Memo<br/>(versioned strategy doc)"]
+    REV["Revision<br/>(REV-XX.md)"]
+    TOPIC["Topic<br/>(memo-scoped)"]
+    BLOCK["Block<br/>(structure node, id B###)"]
+    WP["work-package"]
+    PHASE["Phase<br/>(sequential, depends-on)"]
+    PRD["PRD<br/>(one context, one thread)"]
+    STRAND["Strang<br/>(emergent dependency closure)"]
+    REQ["Requirement<br/>(cross-cutting check)"]
+    TOOL["Tool<br/>(registry entry)"]
+
+    GOAL -.->|spans| MEMO
+    MEMO -->|iterates through| REV
+    MEMO -->|holds| TOPIC
+    MEMO -->|structured by| BLOCK
+    TOPIC -->|realized as| WP
+    WP -->|bundled into| PHASE
+    PHASE -->|carries| PRD
+    BLOCK -->|PRDs derived from| PRD
+    PHASE -. depends-on closure .-> STRAND
+    STRAND -. carries via PRDs .-> PRD
+    PRD -->|pulls| REQ
+    PRD -->|pulls| TOOL
+```
+
+> The chain is **Topic → work-package → Phase → PRD** (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Strang and Requirement are **cross-cutting**, not links in that chain: a strand is the emergent dependency closure over phases ([25-strands.md](./25-strands.md)), and a requirement is a check that reaches work through its PRDs ([23-requirements.md](./23-requirements.md)). A block is a structure node identified by `B\d{3}`, not a synonym for a context block.
+
+---
+
+## Memo
+
+A **memo** is a versioned strategy document and the single highest authority over its own rollout. It starts as a first revision, iterates through revisions until the developer finalizes it, and then drives a rollout that produces real artifacts. A memo's content is **local** and MUST NOT be uploaded: the `.memo/` tree contains no git repository, so the local guarantee is structural, not a remembered rule. A memo lives in a directory named `{NNN}-{slug}` with a fixed set of sub-folders. Every other primitive on this page lives inside, or is derived from, a memo — except the goal, which spans several memos.
+
+Related: [06-memo-structure.md](./06-memo-structure.md) (directory layout, local guarantee), [00-overview.md](./00-overview.md) (what a memo is); related primitives: [Revision](#revision), [Topic](#topic), [Block](#block), [Goal](#goal).
+
+## Revision
+
+A **revision** is one immutable snapshot of a memo's content, stored as `REV-XX.md` (zero-padded, two digits) under the memo's `revisions/` folder. Revisions MUST NOT be edited in place: each change produces a **new** file, so the memo's evolution is a forward-only history. A revision is either a **Full** revision (a standalone, self-contained snapshot) or an **Update** revision (a delta on the preceding Full); before finalization or PRD generation a standalone Full snapshot MUST exist. The first revision of a memo is scanned for contamination at revision 2.
+
+Related: [07-revisions-and-questions.md](./07-revisions-and-questions.md) (revision structure, question format), [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md) (Full vs. Update); related primitives: [Memo](#memo), [Topic](#topic).
+
+## Topic
+
+A **topic** is an atomic point extracted from the input during the five-step input pipeline. Topic extraction MUST produce a **complete** list of every point in the input — nothing is too small to omit — and that list then serves as a checklist during writing. Topics are **memo-scoped**: they belong to one memo and are tracked in that memo's topic store (`<memoDir>/_topics/`), with a finalization coverage gate that distinguishes initial topics from those added in later revisions. A topic is the unit that is realized as a **work-package** when the finalized memo is decomposed; it is the head of the executable chain **Topic → work-package → Phase → PRD**.
+
+Related: [04-input-pipeline.md](./04-input-pipeline.md) (Step 3 topic extraction), [08-phases-and-prds.md](./08-phases-and-prds.md) (topics → work-packages → phases); related primitives: [Block](#block), [Phase](#phase), [PRD](#prd), [Goal](#goal).
+
+## Goal
+
+A **goal** is a primitive that spans **several memos** rather than living inside one. Where a memo is the authority over its own rollout, a goal expresses an intent that persists across the memo sequence and MAY be tracked with its own metrics. A goal is the only primitive on this page that sits *above* a single memo: many memos can contribute to one goal, and a goal outlives any one of them. A goal SHOULD be stated explicitly so the memos that serve it can be related back to it.
+
+Related: [00-overview.md](./00-overview.md) (mission and authority model), [26-memo-history.md](./26-memo-history.md) (the cross-memo timeline a goal is read against); related primitives: [Memo](#memo), [Topic](#topic).
+
+## Block
+
+A **block** is a **structure node** inside a memo, carrying its own stable identifier of the form `B\d{3}` (for example `B001`). It is **not** a synonym for a "context block": it is an addressable unit of memo structure. A block has a fence declaring `id`, `repos`, and `tags`, and a body with `### Problem`, `### Loesung`, and `### Offene Fragen`. A block's `tags` flow **additively into the requirement scope match** (meta → auto-requirements), so the structure a block declares automatically pulls in the requirements that apply to that work. A block carries **no** `strand` field: the strand is emergent and MUST NOT be declared on a block. PRDs are **derived from blocks** and take their order from the phase they belong to.
+
+Related: [06-memo-structure.md](./06-memo-structure.md) (memo structure), [08-phases-and-prds.md](./08-phases-and-prds.md) (PRDs derived from blocks), [23-requirements.md](./23-requirements.md) (the scope match a block's tags feed); related primitives: [PRD](#prd), [Requirement](#requirement), [Topic](#topic).
+
+## PRD
+
+A **PRD** (Product Requirements Document) is a chunk of work-packages sized so that **one PRD fits into one context**. A PRD MUST be self-contained and implementable by **one** agent in **one** thread with a fresh, empty context; if work would need more than one thread, that is the signal to chunk it into more PRDs, not to span one PRD across threads. A PRD's declared context plus working headroom MUST stay within **one third (1/3)** of the context window (the hard cap, measured per PRD), and SHOULD aim to sit inside the **smart zone** of roughly **one quarter (1/4)**. A PRD MUST declare its Required-Context as a `| source | path |` table and reference shared material in `context/` rather than copying it. PRDs are derived from blocks, ordered by their phase, and pull their requirements and tools from the registries.
+
+Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (PRD definition, cap, smart-zone, required-context), [15-prompt-generator.md](./15-prompt-generator.md) (the PRD's first prompt); related primitives: [Phase](#phase), [Block](#block), [Requirement](#requirement), [Tool](#tool).
+
+## Phase
+
+A **phase** is a **sequential, mandatory** unit of the rollout that bundles PRDs which MUST be executed together and in order, and it carries an orchestration role (Lead / Worker / Evaluator). A phase MUST declare its dependencies: `depends-on` is a **mandatory characteristic**, not optional decoration — a phase that depends on another MUST NOT start until that other has completed. The `## Phase-Hints` section is the dependency tree of the rollout, declaring each phase's `depends-on` and (symmetric) `can-parallel-with` relations with a `rationale`. A phase is the node from which the chain **Topic → work-package → Phase → PRD** carries work; following the `depends-on` edges across phases is what makes strands emerge.
+
+Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (phases, `## Phase-Hints`, phase-planning lenses), [12-rollout.md](./12-rollout.md) (phase execution), [13-orchestration.md](./13-orchestration.md) (state model); related primitives: [PRD](#prd), [Strang](#strang), [Topic](#topic).
+
+## Strang
+
+A **strand** (German *Strang*) is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in `## Phase-Hints`. It is **emergent, not authored** — an implementation *derives* a strand by walking the dependency graph; it is never a thematic bundle the author hand-picks. Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**. A strand MAY span several topics, since it is defined by the dependency path the work takes, not by the topic it touches. A strand carries its **PRDs**, and through them its requirements and tools. A strand is a **tag**, never part of the numeric memo ID, and adding or renaming a strand MUST NOT change that ID. A large strand MAY carry an optional **strand spec**, sharpened through an interview pass, and is the unit on which the **Tracer-Bullet** finalize decision applies.
+
+Related: [25-strands.md](./25-strands.md) (emergence, tag-not-ID, strand spec), [08-phases-and-prds.md](./08-phases-and-prds.md) (the phase edges a strand emerges from); related primitives: [Phase](#phase), [PRD](#prd), [Requirement](#requirement), [Tool](#tool).
+
+## Requirement
+
+A **requirement** is a single, addressable, **two-sided** statement of something that must, should, or may hold for a piece of work. Its `statement` faces **generation** (it flows into the prompt generator and shapes the work before it is done); its `check` faces the **finalization gate** (it verifies the work after it is done). Requirements are stored **one file per entry** under `.memo/requirements/`, shared across all memos, and are selected for a piece of work by a deterministic scope cascade over three axes (`repos`, `categories`, `tags`). A requirement is **cross-cutting**: it reaches the work through the PRDs in scope, not as a link in the Topic→Phase→PRD chain. Every check resolves to a **ternary** status — `PASS`, `BLOCKED`, or `INCONCLUSIVE` — and a check that did not run MUST NOT silently report `PASS`. A `blocker` short-circuits the gate; the doer MUST NOT be the grader.
+
+Related: [23-requirements.md](./23-requirements.md) (two-sided model, schema, scope cascade, anti-cheat), [11-quality-and-finalization.md](./11-quality-and-finalization.md) (the gate), [24-tools-registry.md](./24-tools-registry.md) (`check.kind: tool`); related primitives: [PRD](#prd), [Block](#block), [Tool](#tool).
+
+## Tool
+
+A **tool** is an external capability a phase or work-package depends on (browser automation, a spreadsheet reader, the project wiki, and so on), recorded as a short descriptor in the per-project **tools registry** under `.memo/tools/`. The registry is **descriptive**, not a runtime: an entry records *that* a tool exists, *what* it is for, and *where* it lives (the single source of truth), and MUST NOT embed copies of skills or source. The registry is a **RECOMMENDATION**: a project SHOULD maintain it because it makes tool reachability a planning-time concern, but a memo MUST NOT be blocked solely because no registry is present — this is the deliberate difference from the enforced requirements registry. A `check.kind: tool` requirement points into this registry for the tool and tactic that verify it.
+
+Related: [24-tools-registry.md](./24-tools-registry.md) (registry entries, checklist mechanic, wiki-as-a-tool), [23-requirements.md](./23-requirements.md) (tool-kind checks); related primitives: [Requirement](#requirement), [PRD](#prd), [Strang](#strang).
+
+---
+
+## Two Views, Joined at Finalization
+
+The system is best understood as **two complementary views** of the same memo, worked **in parallel** and **joined at finalization**. The **user view** ends when the memo is "done for the user": every topic is captured in blocks and every open question is collected centrally. The **factory view** is how that same memo becomes executable: blocks become PRDs, PRDs are sequenced into phases, and the dependency edges between phases make strands emerge. Finalization is the **join**: it brings the user's intent together with the factory's requirements, and a factory-driven decision (for example, a large strand warranting a **Tracer-Bullet**) MAY raise a fresh question back to the user before the autonomous rollout begins.
+
+The three diagrams below are normative. They are the sharpened form of the work-in-progress concept sketches: the chain and the cross-cutting role of strands and requirements follow the corrected model above.
+
+### User view
+
+A memo, seen by the user, runs from dictated input to a closed document.
+
+```mermaid
+flowchart TD
+    SP["Voice / text input"] --> TO["Topics (memo-scoped)"]
+    TO --> BL["Blocks (id B###): Meta + Topics<br/>Problem / Loesung / Open questions"]
+    BL --> QQ["Questions of all blocks<br/>collected centrally"]
+    QQ --> DONE["Done for the user"]
+```
+
+### Factory view
+
+The same memo, seen by the factory, becomes a dependency-ordered chain of phases and PRDs; large strands fold back through a Tracer-Bullet that rewrites PRDs.
+
+```mermaid
+flowchart TD
+    BL["Blocks (id B###)"] --> PRD["PRDs: each within 1/3 context, one thread<br/>block Meta tags to auto-requirements"]
+    PRD --> PH["Phases: sequential, depends-on"]
+    PH -->|follow the dependency edges| STR["Strang = emergent dependency closure over phases"]
+    STR -. large strand .-> TB["Strand spec + Tracer-Bullet: rewrite PRDs"]
+    TB --> PRD
+```
+
+### Connection at finalization
+
+The user view (closed) and the factory view (worked in parallel) meet at finalization, which is the join of user intent and factory requirements; factory-driven questions can loop back to the user before the autonomous rollout starts.
+
+```mermaid
+flowchart TD
+    UI["User view: done"] --> FIN["Finalization = join of<br/>user intent + factory requirements"]
+    FAC["Factory view: worked in parallel"] --> FIN
+    FIN -->|factory-driven questions, e.g. Tracer-Bullet| USR["User decides"]
+    USR --> RUN["Autonomous rollout"]
+```
+
+---
+
+## Glossary
+
+A compact index of every primitive (and the two retained maturity concepts), each pointing at the detail chapter that owns it.
+
+| Term | Short definition | Detail chapter |
+|------|------------------|----------------|
+| Memo | Versioned, local strategy document; highest authority over its rollout. | [06-memo-structure.md](./06-memo-structure.md) |
+| Revision | Immutable `REV-XX.md` snapshot; new file per change, Full or Update. | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
+| Topic | Atomic, memo-scoped point extracted by the input pipeline; head of the chain. | [04-input-pipeline.md](./04-input-pipeline.md) |
+| Goal | Cross-memo intent that spans several memos and outlives any one. | [00-overview.md](./00-overview.md) |
+| Block | Structure node with id `B\d{3}`; tags feed auto-requirements; no `strand` field. | [06-memo-structure.md](./06-memo-structure.md) |
+| PRD | Self-contained work-chunk fitting one context (cap 1/3, smart-zone 1/4), one thread. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
+| Phase | Sequential, mandatory, dependency-bearing unit with an orchestration role. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
+| Strang | Emergent dependency closure over phases; a tag, not part of the memo ID. | [25-strands.md](./25-strands.md) |
+| Requirement | Two-sided cross-cutting check (statement → generation, check → gate); ternary status. | [23-requirements.md](./23-requirements.md) |
+| Tool | Descriptor in the recommended tools registry; reachability is a planning concern. | [24-tools-registry.md](./24-tools-registry.md) |
+| Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. | [25-strands.md](./25-strands.md) |
+| Smart-Zone | The ~1/4-context band where attention has not yet degraded; the target for a PRD. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
+| context rot | Quality decay of LLM output as input length grows (the cause). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+| contamination | A document written out of a rotten context (the effect). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+
+---
+
+## Related
+
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.
+- [23-requirements.md](./23-requirements.md) — the cross-cutting requirement primitive in full.
+- [25-strands.md](./25-strands.md) — the emergent strand primitive and the Tracer-Bullet decision.
+- [24-tools-registry.md](./24-tools-registry.md) — the tool primitive and its registry.
+- [06-memo-structure.md](./06-memo-structure.md) — the memo, revision, and block structure on disk.
+- [00-overview.md](./00-overview.md) — specification scope and the chapter index.
 
 ========================================
 # Workbench Sub-Spec

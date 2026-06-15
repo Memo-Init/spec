@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-15T10:49:59.632Z"
+generated_at: "2026-06-15T18:02:46.195Z"
 generated_from: "spec/workbench/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/00-overview.md."

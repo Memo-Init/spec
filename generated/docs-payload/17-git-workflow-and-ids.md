@@ -6,7 +6,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T10:49:59.632Z"
+generated_at: "2026-06-15T18:02:46.195Z"
 generated_from: "spec/v0.1.0/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/17-git-workflow-and-ids.md."
@@ -94,13 +94,13 @@ A fixed mapping ties the ID to git artifacts:
 
 ### Commit message
 
-A commit message follows:
+A commit message follows the canonical bracket-prefix form:
 
 ```
-{CTX}-M{NNN}-{PP}-{RR} {Text} #{Issue}
+[PREFIX] M{NNN}-{PP}-{RR} {Text} #{Issue}
 ```
 
-The subject line (first line) **MUST** be ≤ 50 characters. The 50-character count covers the entire first line — including the ID prefix, the text, and the `#{Issue}` reference. No component is exempt. If a single-line message cannot fit within 50 characters, keep the subject line at or below the limit and add detail in the body (separated from the subject by a blank line); the body has no character limit. The `#{Issue}` reference creates the automatic link back to the phase issue. The `{CTX}-M{NNN}-{PP}-{RR}` prefix makes every commit self-locating in the memo → phase → PRD trail.
+The `[PREFIX]` is the project's context prefix in brackets (the same prefix as `{CTX}` above, read once from the project config). The subject line (first line) **MUST** be ≤ 50 characters. The 50-character count covers the entire first line — including the `[PREFIX]` bracket, the ID, the text, and the `#{Issue}` reference. No component is exempt. If a single-line message cannot fit within 50 characters, keep the subject line at or below the limit and add detail in the body (separated from the subject by a blank line); the body has no character limit. The `#{Issue}` reference creates the automatic link back to the phase issue. The `[PREFIX] M{NNN}-{PP}-{RR}` prefix makes every commit self-locating in the memo → phase → PRD trail.
 
 ### Pull requests across repos
 

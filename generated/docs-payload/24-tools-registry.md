@@ -6,7 +6,7 @@ spec_file: "24-tools-registry.md"
 order: 24
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T10:49:59.632Z"
+generated_at: "2026-06-15T18:02:46.195Z"
 generated_from: "spec/v0.1.0/24-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/24-tools-registry.md."
@@ -62,3 +62,12 @@ A project wiki is, for the purposes of this registry, a **tool** — specificall
 The wiki answers in the **present tense**. A wiki page states what is understood to be true now; a query against it returns the current understanding, optimized for fast answers about the project as it stands. That is its strength as a query tool — and the boundary that keeps it well-defined.
 
 What the wiki is **not** is the timeline of how that knowledge was reached. The accumulation of facts over the memo sequence — the story of which memo established what, and where a later memo reversed an earlier course — is the subject of a separate concern, the memo history (see [00-overview.md](/specification/overview/) for the document index). The wiki gives the answer; the memo history gives the provenance and the chronology behind it. A phase that needs to ask "what does the project currently know about X?" reaches for the wiki as a tool. A phase that needs to ask "does a conclusion from an earlier memo still hold?" reaches for the memo history instead. Keeping the two distinct is what stops the wiki's present-tense convenience from being mistaken for an audit trail, and stops the timeline from being flattened into a single current answer.
+
+---
+
+## Related
+
+- [23-requirements.md](/specification/requirements/) — the parallel data folder; `check.kind: tool` requirements point into this registry for the tool and tactic that verify them.
+- [08-phases-and-prds.md](/specification/phases-and-prds/) — the phases and work-packages whose tool dependencies the registry records.
+- [30-primitives.md](/specification/primitives/) — central glossary and concept map; the tool primitive summarized.
+- [00-overview.md](/specification/overview/) — spec scope and the document index.

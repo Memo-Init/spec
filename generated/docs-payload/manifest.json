@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-15T10:49:59.795Z",
+    "generated_at": "2026-06-15T18:02:46.808Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -257,7 +257,7 @@
             "filename": "25-strands.md",
             "slug": "strands",
             "title": "Strands",
-            "description": "A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Often that chain is not one undifferentiated stream: distinct...",
+            "description": "A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Often that chain is not one undifferentiated stream:...",
             "order": 25,
             "section": "Specification",
             "normative": true,
@@ -302,6 +302,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "behavior"
+        },
+        {
+            "filename": "30-primitives.md",
+            "slug": "primitives",
+            "title": "Primitives",
+            "description": "This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail...",
+            "order": 30,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
         }
     ],
     "workbench": {
@@ -339,10 +349,10 @@
         ]
     },
     "stats": {
-        "total_files": 33,
-        "core_files": 30,
+        "total_files": 34,
+        "core_files": 31,
         "workbench_files": 3,
-        "normative_files": 30,
+        "normative_files": 31,
         "informative_files": 3
     }
 }

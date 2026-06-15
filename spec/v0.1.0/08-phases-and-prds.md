@@ -15,9 +15,43 @@ A finalized memo becomes executable work through a chain of decompositions: topi
 A finalized memo is decomposed in two steps.
 
 1. **Topics → PRDs.** The memo's topics become **PRDs** (product requirement documents). The governing constraint is that **one PRD fits into one context**: a PRD MUST be self-contained and sized so that a single agent working in a fresh, empty context can implement it without needing to hold the rest of the memo in mind.
-2. **PRDs → Phases.** PRDs are grouped into **phases**. A phase is a set of PRDs that are executed together as one unit of the rollout.
+2. **PRDs → Phases.** PRDs are grouped into **phases**. A phase is a **sequential, mandatory unit** of the rollout: it bundles PRDs that **MUST** be executed together and in order, and it **MUST** declare its dependencies on other phases. The `depends-on` relation is not optional decoration — it is a **mandatory characteristic** of a phase, because a phase that depends on another may not start until that other has completed (the `## Phase-Hints` dependency tree below). A phase is therefore not merely a "batch": it is a sequenced, dependency-bearing unit.
 
-This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the execution batches.
+This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the sequential, dependency-bearing execution units. Following the `depends-on` edges across phases traces out the **strands** of the memo — a strand is the **dependency closure over phases**, the chain that *emerges* when the `## Phase-Hints` edges are walked transitively (see [25-strands.md](./25-strands.md)). Strands are derived from these phase dependencies, never assigned thematically; many phases typically resolve into one or two large strands.
+
+---
+
+## What a PRD is (the corrected definition)
+
+"PRD" stands for **Product Requirements Document**, but in this spec the term carries a sharper, working meaning: a PRD is a **chunk of work-packages** sized to fit one context. We **chunk work-packages** so each fits into a single fresh, empty context; a work-package too large to fit one context is **split (chunked)** into several PRDs.
+
+This yields three rules that govern how PRDs map onto features and threads:
+
+- **Multiple PRDs may form one feature.** A feature is not one PRD by definition. A theoretically large feature is chunked across **multiple PRDs**, each self-contained, and the feature emerges from their combination — the memo, not any single PRD, remains the authority over the whole feature.
+- **Every PRD runs in exactly one thread.** A PRD is implemented by **one** agent in **one thread** with a fresh, empty context. A PRD is never split across threads; if work would need more than one thread, that is the signal to chunk it into more PRDs (one thread each), not to run a single PRD across several.
+- **PRDs are derived from blocks and follow phase/strand.** PRDs are not free-floating: they are derived from the memo's blocks and take their order from the phase they belong to and the strand that phase resolves into (the `depends-on` closure above).
+
+In short: a PRD is the unit we chunk *down to* so it fits one context and runs in one thread, and a feature is what we compose *up from* one or more such PRDs.
+
+---
+
+## PRD-Cap and Smart-Zone
+
+The "one PRD fits into one context" rule above is qualitative; this section makes it numeric. The qualitative rule still governs — a PRD that does not fit a single fresh context is mis-sized regardless of its token count — and the numbers below **concretize** it rather than replace it.
+
+- **Cap = one third (1/3) of the context window, per PRD.** A PRD's declared context plus its working headroom MUST stay within **1/3 of the context window**. The cap is measured **per PRD, not per phase**: a phase may bundle several PRDs whose combined size far exceeds 1/3, because each PRD is implemented in its own fresh, empty thread — the cap applies to each thread's PRD individually.
+- **Smart-Zone = one quarter (1/4) of the context window.** Below roughly **1/4** of the window, attention has not yet degraded — this is the **smart zone**, the band a PRD SHOULD aim to sit inside. The cap (1/3) is the hard ceiling; the smart-zone (1/4) is the target band where the agent works at full quality. The headroom between 1/4 and 1/3 is deliberate slack, not budget to plan against.
+
+At a 1M context window these fractions are concretely:
+
+| marker | fraction | tokens at 1M | meaning |
+|--------|----------|--------------|---------|
+| Smart-Zone | 1/4 | ~250k | target band — attention not yet degraded |
+| Cap | 1/3 | ~333k | hard ceiling per PRD — must not be exceeded |
+
+The smart-zone (1/4) marker is also the heuristic that `memo-reset-recommend` uses as the *reason* behind its token threshold: when context fill leaves the smart zone, a reset becomes worth recommending at a phase boundary. The reset algorithm itself lives in `memo-reset-recommend` (see [13-orchestration.md](./13-orchestration.md)); this chapter only declares the smart-zone marker it consumes.
+
+> **Known drift (follow-up, not fixed here).** Some generation skills (`memo-rollout-generate`, `memo-phase-generate`) still hard-code a `140000`-token cap, and `memo-prd-generate` mentions `1M`; neither matches the 1/3 cap defined here. This spec section is the **canonical source** for the cap; aligning the generation-skill numbers to it is follow-up work in a separate PRD/memo and is deliberately not changed here.
 
 ---
 
@@ -125,3 +159,5 @@ Scope discipline governs *which* work-packages a phase delivers; the discipline 
 - [15-prompt-generator.md](./15-prompt-generator.md) — produces a PRD's first prompt from its declared Required-Context.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context principle behind the required-context standard and the pointer-not-copy rule.
 - [18-multidimensionality.md](./18-multidimensionality.md) — phases that span multiple repositories.
+- [25-strands.md](./25-strands.md) — a strand is the dependency closure over the phases defined here; it emerges from the `## Phase-Hints` edges.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the Topic → work-package → Phase → PRD chain in one place.

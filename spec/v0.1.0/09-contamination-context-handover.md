@@ -94,4 +94,4 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 - [10-proactive-research.md](./10-proactive-research.md) — proactive research in early revisions, the natural producer of `context/` material the handover points at.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels (`[FACT]` … `[UNKNOWN]`) the handover zones reuse.
 - [13-orchestration.md](./13-orchestration.md) — state files, crash recovery, and the fresh-context evaluator that consumes the empty-context rule.
-- [00-overview.md](./00-overview.md) — conformance language and the context-rot vs contamination glossary.
+- [30-primitives.md](./30-primitives.md) — the central glossary, including the context-rot vs contamination distinction defined inline above (the cause vs the effect).

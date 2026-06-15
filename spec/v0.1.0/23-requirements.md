@@ -158,3 +158,4 @@ A requirement set thereby doubles as an **eval set**: it is the explicit definit
 - [24-tools-registry.md](./24-tools-registry.md) — the parallel data folder; `check.kind: tool` requirements point into the tools registry for the tool and tactic that verify them.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the finalization gate that runs applicable requirement checks and binds them.
 - [00-overview.md](./00-overview.md) — spec scope, conformance, and the document index.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the requirement primitive summarized as cross-cutting.

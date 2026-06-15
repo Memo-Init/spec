@@ -98,3 +98,4 @@ The skill that performs this reads **only** — it never issues writes to the se
 - [03-input-paths.md](./03-input-paths.md) — the four transcript types and their follow-up flows.
 - [10-proactive-research.md](./10-proactive-research.md) — the canonical research definition behind Step 5.
 - [05-memo-strategies.md](./05-memo-strategies.md) — the strategy chosen when the pipeline hands over to `memo-init`.
+- [30-primitives.md](./30-primitives.md) — central glossary and concept map; the topic primitive defined as the head of the executable chain.

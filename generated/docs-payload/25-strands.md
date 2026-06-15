@@ -1,47 +1,48 @@
 ---
 title: "Strands"
-description: "A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Often that chain is not one undifferentiated stream: distinct..."
+description: "A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Often that chain is not one undifferentiated stream:..."
 spec_version: "0.1.0"
 spec_file: "25-strands.md"
 order: 25
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T10:49:59.632Z"
+generated_at: "2026-06-15T18:02:46.195Z"
 generated_from: "spec/v0.1.0/25-strands.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/25-strands.md."
 ---
 
 
-A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](/specification/phases-and-prds/)). Often that chain is not one undifferentiated stream: distinct **processing paths** run through the memo — one path drives the core code, another the documentation, another a sub-spec. A **strand** names one such processing path: a dependency-linked run of phases and PRDs that advances one coherent area of work. Unlike the phases themselves, a strand may span **several topics**, because it is defined by the *way the work is processed*, not by the topic it touches.
+A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](/specification/phases-and-prds/)). Often that chain is not one undifferentiated stream: following the `depends-on` edges between phases (the `## Phase-Hints` dependency tree of [08-phases-and-prds.md](/specification/phases-and-prds/)) traces out distinct dependency chains through the memo. A **strand** is what **emerges** when you follow that dependency graph: the **dependency closure** over the phases that are transitively linked by `depends-on`. A strand is therefore *computed*, not *declared* — it is not a thematic grouping the author assigns, but the chain that the dependency edges produce. Because dependency chains tend to converge, a memo with **many phases** typically resolves into **few (often one or two large) strands**. Unlike the phases themselves, a strand may span **several topics**, because it is defined by the *dependency path the work takes*, not by the topic it touches.
 
 ---
 
 ## What a Strand Is
 
-A strand is a **processing path**: a sequence of phases and PRDs, linked by dependencies, that drives one coherent area of work forward. It **MAY** span several topics.
+A strand is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in the memo's `## Phase-Hints` section (see [08-phases-and-prds.md](/specification/phases-and-prds/)). It is **emergent**, not authored — an implementation *derives* a strand by walking the dependency graph, rather than the author *assigning* phases to a thematic group. A strand **MAY** span several topics, precisely because it is defined by the dependency path the work takes and not by the topic it touches.
 
-- **The flow.** A memo's **topics** are merged into **PRDs**; PRDs are sequenced into **phases**; phases and PRDs, ordered by their dependencies, form a **path** — and that path is a strand. (Topics → PRDs → Phases, per [08-phases-and-prds.md](/specification/phases-and-prds/).)
+- **Emergent, not declared.** A strand is **computed** from the dependency edges: it is the set of phases reachable from one another through `depends-on` (and the PRDs those phases carry). It is **NOT** a thematic bundle the author hand-picks. Two phases belong to the same strand because the dependency graph links them, not because they share a topic.
+- **Many phases, few strands.** Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**, not one strand per phase. The mapping phase→strand is therefore **many-to-one and emergent**, never a fixed 1:1 assignment.
+- **Trivial case.** A memo of a single PRD yields one PRD → one phase → one strand. In that degenerate case there is nothing to re-order, so the tracer-bullet decision (below, and at finalization — see the finalize gate) does not apply.
 - **What a strand carries.** A strand carries its **PRDs**. The PRDs carry the **requirements** (drawn from the registry of [23-requirements.md](/specification/requirements/)) and the **tools** (drawn from [24-tools-registry.md](/specification/tools-registry/)). A strand therefore carries requirements and tools **through its PRDs**, not directly.
 - **Optional strand spec.** A strand **MAY** carry its own **strand spec** — **RECOMMENDED** for larger strands, never mandatory. The strand spec is sharpened through an interview pass (a question catalogue) when the strand is large enough to warrant it.
-- **Phases belong to a strand.** A phase advances exactly one strand; a strand spans the phases that drive its path forward.
 
 ---
 
 ## Example Strands
 
-A memo that simultaneously runs four processing paths is the canonical example:
+A memo whose `## Phase-Hints` dependency graph resolves into four independent chains illustrates the emergent strands that result:
 
-| Strand | Topic |
-|--------|-------|
-| A | Strategy / Verification |
-| B | Spec-Authoring |
-| C | Sub-Spec |
-| D | Bootstrap |
+| Strand (emergent) | Phases in the closure | What the chain happens to touch |
+|-------------------|-----------------------|----------------------------------|
+| A | the strategy/verification phases and everything that `depends-on` them | Strategy / Verification |
+| B | the spec-authoring phases linked by `depends-on` | Spec-Authoring |
+| C | the sub-spec phases linked by `depends-on` | Sub-Spec |
+| D | the bootstrap phases linked by `depends-on` | Bootstrap |
 
-Strand A establishes the verified factual base and the strategy. Strand B authors the core chapters. Strand C authors the sub-spec. Strand D bootstraps the organization and its repositories. Each strand runs a different path; its PRDs carry the requirements and tools that path needs — documentation rules for the B and C paths, repository and code rules for the D path.
+These strands are not assigned; they **fall out** of the dependency tree. Chain A is the closure rooted in the phases that establish the verified factual base and the strategy. Chain B is the closure over the phases that author the core chapters; chain C the sub-spec; chain D the organization-and-repository bootstrap. The topic column merely *names* what each emergent chain happens to touch — it is a description after the fact, not the basis on which the strand was formed. Each chain's PRDs carry the requirements and tools that path needs — documentation rules where the chain authors docs, repository and code rules where it bootstraps.
 
-A smaller, mixed memo illustrates the same idea: a memo that combines `core` code work with `docs/frontend` work runs as **two strands** — a core strand and a frontend strand — because the two paths are processed differently even though they live in one memo.
+A smaller, mixed memo shows the same emergence: if the `core` code phases and the `docs/frontend` phases share no `depends-on` edge, the dependency graph resolves into **two strands** — not because the author grouped them by theme, but because the two dependency chains never converge. Had a phase depended across the two, the closure would have merged them into one strand.
 
 ---
 
@@ -62,5 +63,6 @@ A strand is a **tag or label**, not a component of the numeric memo identifier, 
 - [08-phases-and-prds.md](/specification/phases-and-prds/) — the source of the phase/PRD path a strand runs along.
 - [06-memo-structure.md](/specification/memo-structure/) — strands live inside a memo under `.memo/`.
 - [00-overview.md](/specification/overview/) — specification scope.
+- [30-primitives.md](/specification/primitives/) — central glossary and concept map; the strand primitive summarized as cross-cutting.
 </content>
 </invoke>

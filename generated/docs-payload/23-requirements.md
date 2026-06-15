@@ -6,7 +6,7 @@ spec_file: "23-requirements.md"
 order: 23
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T10:49:59.632Z"
+generated_at: "2026-06-15T18:02:46.195Z"
 generated_from: "spec/v0.1.0/23-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/23-requirements.md."
@@ -166,3 +166,4 @@ A requirement set thereby doubles as an **eval set**: it is the explicit definit
 - [24-tools-registry.md](/specification/tools-registry/) — the parallel data folder; `check.kind: tool` requirements point into the tools registry for the tool and tactic that verify them.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the finalization gate that runs applicable requirement checks and binds them.
 - [00-overview.md](/specification/overview/) — spec scope, conformance, and the document index.
+- [30-primitives.md](/specification/primitives/) — central glossary and concept map; the requirement primitive summarized as cross-cutting.

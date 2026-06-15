@@ -6,7 +6,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T10:49:59.632Z"
+generated_at: "2026-06-15T18:02:46.195Z"
 generated_from: "spec/v0.1.0/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/09-contamination-context-handover.md."
@@ -101,4 +101,4 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 - [10-proactive-research.md](/specification/proactive-research/) — proactive research in early revisions, the natural producer of `context/` material the handover points at.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the evidence levels (`[FACT]` … `[UNKNOWN]`) the handover zones reuse.
 - [13-orchestration.md](/specification/orchestration/) — state files, crash recovery, and the fresh-context evaluator that consumes the empty-context rule.
-- [00-overview.md](/specification/overview/) — conformance language and the context-rot vs contamination glossary.
+- [30-primitives.md](/specification/primitives/) — the central glossary, including the context-rot vs contamination distinction defined inline above (the cause vs the effect).

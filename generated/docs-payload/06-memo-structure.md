@@ -6,7 +6,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T10:49:59.632Z"
+generated_at: "2026-06-15T18:02:46.195Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
@@ -68,3 +68,4 @@ The practical effect is that hours of dictated reasoning, half-formed decisions,
 - [07-revisions-and-questions.md](/specification/revisions-and-questions/) — the three-area revision structure and the question format.
 - [12-rollout.md](/specification/rollout/) — the `rollout/` folder and the lessons-learned file.
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the security gate at the one exit point.
+- [30-primitives.md](/specification/primitives/) — central glossary and concept map; the memo, revision, and block primitives summarized.

@@ -6,7 +6,7 @@ spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T10:49:59.632Z"
+generated_at: "2026-06-15T18:02:46.195Z"
 generated_from: "spec/v0.1.0/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/04-input-pipeline.md."
@@ -105,3 +105,4 @@ The skill that performs this reads **only** — it never issues writes to the se
 - [03-input-paths.md](/specification/input-paths/) — the four transcript types and their follow-up flows.
 - [10-proactive-research.md](/specification/proactive-research/) — the canonical research definition behind Step 5.
 - [05-memo-strategies.md](/specification/memo-strategies/) — the strategy chosen when the pipeline hands over to `memo-init`.
+- [30-primitives.md](/specification/primitives/) — central glossary and concept map; the topic primitive defined as the head of the executable chain.
