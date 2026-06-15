@@ -6,7 +6,7 @@ spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-06-14T10:31:30.607Z"
+generated_at: "2026-06-15T10:49:59.632Z"
 generated_from: "spec/v0.1.0/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/27-landing-the-plane.md."
@@ -38,15 +38,16 @@ The landing produces a single document with a fixed, deterministic structure. Th
 
 ---
 
-## The Landing Checklist (L1–L5)
+## The Landing Checklist (L1–L7)
 
-Landing is complete when these five items hold:
+Landing is complete when these items hold:
 
 - **L1** — Worktrees are cleaned. No stray worktrees are left behind; each one created during the rollout is removed or accounted for.
 - **L2** — Branches are merged or documented. Every branch is either folded back into its target or named explicitly in the landing document with its reason for remaining.
 - **L3** — Commits are prepared and presented, but **never committed by the system**. The changes are staged and described so the pilot can commit them, but the act of committing stays with the pilot.
 - **L4** — Open ends are named. Deferred items, blocker resolutions, and needs-review remnants appear in the OPEN ENDS section; nothing finished-but-unstated is left implicit.
 - **L5** — The end-state is machine-readable. The `landing-readiness.json` marker is written so the landing can be consumed without reading prose.
+- **L7** — Exactly one narrated ChroniC entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The existing L1-L5 points are unchanged; the ChroniC point is L7 and the former L6 slot is deliberately left unassigned.
 
 ---
 

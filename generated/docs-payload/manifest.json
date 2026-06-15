@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-14T10:31:30.775Z",
+    "generated_at": "2026-06-15T10:49:59.795Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -257,7 +257,7 @@
             "filename": "25-strands.md",
             "slug": "strands",
             "title": "Strands",
-            "description": "A single memo frequently works **several distinct topics** across its phases — a memo can simultaneously advance a strategy/verification topic, a specification-authoring topic, a sub-spec topic, and...",
+            "description": "A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Often that chain is not one undifferentiated stream: distinct...",
             "order": 25,
             "section": "Specification",
             "normative": true,

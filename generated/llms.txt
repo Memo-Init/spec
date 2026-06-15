@@ -2439,25 +2439,26 @@ What the wiki is **not** is the timeline of how that knowledge was reached. The 
 |-------|-------|
 | Status | Draft |
 | Depends on | [23-requirements.md](./23-requirements.md), [24-tools-registry.md](./24-tools-registry.md) |
-| Related | [06-memo-structure.md](./06-memo-structure.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [00-overview.md](./00-overview.md) |
+| Related | [08-phases-and-prds.md](./08-phases-and-prds.md), [06-memo-structure.md](./06-memo-structure.md), [00-overview.md](./00-overview.md) |
 
-A single memo frequently works **several distinct topics** across its phases — a memo can simultaneously advance a strategy/verification topic, a specification-authoring topic, a sub-spec topic, and a repository-bootstrap topic. Treating all of that as one undifferentiated stream of phases loses the structure: different topics need different requirements and different tools. A **strand** names one such topic inside a memo, so the memo's work can be reasoned about per topic without splitting the memo itself.
+A single memo becomes executable as a chain of dependency-ordered phases and PRDs (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Often that chain is not one undifferentiated stream: distinct **processing paths** run through the memo — one path drives the core code, another the documentation, another a sub-spec. A **strand** names one such processing path: a dependency-linked run of phases and PRDs that advances one coherent area of work. Unlike the phases themselves, a strand may span **several topics**, because it is defined by the *way the work is processed*, not by the topic it touches.
 
 ---
 
 ## What a Strand Is
 
-A strand is a **named topic** that a memo works across one or more phases.
+A strand is a **processing path**: a sequence of phases and PRDs, linked by dependencies, that drives one coherent area of work forward. It **MAY** span several topics.
 
-- A memo **MAY** declare several strands. A memo with a single, cohesive topic **MAY** have just one (implicit) strand.
-- Each strand **SHOULD** carry its own **requirements** (drawn from the requirements registry of [23-requirements.md](./23-requirements.md)) and its own **tools** (drawn from the tools registry of [24-tools-registry.md](./24-tools-registry.md)). A spec-authoring strand needs documentation requirements and doc tools; a code-bootstrap strand needs the language formatting profile and the test tools. Declaring these per strand keeps each topic's expectations sharp.
-- Strands give a vocabulary for talking about *parts* of a memo. A phase belongs to a strand; a strand spans the phases that advance its topic.
+- **The flow.** A memo's **topics** are merged into **PRDs**; PRDs are sequenced into **phases**; phases and PRDs, ordered by their dependencies, form a **path** — and that path is a strand. (Topics → PRDs → Phases, per [08-phases-and-prds.md](./08-phases-and-prds.md).)
+- **What a strand carries.** A strand carries its **PRDs**. The PRDs carry the **requirements** (drawn from the registry of [23-requirements.md](./23-requirements.md)) and the **tools** (drawn from [24-tools-registry.md](./24-tools-registry.md)). A strand therefore carries requirements and tools **through its PRDs**, not directly.
+- **Optional strand spec.** A strand **MAY** carry its own **strand spec** — **RECOMMENDED** for larger strands, never mandatory. The strand spec is sharpened through an interview pass (a question catalogue) when the strand is large enough to warrant it.
+- **Phases belong to a strand.** A phase advances exactly one strand; a strand spans the phases that drive its path forward.
 
 ---
 
 ## Example Strands
 
-A memo that simultaneously runs four topics is the canonical example:
+A memo that simultaneously runs four processing paths is the canonical example:
 
 | Strand | Topic |
 |--------|-------|
@@ -2466,7 +2467,9 @@ A memo that simultaneously runs four topics is the canonical example:
 | C | Sub-Spec |
 | D | Bootstrap |
 
-Strand A establishes the verified factual base and the strategy. Strand B authors the core chapters. Strand C authors the sub-spec. Strand D bootstraps the organization and its repositories. Each strand has different requirements (documentation rules for B and C; repository and code rules for D) and different tools.
+Strand A establishes the verified factual base and the strategy. Strand B authors the core chapters. Strand C authors the sub-spec. Strand D bootstraps the organization and its repositories. Each strand runs a different path; its PRDs carry the requirements and tools that path needs — documentation rules for the B and C paths, repository and code rules for the D path.
+
+A smaller, mixed memo illustrates the same idea: a memo that combines `core` code work with `docs/frontend` work runs as **two strands** — a core strand and a frontend strand — because the two paths are processed differently even though they live in one memo.
 
 ---
 
@@ -2475,18 +2478,20 @@ Strand A establishes the verified factual base and the strategy. Strand B author
 A strand is a **tag or label**, not a component of the numeric memo identifier, and it is a different concept from a requirement's **severity** (`must` / `should` / `may`), which expresses the strictness of a requirement, not the grouping of work.
 
 - The memo ID stays **stable** and numeric (the `M{NNN}-{PP}-{RR}` form defined in [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)). A strand **MUST NOT** be encoded into the numeric memo ID, and adding or renaming a strand **MUST NOT** change the memo's ID.
-- A strand is attached as a label — for example, "strand C" or a short strand name — and used to group phases, requirements, and tools. Because it is only a label, strands can be added, renamed, or merged as understanding of the memo's topics evolves, without disturbing any identifier that other artifacts (commits, issues, branches) reference.
+- A strand is attached as a label — for example, "strand C" or a short strand name — and used to group the phases and PRDs along its path. Because it is only a label, strands can be added, renamed, or merged as understanding of the memo's paths evolves, without disturbing any identifier that other artifacts (commits, issues, branches) reference.
 - The strand provides organizational grouping; the numeric ID provides stable identity. The two concerns are kept separate.
 
 ---
 
 ## Related
 
-- [23-requirements.md](./23-requirements.md) — per-strand requirements draw from this registry.
-- [24-tools-registry.md](./24-tools-registry.md) — per-strand tools draw from this registry.
+- [23-requirements.md](./23-requirements.md) — a strand's PRDs draw their requirements from this registry.
+- [24-tools-registry.md](./24-tools-registry.md) — a strand's PRDs draw their tools from this registry.
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — the source of the phase/PRD path a strand runs along.
 - [06-memo-structure.md](./06-memo-structure.md) — strands live inside a memo under `.memo/`.
-- [08-phases-and-prds.md](./08-phases-and-prds.md) — a phase belongs to a strand.
 - [00-overview.md](./00-overview.md) — specification scope.
+</content>
+</invoke>
 
 ---
 
@@ -2583,15 +2588,16 @@ The landing produces a single document with a fixed, deterministic structure. Th
 
 ---
 
-## The Landing Checklist (L1–L5)
+## The Landing Checklist (L1–L7)
 
-Landing is complete when these five items hold:
+Landing is complete when these items hold:
 
 - **L1** — Worktrees are cleaned. No stray worktrees are left behind; each one created during the rollout is removed or accounted for.
 - **L2** — Branches are merged or documented. Every branch is either folded back into its target or named explicitly in the landing document with its reason for remaining.
 - **L3** — Commits are prepared and presented, but **never committed by the system**. The changes are staged and described so the pilot can commit them, but the act of committing stays with the pilot.
 - **L4** — Open ends are named. Deferred items, blocker resolutions, and needs-review remnants appear in the OPEN ENDS section; nothing finished-but-unstated is left implicit.
 - **L5** — The end-state is machine-readable. The `landing-readiness.json` marker is written so the landing can be consumed without reading prose.
+- **L7** — Exactly one narrated ChroniC entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The existing L1-L5 points are unchanged; the ChroniC point is L7 and the former L6 slot is deliberately left unassigned.
 
 ---
 
