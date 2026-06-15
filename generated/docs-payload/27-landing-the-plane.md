@@ -6,7 +6,7 @@ spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T18:02:46.195Z"
+generated_at: "2026-06-15T18:31:04.961Z"
 generated_from: "spec/v0.1.0/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/27-landing-the-plane.md."
