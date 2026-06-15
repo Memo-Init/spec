@@ -51,8 +51,6 @@ At a 1M context window these fractions are concretely:
 
 The smart-zone (1/4) marker is also the heuristic that `memo-reset-recommend` uses as the *reason* behind its token threshold: when context fill leaves the smart zone, a reset becomes worth recommending at a phase boundary. The reset algorithm itself lives in `memo-reset-recommend` (see [13-orchestration.md](./13-orchestration.md)); this chapter only declares the smart-zone marker it consumes.
 
-> **Known drift (follow-up, not fixed here).** Some generation skills (`memo-rollout-generate`, `memo-phase-generate`) still hard-code a `140000`-token cap, and `memo-prd-generate` mentions `1M`; neither matches the 1/3 cap defined here. This spec section is the **canonical source** for the cap; aligning the generation-skill numbers to it is follow-up work in a separate PRD/memo and is deliberately not changed here.
-
 ---
 
 ## Declared Context (Required Context Standard)

@@ -6,7 +6,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T18:31:04.961Z"
+generated_at: "2026-06-15T19:00:38.211Z"
 generated_from: "spec/v0.1.0/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/08-phases-and-prds.md."
@@ -57,8 +57,6 @@ At a 1M context window these fractions are concretely:
 | Cap | 1/3 | ~333k | hard ceiling per PRD — must not be exceeded |
 
 The smart-zone (1/4) marker is also the heuristic that `memo-reset-recommend` uses as the *reason* behind its token threshold: when context fill leaves the smart zone, a reset becomes worth recommending at a phase boundary. The reset algorithm itself lives in `memo-reset-recommend` (see [13-orchestration.md](/specification/orchestration/)); this chapter only declares the smart-zone marker it consumes.
-
-> **Known drift (follow-up, not fixed here).** Some generation skills (`memo-rollout-generate`, `memo-phase-generate`) still hard-code a `140000`-token cap, and `memo-prd-generate` mentions `1M`; neither matches the 1/3 cap defined here. This spec section is the **canonical source** for the cap; aligning the generation-skill numbers to it is follow-up work in a separate PRD/memo and is deliberately not changed here.
 
 ---
 

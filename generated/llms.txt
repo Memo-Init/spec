@@ -801,8 +801,6 @@ At a 1M context window these fractions are concretely:
 
 The smart-zone (1/4) marker is also the heuristic that `memo-reset-recommend` uses as the *reason* behind its token threshold: when context fill leaves the smart zone, a reset becomes worth recommending at a phase boundary. The reset algorithm itself lives in `memo-reset-recommend` (see [13-orchestration.md](./13-orchestration.md)); this chapter only declares the smart-zone marker it consumes.
 
-> **Known drift (follow-up, not fixed here).** Some generation skills (`memo-rollout-generate`, `memo-phase-generate`) still hard-code a `140000`-token cap, and `memo-prd-generate` mentions `1M`; neither matches the 1/3 cap defined here. This spec section is the **canonical source** for the cap; aligning the generation-skill numbers to it is follow-up work in a separate PRD/memo and is deliberately not changed here.
-
 ---
 
 ## Declared Context (Required Context Standard)
@@ -2834,7 +2832,7 @@ A follow-up split that is not backed by such a recorded user question is a viola
 
 This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail chapter that specifies it in full: the top level stays brief and points down, the depth lives in the owning chapter. Where this chapter and a detail chapter both speak about a primitive, the detail chapter is authoritative on its own subject and this chapter MUST stay consistent with it. The chapter also carries the system's only entity/relationship diagram and the two complementary concept views — the user view and the factory view — joined at finalization.
 
-There are exactly **ten** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strang, Requirement, Tool**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere.
+There are exactly **ten** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strand, Requirement, Tool**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere.
 
 ---
 
@@ -2852,7 +2850,7 @@ flowchart TD
     WP["work-package"]
     PHASE["Phase<br/>(sequential, depends-on)"]
     PRD["PRD<br/>(one context, one thread)"]
-    STRAND["Strang<br/>(emergent dependency closure)"]
+    STRAND["Strand<br/>(emergent dependency closure)"]
     REQ["Requirement<br/>(cross-cutting check)"]
     TOOL["Tool<br/>(registry entry)"]
 
@@ -2870,7 +2868,7 @@ flowchart TD
     PRD -->|pulls| TOOL
 ```
 
-> The chain is **Topic → work-package → Phase → PRD** (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Strang and Requirement are **cross-cutting**, not links in that chain: a strand is the emergent dependency closure over phases ([25-strands.md](./25-strands.md)), and a requirement is a check that reaches work through its PRDs ([23-requirements.md](./23-requirements.md)). A block is a structure node identified by `B\d{3}`, not a synonym for a context block.
+> The chain is **Topic → work-package → Phase → PRD** (see [08-phases-and-prds.md](./08-phases-and-prds.md)). Strand and Requirement are **cross-cutting**, not links in that chain: a strand is the emergent dependency closure over phases ([25-strands.md](./25-strands.md)), and a requirement is a check that reaches work through its PRDs ([23-requirements.md](./23-requirements.md)). A block is a structure node identified by `B\d{3}`, not a synonym for a context block.
 
 ---
 
@@ -2900,7 +2898,7 @@ Related: [00-overview.md](./00-overview.md) (mission and authority model), [26-m
 
 ## Block
 
-A **block** is a **structure node** inside a memo, carrying its own stable identifier of the form `B\d{3}` (for example `B001`). It is **not** a synonym for a "context block": it is an addressable unit of memo structure. A block has a fence declaring `id`, `repos`, and `tags`, and a body with `### Problem`, `### Loesung`, and `### Offene Fragen`. A block's `tags` flow **additively into the requirement scope match** (meta → auto-requirements), so the structure a block declares automatically pulls in the requirements that apply to that work. A block carries **no** `strand` field: the strand is emergent and MUST NOT be declared on a block. PRDs are **derived from blocks** and take their order from the phase they belong to.
+A **block** is a **structure node** inside a memo, carrying its own stable identifier of the form `B\d{3}` (for example `B001`). It is **not** a synonym for a "context block": it is an addressable unit of memo structure. A block has a fence declaring `id`, `repos`, and `tags`, and a body of three sections — a problem statement, a proposed solution, and open questions. A block's `tags` flow **additively into the requirement scope match** (meta → auto-requirements), so the structure a block declares automatically pulls in the requirements that apply to that work. A block carries **no** `strand` field: the strand is emergent and MUST NOT be declared on a block. PRDs are **derived from blocks** and take their order from the phase they belong to.
 
 Related: [06-memo-structure.md](./06-memo-structure.md) (memo structure), [08-phases-and-prds.md](./08-phases-and-prds.md) (PRDs derived from blocks), [23-requirements.md](./23-requirements.md) (the scope match a block's tags feed); related primitives: [PRD](#prd), [Requirement](#requirement), [Topic](#topic).
 
@@ -2914,11 +2912,11 @@ Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (PRD definition, cap, 
 
 A **phase** is a **sequential, mandatory** unit of the rollout that bundles PRDs which MUST be executed together and in order, and it carries an orchestration role (Lead / Worker / Evaluator). A phase MUST declare its dependencies: `depends-on` is a **mandatory characteristic**, not optional decoration — a phase that depends on another MUST NOT start until that other has completed. The `## Phase-Hints` section is the dependency tree of the rollout, declaring each phase's `depends-on` and (symmetric) `can-parallel-with` relations with a `rationale`. A phase is the node from which the chain **Topic → work-package → Phase → PRD** carries work; following the `depends-on` edges across phases is what makes strands emerge.
 
-Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (phases, `## Phase-Hints`, phase-planning lenses), [12-rollout.md](./12-rollout.md) (phase execution), [13-orchestration.md](./13-orchestration.md) (state model); related primitives: [PRD](#prd), [Strang](#strang), [Topic](#topic).
+Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (phases, `## Phase-Hints`, phase-planning lenses), [12-rollout.md](./12-rollout.md) (phase execution), [13-orchestration.md](./13-orchestration.md) (state model); related primitives: [PRD](#prd), [Strand](#strand), [Topic](#topic).
 
-## Strang
+## Strand
 
-A **strand** (German *Strang*) is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in `## Phase-Hints`. It is **emergent, not authored** — an implementation *derives* a strand by walking the dependency graph; it is never a thematic bundle the author hand-picks. Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**. A strand MAY span several topics, since it is defined by the dependency path the work takes, not by the topic it touches. A strand carries its **PRDs**, and through them its requirements and tools. A strand is a **tag**, never part of the numeric memo ID, and adding or renaming a strand MUST NOT change that ID. A large strand MAY carry an optional **strand spec**, sharpened through an interview pass, and is the unit on which the **Tracer-Bullet** finalize decision applies.
+A **strand** is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in `## Phase-Hints`. It is **emergent, not authored** — an implementation *derives* a strand by walking the dependency graph; it is never a thematic bundle the author hand-picks. Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**. A strand MAY span several topics, since it is defined by the dependency path the work takes, not by the topic it touches. A strand carries its **PRDs**, and through them its requirements and tools. A strand is a **tag**, never part of the numeric memo ID, and adding or renaming a strand MUST NOT change that ID. A large strand MAY carry an optional **strand spec**, sharpened through an interview pass, and is the unit on which the **Tracer-Bullet** finalize decision applies.
 
 Related: [25-strands.md](./25-strands.md) (emergence, tag-not-ID, strand spec), [08-phases-and-prds.md](./08-phases-and-prds.md) (the phase edges a strand emerges from); related primitives: [Phase](#phase), [PRD](#prd), [Requirement](#requirement), [Tool](#tool).
 
@@ -2932,7 +2930,7 @@ Related: [23-requirements.md](./23-requirements.md) (two-sided model, schema, sc
 
 A **tool** is an external capability a phase or work-package depends on (browser automation, a spreadsheet reader, the project wiki, and so on), recorded as a short descriptor in the per-project **tools registry** under `.memo/tools/`. The registry is **descriptive**, not a runtime: an entry records *that* a tool exists, *what* it is for, and *where* it lives (the single source of truth), and MUST NOT embed copies of skills or source. The registry is a **RECOMMENDATION**: a project SHOULD maintain it because it makes tool reachability a planning-time concern, but a memo MUST NOT be blocked solely because no registry is present — this is the deliberate difference from the enforced requirements registry. A `check.kind: tool` requirement points into this registry for the tool and tactic that verify it.
 
-Related: [24-tools-registry.md](./24-tools-registry.md) (registry entries, checklist mechanic, wiki-as-a-tool), [23-requirements.md](./23-requirements.md) (tool-kind checks); related primitives: [Requirement](#requirement), [PRD](#prd), [Strang](#strang).
+Related: [24-tools-registry.md](./24-tools-registry.md) (registry entries, checklist mechanic, wiki-as-a-tool), [23-requirements.md](./23-requirements.md) (tool-kind checks); related primitives: [Requirement](#requirement), [PRD](#prd), [Strand](#strand).
 
 ---
 
@@ -2949,7 +2947,7 @@ A memo, seen by the user, runs from dictated input to a closed document.
 ```mermaid
 flowchart TD
     SP["Voice / text input"] --> TO["Topics (memo-scoped)"]
-    TO --> BL["Blocks (id B###): Meta + Topics<br/>Problem / Loesung / Open questions"]
+    TO --> BL["Blocks (id B###): Meta + Topics<br/>Problem / Solution / Open questions"]
     BL --> QQ["Questions of all blocks<br/>collected centrally"]
     QQ --> DONE["Done for the user"]
 ```
@@ -2962,7 +2960,7 @@ The same memo, seen by the factory, becomes a dependency-ordered chain of phases
 flowchart TD
     BL["Blocks (id B###)"] --> PRD["PRDs: each within 1/3 context, one thread<br/>block Meta tags to auto-requirements"]
     PRD --> PH["Phases: sequential, depends-on"]
-    PH -->|follow the dependency edges| STR["Strang = emergent dependency closure over phases"]
+    PH -->|follow the dependency edges| STR["Strand = emergent dependency closure over phases"]
     STR -. large strand .-> TB["Strand spec + Tracer-Bullet: rewrite PRDs"]
     TB --> PRD
 ```
@@ -2994,7 +2992,7 @@ A compact index of every primitive (and the two retained maturity concepts), eac
 | Block | Structure node with id `B\d{3}`; tags feed auto-requirements; no `strand` field. | [06-memo-structure.md](./06-memo-structure.md) |
 | PRD | Self-contained work-chunk fitting one context (cap 1/3, smart-zone 1/4), one thread. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
 | Phase | Sequential, mandatory, dependency-bearing unit with an orchestration role. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
-| Strang | Emergent dependency closure over phases; a tag, not part of the memo ID. | [25-strands.md](./25-strands.md) |
+| Strand | Emergent dependency closure over phases; a tag, not part of the memo ID. | [25-strands.md](./25-strands.md) |
 | Requirement | Two-sided cross-cutting check (statement → generation, check → gate); ternary status. | [23-requirements.md](./23-requirements.md) |
 | Tool | Descriptor in the recommended tools registry; reachability is a planning concern. | [24-tools-registry.md](./24-tools-registry.md) |
 | Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. | [25-strands.md](./25-strands.md) |
