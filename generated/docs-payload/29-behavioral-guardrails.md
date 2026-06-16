@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T19:20:37.647Z"
+generated_at: "2026-06-16T18:51:24.400Z"
 generated_from: "spec/v0.1.0/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/29-behavioral-guardrails.md."
@@ -66,3 +66,11 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 - A follow-up memo is created ONLY when the user explicitly chooses it. The choice is recorded as a memo question entry (`### F{N}`); until that question is answered in favor of a split, the work stays in the current memo.
 
 A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
+
+---
+
+## Related
+
+- [01-philosophy.md](/specification/philosophy/) — the "Work It In Instead of Deferring" principle behind C7.
+- [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the developer-triggered finalize verb the guardrails defer to.
+- [23-requirements.md](/specification/requirements/) — the requirement-gate model that C6 ("no done without verification") is the behavioral root of.

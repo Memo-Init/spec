@@ -1,12 +1,12 @@
 ---
 title: "Memo-SOP"
-description: "`memo-sop` is the **canonical entry skill** of the memo system. It is the one document that explains the entire process end to end: the path from a dictated transcript to an executed rollout, the..."
+description: "`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. This chapter defines what makes it the single source of truth, why it is the..."
 spec_version: "0.1.0"
 spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T19:20:37.647Z"
+generated_at: "2026-06-16T18:51:24.400Z"
 generated_from: "spec/v0.1.0/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/02-memo-sop-entrypoint.md."
@@ -14,6 +14,8 @@ edit_warning: "This file is auto-generated. Source: spec/v0.1.0/02-memo-sop-entr
 
 
 ---
+
+`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. This chapter defines what makes it the single source of truth, why it is the re-entry point after any loss of session context, and how it classifies every other skill as a public entry point or a private process step.
 
 ## The Single Source of Truth
 

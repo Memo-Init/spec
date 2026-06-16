@@ -116,6 +116,8 @@ The six repositories are bootstrapped from an existing public reference organiza
 
 > **Informative.** This chapter describes the philosophy and interaction model behind the memo system. It is written in prose; the normative requirements that operationalize it live in the chapters it points to.
 
+The memo system rests on a small set of convictions about how an autonomous agent and a developer should work together: that planning outranks coding, that context is finite and must be spent deliberately, and that work is surfaced rather than deferred. This chapter sets out those convictions and the interaction model they imply, before the later chapters turn them into normative rules.
+
 ---
 
 ## Planning Is the Most Important Activity
@@ -216,6 +218,8 @@ Problems that surface during a run are **worked in** during the running phase, n
 
 ---
 
+`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. This chapter defines what makes it the single source of truth, why it is the re-entry point after any loss of session context, and how it classifies every other skill as a public entry point or a private process step.
+
 ## The Single Source of Truth
 
 `memo-sop` is the **canonical entry skill** of the memo system. It is the one document that explains the entire process end to end: the path from a dictated transcript to an executed rollout, the state transitions along the way, the hierarchy of every other skill, and the terminal-output standards. Every other memo skill references it and follows its process.
@@ -313,6 +317,8 @@ This classification drives **progressive disclosure**: public memos and skills a
 
 ---
 
+Every input to the memo system arrives as a transcript, and a mandatory header on its first line selects the flow that follows. This chapter defines the four transcript types the system recognizes and the follow-up path each one routes into.
+
 ## Four Transcript Types
 
 Every input to the memo system arrives as a **transcript**. The transcript server produces exactly four transcript types. The first line of the transcript — a mandatory default header — declares the type, and the type determines the follow-up flow. An implementation MUST recognize all four types and MUST reject a transcript whose first line matches none of them.
@@ -382,6 +388,8 @@ When the input is a transcript-server URL produced by the Viewer, the default he
 | Status | Draft |
 | Depends on | [03-input-paths.md](./03-input-paths.md) |
 | Related | [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md), [05-memo-strategies.md](./05-memo-strategies.md), [10-proactive-research.md](./10-proactive-research.md) |
+
+Before any memo is created or any revision written, every input passes through a fixed, strictly ordered processing pipeline. This chapter defines that five-step pipeline, the order it runs in, and why no step may be skipped or run out of sequence.
 
 ## A Mandatory, Strictly Ordered Pipeline
 
@@ -489,6 +497,8 @@ The skill that performs this reads **only** — it never issues writes to the se
 
 ---
 
+A memo is classified along two independent dimensions that must not be conflated: its *type* (where the SOP stops) and its *strategy* (how the work is shaped on the way there). This chapter specifies the strategy dimension and how it stays orthogonal to the type.
+
 ## Two Orthogonal Dimensions
 
 A memo has two independent classification dimensions. They MUST NOT be conflated.
@@ -550,6 +560,8 @@ Naming this strategy makes the interleaving explicit and reviewable, rather than
 | Related | [07-revisions-and-questions.md](./07-revisions-and-questions.md), [12-rollout.md](./12-rollout.md), [16-git-security-versioning.md](./16-git-security-versioning.md) |
 
 ---
+
+A memo has a stable on-disk shape: a numbered directory, a project prefix to avoid ID collisions, and an internal layout that the rest of the system relies on. This chapter defines how memos are numbered and structured so that their identifiers stay stable for the life of the memo.
 
 ## Numbering
 
@@ -617,6 +629,8 @@ The practical effect is that hours of dictated reasoning, half-formed decisions,
 | Related | [04-input-pipeline.md](./04-input-pipeline.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) |
 
 ---
+
+A memo evolves through revisions, and each revision carries the strict handover surface from the AI to the downstream machinery. This chapter defines the three-area revision structure and the machine-readable question areas that make the AI-to-software handover normative.
 
 ## The Three-Area Revision Structure
 
@@ -2749,6 +2763,14 @@ When drift is discovered while a phase is running, the rule is: do NOT abort the
 
 ---
 
+## Related
+
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — owns the post-phase drift-elimination step that the escalation rule defers to.
+- [13-orchestration.md](./13-orchestration.md) — holds the idempotent lint/CI gate that the resolution protocol installs.
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — source-vs-copy versioning, where divergent copies arise.
+
+---
+
 # 29. Behavioral Guardrails
 
 | Field | Value |
@@ -2809,6 +2831,14 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 - A follow-up memo is created ONLY when the user explicitly chooses it. The choice is recorded as a memo question entry (`### F{N}`); until that question is answered in favor of a split, the work stays in the current memo.
 
 A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
+
+---
+
+## Related
+
+- [01-philosophy.md](./01-philosophy.md) — the "Work It In Instead of Deferring" principle behind C7.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the developer-triggered finalize verb the guardrails defer to.
+- [23-requirements.md](./23-requirements.md) — the requirement-gate model that C6 ("no done without verification") is the behavioral root of.
 
 ---
 

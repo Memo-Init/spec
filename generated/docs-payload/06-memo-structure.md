@@ -1,12 +1,12 @@
 ---
 title: "Memo Structure"
-description: "Memos are numbered with **zero-padded** identifiers (for example, `001`, `017`, `138`). Each memo lives in a directory named `{NNN}-{slug}`. The numeric prefix is stable for the life of the memo and..."
+description: "A memo has a stable on-disk shape: a numbered directory, a project prefix to avoid ID collisions, and an internal layout that the rest of the system relies on. This chapter defines how memos are..."
 spec_version: "0.1.0"
 spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T19:20:37.647Z"
+generated_at: "2026-06-16T18:51:24.400Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
@@ -14,6 +14,8 @@ edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structur
 
 
 ---
+
+A memo has a stable on-disk shape: a numbered directory, a project prefix to avoid ID collisions, and an internal layout that the rest of the system relies on. This chapter defines how memos are numbered and structured so that their identifiers stay stable for the life of the memo.
 
 ## Numbering
 

@@ -1,12 +1,12 @@
 ---
 title: "Input Paths"
-description: "Every input to the memo system arrives as a **transcript**. The transcript server produces exactly four transcript types. The first line of the transcript — a mandatory default header — declares the..."
+description: "Every input to the memo system arrives as a transcript, and a mandatory header on its first line selects the flow that follows. This chapter defines the four transcript types the system recognizes..."
 spec_version: "0.1.0"
 spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-06-15T19:20:37.647Z"
+generated_at: "2026-06-16T18:51:24.400Z"
 generated_from: "spec/v0.1.0/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/03-input-paths.md."
@@ -14,6 +14,8 @@ edit_warning: "This file is auto-generated. Source: spec/v0.1.0/03-input-paths.m
 
 
 ---
+
+Every input to the memo system arrives as a transcript, and a mandatory header on its first line selects the flow that follows. This chapter defines the four transcript types the system recognizes and the follow-up path each one routes into.
 
 ## Four Transcript Types
 
