@@ -6,8 +6,6 @@
 | Depends on | [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md) |
 | Related | [04-input-pipeline.md](./04-input-pipeline.md), [05-memo-strategies.md](./05-memo-strategies.md), [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
 
----
-
 Every input to the memo system arrives as a transcript, and a mandatory header on its first line selects the flow that follows. This chapter defines the four transcript types the system recognizes and the follow-up path each one routes into.
 
 ## Four Transcript Types

@@ -6,8 +6,6 @@
 | Depends on | [03-input-paths.md](./03-input-paths.md) |
 | Related | [06-memo-structure.md](./06-memo-structure.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md) |
 
----
-
 A memo is classified along two independent dimensions that must not be conflated: its *type* (where the SOP stops) and its *strategy* (how the work is shaped on the way there). This chapter specifies the strategy dimension and how it stays orthogonal to the type.
 
 ## Two Orthogonal Dimensions

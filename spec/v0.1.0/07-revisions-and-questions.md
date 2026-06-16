@@ -6,8 +6,6 @@
 | Depends on | [06-memo-structure.md](./06-memo-structure.md) |
 | Related | [04-input-pipeline.md](./04-input-pipeline.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) |
 
----
-
 A memo evolves through revisions, and each revision carries the strict handover surface from the AI to the downstream machinery. This chapter defines the three-area revision structure and the machine-readable question areas that make the AI-to-software handover normative.
 
 ## The Three-Area Revision Structure
