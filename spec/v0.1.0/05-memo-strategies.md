@@ -8,6 +8,8 @@
 
 ---
 
+A memo is classified along two independent dimensions that must not be conflated: its *type* (where the SOP stops) and its *strategy* (how the work is shaped on the way there). This chapter specifies the strategy dimension and how it stays orthogonal to the type.
+
 ## Two Orthogonal Dimensions
 
 A memo has two independent classification dimensions. They MUST NOT be conflated.

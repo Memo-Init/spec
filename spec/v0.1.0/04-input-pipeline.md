@@ -6,6 +6,8 @@
 | Depends on | [03-input-paths.md](./03-input-paths.md) |
 | Related | [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md), [05-memo-strategies.md](./05-memo-strategies.md), [10-proactive-research.md](./10-proactive-research.md) |
 
+Before any memo is created or any revision written, every input passes through a fixed, strictly ordered processing pipeline. This chapter defines that five-step pipeline, the order it runs in, and why no step may be skipped or run out of sequence.
+
 ## A Mandatory, Strictly Ordered Pipeline
 
 Before any memo is created and before any revision is written, every input MUST pass through a five-step processing pipeline. The pipeline is mandatory and strictly sequential: no step may be skipped, and no step may begin before the previous step is complete. It runs both before `memo-init` and before every `memo-revision-generate`.

@@ -8,6 +8,8 @@
 
 ---
 
+Every input to the memo system arrives as a transcript, and a mandatory header on its first line selects the flow that follows. This chapter defines the four transcript types the system recognizes and the follow-up path each one routes into.
+
 ## Four Transcript Types
 
 Every input to the memo system arrives as a **transcript**. The transcript server produces exactly four transcript types. The first line of the transcript — a mandatory default header — declares the type, and the type determines the follow-up flow. An implementation MUST recognize all four types and MUST reject a transcript whose first line matches none of them.

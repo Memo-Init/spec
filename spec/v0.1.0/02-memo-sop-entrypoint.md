@@ -8,6 +8,8 @@
 
 ---
 
+`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. This chapter defines what makes it the single source of truth, why it is the re-entry point after any loss of session context, and how it classifies every other skill as a public entry point or a private process step.
+
 ## The Single Source of Truth
 
 `memo-sop` is the **canonical entry skill** of the memo system. It is the one document that explains the entire process end to end: the path from a dictated transcript to an executed rollout, the state transitions along the way, the hierarchy of every other skill, and the terminal-output standards. Every other memo skill references it and follows its process.

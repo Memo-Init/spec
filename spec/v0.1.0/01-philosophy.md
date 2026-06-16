@@ -8,6 +8,8 @@
 
 > **Informative.** This chapter describes the philosophy and interaction model behind the memo system. It is written in prose; the normative requirements that operationalize it live in the chapters it points to.
 
+The memo system rests on a small set of convictions about how an autonomous agent and a developer should work together: that planning outranks coding, that context is finite and must be spent deliberately, and that work is surfaced rather than deferred. This chapter sets out those convictions and the interaction model they imply, before the later chapters turn them into normative rules.
+
 ---
 
 ## Planning Is the Most Important Activity
