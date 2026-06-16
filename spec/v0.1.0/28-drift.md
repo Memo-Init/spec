@@ -66,3 +66,11 @@ The slogan for the protocol: fix where it COMES FROM, then close the gate it wou
 ## Escalation Rule — After the Phase, Never Mid-Phase
 
 When drift is discovered while a phase is running, the rule is: do NOT abort the phase to chase it. Aborting mid-phase fragments the work and tends to spawn new partial copies. Instead, record the finding and eliminate the drift immediately AFTER the current phase completes, as a dedicated step with its own fresh context. This keeps the in-flight phase coherent while guaranteeing the drift is resolved before the next phase can read the still-wrong source. The orchestration chapter owns the gate that enforces step 4; the phases-and-prds chapter owns this post-phase elimination step.
+
+---
+
+## Related
+
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — owns the post-phase drift-elimination step that the escalation rule defers to.
+- [13-orchestration.md](./13-orchestration.md) — holds the idempotent lint/CI gate that the resolution protocol installs.
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — source-vs-copy versioning, where divergent copies arise.

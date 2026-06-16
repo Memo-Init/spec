@@ -58,3 +58,11 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 - A follow-up memo is created ONLY when the user explicitly chooses it. The choice is recorded as a memo question entry (`### F{N}`); until that question is answered in favor of a split, the work stays in the current memo.
 
 A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
+
+---
+
+## Related
+
+- [01-philosophy.md](./01-philosophy.md) — the "Work It In Instead of Deferring" principle behind C7.
+- [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the developer-triggered finalize verb the guardrails defer to.
+- [23-requirements.md](./23-requirements.md) — the requirement-gate model that C6 ("no done without verification") is the behavioral root of.
