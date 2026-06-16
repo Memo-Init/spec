@@ -6,14 +6,12 @@ spec_file: "05-memo-strategies.md"
 order: 5
 section: "Specification"
 normative: true
-generated_at: "2026-06-16T21:21:50.637Z"
+generated_at: "2026-06-16T21:30:11.072Z"
 generated_from: "spec/v0.1.0/05-memo-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/05-memo-strategies.md."
 ---
 
-
----
 
 A memo is classified along two independent dimensions that must not be conflated: its *type* (where the SOP stops) and its *strategy* (how the work is shaped on the way there). This chapter specifies the strategy dimension and how it stays orthogonal to the type.
 

@@ -6,14 +6,12 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-06-16T21:21:50.637Z"
+generated_at: "2026-06-16T21:30:11.072Z"
 generated_from: "spec/v0.1.0/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/07-revisions-and-questions.md."
 ---
 
-
----
 
 A memo evolves through revisions, and each revision carries the strict handover surface from the AI to the downstream machinery. This chapter defines the three-area revision structure and the machine-readable question areas that make the AI-to-software handover normative.
 

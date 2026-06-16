@@ -6,14 +6,12 @@ spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-06-16T21:21:50.637Z"
+generated_at: "2026-06-16T21:30:11.072Z"
 generated_from: "spec/v0.1.0/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/03-input-paths.md."
 ---
 
-
----
 
 Every input to the memo system arrives as a transcript, and a mandatory header on its first line selects the flow that follows. This chapter defines the four transcript types the system recognizes and the follow-up path each one routes into.
 

@@ -216,8 +216,6 @@ Problems that surface during a run are **worked in** during the running phase, n
 | Depends on | [00-overview.md](./00-overview.md), [01-philosophy.md](./01-philosophy.md) |
 | Related | [03-input-paths.md](./03-input-paths.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md) |
 
----
-
 `memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. This chapter defines what makes it the single source of truth, why it is the re-entry point after any loss of session context, and how it classifies every other skill as a public entry point or a private process step.
 
 ## The Single Source of Truth
@@ -314,8 +312,6 @@ This classification drives **progressive disclosure**: public memos and skills a
 | Status | Draft |
 | Depends on | [02-memo-sop-entrypoint.md](./02-memo-sop-entrypoint.md) |
 | Related | [04-input-pipeline.md](./04-input-pipeline.md), [05-memo-strategies.md](./05-memo-strategies.md), [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
-
----
 
 Every input to the memo system arrives as a transcript, and a mandatory header on its first line selects the flow that follows. This chapter defines the four transcript types the system recognizes and the follow-up path each one routes into.
 
@@ -495,8 +491,6 @@ The skill that performs this reads **only** — it never issues writes to the se
 | Depends on | [03-input-paths.md](./03-input-paths.md) |
 | Related | [06-memo-structure.md](./06-memo-structure.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md) |
 
----
-
 A memo is classified along two independent dimensions that must not be conflated: its *type* (where the SOP stops) and its *strategy* (how the work is shaped on the way there). This chapter specifies the strategy dimension and how it stays orthogonal to the type.
 
 ## Two Orthogonal Dimensions
@@ -558,8 +552,6 @@ Naming this strategy makes the interleaving explicit and reviewable, rather than
 | Status | Draft |
 | Depends on | [05-memo-strategies.md](./05-memo-strategies.md) |
 | Related | [07-revisions-and-questions.md](./07-revisions-and-questions.md), [12-rollout.md](./12-rollout.md), [16-git-security-versioning.md](./16-git-security-versioning.md) |
-
----
 
 A memo has a stable on-disk shape: a numbered directory, a project prefix to avoid ID collisions, and an internal layout that the rest of the system relies on. This chapter defines how memos are numbered and structured so that their identifiers stay stable for the life of the memo.
 
@@ -627,8 +619,6 @@ The practical effect is that hours of dictated reasoning, half-formed decisions,
 | Status | Draft |
 | Depends on | [06-memo-structure.md](./06-memo-structure.md) |
 | Related | [04-input-pipeline.md](./04-input-pipeline.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) |
-
----
 
 A memo evolves through revisions, and each revision carries the strict handover surface from the AI to the downstream machinery. This chapter defines the three-area revision structure and the machine-readable question areas that make the AI-to-software handover normative.
 
