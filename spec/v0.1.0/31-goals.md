@@ -37,8 +37,29 @@ The value of a goal is that it is **measured against real state**, not against a
 
 - **Never in the working session.** A goal is **never** scored in the same session that worked on it. A session that did the work will report "all done" and hide the gap (the lesson of an earlier episode where a working session declared a large requirement set complete and lost the real state). Scoring therefore runs in a **fresh context** — a separate, unbiased reader of the actual artifacts.
 - **Distrust PASS.** A green conformity report is not evidence. The fresh-context reader inspects the real artifacts — files, wiring, tests actually run, real usage — and measures how far the **intent** is met, not whether a report is green.
-- **A single score is a strict object.** One goal's score is `{ pct, done, missing, status, confidence, evidence }`: a percentage, what is genuinely there, what real work is still open, the lifecycle status, the provenance of the judgement, and concrete evidence pointers.
-- **The board is the standard output.** Scoring all goals produces a board — a table of `Goal | % | Status | what is really missing`, sorted worst-first, followed by a summary line of the form `N open · M closed · Ø X %`, and a written report. This board, not a single number, is the deliverable.
+- **A single score is a strict object.** One goal's score is `{ pct, readiness, done, missing, status, confidence, evidence }`: a percentage, the deterministic readiness axis (below), what is genuinely there, what real work is still open, the lifecycle status, the provenance of the judgement, and concrete evidence pointers. Only `pct` is the fresh-context LLM judgement; `readiness` is computed deterministically.
+- **The board is the standard output.** Scoring all goals produces a board — a table of `Goal | % | Readiness | Status | what is really missing`, sorted worst-first, followed by a summary line of the form `N open · M closed · Ø X %`, and a written report. This board, not a single number, is the deliverable.
+
+---
+
+## Readiness — the Second Axis
+
+A goal is measured on **two independent axes**. `pct` answers *how far done*; **readiness** (Bearbeitungsreife) answers a different question: *how much grounding exists to act on the goal autonomously*. The two are separable — sufficiency of context is not the same as completion (the RAG "Sufficient Context" distinction) — so a goal can be near-done with thin grounding, or far from done with rich grounding.
+
+- **Deterministic, not an LLM guess.** Readiness is computed from machine-countable signals — topics recorded across the goal's memos, cross-references between memos, revision depth, and chronicle coverage — consistent with the principle *machine evidence over self-report*. It is therefore not subject to the fresh-context rule and is auto-filled when a score is persisted; the developer never estimates it by hand.
+- **Monotone polarity.** Higher readiness means **more** ready to act. The term "data density" / "information density" is deliberately **rejected**: in information theory it measures uncertainty (higher = more unknown), which would invert the meaning.
+- **A gate, not just a display.** Readiness is the trigger for the optimization path below: a threshold (default `0.65`, calibratable on the real distribution) decides whether a goal is grounded enough to be optimized autonomously. `pct` does **not** gate — it is the *target gap* (the room left to improve).
+
+---
+
+## LLM-Initiated Optimization
+
+There are **two ways into a memo**. The first is user-initiated (a spoken or typed transcript). The second is **llm-initiated**: a goal evaluation is distilled into a full follow-up memo that brings one open goal honestly over the line. Both reuse the same memo-init mechanics; the difference is the input provenance and the `Initiator` key (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)).
+
+- **The trigger is readiness, gated.** A goal qualifies for the autonomous path only when it is `offen` AND `readiness >= 0.65`. A goal that is open but below the bar is **not ready** — the honest move is to build grounding first or ask the developer, never to fabricate an optimization.
+- **Honest target, not a claimed number.** The path commits to *aspiration* (95 %, the optimum — not a pressure target) **and** a *defensible target value* (committed) to which the work binds — the mechanical share it can genuinely close. A real improvement, even only to ~88 %, beats a claimed 95 % followed by hallucination.
+- **Decisions stay questions.** The remaining gap is classified: mechanical parts (content + wiring) are closed autonomously; architecture/scope decisions and anti-cheat items that need an external producer run are surfaced as **visible questions** in the follow-up memo, never silently deferred. A memo that claims completion instead of showing these questions is a form/honesty break.
+- **Autonomy is judged in a fresh context.** Whether the remaining gap is mechanically closable is decided by a fresh-context reader (never the working session), the same unbiased mechanism used for scoring.
 
 ---
 

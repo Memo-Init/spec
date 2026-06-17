@@ -52,6 +52,19 @@ This rule is the structural reason evaluators are the first candidates to become
 
 ---
 
+## Memo Provenance — the Initiator field
+
+A memo's first revision carries provenance metadata so a later analysis can tell **who initiated the memo**. Alongside the context-rot fields (transcript-input, creation-context, session-phase, session-id), the first revision MUST carry an **`Initiator`** field with one of two values:
+
+| Value | Meaning |
+|-------|---------|
+| `user` | The default. The memo was initiated by the developer (spoken or typed input). |
+| `llm` | The memo was machine-initiated — distilled from a goal evaluation by the optimization path (`memo goal optimize <Gid>`, see [31-goals.md](./31-goals.md)). |
+
+The reason is **analytics provenance, not debugging**: a later evaluation MUST be able to separate machine-generated data (`llm`) from genuine user data (`user`), otherwise the statistics mix synthetic and real signals and become misleading. The field is **orthogonal** to transcript-input (input *form* vs. acting *instance*) and introduces **no new transcript type** — both paths reuse the same memo-init mechanics. The `llm` value is set internally by the `optimize` entry point; a memo created any other way stays `user`.
+
+---
+
 ## HANDOVER.md — In-Session Memo Handover
 
 When a session must be handed over (overflow, drifting assumptions, scope change), the handover artifact is a single file named `HANDOVER.md`. This is the only valid name. Variant names (`RE-ENTRY.md`, `PAUSE-STATUS.md`, `HANDOVER.md` duplicates, any other) are forbidden as output names — naming sprawl is itself signal `S5`.

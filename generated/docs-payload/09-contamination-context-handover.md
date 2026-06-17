@@ -6,7 +6,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-06-17T12:56:47.331Z"
+generated_at: "2026-06-17T20:48:45.712Z"
 generated_from: "spec/v0.1.0/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/09-contamination-context-handover.md."
@@ -56,6 +56,19 @@ When work spans more than one session, or when a context is detected as full or 
 - The AI cannot execute the context reset itself. The reset recommendation is a **user action** — the system emits the recommendation, the user performs it.
 
 This rule is the structural reason evaluators are the first candidates to become repo-scoped agents with isolated context (see [14-agents-skills-tasks.md](/specification/agents-skills-tasks/)).
+
+---
+
+## Memo Provenance — the Initiator field
+
+A memo's first revision carries provenance metadata so a later analysis can tell **who initiated the memo**. Alongside the context-rot fields (transcript-input, creation-context, session-phase, session-id), the first revision MUST carry an **`Initiator`** field with one of two values:
+
+| Value | Meaning |
+|-------|---------|
+| `user` | The default. The memo was initiated by the developer (spoken or typed input). |
+| `llm` | The memo was machine-initiated — distilled from a goal evaluation by the optimization path (`memo goal optimize <Gid>`, see [31-goals.md](/specification/goals/)). |
+
+The reason is **analytics provenance, not debugging**: a later evaluation MUST be able to separate machine-generated data (`llm`) from genuine user data (`user`), otherwise the statistics mix synthetic and real signals and become misleading. The field is **orthogonal** to transcript-input (input *form* vs. acting *instance*) and introduces **no new transcript type** — both paths reuse the same memo-init mechanics. The `llm` value is set internally by the `optimize` entry point; a memo created any other way stays `user`.
 
 ---
 
