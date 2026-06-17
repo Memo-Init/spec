@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-16T21:31:13.372Z",
+    "generated_at": "2026-06-17T12:44:45.383Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -312,6 +312,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "foundations"
+        },
+        {
+            "filename": "31-goals.md",
+            "slug": "goals",
+            "title": "Goals",
+            "description": "A **goal** is the triggering **intent** behind work — the feature or outcome that several memos serve — and it is the only primitive that sits *above* a single memo (see...",
+            "order": 31,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
         }
     ],
     "workbench": {
@@ -349,10 +359,10 @@
         ]
     },
     "stats": {
-        "total_files": 34,
-        "core_files": 31,
+        "total_files": 35,
+        "core_files": 32,
         "workbench_files": 3,
-        "normative_files": 31,
+        "normative_files": 32,
         "informative_files": 3
     }
 }

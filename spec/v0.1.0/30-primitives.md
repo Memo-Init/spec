@@ -68,9 +68,9 @@ Related: [04-input-pipeline.md](./04-input-pipeline.md) (Step 3 topic extraction
 
 ## Goal
 
-A **goal** is a primitive that spans **several memos** rather than living inside one. Where a memo is the authority over its own rollout, a goal expresses an intent that persists across the memo sequence and MAY be tracked with its own metrics. A goal is the only primitive on this page that sits *above* a single memo: many memos can contribute to one goal, and a goal outlives any one of them. A goal SHOULD be stated explicitly so the memos that serve it can be related back to it.
+A **goal** is a cross-memo **intent** (id `G\d{3}`) that spans several memos rather than living inside one, and is the only primitive on this page that sits *above* a single memo: many memos contribute to one goal, and a goal outlives any one of them. A goal is defined by **intent, not surface**, has a fluid `offen`↔`abgeschlossen` lifecycle (completion developer-declared, re-openable), and is **scored in a fresh context against real state** — never in the session that did the work. The full lifecycle, scoring mode, friction model, and the goal-vs-chronicle distinction are specified in [31-goals.md](./31-goals.md).
 
-Related: [00-overview.md](./00-overview.md) (mission and authority model), [26-memo-history.md](./26-memo-history.md) (the cross-memo timeline a goal is read against); related primitives: [Memo](#memo), [Topic](#topic).
+Related: [31-goals.md](./31-goals.md) (lifecycle, scoring mode, friction), [00-overview.md](./00-overview.md) (mission and authority model), [26-memo-history.md](./26-memo-history.md) (the cross-memo timeline a goal is read against); related primitives: [Memo](#memo), [Topic](#topic).
 
 ## Block
 
@@ -164,7 +164,7 @@ A compact index of every primitive (and the two retained maturity concepts), eac
 | Memo | Versioned, local strategy document; highest authority over its rollout. | [06-memo-structure.md](./06-memo-structure.md) |
 | Revision | Immutable `REV-XX.md` snapshot; new file per change, Full or Update. | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
 | Topic | Atomic, memo-scoped point extracted by the input pipeline; head of the chain. | [04-input-pipeline.md](./04-input-pipeline.md) |
-| Goal | Cross-memo intent that spans several memos and outlives any one. | [00-overview.md](./00-overview.md) |
+| Goal | Cross-memo intent that spans several memos and outlives any one; scored fresh-context against real state. | [31-goals.md](./31-goals.md) |
 | Block | Structure node with id `B\d{3}`; tags feed auto-requirements; no `strand` field. | [06-memo-structure.md](./06-memo-structure.md) |
 | PRD | Self-contained work-chunk fitting one context (cap 1/3, smart-zone 1/4), one thread. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
 | Phase | Sequential, mandatory, dependency-bearing unit with an orchestration role. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
