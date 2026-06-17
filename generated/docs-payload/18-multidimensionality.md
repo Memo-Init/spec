@@ -6,7 +6,7 @@ spec_file: "18-multidimensionality.md"
 order: 18
 section: "Specification"
 normative: true
-generated_at: "2026-06-17T12:44:44.572Z"
+generated_at: "2026-06-17T12:56:47.331Z"
 generated_from: "spec/v0.1.0/18-multidimensionality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/18-multidimensionality.md."
