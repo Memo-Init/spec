@@ -43,7 +43,7 @@ A project directory **MUST** contain the following folders and files. Folder nam
 | `ABOUT.md` | Yes | Project documentation for humans. |
 | `CLAUDE.md` | Yes | The runbook for the AI. |
 | `.playwright/` | Yes | Browser-automation session, scripts, and output. |
-| `.wiki/` | Optional | LLM-generated project wiki (see [24-tools-registry.md](./24-tools-registry.md)). |
+| `.wiki/` | Optional | LLM-generated project wiki; an OKF-conformant knowledge bundle (see [24-tools-registry.md](./24-tools-registry.md) for its query role and [02-knowledge-format-okf.md](./02-knowledge-format-okf.md) for its on-disk format). |
 
 A project **MUST NOT** omit a required folder. A project **MAY** add the optional `.wiki/`. The workbench audit reports any missing required path as a structural finding and any unexpected top-level entry for review.
 

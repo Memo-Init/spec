@@ -4,7 +4,7 @@
 |-------|-------|
 | Status | Draft |
 | Depends on | — (sub-spec entry point) |
-| Related | [01-project-structure.md](./01-project-structure.md), [06-trash.md](./06-trash.md), [Requirements](./23-requirements.md), [Tools Registry](./24-tools-registry.md), [Strands](./25-strands.md), [Memo History](./26-memo-history.md) |
+| Related | [01-project-structure.md](./01-project-structure.md), [02-knowledge-format-okf.md](./02-knowledge-format-okf.md), [06-trash.md](./06-trash.md), [Requirements](./23-requirements.md), [Tools Registry](./24-tools-registry.md), [Strands](./25-strands.md), [Memo History](./26-memo-history.md) |
 
 > **Informative.** This document introduces the workbench sub-spec, its scope, and its independent versioning. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
 
@@ -78,5 +78,6 @@ The workbench sub-spec contains the following chapters. Requirements, Tools Regi
 |----------|-------|------|
 | `00-overview.md` | Workbench Sub-Spec — Overview | Informative |
 | `01-project-structure.md` | Project Structure & Local Guarantee | Normative |
+| `02-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Normative |
 | `06-trash.md` | Trash — No Deletion, Only `.trash/` | Normative |
 
