@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-17T22:00:57.829Z",
+    "generated_at": "2026-06-17T22:11:43.152Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -347,6 +347,16 @@
                 "sidebar_group": "workbench"
             },
             {
+                "filename": "02-knowledge-format-okf.md",
+                "slug": "knowledge-format-okf",
+                "title": "Knowledge Format — OKF Conformance",
+                "description": "The project wiki under `.wiki/` is a **knowledge bundle**: a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. This chapter declares that bundle **conformant to...",
+                "order": 2,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "workbench"
+            },
+            {
                 "filename": "06-trash.md",
                 "slug": "trash",
                 "title": "Trash",
@@ -359,10 +369,10 @@
         ]
     },
     "stats": {
-        "total_files": 35,
+        "total_files": 36,
         "core_files": 32,
-        "workbench_files": 3,
-        "normative_files": 32,
+        "workbench_files": 4,
+        "normative_files": 33,
         "informative_files": 3
     }
 }

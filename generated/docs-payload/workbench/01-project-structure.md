@@ -6,7 +6,7 @@ spec_file: "01-project-structure.md"
 order: 1
 section: "Workbench"
 normative: true
-generated_at: "2026-06-17T22:00:57.694Z"
+generated_at: "2026-06-17T22:11:41.570Z"
 generated_from: "spec/workbench/01-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/01-project-structure.md."
@@ -50,7 +50,7 @@ A project directory **MUST** contain the following folders and files. Folder nam
 | `ABOUT.md` | Yes | Project documentation for humans. |
 | `CLAUDE.md` | Yes | The runbook for the AI. |
 | `.playwright/` | Yes | Browser-automation session, scripts, and output. |
-| `.wiki/` | Optional | LLM-generated project wiki (see [24-tools-registry.md](/specification/tools-registry/)). |
+| `.wiki/` | Optional | LLM-generated project wiki; an OKF-conformant knowledge bundle (see [24-tools-registry.md](/specification/tools-registry/) for its query role and [02-knowledge-format-okf.md](/specification/knowledge-format-okf/) for its on-disk format). |
 
 A project **MUST NOT** omit a required folder. A project **MAY** add the optional `.wiki/`. The workbench audit reports any missing required path as a structural finding and any unexpected top-level entry for review.
 

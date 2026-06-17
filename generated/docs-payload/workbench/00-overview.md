@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-17T22:00:57.694Z"
+generated_at: "2026-06-17T22:11:41.570Z"
 generated_from: "spec/workbench/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/00-overview.md."
@@ -85,5 +85,6 @@ The workbench sub-spec contains the following chapters. Requirements, Tools Regi
 |----------|-------|------|
 | `00-overview.md` | Workbench Sub-Spec — Overview | Informative |
 | `01-project-structure.md` | Project Structure & Local Guarantee | Normative |
+| `02-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Normative |
 | `06-trash.md` | Trash — No Deletion, Only `.trash/` | Normative |
 
