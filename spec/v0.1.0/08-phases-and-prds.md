@@ -147,6 +147,16 @@ Stating this in the phase chapter keeps the dependency tree honest — `depends-
 
 Scope discipline governs *which* work-packages a phase delivers; the discipline for *each unit a work-package produces* — that every required unit ends as **set**, **justified-omit**, or **blocked** and is never guessed — is the three-exit Worker-output rule defined in [13-orchestration.md](./13-orchestration.md).
 
+## Post-Phase Drift Elimination
+
+This chapter owns the **post-phase drift-elimination step** that the drift escalation rule defers to ([28-drift.md](./28-drift.md)). When drift is discovered *while a phase is running*, the phase is never aborted to chase it — aborting fragments the work and tends to spawn new partial copies. Instead the finding is recorded and the elimination is scheduled as a dedicated step that runs **after the current phase completes**, before the next phase begins.
+
+The step is bounded by three rules so it composes with the dependency tree:
+
+- **After, never mid-phase.** The in-flight phase finishes coherently; only then does the elimination run. This guarantees the still-wrong source is repaired before the next phase can read it and spawn another copy.
+- **Its own fresh context.** The elimination is a separate work unit in a clean context (the empty-context principle), so the contaminated session that surfaced the drift does not carry the wrong value into the fix.
+- **Fix-at-source, then gate.** The step resolves the drift at its source-of-truth (the [28-drift.md](./28-drift.md) protocol) and leaves the idempotent lint/CI gate — owned by [13-orchestration.md](./13-orchestration.md) — in place so the eliminated drift cannot re-enter. A discovered drift is therefore closed at a real point in the dependency tree, not deferred as a standing note.
+
 ---
 
 ## Related
@@ -157,5 +167,6 @@ Scope discipline governs *which* work-packages a phase delivers; the discipline 
 - [15-prompt-generator.md](./15-prompt-generator.md) — produces a PRD's first prompt from its declared Required-Context.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context principle behind the required-context standard and the pointer-not-copy rule.
 - [18-multidimensionality.md](./18-multidimensionality.md) — phases that span multiple repositories.
+- [28-drift.md](./28-drift.md) — the drift error-class whose escalation rule defers to the post-phase elimination step this chapter owns.
 - [25-strands.md](./25-strands.md) — a strand is the dependency closure over the phases defined here; it emerges from the `## Phase-Hints` edges.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the Topic → work-package → Phase → PRD chain in one place.
