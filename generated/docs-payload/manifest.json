@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-18T08:05:50.327Z",
+    "generated_at": "2026-06-18T12:14:39.739Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -322,6 +322,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "foundations"
+        },
+        {
+            "filename": "32-prompt-governance.md",
+            "slug": "prompt-governance",
+            "title": "Prompt Governance",
+            "description": "The single most consequential moment of any spawned task is its **initial prompt**. An error at that first point does not stay small: it is multiplied across the whole batch — a flawed initial prompt...",
+            "order": 32,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
         }
     ],
     "workbench": {
@@ -369,10 +379,10 @@
         ]
     },
     "stats": {
-        "total_files": 36,
-        "core_files": 32,
+        "total_files": 37,
+        "core_files": 33,
         "workbench_files": 4,
-        "normative_files": 33,
+        "normative_files": 34,
         "informative_files": 3
     }
 }
