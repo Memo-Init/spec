@@ -557,7 +557,7 @@ A memo has a stable on-disk shape: a numbered directory, a project prefix to avo
 
 ## Numbering
 
-Memos are numbered with **zero-padded** identifiers (for example, `001`, `017`, `138`). Each memo lives in a directory named `{NNN}-{slug}`. The numeric prefix is stable for the life of the memo and is the basis for the memo ID used in git references (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)).
+Memos are numbered with **zero-padded** identifiers (for example, `001`, `017`, `138`). Each memo lives in a directory named `.memo/memos/{NNN}-{slug}/`. The numeric prefix is stable for the life of the memo and is the basis for the memo ID used in git references (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)). The flat layout `.memo/{NNN}-{slug}/` is **deprecated** and read only as a legacy fallback; new memos MUST be created under `.memo/memos/`.
 
 ### Project Prefix
 
@@ -580,6 +580,8 @@ A memo directory contains a fixed set of sub-folders, each with a single respons
 | Folder | Responsibility |
 |--------|----------------|
 | `revisions/` | The revision files `REV-XX.md` (zero-padded, two digits). The current memo content. |
+| `_topics/` | Per-memo research topics and their derived notes. |
+| `context/` | Memo-local context documents and linked source material. |
 | `transcripts/` | The dictated transcripts that fed the memo. |
 | `rollout/` | Rollout artifacts: state files for crash recovery and the standing lessons-learned file. |
 | `validation/` | Validation outputs produced during finalization and rollout. |
@@ -2314,14 +2316,14 @@ flowchart LR
 
 ## Storage and Scale
 
-Requirements are stored **one file per entry** under `.memo/requirements/`, a sibling of the memos under `.memo/` rather than a child of any single memo. This keeps the set shared across all memos of a project instead of trapped inside one. Each entry is a small, self-describing file, so requirements can be added, reviewed, and diffed individually, and the registry scales to hundreds of fine-grained entries without any single file becoming unmanageable.
+Requirements are stored **one file per entry** under `.memo/_requirements/`, a sibling of the memos under `.memo/` rather than a child of any single memo. This keeps the set shared across all memos of a project instead of trapped inside one. Each entry is a small, self-describing file, so requirements can be added, reviewed, and diffed individually, and the registry scales to hundreds of fine-grained entries without any single file becoming unmanageable.
 
 Scope is **carried by the entry itself**, not by where the file sits. A `scope` object with three axes — `repos`, `categories`, and `tags` — plus a `when` trigger object decides which work an entry applies to. A scoped folder tree is a useful conceptual model for reasoning about the registry — global rules, per-repo rules, per-category rules, per-state rules — but the scope axes in the entry are authoritative. The folder layout is a lens onto the data; the data is the source of truth.
 
 The intended conceptual tree:
 
 ```
-requirements/
+_requirements/
   global/                 # applies to everything (for example: outward-facing language)
   repos/<repo>/           # applies to one repository
   categories/<category>/  # applies to one work category (readme, diagram, issue, …)
@@ -3139,7 +3141,7 @@ A goal and the chronicle ([13-orchestration.md](./13-orchestration.md)) are **co
 |-------|-------|
 | Status | Draft |
 | Depends on | — (sub-spec entry point) |
-| Related | [01-project-structure.md](./01-project-structure.md), [02-knowledge-format-okf.md](./02-knowledge-format-okf.md), [06-trash.md](./06-trash.md), [Requirements](./23-requirements.md), [Tools Registry](./24-tools-registry.md), [Strands](./25-strands.md), [Memo History](./26-memo-history.md) |
+| Related | [01-project-structure.md](./01-project-structure.md), [02-knowledge-format-okf.md](./02-knowledge-format-okf.md), [06-trash.md](./06-trash.md), [Requirements](../v0.1.0/23-requirements.md), [Tools Registry](../v0.1.0/24-tools-registry.md), [Strands](../v0.1.0/25-strands.md), [Memo History](../v0.1.0/26-memo-history.md) |
 
 > **Informative.** This document introduces the workbench sub-spec, its scope, and its independent versioning. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
 
@@ -3151,7 +3153,7 @@ This is the entry point for the **workbench sub-spec** of the memo-init specific
 
 The workbench is documented as an **independent sub-spec**, not as additional chapters of the core specification. The reason is one of concern separation:
 
-- The **core specification** (`spec/vX.Y.Z/00..18`) describes a single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. It reasons about *one memo at a time*.
+- The **core specification** (`spec/vX.Y.Z/00..31`) describes a single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. It reasons about *one memo at a time*.
 - The **workbench sub-spec** (this document) describes the *environment* in which memos live — how projects are laid out on disk, which tools and requirements a memo can pull in, how a single memo splits its work into named strands, and how knowledge and deleted material are kept. It reasons about *the project and the workbench around the memo*.
 
 Keeping these concerns in separate documents lets each evolve at its own pace.
@@ -3207,7 +3209,7 @@ These helpers are global because they serve cross-project concerns (data ingesti
 
 ## Sub-Spec Document Index
 
-The workbench sub-spec contains the following chapters. Requirements, Tools Registry, Strands, and Memo History have been promoted to core chapters and are linked from there: [Requirements](./23-requirements.md), [Tools Registry](./24-tools-registry.md), [Strands](./25-strands.md), [Memo History](./26-memo-history.md).
+The workbench sub-spec contains the following chapters. Requirements, Tools Registry, Strands, and Memo History have been promoted to core chapters and are linked from there: [Requirements](../v0.1.0/23-requirements.md), [Tools Registry](../v0.1.0/24-tools-registry.md), [Strands](../v0.1.0/25-strands.md), [Memo History](../v0.1.0/26-memo-history.md).
 
 | Document | Title | Mode |
 |----------|-------|------|
@@ -3224,7 +3226,7 @@ The workbench sub-spec contains the following chapters. Requirements, Tools Regi
 |-------|-------|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md) |
-| Related | [23-requirements.md](./23-requirements.md), [24-tools-registry.md](./24-tools-registry.md), [06-trash.md](./06-trash.md) |
+| Related | [23-requirements.md](../v0.1.0/23-requirements.md), [24-tools-registry.md](../v0.1.0/24-tools-registry.md), [06-trash.md](./06-trash.md) |
 
 Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. A predictable layout is what lets the workbench audit check structure mechanically (see [00-overview.md](./00-overview.md)) and what lets a memo assume where its context, repositories, and scripts are without searching.
 
@@ -3242,7 +3244,7 @@ The workbench has two distinct structure levels:
 
 No git repository exists at the root level. The root is always local (see [The Root Is Always Local](#the-root-is-always-local)).
 
-**Project level** (`projects/{name}/`) holds the per-project structure defined in the table below. Tools and requirements registries that belong to a specific project live at project level under `.memo/` (cross-reference: [23-requirements.md](./23-requirements.md) and [24-tools-registry.md](./24-tools-registry.md)).
+**Project level** (`projects/{name}/`) holds the per-project structure defined in the table below. Tools and requirements registries that belong to a specific project live at project level under `.memo/` (cross-reference: [23-requirements.md](../v0.1.0/23-requirements.md) and [24-tools-registry.md](../v0.1.0/24-tools-registry.md)).
 
 ---
 
@@ -3253,7 +3255,7 @@ A project directory **MUST** contain the following folders and files. Folder nam
 | Path | Required | Purpose |
 |------|----------|---------|
 | `.claude/` | Yes | Claude Code settings and project-local skills. |
-| `.memo/` | Yes | Memos and their data siblings (`requirements/`, `tools/`); see [23-requirements.md](./23-requirements.md) and [24-tools-registry.md](./24-tools-registry.md). |
+| `.memo/` | Yes | Memos and their data siblings (`requirements/`, `tools/`); see [23-requirements.md](../v0.1.0/23-requirements.md) and [24-tools-registry.md](../v0.1.0/24-tools-registry.md). |
 | `.trash/` | Yes | Recoverable trash; deletion target (see [06-trash.md](./06-trash.md)). |
 | `context/` | Yes | Technical documents, specifications, deep-research output. |
 | `repos/` | Yes | The project's git repositories (one domain per repository). |
@@ -3263,11 +3265,11 @@ A project directory **MUST** contain the following folders and files. Folder nam
 | `ABOUT.md` | Yes | Project documentation for humans. |
 | `CLAUDE.md` | Yes | The runbook for the AI. |
 | `.playwright/` | Yes | Browser-automation session, scripts, and output. |
-| `.wiki/` | Optional | LLM-generated project wiki; an OKF-conformant knowledge bundle (see [24-tools-registry.md](./24-tools-registry.md) for its query role and [02-knowledge-format-okf.md](./02-knowledge-format-okf.md) for its on-disk format). |
+| `.wiki/` | Optional | LLM-generated project wiki; an OKF-conformant knowledge bundle (see [24-tools-registry.md](../v0.1.0/24-tools-registry.md) for its query role and [02-knowledge-format-okf.md](./02-knowledge-format-okf.md) for its on-disk format). |
 
 A project **MUST NOT** omit a required folder. A project **MAY** add the optional `.wiki/`. The workbench audit reports any missing required path as a structural finding and any unexpected top-level entry for review.
 
-Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (see [23-requirements.md](./23-requirements.md)).
+Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (see [23-requirements.md](../v0.1.0/23-requirements.md)).
 
 ---
 
@@ -3276,7 +3278,7 @@ Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one nu
 The workbench root and every project root are **local-only**. There is **no** git repository at the project root and **none** under `.memo/`.
 
 - The absence of a git folder at these levels is a **structural** guarantee, not merely a rule a contributor is asked to follow. Material that has no enclosing repository cannot be pushed.
-- Memos, requirements profiles (machine-readable rule sets that declare coding standards, language rules, or repository conventions for a project — see [23-requirements.md](./23-requirements.md)), tools registries, context documents, proofs, and snapshots therefore stay on the developer's machine by construction. They **MUST NOT** be moved under a tracked repository at the project or `.memo/` level.
+- Memos, requirements profiles (machine-readable rule sets that declare coding standards, language rules, or repository conventions for a project — see [23-requirements.md](../v0.1.0/23-requirements.md)), tools registries, context documents, proofs, and snapshots therefore stay on the developer's machine by construction. They **MUST NOT** be moved under a tracked repository at the project or `.memo/` level.
 - Code that is meant to be shared lives in `repos/`, where each repository is its own git unit. Everything outside `repos/` stays local.
 
 ---
@@ -3306,8 +3308,8 @@ A project **MUST** preserve all three. The guarantee is the precondition for wor
 ## Related
 
 - [00-overview.md](./00-overview.md) — projects-not-repositories framing and the workbench-level checks.
-- [23-requirements.md](./23-requirements.md) — the `requirements/` sibling under `.memo/`.
-- [24-tools-registry.md](./24-tools-registry.md) — the `tools/` sibling under `.memo/`.
+- [23-requirements.md](../v0.1.0/23-requirements.md) — the `requirements/` sibling under `.memo/`.
+- [24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the `tools/` sibling under `.memo/`.
 - [06-trash.md](./06-trash.md) — why deletion routes through `.trash/`.
 
 ---
@@ -3318,7 +3320,7 @@ A project **MUST** preserve all three. The guarantee is the precondition for wor
 |-------|-------|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md), [01-project-structure.md](./01-project-structure.md) |
-| Related | [24-tools-registry.md](./24-tools-registry.md), [26-memo-history.md](./26-memo-history.md), [06-trash.md](./06-trash.md) |
+| Related | [24-tools-registry.md](../v0.1.0/24-tools-registry.md), [26-memo-history.md](../v0.1.0/26-memo-history.md), [06-trash.md](./06-trash.md) |
 
 The project wiki under `.wiki/` is a **knowledge bundle**: a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. This chapter declares that bundle **conformant to the Open Knowledge Format (OKF)** — an open specification, Apache-2.0, that formalizes the same LLM-maintained-wiki pattern the wiki already implements. Conformance is declared as a **non-destructive superset**: the wiki keeps its richer frontmatter and adds nothing the format forbids. Nothing here changes that `context/` is the primary, immutable source (see [01-project-structure.md](./01-project-structure.md)); OKF is a presentation and interchange label on the *generated* wiki, never a replacement for the sources it is distilled from.
 
@@ -3370,7 +3372,7 @@ A conformant external consumer reads `type` and the links and ignores the rest w
 
 ## Two Layers: Permissive Outward, Strict Inward
 
-OKF defines a **permissive consumer** — it tolerates broken links, missing optional fields, an absent `index.md`, and unknown `type` values rather than rejecting a bundle. That tolerance is the right posture for *interchange* between tools and organizations. It is **not** the posture for the wiki's own upkeep, where form strictness is what makes staleness and inconsistency detectable (the principle inherited from the contamination/handover concern, see [09-contamination-context-handover.md](./09-contamination-context-handover.md)).
+OKF defines a **permissive consumer** — it tolerates broken links, missing optional fields, an absent `index.md`, and unknown `type` values rather than rejecting a bundle. That tolerance is the right posture for *interchange* between tools and organizations. It is **not** the posture for the wiki's own upkeep, where form strictness is what makes staleness and inconsistency detectable (the principle inherited from the contamination/handover concern, see [09-contamination-context-handover.md](../v0.1.0/09-contamination-context-handover.md)).
 
 These two postures do not conflict; they are two layers. Outward, the bundle is a permissively-consumable OKF artifact. Inward, `wiki-lint` enforces a stricter contract. The strict inward check is specified next.
 
@@ -3391,7 +3393,7 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 ## What This Is Not
 
-- **Not a replacement for `context/`.** The sources stay primary and immutable; the wiki is the generated, present-tense view, and OKF is a label on that view (see [01-project-structure.md](./01-project-structure.md) and [26-memo-history.md](./26-memo-history.md) for the wiki-vs-history boundary).
+- **Not a replacement for `context/`.** The sources stay primary and immutable; the wiki is the generated, present-tense view, and OKF is a label on that view (see [01-project-structure.md](./01-project-structure.md) and [26-memo-history.md](../v0.1.0/26-memo-history.md) for the wiki-vs-history boundary).
 - **Not a new storage or runtime.** OKF prescribes no database, server, agent framework, or SDK. Conformance is a documentation-and-shape contract, nothing more.
 - **Not a migration of existing bundles.** Adoption is additive. An existing wiki becomes conformant on its next `wiki-ingest` rebuild, which produces a frontmatter-free `index.md` with the `okf_version` marker; no destructive rewrite is forced.
 
@@ -3401,8 +3403,8 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 - [00-overview.md](./00-overview.md) — the workbench sub-spec and its independent versioning, where the format version is read from refs data.
 - [01-project-structure.md](./01-project-structure.md) — `.wiki/` as an optional per-project bundle, and `context/` as the primary immutable source.
-- [24-tools-registry.md](./24-tools-registry.md) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
-- [26-memo-history.md](./26-memo-history.md) — why the wiki answers in the present tense and the history carries the chronology.
+- [24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
+- [26-memo-history.md](../v0.1.0/26-memo-history.md) — why the wiki answers in the present tense and the history carries the chronology.
 - [06-trash.md](./06-trash.md) — superseded wiki pages are trashed, not deleted.
 
 ---

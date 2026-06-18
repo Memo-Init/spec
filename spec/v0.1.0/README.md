@@ -8,7 +8,7 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 
 ---
 
-## Core Chapters (00–29)
+## Core Chapters (00–31)
 
 | Document | Title | Mode |
 |----------|-------|------|
@@ -43,8 +43,9 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 | [28-drift.md](./28-drift.md) | Drift | Normative |
 | [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) | Behavioral Guardrails | Normative |
 | [30-primitives.md](./30-primitives.md) | Primitives | Normative |
+| [31-goals.md](./31-goals.md) | Goals | Normative |
 
-> Chapters 09–30 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer. Chapter 30 is the cross-cutting substrate page: it defines the ten primitives, the central glossary, and the concept map; new readers MAY read it first as a vocabulary, and authors return to it as the single source of truth for terms.
+> Chapters 09–31 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer. Chapter 30 is the cross-cutting substrate page: it defines the ten primitives, the central glossary, and the concept map; new readers MAY read it first as a vocabulary, and authors return to it as the single source of truth for terms.
 
 ---
 
@@ -61,9 +62,9 @@ For a first read, follow the numeric order — the chapters are arranged so each
 7. **Substrate** — [14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [15-prompt-generator.md](./15-prompt-generator.md).
 8. **Git & boundaries** — [16-git-security-versioning.md](./16-git-security-versioning.md), [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [18-multidimensionality.md](./18-multidimensionality.md), [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md).
 9. **Diagrams & recommended CLI** — [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md), [21-human-computer-interaction.md](./21-human-computer-interaction.md), [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md). The flow and interaction diagrams and the self-describing command-tree CLI.
-10. **Cross-cutting concerns & substrate** — [23-requirements.md](./23-requirements.md) (structured requirement capture and profiles), [24-tools-registry.md](./24-tools-registry.md) (per-memo tool inventory), [25-strands.md](./25-strands.md) (parallel work tracks within a memo), [26-memo-history.md](./26-memo-history.md) (audit trail and decision record), [27-landing-the-plane.md](./27-landing-the-plane.md) (graceful completion and handoff), [28-drift.md](./28-drift.md) (detecting and correcting specification drift), [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) (runtime constraints on agent behavior), [30-primitives.md](./30-primitives.md) (the ten primitives, the central glossary, and the concept map — the cross-cutting substrate that ties the vocabulary together).
+10. **Cross-cutting concerns & substrate** — [23-requirements.md](./23-requirements.md) (structured requirement capture and profiles), [24-tools-registry.md](./24-tools-registry.md) (per-memo tool inventory), [25-strands.md](./25-strands.md) (parallel work tracks within a memo), [26-memo-history.md](./26-memo-history.md) (audit trail and decision record), [27-landing-the-plane.md](./27-landing-the-plane.md) (graceful completion and handoff), [28-drift.md](./28-drift.md) (detecting and correcting specification drift), [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) (runtime constraints on agent behavior), [30-primitives.md](./30-primitives.md) (the ten primitives, the central glossary, and the concept map — the cross-cutting substrate that ties the vocabulary together), [31-goals.md](./31-goals.md) (the goal as the triggering intent above a single memo).
 
-Readers who only need the rules of authoring a memo can read 03–08; readers building tooling against the system should additionally read 11–30. A reader who wants the vocabulary first MAY start with [30-primitives.md](./30-primitives.md).
+Readers who only need the rules of authoring a memo can read 03–08; readers building tooling against the system should additionally read 11–31. A reader who wants the vocabulary first MAY start with [30-primitives.md](./30-primitives.md).
 
 ---
 

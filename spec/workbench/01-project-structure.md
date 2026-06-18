@@ -4,7 +4,7 @@
 |-------|-------|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md) |
-| Related | [23-requirements.md](./23-requirements.md), [24-tools-registry.md](./24-tools-registry.md), [06-trash.md](./06-trash.md) |
+| Related | [23-requirements.md](../v0.1.0/23-requirements.md), [24-tools-registry.md](../v0.1.0/24-tools-registry.md), [06-trash.md](./06-trash.md) |
 
 Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. A predictable layout is what lets the workbench audit check structure mechanically (see [00-overview.md](./00-overview.md)) and what lets a memo assume where its context, repositories, and scripts are without searching.
 
@@ -22,7 +22,7 @@ The workbench has two distinct structure levels:
 
 No git repository exists at the root level. The root is always local (see [The Root Is Always Local](#the-root-is-always-local)).
 
-**Project level** (`projects/{name}/`) holds the per-project structure defined in the table below. Tools and requirements registries that belong to a specific project live at project level under `.memo/` (cross-reference: [23-requirements.md](./23-requirements.md) and [24-tools-registry.md](./24-tools-registry.md)).
+**Project level** (`projects/{name}/`) holds the per-project structure defined in the table below. Tools and requirements registries that belong to a specific project live at project level under `.memo/` (cross-reference: [23-requirements.md](../v0.1.0/23-requirements.md) and [24-tools-registry.md](../v0.1.0/24-tools-registry.md)).
 
 ---
 
@@ -33,7 +33,7 @@ A project directory **MUST** contain the following folders and files. Folder nam
 | Path | Required | Purpose |
 |------|----------|---------|
 | `.claude/` | Yes | Claude Code settings and project-local skills. |
-| `.memo/` | Yes | Memos and their data siblings (`requirements/`, `tools/`); see [23-requirements.md](./23-requirements.md) and [24-tools-registry.md](./24-tools-registry.md). |
+| `.memo/` | Yes | Memos and their data siblings (`requirements/`, `tools/`); see [23-requirements.md](../v0.1.0/23-requirements.md) and [24-tools-registry.md](../v0.1.0/24-tools-registry.md). |
 | `.trash/` | Yes | Recoverable trash; deletion target (see [06-trash.md](./06-trash.md)). |
 | `context/` | Yes | Technical documents, specifications, deep-research output. |
 | `repos/` | Yes | The project's git repositories (one domain per repository). |
@@ -43,11 +43,11 @@ A project directory **MUST** contain the following folders and files. Folder nam
 | `ABOUT.md` | Yes | Project documentation for humans. |
 | `CLAUDE.md` | Yes | The runbook for the AI. |
 | `.playwright/` | Yes | Browser-automation session, scripts, and output. |
-| `.wiki/` | Optional | LLM-generated project wiki; an OKF-conformant knowledge bundle (see [24-tools-registry.md](./24-tools-registry.md) for its query role and [02-knowledge-format-okf.md](./02-knowledge-format-okf.md) for its on-disk format). |
+| `.wiki/` | Optional | LLM-generated project wiki; an OKF-conformant knowledge bundle (see [24-tools-registry.md](../v0.1.0/24-tools-registry.md) for its query role and [02-knowledge-format-okf.md](./02-knowledge-format-okf.md) for its on-disk format). |
 
 A project **MUST NOT** omit a required folder. A project **MAY** add the optional `.wiki/`. The workbench audit reports any missing required path as a structural finding and any unexpected top-level entry for review.
 
-Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (see [23-requirements.md](./23-requirements.md)).
+Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one numbered directory per memo). The data siblings `requirements/` and `tools/` sit **alongside** the memos under `.memo/`, not inside any single memo (see [23-requirements.md](../v0.1.0/23-requirements.md)).
 
 ---
 
@@ -56,7 +56,7 @@ Within `.memo/`, the memos themselves remain **directly** under `.memo/` (one nu
 The workbench root and every project root are **local-only**. There is **no** git repository at the project root and **none** under `.memo/`.
 
 - The absence of a git folder at these levels is a **structural** guarantee, not merely a rule a contributor is asked to follow. Material that has no enclosing repository cannot be pushed.
-- Memos, requirements profiles (machine-readable rule sets that declare coding standards, language rules, or repository conventions for a project — see [23-requirements.md](./23-requirements.md)), tools registries, context documents, proofs, and snapshots therefore stay on the developer's machine by construction. They **MUST NOT** be moved under a tracked repository at the project or `.memo/` level.
+- Memos, requirements profiles (machine-readable rule sets that declare coding standards, language rules, or repository conventions for a project — see [23-requirements.md](../v0.1.0/23-requirements.md)), tools registries, context documents, proofs, and snapshots therefore stay on the developer's machine by construction. They **MUST NOT** be moved under a tracked repository at the project or `.memo/` level.
 - Code that is meant to be shared lives in `repos/`, where each repository is its own git unit. Everything outside `repos/` stays local.
 
 ---
@@ -86,6 +86,6 @@ A project **MUST** preserve all three. The guarantee is the precondition for wor
 ## Related
 
 - [00-overview.md](./00-overview.md) — projects-not-repositories framing and the workbench-level checks.
-- [23-requirements.md](./23-requirements.md) — the `requirements/` sibling under `.memo/`.
-- [24-tools-registry.md](./24-tools-registry.md) — the `tools/` sibling under `.memo/`.
+- [23-requirements.md](../v0.1.0/23-requirements.md) — the `requirements/` sibling under `.memo/`.
+- [24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the `tools/` sibling under `.memo/`.
 - [06-trash.md](./06-trash.md) — why deletion routes through `.trash/`.

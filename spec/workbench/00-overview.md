@@ -4,7 +4,7 @@
 |-------|-------|
 | Status | Draft |
 | Depends on | — (sub-spec entry point) |
-| Related | [01-project-structure.md](./01-project-structure.md), [02-knowledge-format-okf.md](./02-knowledge-format-okf.md), [06-trash.md](./06-trash.md), [Requirements](./23-requirements.md), [Tools Registry](./24-tools-registry.md), [Strands](./25-strands.md), [Memo History](./26-memo-history.md) |
+| Related | [01-project-structure.md](./01-project-structure.md), [02-knowledge-format-okf.md](./02-knowledge-format-okf.md), [06-trash.md](./06-trash.md), [Requirements](../v0.1.0/23-requirements.md), [Tools Registry](../v0.1.0/24-tools-registry.md), [Strands](../v0.1.0/25-strands.md), [Memo History](../v0.1.0/26-memo-history.md) |
 
 > **Informative.** This document introduces the workbench sub-spec, its scope, and its independent versioning. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
 
@@ -16,7 +16,7 @@ This is the entry point for the **workbench sub-spec** of the memo-init specific
 
 The workbench is documented as an **independent sub-spec**, not as additional chapters of the core specification. The reason is one of concern separation:
 
-- The **core specification** (`spec/vX.Y.Z/00..18`) describes a single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. It reasons about *one memo at a time*.
+- The **core specification** (`spec/vX.Y.Z/00..31`) describes a single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. It reasons about *one memo at a time*.
 - The **workbench sub-spec** (this document) describes the *environment* in which memos live — how projects are laid out on disk, which tools and requirements a memo can pull in, how a single memo splits its work into named strands, and how knowledge and deleted material are kept. It reasons about *the project and the workbench around the memo*.
 
 Keeping these concerns in separate documents lets each evolve at its own pace.
@@ -72,7 +72,7 @@ These helpers are global because they serve cross-project concerns (data ingesti
 
 ## Sub-Spec Document Index
 
-The workbench sub-spec contains the following chapters. Requirements, Tools Registry, Strands, and Memo History have been promoted to core chapters and are linked from there: [Requirements](./23-requirements.md), [Tools Registry](./24-tools-registry.md), [Strands](./25-strands.md), [Memo History](./26-memo-history.md).
+The workbench sub-spec contains the following chapters. Requirements, Tools Registry, Strands, and Memo History have been promoted to core chapters and are linked from there: [Requirements](../v0.1.0/23-requirements.md), [Tools Registry](../v0.1.0/24-tools-registry.md), [Strands](../v0.1.0/25-strands.md), [Memo History](../v0.1.0/26-memo-history.md).
 
 | Document | Title | Mode |
 |----------|-------|------|

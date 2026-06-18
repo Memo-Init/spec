@@ -10,7 +10,7 @@ A memo has a stable on-disk shape: a numbered directory, a project prefix to avo
 
 ## Numbering
 
-Memos are numbered with **zero-padded** identifiers (for example, `001`, `017`, `138`). Each memo lives in a directory named `{NNN}-{slug}`. The numeric prefix is stable for the life of the memo and is the basis for the memo ID used in git references (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)).
+Memos are numbered with **zero-padded** identifiers (for example, `001`, `017`, `138`). Each memo lives in a directory named `.memo/memos/{NNN}-{slug}/`. The numeric prefix is stable for the life of the memo and is the basis for the memo ID used in git references (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)). The flat layout `.memo/{NNN}-{slug}/` is **deprecated** and read only as a legacy fallback; new memos MUST be created under `.memo/memos/`.
 
 ### Project Prefix
 
@@ -33,6 +33,8 @@ A memo directory contains a fixed set of sub-folders, each with a single respons
 | Folder | Responsibility |
 |--------|----------------|
 | `revisions/` | The revision files `REV-XX.md` (zero-padded, two digits). The current memo content. |
+| `_topics/` | Per-memo research topics and their derived notes. |
+| `context/` | Memo-local context documents and linked source material. |
 | `transcripts/` | The dictated transcripts that fed the memo. |
 | `rollout/` | Rollout artifacts: state files for crash recovery and the standing lessons-learned file. |
 | `validation/` | Validation outputs produced during finalization and rollout. |

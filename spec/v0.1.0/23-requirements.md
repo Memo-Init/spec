@@ -36,14 +36,14 @@ flowchart LR
 
 ## Storage and Scale
 
-Requirements are stored **one file per entry** under `.memo/requirements/`, a sibling of the memos under `.memo/` rather than a child of any single memo. This keeps the set shared across all memos of a project instead of trapped inside one. Each entry is a small, self-describing file, so requirements can be added, reviewed, and diffed individually, and the registry scales to hundreds of fine-grained entries without any single file becoming unmanageable.
+Requirements are stored **one file per entry** under `.memo/_requirements/`, a sibling of the memos under `.memo/` rather than a child of any single memo. This keeps the set shared across all memos of a project instead of trapped inside one. Each entry is a small, self-describing file, so requirements can be added, reviewed, and diffed individually, and the registry scales to hundreds of fine-grained entries without any single file becoming unmanageable.
 
 Scope is **carried by the entry itself**, not by where the file sits. A `scope` object with three axes — `repos`, `categories`, and `tags` — plus a `when` trigger object decides which work an entry applies to. A scoped folder tree is a useful conceptual model for reasoning about the registry — global rules, per-repo rules, per-category rules, per-state rules — but the scope axes in the entry are authoritative. The folder layout is a lens onto the data; the data is the source of truth.
 
 The intended conceptual tree:
 
 ```
-requirements/
+_requirements/
   global/                 # applies to everything (for example: outward-facing language)
   repos/<repo>/           # applies to one repository
   categories/<category>/  # applies to one work category (readme, diagram, issue, …)

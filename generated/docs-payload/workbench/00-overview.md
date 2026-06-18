@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-17T22:24:55.463Z"
+generated_at: "2026-06-18T01:21:03.658Z"
 generated_from: "spec/workbench/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/00-overview.md."
@@ -23,7 +23,7 @@ This is the entry point for the **workbench sub-spec** of the memo-init specific
 
 The workbench is documented as an **independent sub-spec**, not as additional chapters of the core specification. The reason is one of concern separation:
 
-- The **core specification** (`spec/vX.Y.Z/00..18`) describes a single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. It reasons about *one memo at a time*.
+- The **core specification** (`spec/vX.Y.Z/00..31`) describes a single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. It reasons about *one memo at a time*.
 - The **workbench sub-spec** (this document) describes the *environment* in which memos live — how projects are laid out on disk, which tools and requirements a memo can pull in, how a single memo splits its work into named strands, and how knowledge and deleted material are kept. It reasons about *the project and the workbench around the memo*.
 
 Keeping these concerns in separate documents lets each evolve at its own pace.
@@ -79,7 +79,7 @@ These helpers are global because they serve cross-project concerns (data ingesti
 
 ## Sub-Spec Document Index
 
-The workbench sub-spec contains the following chapters. Requirements, Tools Registry, Strands, and Memo History have been promoted to core chapters and are linked from there: [Requirements](/specification/requirements/), [Tools Registry](/specification/tools-registry/), [Strands](/specification/strands/), [Memo History](/specification/memo-history/).
+The workbench sub-spec contains the following chapters. Requirements, Tools Registry, Strands, and Memo History have been promoted to core chapters and are linked from there: [Requirements](../v0.1.0/23-requirements.md), [Tools Registry](../v0.1.0/24-tools-registry.md), [Strands](../v0.1.0/25-strands.md), [Memo History](../v0.1.0/26-memo-history.md).
 
 | Document | Title | Mode |
 |----------|-------|------|
