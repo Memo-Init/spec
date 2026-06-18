@@ -9,9 +9,8 @@
     "docs": {
         "canonical": "https://memo-init.github.io",
         "entryPoints": {
-            "newcomer": "/quickstart/",
             "memoAuthor": "/specification/overview/",
-            "toolMaintainer": "/specification/workbench/",
+            "toolMaintainer": "/workbench/overview/",
             "decisionMaker": "/about/"
         }
     },

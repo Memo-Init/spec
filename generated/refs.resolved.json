@@ -11,9 +11,8 @@
     "docs": {
         "canonical": "https://memo-init.github.io",
         "entryPoints": {
-            "newcomer": "/quickstart/",
             "memoAuthor": "/specification/overview/",
-            "toolMaintainer": "/specification/workbench/",
+            "toolMaintainer": "/workbench/overview/",
             "decisionMaker": "/about/"
         }
     },
@@ -32,8 +31,8 @@
         ]
     },
     "generated": {
-        "at": "2026-06-18T01:21:03.170Z",
-        "fromCommit": "cb3b3ef",
+        "at": "2026-06-18T01:28:27.295Z",
+        "fromCommit": "96bc357",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {
