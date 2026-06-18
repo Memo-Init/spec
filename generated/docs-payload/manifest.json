@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-18T13:40:25.608Z",
+    "generated_at": "2026-06-18T23:43:32.079Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -332,6 +332,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "foundations"
+        },
+        {
+            "filename": "33-maintenance.md",
+            "slug": "maintenance",
+            "title": "Maintenance",
+            "description": "Maintenance is a first-class concern, not a side effect of building. A system that is only ever extended accretes surface faster than it sheds it, and every un-maintained unit eventually drifts from...",
+            "order": 33,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
         }
     ],
     "workbench": {
@@ -379,10 +389,10 @@
         ]
     },
     "stats": {
-        "total_files": 37,
-        "core_files": 33,
+        "total_files": 38,
+        "core_files": 34,
         "workbench_files": 4,
-        "normative_files": 34,
+        "normative_files": 35,
         "informative_files": 3
     }
 }

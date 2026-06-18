@@ -903,6 +903,16 @@ Stating this in the phase chapter keeps the dependency tree honest — `depends-
 
 Scope discipline governs *which* work-packages a phase delivers; the discipline for *each unit a work-package produces* — that every required unit ends as **set**, **justified-omit**, or **blocked** and is never guessed — is the three-exit Worker-output rule defined in [13-orchestration.md](./13-orchestration.md).
 
+## Post-Phase Drift Elimination
+
+This chapter owns the **post-phase drift-elimination step** that the drift escalation rule defers to ([28-drift.md](./28-drift.md)). When drift is discovered *while a phase is running*, the phase is never aborted to chase it — aborting fragments the work and tends to spawn new partial copies. Instead the finding is recorded and the elimination is scheduled as a dedicated step that runs **after the current phase completes**, before the next phase begins.
+
+The step is bounded by three rules so it composes with the dependency tree:
+
+- **After, never mid-phase.** The in-flight phase finishes coherently; only then does the elimination run. This guarantees the still-wrong source is repaired before the next phase can read it and spawn another copy.
+- **Its own fresh context.** The elimination is a separate work unit in a clean context (the empty-context principle), so the contaminated session that surfaced the drift does not carry the wrong value into the fix.
+- **Fix-at-source, then gate.** The step resolves the drift at its source-of-truth (the [28-drift.md](./28-drift.md) protocol) and leaves the idempotent lint/CI gate — owned by [13-orchestration.md](./13-orchestration.md) — in place so the eliminated drift cannot re-enter. A discovered drift is therefore closed at a real point in the dependency tree, not deferred as a standing note.
+
 ---
 
 ## Related
@@ -913,6 +923,7 @@ Scope discipline governs *which* work-packages a phase delivers; the discipline 
 - [15-prompt-generator.md](./15-prompt-generator.md) — produces a PRD's first prompt from its declared Required-Context.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context principle behind the required-context standard and the pointer-not-copy rule.
 - [18-multidimensionality.md](./18-multidimensionality.md) — phases that span multiple repositories.
+- [28-drift.md](./28-drift.md) — the drift error-class whose escalation rule defers to the post-phase elimination step this chapter owns.
 - [25-strands.md](./25-strands.md) — a strand is the dependency closure over the phases defined here; it emerges from the `## Phase-Hints` edges.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the Topic → work-package → Phase → PRD chain in one place.
 
@@ -1462,6 +1473,22 @@ Tasks are used throughout the rollout, not only as bookkeeping — they are the 
 
 Because Tasks persist to disk, they are the first thing a recovering agent reads — the in-progress Task points at the interrupted unit of work, and the state files fill in the detail.
 
+## The Idempotent Drift Gate
+
+Orchestration owns the **idempotent lint/CI gate** that the drift resolution protocol installs ([28-drift.md](./28-drift.md), step 4) and that the escalation rule defers to. The gate's job is to make a divergence *fail loudly* the moment it reappears, so a once-resolved drift cannot silently grow back.
+
+The gate has two complementary checks, both deterministic and token-free:
+
+- **Copy-vs-source equality (in-repo).** For a knowledge-unit derived from a single source-of-truth (a generated number, a pinned command, a shared convention), the gate re-derives or greps the unit and fails when a copy diverges from the source. It is general over the unit *class*, not a single literal string, so a fresh copy of the same kind is caught too.
+- **Pin-vs-head freshness (cross-repo).** For a dependency consumed at a **pinned provenance commit**, the gate compares the pinned commit against the source's current head and reports the commit count between them (the deterministic drift sensor: *pinned == head?* plus *commits-since-pinned*). A pin that has fallen behind its source is drift the moment it is detected, even when nothing is locally broken.
+
+Two properties make the gate safe to run anywhere, repeatedly:
+
+- **Idempotent.** It writes nothing and changes nothing; once green, re-running it stays green. This is what lets it sit in both the local lint path and the CI push gate without side effects.
+- **Blocking, not advisory.** A divergence is a gate failure, not a logged note. The drift is fixed at the source ([28-drift.md](./28-drift.md), protocol) and the gate re-run to zero — the spec does not record a divergence as a standing "known drift," because a recorded-but-unfixed copy is exactly the reproductive source the protocol exists to remove.
+
+The gate is the enforcement end of the post-phase elimination step that [08-phases-and-prds.md](./08-phases-and-prds.md) owns: that chapter schedules *when* a discovered drift is eliminated (after the current phase, in fresh context); this gate guarantees it cannot re-enter once eliminated.
+
 ---
 
 ## Related
@@ -1469,6 +1496,8 @@ Because Tasks persist to disk, they are the first thing a recovering agent reads
 - [12-rollout.md](./12-rollout.md) — the Generate→Execute→Evaluate rollout that this orchestration executes, and the standing lessons-learned file.
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the migration of the fresh-context evaluators to repo-scoped agents.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context rule the evaluators obey and the handover used on a contaminated interruption.
+- [28-drift.md](./28-drift.md) — the drift error-class and resolution protocol whose step-4 idempotent lint/CI gate this chapter holds.
+- [33-maintenance.md](./33-maintenance.md) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -3209,6 +3238,83 @@ Because the generator is both a lever and a single point of failure, it MUST be 
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the agents whose deterministic initial prompt the generator produces.
 - [31-goals.md](./31-goals.md) — the goal primitive; G011 is the goal that measures this mechanism in a fresh context.
 - [30-primitives.md](./30-primitives.md) — the central glossary the prompt-governance vocabulary ties back to.
+
+---
+
+# 33. Maintenance
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [./28-drift.md](./28-drift.md) |
+| Related | [./27-landing-the-plane.md](./27-landing-the-plane.md), [./19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md), [./30-primitives.md](./30-primitives.md), [./31-goals.md](./31-goals.md), [./32-prompt-governance.md](./32-prompt-governance.md) |
+
+Maintenance is a first-class concern, not a side effect of building. A system that is only ever extended accretes surface faster than it sheds it, and every un-maintained unit eventually drifts from the source it was derived from or from the better approach that has since arrived. This chapter names maintenance as a cross-cutting discipline: what it covers, why it breaks in two directions at once, how it is measured, and where the boundary between reporting and acting sits. It does not introduce a new primitive — it is the measuring roof over several existing ones.
+
+## Maintenance Is Changing AND Reducing
+
+The instinct under maintenance pressure is to add — a flag, a branch, a compatibility shim. The cheaper instinct is almost always the wrong one. The more valuable and more expensive instinct is the **deletion question**: what can now be removed, retired, or collapsed. Reduction is maintenance in its highest form because it shrinks the surface that can drift, where addition grows it.
+
+The recurring anti-pattern is the **hybrid**: keeping both the old path and the new path "just in case." A hybrid doubles the maintained surface and guarantees the two halves will diverge, because no author updates both. Landing the plane ([27](./27-landing-the-plane.md)) is the discipline that closes this out — a change is not maintained until the thing it replaced is gone.
+
+## Drift Breaks in Two Directions
+
+Maintenance has to watch two independent kinds of movement:
+
+- **The world drifts (outward, loud).** An upstream source-of-truth moves — a dependency is renamed, a spec is re-published, an API changes. The local copy that pinned the old version is now stale. This is the drift that [28](./28-drift.md) models.
+- **The model improves (inward, quiet).** No external thing changed; a better approach simply arrived. The existing implementation is still "correct" but is no longer how the system would be built today. Nothing breaks, so nothing signals — which is exactly why it needs a deliberate measure.
+
+A maintenance discipline that only watches the first direction misses half the decay. This chapter names the second direction so it can be measured rather than merely felt.
+
+## The Maintenance Category — a Roof, Not an Eleventh Primitive
+
+Maintenance is a **cross-cutting concern** that sits above several existing chapters rather than beside them: Landing ([27](./27-landing-the-plane.md)), Drift ([28](./28-drift.md)), internal-vs-external communication ([19](./19-internal-vs-external-communication.md)), Goals ([31](./31-goals.md)), and Prompt Governance ([32](./32-prompt-governance.md)). What it adds is a **measuring organ** — a scorecard of freshness and blast-radius per unit, plus a maintainer role that reads change and reports decay.
+
+It is a cross-cutting **score**, not a new primitive. The primitives remain **exactly ten** ([30](./30-primitives.md)); maintenance measures across them rather than joining them. Treating maintenance as an eleventh primitive would be a category error — it has no standalone artifact of its own, only a reading taken over the artifacts the primitives already define.
+
+## Two Axes — Freshness and Blast-Radius
+
+A maintenance unit is scored on two orthogonal axes, mirroring the goal-scoring split of a subjective and a deterministic axis ([31](./31-goals.md)):
+
+- **Freshness** — how current the unit is versus its source. Monotone: higher is fresher. This is the judgement axis.
+- **Blast-radius** — how far the unit's drift would propagate if left to rot, computed deterministically from the dependency graph (who consumes it, transitively, and whether any consumer is externally visible). This is the cost axis.
+
+The two are independent: a unit can be very stale with a narrow blast (rot it later) or only mildly stale with a wide blast (fix it now). A **handelnder** maintenance action is therefore gated on the *pair* — act only when the unit is not fresh **and** its blast-radius is wide enough; otherwise report and move on. Freshness alone never forces action; it is the gap to be closed, not the trigger.
+
+## Provenance and Re-Verification
+
+Every declared dependency edge carries a **provenance pin** — the commit of the source at which the edge was last verified. With the pin, staleness is a *count* (commits on the source since the pin), not a guess; without it, staleness is unmeasurable. This is why an explicit pin on every edge is a maintainability precondition, not an optional nicety.
+
+**Re-verification** re-stamps the pin after a fresh-context check that the edge still holds at the source's current head. It is git-centric and forward-only: it never rewrites history and never deletes. Marking an edge fresh without re-checking it would merely hide drift, so the stamp always follows a check.
+
+## Autonomy Boundary
+
+The maintainer is **reporting-autonomous**: it reads the diff, clusters changes, traverses the affected graph, renders the board and an evidence trail, and *proposes* removals. It is **acting only behind a gate or human approval**: re-blessing an edge, deleting anything, or spawning new work all require the gate to qualify or a person to decide. The system never commits on its own, and deletion always goes to a recoverable trash, never a destructive remove. "When a human decides" is an explicit output of every maintenance run, not an implicit default.
+
+## Coverage Beyond the LLM — Mechanism Assignment
+
+Not every drift class is best caught by an LLM reading code. Each class is assigned to the deterministic mechanism that covers it, so the LLM maintainer is the integrator of machine evidence rather than its sole source:
+
+| Drift class | Deterministic mechanism |
+|-------------|-------------------------|
+| Secret / credential exposure | secrets scan at the commit and push gate |
+| Dependency supply-chain rot | dependency-advisory watch over the lockfile |
+| Source-copy divergence | the idempotent lint/CI gate ([28](./28-drift.md)) |
+| Pinned-source staleness | provenance-pin compared against the source head (commit count) |
+| Behavioral regression | runtime guardrails ([29](./29-behavioral-guardrails.md)) plus local exit codes |
+
+A maintenance discipline must also keep an explicit **blind-spots list** — the drift classes for which no mechanism yet exists — declared openly rather than left as a silent gap, so coverage is honest about its own edges.
+
+---
+
+## Related
+
+- [27-landing-the-plane.md](./27-landing-the-plane.md) — reduction and graceful completion; the deletion question this chapter builds on.
+- [28-drift.md](./28-drift.md) — the outward drift direction and the idempotent lint/CI gate this chapter's coverage table points at.
+- [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) — the inward/outward axis that separates the two drift directions.
+- [30-primitives.md](./30-primitives.md) — the ten primitives this chapter measures across but does not extend.
+- [31-goals.md](./31-goals.md) — the goal-scoring split (subjective + deterministic axis) that the freshness/blast-radius pair mirrors.
+- [32-prompt-governance.md](./32-prompt-governance.md) — the governed-default discipline maintenance also relies on.
 
 ========================================
 # Workbench Sub-Spec

@@ -6,7 +6,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-06-18T13:40:25.453Z"
+generated_at: "2026-06-18T23:43:31.907Z"
 generated_from: "spec/v0.1.0/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/13-orchestration.md."
@@ -130,6 +130,22 @@ Tasks are used throughout the rollout, not only as bookkeeping — they are the 
 
 Because Tasks persist to disk, they are the first thing a recovering agent reads — the in-progress Task points at the interrupted unit of work, and the state files fill in the detail.
 
+## The Idempotent Drift Gate
+
+Orchestration owns the **idempotent lint/CI gate** that the drift resolution protocol installs ([28-drift.md](/specification/drift/), step 4) and that the escalation rule defers to. The gate's job is to make a divergence *fail loudly* the moment it reappears, so a once-resolved drift cannot silently grow back.
+
+The gate has two complementary checks, both deterministic and token-free:
+
+- **Copy-vs-source equality (in-repo).** For a knowledge-unit derived from a single source-of-truth (a generated number, a pinned command, a shared convention), the gate re-derives or greps the unit and fails when a copy diverges from the source. It is general over the unit *class*, not a single literal string, so a fresh copy of the same kind is caught too.
+- **Pin-vs-head freshness (cross-repo).** For a dependency consumed at a **pinned provenance commit**, the gate compares the pinned commit against the source's current head and reports the commit count between them (the deterministic drift sensor: *pinned == head?* plus *commits-since-pinned*). A pin that has fallen behind its source is drift the moment it is detected, even when nothing is locally broken.
+
+Two properties make the gate safe to run anywhere, repeatedly:
+
+- **Idempotent.** It writes nothing and changes nothing; once green, re-running it stays green. This is what lets it sit in both the local lint path and the CI push gate without side effects.
+- **Blocking, not advisory.** A divergence is a gate failure, not a logged note. The drift is fixed at the source ([28-drift.md](/specification/drift/), protocol) and the gate re-run to zero — the spec does not record a divergence as a standing "known drift," because a recorded-but-unfixed copy is exactly the reproductive source the protocol exists to remove.
+
+The gate is the enforcement end of the post-phase elimination step that [08-phases-and-prds.md](/specification/phases-and-prds/) owns: that chapter schedules *when* a discovered drift is eliminated (after the current phase, in fresh context); this gate guarantees it cannot re-enter once eliminated.
+
 ---
 
 ## Related
@@ -137,4 +153,6 @@ Because Tasks persist to disk, they are the first thing a recovering agent reads
 - [12-rollout.md](/specification/rollout/) — the Generate→Execute→Evaluate rollout that this orchestration executes, and the standing lessons-learned file.
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the migration of the fresh-context evaluators to repo-scoped agents.
 - [09-contamination-context-handover.md](/specification/contamination-context-handover/) — the empty-context rule the evaluators obey and the handover used on a contaminated interruption.
+- [28-drift.md](/specification/drift/) — the drift error-class and resolution protocol whose step-4 idempotent lint/CI gate this chapter holds.
+- [33-maintenance.md](/specification/maintenance/) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
 - [00-overview.md](/specification/overview/) — conformance language.

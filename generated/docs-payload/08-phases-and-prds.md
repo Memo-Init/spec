@@ -6,7 +6,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-06-18T13:40:25.453Z"
+generated_at: "2026-06-18T23:43:31.907Z"
 generated_from: "spec/v0.1.0/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/08-phases-and-prds.md."
@@ -154,6 +154,16 @@ Stating this in the phase chapter keeps the dependency tree honest — `depends-
 
 Scope discipline governs *which* work-packages a phase delivers; the discipline for *each unit a work-package produces* — that every required unit ends as **set**, **justified-omit**, or **blocked** and is never guessed — is the three-exit Worker-output rule defined in [13-orchestration.md](/specification/orchestration/).
 
+## Post-Phase Drift Elimination
+
+This chapter owns the **post-phase drift-elimination step** that the drift escalation rule defers to ([28-drift.md](/specification/drift/)). When drift is discovered *while a phase is running*, the phase is never aborted to chase it — aborting fragments the work and tends to spawn new partial copies. Instead the finding is recorded and the elimination is scheduled as a dedicated step that runs **after the current phase completes**, before the next phase begins.
+
+The step is bounded by three rules so it composes with the dependency tree:
+
+- **After, never mid-phase.** The in-flight phase finishes coherently; only then does the elimination run. This guarantees the still-wrong source is repaired before the next phase can read it and spawn another copy.
+- **Its own fresh context.** The elimination is a separate work unit in a clean context (the empty-context principle), so the contaminated session that surfaced the drift does not carry the wrong value into the fix.
+- **Fix-at-source, then gate.** The step resolves the drift at its source-of-truth (the [28-drift.md](/specification/drift/) protocol) and leaves the idempotent lint/CI gate — owned by [13-orchestration.md](/specification/orchestration/) — in place so the eliminated drift cannot re-enter. A discovered drift is therefore closed at a real point in the dependency tree, not deferred as a standing note.
+
 ---
 
 ## Related
@@ -164,5 +174,6 @@ Scope discipline governs *which* work-packages a phase delivers; the discipline 
 - [15-prompt-generator.md](/specification/prompt-generator/) — produces a PRD's first prompt from its declared Required-Context.
 - [09-contamination-context-handover.md](/specification/contamination-context-handover/) — the empty-context principle behind the required-context standard and the pointer-not-copy rule.
 - [18-multidimensionality.md](/specification/multidimensionality/) — phases that span multiple repositories.
+- [28-drift.md](/specification/drift/) — the drift error-class whose escalation rule defers to the post-phase elimination step this chapter owns.
 - [25-strands.md](/specification/strands/) — a strand is the dependency closure over the phases defined here; it emerges from the `## Phase-Hints` edges.
 - [30-primitives.md](/specification/primitives/) — central glossary and concept map; the Topic → work-package → Phase → PRD chain in one place.
