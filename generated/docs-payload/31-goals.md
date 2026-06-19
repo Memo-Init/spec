@@ -6,7 +6,7 @@ spec_file: "31-goals.md"
 order: 31
 section: "Specification"
 normative: true
-generated_at: "2026-06-18T23:43:31.907Z"
+generated_at: "2026-06-19T12:17:08.126Z"
 generated_from: "spec/v0.1.0/31-goals.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/31-goals.md."
@@ -24,7 +24,7 @@ A goal is a **cross-memo intent**, tracked with its own id (`G\d{3}`, e.g. `G001
 - **Intent, not surface.** A goal names the outcome that work serves, not a visible proxy for it. Scoring and grouping are done against the intent; a surface label ("the viewer", "the website") is at best a description of what the intent currently touches.
 - **Spans several memos.** Many memos can contribute to one goal, and the goal persists while individual memos are finalized and rolled out. The cross-memo timeline a goal is read against is the memo history (see [26-memo-history.md](/specification/memo-history/)).
 - **Research-only is not an open goal.** A goal that has only been researched, with no work intended yet, is not counted as an *open* goal in the working sense; it is a noted intent until work begins.
-- **Stated explicitly.** A goal SHOULD be stated explicitly so the memos that serve it can be related back to it, and so its progress can be measured rather than assumed.
+- **Stated explicitly — AI-discovered, developer-approved.** A goal SHOULD be stated explicitly so the memos that serve it can be related back to it, and so its progress can be measured rather than assumed. Noticing that a goal is *missing* is the AI's job — most naturally during `score-all`, where a build-out memo that no goal owns is a coverage gap the board should surface. Creating the goal, however, is **never** unilateral: the AI *proposes* the missing goal (a candidate intent + memos) and the developer **approves** it before it is seeded — the mirror of completion being developer-declared (see Lifecycle).
 
 ---
 
@@ -32,6 +32,7 @@ A goal is a **cross-memo intent**, tracked with its own id (`G\d{3}`, e.g. `G001
 
 A goal has a deliberately simple, **fluid** lifecycle: `offen` → `abgeschlossen`, and back again when needed.
 
+- **Creation is developer-approved, AI-discovered.** A goal is born when the developer approves it, not when the AI decides to. The AI is *expected* to find a missing goal — a finalized, rolled-out build-out memo that produced real artifacts yet is owned by no goal is a coverage gap — and to propose it with a candidate intent and memos. It is seeded only on the developer's go-ahead; the AI never writes a goal into the store on its own. This is the symmetric counterpart to *Completion is developer-declared*: both ends of the lifecycle are the developer's call, while the discovery and the measurement are the AI's.
 - **Completion is developer-declared.** A goal moves to `abgeschlossen` only when the developer declares it done — in practice around a high-but-not-perfect bar (≈95 %), with safety never traded away for the last few percent. A programmatic check MAY *suggest* completion, but the suggestion never flips the status on its own.
 - **Re-openable.** Because understanding evolves, a goal that was closed MAY be re-opened. The status is a current judgement, not an irreversible gate.
 - **Succession.** A goal keeps its base name across the work it spans; a follow-up stage is only introduced when there is genuinely new build on top, never to rename completed work. The base concept stays "goal".
