@@ -6,7 +6,7 @@ spec_file: "22-tree-cli-recommended-way.md"
 order: 22
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T17:56:03.726Z"
 generated_from: "spec/v0.1.0/22-tree-cli-recommended-way.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/22-tree-cli-recommended-way.md."
@@ -146,6 +146,18 @@ The help is only useful if it is in the agent's context when the agent acts.
 > In **all** phases — research as well as implementation — the system MUST load the tool's help / `describe()` output into the agent's context. Tool embedding is a high-priority requirement: an agent MUST NOT be asked to use a tool without its help present in context.
 
 This requirement is what binds the rest of the chapter together: the branch/leaf tree and its help-as-spec only deliver their value when the help is embedded in every phase the agent works through.
+
+---
+
+## Why This Is How Internal CLIs Are Built
+
+This pattern is not only for exposing third-party tools — it is the **recommended way to build the project's own internal CLIs** (the `memo` command being the reference). The value is concrete:
+
+- **The tree is its own documentation.** Because help-as-spec holds, `--describe` is the single source of truth for what the CLI can do; the capability inventory is *discovered from the tool*, not maintained as a second list elsewhere (this is what lets the tools registry, [24-tools-registry.md](/specification/tools-registry/), reference the command tree rather than re-enumerate it).
+- **One envelope, no per-command glue.** Every leaf returns `{ status, error, fix }`, so an agent — or another command — consumes any leaf the same way, and the `fix` field makes failures self-correcting.
+- **It scales by adding a row, not a branch of code.** A new capability is a new leaf in the right domain folder; the tree, the help, and the `--describe` rendering pick it up for free.
+
+How to build one, in short: **one folder per domain**, a branch per domain with `children`, a leaf per action carrying behaviour-encoding Zod `input`/`output` descriptions and an `execute`; return the shared envelope; register the domain in the tree and let `describe()` render the help. A new internal CLI follows this shape so that, from day one, its help is a specification and its commands are discoverable the same way every other project tool is.
 
 ---
 
