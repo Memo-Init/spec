@@ -6,7 +6,7 @@ spec_file: "12-rollout.md"
 order: 12
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T18:21:37.746Z"
 generated_from: "spec/v0.1.0/12-rollout.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/12-rollout.md."
@@ -22,6 +22,17 @@ The rollout turns a finalized memo into implemented code. It begins only **after
 The rollout applies the recursive **Generate → Execute → Evaluate** pattern — defined for every level in [13-orchestration.md](/specification/orchestration/) — at the rollout level, with a fourth closing step, **Land**. At the rollout level, **Generate** produces the PRDs and validates them bidirectionally against the memo; **Execute** iterates over the phases, delegating each to a phase agent team; **Evaluate** checks memo conformity (nothing added, nothing forgotten) and applies the applicable requirements for each PRD. A FAIL at any phase stops the rollout and informs the user; on PASS the next phase starts immediately. After Evaluate, **Land** (see [27-landing-the-plane.md](/specification/landing-the-plane/)) leaves the workspace in a startable "next-morning" state: worktrees cleaned, branches merged or documented, commits prepared and presented, open ends named, and a machine-readable `landing-readiness.json` written.
 
 The rollout MUST begin by displaying a **duty-of-care contract** (eight commitments: implement only what the memo says, self-test every agent result, validate per the applicable requirements for each change, never accept "the agent says done" as verification, report "done" only after software validation, surface problems immediately) and a tool check. A missing required tool aborts the rollout. After the user confirms the contract, the rollout runs autonomously.
+
+---
+
+## Pre-Rollout Health Check
+
+Before the rollout commits to the autonomous span, it SHOULD surface the project's **health** — the Sync-Score read-projection over the four boards (maintenance, goals, chronicle, wiki; see [33-maintenance.md](/specification/maintenance/) and [26-memo-history.md](/specification/memo-history/)). The point is to make "red zones" visible *before* they bite mid-execution.
+
+- **WARN, not block.** The health check is an **estimate against a threshold**, not the binary drift gate. A below-threshold score is surfaced as a warning; it does **not** stop the rollout — the finalized memo is the authority. The one exception is a **critical** maintenance status, which MAY be a hard block, since a critical card is a known-broken foundation.
+- **The chronicle is the leading indicator.** A stale chronicle pulls the score down even when the other signals look green, because the downstream measurements stand on the chronicle's completeness. A leading-indicator alarm before a rollout means "bring the chronicle current first".
+
+The health check is idempotent and stores nothing; it is the *window* onto the maintenance roof, not a new gate in the binary sense.
 
 ---
 
@@ -82,4 +93,6 @@ The two files are deliberately separate and **MUST NOT** be conflated:
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the evaluators that run the Evaluate phase in isolated context.
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the deterministic git flow that governs commits during the rollout and after a rollout stop.
 - [27-landing-the-plane.md](/specification/landing-the-plane/) — full specification of the fourth rollout step: landing document structure, L1–L5 checklist, and pilot/system boundary.
+- [33-maintenance.md](/specification/maintenance/) — the maintenance roof and the board the pre-rollout health check projects over.
+- [26-memo-history.md](/specification/memo-history/) — the chronicle, the leading indicator of the pre-rollout health check.
 - [00-overview.md](/specification/overview/) — conformance language.

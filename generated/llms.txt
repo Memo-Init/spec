@@ -1300,6 +1300,17 @@ The rollout MUST begin by displaying a **duty-of-care contract** (eight commitme
 
 ---
 
+## Pre-Rollout Health Check
+
+Before the rollout commits to the autonomous span, it SHOULD surface the project's **health** — the Sync-Score read-projection over the four boards (maintenance, goals, chronicle, wiki; see [33-maintenance.md](./33-maintenance.md) and [26-memo-history.md](./26-memo-history.md)). The point is to make "red zones" visible *before* they bite mid-execution.
+
+- **WARN, not block.** The health check is an **estimate against a threshold**, not the binary drift gate. A below-threshold score is surfaced as a warning; it does **not** stop the rollout — the finalized memo is the authority. The one exception is a **critical** maintenance status, which MAY be a hard block, since a critical card is a known-broken foundation.
+- **The chronicle is the leading indicator.** A stale chronicle pulls the score down even when the other signals look green, because the downstream measurements stand on the chronicle's completeness. A leading-indicator alarm before a rollout means "bring the chronicle current first".
+
+The health check is idempotent and stores nothing; it is the *window* onto the maintenance roof, not a new gate in the binary sense.
+
+---
+
 ## Hands-Off Goal
 
 The design goal is **hands-off after finalization**: once a memo is finalized, the user touches nothing further. The entire rollout — generate, execute, evaluate, across all phases and PRDs — runs without further user interaction except at genuine blockers.
@@ -1357,6 +1368,8 @@ The two files are deliberately separate and **MUST NOT** be conflated:
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the evaluators that run the Evaluate phase in isolated context.
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow that governs commits during the rollout and after a rollout stop.
 - [27-landing-the-plane.md](./27-landing-the-plane.md) — full specification of the fourth rollout step: landing document structure, L1–L5 checklist, and pilot/system boundary.
+- [33-maintenance.md](./33-maintenance.md) — the maintenance roof and the board the pre-rollout health check projects over.
+- [26-memo-history.md](./26-memo-history.md) — the chronicle, the leading indicator of the pre-rollout health check.
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
