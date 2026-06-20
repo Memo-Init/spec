@@ -40,7 +40,7 @@ The repository is organized into a hand-written core spec, a workbench sub-spec,
 and a generated machine-readable layer:
 
 ```
-spec/v0.1.0/        Core spec chapters 00..31 (hand-written)
+spec/v0.1.0/        Core spec chapters 00..36 (hand-written)
 spec/workbench/     Sub-spec: project structure, requirements, tools, strands, wiki, trash
 data/               refs.manual.json (source of truth) + refs.schema.json (AJV)
 generated/          DO NOT EDIT — llms.txt, refs.resolved.json, docs-payload/ + manifest.json
@@ -49,7 +49,7 @@ personas/           3-5 audience personas + entry-points + tone-guide
 .github/workflows/  generate + cross-repo dispatch (spec-updated / refs-updated)
 ```
 
-- **Core spec:** chapters `00..31` under `spec/v0.1.0/`, hand-written.
+- **Core spec:** chapters `00..36` under `spec/v0.1.0/`, hand-written.
 - **Workbench sub-spec:** project structure, requirements, tools, strands, wiki,
   trash under `spec/workbench/`.
 - **References:** `data/refs.manual.json` is the source of truth (validated by
