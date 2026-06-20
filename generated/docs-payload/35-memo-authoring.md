@@ -6,7 +6,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:08:06.042Z"
+generated_at: "2026-06-20T12:12:43.818Z"
 generated_from: "spec/v0.1.0/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/35-memo-authoring.md."
@@ -47,6 +47,19 @@ Diagrams are **first-class memo content**, not a special case. The viewer render
 - **Vega-Lite** for quantitative and statistical charts — a fenced `vega-lite` block whose body is a Vega-Lite JSON spec (added in Memo 020). Use it when the point is a measurement, not a relationship.
 
 **Portrait is mandatory.** Diagrams MUST be authored **portrait** — Mermaid flowcharts use `flowchart TD` (top-down), never landscape (`flowchart LR`) — so they fit the viewer's narrow reading column without horizontal scrolling. A wide left-to-right diagram is a defect, not a stylistic choice. When a graph is genuinely too wide, split it into several stacked top-down diagrams rather than turning it on its side.
+
+## Determinism and Spec-Chapter Conventions
+
+A thread runs through every convention above: **prefer the deterministic form**. A fixed data payload, a `questions-json` block ([34-question-interface.md](/specification/question-interface/)), and a script-rendered table all share the property that a machine produces them the same way every time, so they cannot drift from their source and cost nothing to regenerate. The more of a memo's content that is deterministic rather than re-typed by hand, the less it decays — determinism is the default, and prose is reserved for the reasoning that genuinely needs a human voice.
+
+The same discipline applies to **authoring a new specification chapter**: each one follows the established skeleton so a new chapter is "right on the first try" and consistent with the rest. The skeleton is:
+
+- a numbered H1 title (`# NN. Title`);
+- a metadata table directly under the title with **Status**, **Depends on**, and **Related** rows;
+- **intro prose** between the metadata table and the first `## ` heading — a short, content-first orientation;
+- a bottom **`## Related`** section linking the neighbouring chapters.
+
+The intro-prose and `## Related` requirements are **machine-enforced** by the spec-quality gate (the idempotent lint that audits every numbered chapter), so a chapter that omits either one fails the gate rather than merely reading as inconsistent.
 
 ## Related
 

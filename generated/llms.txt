@@ -3457,6 +3457,19 @@ Diagrams are **first-class memo content**, not a special case. The viewer render
 
 **Portrait is mandatory.** Diagrams MUST be authored **portrait** — Mermaid flowcharts use `flowchart TD` (top-down), never landscape (`flowchart LR`) — so they fit the viewer's narrow reading column without horizontal scrolling. A wide left-to-right diagram is a defect, not a stylistic choice. When a graph is genuinely too wide, split it into several stacked top-down diagrams rather than turning it on its side.
 
+## Determinism and Spec-Chapter Conventions
+
+A thread runs through every convention above: **prefer the deterministic form**. A fixed data payload, a `questions-json` block ([34-question-interface.md](./34-question-interface.md)), and a script-rendered table all share the property that a machine produces them the same way every time, so they cannot drift from their source and cost nothing to regenerate. The more of a memo's content that is deterministic rather than re-typed by hand, the less it decays — determinism is the default, and prose is reserved for the reasoning that genuinely needs a human voice.
+
+The same discipline applies to **authoring a new specification chapter**: each one follows the established skeleton so a new chapter is "right on the first try" and consistent with the rest. The skeleton is:
+
+- a numbered H1 title (`# NN. Title`);
+- a metadata table directly under the title with **Status**, **Depends on**, and **Related** rows;
+- **intro prose** between the metadata table and the first `## ` heading — a short, content-first orientation;
+- a bottom **`## Related`** section linking the neighbouring chapters.
+
+The intro-prose and `## Related` requirements are **machine-enforced** by the spec-quality gate (the idempotent lint that audits every numbered chapter), so a chapter that omits either one fails the gate rather than merely reading as inconsistent.
+
 ## Related
 
 - [06-memo-structure.md](./06-memo-structure.md) — the on-disk shape of a memo that this chapter authors into.
