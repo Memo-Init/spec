@@ -2524,13 +2524,15 @@ The registry's value is realized as a checklist during memo creation. While a me
 
 The checklist makes tool reachability a planning-time concern. Combined with the workbench-level tool-reachability check, a memo can confirm its required tools resolve *before* the rollout assumes them. A phase that depends on a tool whose `reachable` flag is false is a phase that will stall; surfacing that during planning is the entire point. Per-phase tool selections draw from this same registry, so each phase declares the tools it needs against one shared index rather than re-describing them ad hoc.
 
-## Wiki as a Tool
+## A Reference Registry — Wiki, Chronicle, Command Tree
 
-A project wiki is, for the purposes of this registry, a **tool** — specifically a tool for querying the workbench's accumulated knowledge. Over many memos a project builds up far more than any single memo holds: context documents, finalized decisions, and the present-tense understanding distilled from them. The wiki is how a memo author asks the workbench what it already knows, instead of rediscovering it. Registered as a tool, the wiki takes its place in the checklist alongside browser automation, spreadsheets, and the rest: a phase that needs to consult prior project knowledge can declare a dependency on it.
+The registry is a place of **references, not copies** — and three project-wide entry points are registered here the same way a tool is: by a `location` pointer to where each one is fully specified, never by restating it.
 
-The wiki answers in the **present tense**. A wiki page states what is understood to be true now; a query against it returns the current understanding, optimized for fast answers about the project as it stands. That is its strength as a query tool — and the boundary that keeps it well-defined.
+- **The wiki** is registered as a tool — the entry point for querying the project's accumulated knowledge. Its full concept (the bottleneck over the structured architecture and the unstructured material beneath it) lives in its own chapter; the registry only records that it exists, what it is for, and where it lives. See [The Wiki — Entry Point](../workbench/04-wiki.md).
+- **The chronicle** is the timeline counterpart — registered as the reference for "how the project's knowledge was reached", distinct from the wiki's present-tense answer. See [26-memo-history.md](./26-memo-history.md).
+- **The self-describing command tree** is the registry's runtime sibling: the CLI describes its own commands, so the inventory of *what the project's own tooling can do* is discoverable rather than re-listed here. See [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md).
 
-What the wiki is **not** is the timeline of how that knowledge was reached. The accumulation of facts over the memo sequence — the story of which memo established what, and where a later memo reversed an earlier course — is the subject of a separate concern, the memo history (see [00-overview.md](./00-overview.md) for the document index). The wiki gives the answer; the memo history gives the provenance and the chronology behind it. A phase that needs to ask "what does the project currently know about X?" reaches for the wiki as a tool. A phase that needs to ask "does a conclusion from an earlier memo still hold?" reaches for the memo history instead. Keeping the two distinct is what stops the wiki's present-tense convenience from being mistaken for an audit trail, and stops the timeline from being flattened into a single current answer.
+The boundary that keeps these well-defined is the same in each case: the wiki answers in the **present tense** ("what does the project know about X now?"), the chronicle answers in **chronological** terms ("does a conclusion from an earlier memo still hold?"), and the command tree answers in terms of **capability** ("what can the tooling do?"). The registry holds the pointers; the targets hold the content.
 
 ---
 
@@ -2538,6 +2540,8 @@ What the wiki is **not** is the timeline of how that knowledge was reached. The 
 
 - [23-requirements.md](./23-requirements.md) — the parallel data folder; `check.kind: tool` requirements point into this registry for the tool and tactic that verify them.
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the phases and work-packages whose tool dependencies the registry records.
+- [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md) — the self-describing command tree, the capability counterpart registered here by reference.
+- [26-memo-history.md](./26-memo-history.md) — the chronicle, the chronological counterpart to the wiki's present-tense answer.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the tool primitive summarized.
 - [00-overview.md](./00-overview.md) — spec scope and the document index.
 
@@ -3674,6 +3678,8 @@ The workbench sub-spec contains the following chapters. Requirements, Tools Regi
 | `00-overview.md` | Workbench Sub-Spec — Overview | Informative |
 | `01-project-structure.md` | Project Structure & Local Guarantee | Normative |
 | `02-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Normative |
+| `03-project-architecture.md` | Project Architecture | Normative |
+| `04-wiki.md` | The Wiki — Entry Point | Normative |
 | `06-trash.md` | Trash — No Deletion, Only `.trash/` | Normative |
 
 ---
@@ -3780,7 +3786,7 @@ A project **MUST** preserve all three. The guarantee is the precondition for wor
 | Depends on | [00-overview.md](./00-overview.md), [01-project-structure.md](./01-project-structure.md) |
 | Related | [24-tools-registry.md](../v0.1.0/24-tools-registry.md), [26-memo-history.md](../v0.1.0/26-memo-history.md), [06-trash.md](./06-trash.md) |
 
-The project wiki under `.wiki/` is a **knowledge bundle**: a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. This chapter declares that bundle **conformant to the Open Knowledge Format (OKF)** — an open specification, Apache-2.0, that formalizes the same LLM-maintained-wiki pattern the wiki already implements. Conformance is declared as a **non-destructive superset**: the wiki keeps its richer frontmatter and adds nothing the format forbids. Nothing here changes that `context/` is the primary, immutable source (see [01-project-structure.md](./01-project-structure.md)); OKF is a presentation and interchange label on the *generated* wiki, never a replacement for the sources it is distilled from.
+OKF (the Open Knowledge Format) is the **storage format** the workbench uses for knowledge bundles — a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. Two bundles use it: the project wiki under `.wiki/` (the entry point, [04-wiki.md](./04-wiki.md)) and the project architecture under `context/architecture-okf/` (the repo graph, [03-project-architecture.md](./03-project-architecture.md)). This chapter is the **format reference**: it declares those bundles **conformant to OKF** — an open specification, Apache-2.0 — as a **non-destructive superset** that keeps richer frontmatter and adds nothing the format forbids. It is a format detail, not a headline: a reader understands "the wiki" and "the project architecture" as concepts in their own chapters, and comes here only for the on-disk encoding. Nothing here changes that `context/` is the primary, immutable source (see [01-project-structure.md](./01-project-structure.md)); OKF is a presentation and interchange label on the *generated* bundle, never a replacement for the sources it is distilled from.
 
 ---
 
@@ -3861,9 +3867,158 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 - [00-overview.md](./00-overview.md) — the workbench sub-spec and its independent versioning, where the format version is read from refs data.
 - [01-project-structure.md](./01-project-structure.md) — `.wiki/` as an optional per-project bundle, and `context/` as the primary immutable source.
+- [03-project-architecture.md](./03-project-architecture.md) — the project-architecture bundle, the other consumer of this format (concept first, OKF as encoding).
+- [04-wiki.md](./04-wiki.md) — the wiki entry point, the format's primary consumer.
 - [24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
 - [26-memo-history.md](../v0.1.0/26-memo-history.md) — why the wiki answers in the present tense and the history carries the chronology.
 - [06-trash.md](./06-trash.md) — superseded wiki pages are trashed, not deleted.
+
+---
+
+# 03. Project Architecture
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md), [01-project-structure.md](./01-project-structure.md) |
+| Related | [02-knowledge-format-okf.md](./02-knowledge-format-okf.md), [04-wiki.md](./04-wiki.md), [../v0.1.0/33-maintenance.md](../v0.1.0/33-maintenance.md), [../v0.1.0/23-requirements.md](../v0.1.0/23-requirements.md) |
+
+A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges between them, and the provenance that says when each edge was last verified. This chapter is about that content first; the on-disk encoding (a knowledge bundle in OKF, [02-knowledge-format-okf.md](./02-knowledge-format-okf.md)) is a detail named at the end, not the headline. The shift is deliberate: ask *what the architecture is* before asking *what format it is stored in*.
+
+---
+
+## Every Project Has an Architecture
+
+Even a single-repo project has an architecture — a trivial one. As soon as a project holds more than one repository, the relationships between them carry real information: which repo is the source another is induced from, which repo consumes another's output, which dependency is externally visible. That graph is the architecture, and it is the **Soll** (the declared target state) against which the real repositories are measured.
+
+- **Nodes are repos.** One node per repository, each carrying its role: a human title, whether it faces inward or outward, and the source it is pinned to (`repos/<name> @ <commit>`).
+- **Edges are declared relationships** between repos — `set` (a real, justified edge), `justified-omit` (deliberately no edge, with a reason), or `blocked`. Each edge carries a provenance commit so drift from it is a *count*, not a guess (see [../v0.1.0/33-maintenance.md](../v0.1.0/33-maintenance.md)).
+- **The bundle is the Soll, the score is separate.** The architecture bundle carries the *structure*; the maintenance store carries the *score* taken against it. Keeping the two apart is what lets the structure be authored by hand and the score be measured in a fresh context.
+
+---
+
+## The Entry Point — A Memo Must Find the Architecture, Never Rediscover It
+
+A memo that needs the architecture **MUST be able to find it through a single entry point**, rather than guessing a path or re-deriving the structure each time. This is the bottleneck principle: there is one door, and everything goes through it.
+
+- For an agent or a human, the door is the **wiki** ([04-wiki.md](./04-wiki.md)): the wiki indexes the architecture as one of the things it knows about, pointing at the bundle rather than copying it.
+- For deterministic code, the door is **`memo architecture locate`**: a thin resolver that reads the bundle and returns where it is, what nodes it holds, and which repos have no node yet. It replaces paths that would otherwise be repeated in prose across several skills — one resolver, consulted, instead of a convention re-guessed.
+
+The point of the single door is that the architecture's location stops being tribal knowledge embedded in each consumer and becomes a declared, resolvable fact.
+
+---
+
+## Presence Is Measured, Not Assumed
+
+Every project **SHOULD** store its architecture as a bundle, so that a memo always has the structural ground it needs. Whether it does is a **measured** property, in the same spirit as goal and maintenance scoring:
+
+- A **presence requirement** (advisory severity) states the expectation: the architecture is present as a bundle, and a memo can find it via the entry point. Advisory — not a blocker — because a project with no repositories has a trivial or empty architecture, and that is acceptable, not a failure.
+- The **wiki health check** flags absence at the moment it matters: `wiki-lint` runs automatically before a memo starts, so a project whose architecture bundle is missing is surfaced right there as a non-blocking warning. The check reports the *complete absence* of the bundle (and MAY report repos that exist with no node).
+
+Because the requirement is advisory and the check is non-blocking, presence becomes visible without becoming a gate — a project is reminded, never stopped.
+
+---
+
+## Maintenance Keeps the Architecture Fresh
+
+Keeping the architecture current is one of maintenance's jobs, not a separate mechanism. The architecture bundle is itself a maintenance unit: each node pins its sources and edges to a commit, and the maintainer compares the **declared** architecture against the **real** one (`git log <pin>..HEAD`), flagging edges that have drifted from their pinned commit and edges that exist in reality but are absent or marked `justified-omit` in the node — the Soll itself can be stale. Re-verification re-stamps the provenance pin after a fresh-context check (see [../v0.1.0/33-maintenance.md](../v0.1.0/33-maintenance.md)). So the architecture is kept honest from two sides: the wiki flags absence when a memo starts, maintenance flags staleness and gaps periodically.
+
+---
+
+## Internal Projects vs. Foreign Projects
+
+The complexity of the architecture **scales with the repositories**, and is not forced where it does not fit:
+
+| Project kind | Architecture bundle | Wiki |
+|--------------|---------------------|------|
+| **Internal** (a real multi-repo system with a clear target structure) | the default — repo nodes, edges, provenance | the entry point over everything |
+| **Foreign / research** (a sibling project that is mostly unstructured research, with little or no repo structure of its own) | not forced — minimal or empty is acceptable | the wiki alone carries the unstructured material |
+
+The advisory severity is what makes this work: a research-heavy foreign project that has no architecture bundle is flagged "no architecture", and for that kind of project the flag is an **accepted state**, not an error. The full architecture — edges, justified-omits, blast-radius — earns its cost only where repositories are genuinely interconnected.
+
+---
+
+## OKF Is the Storage Format
+
+The architecture is stored as an **OKF knowledge bundle** ([02-knowledge-format-okf.md](./02-knowledge-format-okf.md)): one node document per repo (`type: repo` plus the role fields as extension keys), the edges declared in the body, all under `context/architecture-okf/`. OKF is named here only as the *encoding* — the concept above stands on its own, and a reader needs to understand "project architecture" without first understanding "OKF". The bundle directory keeps its `-okf` suffix as a file convention; the visible term for the concept is **project architecture**.
+
+---
+
+## Related
+
+- [02-knowledge-format-okf.md](./02-knowledge-format-okf.md) — OKF, the storage format the architecture (and the wiki) is encoded in.
+- [04-wiki.md](./04-wiki.md) — the wiki as the entry point that indexes the architecture among everything else.
+- [../v0.1.0/33-maintenance.md](../v0.1.0/33-maintenance.md) — maintenance scores the architecture bundle as a unit and keeps its provenance pins fresh.
+- [../v0.1.0/23-requirements.md](../v0.1.0/23-requirements.md) — the requirements layer the advisory presence requirement is expressed in.
+- [01-project-structure.md](./01-project-structure.md) — `context/` as the primary immutable source, where the bundle lives.
+
+---
+
+# 04. The Wiki — Entry Point
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md), [03-project-architecture.md](./03-project-architecture.md) |
+| Related | [02-knowledge-format-okf.md](./02-knowledge-format-okf.md), [../v0.1.0/24-tools-registry.md](../v0.1.0/24-tools-registry.md), [../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md) |
+
+The wiki is the **entry point** — the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; its on-disk format is OKF ([02-knowledge-format-okf.md](./02-knowledge-format-okf.md)).
+
+---
+
+## The Bottleneck Over Everything
+
+Two kinds of knowledge sit beneath the wiki, and the wiki is the entry point over **both**:
+
+| Layer | What | Form |
+|-------|------|------|
+| **Structured** | the project architecture — which repos exist, how they connect ([03-project-architecture.md](./03-project-architecture.md)) | OKF nodes + edges |
+| **Unstructured** | research piles, `context/` files, distilled decisions — everything else the project holds | any form; the wiki categorizes and files it |
+
+The user does not care which form a piece of knowledge is in — the wiki finds it. That is the whole point of a single entry point: knowledge is reached *through the wiki*, not by knowing in advance where each kind of thing lives.
+
+---
+
+## The Wiki Indexes the Architecture — It Does Not Copy It
+
+The architecture is one of the things the wiki knows about, but the wiki **points at it, it does not duplicate it**. The wiki's index carries an entry that refers to the architecture bundle (`context/architecture-okf/`); the bundle stays the single source of truth, and the wiki never holds a second, drifting copy of the repo graph. This is the same no-copy rule the tools registry follows ([../v0.1.0/24-tools-registry.md](../v0.1.0/24-tools-registry.md)): a reference whose target owns the content, so an update changes one place. A deterministic consumer that needs the architecture follows the pointer to `memo architecture locate`; a human or agent browsing the wiki follows the same pointer by hand.
+
+---
+
+## Present Tense, Not Chronology
+
+The wiki answers in the **present tense**: a wiki page states what is understood to be true *now*, and a query returns the current consolidated understanding, optimized for fast answers. What the wiki is **not** is the timeline of how that understanding was reached — that is the chronicle ([../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md)). The wiki gives the current answer; the chronicle gives the provenance and the order of change. A memo that asks "what does the project know about X right now?" reaches for the wiki; one that asks "does a conclusion from an earlier memo still hold?" reaches for the chronicle. Keeping the two distinct stops the wiki's convenience from being mistaken for an audit trail.
+
+---
+
+## Every Project Gets a Wiki; Only Internal Projects Get Enforced Architecture
+
+The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required:
+
+- **Every project** — internal or foreign — gets a wiki, because every project has unstructured knowledge worth categorizing and querying. The wiki is the entry point for all of them.
+- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([03-project-architecture.md](./03-project-architecture.md)).
+
+So "the wiki finds everything" holds for all projects; "the project has a structured architecture" holds for the internal ones.
+
+---
+
+## Keeping the Wiki Fresh — Two Triggers
+
+The wiki is kept current by **two complementary triggers**, one at write time and one periodic:
+
+- **Ingest at landing.** When a memo lands, its new knowledge is folded into the wiki (the ingest step of landing). This keeps the wiki current as the project produces knowledge, at the moment the knowledge is finalized.
+- **Stale flag on the maintenance board.** Periodically, the maintenance discipline ([../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md) and the maintenance chapter) flags wiki pages that have drifted from their sources, so staleness that accrues between landings is still caught.
+
+Write-time freshness keeps the wiki growing correctly; periodic staleness detection catches the decay that write-time cannot see. Together they keep the entry point trustworthy.
+
+---
+
+## Related
+
+- [03-project-architecture.md](./03-project-architecture.md) — the structured layer the wiki indexes and points at.
+- [02-knowledge-format-okf.md](./02-knowledge-format-okf.md) — OKF, the on-disk format of both the wiki and the architecture bundle.
+- [../v0.1.0/24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
+- [../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md) — the chronicle, the present-tense wiki's chronological counterpart.
 
 ---
 

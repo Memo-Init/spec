@@ -79,5 +79,7 @@ The workbench sub-spec contains the following chapters. Requirements, Tools Regi
 | `00-overview.md` | Workbench Sub-Spec — Overview | Informative |
 | `01-project-structure.md` | Project Structure & Local Guarantee | Normative |
 | `02-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Normative |
+| `03-project-architecture.md` | Project Architecture | Normative |
+| `04-wiki.md` | The Wiki — Entry Point | Normative |
 | `06-trash.md` | Trash — No Deletion, Only `.trash/` | Normative |
 

@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-20T17:44:55.505Z",
+    "generated_at": "2026-06-20T17:52:45.846Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -400,8 +400,28 @@
                 "filename": "02-knowledge-format-okf.md",
                 "slug": "knowledge-format-okf",
                 "title": "Knowledge Format — OKF Conformance",
-                "description": "The project wiki under `.wiki/` is a **knowledge bundle**: a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. This chapter declares that bundle **conformant to...",
+                "description": "OKF (the Open Knowledge Format) is the **storage format** the workbench uses for knowledge bundles — a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. Two...",
                 "order": 2,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "workbench"
+            },
+            {
+                "filename": "03-project-architecture.md",
+                "slug": "project-architecture",
+                "title": "Project Architecture",
+                "description": "A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges...",
+                "order": 3,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "workbench"
+            },
+            {
+                "filename": "04-wiki.md",
+                "slug": "wiki",
+                "title": "The Wiki — Entry Point",
+                "description": "The wiki is the **entry point** — the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project...",
+                "order": 4,
                 "section": "Workbench",
                 "normative": true,
                 "sidebar_group": "workbench"
@@ -419,10 +439,10 @@
         ]
     },
     "stats": {
-        "total_files": 41,
+        "total_files": 43,
         "core_files": 37,
-        "workbench_files": 4,
-        "normative_files": 38,
+        "workbench_files": 6,
+        "normative_files": 40,
         "informative_files": 3
     }
 }

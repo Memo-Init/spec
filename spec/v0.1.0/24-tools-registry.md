@@ -47,13 +47,15 @@ The registry's value is realized as a checklist during memo creation. While a me
 
 The checklist makes tool reachability a planning-time concern. Combined with the workbench-level tool-reachability check, a memo can confirm its required tools resolve *before* the rollout assumes them. A phase that depends on a tool whose `reachable` flag is false is a phase that will stall; surfacing that during planning is the entire point. Per-phase tool selections draw from this same registry, so each phase declares the tools it needs against one shared index rather than re-describing them ad hoc.
 
-## Wiki as a Tool
+## A Reference Registry — Wiki, Chronicle, Command Tree
 
-A project wiki is, for the purposes of this registry, a **tool** — specifically a tool for querying the workbench's accumulated knowledge. Over many memos a project builds up far more than any single memo holds: context documents, finalized decisions, and the present-tense understanding distilled from them. The wiki is how a memo author asks the workbench what it already knows, instead of rediscovering it. Registered as a tool, the wiki takes its place in the checklist alongside browser automation, spreadsheets, and the rest: a phase that needs to consult prior project knowledge can declare a dependency on it.
+The registry is a place of **references, not copies** — and three project-wide entry points are registered here the same way a tool is: by a `location` pointer to where each one is fully specified, never by restating it.
 
-The wiki answers in the **present tense**. A wiki page states what is understood to be true now; a query against it returns the current understanding, optimized for fast answers about the project as it stands. That is its strength as a query tool — and the boundary that keeps it well-defined.
+- **The wiki** is registered as a tool — the entry point for querying the project's accumulated knowledge. Its full concept (the bottleneck over the structured architecture and the unstructured material beneath it) lives in its own chapter; the registry only records that it exists, what it is for, and where it lives. See [The Wiki — Entry Point](../workbench/04-wiki.md).
+- **The chronicle** is the timeline counterpart — registered as the reference for "how the project's knowledge was reached", distinct from the wiki's present-tense answer. See [26-memo-history.md](./26-memo-history.md).
+- **The self-describing command tree** is the registry's runtime sibling: the CLI describes its own commands, so the inventory of *what the project's own tooling can do* is discoverable rather than re-listed here. See [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md).
 
-What the wiki is **not** is the timeline of how that knowledge was reached. The accumulation of facts over the memo sequence — the story of which memo established what, and where a later memo reversed an earlier course — is the subject of a separate concern, the memo history (see [00-overview.md](./00-overview.md) for the document index). The wiki gives the answer; the memo history gives the provenance and the chronology behind it. A phase that needs to ask "what does the project currently know about X?" reaches for the wiki as a tool. A phase that needs to ask "does a conclusion from an earlier memo still hold?" reaches for the memo history instead. Keeping the two distinct is what stops the wiki's present-tense convenience from being mistaken for an audit trail, and stops the timeline from being flattened into a single current answer.
+The boundary that keeps these well-defined is the same in each case: the wiki answers in the **present tense** ("what does the project know about X now?"), the chronicle answers in **chronological** terms ("does a conclusion from an earlier memo still hold?"), and the command tree answers in terms of **capability** ("what can the tooling do?"). The registry holds the pointers; the targets hold the content.
 
 ---
 
@@ -61,5 +63,7 @@ What the wiki is **not** is the timeline of how that knowledge was reached. The 
 
 - [23-requirements.md](./23-requirements.md) — the parallel data folder; `check.kind: tool` requirements point into this registry for the tool and tactic that verify them.
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the phases and work-packages whose tool dependencies the registry records.
+- [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md) — the self-describing command tree, the capability counterpart registered here by reference.
+- [26-memo-history.md](./26-memo-history.md) — the chronicle, the chronological counterpart to the wiki's present-tense answer.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the tool primitive summarized.
 - [00-overview.md](./00-overview.md) — spec scope and the document index.
