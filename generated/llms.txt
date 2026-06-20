@@ -392,11 +392,12 @@ Before any memo is created or any revision written, every input passes through a
 Before any memo is created and before any revision is written, every input MUST pass through a five-step processing pipeline. The pipeline is mandatory and strictly sequential: no step may be skipped, and no step may begin before the previous step is complete. It runs both before `memo-init` and before every `memo-revision-generate`.
 
 ```
-1. Completeness check        → ALL files read?
-2. Transcription-error scan  → ALL errors corrected?
-3. Topic extraction          → ALL topics listed?
-4. Context preservation      → ALL context documented?
-5. Research                  → research-worthy topics derived, proactive research triggered?
+1. Completeness check         → ALL files read?
+2. Transcription-error scan   → ALL errors corrected?
+2b. Transcript-reliability    → reliability estimated (WARN), suspicions flagged?
+3. Topic extraction           → ALL topics listed?
+4. Context preservation       → ALL context documented?
+5. Research                   → research-worthy topics derived, proactive research triggered?
    → ready for memo-init or memo-revision-generate
 ```
 
@@ -424,6 +425,15 @@ An implementation MUST proactively check the input against the known transcripti
 | Repair | Prepare |
 
 The table is extensible; new patterns MAY be added over time. The requirement is that the scan always runs and that corrections are surfaced, not silently applied.
+
+---
+
+## Step 2b — Transcript-Reliability Estimate
+
+Directly after the transcription-error scan and **before** topic extraction, an implementation SHOULD estimate the input's **transcript reliability** — a deterministic score that flags suspected machine artifacts so they are not extracted as topics. A transcript is raw machine output, and the transcription software sometimes *invents* text (provider sign-offs, copyright boilerplate) that no grammar check can catch; the estimate is the guardrail against an invented artifact becoming a real topic. It is specified in full in [37-transcript-reliability.md](./37-transcript-reliability.md); two rules bind here:
+
+- **WARN, never block.** The estimate produces a reliability value, a confidence, and located findings (suspected boilerplate, unannounced novel names). It is **advisory**: a low score means "re-confirm these spots with the developer", never "discard the input". The developer, not the score, decides (memo authority).
+- **The long initial transcript matters most.** The estimate runs for every transcript but is sharpest on the long `memo-init` transcript, where invented text has the most surface *and* cross-angle redundancy makes outliers detectable; for short `free`/`revision` inputs it reports low confidence rather than false alarms.
 
 ---
 
@@ -477,6 +487,7 @@ The skill that performs this reads **only** — it never issues writes to the se
 ## Related
 
 - [03-input-paths.md](./03-input-paths.md) — the four transcript types and their follow-up flows.
+- [37-transcript-reliability.md](./37-transcript-reliability.md) — the Step 2b reliability estimate, the raw-transcript interpretation rule, and the dictionary in full.
 - [10-proactive-research.md](./10-proactive-research.md) — the canonical research definition behind Step 5.
 - [05-memo-strategies.md](./05-memo-strategies.md) — the strategy chosen when the pipeline hands over to `memo-init`.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the topic primitive defined as the head of the executable chain.
@@ -3138,6 +3149,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 | Chronicle | The narrated, append-only timeline of memos with breakpoints; the project's entry point. Not a primitive — a cross-cutting view. | [26-memo-history.md](./26-memo-history.md) |
 | context rot | Quality decay of LLM output as input length grows (the cause). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
 | contamination | A document written out of a rotten context (the effect). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+| transcript reliability | How trustworthy a raw machine transcript is (input-side: the software invents/noises before the model reads). Distinct from contamination. | [37-transcript-reliability.md](./37-transcript-reliability.md) |
 
 ---
 
@@ -3637,6 +3649,95 @@ Measurement and grading are **never** done by the session that did the work — 
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the skill-versus-agent distinction underneath these strategies.
 - [35-memo-authoring.md](./35-memo-authoring.md) — the data payload that doubles as the fan-out seed.
 - [31-goals.md](./31-goals.md) — fresh-context scoring, an instance of fresh-context evaluation.
+
+---
+
+# 37. Transcript Reliability
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [03-input-paths.md](./03-input-paths.md), [04-input-pipeline.md](./04-input-pipeline.md) |
+| Related | [09-contamination-context-handover.md](./09-contamination-context-handover.md), [30-primitives.md](./30-primitives.md), [10-proactive-research.md](./10-proactive-research.md) |
+
+A transcript is a human speaking a task into a microphone, transcribed by software into the input field. Transcripts are **highly variable in reliability**, and the spec until now treated them as trustworthy input without question. This chapter names that gap: it defines what makes a transcript unreliable, the interpretation rule that follows, the deterministic reliability estimate that flags suspect spots (the Step 2b of [04-input-pipeline.md](./04-input-pipeline.md)), and how this input-side concern is distinct from the output-side notion of contamination.
+
+---
+
+## What a Transcript Is, and Why It Is Raw
+
+The developer speaks; the **transcription software** (not the model, not the developer) writes the text, and the developer never edits it — it lands in the field unedited. Two failure modes follow from that, and neither is a typo:
+
+- **Invention, not misspelling.** Transcription errors carry no grammar mistakes, so they cannot be caught grammatically. Instead the software **adds invented text** — provider sign-offs and copyright boilerplate ("bis bald", "copyright bei WDR und tschüssi", "subtitles by …"). This is a different class from a word-confusion: a confusion swaps a *known* word, an invention appends *foreign* text.
+- **Silent provider downgrade.** The provider can switch the transcription model to a weaker one without warning, so quality drops with no trigger. A reliability estimate must therefore work even when no specific cause is known.
+
+---
+
+## The Length Statistic
+
+Errors become **more** visible the longer the developer speaks. When the same point is made from several angles, an extreme deviation stands out against the redundancy; a **short** transcript offers no comparison, so an invented word looks more plausibly real. The consequence is a paradox the estimate must respect: the **long initial transcript** is at once the **most dangerous** (the most surface to invent on) and the **most checkable** (redundancy is the detector). This is why reliability carries a separate **confidence**: a long, redundant transcript is measured with high confidence; a short one is measured cautiously, with low confidence rather than a false alarm.
+
+---
+
+## The Raw-Transcript Interpretation Rule
+
+The existing raw-transcript rule (Step 1 of [04-input-pipeline.md](./04-input-pipeline.md)) preserves the unedited text. This chapter adds the missing **semantic** half — how that raw text MUST be *interpreted*:
+
+> **Raw-Transcript Default-Assumption.** A transcript is, by default, **100 % raw machine output**. Its wording is NOT contaminated by the developer — the software auto-copies it into the field unedited. Therefore an implementation MUST NOT treat any odd spelling, invented term, or name in a transcript as a developer **decision**. A specific wording is intended **only** when the developer **explicitly announces it** ("I want to discuss X, it is written like this") or **spells it out** letter by letter. Anything else is machine text and MUST be questioned, never adopted as intent.
+
+The canonical failure this rule prevents is deriving a **naming convention from a transcription artifact** — taking a transcribed spelling and turning it into a decided term. It is the same class as a discarded invented name in the dictionary (an AI invention, not a developer wish): such a term is removed entirely, never merely negated. The rule is the middle piece of a three-link chain: *preserve* the raw text (Step 1), *never interpret* a wording as a decision (this rule), *ask rather than invent* (Step 3's "ask" duty).
+
+---
+
+## The Reliability Estimate
+
+The estimate is a deterministic, cheap score in the spirit of the other deterministic scores (readiness, blast-radius): an **estimate against a threshold, not a 0/1 proof**, that never aborts. It returns a `reliability` value, a `confidence`, the underlying `signals`, located `findings`, and a `recommendation`. A low score means "re-confirm the flagged spots with the developer", never "discard".
+
+| Signal | What it measures | Effect |
+|--------|------------------|--------|
+| `lengthWords` | word count of the raw body | context for `confidence` (short → lower confidence), not the score |
+| `boilerplateHits` | matches against a provider-boilerplate list (sign-offs, copyright) | lowers reliability; each becomes a located finding |
+| `dictionaryHitDensity` | dictionary corrections per 100 words — many known mishearings means a noisy transcript | lowers reliability |
+| `topicCohesion` | share of the text that belongs to the dominant theme; a deep outlier ("blue elephants" mid-spec) is an invention flag | lowers reliability on outliers |
+| `crossAngleRedundancy` | rough intra-transcript repetition — more is **more checkable** | raises `confidence`, not the score |
+| `unannouncedNovelTokens` | rare CamelCase / capitalized non-dictionary tokens not announced or spelled out — naming-bug candidates | becomes a finding (read with the interpretation rule above) |
+
+The lowering signals combine into `reliability ∈ [0,1]`; `lengthWords` and `crossAngleRedundancy` modulate `confidence` only. Boilerplate hits and unannounced novel tokens produce **findings** with their location, so the developer is asked about specific spots rather than the whole input. The default threshold is calibratable on the real distribution. The estimate is wired as Step 2b of the input pipeline — after the dictionary scan, before topic extraction — and runs **WARN, never block**.
+
+---
+
+## The Dictionary and Its CLI
+
+Recurring mis-hearings are corrected once in a shared **transcription dictionary** (`.memo/_references/transcription-dictionary.md`): a flat `Falsch | Richtig | Notiz` table, consulted before topic extraction and applied as non-content-changing, word-bounded replacements. Two minimal CLI surfaces back it deterministically (minimal by intent — only what is needed):
+
+- `memo transcript score <file>` — run the reliability estimate over a raw transcript and return the score object.
+- `memo dictionary add "<wrong>" "<right>" --note "<evidence>"` — append a proven mis-hearing to the table rather than hand-editing it.
+
+The dictionary's parser and applier are a shared primitive (one module both the cross-memo check and these commands use), not a detail buried in one caller.
+
+---
+
+## Distinct from Contamination
+
+Transcript reliability is **not** contamination, and the two MUST NOT be conflated — they are different axes:
+
+| Term | Axis | Source |
+|------|------|--------|
+| context rot | cause: LLM output degrades as input length grows | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+| contamination | effect: a document written out of a rotten context | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+| transcript reliability | input: the machine transcript invents or is noisy, *before* the model reads it | this chapter |
+
+Contamination describes the model's own degraded **output** context; transcript reliability describes foreign **input** from the transcription software, upstream of the model. Using "contaminated" for a noisy transcript would blur the sharp contamination definition — hence the separate term.
+
+---
+
+## Related
+
+- [04-input-pipeline.md](./04-input-pipeline.md) — Step 2b, where the reliability estimate runs, and Step 1's raw-transcript preservation rule this chapter's interpretation rule extends.
+- [03-input-paths.md](./03-input-paths.md) — the four transcript types; the long `memo-init` transcript is the estimate's focus.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — contamination and context rot, the distinct output-side axes.
+- [30-primitives.md](./30-primitives.md) — the glossary where transcript reliability sits beside context rot and contamination.
+- [10-proactive-research.md](./10-proactive-research.md) — Step 5 research, which must not run on invented topics.
 
 ========================================
 # Workbench Sub-Spec

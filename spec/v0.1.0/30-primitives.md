@@ -176,6 +176,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 | Chronicle | The narrated, append-only timeline of memos with breakpoints; the project's entry point. Not a primitive — a cross-cutting view. | [26-memo-history.md](./26-memo-history.md) |
 | context rot | Quality decay of LLM output as input length grows (the cause). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
 | contamination | A document written out of a rotten context (the effect). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+| transcript reliability | How trustworthy a raw machine transcript is (input-side: the software invents/noises before the model reads). Distinct from contamination. | [37-transcript-reliability.md](./37-transcript-reliability.md) |
 
 ---
 

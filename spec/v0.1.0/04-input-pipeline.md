@@ -13,11 +13,12 @@ Before any memo is created or any revision written, every input passes through a
 Before any memo is created and before any revision is written, every input MUST pass through a five-step processing pipeline. The pipeline is mandatory and strictly sequential: no step may be skipped, and no step may begin before the previous step is complete. It runs both before `memo-init` and before every `memo-revision-generate`.
 
 ```
-1. Completeness check        → ALL files read?
-2. Transcription-error scan  → ALL errors corrected?
-3. Topic extraction          → ALL topics listed?
-4. Context preservation      → ALL context documented?
-5. Research                  → research-worthy topics derived, proactive research triggered?
+1. Completeness check         → ALL files read?
+2. Transcription-error scan   → ALL errors corrected?
+2b. Transcript-reliability    → reliability estimated (WARN), suspicions flagged?
+3. Topic extraction           → ALL topics listed?
+4. Context preservation       → ALL context documented?
+5. Research                   → research-worthy topics derived, proactive research triggered?
    → ready for memo-init or memo-revision-generate
 ```
 
@@ -45,6 +46,15 @@ An implementation MUST proactively check the input against the known transcripti
 | Repair | Prepare |
 
 The table is extensible; new patterns MAY be added over time. The requirement is that the scan always runs and that corrections are surfaced, not silently applied.
+
+---
+
+## Step 2b — Transcript-Reliability Estimate
+
+Directly after the transcription-error scan and **before** topic extraction, an implementation SHOULD estimate the input's **transcript reliability** — a deterministic score that flags suspected machine artifacts so they are not extracted as topics. A transcript is raw machine output, and the transcription software sometimes *invents* text (provider sign-offs, copyright boilerplate) that no grammar check can catch; the estimate is the guardrail against an invented artifact becoming a real topic. It is specified in full in [37-transcript-reliability.md](./37-transcript-reliability.md); two rules bind here:
+
+- **WARN, never block.** The estimate produces a reliability value, a confidence, and located findings (suspected boilerplate, unannounced novel names). It is **advisory**: a low score means "re-confirm these spots with the developer", never "discard the input". The developer, not the score, decides (memo authority).
+- **The long initial transcript matters most.** The estimate runs for every transcript but is sharpest on the long `memo-init` transcript, where invented text has the most surface *and* cross-angle redundancy makes outliers detectable; for short `free`/`revision` inputs it reports low confidence rather than false alarms.
 
 ---
 
@@ -98,6 +108,7 @@ The skill that performs this reads **only** — it never issues writes to the se
 ## Related
 
 - [03-input-paths.md](./03-input-paths.md) — the four transcript types and their follow-up flows.
+- [37-transcript-reliability.md](./37-transcript-reliability.md) — the Step 2b reliability estimate, the raw-transcript interpretation rule, and the dictionary in full.
 - [10-proactive-research.md](./10-proactive-research.md) — the canonical research definition behind Step 5.
 - [05-memo-strategies.md](./05-memo-strategies.md) — the strategy chosen when the pipeline hands over to `memo-init`.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the topic primitive defined as the head of the executable chain.

@@ -6,7 +6,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T17:41:22.408Z"
+generated_at: "2026-06-20T18:05:26.218Z"
 generated_from: "spec/v0.1.0/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/30-primitives.md."
@@ -183,6 +183,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 | Chronicle | The narrated, append-only timeline of memos with breakpoints; the project's entry point. Not a primitive — a cross-cutting view. | [26-memo-history.md](/specification/memo-history/) |
 | context rot | Quality decay of LLM output as input length grows (the cause). | [09-contamination-context-handover.md](/specification/contamination-context-handover/) |
 | contamination | A document written out of a rotten context (the effect). | [09-contamination-context-handover.md](/specification/contamination-context-handover/) |
+| transcript reliability | How trustworthy a raw machine transcript is (input-side: the software invents/noises before the model reads). Distinct from contamination. | [37-transcript-reliability.md](/specification/transcript-reliability/) |
 
 ---
 

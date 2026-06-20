@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-20T18:00:13.278Z",
+    "generated_at": "2026-06-20T18:05:27.077Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -372,6 +372,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "execution"
+        },
+        {
+            "filename": "37-transcript-reliability.md",
+            "slug": "transcript-reliability",
+            "title": "Transcript Reliability",
+            "description": "A transcript is a human speaking a task into a microphone, transcribed by software into the input field. Transcripts are **highly variable in reliability**, and the spec until now treated them as...",
+            "order": 37,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
         }
     ],
     "workbench": {
@@ -439,10 +449,10 @@
         ]
     },
     "stats": {
-        "total_files": 43,
-        "core_files": 37,
+        "total_files": 44,
+        "core_files": 38,
         "workbench_files": 6,
-        "normative_files": 40,
+        "normative_files": 41,
         "informative_files": 3
     }
 }
