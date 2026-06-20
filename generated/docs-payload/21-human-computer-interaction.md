@@ -6,7 +6,7 @@ spec_file: "21-human-computer-interaction.md"
 order: 21
 section: "Specification"
 normative: true
-generated_at: "2026-06-19T12:17:08.126Z"
+generated_at: "2026-06-20T12:03:13.543Z"
 generated_from: "spec/v0.1.0/21-human-computer-interaction.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/21-human-computer-interaction.md."
@@ -74,3 +74,4 @@ After confirmation, the `BREAK - duty-of-care contract` is shown, and from there
 - [20-flow-full-vs-update-revisions.md](/specification/flow-full-vs-update-revisions/) — the Full/Update revision flow that this interaction model wraps.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the finalization gate and quality checks the blocker guards.
 - [00-overview.md](/specification/overview/) — conformance language.
+- [34-question-interface.md](/specification/question-interface/) — the option-scoring discipline behind the questions the user answers here.

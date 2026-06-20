@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-19T12:17:08.296Z",
+    "generated_at": "2026-06-20T12:03:14.276Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -342,6 +342,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "foundations"
+        },
+        {
+            "filename": "34-question-interface.md",
+            "slug": "question-interface",
+            "title": "Question Interface",
+            "description": "The question interface is the primary surface between the user and the agent: most decisions a memo records pass through it. This chapter defines the discipline that surface carries — every option is...",
+            "order": 34,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "behavior"
         }
     ],
     "workbench": {
@@ -389,10 +399,10 @@
         ]
     },
     "stats": {
-        "total_files": 38,
-        "core_files": 34,
+        "total_files": 39,
+        "core_files": 35,
         "workbench_files": 4,
-        "normative_files": 35,
+        "normative_files": 36,
         "informative_files": 3
     }
 }

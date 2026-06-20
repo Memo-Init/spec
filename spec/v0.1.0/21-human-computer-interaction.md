@@ -67,3 +67,4 @@ After confirmation, the `BREAK - duty-of-care contract` is shown, and from there
 - [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md) — the Full/Update revision flow that this interaction model wraps.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the finalization gate and quality checks the blocker guards.
 - [00-overview.md](./00-overview.md) — conformance language.
+- [34-question-interface.md](./34-question-interface.md) — the option-scoring discipline behind the questions the user answers here.

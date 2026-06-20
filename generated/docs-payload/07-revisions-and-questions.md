@@ -6,7 +6,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-06-19T12:17:08.126Z"
+generated_at: "2026-06-20T12:03:13.543Z"
 generated_from: "spec/v0.1.0/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/07-revisions-and-questions.md."
@@ -142,3 +142,4 @@ A revision MUST NOT be edited in place. Each change produces a new `REV-XX.md` f
 - [04-input-pipeline.md](/specification/input-pipeline/) — input processing that runs before each revision is generated.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the gate that requires the open-questions area to be empty.
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the authoring skills that implement the question format.
+- [34-question-interface.md](/specification/question-interface/) — the scoring discipline and the `questions-json` mandate that builds on this format.

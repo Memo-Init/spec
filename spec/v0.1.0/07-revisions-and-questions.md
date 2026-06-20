@@ -135,3 +135,4 @@ A revision MUST NOT be edited in place. Each change produces a new `REV-XX.md` f
 - [04-input-pipeline.md](./04-input-pipeline.md) — input processing that runs before each revision is generated.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the gate that requires the open-questions area to be empty.
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the authoring skills that implement the question format.
+- [34-question-interface.md](./34-question-interface.md) — the scoring discipline and the `questions-json` mandate that builds on this format.
