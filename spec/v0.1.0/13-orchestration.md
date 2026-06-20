@@ -55,15 +55,17 @@ These dials bound the "in parallel where dependencies allow" rule above; the dep
 
 ---
 
-## Workflows vs Agents
+## Research Fan-Out vs Agents
 
-The parallelism dials above describe *how many* units run concurrently once parallel work is chosen, but they do not decide *which orchestration mechanism* drives that work. There are two mechanisms — **dynamic workflows** (harness-driven parallel sub-agent fan-out) and **agents** (the native Lead/Worker/Evaluator agent team of this chapter) — and the policy below decides where each one applies.
+The parallelism dials above describe *how many* units run concurrently once parallel work is chosen, but they do not decide *which orchestration mechanism* drives that work. There are two mechanisms — a **model-driven research fan-out** (the Lead spawns a handful of parallel sub-agents and decides per turn) and the **agent team** (the native Lead/Worker/Evaluator team of this chapter) — and the policy below decides where each applies.
 
-- **Dynamic workflows are research-only.** A dynamic workflow — a harness-driven parallel fan-out of sub-agents — is permitted **only** for genuine **research**, where independent sub-agents gather information in parallel and report back. The Default for a research fan-out is **2-4 parallel sub-agents**. This is the *single* place a workflow-style fan-out is allowed; it is documented in [research-workflow](../../../core/skills/research/research-workflow/SKILL.md).
-- **Everything else uses agents.** All non-research orchestration — phase execution above all — uses the **agent team** (Lead/Worker/Evaluator/Phase Evaluator), because agents are native to Claude Code and integrate better than a generic workflow runner. Phase execution (`memo-phase-execute`) is therefore **agent-based** and **MUST NOT** run as a dynamic-workflow mode.
+> **Terminology.** This section's mechanism is a **model-driven research fan-out**, *not* a "dynamic workflow". The platform reserves **Dynamic Workflow** for a different, script-driven primitive — a JavaScript script that holds the loop/branching/intermediate results and scales to dozens or hundreds of agents (the third agent-execution primitive, defined in [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)). To avoid a permanent collision with the platform term, this spec calls its own model-driven mechanism a *research fan-out* and uses *Dynamic Workflow* only for the script primitive.
+
+- **Model-driven research fan-out is research-only.** A research fan-out — the Lead spawning parallel sub-agents that each gather information and report back — is permitted **only** for genuine **research**. The Default is **2-4 parallel sub-agents**. This is the *single* place a model-driven fan-out is allowed; it is documented in [research-workflow](../../../core/skills/research/research-workflow/SKILL.md).
+- **Everything else uses agents.** All non-research orchestration — phase execution above all — uses the **agent team** (Lead/Worker/Evaluator/Phase Evaluator), because agents are native to Claude Code and integrate better than a generic runner. Phase execution (`memo-phase-execute`) is therefore **agent-based** and **MUST NOT** run as a script-driven Dynamic Workflow.
 - **Added parallelism in phase execution requires evidence.** The "in parallel where dependencies allow" rule (above) stays the dependency-gated Default for the agent phase. Increasing that parallelism — for example wiring the Parallelism Dials into `memo-phase-execute` — is **NOT** done on the strength of the spec dials alone; it requires real, measured **evidence** first.
 
-This policy locates **when** the Parallelism Dials apply rather than removing them: the dials remain the Soll bounds for concurrent work, and this section decides where workflow fan-out is even permitted (research, 2-4 parallel) versus where agents govern (everything else, dependency-gated).
+This policy locates **when** the Parallelism Dials apply rather than removing them: the dials remain the Soll bounds for concurrent work, and this section decides where a model-driven fan-out is even permitted (research, 2-4 parallel) versus where agents govern (everything else, dependency-gated).
 
 ---
 

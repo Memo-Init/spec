@@ -6,7 +6,7 @@ spec_file: "36-agent-research-strategies.md"
 order: 36
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T17:58:27.359Z"
 generated_from: "spec/v0.1.0/36-agent-research-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/36-agent-research-strategies.md."
@@ -24,6 +24,8 @@ The headline strategy. Deep research is **expensive to run and cheap to reuse**,
 3. **Fan out cheaply.** Each record of the distillate **seeds one sub-agent** with a small, self-contained brief. The sub-agents run in parallel under the orchestration machinery ([13-orchestration.md](/specification/orchestration/)); none repeats the expensive research, because the distillate already carries it.
 
 The payoff is that the costly part happens once and the parallel part is cheap and uniform. The same dataset that renders a generated table ([35-memo-authoring.md](/specification/memo-authoring/)) is the fan-out seed — the table is for the human reader, the records are for the sub-agents. The goal-optimization pipeline is an instance of this shape: a goal's accumulated findings are distilled into an init-transcript that seeds a follow-up memo (see [31-goals.md](/specification/goals/)).
+
+**Mapped onto the agent-execution primitives ([14-agents-skills-tasks.md](/specification/agents-skills-tasks/)):** the one expensive research pass (step 1) runs as a single ephemeral sub-agent (type a) or a deterministic workflow (type c); the cheap fan-out (step 3) uses **type (a)** ephemeral sub-agents when there are a few records, and is the **canonical use of type (c)** — a deterministic workflow — when the records number in the dozens or hundreds (its high agent cap and script-repeatability are built for exactly that). Persistent agents (type b) are **not** the default here: the strategy depends on the fan-out workers being stateless and uniform, where type (b) fits iterative single-worker dialogue instead. This is a strategy choosing a type, not a new type.
 
 ## Fan-Out by Unit
 

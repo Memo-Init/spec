@@ -6,7 +6,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T17:58:27.359Z"
 generated_from: "spec/v0.1.0/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/14-agents-skills-tasks.md."
@@ -36,6 +36,33 @@ A **skill** is the right shape when the procedure should run inside the caller's
 
 ---
 
+## Agent Execution Primitives
+
+"Agent" is run in **three** distinct forms. This is the canonical typology; the orchestration machinery ([13-orchestration.md](/specification/orchestration/)) and the deployment strategies ([36-agent-research-strategies.md](/specification/agent-research-strategies/)) refer back to these types rather than redefining them.
+
+| Type | Mechanism | Context | Return |
+|------|-----------|---------|--------|
+| **(a) Ephemeral sub-agent** | the `Agent` tool — spawns a fresh instance with its own system prompt, tools, and permissions; one-shot | fresh, isolated per invocation; sees no conversation history | only the final message |
+| **(b) Persistent agent** | an agent **id** returned on completion; continued via `SendMessage`, not a fresh `Agent` call | retains its full history; resumes exactly where it stopped | the final message of the resumed run; re-queryable |
+| **(c) Deterministic workflow** | a JavaScript **script** Claude writes; the runtime executes it; the *script* holds the loop, branching, and intermediate results | runs separate from Claude's context window; scales to dozens–hundreds of agents (up to ~1000/run) | only the final report reaches the context |
+
+The platform name for type (c) is **Dynamic Workflow** — the script-driven primitive. A model-driven *research fan-out* (the Lead spawning a few type-(a) sub-agents per turn) is a different thing and MUST NOT be called a dynamic workflow (see [13-orchestration.md](/specification/orchestration/)).
+
+**Nesting.** A sub-agent MAY spawn its own sub-agents, but the depth is **fixed at five** and is not configurable: a sub-agent at depth five does not receive the `Agent` tool and cannot spawn further. Only the top-level sub-agent's summary returns to the caller.
+
+---
+
+## The Word "Subagent" — Two Meanings
+
+The word "subagent" carries two readings that MUST be kept apart so they do not collide.
+
+- **User meaning (type-agnostic).** From the user's side a subagent is simply "**I delegate something and get a result back**" — it does not matter whether the work ran as an ephemeral sub-agent, a persistent agent, or a deterministic workflow. All three are "a subagent" in this sense.
+- **Technical meaning (precise).** Technically, "subagent" is **only type (a)** — the ephemeral, fresh-context, one-shot form. Types (b) and (c) are a persistent agent and a workflow, not subagents in the strict sense.
+
+When this spec says "subagent" in a mechanism context it means type (a); when it describes delegation from the user's perspective it means the broad, type-agnostic sense. The distinction is named here so the two never silently merge.
+
+---
+
 ## Migration Boundary
 
 Evaluators are the natural first candidates for agent form because the empty-context rule already requires them to run in a fresh, isolated context (see [09-contamination-context-handover.md](/specification/contamination-context-handover/)) — they are agents in everything but form.
@@ -62,6 +89,8 @@ These stay skills because they are procedures meant to run inside the caller's c
 ## Related
 
 - [15-prompt-generator.md](/specification/prompt-generator/) — the deterministic compositor that produces an agent's per-invocation start-prompt.
+- [13-orchestration.md](/specification/orchestration/) — the machinery (team roles, dials, state) that runs the agent types defined here, and the model-driven-fan-out vs Dynamic-Workflow distinction.
+- [36-agent-research-strategies.md](/specification/agent-research-strategies/) — the deployment strategies that reference these types (e.g. distillate-fan-out mapped onto type (a)/(c)).
 - [12-rollout.md](/specification/rollout/) — the rollout whose Evaluate phase is run by the migrated evaluators.
 - [09-contamination-context-handover.md](/specification/contamination-context-handover/) — the empty-context rule that makes evaluators the natural first migration.
 - [00-overview.md](/specification/overview/) — conformance language.
