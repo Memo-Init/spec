@@ -32,6 +32,15 @@ When the set reaches **eight or more entries**, stop hand-typing the table. Inst
 
 Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](./10-proactive-research.md) and [36-agent-research-strategies.md](./36-agent-research-strategies.md)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
 
+## Diagrams in Memos (Mermaid and Vega-Lite)
+
+Diagrams are **first-class memo content**, not a special case. The viewer renders **every** fenced `mermaid` block to an SVG and **every** fenced `vega-lite` block to a chart — the dispatch is per code block, so there is no single fixed diagram slot. This capability is easy to under-use: a memo may carry **several diagrams, distributed** through the document, each placed next to the chapter it illustrates, rather than one diagram at a fixed position.
+
+- **Mermaid** for structure and flow — the relationships between strands, the shape of a process, a state machine. The canonical interaction diagram in [21-human-computer-interaction.md](./21-human-computer-interaction.md) is the reference for style.
+- **Vega-Lite** for quantitative and statistical charts — a fenced `vega-lite` block whose body is a Vega-Lite JSON spec (added in Memo 020). Use it when the point is a measurement, not a relationship.
+
+**Portrait is mandatory.** Diagrams MUST be authored **portrait** — Mermaid flowcharts use `flowchart TD` (top-down), never landscape (`flowchart LR`) — so they fit the viewer's narrow reading column without horizontal scrolling. A wide left-to-right diagram is a defect, not a stylistic choice. When a graph is genuinely too wide, split it into several stacked top-down diagrams rather than turning it on its side.
+
 ## Related
 
 - [06-memo-structure.md](./06-memo-structure.md) — the on-disk shape of a memo that this chapter authors into.

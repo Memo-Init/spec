@@ -148,4 +148,5 @@ The gate is the enforcement end of the post-phase elimination step that [08-phas
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context rule the evaluators obey and the handover used on a contaminated interruption.
 - [28-drift.md](./28-drift.md) — the drift error-class and resolution protocol whose step-4 idempotent lint/CI gate this chapter holds.
 - [33-maintenance.md](./33-maintenance.md) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
+- [36-agent-research-strategies.md](./36-agent-research-strategies.md) — the strategy/pattern layer (Distillate-Fan-Out, fan-out by unit) above this machinery.
 - [00-overview.md](./00-overview.md) — conformance language.

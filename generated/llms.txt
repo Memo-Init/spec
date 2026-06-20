@@ -1500,6 +1500,7 @@ The gate is the enforcement end of the post-phase elimination step that [08-phas
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context rule the evaluators obey and the handover used on a contaminated interruption.
 - [28-drift.md](./28-drift.md) — the drift error-class and resolution protocol whose step-4 idempotent lint/CI gate this chapter holds.
 - [33-maintenance.md](./33-maintenance.md) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
+- [36-agent-research-strategies.md](./36-agent-research-strategies.md) — the strategy/pattern layer (Distillate-Fan-Out, fan-out by unit) above this machinery.
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -3447,6 +3448,15 @@ When the set reaches **eight or more entries**, stop hand-typing the table. Inst
 
 Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](./10-proactive-research.md) and [36-agent-research-strategies.md](./36-agent-research-strategies.md)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
 
+## Diagrams in Memos (Mermaid and Vega-Lite)
+
+Diagrams are **first-class memo content**, not a special case. The viewer renders **every** fenced `mermaid` block to an SVG and **every** fenced `vega-lite` block to a chart — the dispatch is per code block, so there is no single fixed diagram slot. This capability is easy to under-use: a memo may carry **several diagrams, distributed** through the document, each placed next to the chapter it illustrates, rather than one diagram at a fixed position.
+
+- **Mermaid** for structure and flow — the relationships between strands, the shape of a process, a state machine. The canonical interaction diagram in [21-human-computer-interaction.md](./21-human-computer-interaction.md) is the reference for style.
+- **Vega-Lite** for quantitative and statistical charts — a fenced `vega-lite` block whose body is a Vega-Lite JSON spec (added in Memo 020). Use it when the point is a measurement, not a relationship.
+
+**Portrait is mandatory.** Diagrams MUST be authored **portrait** — Mermaid flowcharts use `flowchart TD` (top-down), never landscape (`flowchart LR`) — so they fit the viewer's narrow reading column without horizontal scrolling. A wide left-to-right diagram is a defect, not a stylistic choice. When a graph is genuinely too wide, split it into several stacked top-down diagrams rather than turning it on its side.
+
 ## Related
 
 - [06-memo-structure.md](./06-memo-structure.md) — the on-disk shape of a memo that this chapter authors into.
@@ -3454,6 +3464,44 @@ Two properties make this worth the small upfront cost. First, **determinism**: a
 - [30-primitives.md](./30-primitives.md) — the memo primitive and the concept map.
 - [10-proactive-research.md](./10-proactive-research.md) — research output as the dataset behind generated tables.
 - [34-question-interface.md](./34-question-interface.md) — the option-scoring discipline a memo's decisions follow.
+
+---
+
+# 36. Agent and Research Strategies
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [./13-orchestration.md](./13-orchestration.md), [./10-proactive-research.md](./10-proactive-research.md) |
+| Related | [./14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [./31-goals.md](./31-goals.md), [./35-memo-authoring.md](./35-memo-authoring.md), [./09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+
+This chapter collects the **strategies** for deploying agents and research effectively — the reusable patterns that decide *how* work is fanned out and *how* expensive findings are reused. It is deliberately the pattern layer, not the machinery: the orchestration mechanics (Generate → Execute → Evaluate, agent teams, parallelism dials, state and recovery) live in [13-orchestration.md](./13-orchestration.md), the research lifecycle (when to research, sub-agent spawning, where large output goes) lives in [10-proactive-research.md](./10-proactive-research.md), and the skill-versus-agent distinction lives in [14-agents-skills-tasks.md](./14-agents-skills-tasks.md). Here we name the patterns that sit above all three, so a strategy can be chosen by name rather than re-derived each time.
+
+## Distillate-Fan-Out
+
+The headline strategy. Deep research is **expensive to run and cheap to reuse**, so it should be run **once** and then **distilled** into a compact, structured artifact that many cheaper sub-agents are seeded from — instead of paying for the same broad research inside every sub-agent.
+
+1. **Research once, deeply.** A single expensive pass (broad web/codebase sweep, many sources) produces the raw findings. Large raw output goes to the memo's `context/` ([10-proactive-research.md](./10-proactive-research.md)), never inline.
+2. **Distill.** The raw findings are reduced to a **distillate** — a compact, reusable artifact that carries only what the downstream work needs. The distillate is frequently a **structured dataset** (the data payload of [35-memo-authoring.md](./35-memo-authoring.md)): one record per unit of work.
+3. **Fan out cheaply.** Each record of the distillate **seeds one sub-agent** with a small, self-contained brief. The sub-agents run in parallel under the orchestration machinery ([13-orchestration.md](./13-orchestration.md)); none repeats the expensive research, because the distillate already carries it.
+
+The payoff is that the costly part happens once and the parallel part is cheap and uniform. The same dataset that renders a generated table ([35-memo-authoring.md](./35-memo-authoring.md)) is the fan-out seed — the table is for the human reader, the records are for the sub-agents. The goal-optimization pipeline is an instance of this shape: a goal's accumulated findings are distilled into an init-transcript that seeds a follow-up memo (see [31-goals.md](./31-goals.md)).
+
+## Fan-Out by Unit
+
+When work decomposes into independent units — one repo, one file, one chapter, one goal — the strategy is **one agent per unit**, run in parallel, each agent scoped to exactly its unit. This keeps each context small and the work embarrassingly parallel, and it makes a missing or failed unit visible as a single gap rather than a silent omission. The degree of parallelism is a dial set by the orchestrator ([13-orchestration.md](./13-orchestration.md)); the strategy here is only the decomposition: pick a unit boundary along which the work is genuinely independent, and assign one agent to each.
+
+## Fresh-Context Evaluation
+
+Measurement and grading are **never** done by the session that did the work — a working session reports "all done" and hides the gap. The strategy is to evaluate in a **fresh context**: a separate, unbiased reader that inspects the real artifacts rather than trusting a PASS-report. This is the operating principle behind goal scoring and maintenance scoring ([31-goals.md](./31-goals.md)); as a general agent strategy it applies wherever a result must be judged honestly — spawn a clean reader, hand it the artifacts and the intent, and let it measure against reality. The contamination boundary that makes a context "fresh" is defined in [09-contamination-context-handover.md](./09-contamination-context-handover.md).
+
+## Related
+
+- [13-orchestration.md](./13-orchestration.md) — the orchestration machinery these strategies run on (the boundary: machinery there, patterns here).
+- [10-proactive-research.md](./10-proactive-research.md) — the research lifecycle and where large research output is stored.
+- [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the skill-versus-agent distinction underneath these strategies.
+- [35-memo-authoring.md](./35-memo-authoring.md) — the data payload that doubles as the fan-out seed.
+- [31-goals.md](./31-goals.md) — fresh-context scoring, an instance of fresh-context evaluation.
 
 ========================================
 # Workbench Sub-Spec

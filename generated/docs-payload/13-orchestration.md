@@ -6,7 +6,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-06-19T12:17:08.126Z"
+generated_at: "2026-06-20T12:08:06.042Z"
 generated_from: "spec/v0.1.0/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/13-orchestration.md."
@@ -155,4 +155,5 @@ The gate is the enforcement end of the post-phase elimination step that [08-phas
 - [09-contamination-context-handover.md](/specification/contamination-context-handover/) — the empty-context rule the evaluators obey and the handover used on a contaminated interruption.
 - [28-drift.md](/specification/drift/) — the drift error-class and resolution protocol whose step-4 idempotent lint/CI gate this chapter holds.
 - [33-maintenance.md](/specification/maintenance/) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
+- [36-agent-research-strategies.md](/specification/agent-research-strategies/) — the strategy/pattern layer (Distillate-Fan-Out, fan-out by unit) above this machinery.
 - [00-overview.md](/specification/overview/) — conformance language.
