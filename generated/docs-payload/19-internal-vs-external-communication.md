@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T18:08:38.158Z"
 generated_from: "spec/v0.1.0/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/19-internal-vs-external-communication.md."
@@ -108,8 +108,37 @@ The test is the same as everywhere in this chapter: direction, not secrecy. Each
 
 ---
 
+## The Trust Layer — Communicating to the User
+
+The directions above govern *published artifacts*. There is a third communication surface this chapter also owns: how the **orchestrator speaks to the user** during a run (Protocol A of the three-layer model, see [21-human-computer-interaction.md](/specification/human-computer-interaction/)). When the orchestrator is *also* the user's output channel, the user is easily buried in text and the important thing is lost underneath. The trust layer is the discipline that prevents that.
+
+> **Surface-only output contract (invariant).** The default state of the user thread is **empty**. Surfacing a line to the user is a **deliberate, per-event decision** — large/important decisions and notable events only — never an automatic relay of everything the workers produced. A worker's intermediate output reaches the user only when the orchestrator chooses to surface it.
+
+The convention has twelve binding points (J1–J12):
+
+| # | Requirement |
+|---|-------------|
+| J1 | Communication reads the **same regardless of which skill** is running — the user should not have to infer the active skill from the style. |
+| J2 | At the start of a run, **name the affected repos / files / tools** so the user knows the blast surface up front. |
+| J3 | Report the **unusual proactively** (an out-of-the-ordinary access or action), rather than letting it pass silently. |
+| J4 | Prefer **tables and clear structure with a recommendation** over a wall of prose. |
+| J5 | Speak to the user in the **user's register**, never in the internal worker-context language. |
+| J6 | Be **100 % honest**; an unusual outcome is **discussed**, not glossed — a surprise erodes trust. |
+| J7 | Give **regular, structured updates** on a recurring cadence, so the user can step away and return informed. |
+| J8 | Let the user **look into the orchestrator** — its progress is observable, not a black box. |
+| J9 | Use **full, unambiguous paths** so a reference cannot be misread. |
+| J10 | Keep **naming clarity** — which project, which memo — so the user is never unsure what is being acted on. |
+| J11 | Keep the **question interface clearly defined** (see [34-question-interface.md](/specification/question-interface/)). |
+| J12 | Treat **surprises as negative** — an unannounced outcome is a defect of communication, even when the work itself is fine. |
+
+The clean-terminal *mechanisms* that make this enforceable rather than merely aspirational (event watcher, cadence timer, out-of-band notification, workflow progress panel) are listed in [21-human-computer-interaction.md](/specification/human-computer-interaction/). The rule here is the convention; the mechanisms there are how it is carried out.
+
+---
+
 ## Related
 
 - [00-overview.md](/specification/overview/) — conformance language and the self-explanatory-to-a-stranger requirement.
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the security review that keeps private data out of public artifacts.
 - [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) — commit messages as outward-facing artifacts, the inward-facing question-ID schema, and the commit ID that anchors the PRD message channel.
+- [21-human-computer-interaction.md](/specification/human-computer-interaction/) — the three communication layers and the clean-terminal mechanisms that carry out the Trust-Layer convention.
+- [34-question-interface.md](/specification/question-interface/) — the question interface referenced by J11.

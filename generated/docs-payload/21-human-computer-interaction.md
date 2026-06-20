@@ -6,7 +6,7 @@ spec_file: "21-human-computer-interaction.md"
 order: 21
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T18:08:38.158Z"
 generated_from: "spec/v0.1.0/21-human-computer-interaction.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/21-human-computer-interaction.md."
@@ -69,9 +69,41 @@ After confirmation, the `BREAK - duty-of-care contract` is shown, and from there
 
 ---
 
+## The Three Communication Layers
+
+Communication in the system runs across **three layers**, and they are a *communication topology*, not a work cycle:
+
+```
+User  ──Protocol A (Trust Layer)──▶  Orchestrator  ──Protocol B (start-prompt)──▶  Worker
+```
+
+- **User ↔ Orchestrator (Protocol A).** The trust layer: the orchestrator (the main loop) is the user's single channel. How it speaks to the user is governed by the Trust-Layer convention in [19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/).
+- **Orchestrator ↔ Worker (Protocol B).** The orchestrator hands work to a worker via a deterministically composed start-prompt ([15-prompt-generator.md](/specification/prompt-generator/)). A worker is any of the three agent-execution primitives ([14-agents-skills-tasks.md](/specification/agents-skills-tasks/)); it cannot address the user directly — everything it returns reaches the user only through the orchestrator.
+
+**G→E→E is not the layer topology.** The Generate → Execute → Evaluate cycle is a *work cycle that runs at a layer*; the three layers are the *communication topology between participants*. They are related but distinct concepts and MUST NOT be conflated — G→E→E describes how a unit of work proceeds, the three layers describe who talks to whom.
+
+**Three layers are enough; the fourth is deferred.** A separate **Communicator** agent (a fourth layer) is **not** technically required to keep the user's terminal clean: a worker never leaks its intermediate output to the user automatically, and the orchestrator already has dedicated surfacing primitives (below). The "Communicator" is therefore a **discipline of the orchestrator**, not a fourth agent. A genuine fourth layer earns its place only when several orchestrators run in parallel and their reports must themselves be marshalled — deferred until then.
+
+---
+
+## Staying in the Loop — Clean-Terminal Surfacing
+
+During the autonomous span (after the duty-of-care break), the user must be able to *step away and come back* and still know what happened, without being buried in text. The orchestrator keeps the main thread clean and surfaces only what matters, on a recurring cadence or on a concrete event. The mechanisms (all available to the orchestrator, distinct from the conversation thread):
+
+- **Surface-only output contract** — the default is an *empty* user thread; surfacing a line is a deliberate per-event decision, never a dump of everything the workers said. This is the binding invariant (see [19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/)).
+- **Event channel** — a background watcher with a narrow match pattern emits a single line when a risky/notable state occurs (a mass move to trash, a test break, drift). A clean one-line signal is exactly what makes a silent disaster visible the moment it happens.
+- **Cadence channel** — a session timer enqueues one condensed status line every few minutes, so "staying in the loop" does not mean watching a stream.
+- **Attention channel** — an out-of-band notification, used sparingly, only for "the user wants to know this now" (a run finished, a decision is needed).
+- **Workflows for large runs** — when dozens of agents are needed, a script-driven workflow keeps the main thread clean by construction (its progress lives in a separate panel, one report at the end), so the clean-terminal property is free.
+
+---
+
 ## Related
 
 - [20-flow-full-vs-update-revisions.md](/specification/flow-full-vs-update-revisions/) — the Full/Update revision flow that this interaction model wraps.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the finalization gate and quality checks the blocker guards.
+- [19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/) — the Trust-Layer convention (J1–J12) and the surface-only output contract that govern Protocol A.
+- [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the three worker primitives the orchestrator drives over Protocol B.
+- [15-prompt-generator.md](/specification/prompt-generator/) — the start-prompt that is Protocol B.
 - [00-overview.md](/specification/overview/) — conformance language.
 - [34-question-interface.md](/specification/question-interface/) — the option-scoring discipline behind the questions the user answers here.
