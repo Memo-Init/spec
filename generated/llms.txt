@@ -3228,12 +3228,12 @@ Memos differ sharply, and each PRD needs exactly its own documents. Governance t
 
 ---
 
-## Governance: Goal G011
+## Governance: the Prompt-Governance Goal
 
 Because the generator is both a lever and a single point of failure, it MUST be measured, not assumed.
 
-- **A goal that names the mechanism.** Goal **G011 — Prompt Governance / Initial-Prompt Harness** asserts that the initial prompts of all spawned agents run through a controlled harness with a guaranteed minimum quality floor — deterministic, driven by the LLM through the CLI, with room for necessary additions — across both cases (PRD homogeneous, research heterogeneous). G011 is the application side of the requirements goal (G003) and is kept **separate** from it; the only coupling is the injection placeholder.
-- **Measured in a fresh context.** Like every goal ([31-goals.md](./31-goals.md)), G011 is scored against real state in a fresh context, never in the session that built the wiring. A green report is not evidence that the bottleneck is actually the default path; the fresh-context reader inspects whether the composed path is genuinely used.
+- **A goal that names the mechanism.** A goal — **Prompt Governance / Initial-Prompt Harness** — asserts that the initial prompts of all spawned agents run through a controlled harness with a guaranteed minimum quality floor — deterministic, driven by the LLM through the CLI, with room for necessary additions — across both cases (PRD homogeneous, research heterogeneous). It is the application side of the requirements goal and is kept **separate** from it; the only coupling is the injection placeholder.
+- **Measured in a fresh context.** Like every goal ([31-goals.md](./31-goals.md)), this goal is scored against real state in a fresh context, never in the session that built the wiring. A green report is not evidence that the bottleneck is actually the default path; the fresh-context reader inspects whether the composed path is genuinely used.
 
 ---
 
@@ -3243,7 +3243,7 @@ Because the generator is both a lever and a single point of failure, it MUST be 
 - [23-requirements.md](./23-requirements.md) — the requirements layer whose application side is prompt governance (the injection chain).
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the phase plan that is the source for one composed prompt per PRD (Case B).
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the agents whose deterministic initial prompt the generator produces.
-- [31-goals.md](./31-goals.md) — the goal primitive; G011 is the goal that measures this mechanism in a fresh context.
+- [31-goals.md](./31-goals.md) — the goal primitive; the prompt-governance goal measures this mechanism in a fresh context.
 - [30-primitives.md](./30-primitives.md) — the central glossary the prompt-governance vocabulary ties back to.
 
 ---
@@ -3393,11 +3393,11 @@ The legacy markdown parser locates options by scanning for an inline marker (`([
 
 Questions MUST be authored as a **`questions-json` block** (the block's syntax and field schema are defined in [07-revisions-and-questions.md](./07-revisions-and-questions.md)). In that block, options are **JSON objects**, never recovered by an inline marker scan, so the phantom-trap is **structurally eliminated** rather than mitigated. When the block is present it is **authoritative** (07's authority rule); this chapter elevates that from "authoritative when present" to **required for questions** — the deterministic block is the canonical way to pose a question.
 
-### Interplay with MEMO-025
+### Interplay with the Question-Count Gate
 
-The lint gate **MEMO-025** counts the `### F{N}` markdown headings in a memo and compares that count to the number of questions in the `questions-json` block; a mismatch is a violation. The two channels MUST therefore stay in **1:1 correspondence** — a question present in one MUST be present in the other, so the counts are equal.
+The **question-count lint gate** counts the `### F{N}` markdown headings in a memo and compares that count to the number of questions in the `questions-json` block; a mismatch is a violation. The two channels MUST therefore stay in **1:1 correspondence** — a question present in one MUST be present in the other, so the counts are equal.
 
-The recurring failure is **asymmetry**: a json block carrying only the still-open questions while every answered question keeps its `### F{N}` heading — the heading count then exceeds the json count and MEMO-025 fires. Two ways to stay symmetric:
+The recurring failure is **asymmetry**: a json block carrying only the still-open questions while every answered question keeps its `### F{N}` heading — the heading count then exceeds the json count and the gate fires. Two ways to stay symmetric:
 
 - **Mirror** every question in both the `questions-json` block and as a `### F{N}` heading (equal counts; json authoritative, markdown the human-readable mirror); or
 - **Drop from both** — a question moved to a non-`### F{N}` prose form (e.g. a fully answered question summarized in prose) is also removed from the json block, so neither count includes it.
@@ -3440,7 +3440,7 @@ When a set of like items reaches **five or more entries**, present it as a **Mar
 
 ### Generate at Eight or More — the Data Payload
 
-When the set reaches **eight or more entries**, stop hand-typing the table. Instead, author the data **once as a structured payload** and render the table **from a script**, following the established pattern (prior art: Memo 031's `generate-tables.py`):
+When the set reaches **eight or more entries**, stop hand-typing the table. Instead, author the data **once as a structured payload** and render the table **from a script**, following the established pattern (a generator script that renders the table from a JSON dataset):
 
 - The data lives as a **JSON dataset** in the memo's `context/` folder — one record per item, with named fields.
 - A small **script** loads the JSON and renders the Markdown table deterministically, writing an output file that carries a header stating it is generated and **must not be hand-edited — the JSON is the source**.
@@ -3453,7 +3453,7 @@ Two properties make this worth the small upfront cost. First, **determinism**: a
 Diagrams are **first-class memo content**, not a special case. The viewer renders **every** fenced `mermaid` block to an SVG and **every** fenced `vega-lite` block to a chart — the dispatch is per code block, so there is no single fixed diagram slot. This capability is easy to under-use: a memo may carry **several diagrams, distributed** through the document, each placed next to the chapter it illustrates, rather than one diagram at a fixed position.
 
 - **Mermaid** for structure and flow — the relationships between strands, the shape of a process, a state machine. The canonical interaction diagram in [21-human-computer-interaction.md](./21-human-computer-interaction.md) is the reference for style.
-- **Vega-Lite** for quantitative and statistical charts — a fenced `vega-lite` block whose body is a Vega-Lite JSON spec (added in Memo 020). Use it when the point is a measurement, not a relationship.
+- **Vega-Lite** for quantitative and statistical charts — a fenced `vega-lite` block whose body is a Vega-Lite JSON spec. Use it when the point is a measurement, not a relationship.
 
 **Portrait is mandatory.** Diagrams MUST be authored **portrait** — Mermaid flowcharts use `flowchart TD` (top-down), never landscape (`flowchart LR`) — so they fit the viewer's narrow reading column without horizontal scrolling. A wide left-to-right diagram is a defect, not a stylistic choice. When a graph is genuinely too wide, split it into several stacked top-down diagrams rather than turning it on its side.
 

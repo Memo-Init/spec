@@ -24,7 +24,7 @@ When a set of like items reaches **five or more entries**, present it as a **Mar
 
 ### Generate at Eight or More — the Data Payload
 
-When the set reaches **eight or more entries**, stop hand-typing the table. Instead, author the data **once as a structured payload** and render the table **from a script**, following the established pattern (prior art: Memo 031's `generate-tables.py`):
+When the set reaches **eight or more entries**, stop hand-typing the table. Instead, author the data **once as a structured payload** and render the table **from a script**, following the established pattern (a generator script that renders the table from a JSON dataset):
 
 - The data lives as a **JSON dataset** in the memo's `context/` folder — one record per item, with named fields.
 - A small **script** loads the JSON and renders the Markdown table deterministically, writing an output file that carries a header stating it is generated and **must not be hand-edited — the JSON is the source**.
@@ -37,7 +37,7 @@ Two properties make this worth the small upfront cost. First, **determinism**: a
 Diagrams are **first-class memo content**, not a special case. The viewer renders **every** fenced `mermaid` block to an SVG and **every** fenced `vega-lite` block to a chart — the dispatch is per code block, so there is no single fixed diagram slot. This capability is easy to under-use: a memo may carry **several diagrams, distributed** through the document, each placed next to the chapter it illustrates, rather than one diagram at a fixed position.
 
 - **Mermaid** for structure and flow — the relationships between strands, the shape of a process, a state machine. The canonical interaction diagram in [21-human-computer-interaction.md](./21-human-computer-interaction.md) is the reference for style.
-- **Vega-Lite** for quantitative and statistical charts — a fenced `vega-lite` block whose body is a Vega-Lite JSON spec (added in Memo 020). Use it when the point is a measurement, not a relationship.
+- **Vega-Lite** for quantitative and statistical charts — a fenced `vega-lite` block whose body is a Vega-Lite JSON spec. Use it when the point is a measurement, not a relationship.
 
 **Portrait is mandatory.** Diagrams MUST be authored **portrait** — Mermaid flowcharts use `flowchart TD` (top-down), never landscape (`flowchart LR`) — so they fit the viewer's narrow reading column without horizontal scrolling. A wide left-to-right diagram is a defect, not a stylistic choice. When a graph is genuinely too wide, split it into several stacked top-down diagrams rather than turning it on its side.
 

@@ -6,7 +6,7 @@ spec_file: "32-prompt-governance.md"
 order: 32
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T17:29:32.822Z"
 generated_from: "spec/v0.1.0/32-prompt-governance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/32-prompt-governance.md."
@@ -64,12 +64,12 @@ Memos differ sharply, and each PRD needs exactly its own documents. Governance t
 
 ---
 
-## Governance: Goal G011
+## Governance: the Prompt-Governance Goal
 
 Because the generator is both a lever and a single point of failure, it MUST be measured, not assumed.
 
-- **A goal that names the mechanism.** Goal **G011 — Prompt Governance / Initial-Prompt Harness** asserts that the initial prompts of all spawned agents run through a controlled harness with a guaranteed minimum quality floor — deterministic, driven by the LLM through the CLI, with room for necessary additions — across both cases (PRD homogeneous, research heterogeneous). G011 is the application side of the requirements goal (G003) and is kept **separate** from it; the only coupling is the injection placeholder.
-- **Measured in a fresh context.** Like every goal ([31-goals.md](/specification/goals/)), G011 is scored against real state in a fresh context, never in the session that built the wiring. A green report is not evidence that the bottleneck is actually the default path; the fresh-context reader inspects whether the composed path is genuinely used.
+- **A goal that names the mechanism.** A goal — **Prompt Governance / Initial-Prompt Harness** — asserts that the initial prompts of all spawned agents run through a controlled harness with a guaranteed minimum quality floor — deterministic, driven by the LLM through the CLI, with room for necessary additions — across both cases (PRD homogeneous, research heterogeneous). It is the application side of the requirements goal and is kept **separate** from it; the only coupling is the injection placeholder.
+- **Measured in a fresh context.** Like every goal ([31-goals.md](/specification/goals/)), this goal is scored against real state in a fresh context, never in the session that built the wiring. A green report is not evidence that the bottleneck is actually the default path; the fresh-context reader inspects whether the composed path is genuinely used.
 
 ---
 
@@ -79,5 +79,5 @@ Because the generator is both a lever and a single point of failure, it MUST be 
 - [23-requirements.md](/specification/requirements/) — the requirements layer whose application side is prompt governance (the injection chain).
 - [08-phases-and-prds.md](/specification/phases-and-prds/) — the phase plan that is the source for one composed prompt per PRD (Case B).
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the agents whose deterministic initial prompt the generator produces.
-- [31-goals.md](/specification/goals/) — the goal primitive; G011 is the goal that measures this mechanism in a fresh context.
+- [31-goals.md](/specification/goals/) — the goal primitive; the prompt-governance goal measures this mechanism in a fresh context.
 - [30-primitives.md](/specification/primitives/) — the central glossary the prompt-governance vocabulary ties back to.

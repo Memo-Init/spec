@@ -6,7 +6,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T17:29:32.822Z"
 generated_from: "spec/v0.1.0/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/34-question-interface.md."
@@ -73,11 +73,11 @@ The legacy markdown parser locates options by scanning for an inline marker (`([
 
 Questions MUST be authored as a **`questions-json` block** (the block's syntax and field schema are defined in [07-revisions-and-questions.md](/specification/revisions-and-questions/)). In that block, options are **JSON objects**, never recovered by an inline marker scan, so the phantom-trap is **structurally eliminated** rather than mitigated. When the block is present it is **authoritative** (07's authority rule); this chapter elevates that from "authoritative when present" to **required for questions** — the deterministic block is the canonical way to pose a question.
 
-### Interplay with MEMO-025
+### Interplay with the Question-Count Gate
 
-The lint gate **MEMO-025** counts the `### F{N}` markdown headings in a memo and compares that count to the number of questions in the `questions-json` block; a mismatch is a violation. The two channels MUST therefore stay in **1:1 correspondence** — a question present in one MUST be present in the other, so the counts are equal.
+The **question-count lint gate** counts the `### F{N}` markdown headings in a memo and compares that count to the number of questions in the `questions-json` block; a mismatch is a violation. The two channels MUST therefore stay in **1:1 correspondence** — a question present in one MUST be present in the other, so the counts are equal.
 
-The recurring failure is **asymmetry**: a json block carrying only the still-open questions while every answered question keeps its `### F{N}` heading — the heading count then exceeds the json count and MEMO-025 fires. Two ways to stay symmetric:
+The recurring failure is **asymmetry**: a json block carrying only the still-open questions while every answered question keeps its `### F{N}` heading — the heading count then exceeds the json count and the gate fires. Two ways to stay symmetric:
 
 - **Mirror** every question in both the `questions-json` block and as a `### F{N}` heading (equal counts; json authoritative, markdown the human-readable mirror); or
 - **Drop from both** — a question moved to a non-`### F{N}` prose form (e.g. a fully answered question summarized in prose) is also removed from the json block, so neither count includes it.
