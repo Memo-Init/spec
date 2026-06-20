@@ -64,3 +64,4 @@ The practical effect is that hours of dictated reasoning, half-formed decisions,
 - [12-rollout.md](./12-rollout.md) — the `rollout/` folder and the lessons-learned file.
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the security gate at the one exit point.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the memo, revision, and block primitives summarized.
+- [35-memo-authoring.md](./35-memo-authoring.md) — how a memo's content is authored well: tables, generated data payloads, conventions.

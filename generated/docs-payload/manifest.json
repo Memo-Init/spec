@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-20T12:03:14.276Z",
+    "generated_at": "2026-06-20T12:05:58.019Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -352,6 +352,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "behavior"
+        },
+        {
+            "filename": "35-memo-authoring.md",
+            "slug": "memo-authoring",
+            "title": "Memo Authoring",
+            "description": "Where [06-memo-structure.md](./06-memo-structure.md) defines the on-disk shape of a memo, this chapter defines how a memo is **written well**: what a memo is from the author's vantage, and the...",
+            "order": 35,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "input"
         }
     ],
     "workbench": {
@@ -399,10 +409,10 @@
         ]
     },
     "stats": {
-        "total_files": 39,
-        "core_files": 35,
+        "total_files": 40,
+        "core_files": 36,
         "workbench_files": 4,
-        "normative_files": 36,
+        "normative_files": 37,
         "informative_files": 3
     }
 }

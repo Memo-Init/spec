@@ -6,7 +6,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-19T12:17:08.126Z"
+generated_at: "2026-06-20T12:05:57.410Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
@@ -71,3 +71,4 @@ The practical effect is that hours of dictated reasoning, half-formed decisions,
 - [12-rollout.md](/specification/rollout/) — the `rollout/` folder and the lessons-learned file.
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the security gate at the one exit point.
 - [30-primitives.md](/specification/primitives/) — central glossary and concept map; the memo, revision, and block primitives summarized.
+- [35-memo-authoring.md](/specification/memo-authoring/) — how a memo's content is authored well: tables, generated data payloads, conventions.
