@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-20T12:43:33.792Z",
+    "generated_at": "2026-06-20T17:41:23.317Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -266,8 +266,8 @@
         {
             "filename": "26-memo-history.md",
             "slug": "memo-history",
-            "title": "Memo History",
-            "description": "Memos in a project do not stand alone. They accumulate into a **cumulative timeline**: memo 0 is followed by memo 1, then memo 2, and so on, and read in order they tell the story of how a project...",
+            "title": "Chronicle (Memo History)",
+            "description": "The **chronicle** is the project's timeline and its single entry point. Memos do not stand alone: they accumulate into a cumulative sequence — memo 0 is followed by memo 1, then memo 2, and so on —...",
             "order": 26,
             "section": "Specification",
             "normative": true,

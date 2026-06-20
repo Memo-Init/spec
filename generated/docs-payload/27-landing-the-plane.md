@@ -6,7 +6,7 @@ spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T17:41:22.408Z"
 generated_from: "spec/v0.1.0/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/27-landing-the-plane.md."
@@ -47,7 +47,7 @@ Landing is complete when these items hold:
 - **L3** — Commits are prepared and presented, but **never committed by the system**. The changes are staged and described so the pilot can commit them, but the act of committing stays with the pilot.
 - **L4** — Open ends are named. Deferred items, blocker resolutions, and needs-review remnants appear in the OPEN ENDS section; nothing finished-but-unstated is left implicit.
 - **L5** — The end-state is machine-readable. The `landing-readiness.json` marker is written so the landing can be consumed without reading prose.
-- **L7** — Exactly one narrated ChroniC entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The existing L1-L5 points are unchanged; the ChroniC point is L7 and the former L6 slot is deliberately left unassigned.
+- **L7** — Exactly one narrated chronicle entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The existing L1-L5 points are unchanged; the chronicle point is L7 and the former L6 slot is deliberately left unassigned.
 
 ---
 

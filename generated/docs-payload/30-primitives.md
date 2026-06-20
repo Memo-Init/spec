@@ -6,7 +6,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T12:43:33.617Z"
+generated_at: "2026-06-20T17:41:22.408Z"
 generated_from: "spec/v0.1.0/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/30-primitives.md."
@@ -164,7 +164,7 @@ flowchart TD
 
 ## Glossary
 
-A compact index of every primitive (and the two retained maturity concepts), each pointing at the detail chapter that owns it.
+A compact index of every primitive (and the retained maturity and cross-cutting concepts), each pointing at the detail chapter that owns it.
 
 | Term | Short definition | Detail chapter |
 |------|------------------|----------------|
@@ -180,6 +180,7 @@ A compact index of every primitive (and the two retained maturity concepts), eac
 | Tool | Descriptor in the recommended tools registry; reachability is a planning concern. | [24-tools-registry.md](/specification/tools-registry/) |
 | Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. | [25-strands.md](/specification/strands/) |
 | Smart-Zone | The ~1/4-context band where attention has not yet degraded; the target for a PRD. | [08-phases-and-prds.md](/specification/phases-and-prds/) |
+| Chronicle | The narrated, append-only timeline of memos with breakpoints; the project's entry point. Not a primitive — a cross-cutting view. | [26-memo-history.md](/specification/memo-history/) |
 | context rot | Quality decay of LLM output as input length grows (the cause). | [09-contamination-context-handover.md](/specification/contamination-context-handover/) |
 | contamination | A document written out of a rotten context (the effect). | [09-contamination-context-handover.md](/specification/contamination-context-handover/) |
 

@@ -157,7 +157,7 @@ flowchart TD
 
 ## Glossary
 
-A compact index of every primitive (and the two retained maturity concepts), each pointing at the detail chapter that owns it.
+A compact index of every primitive (and the retained maturity and cross-cutting concepts), each pointing at the detail chapter that owns it.
 
 | Term | Short definition | Detail chapter |
 |------|------------------|----------------|
@@ -173,6 +173,7 @@ A compact index of every primitive (and the two retained maturity concepts), eac
 | Tool | Descriptor in the recommended tools registry; reachability is a planning concern. | [24-tools-registry.md](./24-tools-registry.md) |
 | Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. | [25-strands.md](./25-strands.md) |
 | Smart-Zone | The ~1/4-context band where attention has not yet degraded; the target for a PRD. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
+| Chronicle | The narrated, append-only timeline of memos with breakpoints; the project's entry point. Not a primitive — a cross-cutting view. | [26-memo-history.md](./26-memo-history.md) |
 | context rot | Quality decay of LLM output as input length grows (the cause). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
 | contamination | A document written out of a rotten context (the effect). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
 

@@ -75,11 +75,11 @@ Goal progress is read alongside the **friction** the work encountered, because r
 
 ---
 
-## Goal vs ChroniC
+## Goal vs Chronicle
 
-A goal and the chronicle ([13-orchestration.md](./13-orchestration.md)) are **complementary**, and must not be confused.
+A goal and the chronicle ([26-memo-history.md](./26-memo-history.md)) are **complementary**, and must not be confused.
 
-- **ChroniC narrates; it does not grade.** The chronicle tells the story of what happened, in order, including the friction and the reversals — honestly, never flattering, and explicitly **not** a score.
+- **The chronicle narrates; it does not grade.** The chronicle tells the story of what happened, in order, including the friction and the reversals — honestly, never flattering, and explicitly **not** a score.
 - **A goal measures.** A goal carries the metric: how far the intent is met, at real state, in a fresh context.
 - Read together, the chronicle says *what we did and where we turned*, and the goal says *how far that got us toward the intent*. Neither substitutes for the other.
 - **The chronicle is the mandatory run-up to goal derivation — but not an auto-pipeline.** Deriving goals from the project's own history reads the chronicle first: its order, its breakpoints, and its thematic clusters surface themes that dozens of isolated memo folders hide, so no theme is swallowed. The chronicle is therefore a **required pre-step** of goal derivation, **not** a deterministic auto-pipeline — the human/LLM clustering decision stays the core of it. This anchor only holds when the chronicle is **reliably complete**, which is why it leans on the chronicle's WARN-only topic-coverage check ([13-orchestration.md](./13-orchestration.md)): a chronicle entry that omits a memo's registered topics is flagged so the run-up can be trusted.
