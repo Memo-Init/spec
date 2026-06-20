@@ -6,7 +6,7 @@ spec_file: "10-proactive-research.md"
 order: 10
 section: "Specification"
 normative: true
-generated_at: "2026-06-19T12:17:08.126Z"
+generated_at: "2026-06-20T12:43:33.617Z"
 generated_from: "spec/v0.1.0/10-proactive-research.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/10-proactive-research.md."
