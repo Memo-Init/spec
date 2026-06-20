@@ -4,9 +4,9 @@
 |-------|-------|
 | Status | Draft |
 | Depends on | [26-memo-history.md](./26-memo-history.md), [00-overview.md](./00-overview.md) |
-| Related | [30-primitives.md](./30-primitives.md), [13-orchestration.md](./13-orchestration.md), [06-memo-structure.md](./06-memo-structure.md) |
+| Related | [30-primitives.md](./30-primitives.md), [13-orchestration.md](./13-orchestration.md), [06-memo-structure.md](./06-memo-structure.md), [26-memo-history.md](./26-memo-history.md), [33-maintenance.md](./33-maintenance.md) |
 
-A **goal** is the triggering **intent** behind work — the feature or outcome that several memos serve — and it is the only primitive that sits *above* a single memo (see [30-primitives.md](./30-primitives.md)). Where a memo is the highest authority over its own rollout, a goal expresses an intent that persists across the memo sequence and outlives any one memo. A goal is defined by the intent it pursues, not by the surface it happens to touch: "a website" is a surface, "the project has a current public presence online" is the intent. Because the intent cross-cuts repos and memos, a goal is the natural unit at which to ask the honest question a single PASS-report cannot answer: *how far along is this, really?*
+A **goal** is the triggering **intent** behind work — the feature or outcome that several memos serve — and it is the only primitive that sits *above* a single memo (see [30-primitives.md](./30-primitives.md)). Where a memo is the highest authority over its own rollout, a goal expresses an intent that persists across the memo sequence and outlives any one memo. A goal is defined by the intent it pursues, not by the surface it happens to touch: "a website" is a surface, "the project has a current public presence online" is the intent. Because the intent cross-cuts repos and memos, a goal is the natural unit at which to ask the honest question a single PASS-report cannot answer: *how far along is this, really?* A goal is the **forward** pole — the bow that splits the water; its backward twin is maintenance, the stern that trails delivered work (see [33-maintenance.md](./33-maintenance.md)). Both are derived from the same chronicle, sorted by the NEW/DRIFT triage.
 
 ---
 
