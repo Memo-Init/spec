@@ -186,7 +186,7 @@ For that reason, **questions are essential**, and the developer holds the ultima
 
 The two touchpoints where the developer meets the system — input at the start, and feedback/finalization during the revision loop — are kept deliberately **minimal but high-value**. Minimal contact, maximally important: each touch is a small surface that is optimized to carry as much decision weight as possible, so the developer's limited attention lands where it changes the outcome. The interaction model that fixes these two touchpoints in detail is described in [21-human-computer-interaction.md](./21-human-computer-interaction.md).
 
-Over time the agent can pre-think **more** — anticipating decisions, narrowing options, learning the developer's preferences through the user mental model it carries forward (see [21-human-computer-interaction.md](./21-human-computer-interaction.md)). Pre-thinking more does not abolish questions; it raises their quality. There are always questions left, because there are always valid paths whose choice belongs to the developer. The goal is not to remove the questions but to make each one worth answering.
+Over time the agent can pre-think **more** — anticipating decisions, narrowing options, learning the developer's preferences through the user mental model it carries forward (see [41-mental-model.md](./41-mental-model.md)). Pre-thinking more does not abolish questions; it raises their quality. There are always questions left, because there are always valid paths whose choice belongs to the developer. The goal is not to remove the questions but to make each one worth answering.
 
 ---
 
@@ -3780,6 +3780,21 @@ Questions reach the user through two channels, and **both carry the same discipl
 
 Whichever channel is used, each option is scored, the score is communicated, the recommendation comes from the holistic view, and every question still offers a "keep working" option (guardrail C2, [29-behavioral-guardrails.md](./29-behavioral-guardrails.md)). The channel is a delivery detail; the reasoning discipline is invariant across it.
 
+## The Mental Model Biases the Recommendation
+
+The recommendation a question carries is not formed in a vacuum: it is **biased by the User Mental Model** (see [41-mental-model.md](./41-mental-model.md)), the project-global portrait of how the developer tends to decide across the memo sequence. When an option set maps onto a known decision axis — minimal-first versus complete, work-in versus defer, sober versus narrative — the agent's recommendation tilts toward the developer's learned leaning, so the recommended option is more often the one the developer would have chosen anyway. This is the whole point of carrying a mental model forward: better recommendations, fewer rounds.
+
+The coupling is strictly **advisory**. The mental model **does not enable auto-answering**. Knowing a tendency is not knowing the answer to *this* question, and the developer's right of decision is not delegable. A biased recommendation is still a recommendation attached to a question the developer answers; the questions stay essential and the developer decides. The model raises the quality of the recommendation; it never closes the question on the developer's behalf.
+
+## AI-on-Behalf and the Answer-Split
+
+The answered-questions record a memo carries is not a single undifferentiated list. It is **split by who answered**:
+
+- **Answered by the developer** — the questions the developer decided directly. These are the canonical decision record, and the source the mental model is later derived from.
+- **Answered by the AI on the developer's behalf** — questions the agent pre-answered, recorded explicitly as such so the provenance of each decision stays visible. An on-behalf answer is never disguised as a developer answer; the split is what keeps the record honest.
+
+The agent MAY pre-answer on the developer's behalf **only above a high confidence bar** — the finalize guard. The bar exists because pre-answering is a delegation of the developer's decision right, and that delegation is only safe when the agent is highly confident the developer would have decided the same way (most often because a mental-model axis points strongly and consistently in one direction). **Below the bar, the question is not pre-answered — it is surfaced to the developer** as an open question. There is no silent middle ground: either the confidence clears the finalize guard and the on-behalf answer is recorded as on-behalf, or the question is shown. This is the mechanism that lets the agent pre-think more without ever quietly taking a decision that was the developer's to make.
+
 ## The Deterministic Question Format
 
 The memo-question channel rendered incorrectly often enough to be a recurring defect, and the fix is to make the format deterministic rather than to keep patching a fragile parser.
@@ -3827,6 +3842,7 @@ Either way the invariant holds: `count(### F{N} headings) == count(questions in 
 - [21-human-computer-interaction.md](./21-human-computer-interaction.md) — where the user interacts with questions in the viewer; the canonical interaction model.
 - [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) — C2 (every question keeps a "keep working" option), C6 (verification before "done"), C7 (deferral is the user's decision); the hard guards the axes never override.
 - [31-goals.md](./31-goals.md) — the holistic, intent-level view the recommendation is made from.
+- [41-mental-model.md](./41-mental-model.md) — the User Mental Model that biases each recommendation (advisory, never a question-killer) and the source of the answered-by-developer record.
 - [05-memo-strategies.md](./05-memo-strategies.md) — the memo strategy the question interface drives.
 
 ---
@@ -4260,6 +4276,96 @@ A few orientation and scope conventions hold:
 - [21-human-computer-interaction.md](./21-human-computer-interaction.md) — the canonical interaction diagram, a worked reference for Mermaid style.
 - [06-memo-structure.md](./06-memo-structure.md) — the `media/` folder where exported or generated assets live.
 - [00-overview.md](./00-overview.md) — conformance language and the Informative/Normative marking.
+
+---
+
+# 41. User Mental Model
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [21-human-computer-interaction.md](./21-human-computer-interaction.md), [34-question-interface.md](./34-question-interface.md) |
+| Related | [31-goals.md](./31-goals.md), [12-rollout.md](./12-rollout.md), [33-maintenance.md](./33-maintenance.md), [00-overview.md](./00-overview.md) |
+
+The **User Mental Model** is a project-global primitive that records *where the developer tends to go inside decision spaces* — learned not from any single memo but accumulated across the whole memo sequence. Every finalized memo carries an answered-questions section that pairs, per question, the agent's recommendation against the developer's actual decision. Read across many memos, those pairs reveal stable tendencies: a leaning toward the minimal solution first or toward the complete one, a habit of working deferred scope into the current memo rather than spinning out a follow-up, a preference for sober prose over narrative. The mental model is the distilled portrait of those leanings. It is the structural **mirror of the goal store** ([31-goals.md](./31-goals.md)): where a goal sits *above* a single memo to measure an intent across the sequence, the mental model sits *above* a single memo to measure a *preference* across the sequence. Both are project-global, both are derived from the project's own accumulated history, and both exist to make the agent's future judgement sharper than a single memo's context could.
+
+---
+
+## What the Mental Model Is
+
+The mental model answers a question no single memo can: *which way does this developer usually decide when the agent offers a choice?*
+
+- **A preference portrait, not a transcript.** It is not a log of every answer; it is the distilled tendency that emerges once dozens of recommendation-versus-decision pairs are read together. One disagreement is noise; a repeated pattern is a tendency.
+- **Learned from answered questions.** The source is each finalized memo's answered-questions record — specifically the pair of *what the agent recommended* and *what the developer actually decided*. Where the two diverge consistently, an axis is born.
+- **Project-global, single profile.** Unlike a goal (one entry per intent), the mental model is a **single** profile for the whole project, because there is one developer whose taste the project is learning. The store holds exactly one snapshot, replaced whole on each derivation rather than appended to.
+- **Advisory, never authoritative.** The model biases the agent's recommendation; it never makes a decision. It is an input to the agent's reasoning, not a substitute for the developer's.
+
+---
+
+## The Profile Schema
+
+The whole mental model lives in a single `profile.json` under `.memo/mental-model/`. It has four parts:
+
+- **`axes`** — the decision tendencies, each `{ key, tendency, confidence, evidence[] }`. The `key` names the decision space (for example a minimal-versus-complete axis); `tendency` is a short reading of which way the developer leans; `confidence` is `low | medium | high`; and `evidence` lists the concrete answered-question pointers that support the reading.
+- **`extremes`** — flagged absolute opinions, each `{ topic, note, evidence }`. These are the strongly-held, non-negotiable positions, captured separately because they carry a special signal (below).
+- **`derivedFrom`** — the list of memo numbers the derivation walked, in the order it read them (newest first). This is what makes staleness countable: it records exactly how far back the current portrait sees.
+- **`lastDerivation`** — the timestamp of the snapshot, or null when no derivation has run yet.
+
+A fresh project with no derivation renders a clear "nothing learned yet" rather than an error: an absent profile is a normal early state, not a fault.
+
+---
+
+## Derivation Runs in a Fresh Context
+
+The derivation — reading the answered-question pairs and distilling axes — is a **fresh-context judgement**, never the working session. This is the same discipline goal scoring follows: a session that did the work is biased about it, so an unbiased reader, starting from an empty context, walks the finalized memos chronologically (newest back toward oldest) and reads each one's answered-questions section.
+
+The store itself is **deterministic and does nothing clever**. It does not compute the derivation; it only **persists a finished one** and reads it back. The split is deliberate:
+
+- **`derive`** records a finished fresh-context derivation, replacing the single profile (a derivation is a fresh snapshot, not an append).
+- **`show`** renders the persisted profile — an axes table, the extreme-opinion list, and a summary line — and is read-only.
+
+Keeping the judgement in the skill and the persistence in the store means the store is testable and total, while the genuinely hard part — reading taste out of history — stays where fresh context can be guaranteed.
+
+---
+
+## The Advisory Contract
+
+The mental model **sharpens the agent's recommendation; it never replaces a question.** This is its single most important boundary.
+
+- **It biases, it does not answer.** When the agent forms a recommendation for a question, the relevant axis tilts that recommendation toward the developer's known leaning — so the recommended option is more often the one the developer would have picked anyway. That is the whole value: better recommendations, fewer rounds.
+- **Questions stay essential.** The model is **never a question-killer**. Knowing a tendency is not the same as knowing the answer to *this* question, and the developer's right of decision is not delegable (see [34-question-interface.md](./34-question-interface.md) and [21-human-computer-interaction.md](./21-human-computer-interaction.md)). Pre-thinking more raises the *quality* of questions; it never removes them.
+- **It never auto-answers silently.** The model may inform how the agent pre-thinks, but it must not flip a decision on the developer's behalf without that being visible and bounded. Pre-answering on the developer's behalf is governed separately and only above a high confidence bar (see [34-question-interface.md](./34-question-interface.md)); below that bar the question is surfaced.
+
+---
+
+## The Extreme-Opinion Flag
+
+Some opinions are recorded not as a gentle tendency but as an **absolute**: a position the developer holds without compromise. These are flagged separately, because an absolute opinion carries a diagnostic signal that a soft tendency does not.
+
+When a developer holds an unusually hard line on something, the most useful reading is often **not** "the developer is being unreasonable" but "**the system itself is probably off**" — a misconfigured environment, a broken git habit, a tool that keeps doing the wrong thing, a default that fights the workflow. An extreme opinion is therefore treated as a pointer at the system's own rough edges (git / env / config) rather than as a personality quirk to be worked around. Captured this way, the flag turns a recurring frustration into an actionable maintenance hint instead of a stalemate.
+
+---
+
+## Staleness and the Freshness Cockpit
+
+The mental model is only as good as how far back it has read. It goes **stale** when its newest derived-from memo number falls behind the newest memo in the project — that is, when memos have been finalized since the last derivation, so the current portrait no longer reflects the most recent decisions.
+
+This staleness is a **counting signal**, not a guess: compare the highest memo number in `derivedFrom` against the highest memo number in the project, and the gap is the staleness. Because it is countable, it belongs on the project's freshness cockpit — the `memo health` projection (see [12-rollout.md](./12-rollout.md)) — which surfaces the mental model as one of its counting freshness signals, alongside the other things that drift behind the project's leading edge. When the gap is wide enough, the cockpit **recommends a re-derivation**; it never runs one silently. As with goal optimization and maintenance re-verification, the developer triggers the act — the system surfaces the need and waits.
+
+`memo health` therefore carries the mental model as one freshness signal among several: a single counting check that says *the learned preference portrait is N memos behind the project*, so the developer can decide whether a refresh is worth it now.
+
+---
+
+## Related
+
+- [21-human-computer-interaction.md](./21-human-computer-interaction.md) — the two developer touchpoints and the canonical interaction model the mental model learns from and serves.
+- [34-question-interface.md](./34-question-interface.md) — where the mental model biases each recommendation, and the answer-split / on-behalf contract that bounds pre-answering.
+- [31-goals.md](./31-goals.md) — the goal store, the structural mirror of the mental model (intent above a memo versus preference above a memo).
+- [12-rollout.md](./12-rollout.md) — the freshness cockpit (`memo health`) that surfaces the mental model's staleness as a counting signal.
+- [33-maintenance.md](./33-maintenance.md) — the backward-view measuring discipline whose freshness reading the cockpit shares.
+- [00-overview.md](./00-overview.md) — mission and authority model (the developer holds the right of decision the mental model never displaces).
+</content>
+</invoke>
 
 ========================================
 # Workbench Sub-Spec

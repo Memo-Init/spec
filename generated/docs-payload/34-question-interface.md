@@ -6,7 +6,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T17:45:05.095Z"
+generated_at: "2026-06-22T20:16:19.797Z"
 generated_from: "spec/v0.1.0/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/34-question-interface.md."
@@ -61,6 +61,21 @@ Questions reach the user through two channels, and **both carry the same discipl
 
 Whichever channel is used, each option is scored, the score is communicated, the recommendation comes from the holistic view, and every question still offers a "keep working" option (guardrail C2, [29-behavioral-guardrails.md](/specification/behavioral-guardrails/)). The channel is a delivery detail; the reasoning discipline is invariant across it.
 
+## The Mental Model Biases the Recommendation
+
+The recommendation a question carries is not formed in a vacuum: it is **biased by the User Mental Model** (see [41-mental-model.md](/specification/mental-model/)), the project-global portrait of how the developer tends to decide across the memo sequence. When an option set maps onto a known decision axis — minimal-first versus complete, work-in versus defer, sober versus narrative — the agent's recommendation tilts toward the developer's learned leaning, so the recommended option is more often the one the developer would have chosen anyway. This is the whole point of carrying a mental model forward: better recommendations, fewer rounds.
+
+The coupling is strictly **advisory**. The mental model **does not enable auto-answering**. Knowing a tendency is not knowing the answer to *this* question, and the developer's right of decision is not delegable. A biased recommendation is still a recommendation attached to a question the developer answers; the questions stay essential and the developer decides. The model raises the quality of the recommendation; it never closes the question on the developer's behalf.
+
+## AI-on-Behalf and the Answer-Split
+
+The answered-questions record a memo carries is not a single undifferentiated list. It is **split by who answered**:
+
+- **Answered by the developer** — the questions the developer decided directly. These are the canonical decision record, and the source the mental model is later derived from.
+- **Answered by the AI on the developer's behalf** — questions the agent pre-answered, recorded explicitly as such so the provenance of each decision stays visible. An on-behalf answer is never disguised as a developer answer; the split is what keeps the record honest.
+
+The agent MAY pre-answer on the developer's behalf **only above a high confidence bar** — the finalize guard. The bar exists because pre-answering is a delegation of the developer's decision right, and that delegation is only safe when the agent is highly confident the developer would have decided the same way (most often because a mental-model axis points strongly and consistently in one direction). **Below the bar, the question is not pre-answered — it is surfaced to the developer** as an open question. There is no silent middle ground: either the confidence clears the finalize guard and the on-behalf answer is recorded as on-behalf, or the question is shown. This is the mechanism that lets the agent pre-think more without ever quietly taking a decision that was the developer's to make.
+
 ## The Deterministic Question Format
 
 The memo-question channel rendered incorrectly often enough to be a recurring defect, and the fix is to make the format deterministic rather than to keep patching a fragile parser.
@@ -108,4 +123,5 @@ Either way the invariant holds: `count(### F{N} headings) == count(questions in 
 - [21-human-computer-interaction.md](/specification/human-computer-interaction/) — where the user interacts with questions in the viewer; the canonical interaction model.
 - [29-behavioral-guardrails.md](/specification/behavioral-guardrails/) — C2 (every question keeps a "keep working" option), C6 (verification before "done"), C7 (deferral is the user's decision); the hard guards the axes never override.
 - [31-goals.md](/specification/goals/) — the holistic, intent-level view the recommendation is made from.
+- [41-mental-model.md](/specification/mental-model/) — the User Mental Model that biases each recommendation (advisory, never a question-killer) and the source of the answered-by-developer record.
 - [05-memo-strategies.md](/specification/memo-strategies/) — the memo strategy the question interface drives.
