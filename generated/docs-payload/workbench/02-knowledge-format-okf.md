@@ -6,7 +6,7 @@ spec_file: "02-knowledge-format-okf.md"
 order: 2
 section: "Workbench"
 normative: true
-generated_at: "2026-06-22T17:45:05.095Z"
+generated_at: "2026-06-22T20:42:59.547Z"
 generated_from: "spec/workbench/02-knowledge-format-okf.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/02-knowledge-format-okf.md."
