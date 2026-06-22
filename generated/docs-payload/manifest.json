@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-22T17:45:05.313Z",
+    "generated_at": "2026-06-22T20:16:20.318Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -241,7 +241,7 @@
             "order": 23,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "requirements"
+            "sidebar_group": "procedure"
         },
         {
             "filename": "24-tools-registry.md",
@@ -251,7 +251,7 @@
             "order": 24,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "tools"
+            "sidebar_group": "procedure"
         },
         {
             "filename": "25-strands.md",
@@ -271,7 +271,7 @@
             "order": 26,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "tools"
+            "sidebar_group": "health"
         },
         {
             "filename": "27-landing-the-plane.md",
@@ -321,7 +321,7 @@
             "order": 31,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "health"
         },
         {
             "filename": "32-prompt-governance.md",
@@ -341,7 +341,7 @@
             "order": 33,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "health"
         },
         {
             "filename": "34-question-interface.md",
@@ -412,6 +412,16 @@
             "section": "Specification",
             "normative": false,
             "sidebar_group": "foundations"
+        },
+        {
+            "filename": "41-mental-model.md",
+            "slug": "mental-model",
+            "title": "User Mental Model",
+            "description": "The **User Mental Model** is a project-global primitive that records *where the developer tends to go inside decision spaces* — learned not from any single memo but accumulated across the whole memo...",
+            "order": 41,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "health"
         }
     ],
     "workbench": {
@@ -479,10 +489,10 @@
         ]
     },
     "stats": {
-        "total_files": 47,
-        "core_files": 41,
+        "total_files": 48,
+        "core_files": 42,
         "workbench_files": 6,
-        "normative_files": 43,
+        "normative_files": 44,
         "informative_files": 4
     }
 }

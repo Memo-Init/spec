@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-06-22T17:45:05.095Z"
+generated_at: "2026-06-22T20:16:19.797Z"
 generated_from: "spec/v0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/01-philosophy.md."
@@ -85,7 +85,7 @@ For that reason, **questions are essential**, and the developer holds the ultima
 
 The two touchpoints where the developer meets the system — input at the start, and feedback/finalization during the revision loop — are kept deliberately **minimal but high-value**. Minimal contact, maximally important: each touch is a small surface that is optimized to carry as much decision weight as possible, so the developer's limited attention lands where it changes the outcome. The interaction model that fixes these two touchpoints in detail is described in [21-human-computer-interaction.md](/specification/human-computer-interaction/).
 
-Over time the agent can pre-think **more** — anticipating decisions, narrowing options, learning the developer's preferences through the user mental model it carries forward (see [21-human-computer-interaction.md](/specification/human-computer-interaction/)). Pre-thinking more does not abolish questions; it raises their quality. There are always questions left, because there are always valid paths whose choice belongs to the developer. The goal is not to remove the questions but to make each one worth answering.
+Over time the agent can pre-think **more** — anticipating decisions, narrowing options, learning the developer's preferences through the user mental model it carries forward (see [41-mental-model.md](/specification/mental-model/)). Pre-thinking more does not abolish questions; it raises their quality. There are always questions left, because there are always valid paths whose choice belongs to the developer. The goal is not to remove the questions but to make each one worth answering.
 
 ---
 

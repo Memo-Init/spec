@@ -68,8 +68,8 @@ const SIDEBAR_GROUP_BY_ORDER = {
     3: 'input', 4: 'input', 5: 'input', 6: 'input', 7: 'input',
     8: 'execution', 12: 'execution', 13: 'execution', 22: 'execution', 27: 'execution',
     10: 'finalization', 11: 'finalization',
-    23: 'requirements',
-    24: 'tools', 26: 'tools',
+    23: 'procedure', 24: 'procedure',
+    26: 'health', 31: 'health', 33: 'health', 41: 'health',
     9: 'behavior', 16: 'behavior', 17: 'behavior', 19: 'behavior', 21: 'behavior', 28: 'behavior', 29: 'behavior', 34: 'behavior',
     35: 'input', 36: 'execution',
     2: 'foundations', 18: 'foundations', 20: 'foundations', 25: 'foundations'
