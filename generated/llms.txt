@@ -178,6 +178,18 @@ The throughline is that the human invests effort up front, inside the guardrails
 
 ---
 
+## Questions Stay Essential
+
+The agent is very good at following instructions and executing them. That strength is exactly why the guardrails matter: within the guardrails there is rarely a single correct path. There are many valid ones, and the choice between them is a matter of taste and of the long-term view — the kind of judgement that only the developer, carrying the experience of the whole project, can supply. The agent can lay out the options and recommend one; it cannot own the decision that shapes where the project goes next.
+
+For that reason, **questions are essential**, and the developer holds the ultimate right of decision. The questions are not a sign that the agent is underpowered; they are the deliberate hinge where the developer's taste and long view enter the work.
+
+The two touchpoints where the developer meets the system — input at the start, and feedback/finalization during the revision loop — are kept deliberately **minimal but high-value**. Minimal contact, maximally important: each touch is a small surface that is optimized to carry as much decision weight as possible, so the developer's limited attention lands where it changes the outcome. The interaction model that fixes these two touchpoints in detail is described in [21-human-computer-interaction.md](./21-human-computer-interaction.md).
+
+Over time the agent can pre-think **more** — anticipating decisions, narrowing options, learning the developer's preferences through the user mental model it carries forward (see [21-human-computer-interaction.md](./21-human-computer-interaction.md)). Pre-thinking more does not abolish questions; it raises their quality. There are always questions left, because there are always valid paths whose choice belongs to the developer. The goal is not to remove the questions but to make each one worth answering.
+
+---
+
 ## Prioritization Is the Developer's Decision
 
 A direct consequence of the interaction model: the AI MUST NOT decide what is important. Prioritizing, down-ranking, or setting a threshold on the work order is the developer's exclusive responsibility. **Every item is equally important unless the developer says otherwise.** If a dictated transcript contains fifteen things, all fifteen are worked through, each one as important as the next. The AI MAY ask questions (asking is explicitly encouraged) and MAY raise essential technical objections, but it MUST NOT silently drop, down-rank, or unilaterally threshold any item.
@@ -196,6 +208,25 @@ The system does not chase "quick wins." Provider prompts tend to push quick wins
 ## Work It In Instead of Deferring
 
 Problems that surface during a run are **worked in** during the running phase, not exported into a follow-up memo. A follow-up memo is expensive: it costs the developer hours, forces the research to be redone from scratch, and adds revision rounds — turning a small button-color change into a phantom multi-day effort. Plans MAY be arbitrarily long; the AI MAY keep working a problem as long as needed and has the resources to do so. The hard limits are unchanged (no commits or pushes without approval); "work it in" never means "act outside the guardrails." Concerns that are not genuine blockers go into the rollout preface, not into a stop. See the rollout chapter for the preface/concern channel.
+
+---
+
+## The Metaplan — Packing the Train
+
+There are **no priorities** in the sense of a cheap tier and an expensive tier. Everything runs at the **same quality level**: there is no "cheap" memo and no "cheap" spec, only high quality. The system does not save effort by doing some work to a lower standard; that lever does not exist here.
+
+The genuinely scarce resource is **memo creation itself**, not the token price. A memo costs the developer's attention and a finalization cycle, and the developer dictates roughly two large memos a day. Tokens are comparatively abundant; a fresh memo is not. The economics of the system follow from that single fact: optimize for getting the most out of each memo, because the memos — not the tokens — are the bottleneck.
+
+The image is a **train that departs twice a day**. At each departure, the train should carry as much as is sensibly and safely possible: pack the topics that are ready into this departure rather than waiting for a later one. A memo-train should therefore carry **as many related topics as possible** — related topics worked through one after another in a controlled way produce network effects, because each topic informs and reinforces the others while the context is warm. A train that leaves half-empty wastes the scarce departure.
+
+The packing has bounds, and they are firm:
+
+- **Same project.** A train carries topics from one project; it does not mix projects into a single memo.
+- **The chronicle timeline must stay clean.** Memos are time documents — they are dated records that the maintenance, goals, and chronicle systems build on. Packing a train must never blur that timeline; the chronicle staying readable and correctly ordered is the big guardrail that bounds how much, and what, goes into one departure.
+
+Within those bounds the topic count is **at least three, with no upper cap**. The optimization is explicitly for **large, multi-topic inputs**: a single-topic memo is possible but is not the target case. The system is tuned for a developer who has thought through many related things at once and wants them packed into one well-ordered departure.
+
+The aim of all this is **moving forward** — innovation and shipped progress — not automation for its own sake. Packing the train densely is in service of pushing more worked-through topics out into the world per departure. The economics of front-loading the expensive research once and reusing it across the packed topics — the distillation economy that makes a densely packed train affordable — is described in [36-agent-research-strategies.md](./36-agent-research-strategies.md).
 
 ---
 
@@ -593,11 +624,12 @@ A memo directory contains a fixed set of sub-folders, each with a single respons
 | `revisions/` | The revision files `REV-XX.md` (zero-padded, two digits). The current memo content. |
 | `_topics/` | Per-memo research topics and their derived notes. |
 | `context/` | Memo-local context documents and linked source material. |
+| `media/` | Memo-local images and assets (screenshots, mockups, exported diagrams) referenced by the revisions. |
 | `transcripts/` | The dictated transcripts that fed the memo. |
 | `rollout/` | Rollout artifacts: state files for crash recovery and the standing lessons-learned file. |
 | `validation/` | Validation outputs produced during finalization and rollout. |
 
-A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. Revisions MUST NOT be edited in place; each change produces a new file (see [07-revisions-and-questions.md](./07-revisions-and-questions.md)).
+A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. Revisions MUST NOT be edited in place; each change produces a new file (see [07-revisions-and-questions.md](./07-revisions-and-questions.md)). Images and other assets live in `media/`, parallel to `context/`, and are referenced from a revision with a simple relative path (`![](media/screenshot-pencil-revision-2.png)`); filenames SHOULD be speaking (`media/screenshot-pencil-revision-2.png`, not `media/1.png`), and there is deliberately no revision-relative path scheme — one flat `media/` folder per memo keeps references trivial.
 
 ---
 
@@ -756,11 +788,20 @@ The revision number increments regardless of mode. An Update-Revision's preamble
 
 A revision MUST NOT be edited in place. Each change produces a new `REV-XX.md` file. In-place edits have caused data loss in practice; the append-only rule is a guardrail against it. The revision number is zero-padded and two digits.
 
+### Why Append-Only — Contaminated-Revision Rescue
+
+Append-only is not only a safeguard against accidental overwrites; it is the infrastructure that makes a contaminated revision **recoverable**. A revision is written from a context, and a context degrades as it fills ([09-contamination-context-handover.md](./09-contamination-context-handover.md)). If the state at, say, REV-6 or REV-7 turns out to be written out of a degraded context, the rescue path is concrete and only possible because every prior state still exists on disk: read **all** revisions in order, analyze what is contaminated and what is sound, and write a complete, clean **REV-8** from a fresh context. The full history of states is the raw material for that clean rewrite.
+
+A revision is **expensive** — it represents many tokens of reasoning. This is what makes a living-edit-of-a-single-file approach risky for this particular artifact. We respect that approach; it is a reasonable design in many settings, and the trade-off here is specific, not a verdict on it. The trade-off is this: when a single growing file is the only copy, a highly filled state (a file that has grown into the hundreds of thousands of tokens) is itself subject to context rot, and there is no earlier clean state to fall back to. On the private `.memo/` layer there is also no git history (the tree is structurally local and un-versioned, see [06-memo-structure.md](./06-memo-structure.md)), so an in-place corruption of that one file is total loss of **both** the memo and the tokens that went into it. Separate revision files give back exactly the fallback that git would otherwise provide.
+
+Context is also driven up **from the outside**, not only by the memo's own growth. A research pass that drives a browser (for example Playwright) or sweeps many sources pours external material into the working context and fills it faster than the prose alone would. That is a second, independent reason to commit a new state as a **new revision** rather than mutating the current file in place: the next clean state should start from a deliberate, readable snapshot, not from a file that has absorbed an unbounded amount of external context.
+
 ---
 
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — input processing that runs before each revision is generated.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — context rot and contamination; the fresh-context rewrite that append-only history makes possible.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the gate that requires the open-questions area to be empty.
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the authoring skills that implement the question format.
 - [34-question-interface.md](./34-question-interface.md) — the scoring discipline and the `questions-json` mandate that builds on this format.
@@ -994,6 +1035,8 @@ When work spans more than one session, or when a context is detected as full or 
 
 This rule is the structural reason evaluators are the first candidates to become repo-scoped agents with isolated context (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
 
+The append-only revision structure ([07-revisions-and-questions.md](./07-revisions-and-questions.md)) is what makes a fresh-context rewrite of a contaminated memo possible in practice. Because every prior `REV-XX.md` still exists on disk, a clean context can read the full history, separate the sound states from the contaminated ones, and author a complete clean revision — rather than being stranded with a single mutated file that carries the rot and has no earlier state to recover. Append-only is, in that sense, the rescue infrastructure for contamination.
+
 ---
 
 ## Memo Provenance — the Initiator field
@@ -1048,6 +1091,7 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 
 ## Related
 
+- [07-revisions-and-questions.md](./07-revisions-and-questions.md) — the append-only revision structure that is the rescue infrastructure for a contaminated memo.
 - [10-proactive-research.md](./10-proactive-research.md) — proactive research in early revisions, the natural producer of `context/` material the handover points at.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels (`[FACT]` … `[UNKNOWN]`) the handover zones reuse.
 - [13-orchestration.md](./13-orchestration.md) — state files, crash recovery, and the fresh-context evaluator that consumes the empty-context rule.
@@ -2336,6 +2380,8 @@ User interaction has exactly two points: **input** at the start, and **feedback/
 - **Feedback / finalization** — the user reads the presented Full revision in the viewer, gives further feedback (which loops back into a new revision), or answers open questions, and finally decides to finalize.
 
 Only **Full** revisions are presented to the user (see [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md)). Between the two interaction points, Claude works autonomously: input processing, research, revision generation, execution, and the auto-check.
+
+**Questions stay essential.** The two touchpoints are deliberately minimal but high-value: minimal contact, maximally important. They are the place where the developer's taste and long view enter the work, because within the guardrails there are usually many valid paths and the choice between them belongs to the developer. As the agent learns to pre-think more over time it raises the quality of the questions rather than abolishing them — there are always questions left, and the developer holds the ultimate right of decision. The positive stance behind this is set out in [01-philosophy.md](./01-philosophy.md).
 
 ---
 
@@ -3828,6 +3874,8 @@ Diagrams are **first-class memo content**, not a special case. The viewer render
 
 **Portrait is mandatory.** Diagrams MUST be authored **portrait** — Mermaid flowcharts use `flowchart TD` (top-down), never landscape (`flowchart LR`) — so they fit the viewer's narrow reading column without horizontal scrolling. A wide left-to-right diagram is a defect, not a stylistic choice. When a graph is genuinely too wide, split it into several stacked top-down diagrams rather than turning it on its side.
 
+For **which** diagram type to reach for — the leading "does a visual help a decision?" question and the intent→type matrix — see the diagram recommendations in [40-diagrams.md](./40-diagrams.md).
+
 ## Determinism and Spec-Chapter Conventions
 
 A thread runs through every convention above: **prefer the deterministic form**. A fixed data payload, a `questions-json` block ([34-question-interface.md](./34-question-interface.md)), and a script-rendered table all share the property that a machine produces them the same way every time, so they cannot drift from their source and cost nothing to regenerate. The more of a memo's content that is deterministic rather than re-typed by hand, the less it decays — determinism is the default, and prose is reserved for the reasoning that genuinely needs a human voice.
@@ -3848,6 +3896,7 @@ The intro-prose and `## Related` requirements are **machine-enforced** by the sp
 - [30-primitives.md](./30-primitives.md) — the memo primitive and the concept map.
 - [10-proactive-research.md](./10-proactive-research.md) — research output as the dataset behind generated tables.
 - [34-question-interface.md](./34-question-interface.md) — the option-scoring discipline a memo's decisions follow.
+- [40-diagrams.md](./40-diagrams.md) — diagram recommendations: the leading question and the intent→type matrix.
 
 ---
 
@@ -4137,6 +4186,80 @@ This prerequisite is **explicitly deferred**, and the deferral is handled by the
 - [33-maintenance.md](./33-maintenance.md) — the provenance pin and the gated re-bless flow that advances an internal SHA pin without a release.
 - [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — git as backup and findability rather than a deployment trigger, and the work-package ID trail.
 - [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) — the inward/outward axis that decides which artefacts earn a Release and which stay SHA-pinned.
+
+---
+
+# 40. Diagrams
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [35-memo-authoring.md](./35-memo-authoring.md) |
+| Related | [21-human-computer-interaction.md](./21-human-computer-interaction.md), [06-memo-structure.md](./06-memo-structure.md), [00-overview.md](./00-overview.md) |
+
+> **Informative.** This chapter offers diagram **recommendations**, not rules. Its purpose is to make the diagram variety the viewer already supports actually get used. The guidance lives here, in the open specification, rather than buried in a private skill, so that it is transparent and shared. Nothing in this chapter is a new normative requirement; the existing authoring rules in [35-memo-authoring.md](./35-memo-authoring.md) (portrait orientation, diagrams as first-class content) remain the binding ones.
+
+A diagram is one of the cheapest ways to turn a paragraph of reasoning into something a reader grasps at a glance, and the viewer renders a wide range of diagram types with no extra work. Yet in practice the same one or two diagram shapes get reached for every time, and the rest of the range sits unused. The gap has never been capability — it is guidance: knowing which kind of picture fits which kind of question. This chapter closes that gap by stating, in the open, when a diagram helps and which type fits which intent.
+
+---
+
+## The Leading Question
+
+Before adding a diagram to a topic, a blog post, or a memo chapter, ask one question:
+
+> **Does a diagram or visual help the reader make a more informed or a faster decision?**
+
+The answer routes the choice:
+
+- **Yes** — include the diagram. A picture that speeds up or sharpens a decision earns its place.
+- **No, or unclear** — check whether a *different* diagram type fits the intent better (the matrix below helps). When still in doubt, leave it out. A decorative diagram that carries no decision is noise.
+
+There is a useful diagnostic hidden in this question. If, for a given topic, **no** diagram type fits at all — nothing structural, behavioural, quantitative, or temporal seems to apply — that is often a signal that the topic is **not yet thought through**. A well-understood topic almost always has a shape that some diagram can show. An inability to find any fitting visual is worth treating as feedback on the thinking, not only on the picture.
+
+---
+
+## Diagram Intent → Type
+
+Pick the diagram from the **intent**, not from habit. The matrix below maps the intent a diagram serves to the concrete types that fit it. The Mermaid types are rendered by the viewer directly; the Vega entry is for quantitative charts.
+
+| Intent | What you are showing | Fitting types |
+|--------|----------------------|---------------|
+| **Structure** | How parts relate, what contains what, system shape | Mermaid `flowchart`, C4-style diagrams |
+| **Behavior** | How something moves through states, an ordered exchange | Mermaid `stateDiagram`, `sequenceDiagram` |
+| **Data** | Entities and their relationships, the shape of a model | Mermaid `erDiagram`, `classDiagram` |
+| **Time** | Order over time, a schedule, a path through stages | Mermaid `timeline`, `gantt`, `journey` |
+| **Comparison** | Items placed against one or two axes, a quantitative measurement | Mermaid `quadrantChart`, Vega-Lite chart |
+
+The matrix is a starting point, not an exhaustive list. The point is to choose by asking "what is the intent here?" and then reaching for the type that fits, rather than rendering everything as the one flowchart that happens to be familiar.
+
+---
+
+## A Diagram Is a Decision Tool
+
+Treat a diagram as a **decision tool**, not as illustration added after the fact. Its job is to make a choice clearer or quicker for whoever reads it — the developer weighing options, a future reader reconstructing why something is shaped the way it is.
+
+Because a diagram is a decision tool, **several diagrams from different perspectives are explicitly encouraged**. A topic rarely has a single correct view: one diagram may show the structure, another the behaviour over time, a third the comparison that motivated the decision. Drawing two or three quick views of the same thing from different angles is a fast, visual way to work a perspective out — and it is cheap, because each diagram is a small fenced block. Reaching for *multiple* diagrams is a feature of good authoring, not redundancy to be trimmed.
+
+---
+
+## What the Viewer Renders, and What Stays Out of Scope
+
+The viewer renders Mermaid (version 11.4.1) and all of its diagram types with **zero code work** — every fenced `mermaid` block becomes an SVG, and the matrix above lists types the viewer already supports today. The variety has always been available; the missing piece was guidance on using it, which is what this chapter supplies.
+
+A few orientation and scope conventions hold:
+
+- **Portrait is the default.** Diagrams are authored portrait (top-down) so they fit the viewer's narrow reading column without horizontal scrolling. This is the binding authoring rule from [35-memo-authoring.md](./35-memo-authoring.md); the recommendations here sit on top of it, they do not relax it.
+- **Mermaid is preferred because it is code-near and human-verifiable.** A Mermaid diagram is text, diffs cleanly, and a reader can verify it against the system by reading it. Generated-image diagrams (for example a model-rendered picture of an architecture) stay **out of scope** for spec and memo content for exactly that reason: they are opaque, cannot be diffed, and cannot be verified by reading.
+- **Art and hand-drawn styles stay decoupled.** Excalidraw-style or artistic renderings have their place in **docs, blog posts, and marketing**, where the audience and intent differ. They are deliberately kept separate from the memo and spec layer, whose diagrams are working decision tools rather than presentation pieces.
+
+---
+
+## Related
+
+- [35-memo-authoring.md](./35-memo-authoring.md) — diagrams as first-class memo content and the portrait-orientation rule these recommendations build on.
+- [21-human-computer-interaction.md](./21-human-computer-interaction.md) — the canonical interaction diagram, a worked reference for Mermaid style.
+- [06-memo-structure.md](./06-memo-structure.md) — the `media/` folder where exported or generated assets live.
+- [00-overview.md](./00-overview.md) — conformance language and the Informative/Normative marking.
 
 ========================================
 # Workbench Sub-Spec

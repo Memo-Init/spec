@@ -48,6 +48,8 @@ User interaction has exactly two points: **input** at the start, and **feedback/
 
 Only **Full** revisions are presented to the user (see [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md)). Between the two interaction points, Claude works autonomously: input processing, research, revision generation, execution, and the auto-check.
 
+**Questions stay essential.** The two touchpoints are deliberately minimal but high-value: minimal contact, maximally important. They are the place where the developer's taste and long view enter the work, because within the guardrails there are usually many valid paths and the choice between them belongs to the developer. As the agent learns to pre-think more over time it raises the quality of the questions rather than abolishing them — there are always questions left, and the developer holds the ultimate right of decision. The positive stance behind this is set out in [01-philosophy.md](./01-philosophy.md).
+
 ---
 
 ## The Finalization Blocker

@@ -6,7 +6,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T09:56:04.990Z"
+generated_at: "2026-06-22T17:24:34.436Z"
 generated_from: "spec/v0.1.0/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/09-contamination-context-handover.md."
@@ -56,6 +56,8 @@ When work spans more than one session, or when a context is detected as full or 
 - The AI cannot execute the context reset itself. The reset recommendation is a **user action** — the system emits the recommendation, the user performs it.
 
 This rule is the structural reason evaluators are the first candidates to become repo-scoped agents with isolated context (see [14-agents-skills-tasks.md](/specification/agents-skills-tasks/)).
+
+The append-only revision structure ([07-revisions-and-questions.md](/specification/revisions-and-questions/)) is what makes a fresh-context rewrite of a contaminated memo possible in practice. Because every prior `REV-XX.md` still exists on disk, a clean context can read the full history, separate the sound states from the contaminated ones, and author a complete clean revision — rather than being stranded with a single mutated file that carries the rot and has no earlier state to recover. Append-only is, in that sense, the rescue infrastructure for contamination.
 
 ---
 
@@ -111,6 +113,7 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 
 ## Related
 
+- [07-revisions-and-questions.md](/specification/revisions-and-questions/) — the append-only revision structure that is the rescue infrastructure for a contaminated memo.
 - [10-proactive-research.md](/specification/proactive-research/) — proactive research in early revisions, the natural producer of `context/` material the handover points at.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the evidence levels (`[FACT]` … `[UNKNOWN]`) the handover zones reuse.
 - [13-orchestration.md](/specification/orchestration/) — state files, crash recovery, and the fresh-context evaluator that consumes the empty-context rule.

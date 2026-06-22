@@ -6,7 +6,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T09:56:04.990Z"
+generated_at: "2026-06-22T17:24:34.436Z"
 generated_from: "spec/v0.1.0/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/07-revisions-and-questions.md."
@@ -135,11 +135,20 @@ The revision number increments regardless of mode. An Update-Revision's preamble
 
 A revision MUST NOT be edited in place. Each change produces a new `REV-XX.md` file. In-place edits have caused data loss in practice; the append-only rule is a guardrail against it. The revision number is zero-padded and two digits.
 
+### Why Append-Only — Contaminated-Revision Rescue
+
+Append-only is not only a safeguard against accidental overwrites; it is the infrastructure that makes a contaminated revision **recoverable**. A revision is written from a context, and a context degrades as it fills ([09-contamination-context-handover.md](/specification/contamination-context-handover/)). If the state at, say, REV-6 or REV-7 turns out to be written out of a degraded context, the rescue path is concrete and only possible because every prior state still exists on disk: read **all** revisions in order, analyze what is contaminated and what is sound, and write a complete, clean **REV-8** from a fresh context. The full history of states is the raw material for that clean rewrite.
+
+A revision is **expensive** — it represents many tokens of reasoning. This is what makes a living-edit-of-a-single-file approach risky for this particular artifact. We respect that approach; it is a reasonable design in many settings, and the trade-off here is specific, not a verdict on it. The trade-off is this: when a single growing file is the only copy, a highly filled state (a file that has grown into the hundreds of thousands of tokens) is itself subject to context rot, and there is no earlier clean state to fall back to. On the private `.memo/` layer there is also no git history (the tree is structurally local and un-versioned, see [06-memo-structure.md](/specification/memo-structure/)), so an in-place corruption of that one file is total loss of **both** the memo and the tokens that went into it. Separate revision files give back exactly the fallback that git would otherwise provide.
+
+Context is also driven up **from the outside**, not only by the memo's own growth. A research pass that drives a browser (for example Playwright) or sweeps many sources pours external material into the working context and fills it faster than the prose alone would. That is a second, independent reason to commit a new state as a **new revision** rather than mutating the current file in place: the next clean state should start from a deliberate, readable snapshot, not from a file that has absorbed an unbounded amount of external context.
+
 ---
 
 ## Related
 
 - [04-input-pipeline.md](/specification/input-pipeline/) — input processing that runs before each revision is generated.
+- [09-contamination-context-handover.md](/specification/contamination-context-handover/) — context rot and contamination; the fresh-context rewrite that append-only history makes possible.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the gate that requires the open-questions area to be empty.
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the authoring skills that implement the question format.
 - [34-question-interface.md](/specification/question-interface/) — the scoring discipline and the `questions-json` mandate that builds on this format.

@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-06-22T09:56:04.990Z"
+generated_at: "2026-06-22T17:24:34.436Z"
 generated_from: "spec/v0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/01-philosophy.md."
@@ -77,6 +77,18 @@ The throughline is that the human invests effort up front, inside the guardrails
 
 ---
 
+## Questions Stay Essential
+
+The agent is very good at following instructions and executing them. That strength is exactly why the guardrails matter: within the guardrails there is rarely a single correct path. There are many valid ones, and the choice between them is a matter of taste and of the long-term view — the kind of judgement that only the developer, carrying the experience of the whole project, can supply. The agent can lay out the options and recommend one; it cannot own the decision that shapes where the project goes next.
+
+For that reason, **questions are essential**, and the developer holds the ultimate right of decision. The questions are not a sign that the agent is underpowered; they are the deliberate hinge where the developer's taste and long view enter the work.
+
+The two touchpoints where the developer meets the system — input at the start, and feedback/finalization during the revision loop — are kept deliberately **minimal but high-value**. Minimal contact, maximally important: each touch is a small surface that is optimized to carry as much decision weight as possible, so the developer's limited attention lands where it changes the outcome. The interaction model that fixes these two touchpoints in detail is described in [21-human-computer-interaction.md](/specification/human-computer-interaction/).
+
+Over time the agent can pre-think **more** — anticipating decisions, narrowing options, learning the developer's preferences through the user mental model it carries forward (see [21-human-computer-interaction.md](/specification/human-computer-interaction/)). Pre-thinking more does not abolish questions; it raises their quality. There are always questions left, because there are always valid paths whose choice belongs to the developer. The goal is not to remove the questions but to make each one worth answering.
+
+---
+
 ## Prioritization Is the Developer's Decision
 
 A direct consequence of the interaction model: the AI MUST NOT decide what is important. Prioritizing, down-ranking, or setting a threshold on the work order is the developer's exclusive responsibility. **Every item is equally important unless the developer says otherwise.** If a dictated transcript contains fifteen things, all fifteen are worked through, each one as important as the next. The AI MAY ask questions (asking is explicitly encouraged) and MAY raise essential technical objections, but it MUST NOT silently drop, down-rank, or unilaterally threshold any item.
@@ -95,6 +107,25 @@ The system does not chase "quick wins." Provider prompts tend to push quick wins
 ## Work It In Instead of Deferring
 
 Problems that surface during a run are **worked in** during the running phase, not exported into a follow-up memo. A follow-up memo is expensive: it costs the developer hours, forces the research to be redone from scratch, and adds revision rounds — turning a small button-color change into a phantom multi-day effort. Plans MAY be arbitrarily long; the AI MAY keep working a problem as long as needed and has the resources to do so. The hard limits are unchanged (no commits or pushes without approval); "work it in" never means "act outside the guardrails." Concerns that are not genuine blockers go into the rollout preface, not into a stop. See the rollout chapter for the preface/concern channel.
+
+---
+
+## The Metaplan — Packing the Train
+
+There are **no priorities** in the sense of a cheap tier and an expensive tier. Everything runs at the **same quality level**: there is no "cheap" memo and no "cheap" spec, only high quality. The system does not save effort by doing some work to a lower standard; that lever does not exist here.
+
+The genuinely scarce resource is **memo creation itself**, not the token price. A memo costs the developer's attention and a finalization cycle, and the developer dictates roughly two large memos a day. Tokens are comparatively abundant; a fresh memo is not. The economics of the system follow from that single fact: optimize for getting the most out of each memo, because the memos — not the tokens — are the bottleneck.
+
+The image is a **train that departs twice a day**. At each departure, the train should carry as much as is sensibly and safely possible: pack the topics that are ready into this departure rather than waiting for a later one. A memo-train should therefore carry **as many related topics as possible** — related topics worked through one after another in a controlled way produce network effects, because each topic informs and reinforces the others while the context is warm. A train that leaves half-empty wastes the scarce departure.
+
+The packing has bounds, and they are firm:
+
+- **Same project.** A train carries topics from one project; it does not mix projects into a single memo.
+- **The chronicle timeline must stay clean.** Memos are time documents — they are dated records that the maintenance, goals, and chronicle systems build on. Packing a train must never blur that timeline; the chronicle staying readable and correctly ordered is the big guardrail that bounds how much, and what, goes into one departure.
+
+Within those bounds the topic count is **at least three, with no upper cap**. The optimization is explicitly for **large, multi-topic inputs**: a single-topic memo is possible but is not the target case. The system is tuned for a developer who has thought through many related things at once and wants them packed into one well-ordered departure.
+
+The aim of all this is **moving forward** — innovation and shipped progress — not automation for its own sake. Packing the train densely is in service of pushing more worked-through topics out into the world per departure. The economics of front-loading the expensive research once and reusing it across the packed topics — the distillation economy that makes a densely packed train affordable — is described in [36-agent-research-strategies.md](/specification/agent-research-strategies/).
 
 ---
 

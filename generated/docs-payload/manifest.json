@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-22T09:56:05.185Z",
+    "generated_at": "2026-06-22T17:24:35.207Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -402,6 +402,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "foundations"
+        },
+        {
+            "filename": "40-diagrams.md",
+            "slug": "diagrams",
+            "title": "Diagrams",
+            "description": "A diagram is one of the cheapest ways to turn a paragraph of reasoning into something a reader grasps at a glance, and the viewer renders a wide range of diagram types with no extra work. Yet in...",
+            "order": 40,
+            "section": "Specification",
+            "normative": false,
+            "sidebar_group": "foundations"
         }
     ],
     "workbench": {
@@ -469,10 +479,10 @@
         ]
     },
     "stats": {
-        "total_files": 46,
-        "core_files": 40,
+        "total_files": 47,
+        "core_files": 41,
         "workbench_files": 6,
         "normative_files": 43,
-        "informative_files": 3
+        "informative_files": 4
     }
 }

@@ -6,7 +6,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T09:56:04.990Z"
+generated_at: "2026-06-22T17:24:34.436Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
@@ -42,11 +42,12 @@ A memo directory contains a fixed set of sub-folders, each with a single respons
 | `revisions/` | The revision files `REV-XX.md` (zero-padded, two digits). The current memo content. |
 | `_topics/` | Per-memo research topics and their derived notes. |
 | `context/` | Memo-local context documents and linked source material. |
+| `media/` | Memo-local images and assets (screenshots, mockups, exported diagrams) referenced by the revisions. |
 | `transcripts/` | The dictated transcripts that fed the memo. |
 | `rollout/` | Rollout artifacts: state files for crash recovery and the standing lessons-learned file. |
 | `validation/` | Validation outputs produced during finalization and rollout. |
 
-A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. Revisions MUST NOT be edited in place; each change produces a new file (see [07-revisions-and-questions.md](/specification/revisions-and-questions/)).
+A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. Revisions MUST NOT be edited in place; each change produces a new file (see [07-revisions-and-questions.md](/specification/revisions-and-questions/)). Images and other assets live in `media/`, parallel to `context/`, and are referenced from a revision with a simple relative path (`![](media/screenshot-pencil-revision-2.png)`); filenames SHOULD be speaking (`media/screenshot-pencil-revision-2.png`, not `media/1.png`), and there is deliberately no revision-relative path scheme — one flat `media/` folder per memo keeps references trivial.
 
 ---
 

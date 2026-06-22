@@ -6,7 +6,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T09:56:04.990Z"
+generated_at: "2026-06-22T17:24:34.436Z"
 generated_from: "spec/v0.1.0/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/35-memo-authoring.md."
@@ -48,6 +48,8 @@ Diagrams are **first-class memo content**, not a special case. The viewer render
 
 **Portrait is mandatory.** Diagrams MUST be authored **portrait** — Mermaid flowcharts use `flowchart TD` (top-down), never landscape (`flowchart LR`) — so they fit the viewer's narrow reading column without horizontal scrolling. A wide left-to-right diagram is a defect, not a stylistic choice. When a graph is genuinely too wide, split it into several stacked top-down diagrams rather than turning it on its side.
 
+For **which** diagram type to reach for — the leading "does a visual help a decision?" question and the intent→type matrix — see the diagram recommendations in [40-diagrams.md](/specification/diagrams/).
+
 ## Determinism and Spec-Chapter Conventions
 
 A thread runs through every convention above: **prefer the deterministic form**. A fixed data payload, a `questions-json` block ([34-question-interface.md](/specification/question-interface/)), and a script-rendered table all share the property that a machine produces them the same way every time, so they cannot drift from their source and cost nothing to regenerate. The more of a memo's content that is deterministic rather than re-typed by hand, the less it decays — determinism is the default, and prose is reserved for the reasoning that genuinely needs a human voice.
@@ -68,3 +70,4 @@ The intro-prose and `## Related` requirements are **machine-enforced** by the sp
 - [30-primitives.md](/specification/primitives/) — the memo primitive and the concept map.
 - [10-proactive-research.md](/specification/proactive-research/) — research output as the dataset behind generated tables.
 - [34-question-interface.md](/specification/question-interface/) — the option-scoring discipline a memo's decisions follow.
+- [40-diagrams.md](/specification/diagrams/) — diagram recommendations: the leading question and the intent→type matrix.

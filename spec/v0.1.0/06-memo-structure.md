@@ -35,11 +35,12 @@ A memo directory contains a fixed set of sub-folders, each with a single respons
 | `revisions/` | The revision files `REV-XX.md` (zero-padded, two digits). The current memo content. |
 | `_topics/` | Per-memo research topics and their derived notes. |
 | `context/` | Memo-local context documents and linked source material. |
+| `media/` | Memo-local images and assets (screenshots, mockups, exported diagrams) referenced by the revisions. |
 | `transcripts/` | The dictated transcripts that fed the memo. |
 | `rollout/` | Rollout artifacts: state files for crash recovery and the standing lessons-learned file. |
 | `validation/` | Validation outputs produced during finalization and rollout. |
 
-A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. Revisions MUST NOT be edited in place; each change produces a new file (see [07-revisions-and-questions.md](./07-revisions-and-questions.md)).
+A memo MUST place its content under `revisions/` as discrete `REV-XX.md` files. Revisions MUST NOT be edited in place; each change produces a new file (see [07-revisions-and-questions.md](./07-revisions-and-questions.md)). Images and other assets live in `media/`, parallel to `context/`, and are referenced from a revision with a simple relative path (`![](media/screenshot-pencil-revision-2.png)`); filenames SHOULD be speaking (`media/screenshot-pencil-revision-2.png`, not `media/1.png`), and there is deliberately no revision-relative path scheme — one flat `media/` folder per memo keeps references trivial.
 
 ---
 

@@ -50,6 +50,8 @@ When work spans more than one session, or when a context is detected as full or 
 
 This rule is the structural reason evaluators are the first candidates to become repo-scoped agents with isolated context (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
 
+The append-only revision structure ([07-revisions-and-questions.md](./07-revisions-and-questions.md)) is what makes a fresh-context rewrite of a contaminated memo possible in practice. Because every prior `REV-XX.md` still exists on disk, a clean context can read the full history, separate the sound states from the contaminated ones, and author a complete clean revision — rather than being stranded with a single mutated file that carries the rot and has no earlier state to recover. Append-only is, in that sense, the rescue infrastructure for contamination.
+
 ---
 
 ## Memo Provenance — the Initiator field
@@ -104,6 +106,7 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 
 ## Related
 
+- [07-revisions-and-questions.md](./07-revisions-and-questions.md) — the append-only revision structure that is the rescue infrastructure for a contaminated memo.
 - [10-proactive-research.md](./10-proactive-research.md) — proactive research in early revisions, the natural producer of `context/` material the handover points at.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels (`[FACT]` … `[UNKNOWN]`) the handover zones reuse.
 - [13-orchestration.md](./13-orchestration.md) — state files, crash recovery, and the fresh-context evaluator that consumes the empty-context rule.
