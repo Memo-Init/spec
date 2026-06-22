@@ -6,7 +6,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T20:42:59.547Z"
+generated_at: "2026-06-22T21:29:45.860Z"
 generated_from: "spec/v0.1.0/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/13-orchestration.md."
@@ -167,12 +167,114 @@ The gate is the enforcement end of the post-phase elimination step that [08-phas
 
 ---
 
+## Contract Negotiation Between Generator and Validator
+
+Before a Worker is allowed to start a PRD, the phase generator and a fresh-context validator negotiate a **file-based contract** — a `contract.json` that fixes *what counts as done* before any code is written. The contract exists so the later evaluator grades against an agreed, checkable target rather than re-interpreting the PRD prose, and so a phase cannot begin executing work whose intent was never pinned down.
+
+The negotiation runs over separate files, never a shared one, so two contexts never write the same artifact and there is no race:
+
+| Artifact | Owner | Content |
+|----------|-------|---------|
+| `contract-seed.json` | Lead | The phase's **hard requirements** as fixed, non-negotiable entries — they enter the final contract unchanged. |
+| `proposal.md` | Generator | Proposed scope, assertions (beyond the hard requirements), and the verification method for each. |
+| `feedback.md` | Validator | Pushback on scope (too broad?), test strength (too weak?), and missing edge cases. The validator sees only the proposal, never the generator's reasoning trace. |
+| `contract.json` | Lead | The result: seeded hard requirements plus negotiated entries, validated by the Lead. |
+
+The procedure is bounded and Lead-arbitrated:
+
+- The Lead writes `contract-seed.json` with every hard requirement as a fixed entry. These are not up for negotiation.
+- The generator proposes; the validator pushes back; each round is appended to a per-round history file. The two never edit the same file.
+- The round limit is **three**. On agreement before round three both sides confirm; with no agreement after round three the **Lead decides** which contested entries are admitted and records that the decision was the Lead's.
+- A **trivial fallback**: when the contract follows unambiguously from the hard requirements with no open assertions, the negotiation is skipped and the Lead writes `contract.json` directly. The two extra contexts of a negotiation are spent only where the contract is genuinely contested.
+
+**The coverage gate.** After the contract is assembled, a deterministic gate checks that **every hard requirement from the seed is covered in the final contract**. A missing hard requirement sets the contract to `blocked` and **no Worker starts for that PRD** — the finding is reported up to the execution layer. There is no silent start without a green contract. This gate is the negotiation's enforcement end: it guarantees that the generated unit of work provably covers the phase's stated intent before execution, closing the failure mode where a Worker quietly begins on a scope that drifted from what the memo demanded.
+
+Once the gate is green and the contract is `agreed`, the generator is assigned as the Worker and the evaluator later grades **against the contract, not the original prose** — every hard assertion must hold, and every negotiated assertion must hold unless the contract marked it optional. A PRD that carries no contract (a direct PRD without negotiation) is graded against its acceptance criteria as before.
+
+A negotiated entry a Worker later declines is handled by the asymmetry the worker-output exits already establish: a declined *should-apply* entry is recorded with its reason and **reported** to the human, not blocked; a hard entry that cannot be met is `blocked` and halts that PRD. A declined hard entry is a contradiction in terms and never appears in the declined list.
+
+---
+
+## The Inter-Agent Findings Channel
+
+Parallel agents that only return final text cannot tell the Lead — or each other — what they discovered mid-flight. A Worker that finds a shared convention is wrong, or that a dependency behaves unexpectedly, has nowhere to surface that short of finishing and reporting. The **findings channel** is the shared, append-only store that fills this gap: a place where any agent in the phase deposits a cross-cutting discovery the moment it is made, and any other agent (a parallel Worker, the fresh-context evaluator, the Lead) reads it without carry-over.
+
+The channel is governed by a single discipline — **one writer, append-only**:
+
+- The Lead **initialises the store once per phase run**; initialisation never overwrites an existing store, it reports the one already present.
+- Every cross-worker-relevant finding is deposited deterministically through the canonical write path, which is the **only** writer. A finding carries a **dedup key** (so the same discovery deposited twice collapses to one entry), an optional **thread tag** (grouping related findings), an **author**, and a structured **payload**.
+- Readers — parallel Workers and the fresh evaluator — pull the shared state by thread, never by hand-collecting JSON. Because the store is on disk and append-only, a reader sees a consistent, ordered record rather than a snapshot of one agent's memory.
+
+Two properties keep the channel safe to share. It is **append-only**, so a late reader never loses an earlier finding and a crash mid-phase does not swallow what was already surfaced. And it has a **single write path**, so there is no format drift between what one agent writes and another reads — the same shape goes in and comes out.
+
+The channel deliberately stops short of an enforced identity model. The author field is a **free attribution**, not a server-checked credential: there is no registration-before-write, no per-agent secret. A stronger write-own-identity model (rooms, usernames, registration) is a deliberately deferred decision, not an accidental omission — until it is decided, the channel is a shared notebook with honest attribution, not an access-controlled log, and no orchestration step should assume a secret-checked author.
+
+---
+
+## The Utilization Gate — Built-but-Unwired
+
+The dominant failure mode of a maturing system is not broken code — it is **code that is built, green under its own unit tests, and never wired in**. A module reaches completion, its tests pass, and it lives in the isolation of those tests, reached by no real caller. "Tests green" is not evidence that a module is *used*. The utilization gate makes **being wired in** a conformance condition of evaluation, not merely **being present**.
+
+The rule is sharp: **every new module or feature built in the rollout MUST have at least one real, non-test call path** — it is actually reachable from a genuine entry point (a CLI leaf, a skill step, another production module), not only from a `.test.mjs` file.
+
+The check runs in a fresh context, because the agent that built the work cannot be trusted to judge whether it is reached:
+
+1. **Inventory the new modules.** From the backward check, take every newly created production file or export. Test files do not count as modules.
+2. **Prove a real call path per export.** A fresh-context sub-agent verifies reachability against the real code — it follows the chain **from the entry point to the module**, not from the test to the module. Is the export imported or called by production code? Is it reachable from a real entry point?
+3. **Classify honestly.** *Wired* — at least one real non-test call path found, a PASS contribution. *Test-only* — reachable only from tests, no production caller, not wired in as a default: a **gate violation**, listed in the report as the module plus its missing call path.
+
+A test-only finding is a **fail contribution**: the module is built but not in the real path, which is exactly the failure the gate exists to catch. A green test report does **not** substitute for the call-path proof. The fresh context is essential here — the sub-agent trusts no execution report claiming "wired", and follows the call chain itself.
+
+---
+
+## The UI-Proof Baseline and Before/After Contract
+
+UI-affecting work cannot be judged by an after-shot alone — an after-shot shows a state, not a *change*. To evaluate whether a view changed the way the memo intended, evaluation needs a **before** to compare against. The before/after contract splits this across two moments in the phase lifecycle: a **baseline captured at phase-start**, and a **before/after diff produced at evaluation**.
+
+**Baseline at phase-start.** Before the phase's PRDs execute, the relevant screens and states — those the memo's UI scope names as changing — are captured in their current, unchanged form and stored as the baseline, alongside a manifest listing each captured screen so the later step can match them one-to-one. The baseline must be taken *before* execution; once the PRDs run, the "before" is gone. Only after the baseline is recorded do the phase's PRDs run.
+
+**Before/after diff at evaluation.** After all phases complete, the same screens and states are captured again as the after-set, and each is diffed against its baseline. The evaluation report carries, per screen: the before path, the after path, the observed change, and the change the memo planned — so a reviewer sees both that something changed *and* whether it changed as intended. The evidence — baseline shots, after shots, and the diff — lives under the project's proofs area as the layout of record for the comparison.
+
+When no baseline was captured at phase-start, the comparison is not silently dropped: it is marked **"N/A — no baseline"** and a warning is emitted, so the absence of a before is visible rather than hidden. The contract degrades loudly, never quietly.
+
+---
+
+## Parallelism: When Phases and PRDs May Run Together
+
+The parallelism dials above bound *how many* units run at once; this section decides *whether* units may run together at all. The two are distinct: the dials are an upper safety bound on concurrency, while the sequential-versus-parallel decision is driven entirely by **dependencies**.
+
+- **The default is sequential under memo authority.** Phases run in the order the memo lays down, and PRDs run in dependency order within a phase. The memo is the highest authority on ordering; the orchestration does not reorder or parallelise work the memo sequences.
+- **Parallel only where dependencies allow.** Workers run concurrently **only** when their PRDs have no mutual dependency — the dependency tree decides which units may share a moment. Two PRDs that touch the same files, or where one consumes the other's output, are sequential by necessity, not by preference.
+- **Within a phase, merges are sequential.** Even when Workers ran in parallel, their worktrees are merged back one at a time in PRD order, so a merge conflict is resolved against a known, ordered base rather than a tangle of simultaneous merges.
+- **Raising parallelism requires evidence, not prose.** Increasing concurrency beyond the dependency-gated default — for instance wiring the concurrency dials into the execution path — is **not** done on the strength of this specification alone. It requires real, measured evidence first. The dials describe the Soll bound; turning that bound into a higher live default is a separate, evidence-backed step.
+
+This keeps the safe default conservative: work is sequential unless the dependency tree proves it can safely run together, and the memo's ordering is never overridden for speed.
+
+---
+
+## Iteration and Retry Limits
+
+Every iterative loop in orchestration is **bounded**, so a stuck unit of work escalates or is isolated rather than spinning forever. The bounds differ by loop because each loop fails differently.
+
+| Loop | Bound | On exceeding the bound |
+|------|-------|------------------------|
+| PRD generation/evaluation (during Generate) | **2 retries** per PRD | Mark the PRD `needs-review`; do not block the pipeline for one PRD. |
+| Worker ↔ Evaluator (during Execute) | **3 iterations** per PRD | The PRD closes as `needs-review` (a finished partial state) and a **follow-up PRD** inherits the remaining scope plus the evaluator's findings; the run continues — it never fully stops. |
+| Phase-Evaluator (during Execute) | **2 iterations** | The Lead reports the integration problem up to the execution layer. |
+| Contract negotiation (before Execute) | **3 rounds** | The Lead decides the contested entries (see *Contract Negotiation* above). |
+
+The Worker↔Evaluator limit deserves emphasis: hitting three iterations without a PASS is **not a stop**. The original PRD is recorded as a completed partial state, its unresolved scope migrates into a freshly numbered follow-up PRD attached to the running phase, and that follow-up is worked under the same bounds. This is the structural form of the rule that the run never silently stalls — a stuck unit is isolated into its own follow-up so the rest of the phase proceeds, and only a genuinely unresolvable blocker or an infrastructure incident escalates to a real stop.
+
+---
+
 ## Related
 
 - [12-rollout.md](/specification/rollout/) — the Generate→Execute→Evaluate rollout that this orchestration executes, and the standing lessons-learned file.
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the migration of the fresh-context evaluators to repo-scoped agents.
 - [09-contamination-context-handover.md](/specification/contamination-context-handover/) — the empty-context rule the evaluators obey and the handover used on a contaminated interruption.
 - [28-drift.md](/specification/drift/) — the drift error-class and resolution protocol whose step-4 idempotent lint/CI gate this chapter holds.
+- [23-requirements.md](/specification/requirements/) — the hard/should-apply requirement tiers that seed the contract and drive the coverage gate.
+- [31-goals.md](/specification/goals/) — the goal-scoring layer; the utilization gate's built-but-unwired check is the same "PASS ≠ reality" honesty applied at evaluation.
 - [33-maintenance.md](/specification/maintenance/) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
 - [36-agent-research-strategies.md](/specification/agent-research-strategies/) — the strategy/pattern layer (Distillate-Fan-Out, fan-out by unit) above this machinery.
 - [00-overview.md](/specification/overview/) — conformance language.

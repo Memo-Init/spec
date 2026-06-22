@@ -6,7 +6,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T20:42:59.547Z"
+generated_at: "2026-06-22T21:29:45.860Z"
 generated_from: "spec/v0.1.0/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/14-agents-skills-tasks.md."
@@ -83,6 +83,22 @@ Evaluators are the natural first candidates for agent form because the empty-con
 - pointer skills (on-demand routers to vendored rules)
 
 These stay skills because they are procedures meant to run inside the caller's context — they shape how the caller writes code or docs, and an isolated context would sever them from the work they govern.
+
+---
+
+## Out-of-Scope Register
+
+Not every skill that exists in the system is governed by this process specification, and pretending otherwise would be dishonest. Two families of skills sit **deliberately outside** the process spec's scope and carry **no governing chapter** — they are acknowledged here, not mapped onto a forced home.
+
+- **Coding-standard skills** — the `node-*` family (formatting, class architecture, validation, error codes, testing, environment manager, server design). The Node.js coding standard is the property of the project's own house rules — a `CLAUDE.md`-style runbook — not of this specification. This spec governs the memo **process**, not code style; mapping these skills onto a process chapter would claim a coverage that does not and should not exist.
+- **Domain and external-tool skills** — blockchain-data query skills, the external API-CLI usage skill, and external-schema grading skills. Each encodes an **external domain** that is governed by its own external references (the data platform's query dialect, the API catalog's contract, the schema model's grading rules), not by this process spec. The process spec does not own those domains and makes no claim over them.
+
+To make the position machine-checkable and honest rather than implicit, such skills declare in their frontmatter:
+
+- `specs.primary: null` — an explicit, recorded statement that **no** chapter of this spec governs the skill, rather than an arbitrary mapping picked to satisfy a coverage tool, and
+- a `scope` marker — one of `coding-standard`, `domain`, or `external` — that names **why** the skill is out of scope.
+
+The `null` primary plus the `scope` marker is the honest signal: *acknowledged out-of-scope*, not *pretended coverage*. A coverage audit reads these markers and counts such skills as deliberately unmapped, never as gaps to be back-filled with a forced chapter reference.
 
 ---
 

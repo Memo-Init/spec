@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-22T20:42:59.725Z",
+    "generated_at": "2026-06-22T21:29:46.061Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -422,6 +422,36 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "health"
+        },
+        {
+            "filename": "42-plans.md",
+            "slug": "plans",
+            "title": "Plans",
+            "description": "A **plan** is the primitive that sits above the memo and sequences the work of one or more finalized memos into a single ordered run. A memo is the highest authority over its own rollout, but a...",
+            "order": 42,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
+        },
+        {
+            "filename": "43-skill-authoring-and-quality.md",
+            "slug": "skill-authoring-and-quality",
+            "title": "Skill Authoring & Quality",
+            "description": "A skill is a procedure the system runs again and again, yet for most of the system's life skill quality was the one thing nothing governed. Chapters classify a skill against an agent and a task...",
+            "order": 43,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
+        },
+        {
+            "filename": "44-repository-and-outward-docs.md",
+            "slug": "repository-and-outward-docs",
+            "title": "Repository Scaffolding & Outward Documentation",
+            "description": "The git area governs how a repository is committed, secured, identified, and released, but it stops at the repository's surface. The surface itself — the folder layout a new repository is born with,...",
+            "order": 44,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
         }
     ],
     "workbench": {
@@ -477,6 +507,16 @@
                 "sidebar_group": "workbench"
             },
             {
+                "filename": "05-browser-automation.md",
+                "slug": "browser-automation",
+                "title": "Browser Automation & Research Method",
+                "description": "The core specification's research chapter ([../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and how that...",
+                "order": 5,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "workbench"
+            },
+            {
                 "filename": "06-trash.md",
                 "slug": "trash",
                 "title": "Trash",
@@ -489,10 +529,10 @@
         ]
     },
     "stats": {
-        "total_files": 48,
-        "core_files": 42,
-        "workbench_files": 6,
-        "normative_files": 44,
+        "total_files": 52,
+        "core_files": 45,
+        "workbench_files": 7,
+        "normative_files": 48,
         "informative_files": 4
     }
 }

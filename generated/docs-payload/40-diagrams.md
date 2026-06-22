@@ -6,7 +6,7 @@ spec_file: "40-diagrams.md"
 order: 40
 section: "Specification"
 normative: false
-generated_at: "2026-06-22T20:42:59.547Z"
+generated_at: "2026-06-22T21:29:45.860Z"
 generated_from: "spec/v0.1.0/40-diagrams.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/40-diagrams.md."
@@ -67,6 +67,12 @@ A few orientation and scope conventions hold:
 - **Portrait is the default.** Diagrams are authored portrait (top-down) so they fit the viewer's narrow reading column without horizontal scrolling. This is the binding authoring rule from [35-memo-authoring.md](/specification/memo-authoring/); the recommendations here sit on top of it, they do not relax it.
 - **Mermaid is preferred because it is code-near and human-verifiable.** A Mermaid diagram is text, diffs cleanly, and a reader can verify it against the system by reading it. Generated-image diagrams (for example a model-rendered picture of an architecture) stay **out of scope** for spec and memo content for exactly that reason: they are opaque, cannot be diffed, and cannot be verified by reading.
 - **Art and hand-drawn styles stay decoupled.** Excalidraw-style or artistic renderings have their place in **docs, blog posts, and marketing**, where the audience and intent differ. They are deliberately kept separate from the memo and spec layer, whose diagrams are working decision tools rather than presentation pieces.
+
+---
+
+## Structure First, Color Later — Also for Mockups
+
+The structure-before-color habit that already governs diagrams is the same discipline that governs UI mockups. A diagram is worked out as black-and-white structure first, and color is added only once the shape is right; a UI mockup follows the identical staging — a black-and-white wireframe first, color and refinement later. The reason is the same in both cases: settling the structure before the polish keeps the early conversation about what the picture *says*, not about how it looks. The asset side of this — where those mockups and exported diagrams are stored — is the `media/` asset convention in [06-memo-structure.md](/specification/memo-structure/).
 
 ---
 

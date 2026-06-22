@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-06-22T20:42:59.547Z"
+generated_at: "2026-06-22T21:29:45.860Z"
 generated_from: "spec/v0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/00-overview.md."
@@ -87,6 +87,12 @@ The six repositories are bootstrapped from an existing public reference organiza
 | `viewer` | The memo viewer, extracted from the toolkit editor. Core-like: depends directly on the spec. |
 | `prompt-generator` | The deterministic start-prompt compositor. |
 | `core` | Skills (the base layer) and agents (evaluators first). |
+
+---
+
+## Out-of-Scope Skills (Acknowledged, Not Mapped)
+
+Some skills are deliberately **out of scope** for this process specification and carry no governing chapter: coding-standard skills (the `node-*` family) belong to the project's own house rules, and domain or external-tool skills are governed by their own external references. Such skills declare `specs.primary: null` plus a `scope` marker rather than a forced mapping — the honest position is *acknowledged out-of-scope*, not *pretended coverage*. The full register is in [14-agents-skills-tasks.md](/specification/agents-skills-tasks/).
 
 ---
 

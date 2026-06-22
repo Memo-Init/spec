@@ -6,7 +6,7 @@ spec_file: "04-wiki.md"
 order: 4
 section: "Workbench"
 normative: true
-generated_at: "2026-06-22T20:42:59.547Z"
+generated_at: "2026-06-22T21:29:45.860Z"
 generated_from: "spec/workbench/04-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/04-wiki.md."
