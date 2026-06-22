@@ -6,7 +6,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T18:35:05.282Z"
+generated_at: "2026-06-22T01:11:01.570Z"
 generated_from: "spec/v0.1.0/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/17-git-workflow-and-ids.md."
@@ -90,7 +90,7 @@ A fixed mapping ties the ID to git artifacts:
 | 1 Phase | 1 Issue | Each phase has exactly one issue (`M{NNN}-{PP}` reference) |
 | 1 Commit | 1 PRD | A commit corresponds to one PRD |
 | 1 PR | 1 affected repo | One pull request per affected repository, not one per memo |
-| Branch | per memo | `memo-{NNN}-{slug}` |
+| Branch | per memo | `<PREFIX>-{NNN}-{slug}` (the canonical branch-naming schema below) |
 
 ### Commit message
 
@@ -104,9 +104,43 @@ The `[PREFIX]` is the project's context prefix in brackets (the same prefix as `
 
 ### Pull requests across repos
 
-Because one memo can coordinate several repositories (see [18-multidimensionality.md](/specification/multidimensionality/)), the unit of a pull request is the **affected repo**, not the memo. A memo touching three repos produces three pull requests, each on its own `memo-{NNN}-{slug}` branch in that repo.
+Because one memo can coordinate several repositories (see [18-multidimensionality.md](/specification/multidimensionality/)), the unit of a pull request is the **affected repo**, not the memo. A memo touching three repos produces three pull requests, each on its own canonical branch (the `<PREFIX>-{NNN}-{slug}` schema below) in that repo.
 
 All PRs for a memo are merged together as the final step of the rollout — the "landing the plane" moment (see [13-orchestration.md](/specification/orchestration/)). The orchestrator **MUST NOT** merge a repo's PR in isolation before the other affected repos are ready; concurrent merge keeps the multi-repo state consistent. If a PR must be merged earlier for a dependency reason, the deviation **MUST** be noted in the memo's rollout log.
+
+---
+
+## Branch Naming
+
+There is exactly **one** canonical branch-naming schema, and it is rooted on the full prefixed memo-ID — the same `{CTX}` prefix and `{NNN}` memo number defined above. Earlier drafts carried a second, unprefixed `memo-{NNN}-{slug}` shape; that shape is **RETRACTED**. Two competing schemas that both interpolate `{NNN}` are exactly how a branch ends up carrying the wrong number, so only one schema is permitted.
+
+The canonical branch name is:
+
+```
+<PREFIX>-{NNN}-{slug}[/p{N}[-prd{RR}]]
+```
+
+| Segment | Meaning | Source |
+|---------|---------|--------|
+| `<PREFIX>` | The project's context prefix (the same `{CTX}` as the memo-ID). | Read once from the project config (the `projectPrefix` entry), never typed by hand. |
+| `{NNN}` | 3-digit memo number. | The memo directory name (`{NNN}-{slug}`). |
+| `{slug}` | The memo's kebab slug. | The memo directory name. |
+| `/p{N}` | Optional phase suffix, added when the branch is scoped to one phase. | The phase number. |
+| `-prd{RR}` | Optional PRD suffix, appended to the phase suffix when the branch is scoped to one PRD. A PRD suffix **MUST NOT** appear without a phase suffix (a PRD lives inside a phase). | The PRD number. |
+
+The base form `<PREFIX>-{NNN}-{slug}` is the per-memo branch. The `/p{N}` and `/p{N}-prd{RR}` forms are the same branch lifecycle scoped down to a phase or a PRD; they are not a different branch family.
+
+### The CLI Leaf Is the Source of Truth
+
+The prefix and the memo number/slug are not retyped at each branch creation — that is precisely how a wrong number gets introduced. The branch name is **derived deterministically** by a single CLI leaf, `memo git branch-name`, which reads the prefix from the project config and the `{NNN}-{slug}` id from the memo directory name and assembles the canonical schema above. That leaf is the **source of truth** for the branch name; any tool, skill, or human that needs the branch name **MUST** obtain it from this leaf rather than constructing the string independently.
+
+### Fail-Loud Rule
+
+The derivation is **fail-loud**. If the project config is missing or carries no non-empty prefix, or if the supplied memo cannot be resolved to an `{NNN}-{slug}` id from a directory name, the leaf **MUST** fail with a clear error and a repair hint — it **MUST NOT** emit a branch name built from a guessed or defaulted number or prefix. A missing prefix is an error to surface, never a value to invent (this is the same no-silent-default discipline that governs the deterministic git flow in [16-git-security-versioning.md](/specification/git-security-versioning/)).
+
+### Branch-Number Gate (normative)
+
+A pre-merge / stale-guard check **MUST** compare the working branch against the value produced by `memo git branch-name` for the memo being landed. The check **MUST** block the merge when the working branch's memo number does not equal the memo-ID's number. A branch whose number disagrees with the memo it claims to implement is a wrong-numbered branch, and a wrong-numbered branch **MUST NOT** be merged. Because the CLI leaf is the single source of truth, the comparison is deterministic: there is one expected branch name, and a working branch that does not match it on the number segment fails the gate. This gate is the enforcement counterpart of the fail-loud derivation — the derivation prevents a wrong number from being produced, the gate prevents a wrong number from being merged.
 
 ---
 

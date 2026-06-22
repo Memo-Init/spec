@@ -16,7 +16,7 @@ A strand is the **dependency closure over phases**: the transitive closure of th
 
 - **Emergent, not declared.** A strand is **computed** from the dependency edges: it is the set of phases reachable from one another through `depends-on` (and the PRDs those phases carry). It is **NOT** a thematic bundle the author hand-picks. Two phases belong to the same strand because the dependency graph links them, not because they share a topic.
 - **Many phases, few strands.** Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**, not one strand per phase. The mapping phase→strand is therefore **many-to-one and emergent**, never a fixed 1:1 assignment.
-- **Trivial case.** A memo of a single PRD yields one PRD → one phase → one strand. In that degenerate case there is nothing to re-order, so the tracer-bullet decision (below, and at finalization — see the finalize gate) does not apply.
+- **Trivial case.** A memo of a single PRD yields one PRD → one phase → one strand. In that degenerate case there is nothing to re-order, so the tracer-bullet decision (below, and at finalization — see the finalize gate) does not apply. Note that **this** tracer-bullet is the *strand-finalize* sense — a finalization-time decision on a large strand — and is **distinct** from the same-named vertical-slice-first **rollout strategy** (an optional rollout-execution order chosen at rollout start) defined in [12-rollout.md](./12-rollout.md). The two share the image but operate at different points and scopes; do not conflate them.
 - **What a strand carries.** A strand carries its **PRDs**. The PRDs carry the **requirements** (drawn from the registry of [23-requirements.md](./23-requirements.md)) and the **tools** (drawn from [24-tools-registry.md](./24-tools-registry.md)). A strand therefore carries requirements and tools **through its PRDs**, not directly.
 - **Optional strand spec.** A strand **MAY** carry its own **strand spec** — **RECOMMENDED** for larger strands, never mandatory. The strand spec is sharpened through an interview pass (a question catalogue) when the strand is large enough to warrant it.
 
@@ -54,6 +54,7 @@ A strand is a **tag or label**, not a component of the numeric memo identifier, 
 - [23-requirements.md](./23-requirements.md) — a strand's PRDs draw their requirements from this registry.
 - [24-tools-registry.md](./24-tools-registry.md) — a strand's PRDs draw their tools from this registry.
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the source of the phase/PRD path a strand runs along.
+- [12-rollout.md](./12-rollout.md) — the vertical-slice-first (tracer-bullet) rollout strategy, a distinct same-named concept from this chapter's strand-finalize Tracer-Bullet decision.
 - [06-memo-structure.md](./06-memo-structure.md) — strands live inside a memo under `.memo/`.
 - [00-overview.md](./00-overview.md) — specification scope.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the strand primitive summarized as cross-cutting.

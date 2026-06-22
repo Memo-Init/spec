@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-20T18:35:05.455Z",
+    "generated_at": "2026-06-22T01:11:03.986Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -277,7 +277,7 @@
             "filename": "27-landing-the-plane.md",
             "slug": "landing-the-plane",
             "title": "Landing the Plane",
-            "description": "Landing the plane is the fourth step of the rollout, after Generate, Execute, and Evaluate. Where Evaluate decides whether the work is correct, landing decides whether the workspace is in a state...",
+            "description": "Landing the plane is the second stage of the process end, the step that follows a green Evaluate. The rollout (Generate, Execute, Evaluate) is the first stage; landing is the second, and merge...",
             "order": 27,
             "section": "Specification",
             "normative": true,
@@ -382,6 +382,26 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "foundations"
+        },
+        {
+            "filename": "38-stage-model.md",
+            "slug": "stage-model",
+            "title": "Stage Model",
+            "description": "The most reliable way to leave a thread half-finished is to mistake the end of the rollout for the end of the work. The rollout closes when Evaluate passes, but a passed Evaluate is only the first of...",
+            "order": 38,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
+        },
+        {
+            "filename": "39-release-and-pinning.md",
+            "slug": "release-and-pinning",
+            "title": "Release and Pinning",
+            "description": "A system that ships nothing outward still does not need a version on every repository. The historical failure was the opposite of under-shipping: every repository was stamped with the same version...",
+            "order": 39,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "foundations"
         }
     ],
     "workbench": {
@@ -449,10 +469,10 @@
         ]
     },
     "stats": {
-        "total_files": 44,
-        "core_files": 38,
+        "total_files": 46,
+        "core_files": 40,
         "workbench_files": 6,
-        "normative_files": 41,
+        "normative_files": 43,
         "informative_files": 3
     }
 }

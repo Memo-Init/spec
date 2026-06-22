@@ -1,19 +1,21 @@
 ---
 title: "Landing the Plane"
-description: "Landing the plane is the fourth step of the rollout, after Generate, Execute, and Evaluate. Where Evaluate decides whether the work is correct, landing decides whether the workspace is in a state..."
+description: "Landing the plane is the second stage of the process end, the step that follows a green Evaluate. The rollout (Generate, Execute, Evaluate) is the first stage; landing is the second, and merge..."
 spec_version: "0.1.0"
 spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T18:35:05.282Z"
+generated_at: "2026-06-22T01:11:01.570Z"
 generated_from: "spec/v0.1.0/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/27-landing-the-plane.md."
 ---
 
 
-Landing the plane is the fourth step of the rollout, after Generate, Execute, and Evaluate. Where Evaluate decides whether the work is correct, landing decides whether the workspace is in a state someone can resume. It leaves the workspace better than it was found, in a condition a fresh context can pick up the next morning without questions. This is the precondition of the "interlocking brick" principle: a new memo only docks cleanly onto a workspace that the previous memo left correctly.
+Landing the plane is the second stage of the process end, the step that follows a green Evaluate. The rollout (Generate, Execute, Evaluate) is the first stage; landing is the second, and merge preparation and the push gate follow it (see [38-stage-model.md](/specification/stage-model/)). Where Evaluate decides whether the work is correct, landing decides whether the workspace is in a state someone can resume. It leaves the workspace better than it was found, in a condition a fresh context can pick up the next morning without questions. This is the precondition of the "interlocking brick" principle: a new memo only docks cleanly onto a workspace that the previous memo left correctly.
+
+Landing prepares; it does not perform the merge. As Stage 2 it makes the workspace startable and push-ready in principle — worktrees cleaned, open ends named, the chronicle written — and hands off to Merge Preparation (Stage 3), which carries every working branch through a local merge up to `main`. The division of labour between these two stages is fixed in [38-stage-model.md](/specification/stage-model/) and is referenced throughout this chapter.
 
 ---
 
@@ -42,9 +44,9 @@ The landing produces a single document with a fixed, deterministic structure. Th
 
 Landing is complete when these items hold:
 
-- **L1** — Worktrees are cleaned. No stray worktrees are left behind; each one created during the rollout is removed or accounted for.
-- **L2** — Branches are merged or documented. Every branch is either folded back into its target or named explicitly in the landing document with its reason for remaining.
-- **L3** — Commits are prepared and presented, but **never committed by the system**. The changes are staged and described so the pilot can commit them, but the act of committing stays with the pilot.
+- **L1** — Worktrees are cleaned. No stray worktrees are left behind; each one created during the rollout is removed or accounted for. Worktree cleanup is a mandatory part of landing, not an optional tidy-up.
+- **L2** — Branches are carried through to a local merge. Landing (Stage 2) leaves the workspace startable; Merge Preparation (Stage 3) then takes every working branch through a local merge up to `main` (see [38-stage-model.md](/specification/stage-model/)). Merging is the default outcome: a branch is folded back into `main` unless there is a justified exception, in which case the landing document names that branch and the explicit reason it remains unmerged. "Documented instead of merged" is an exception with a named reason, never the easy default that leaves stub branches behind.
+- **L3** — Commits are prepared and locally merged, but **never pushed**. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's.
 - **L4** — Open ends are named. Deferred items, blocker resolutions, and needs-review remnants appear in the OPEN ENDS section; nothing finished-but-unstated is left implicit.
 - **L5** — The end-state is machine-readable. The `landing-readiness.json` marker is written so the landing can be consumed without reading prose.
 - **L7** — Exactly one narrated chronicle entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The existing L1-L5 points are unchanged; the chronicle point is L7 and the former L6 slot is deliberately left unassigned.
@@ -53,15 +55,16 @@ Landing is complete when these items hold:
 
 ## Pilot and System
 
-The **user is the pilot**; the system only prepares the landing. The boundary is sharp and is a hard rule: committing and pushing are acts of release, and release is the pilot's authorization. The system does everything up to that line — it cleans worktrees, stages changes, writes the description, names the open ends, and emits the marker — but it does not commit and it does not push on its own. It presents a landing the pilot can act on with as few questions as possible.
+The **user is the pilot**; the system prepares a landing the pilot can act on with as few questions as possible. The boundary is sharp and is a hard rule, but it falls at the push, not at the commit. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's. This replaces the older "never committed by the system" framing with "committed and locally merged, never pushed".
 
-Two distinctions sharpen this. A commit is not a push: even where a commit is prepared, it is the pilot who issues it, and pushing is a further, separate act of release that is never automatic. And "prepared and presented" is the system's ceiling — the changes are ready and explained, but the decision to land them is the pilot's, taken at the next break.
+Two distinctions sharpen this. A commit is not a push: the system writes the commits and folds the branches together locally, but the push that releases them is a further, separate act that is never automatic. And a clean, push-ready `main` is the system's ceiling — the work is committed, merged, and explained, but the decision to release it is the pilot's, taken at the next break. A `verdict: OPEN` is not a failure: honest landing names open ends rather than hiding them, and the system's job remains to leave the pilot a landing that needs as few questions as possible.
 
 ---
 
 ## Related
 
-- [12-rollout.md](/specification/rollout/) — the rollout that runs Generate, Execute, and Evaluate before this fourth step.
+- [12-rollout.md](/specification/rollout/) — the rollout (Stage 1) that runs Generate, Execute, and Evaluate before this landing stage.
+- [38-stage-model.md](/specification/stage-model/) — the four-stage process end; landing is Stage 2, merge preparation (the local merge up to `main`) is Stage 3, and the push gate is Stage 4.
 - [13-orchestration.md](/specification/orchestration/) — the orchestrator, agent team, and state files that drive the rollout and feed the machine-readable marker.
-- [16-git-security-versioning.md](/specification/git-security-versioning/) — the deterministic git flow governing worktrees, branches, and the commits the landing prepares.
+- [16-git-security-versioning.md](/specification/git-security-versioning/) — the deterministic git flow governing worktrees, branches, and the commits and local merge the landing and merge preparation prepare.
 - [00-overview.md](/specification/overview/) — conformance language.

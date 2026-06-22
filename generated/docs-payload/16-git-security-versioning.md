@@ -6,14 +6,14 @@ spec_file: "16-git-security-versioning.md"
 order: 16
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T18:35:05.282Z"
+generated_at: "2026-06-22T01:11:01.570Z"
 generated_from: "spec/v0.1.0/16-git-security-versioning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/16-git-security-versioning.md."
 ---
 
 
-After a rollout stop, the system has historically handed work over to an uncontrolled commit-and-push — "it runs out of control". This chapter fixes a **deterministic git flow** so that what happens to a repository after a stop is specified, not improvised. Security is a fixed part of that flow, not an afterthought.
+After a rollout stop, the system has historically handed work over to an uncontrolled commit-and-push — "it runs out of control". This chapter fixes a **deterministic git flow** so that what happens to a repository after a stop is specified, not improvised. Security is a fixed part of that flow, not an afterthought — and that security extends to destructive git operations, which must never silently overwrite uncommitted work.
 
 ---
 
@@ -62,6 +62,30 @@ Issues are part of this same security-governed area. An issue **MUST** be:
 - **Free of secrets** — the same `git-security` scan that gates commits also scans issue text before creation.
 
 Work packages are addressed by ID rather than by absolute path; this reduces path exposure and keeps the public issue trail clean.
+
+---
+
+## Destructive git-ops over a dirty tree
+
+Some git operations overwrite the working tree without confirmation: a path-scoped checkout (`git checkout <ref> -- <path>`), a `git restore`, a `git reset --hard`, and `git clean`. When such an operation is run too broadly over a tree that holds uncommitted edits, those edits are overwritten in place and are gone — the only surviving version is what was last committed. This is a real, irreversible data-loss class, not a hypothetical one.
+
+The governing principle is **Working-Clone ≠ Backup**. The local working clone is **NOT** a backup. Only state that is **committed AND pushed to the remote (`origin`)** is protected: the remote is the durable backup. Uncommitted edits live in exactly one place — the working tree — and have no copy anywhere; if they are overwritten, no recovery exists.
+
+### Pre-Destructive-Guard (normative)
+
+Before running any potentially-destructive git operation that can overwrite dirty or protected files — `git checkout … -- <path>`, `git restore`, `git reset --hard`, `git clean` — the actor:
+
+- **MUST** first determine whether the working tree is dirty or holds protected files in the operation's path range. A broad destructive path operation over a dirty tree is **NEVER** run.
+- **MUST**, when dirty or protected files are in range, secure those files first — stash or commit them — **OR** narrow the operation so its path scope tightly excludes every dirty/protected file. Securing first and tight scoping are the only two permitted ways forward; running broad-and-dirty is not.
+- **MUST NOT** widen a destructive path operation beyond the specific files it is meant to touch. The default scope is the narrowest path that achieves the intent, never the whole tree or a parent directory.
+
+### Protected-files / disposition check (normative)
+
+Where a controlled stop or rollout records the working tree's dirty and protected files in a readiness marker's disposition (the enumerated list of files that must not be lost), that disposition is authoritative:
+
+- Before any destructive git-op, the actor **MUST** consult the recorded disposition of protected/dirty files.
+- Every file named there **MUST** be stashed or committed before the op runs, **OR** the op **MUST** be narrowed so that none of those files fall within its path scope.
+- A destructive git-op that would overwrite a file the disposition marks as protected, without first securing it, **MUST NOT** be run.
 
 ---
 

@@ -6,7 +6,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T18:35:05.282Z"
+generated_at: "2026-06-22T01:11:01.570Z"
 generated_from: "spec/v0.1.0/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/34-question-interface.md."
@@ -72,6 +72,24 @@ The legacy markdown parser locates options by scanning for an inline marker (`([
 ### The questions-json Mandate
 
 Questions MUST be authored as a **`questions-json` block** (the block's syntax and field schema are defined in [07-revisions-and-questions.md](/specification/revisions-and-questions/)). In that block, options are **JSON objects**, never recovered by an inline marker scan, so the phantom-trap is **structurally eliminated** rather than mitigated. When the block is present it is **authoritative** (07's authority rule); this chapter elevates that from "authoritative when present" to **required for questions** — the deterministic block is the canonical way to pose a question.
+
+#### The Question-Object Fields
+
+Each question object in the block is authored with **English** field names. These are the canonical names docs and authors use:
+
+| Field | Type | Meaning |
+|-------|------|---------|
+| `id` | string | The question id, e.g. `F1` (1:1 with the `### F{N}` heading). |
+| `title` | string | A short title shown next to the id. |
+| `background` | string | One or two sentences that reconstruct the context. |
+| `question` | string | The question itself, with all options spelled out. |
+| `recommendation` | string | The agent's recommendation plus its one-line reasoning. |
+| `type` | `single` \| `multi` | Single-choice or multiple-choice. |
+| `options` | object[] | The real options, each `{ key, label, kind }`. |
+| `preselected` | number[] | Optional explicit pre-selection by option index. |
+| `answered` | boolean | Whether the question has been answered. |
+
+The parser is **tolerant**: for back-compat it still accepts the legacy German field names — `frage` (for `question`), `hintergrund` (for `background`), `typ` (for `type`), and `aiRecommendation`/`ai_recommendation` (for `recommendation`). When both spellings are present on the same object the German name wins, so existing blocks keep parsing unchanged. New blocks SHOULD use the English names above. The `custom` ("reject") and `topic` ("skip via topic") options are injected by the parser and MUST NOT be authored as extra option rows.
 
 ### Interplay with the Question-Count Gate
 

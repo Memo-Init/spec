@@ -1325,6 +1325,23 @@ This mirrors the empty-context discipline (see [09-contamination-context-handove
 
 ---
 
+## Vertical-Slice-First (Tracer-Bullet) Rollout Strategy
+
+A rollout MAY adopt an optional execution strategy, chosen **at rollout start**, when its phases share a **risky integration** — an architecture whose end-to-end viability is not yet proven and would only be discovered after most of the work is already built. Under this strategy, the rollout first implements **one thin vertical slice that runs end-to-end across all phases** — a single narrow path that touches each layer the integration spans — to prove the architecture early, **before** fanning out the remaining breadth. Only once that one slice is demonstrably working does the rollout build out the rest of the PRDs in each phase. The intent is to de-risk: a wrong architectural assumption surfaces on the first slice, when correcting it is cheap, rather than after the full breadth has been committed to a flawed design.
+
+The two alternatives are decided once, at rollout start:
+
+| Strategy | When to choose | Shape of execution |
+|----------|----------------|--------------------|
+| **Sequential (default)** | No risky integration; phases are well-understood and independent enough. | Build each phase's full breadth in dependency order. |
+| **Vertical-slice-first** | A risky integration whose viability must be proven before committing the breadth. | Build one thin end-to-end slice through all phases first; fan out the rest only after it works. |
+
+This is an **optional rollout-execution strategy**, not a mandatory step: the sequential default is the norm, and the vertical-slice-first strategy is reached for only when the integration risk justifies the extra discipline of carving out a first slice.
+
+> **Distinct from the strand-finalize "tracer-bullet".** This rollout strategy shares the evocative "tracer-bullet" image (a single round whose visible trace proves the line of fire) but is a **different concept** from the strand-finalize **Tracer-Bullet** decision in [25-strands.md](./25-strands.md) and [30-primitives.md](./30-primitives.md). That one is a *finalization-time* decision on a single large strand — write a strand spec and rewrite that strand's PRDs. This one is a *rollout-execution* strategy chosen at rollout start, governing the order in which the whole rollout's breadth is built. They live at different points in the workflow and on different scopes (one strand vs. the entire rollout); do not conflate them.
+
+---
+
 ## Landing the Plane (Closing Step)
 
 After Evaluate, the rollout MUST **land the plane** — the fourth and final step, which leaves
@@ -1370,6 +1387,8 @@ The two files are deliberately separate and **MUST NOT** be conflated:
 - [27-landing-the-plane.md](./27-landing-the-plane.md) — full specification of the fourth rollout step: landing document structure, L1–L5 checklist, and pilot/system boundary.
 - [33-maintenance.md](./33-maintenance.md) — the maintenance roof and the board the pre-rollout health check projects over.
 - [26-memo-history.md](./26-memo-history.md) — the chronicle, the leading indicator of the pre-rollout health check.
+- [25-strands.md](./25-strands.md) — the strand-finalize "Tracer-Bullet" decision, a distinct concept from the vertical-slice-first rollout strategy above.
+- [30-primitives.md](./30-primitives.md) — the central glossary that disambiguates the two "tracer-bullet" senses.
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -1414,6 +1433,23 @@ Each phase is run by a team with four roles. The Lead is the coordinator; no age
 The Lead starts Workers in parallel where PRD dependencies allow, runs an Evaluator (fresh context, no carry-over) per finished Worker, iterates Worker↔Evaluator at most twice on FAIL, then runs the Phase Evaluator on the integrated result. Evaluators **MUST** receive a fresh context — they know nothing of the implementation process and see only the PRD plus the produced files (the empty-context rule, see [09-contamination-context-handover.md](./09-contamination-context-handover.md)). The first roles to migrate to repo-scoped agents are exactly these evaluators (see [14-agents-skills-tasks.md](./14-agents-skills-tasks.md)).
 
 The **Model capability** column expresses role requirements, not product names. The Lead requires the strongest reasoning model because it holds the most context and makes coordination decisions. Workers default to a standard capable model; complex or highly interdependent PRDs warrant the strongest available. Evaluators and Phase Evaluators need a validated, capable model — a lighter option is permissible when the validation task is clearly bounded. Model selection is the operator's responsibility and is governed by resource budget; the harness does not enforce a specific product.
+
+Phase execution is **agent-team based, not script-driven.** The default execution path is for the Lead to **spawn one Worker per PRD** in its own context — this is the wired default of an agent phase, not an optional "may use agents" suggestion. The model-driven fan-out (the Lead deciding per turn over a handful of parallel sub-agents) is reserved for **research only** (see *Research Fan-Out vs Agents* below); everything else, phase execution above all, runs as the Lead/Worker/Evaluator/Phase-Evaluator team.
+
+---
+
+## Agent-Naming Schema
+
+When the Lead spawns the team, every agent **MUST** be named by a canonical schema so the agent-tree view stays legible. The schema separates two fields: `name` carries the **ID** (very short, the addressable key) and `description` carries the **one-line human sense** of that agent. No free-text sprawl — the ID is mechanical, the sense is one short line.
+
+| Role | `name` (the ID) | `description` (the human short-sense) |
+|------|-----------------|----------------------------------------|
+| Lead | `lead-m{NNN}` | `"Rollout Memo {NNN} — Phase {x}/{y}"` |
+| Worker (1 per PRD) | `prd-{NNN}-{RR}` | `"{short PRD title}"` |
+| Evaluator | `eval-{NNN}-{RR}` | `"Eval PRD-{RR} (fresh)"` |
+| Research | `res-{topic}` | `"{short research question}"` |
+
+`{NNN}` is the three-digit memo number, `{RR}` the two-digit PRD number, `{x}/{y}` the current/total phase count, `{topic}` a short kebab slug for a research sub-agent. The rule is invariant across roles: `name` is the ID, `description` is the human short-sense, and neither field is padded with prose. The Lead applies this schema at every spawn point; the agent-tree view reads `name` for structure and `description` for meaning.
 
 ---
 
@@ -1687,6 +1723,26 @@ The phase-evaluator order is built with a function placeholder. A function loads
 
 ---
 
+## Dependency-Aware Ordering and the L1 PRD→PRD Edge
+
+When the compositor derives one prompt per PRD from a memo's rollout plan, the order of the emitted prompts is **dependency-aware, not naive numeric**. This is the same function-placeholder pattern as the phase-evaluator order, applied to the whole batch — the engine itself is unchanged.
+
+- **Topological order from `## Phase-Hints`.** The phases are ordered so that every phase follows the phases it `depends-on` (see [08-phases-and-prds.md](./08-phases-and-prds.md)). The ordering is a deterministic topological sort with a **stable numeric fallback**: among phases that are simultaneously ready, the lowest phase number runs first. A memo **without** phase hints therefore yields exactly the numeric order — the rule is additive, never destabilizing. A dependency cycle (or a dangling `depends-on`) is a **hard error**, not a silent re-order.
+- **The L1 PRD→PRD edge in the prompt.** Each composed PRD prompt **names the PRD(s) it depends on**. This dependency edge — level-one, PRD to PRD — is rendered into the prompt through a placeholder, exactly like every other dynamic value, so it stays inside the deterministic contract (same plan in, same prompt, same hash). A PRD with no upstream PRD renders the explicit "no upstream PRD" state; an empty dependency list is a **valid** state (a root PRD), not a finding.
+- **Bound to measured evidence.** Ordering is derived from the authored plan, not guessed: the source is the `## Phase-Hints` relations and the per-PRD dependency declarations. The producer stays the single bottleneck — the generator code is untouched and all of the per-memo dynamics live consumer-side (see [32-prompt-governance.md](./32-prompt-governance.md)).
+
+---
+
+## The Coverage Principle
+
+A composed batch should **cover the memo's units**, and that coverage is **measured, not assumed**. The principle is the same honesty rule the goal layer applies: a green run is not proof of coverage; coverage is a number you compute against the real plan.
+
+- **Soll (target).** Every unit the memo declares for implementation — each PRD in the rollout plan — should have exactly one composed prompt. The target is the full set of declared units.
+- **Ist (actual).** The set of prompts the compositor actually emitted, counted against the declared units.
+- **The dial.** Coverage is the Ist measured against the Soll: a ratio of composed prompts to declared units. A dial below the target is a **visible gap** (a unit with no composed prompt), not a silent omission — the same "the displayed context must coincide with the structure" rule the governance chapter states. The compositor reads the plan as the single source of the unit list, so the dial is computable and reviewable rather than asserted.
+
+---
+
 ## Skills Integration
 
 The prompt generator does not operate in isolation: it couples bidirectionally to the skill layer.
@@ -1712,6 +1768,8 @@ This is exactly what the agent layer needs: the generator produces the **determi
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the `AGENTS.md` agents whose per-invocation start-prompt this generator produces.
 - [13-orchestration.md](./13-orchestration.md) — the phase orchestration whose evaluator order is composed via the function-placeholder pattern.
 - [12-rollout.md](./12-rollout.md) — the rollout in which deterministic start-prompts drive sub-agent work.
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — the `## Phase-Hints` dependency tree from which the topological PRD-prompt order is derived.
+- [32-prompt-governance.md](./32-prompt-governance.md) — the governance that keeps this engine the sole, untouched prompt producer.
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -1724,7 +1782,7 @@ This is exactly what the agent layer needs: the generator produces the **determi
 | Depends on | [15-prompt-generator.md](./15-prompt-generator.md) |
 | Related | [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [13-orchestration.md](./13-orchestration.md), [00-overview.md](./00-overview.md) |
 
-After a rollout stop, the system has historically handed work over to an uncontrolled commit-and-push — "it runs out of control". This chapter fixes a **deterministic git flow** so that what happens to a repository after a stop is specified, not improvised. Security is a fixed part of that flow, not an afterthought.
+After a rollout stop, the system has historically handed work over to an uncontrolled commit-and-push — "it runs out of control". This chapter fixes a **deterministic git flow** so that what happens to a repository after a stop is specified, not improvised. Security is a fixed part of that flow, not an afterthought — and that security extends to destructive git operations, which must never silently overwrite uncommitted work.
 
 ---
 
@@ -1773,6 +1831,30 @@ Issues are part of this same security-governed area. An issue **MUST** be:
 - **Free of secrets** — the same `git-security` scan that gates commits also scans issue text before creation.
 
 Work packages are addressed by ID rather than by absolute path; this reduces path exposure and keeps the public issue trail clean.
+
+---
+
+## Destructive git-ops over a dirty tree
+
+Some git operations overwrite the working tree without confirmation: a path-scoped checkout (`git checkout <ref> -- <path>`), a `git restore`, a `git reset --hard`, and `git clean`. When such an operation is run too broadly over a tree that holds uncommitted edits, those edits are overwritten in place and are gone — the only surviving version is what was last committed. This is a real, irreversible data-loss class, not a hypothetical one.
+
+The governing principle is **Working-Clone ≠ Backup**. The local working clone is **NOT** a backup. Only state that is **committed AND pushed to the remote (`origin`)** is protected: the remote is the durable backup. Uncommitted edits live in exactly one place — the working tree — and have no copy anywhere; if they are overwritten, no recovery exists.
+
+### Pre-Destructive-Guard (normative)
+
+Before running any potentially-destructive git operation that can overwrite dirty or protected files — `git checkout … -- <path>`, `git restore`, `git reset --hard`, `git clean` — the actor:
+
+- **MUST** first determine whether the working tree is dirty or holds protected files in the operation's path range. A broad destructive path operation over a dirty tree is **NEVER** run.
+- **MUST**, when dirty or protected files are in range, secure those files first — stash or commit them — **OR** narrow the operation so its path scope tightly excludes every dirty/protected file. Securing first and tight scoping are the only two permitted ways forward; running broad-and-dirty is not.
+- **MUST NOT** widen a destructive path operation beyond the specific files it is meant to touch. The default scope is the narrowest path that achieves the intent, never the whole tree or a parent directory.
+
+### Protected-files / disposition check (normative)
+
+Where a controlled stop or rollout records the working tree's dirty and protected files in a readiness marker's disposition (the enumerated list of files that must not be lost), that disposition is authoritative:
+
+- Before any destructive git-op, the actor **MUST** consult the recorded disposition of protected/dirty files.
+- Every file named there **MUST** be stashed or committed before the op runs, **OR** the op **MUST** be narrowed so that none of those files fall within its path scope.
+- A destructive git-op that would overwrite a file the disposition marks as protected, without first securing it, **MUST NOT** be run.
 
 ---
 
@@ -1870,7 +1952,7 @@ A fixed mapping ties the ID to git artifacts:
 | 1 Phase | 1 Issue | Each phase has exactly one issue (`M{NNN}-{PP}` reference) |
 | 1 Commit | 1 PRD | A commit corresponds to one PRD |
 | 1 PR | 1 affected repo | One pull request per affected repository, not one per memo |
-| Branch | per memo | `memo-{NNN}-{slug}` |
+| Branch | per memo | `<PREFIX>-{NNN}-{slug}` (the canonical branch-naming schema below) |
 
 ### Commit message
 
@@ -1884,9 +1966,43 @@ The `[PREFIX]` is the project's context prefix in brackets (the same prefix as `
 
 ### Pull requests across repos
 
-Because one memo can coordinate several repositories (see [18-multidimensionality.md](./18-multidimensionality.md)), the unit of a pull request is the **affected repo**, not the memo. A memo touching three repos produces three pull requests, each on its own `memo-{NNN}-{slug}` branch in that repo.
+Because one memo can coordinate several repositories (see [18-multidimensionality.md](./18-multidimensionality.md)), the unit of a pull request is the **affected repo**, not the memo. A memo touching three repos produces three pull requests, each on its own canonical branch (the `<PREFIX>-{NNN}-{slug}` schema below) in that repo.
 
 All PRs for a memo are merged together as the final step of the rollout — the "landing the plane" moment (see [13-orchestration.md](./13-orchestration.md)). The orchestrator **MUST NOT** merge a repo's PR in isolation before the other affected repos are ready; concurrent merge keeps the multi-repo state consistent. If a PR must be merged earlier for a dependency reason, the deviation **MUST** be noted in the memo's rollout log.
+
+---
+
+## Branch Naming
+
+There is exactly **one** canonical branch-naming schema, and it is rooted on the full prefixed memo-ID — the same `{CTX}` prefix and `{NNN}` memo number defined above. Earlier drafts carried a second, unprefixed `memo-{NNN}-{slug}` shape; that shape is **RETRACTED**. Two competing schemas that both interpolate `{NNN}` are exactly how a branch ends up carrying the wrong number, so only one schema is permitted.
+
+The canonical branch name is:
+
+```
+<PREFIX>-{NNN}-{slug}[/p{N}[-prd{RR}]]
+```
+
+| Segment | Meaning | Source |
+|---------|---------|--------|
+| `<PREFIX>` | The project's context prefix (the same `{CTX}` as the memo-ID). | Read once from the project config (the `projectPrefix` entry), never typed by hand. |
+| `{NNN}` | 3-digit memo number. | The memo directory name (`{NNN}-{slug}`). |
+| `{slug}` | The memo's kebab slug. | The memo directory name. |
+| `/p{N}` | Optional phase suffix, added when the branch is scoped to one phase. | The phase number. |
+| `-prd{RR}` | Optional PRD suffix, appended to the phase suffix when the branch is scoped to one PRD. A PRD suffix **MUST NOT** appear without a phase suffix (a PRD lives inside a phase). | The PRD number. |
+
+The base form `<PREFIX>-{NNN}-{slug}` is the per-memo branch. The `/p{N}` and `/p{N}-prd{RR}` forms are the same branch lifecycle scoped down to a phase or a PRD; they are not a different branch family.
+
+### The CLI Leaf Is the Source of Truth
+
+The prefix and the memo number/slug are not retyped at each branch creation — that is precisely how a wrong number gets introduced. The branch name is **derived deterministically** by a single CLI leaf, `memo git branch-name`, which reads the prefix from the project config and the `{NNN}-{slug}` id from the memo directory name and assembles the canonical schema above. That leaf is the **source of truth** for the branch name; any tool, skill, or human that needs the branch name **MUST** obtain it from this leaf rather than constructing the string independently.
+
+### Fail-Loud Rule
+
+The derivation is **fail-loud**. If the project config is missing or carries no non-empty prefix, or if the supplied memo cannot be resolved to an `{NNN}-{slug}` id from a directory name, the leaf **MUST** fail with a clear error and a repair hint — it **MUST NOT** emit a branch name built from a guessed or defaulted number or prefix. A missing prefix is an error to surface, never a value to invent (this is the same no-silent-default discipline that governs the deterministic git flow in [16-git-security-versioning.md](./16-git-security-versioning.md)).
+
+### Branch-Number Gate (normative)
+
+A pre-merge / stale-guard check **MUST** compare the working branch against the value produced by `memo git branch-name` for the memo being landed. The check **MUST** block the merge when the working branch's memo number does not equal the memo-ID's number. A branch whose number disagrees with the memo it claims to implement is a wrong-numbered branch, and a wrong-numbered branch **MUST NOT** be merged. Because the CLI leaf is the single source of truth, the comparison is deterministic: there is one expected branch name, and a working branch that does not match it on the number segment fails the gate. This gate is the enforcement counterpart of the fail-loud derivation — the derivation prevents a wrong number from being produced, the gate prevents a wrong number from being merged.
 
 ---
 
@@ -2693,7 +2809,7 @@ A strand is the **dependency closure over phases**: the transitive closure of th
 
 - **Emergent, not declared.** A strand is **computed** from the dependency edges: it is the set of phases reachable from one another through `depends-on` (and the PRDs those phases carry). It is **NOT** a thematic bundle the author hand-picks. Two phases belong to the same strand because the dependency graph links them, not because they share a topic.
 - **Many phases, few strands.** Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**, not one strand per phase. The mapping phase→strand is therefore **many-to-one and emergent**, never a fixed 1:1 assignment.
-- **Trivial case.** A memo of a single PRD yields one PRD → one phase → one strand. In that degenerate case there is nothing to re-order, so the tracer-bullet decision (below, and at finalization — see the finalize gate) does not apply.
+- **Trivial case.** A memo of a single PRD yields one PRD → one phase → one strand. In that degenerate case there is nothing to re-order, so the tracer-bullet decision (below, and at finalization — see the finalize gate) does not apply. Note that **this** tracer-bullet is the *strand-finalize* sense — a finalization-time decision on a large strand — and is **distinct** from the same-named vertical-slice-first **rollout strategy** (an optional rollout-execution order chosen at rollout start) defined in [12-rollout.md](./12-rollout.md). The two share the image but operate at different points and scopes; do not conflate them.
 - **What a strand carries.** A strand carries its **PRDs**. The PRDs carry the **requirements** (drawn from the registry of [23-requirements.md](./23-requirements.md)) and the **tools** (drawn from [24-tools-registry.md](./24-tools-registry.md)). A strand therefore carries requirements and tools **through its PRDs**, not directly.
 - **Optional strand spec.** A strand **MAY** carry its own **strand spec** — **RECOMMENDED** for larger strands, never mandatory. The strand spec is sharpened through an interview pass (a question catalogue) when the strand is large enough to warrant it.
 
@@ -2731,6 +2847,7 @@ A strand is a **tag or label**, not a component of the numeric memo identifier, 
 - [23-requirements.md](./23-requirements.md) — a strand's PRDs draw their requirements from this registry.
 - [24-tools-registry.md](./24-tools-registry.md) — a strand's PRDs draw their tools from this registry.
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the source of the phase/PRD path a strand runs along.
+- [12-rollout.md](./12-rollout.md) — the vertical-slice-first (tracer-bullet) rollout strategy, a distinct same-named concept from this chapter's strand-finalize Tracer-Bullet decision.
 - [06-memo-structure.md](./06-memo-structure.md) — strands live inside a memo under `.memo/`.
 - [00-overview.md](./00-overview.md) — specification scope.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the strand primitive summarized as cross-cutting.
@@ -2838,9 +2955,11 @@ A topic in the wiki tells you the current answer; the chronicle tells you how th
 | Field | Value |
 |-------|-------|
 | Status | Draft |
-| Related | [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [00-overview.md](./00-overview.md) |
+| Related | [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [38-stage-model.md](./38-stage-model.md), [00-overview.md](./00-overview.md) |
 
-Landing the plane is the fourth step of the rollout, after Generate, Execute, and Evaluate. Where Evaluate decides whether the work is correct, landing decides whether the workspace is in a state someone can resume. It leaves the workspace better than it was found, in a condition a fresh context can pick up the next morning without questions. This is the precondition of the "interlocking brick" principle: a new memo only docks cleanly onto a workspace that the previous memo left correctly.
+Landing the plane is the second stage of the process end, the step that follows a green Evaluate. The rollout (Generate, Execute, Evaluate) is the first stage; landing is the second, and merge preparation and the push gate follow it (see [38-stage-model.md](./38-stage-model.md)). Where Evaluate decides whether the work is correct, landing decides whether the workspace is in a state someone can resume. It leaves the workspace better than it was found, in a condition a fresh context can pick up the next morning without questions. This is the precondition of the "interlocking brick" principle: a new memo only docks cleanly onto a workspace that the previous memo left correctly.
+
+Landing prepares; it does not perform the merge. As Stage 2 it makes the workspace startable and push-ready in principle — worktrees cleaned, open ends named, the chronicle written — and hands off to Merge Preparation (Stage 3), which carries every working branch through a local merge up to `main`. The division of labour between these two stages is fixed in [38-stage-model.md](./38-stage-model.md) and is referenced throughout this chapter.
 
 ---
 
@@ -2869,9 +2988,9 @@ The landing produces a single document with a fixed, deterministic structure. Th
 
 Landing is complete when these items hold:
 
-- **L1** — Worktrees are cleaned. No stray worktrees are left behind; each one created during the rollout is removed or accounted for.
-- **L2** — Branches are merged or documented. Every branch is either folded back into its target or named explicitly in the landing document with its reason for remaining.
-- **L3** — Commits are prepared and presented, but **never committed by the system**. The changes are staged and described so the pilot can commit them, but the act of committing stays with the pilot.
+- **L1** — Worktrees are cleaned. No stray worktrees are left behind; each one created during the rollout is removed or accounted for. Worktree cleanup is a mandatory part of landing, not an optional tidy-up.
+- **L2** — Branches are carried through to a local merge. Landing (Stage 2) leaves the workspace startable; Merge Preparation (Stage 3) then takes every working branch through a local merge up to `main` (see [38-stage-model.md](./38-stage-model.md)). Merging is the default outcome: a branch is folded back into `main` unless there is a justified exception, in which case the landing document names that branch and the explicit reason it remains unmerged. "Documented instead of merged" is an exception with a named reason, never the easy default that leaves stub branches behind.
+- **L3** — Commits are prepared and locally merged, but **never pushed**. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's.
 - **L4** — Open ends are named. Deferred items, blocker resolutions, and needs-review remnants appear in the OPEN ENDS section; nothing finished-but-unstated is left implicit.
 - **L5** — The end-state is machine-readable. The `landing-readiness.json` marker is written so the landing can be consumed without reading prose.
 - **L7** — Exactly one narrated chronicle entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The existing L1-L5 points are unchanged; the chronicle point is L7 and the former L6 slot is deliberately left unassigned.
@@ -2880,17 +2999,18 @@ Landing is complete when these items hold:
 
 ## Pilot and System
 
-The **user is the pilot**; the system only prepares the landing. The boundary is sharp and is a hard rule: committing and pushing are acts of release, and release is the pilot's authorization. The system does everything up to that line — it cleans worktrees, stages changes, writes the description, names the open ends, and emits the marker — but it does not commit and it does not push on its own. It presents a landing the pilot can act on with as few questions as possible.
+The **user is the pilot**; the system prepares a landing the pilot can act on with as few questions as possible. The boundary is sharp and is a hard rule, but it falls at the push, not at the commit. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's. This replaces the older "never committed by the system" framing with "committed and locally merged, never pushed".
 
-Two distinctions sharpen this. A commit is not a push: even where a commit is prepared, it is the pilot who issues it, and pushing is a further, separate act of release that is never automatic. And "prepared and presented" is the system's ceiling — the changes are ready and explained, but the decision to land them is the pilot's, taken at the next break.
+Two distinctions sharpen this. A commit is not a push: the system writes the commits and folds the branches together locally, but the push that releases them is a further, separate act that is never automatic. And a clean, push-ready `main` is the system's ceiling — the work is committed, merged, and explained, but the decision to release it is the pilot's, taken at the next break. A `verdict: OPEN` is not a failure: honest landing names open ends rather than hiding them, and the system's job remains to leave the pilot a landing that needs as few questions as possible.
 
 ---
 
 ## Related
 
-- [12-rollout.md](./12-rollout.md) — the rollout that runs Generate, Execute, and Evaluate before this fourth step.
+- [12-rollout.md](./12-rollout.md) — the rollout (Stage 1) that runs Generate, Execute, and Evaluate before this landing stage.
+- [38-stage-model.md](./38-stage-model.md) — the four-stage process end; landing is Stage 2, merge preparation (the local merge up to `main`) is Stage 3, and the push gate is Stage 4.
 - [13-orchestration.md](./13-orchestration.md) — the orchestrator, agent team, and state files that drive the rollout and feed the machine-readable marker.
-- [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow governing worktrees, branches, and the commits the landing prepares.
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow governing worktrees, branches, and the commits and local merge the landing and merge preparation prepare.
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -3035,6 +3155,20 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 
 A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
 
+## C8 — Fix What You Find, Within YAGNI
+
+A healthy engineering culture leaves the workspace better than it was found. When an agent passes a small, adjacent defect — a broken link, a stale table, a typo in a sibling section, a one-line inconsistency next to the file it is already editing — the cultural failure is to walk past it: to offload it, hide it, or push it into the future. Documenting a problem is not solving it. A note that says "this is broken" leaves the thing broken.
+
+The rule: fix the small, adjacent defects you encounter, in place, while you are there. Do not file them away as someone else's problem; do not hide them behind a "known issue" comment; do not defer them to a round that may never come. This guardrail is the positive, in-the-small companion to "Work It In Instead of Deferring" ([01-philosophy.md](./01-philosophy.md)) — the philosophy frames why surfaced work is worked in rather than exported; this rule applies the same instinct to the incidental defects an agent stumbles over mid-task.
+
+This rule is deliberately bounded, and the boundary must be stated explicitly so it cannot be misread as a license to grow scope:
+
+- **Fix-what-you-find forbids HIDING.** The failure it prevents is the quiet pass-by — leaving a known small defect untouched because it was not the assigned task.
+- **YAGNI forbids BLOATING.** Fixing what you find is NOT a mandate to add unrequested scope, speculative features, or "while I'm here" abstractions for needs that have not arrived. "You aren't gonna need it" still governs: build for the requirement in front of you, not for an imagined future one.
+- **The two coexist.** Fix the small adjacent defect; add no speculative scope. One rule closes the gap where real defects get hidden; the other closes the gap where imagined needs get built. Neither overrides the other, and neither overrides the prioritization and deferral rules above (C7) — a *large* adjacent defect is still surfaced to the user, not silently absorbed.
+
+The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in `context/`** — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
+
 ---
 
 ## Related
@@ -3139,7 +3273,7 @@ Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (phases, `## Phase-Hin
 
 ## Strand
 
-A **strand** is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in `## Phase-Hints`. It is **emergent, not authored** — an implementation *derives* a strand by walking the dependency graph; it is never a thematic bundle the author hand-picks. Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**. A strand MAY span several topics, since it is defined by the dependency path the work takes, not by the topic it touches. A strand carries its **PRDs**, and through them its requirements and tools. A strand is a **tag**, never part of the numeric memo ID, and adding or renaming a strand MUST NOT change that ID. A large strand MAY carry an optional **strand spec**, sharpened through an interview pass, and is the unit on which the **Tracer-Bullet** finalize decision applies.
+A **strand** is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in `## Phase-Hints`. It is **emergent, not authored** — an implementation *derives* a strand by walking the dependency graph; it is never a thematic bundle the author hand-picks. Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**. A strand MAY span several topics, since it is defined by the dependency path the work takes, not by the topic it touches. A strand carries its **PRDs**, and through them its requirements and tools. A strand is a **tag**, never part of the numeric memo ID, and adding or renaming a strand MUST NOT change that ID. A large strand MAY carry an optional **strand spec**, sharpened through an interview pass, and is the unit on which the **Tracer-Bullet** finalize decision applies. This **Tracer-Bullet** is the *strand-finalize* sense — a finalization-time decision on one large strand — and is distinct from the same-named vertical-slice-first **rollout strategy** defined in [12-rollout.md](./12-rollout.md), which governs the build order of an entire rollout.
 
 Related: [25-strands.md](./25-strands.md) (emergence, tag-not-ID, strand spec), [08-phases-and-prds.md](./08-phases-and-prds.md) (the phase edges a strand emerges from); related primitives: [Phase](#phase), [PRD](#prd), [Requirement](#requirement), [Tool](#tool).
 
@@ -3218,7 +3352,8 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 | Strand | Emergent dependency closure over phases; a tag, not part of the memo ID. | [25-strands.md](./25-strands.md) |
 | Requirement | Two-sided cross-cutting check (statement → generation, check → gate); ternary status. | [23-requirements.md](./23-requirements.md) |
 | Tool | Descriptor in the recommended tools registry; reachability is a planning concern. | [24-tools-registry.md](./24-tools-registry.md) |
-| Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. | [25-strands.md](./25-strands.md) |
+| Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. Distinct from the vertical-slice-first rollout strategy of the same image. | [25-strands.md](./25-strands.md) |
+| Vertical-slice-first (tracer-bullet) rollout strategy | Optional rollout-execution strategy chosen at rollout start: build one thin end-to-end slice across all phases first to prove a risky integration, then fan out. Not the strand-finalize decision. | [12-rollout.md](./12-rollout.md) |
 | Smart-Zone | The ~1/4-context band where attention has not yet degraded; the target for a PRD. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
 | Chronicle | The narrated, append-only timeline of memos with breakpoints; the project's entry point. Not a primitive — a cross-cutting view. | [26-memo-history.md](./26-memo-history.md) |
 | context rot | Quality decay of LLM output as input length grows (the cause). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
@@ -3231,7 +3366,8 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.
 - [23-requirements.md](./23-requirements.md) — the cross-cutting requirement primitive in full.
-- [25-strands.md](./25-strands.md) — the emergent strand primitive and the Tracer-Bullet decision.
+- [25-strands.md](./25-strands.md) — the emergent strand primitive and the strand-finalize Tracer-Bullet decision.
+- [12-rollout.md](./12-rollout.md) — the vertical-slice-first (tracer-bullet) rollout strategy, the same-named but distinct rollout-execution concept.
 - [24-tools-registry.md](./24-tools-registry.md) — the tool primitive and its registry.
 - [06-memo-structure.md](./06-memo-structure.md) — the memo, revision, and block structure on disk.
 - [00-overview.md](./00-overview.md) — specification scope and the chapter index.
@@ -3362,7 +3498,7 @@ The prompt generator is not "a small module off to the side"; it is the **channe
 
 Two work shapes pass through the same bottleneck, and the spec treats them as one governed mechanism with two configurations.
 
-- **Case B — PRD generation (homogeneous).** Highly automatable: at finalization the memo's phase plan ([08-phases-and-prds.md](./08-phases-and-prds.md)) is the source from which **one composed prompt per PRD** is derived. This is the **default** PRD-prompt path; free-form per-PRD prompting is the deprecated fallback, not the norm.
+- **Case B — PRD generation (homogeneous).** Highly automatable: at finalization the memo's phase plan ([08-phases-and-prds.md](./08-phases-and-prds.md)) is the source from which **one composed prompt per PRD** is derived. This is the **default** PRD-prompt path; free-form per-PRD prompting is the deprecated fallback, not the norm. PRD generation is a governed step in its own right — generation is **not** execution — and it MUST be **dependency-aware, not naive numeric**: the composed prompts are ordered topologically from the `## Phase-Hints` relations, and each PRD prompt carries the **L1 PRD→PRD dependency edge** (the upstream PRD(s) it depends on). See the dependency-ordering and coverage sections of [15-prompt-generator.md](./15-prompt-generator.md) for the engine-side contract.
 - **Case A — research at memo-init (heterogeneous).** Research prompts are diverse, but they MUST still run through a harness rather than ad-hoc text: a research-prompt template, a config, and a bridge that tags each research output with its **topic id** so the topic store links back to the produced research file.
 - **The common denominator.** Both cases need the same bottleneck — deterministic, with an intervention door — so the quality floor is never undercut regardless of how heterogeneous the work is.
 
@@ -3374,6 +3510,17 @@ Governance draws a hard line between *what the LLM touches* and *what stays a st
 
 - **The LLM knows only the CLI.** A conforming consumer MUST drive the generator exclusively through the `memo prompt compose` leaf (or an equivalent leaf), which demands defined, typed inputs. The LLM does not know the engine internals; it knows the CLI contract. As more of the prompt is carried by the template, the consumer MUST be told what it still has to contribute — that shifting boundary is the substance of the interaction, and the AI's own input is kept minimal, only where essential.
 - **The generator code stays untouched (the boundary).** The dynamic part — per-memo data structures, the `buildUnits` configuration, and the rendering of context into the prompt — MUST live **consumer-side** (in the core CLI and its templates), through the generator's already-typed `function` placeholder sources. The prompt-generator module remains a stable, deterministic library; its code is **not** modified to serve a given memo. Keeping the single point of failure small and unchanged is a normative constraint, not a preference.
+
+---
+
+## Dependency-Aware PRD Generation Stays Governed
+
+Making PRD generation dependency-aware does **not** loosen the governance — it tightens it, under the same constraints that hold for every other composed prompt.
+
+- **The compositor stays the SOLE prompt producer.** Topological ordering and the L1 PRD→PRD edge are realized as an **extension of the existing compositor**, not as a rival prompt path. There is exactly one producer of initial prompts; dependency-awareness does not introduce a second one.
+- **The generator code stays untouched.** The ordering pass and the dependency-edge rendering live **consumer-side**, through the generator's already-typed `function` placeholder sources — the same boundary the previous section draws. The prompt-generator module is not modified to make PRD generation dependency-aware.
+- **Bidirectional memo validation still applies.** A dependency-aware batch is still validated both ways against the memo (every memo unit covered; no composed prompt without a memo basis). Reordering changes the sequence, never the set.
+- **Bound to measured evidence.** The order is **derived** from the authored `## Phase-Hints` and the per-PRD dependency declarations, never guessed. Absent hints, the order is the stable numeric fallback. The dependency tree is reviewable because it is read from the plan, not asserted by the producer.
 
 ---
 
@@ -3599,6 +3746,24 @@ The legacy markdown parser locates options by scanning for an inline marker (`([
 
 Questions MUST be authored as a **`questions-json` block** (the block's syntax and field schema are defined in [07-revisions-and-questions.md](./07-revisions-and-questions.md)). In that block, options are **JSON objects**, never recovered by an inline marker scan, so the phantom-trap is **structurally eliminated** rather than mitigated. When the block is present it is **authoritative** (07's authority rule); this chapter elevates that from "authoritative when present" to **required for questions** — the deterministic block is the canonical way to pose a question.
 
+#### The Question-Object Fields
+
+Each question object in the block is authored with **English** field names. These are the canonical names docs and authors use:
+
+| Field | Type | Meaning |
+|-------|------|---------|
+| `id` | string | The question id, e.g. `F1` (1:1 with the `### F{N}` heading). |
+| `title` | string | A short title shown next to the id. |
+| `background` | string | One or two sentences that reconstruct the context. |
+| `question` | string | The question itself, with all options spelled out. |
+| `recommendation` | string | The agent's recommendation plus its one-line reasoning. |
+| `type` | `single` \| `multi` | Single-choice or multiple-choice. |
+| `options` | object[] | The real options, each `{ key, label, kind }`. |
+| `preselected` | number[] | Optional explicit pre-selection by option index. |
+| `answered` | boolean | Whether the question has been answered. |
+
+The parser is **tolerant**: for back-compat it still accepts the legacy German field names — `frage` (for `question`), `hintergrund` (for `background`), `typ` (for `type`), and `aiRecommendation`/`ai_recommendation` (for `recommendation`). When both spellings are present on the same object the German name wins, so existing blocks keep parsing unchanged. New blocks SHOULD use the English names above. The `custom` ("reject") and `topic` ("skip via topic") options are injected by the parser and MUST NOT be authored as extra option rows.
+
 ### Interplay with the Question-Count Gate
 
 The **question-count lint gate** counts the `### F{N}` markdown headings in a memo and compares that count to the number of questions in the `questions-json` block; a mismatch is a violation. The two channels MUST therefore stay in **1:1 correspondence** — a question present in one MUST be present in the other, so the counts are equal.
@@ -3812,6 +3977,166 @@ Contamination describes the model's own degraded **output** context; transcript 
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — contamination and context rot, the distinct output-side axes.
 - [30-primitives.md](./30-primitives.md) — the glossary where transcript reliability sits beside context rot and contamination.
 - [10-proactive-research.md](./10-proactive-research.md) — Step 5 research, which must not run on invented topics.
+
+---
+
+# 38. Stage Model
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [./12-rollout.md](./12-rollout.md), [./27-landing-the-plane.md](./27-landing-the-plane.md) |
+| Related | [./12-rollout.md](./12-rollout.md), [./27-landing-the-plane.md](./27-landing-the-plane.md), [./13-orchestration.md](./13-orchestration.md), [./17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [./00-overview.md](./00-overview.md) |
+
+The most reliable way to leave a thread half-finished is to mistake the end of the rollout for the end of the work. The rollout closes when Evaluate passes, but a passed Evaluate is only the first of four stages that carry a memo from "code written" to "thread done". The governing principle is short and load-bearing: **Rollout done ≠ memo done**. The rollout is stage one of four; three further stages stand between a green Evaluate and a thread that can be closed without leaving a mess for the next morning. This chapter names those four stages, fixes the condition that ends each one, and places the per-memo model under the wider plan meta-level, where the same "the rollout is only stage one of N" holds across a sequence of memos as well as within a single one.
+
+---
+
+## The Four Stages
+
+The process end is a fixed, ordered sequence. Each stage has a single job and a single condition that ends it; a stage is not complete until its end-condition holds, and the next stage does not begin until the previous one is done. The condition is what makes the boundary checkable rather than a matter of judgement.
+
+| Stage | Name | Content | Ends when |
+|-------|------|---------|-----------|
+| 1 | Rollout | Generate → Execute → Evaluate | Evaluate PASS |
+| 2 | Landing the Plane | clean up, name open ends honestly, chronicle + handover, worktree cleanup | the workspace is "next-morning" startable |
+| 3 | Merge Preparation | branches ID-named, locally merged up to `main`, commits prepared and presented | clean and conflict-free, push-ready |
+| 4 | Merge / Push Gate | the user authorizes the push (push is never automatic) | the user pushes and the thread is done |
+
+**Stage 1 — Rollout.** The autonomous half: Generate produces the work orders, Execute implements them across phases, Evaluate checks memo conformity. The stage ends on a green Evaluate. Its full specification is [12-rollout.md](./12-rollout.md). A green Evaluate ends the rollout — it does not end the memo.
+
+**Stage 2 — Landing the Plane.** Landing renders the end-state legible and resumable: it cleans worktrees, names open ends honestly (including a `verdict: OPEN` where that is the truth), writes the chronicle entry and the handover, and leaves the workspace in a state a fresh context can pick up the next morning without questions. Its full specification is [27-landing-the-plane.md](./27-landing-the-plane.md). **Landing is always mandatory** — it is never skipped, regardless of whether the merge stages run immediately or later, because a thread left without a landing is a thread the next session has to reconstruct.
+
+**Stage 3 — Merge Preparation.** With the workspace landed, the branches are named by their memo ID (see [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)), the system performs the **local merge up to `main`** deterministically, and the commits are prepared and presented. The stage ends when the result is clean and conflict-free — push-ready, with nothing left to resolve before release.
+
+**Stage 4 — Merge / Push Gate.** The final boundary is the user's. The user authorizes the push; the push is never automatic. The stage — and the thread — ends when the user pushes.
+
+---
+
+## What "The System Merges, The User Releases" Means
+
+The boundary between stage three and stage four is precise, and a common over-statement gets it wrong. It is **not** true that "the user does the merge". The system performs the local merge up to `main` deterministically as part of merge preparation: it folds the ID-named branches together, resolves the integration locally, and presents a clean, conflict-free `main` ready to release. What the system does **not** do is push. The push is the one act of release that stays with the user, every time, and is never automatic.
+
+So the correct framing is a split: **the system merges locally, the user releases by pushing.** Stage three is deterministic system work — branch naming, local merge, commit preparation — and it produces a push-ready state. Stage four is the human gate — the user inspects what is prepared and authorizes the push. Conflating the two, in either direction, is the error this chapter exists to prevent: the system must not push on its own, and "the user merges" must not be used to excuse the system from doing the deterministic local merge it is responsible for.
+
+---
+
+## The Plan Meta-Level
+
+Above the per-memo stage model sits the **plan**. A plan carries one or more memos, and the stages described here apply to each memo in turn. The plan does not replace the per-memo sequence; it nests it. The same shape — "the rollout is only the first stage of N" — holds at both levels: within a single memo, a passed Evaluate is stage one of four; across a plan, a finished rollout of one memo is one step of a longer sequence, with its own landing, merge preparation, and push gate still ahead, and further memos behind it.
+
+The practical consequence is that closing a memo's rollout never closes the plan, and closing a memo's four stages never implies the plan is done while sibling memos remain. The push gate is reached per memo; a plan is finished only when every memo it carries has passed its own stage four. The meta-level is therefore not a different process but the same process applied repeatedly, with the plan as the ledger that records which memos have reached the gate and which have not.
+
+---
+
+## The Stage Lifecycle
+
+The lifecycle moves a finalized memo through the four stages to a closed thread. Solid edges are **gates** — a condition that must hold before the next stage begins. Dotted edges are **coordinated stage handovers** — a baton pass where the work continues but the responsibility moves from one stage's job to the next.
+
+```mermaid
+flowchart TD
+    M([Memo finalized]) -.-> S1[Stage 1: Rollout<br/>Generate → Execute → Evaluate]
+    S1 --> G1{Evaluate PASS?}
+    G1 -->|no| S1
+    G1 -->|yes| S2[Stage 2: Landing the Plane<br/>clean up · chronicle · handover · worktrees]
+    S2 -.-> S3[Stage 3: Merge Preparation<br/>ID-named branches · local merge to main · commits prepared]
+    S3 --> G2{clean & conflict-free?}
+    G2 -->|no| S3
+    G2 -->|yes| S4[Stage 4: Merge / Push Gate<br/>user authorizes the push]
+    S4 --> D([thread done])
+```
+
+The two gates are the checkable boundaries: the Evaluate gate closes stage one, and the clean-and-conflict-free gate closes stage three. The dotted handovers — finalized memo into rollout, landing into merge preparation — are coordinated baton passes rather than pass/fail checks: the work flows on, but the stage's job changes hands. The final edge into "thread done" is the user's push, the only place where the sequence leaves the system's hands entirely.
+
+---
+
+## Related
+
+- [12-rollout.md](./12-rollout.md) — stage one, the autonomous Generate → Execute → Evaluate that ends on a green Evaluate.
+- [27-landing-the-plane.md](./27-landing-the-plane.md) — stage two, the always-mandatory landing that leaves the workspace next-morning startable.
+- [13-orchestration.md](./13-orchestration.md) — the orchestrator and state files that drive the stages and record their progress.
+- [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — the ID-named branches and the deterministic git flow behind merge preparation and the push gate.
+- [00-overview.md](./00-overview.md) — conformance language.
+
+---
+
+# 39. Release and Pinning
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [16-git-security-versioning.md](./16-git-security-versioning.md), [33-maintenance.md](./33-maintenance.md) |
+| Related | [16-git-security-versioning.md](./16-git-security-versioning.md), [33-maintenance.md](./33-maintenance.md), [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) |
+
+A system that ships nothing outward still does not need a version on every repository. The historical failure was the opposite of under-shipping: every repository was stamped with the same version number, and formal releases were cut for artefacts that no consumer ever installed — vestigial releases that signalled "shipped" where nothing was. This chapter replaces that uniform over-release with a **two-stage policy**. The internal stage pins cross-repo dependencies by commit hash and bumps them through the maintenance re-bless flow; the external stage cuts a formal Release only for the named outward-facing artefacts. A version is the exception reserved for what actually leaves the system, not the default applied to everything inside it.
+
+---
+
+## Two Stages — Dev by Default, Release by Exception
+
+The split is between how repositories depend on each other internally and how the system ships outward.
+
+- **Internal stage — commit-hash pinning (the default).** Cross-repo dependencies are pinned by **git commit SHA**, not by version range. A repository that consumes another names the exact commit it was verified against — a site repository pins the specification repository by `#<sha>`, for example. This is the **default mode**: "dev mode is default." No version number is minted, no release is cut; the dependency is simply a frozen, named point in the source's history.
+- **External stage — a Release (the exception).** A formal Release with a version is created **only** for the named outward-facing artefacts. A Release is an outward act ([19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md)): it exists for an audience outside the system and is therefore reserved for the artefacts that audience actually consumes.
+
+The two stages are not two phases of the same artefact's life — most artefacts never leave the internal stage at all. The internal stage is the steady state; the external stage is entered only by the few repositories that ship.
+
+---
+
+## Which Repositories Release, and Which Are Pinned
+
+Releasing is bound to the **outward/internal axis** ([19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md)), not to repository size or activity.
+
+| Class | Artefacts | Distribution |
+|-------|-----------|--------------|
+| **Outward — gets a Release** | the CLI, the viewer, and the specification's site payload | a formal Release with a version, cut only when the artefact actually ships |
+| **Internal — sha-pinned, no Release** | the organisation profile repository, the prompt-generator, and the core library | consumed only by other repositories in the system, pinned by commit SHA |
+
+Internal-only repositories get **no releases at all**. A core library that is only ever imported by sibling repositories, an organisation profile, a prompt-generator that no outside party installs — none of these has an outside audience, so none earns a version. They are kept current by their pins, re-blessed through maintenance, and never tagged.
+
+This is the same triage the rest of the system applies: an artefact that faces outward carries the outward apparatus (a Release), an artefact that faces inward carries the inward apparatus (a SHA pin).
+
+---
+
+## Bumping a Pin Through Maintenance, Not Through a Release
+
+An internal SHA pin moves forward through the **maintenance re-bless flow** ([33-maintenance.md](./33-maintenance.md)), not through a version release. Every cross-repo edge carries a provenance pin — the commit of the source at which the edge was last verified — and advancing that pin is exactly the gated re-verification the maintenance chapter defines: a fresh-context check that the edge still holds at the source's current head, after which the pin is re-stamped.
+
+Bumping a pin is therefore a **maintenance act, not a release act**. It produces no version, no tag, and no outward signal; it simply moves the consumer's frozen reference forward to a newer, re-verified commit of the source. Because the pin always follows a check, the consumer never silently advances onto an unverified head — re-blessing without re-checking would merely hide drift ([28-drift.md](./28-drift.md)). The internal stage thus has its own forward motion that is entirely independent of releasing.
+
+---
+
+## Vestigial Releases Fall
+
+A release **exists only when an outward repository actually ships.** The pre-existing unused versions — cut for artefacts no consumer installed — are **retired**: they signalled a shipment that never happened, and keeping them around invites a consumer to depend on a tag that means nothing.
+
+The governing rule is that a version is a claim about an outward shipment. Where no shipment occurred, the version is a false claim and is removed. Going forward a Release is minted at the moment an outward artefact ships and at no other moment; the count of live releases tracks the count of real shipments, not the count of repositories.
+
+---
+
+## Pinning Caveats — Age Guards and Private Access
+
+Two operational caveats bound the SHA-pinning approach.
+
+- **A registry age-guard does not cover git-SHA pins.** A registry `min-release-age` guard — the rule that delays consuming a freshly published registry version until it has aged — applies **only to registry installs**, not to git-SHA pins. A SHA pin resolves a commit directly from the source repository and bypasses the registry entirely, so the age guard never sees it. The mitigation is a discipline, not a tool: **pin only reviewed SHAs.** The reviewer is the age guard's stand-in — a pin advances to a commit that a fresh-context check has actually inspected, never to an arbitrary head.
+- **Private sources need authenticated access.** A pin into a private repository resolves over an authenticated transport — SSH or a token — because the consuming build must be able to fetch the exact commit. A public-by-default posture does not change this: where a source is private, the pin only resolves for an actor holding the credential.
+
+---
+
+## The CLI Release Is Gated on a Decoupling Prerequisite
+
+The CLI is named as an outward artefact, but it is **not yet releasable as a standalone install.** Its code imports across repository boundaries by **relative path** — it reaches into sibling repositories through the filesystem rather than through a declared, installable dependency. A standalone install has no sibling repositories beside it, so those relative imports would not resolve. A real CLI Release is therefore **gated on a prerequisite**: the CLI must first be **decoupled** so it depends on its siblings through declared, resolvable dependencies rather than relative paths.
+
+This prerequisite is **explicitly deferred**, and the deferral is handled by the system's own rule for deferred scope: deferred work is **parked as a research note** (a research record under the project's context store), **never spun out as a follow-up artefact of its own**. The decoupling research is the parked note; the CLI Release stays gated behind it until the work is done. Naming the gate openly — rather than cutting a premature CLI Release that cannot actually be installed — is the honest position: the artefact is outward-classed in principle and release-blocked in practice, and the chapter says so rather than pretending the prerequisite away.
+
+---
+
+## Related
+
+- [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow, the commit-is-not-push rule, and the security gate that governs what leaves a repository.
+- [33-maintenance.md](./33-maintenance.md) — the provenance pin and the gated re-bless flow that advances an internal SHA pin without a release.
+- [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — git as backup and findability rather than a deployment trigger, and the work-package ID trail.
+- [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) — the inward/outward axis that decides which artefacts earn a Release and which stay SHA-pinned.
 
 ========================================
 # Workbench Sub-Spec

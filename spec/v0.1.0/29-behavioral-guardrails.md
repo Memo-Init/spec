@@ -59,6 +59,20 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 
 A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
 
+## C8 — Fix What You Find, Within YAGNI
+
+A healthy engineering culture leaves the workspace better than it was found. When an agent passes a small, adjacent defect — a broken link, a stale table, a typo in a sibling section, a one-line inconsistency next to the file it is already editing — the cultural failure is to walk past it: to offload it, hide it, or push it into the future. Documenting a problem is not solving it. A note that says "this is broken" leaves the thing broken.
+
+The rule: fix the small, adjacent defects you encounter, in place, while you are there. Do not file them away as someone else's problem; do not hide them behind a "known issue" comment; do not defer them to a round that may never come. This guardrail is the positive, in-the-small companion to "Work It In Instead of Deferring" ([01-philosophy.md](./01-philosophy.md)) — the philosophy frames why surfaced work is worked in rather than exported; this rule applies the same instinct to the incidental defects an agent stumbles over mid-task.
+
+This rule is deliberately bounded, and the boundary must be stated explicitly so it cannot be misread as a license to grow scope:
+
+- **Fix-what-you-find forbids HIDING.** The failure it prevents is the quiet pass-by — leaving a known small defect untouched because it was not the assigned task.
+- **YAGNI forbids BLOATING.** Fixing what you find is NOT a mandate to add unrequested scope, speculative features, or "while I'm here" abstractions for needs that have not arrived. "You aren't gonna need it" still governs: build for the requirement in front of you, not for an imagined future one.
+- **The two coexist.** Fix the small adjacent defect; add no speculative scope. One rule closes the gap where real defects get hidden; the other closes the gap where imagined needs get built. Neither overrides the other, and neither overrides the prioritization and deferral rules above (C7) — a *large* adjacent defect is still surfaced to the user, not silently absorbed.
+
+The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in `context/`** — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
+
 ---
 
 ## Related

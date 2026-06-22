@@ -39,6 +39,23 @@ The Lead starts Workers in parallel where PRD dependencies allow, runs an Evalua
 
 The **Model capability** column expresses role requirements, not product names. The Lead requires the strongest reasoning model because it holds the most context and makes coordination decisions. Workers default to a standard capable model; complex or highly interdependent PRDs warrant the strongest available. Evaluators and Phase Evaluators need a validated, capable model — a lighter option is permissible when the validation task is clearly bounded. Model selection is the operator's responsibility and is governed by resource budget; the harness does not enforce a specific product.
 
+Phase execution is **agent-team based, not script-driven.** The default execution path is for the Lead to **spawn one Worker per PRD** in its own context — this is the wired default of an agent phase, not an optional "may use agents" suggestion. The model-driven fan-out (the Lead deciding per turn over a handful of parallel sub-agents) is reserved for **research only** (see *Research Fan-Out vs Agents* below); everything else, phase execution above all, runs as the Lead/Worker/Evaluator/Phase-Evaluator team.
+
+---
+
+## Agent-Naming Schema
+
+When the Lead spawns the team, every agent **MUST** be named by a canonical schema so the agent-tree view stays legible. The schema separates two fields: `name` carries the **ID** (very short, the addressable key) and `description` carries the **one-line human sense** of that agent. No free-text sprawl — the ID is mechanical, the sense is one short line.
+
+| Role | `name` (the ID) | `description` (the human short-sense) |
+|------|-----------------|----------------------------------------|
+| Lead | `lead-m{NNN}` | `"Rollout Memo {NNN} — Phase {x}/{y}"` |
+| Worker (1 per PRD) | `prd-{NNN}-{RR}` | `"{short PRD title}"` |
+| Evaluator | `eval-{NNN}-{RR}` | `"Eval PRD-{RR} (fresh)"` |
+| Research | `res-{topic}` | `"{short research question}"` |
+
+`{NNN}` is the three-digit memo number, `{RR}` the two-digit PRD number, `{x}/{y}` the current/total phase count, `{topic}` a short kebab slug for a research sub-agent. The rule is invariant across roles: `name` is the ID, `description` is the human short-sense, and neither field is padded with prose. The Lead applies this schema at every spawn point; the agent-tree view reads `name` for structure and `description` for meaning.
+
 ---
 
 ## Parallelism Dials

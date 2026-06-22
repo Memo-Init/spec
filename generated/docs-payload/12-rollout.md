@@ -6,7 +6,7 @@ spec_file: "12-rollout.md"
 order: 12
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T18:35:05.282Z"
+generated_at: "2026-06-22T01:11:01.570Z"
 generated_from: "spec/v0.1.0/12-rollout.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/12-rollout.md."
@@ -47,6 +47,23 @@ The autonomy rules are strict:
 - Everything else is handled autonomously.
 
 This mirrors the empty-context discipline (see [09-contamination-context-handover.md](/specification/contamination-context-handover/)): the user's judgement is spent up front, at finalization; the rollout then executes a settled plan.
+
+---
+
+## Vertical-Slice-First (Tracer-Bullet) Rollout Strategy
+
+A rollout MAY adopt an optional execution strategy, chosen **at rollout start**, when its phases share a **risky integration** — an architecture whose end-to-end viability is not yet proven and would only be discovered after most of the work is already built. Under this strategy, the rollout first implements **one thin vertical slice that runs end-to-end across all phases** — a single narrow path that touches each layer the integration spans — to prove the architecture early, **before** fanning out the remaining breadth. Only once that one slice is demonstrably working does the rollout build out the rest of the PRDs in each phase. The intent is to de-risk: a wrong architectural assumption surfaces on the first slice, when correcting it is cheap, rather than after the full breadth has been committed to a flawed design.
+
+The two alternatives are decided once, at rollout start:
+
+| Strategy | When to choose | Shape of execution |
+|----------|----------------|--------------------|
+| **Sequential (default)** | No risky integration; phases are well-understood and independent enough. | Build each phase's full breadth in dependency order. |
+| **Vertical-slice-first** | A risky integration whose viability must be proven before committing the breadth. | Build one thin end-to-end slice through all phases first; fan out the rest only after it works. |
+
+This is an **optional rollout-execution strategy**, not a mandatory step: the sequential default is the norm, and the vertical-slice-first strategy is reached for only when the integration risk justifies the extra discipline of carving out a first slice.
+
+> **Distinct from the strand-finalize "tracer-bullet".** This rollout strategy shares the evocative "tracer-bullet" image (a single round whose visible trace proves the line of fire) but is a **different concept** from the strand-finalize **Tracer-Bullet** decision in [25-strands.md](/specification/strands/) and [30-primitives.md](/specification/primitives/). That one is a *finalization-time* decision on a single large strand — write a strand spec and rewrite that strand's PRDs. This one is a *rollout-execution* strategy chosen at rollout start, governing the order in which the whole rollout's breadth is built. They live at different points in the workflow and on different scopes (one strand vs. the entire rollout); do not conflate them.
 
 ---
 
@@ -95,4 +112,6 @@ The two files are deliberately separate and **MUST NOT** be conflated:
 - [27-landing-the-plane.md](/specification/landing-the-plane/) — full specification of the fourth rollout step: landing document structure, L1–L5 checklist, and pilot/system boundary.
 - [33-maintenance.md](/specification/maintenance/) — the maintenance roof and the board the pre-rollout health check projects over.
 - [26-memo-history.md](/specification/memo-history/) — the chronicle, the leading indicator of the pre-rollout health check.
+- [25-strands.md](/specification/strands/) — the strand-finalize "Tracer-Bullet" decision, a distinct concept from the vertical-slice-first rollout strategy above.
+- [30-primitives.md](/specification/primitives/) — the central glossary that disambiguates the two "tracer-bullet" senses.
 - [00-overview.md](/specification/overview/) — conformance language.

@@ -6,7 +6,7 @@ spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-06-20T18:35:05.282Z"
+generated_at: "2026-06-22T01:11:01.570Z"
 generated_from: "spec/v0.1.0/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/15-prompt-generator.md."
@@ -69,6 +69,26 @@ The phase-evaluator order is built with a function placeholder. A function loads
 
 ---
 
+## Dependency-Aware Ordering and the L1 PRD→PRD Edge
+
+When the compositor derives one prompt per PRD from a memo's rollout plan, the order of the emitted prompts is **dependency-aware, not naive numeric**. This is the same function-placeholder pattern as the phase-evaluator order, applied to the whole batch — the engine itself is unchanged.
+
+- **Topological order from `## Phase-Hints`.** The phases are ordered so that every phase follows the phases it `depends-on` (see [08-phases-and-prds.md](/specification/phases-and-prds/)). The ordering is a deterministic topological sort with a **stable numeric fallback**: among phases that are simultaneously ready, the lowest phase number runs first. A memo **without** phase hints therefore yields exactly the numeric order — the rule is additive, never destabilizing. A dependency cycle (or a dangling `depends-on`) is a **hard error**, not a silent re-order.
+- **The L1 PRD→PRD edge in the prompt.** Each composed PRD prompt **names the PRD(s) it depends on**. This dependency edge — level-one, PRD to PRD — is rendered into the prompt through a placeholder, exactly like every other dynamic value, so it stays inside the deterministic contract (same plan in, same prompt, same hash). A PRD with no upstream PRD renders the explicit "no upstream PRD" state; an empty dependency list is a **valid** state (a root PRD), not a finding.
+- **Bound to measured evidence.** Ordering is derived from the authored plan, not guessed: the source is the `## Phase-Hints` relations and the per-PRD dependency declarations. The producer stays the single bottleneck — the generator code is untouched and all of the per-memo dynamics live consumer-side (see [32-prompt-governance.md](/specification/prompt-governance/)).
+
+---
+
+## The Coverage Principle
+
+A composed batch should **cover the memo's units**, and that coverage is **measured, not assumed**. The principle is the same honesty rule the goal layer applies: a green run is not proof of coverage; coverage is a number you compute against the real plan.
+
+- **Soll (target).** Every unit the memo declares for implementation — each PRD in the rollout plan — should have exactly one composed prompt. The target is the full set of declared units.
+- **Ist (actual).** The set of prompts the compositor actually emitted, counted against the declared units.
+- **The dial.** Coverage is the Ist measured against the Soll: a ratio of composed prompts to declared units. A dial below the target is a **visible gap** (a unit with no composed prompt), not a silent omission — the same "the displayed context must coincide with the structure" rule the governance chapter states. The compositor reads the plan as the single source of the unit list, so the dial is computable and reviewable rather than asserted.
+
+---
+
 ## Skills Integration
 
 The prompt generator does not operate in isolation: it couples bidirectionally to the skill layer.
@@ -94,4 +114,6 @@ This is exactly what the agent layer needs: the generator produces the **determi
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the `AGENTS.md` agents whose per-invocation start-prompt this generator produces.
 - [13-orchestration.md](/specification/orchestration/) — the phase orchestration whose evaluator order is composed via the function-placeholder pattern.
 - [12-rollout.md](/specification/rollout/) — the rollout in which deterministic start-prompts drive sub-agent work.
+- [08-phases-and-prds.md](/specification/phases-and-prds/) — the `## Phase-Hints` dependency tree from which the topological PRD-prompt order is derived.
+- [32-prompt-governance.md](/specification/prompt-governance/) — the governance that keeps this engine the sole, untouched prompt producer.
 - [00-overview.md](/specification/overview/) — conformance language.

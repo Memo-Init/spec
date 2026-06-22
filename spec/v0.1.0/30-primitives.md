@@ -92,7 +92,7 @@ Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (phases, `## Phase-Hin
 
 ## Strand
 
-A **strand** is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in `## Phase-Hints`. It is **emergent, not authored** — an implementation *derives* a strand by walking the dependency graph; it is never a thematic bundle the author hand-picks. Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**. A strand MAY span several topics, since it is defined by the dependency path the work takes, not by the topic it touches. A strand carries its **PRDs**, and through them its requirements and tools. A strand is a **tag**, never part of the numeric memo ID, and adding or renaming a strand MUST NOT change that ID. A large strand MAY carry an optional **strand spec**, sharpened through an interview pass, and is the unit on which the **Tracer-Bullet** finalize decision applies.
+A **strand** is the **dependency closure over phases**: the transitive closure of the `depends-on` edges declared in `## Phase-Hints`. It is **emergent, not authored** — an implementation *derives* a strand by walking the dependency graph; it is never a thematic bundle the author hand-picks. Because dependency chains converge, a memo with many phases typically resolves into **one or two large strands**. A strand MAY span several topics, since it is defined by the dependency path the work takes, not by the topic it touches. A strand carries its **PRDs**, and through them its requirements and tools. A strand is a **tag**, never part of the numeric memo ID, and adding or renaming a strand MUST NOT change that ID. A large strand MAY carry an optional **strand spec**, sharpened through an interview pass, and is the unit on which the **Tracer-Bullet** finalize decision applies. This **Tracer-Bullet** is the *strand-finalize* sense — a finalization-time decision on one large strand — and is distinct from the same-named vertical-slice-first **rollout strategy** defined in [12-rollout.md](./12-rollout.md), which governs the build order of an entire rollout.
 
 Related: [25-strands.md](./25-strands.md) (emergence, tag-not-ID, strand spec), [08-phases-and-prds.md](./08-phases-and-prds.md) (the phase edges a strand emerges from); related primitives: [Phase](#phase), [PRD](#prd), [Requirement](#requirement), [Tool](#tool).
 
@@ -171,7 +171,8 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 | Strand | Emergent dependency closure over phases; a tag, not part of the memo ID. | [25-strands.md](./25-strands.md) |
 | Requirement | Two-sided cross-cutting check (statement → generation, check → gate); ternary status. | [23-requirements.md](./23-requirements.md) |
 | Tool | Descriptor in the recommended tools registry; reachability is a planning concern. | [24-tools-registry.md](./24-tools-registry.md) |
-| Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. | [25-strands.md](./25-strands.md) |
+| Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. Distinct from the vertical-slice-first rollout strategy of the same image. | [25-strands.md](./25-strands.md) |
+| Vertical-slice-first (tracer-bullet) rollout strategy | Optional rollout-execution strategy chosen at rollout start: build one thin end-to-end slice across all phases first to prove a risky integration, then fan out. Not the strand-finalize decision. | [12-rollout.md](./12-rollout.md) |
 | Smart-Zone | The ~1/4-context band where attention has not yet degraded; the target for a PRD. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
 | Chronicle | The narrated, append-only timeline of memos with breakpoints; the project's entry point. Not a primitive — a cross-cutting view. | [26-memo-history.md](./26-memo-history.md) |
 | context rot | Quality decay of LLM output as input length grows (the cause). | [09-contamination-context-handover.md](./09-contamination-context-handover.md) |
@@ -184,7 +185,8 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.
 - [23-requirements.md](./23-requirements.md) — the cross-cutting requirement primitive in full.
-- [25-strands.md](./25-strands.md) — the emergent strand primitive and the Tracer-Bullet decision.
+- [25-strands.md](./25-strands.md) — the emergent strand primitive and the strand-finalize Tracer-Bullet decision.
+- [12-rollout.md](./12-rollout.md) — the vertical-slice-first (tracer-bullet) rollout strategy, the same-named but distinct rollout-execution concept.
 - [24-tools-registry.md](./24-tools-registry.md) — the tool primitive and its registry.
 - [06-memo-structure.md](./06-memo-structure.md) — the memo, revision, and block structure on disk.
 - [00-overview.md](./00-overview.md) — specification scope and the chapter index.
