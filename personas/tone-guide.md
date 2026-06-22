@@ -81,6 +81,22 @@ The memo itself draws a hard line between the bootstrap (org + repos + spec text
 
 Rationale: TD reads better on all screen sizes, especially mobile. LR diagrams clip on narrow viewports.
 
+## Blog (release/feature posts)
+
+The blog is a different register from the spec: narrative is allowed, the spec's "no hype"
+rule is not a ban on warmth here. The reference for the corridor is a problem-first,
+first-person-plural ("we") release post with concrete numbers instead of superlatives —
+human *within* the evidence discipline. Three guardrails specific to blog posts:
+
+| Guardrail | Meaning |
+|-----------|---------|
+| **Human, but honest** | Narrative and warm, yet every fact cited and every estimate marked. Evidence discipline stays — it is the trust signal, not a cost. |
+| **Outward-facing** | Written for a new visitor with no project context. No internal process narration, no insider terms, no memo numbers; explain a term before using it. Wins over narrative depth when they conflict. |
+| **Humble, not boastful** | No superiority claims. Convergence with prior art is told as convergence ("and"), never as a race we won — big claims attract negativity. |
+
+Operational conventions (cadence, skeleton, frontmatter, snapshot comments) live in the
+site repo's `BLOG-CONVENTION.md`; this entry sets only the tone.
+
 ## Audit trail
 
-Source: Memo 001 REV-04 (evidence discipline, scope-separation rule, honest framing of estimates/deviations). Structural model: an earlier project's persona tone-guide.
+Source: Memo 001 REV-04 (evidence discipline, scope-separation rule, honest framing of estimates/deviations). Structural model: an earlier project's persona tone-guide. Blog section added by Memo 037 (release-communication blog).
