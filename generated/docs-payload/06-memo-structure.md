@@ -6,7 +6,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T01:11:01.570Z"
+generated_at: "2026-06-22T09:56:04.990Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
