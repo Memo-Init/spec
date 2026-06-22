@@ -8,13 +8,13 @@
 
 This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail chapter that specifies it in full: the top level stays brief and points down, the depth lives in the owning chapter. Where this chapter and a detail chapter both speak about a primitive, the detail chapter is authoritative on its own subject and this chapter MUST stay consistent with it. The chapter also carries the system's only entity/relationship diagram and the two complementary concept views — the user view and the factory view — joined at finalization.
 
-There are exactly **ten** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strand, Requirement, Tool**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere.
+There are exactly **eleven** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strand, Requirement, Tool, Plan**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere.
 
 ---
 
 ## Concept Map
 
-The diagram below shows how the primitives relate. It is the corrected model: a memo holds topics; topics are realized as work-packages, which are bundled into sequential phases; phases carry PRDs. A **strand** is not a structural sibling of these — it is the *emergent* dependency closure over phases (it is computed by walking the `depends-on` edges, never authored). A **requirement** is likewise cross-cutting: it is a check that applies to work through the PRDs. A **block** is a structure node inside the memo, carrying its own `B\d{3}` id, from which PRDs are derived. A **goal** sits *above* a single memo, spanning the memo sequence.
+The diagram below shows how the primitives relate. It is the corrected model: a memo holds topics; topics are realized as work-packages, which are bundled into sequential phases; phases carry PRDs. A **strand** is not a structural sibling of these — it is the *emergent* dependency closure over phases (it is computed by walking the `depends-on` edges, never authored). A **requirement** is likewise cross-cutting: it is a check that applies to work through the PRDs. A **block** is a structure node inside the memo, carrying its own `B\d{3}` id, from which PRDs are derived. A **goal** sits *above* a single memo, spanning the memo sequence. A **plan** also sits above the single memo, but on the execution side: it spans one or more finalized memos and sequences their phases into a single ordered run.
 
 ```mermaid
 flowchart TD
@@ -29,8 +29,11 @@ flowchart TD
     STRAND["Strand<br/>(emergent dependency closure)"]
     REQ["Requirement<br/>(cross-cutting check)"]
     TOOL["Tool<br/>(registry entry)"]
+    PLAN["Plan<br/>(spans many memos, sequences phases)"]
 
     GOAL -.->|spans| MEMO
+    PLAN -.->|spans & sequences| MEMO
+    PLAN -. sequences phases of .-> PHASE
     MEMO -->|iterates through| REV
     MEMO -->|holds| TOPIC
     MEMO -->|structured by| BLOCK
@@ -89,6 +92,12 @@ Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (PRD definition, cap, 
 A **phase** is a **sequential, mandatory** unit of the rollout that bundles PRDs which MUST be executed together and in order, and it carries an orchestration role (Lead / Worker / Evaluator). A phase MUST declare its dependencies: `depends-on` is a **mandatory characteristic**, not optional decoration — a phase that depends on another MUST NOT start until that other has completed. The `## Phase-Hints` section is the dependency tree of the rollout, declaring each phase's `depends-on` and (symmetric) `can-parallel-with` relations with a `rationale`. A phase is the node from which the chain **Topic → work-package → Phase → PRD** carries work; following the `depends-on` edges across phases is what makes strands emerge.
 
 Related: [08-phases-and-prds.md](./08-phases-and-prds.md) (phases, `## Phase-Hints`, phase-planning lenses), [12-rollout.md](./12-rollout.md) (phase execution), [13-orchestration.md](./13-orchestration.md) (state model); related primitives: [PRD](#prd), [Strand](#strand), [Topic](#topic).
+
+## Plan
+
+A **plan** is the primitive that sits **above the single memo on the execution side**: it spans one or more **finalized** memos and sequences their phases into a single ordered run (id `PLAN-\d{3}-[a-z0-9-]+`). It does not replace the per-memo stage model — it **nests** it, applying the four stages to each carried memo while recording, across all of them, which phase runs next and which have reached the push gate. The order of phases is the **memo's** to decide (memo authority); the plan respects each memo's `## Phase-Hints` and, when it carries more than one memo, an explicit `executionOrder` of cross-memo `phaseRef`s. A plan's deterministic state lives in `plan-status.json`; its human-readable face is `plan.md`. Both a standalone rollout (the direct path) and a rollout under a plan context coexist, entered through one public entry-point. The full store, schema, next-phase resolution, budget gate, crash recovery, conformance, plan-stop verb, and archival are specified in [42-plans.md](./42-plans.md).
+
+Related: [42-plans.md](./42-plans.md) (store, schema, resolution, plan-stop, archival), [38-stage-model.md](./38-stage-model.md) (the four stages the plan nests per memo), [12-rollout.md](./12-rollout.md) (the rollout a plan sequences); related primitives: [Memo](#memo), [Phase](#phase), [Goal](#goal).
 
 ## Strand
 
@@ -171,6 +180,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 | Strand | Emergent dependency closure over phases; a tag, not part of the memo ID. | [25-strands.md](./25-strands.md) |
 | Requirement | Two-sided cross-cutting check (statement → generation, check → gate); ternary status. | [23-requirements.md](./23-requirements.md) |
 | Tool | Descriptor in the recommended tools registry; reachability is a planning concern. | [24-tools-registry.md](./24-tools-registry.md) |
+| Plan | Execution-side primitive above the memo; spans many finalized memos and sequences their phases into one ordered run. | [42-plans.md](./42-plans.md) |
 | Tracer-Bullet | Finalize decision for a large strand: write a strand spec and rewrite its PRDs. Distinct from the vertical-slice-first rollout strategy of the same image. | [25-strands.md](./25-strands.md) |
 | Vertical-slice-first (tracer-bullet) rollout strategy | Optional rollout-execution strategy chosen at rollout start: build one thin end-to-end slice across all phases first to prove a risky integration, then fan out. Not the strand-finalize decision. | [12-rollout.md](./12-rollout.md) |
 | Smart-Zone | The ~1/4-context band where attention has not yet degraded; the target for a PRD. | [08-phases-and-prds.md](./08-phases-and-prds.md) |
@@ -188,5 +198,6 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 - [25-strands.md](./25-strands.md) — the emergent strand primitive and the strand-finalize Tracer-Bullet decision.
 - [12-rollout.md](./12-rollout.md) — the vertical-slice-first (tracer-bullet) rollout strategy, the same-named but distinct rollout-execution concept.
 - [24-tools-registry.md](./24-tools-registry.md) — the tool primitive and its registry.
+- [42-plans.md](./42-plans.md) — the plan primitive that spans many memos and sequences their phases.
 - [06-memo-structure.md](./06-memo-structure.md) — the memo, revision, and block structure on disk.
 - [00-overview.md](./00-overview.md) — specification scope and the chapter index.

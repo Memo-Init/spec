@@ -83,6 +83,12 @@ The six repositories are bootstrapped from an existing public reference organiza
 
 ---
 
+## Out-of-Scope Skills (Acknowledged, Not Mapped)
+
+Some skills are deliberately **out of scope** for this process specification and carry no governing chapter: coding-standard skills (the `node-*` family) belong to the project's own house rules, and domain or external-tool skills are governed by their own external references. Such skills declare `specs.primary: null` plus a `scope` marker rather than a forced mapping — the honest position is *acknowledged out-of-scope*, not *pretended coverage*. The full register is in [14-agents-skills-tasks.md](./14-agents-skills-tasks.md).
+
+---
+
 ## Related
 
 - [01-philosophy.md](./01-philosophy.md) — the guardrail analogy and interaction model.

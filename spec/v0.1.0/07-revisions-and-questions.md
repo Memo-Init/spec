@@ -138,6 +138,43 @@ Context is also driven up **from the outside**, not only by the memo's own growt
 
 ---
 
+## The Answered-Question Pair
+
+When a question is answered, the answered-questions area records more than the decision — it records the **pairing** of what the AI recommended against what the developer actually decided. This pairing is a first-class artefact, and its on-disk format is two literal field lines:
+
+```
+**AI-Empfehlung war:** <the recommendation the AI had made>
+**User-Entscheidung:** <the decision the developer actually took>
+```
+
+The two German labels `**AI-Empfehlung war:**` and `**User-Entscheidung:**` are the literal artefact format — they are written verbatim, in exactly this form, as the answered-question pair. The value on the first line is the AI's prior recommendation; the value on the second line is the developer's actual choice, which may agree with the recommendation or overrule it.
+
+The pairing is what makes a memo's answered questions more than a decision log. Read across many memos, the accumulated `AI-Empfehlung war` ↔ `User-Entscheidung` pairs are the raw material from which a cross-memo preference model is later derived — the systematic record of where the developer tends to follow the AI and where they tend to overrule it. A bare decision without its paired recommendation cannot feed that model; the pairing is the point. The downstream model that consumes these pairs is defined in its own chapter ([41-mental-model.md](./41-mental-model.md)).
+
+---
+
+## The Revision-Prepare Artefact
+
+Before each revision is written, a preparation and reflection file `REV-{NN}-prepare.md` is produced. It is a **first-class artefact, not scratch** — it is written deliberately, kept on disk, and stands as the record of how the upcoming revision was planned.
+
+The prepare file documents three things:
+
+- **The interpretation of the feedback.** How the agent understood the user's feedback for this revision — restated in the agent's own words so that the interpretation itself is on the record and can be checked against what the user meant.
+- **The planned per-chapter changes.** Which chapters will change and how, laid out before any revision content is written, so the revision is executed against a plan rather than improvised.
+- **Any revision blockers.** Open obstacles that would prevent a clean revision — missing information, an unresolved contradiction, a decision the agent cannot make autonomously. A recorded blocker is the signal to pause and ask rather than to write a revision on a shaky basis.
+
+Because the prepare file exists before the `REV-XX.md` it plans, the revision becomes a deliberate execution of a documented intention rather than a single uninterrupted generation.
+
+---
+
+## The Feedback-Coverage Gate
+
+After a revision is written, a **mandatory check** verifies that **every** feedback point the user raised was actually incorporated. The gate compares the recorded feedback (from the prepare artefact above) against the revision that was produced and confirms each point is addressed.
+
+The gate is **auto-iterating within a bound**: if it finds feedback points that were missed, it does not immediately escalate — it revises again to close the gap, up to a bounded number of attempts. Only when the bound is exhausted and gaps remain does it stop auto-iterating and **ask the user**. This keeps the common case — a point or two slipped through — self-correcting without a round-trip, while still surfacing a genuinely stuck revision to the developer rather than silently shipping an incomplete one.
+
+---
+
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — input processing that runs before each revision is generated.
@@ -145,3 +182,4 @@ Context is also driven up **from the outside**, not only by the memo's own growt
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the gate that requires the open-questions area to be empty.
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the authoring skills that implement the question format.
 - [34-question-interface.md](./34-question-interface.md) — the scoring discipline and the `questions-json` mandate that builds on this format.
+- [41-mental-model.md](./41-mental-model.md) — the cross-memo preference model derived from the answered-question pairs.

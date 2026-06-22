@@ -93,6 +93,61 @@ During the autonomous span (after the duty-of-care break), the user must be able
 
 ---
 
+## Two Output Channels — The Reply Channel vs the State Channel
+
+Output in the system flows on **two distinct channels**, and they MUST NOT be confused. The distinction decides *where* the human-facing overview is rendered, and it is the difference between an overview the user actually sees and one that disappears into a collapsed tool log.
+
+- **The reply channel (R1).** Everything meant for the human — status lines, overviews, boards — is rendered as **markdown directly in the agent's reply**. This is the channel the user reads. A markdown table in the reply renders as a visible table; the human sees the overview at a glance, without expanding anything.
+- **The machine / state channel.** Shelling out to a command (Bash/CLI), reading a state file, or piping JSON through a tool is how the agent *obtains* the data. Its raw `stdout` lands in the collapsed, often-invisible tool area. This channel is for the machine, not for human-facing display.
+
+The binding rule follows from the split:
+
+> Every status / overview / board output MUST be presented as markdown **in the agent's reply** (the R1 channel) and MUST NOT be produced by shelling out to a command for display. Fetching the underlying data via a command is allowed; the human-facing table is then **mirrored** into the reply as markdown.
+
+Concretely, the **goal board** and the **maintenance board** are always presented in the reply: the agent may fetch their data via a command (for example, a scoring CLI emitting JSON), but the board the user reads is the markdown table in the reply — **never** a raw shell dump. Using `echo`/`printf`/`cat`/a raw JSON dump as the *sole* status output is the anti-pattern: it vanishes into the tool area. The correct shape is always *fetch with the command, render the table in the reply*. This applies equally to the surfacing during the autonomous span: surfacing a line is a deliberate per-event decision in the reply channel, never a dump of everything a worker said (see the surface-only contract above).
+
+---
+
+## The Status-Table Layout
+
+When rollout status is presented to the user, it follows a canonical table layout so that a glance at the reply tells the whole story. The standard column set for a rollout / stage status table is **exactly**:
+
+```
+| Stage | Phase | PRD | Status | Tests | Nächste |
+```
+
+These six columns, in this order, are the standard for every rollout / stage overview. A worked example, rendered in the reply (not via a command):
+
+```
+| Stage | Phase | PRD | Status | Tests | Nächste |
+|-------|-------|-----|--------|-------|---------|
+| 1 Rollout | 2/3 core | PRD-04 | fulfilled | 12/12 green | PRD-05 |
+| 1 Rollout | 2/3 core | PRD-05 | running | — | Phase-Evaluate |
+```
+
+Domain boards keep their own subject-matter columns — the goal board uses `Goal | Kind | % | Status | Missing`, the maintenance board uses `Repo | Freshness % | Blast | maintStatus | Missing` — but they render the same way: as markdown in the reply, on the R1 channel. The stage table is the shared layout; the domain boards are specializations of the same presentation rule. The cells of every such table carry plain-language subjects, never bare codes or unresolved hashes.
+
+The status tables are part of a small, fixed set of communication points during the autonomous rollout: a one-line phase start, a compact phase-end post, the hard-stop signal, and the bundled open questions at landing. There are no mid-phase "shall I continue?" questions — concerns go into the preface channel, not into a prompt that stops the run.
+
+---
+
+## Landing the Plane — The Mandatory Landing Checklist
+
+The autonomous rollout is not the end of the work. After Generate → Execute → Evaluate, a **mandatory landing step** closes the run: "landing the plane." Landing does not mean "passengers out"; it means the rubbish is cleared, the machine is checked, it is parked properly and secured against gusts — **so that the next morning the aircraft can be rolled out of the garage and flown again immediately**. The deliverable is a *startable morning structure*: a fresh context can pick up the thread without a single clarifying question.
+
+The checklist is a fixed set of checkpoints, and every one MUST be run:
+
+- **Worktree cleanup is mandatory.** Every worktree created during the rollout is removed. An open worktree is permissible only as "deliberately open" with a named reason — otherwise cleanup is obligatory, no zombie folders.
+- **Branches merged to `main`.** Every working branch is merged to `main`; "documented instead of merged" is a justified exception with a named reason, never a silent open branch.
+- **Commits and the local merge.** One commit per PRD; in the merge-preparation step the machine performs the deterministic **local merge up to `main`**. Commit is not push, and a local merge is not a release: the machine commits and merges locally to a clean, push-ready `main`, but the **push** — the one act of approval — is never automatic and stays with the user.
+- **Open ends named honestly.** All follow-up items, unresolved blockers, needs-review sub-states, and deferred points are named in **one** list. Naming an open end is part of an honest landing — it is surfaced, not hidden; a "landed with open ends" verdict is not a failure.
+- **State left machine-readable.** A landing-readiness record is written so the next context can resume without asking.
+- **Chronicle entry appended.** Exactly one narrated chronicle entry for the run is appended (append-only, each entry chaining to the previous one). It names the touched topic IDs and tells the real course of the work — what was done, what was discarded — so the append-only record reflects the real order, not the numbering.
+
+The full stage model around this — Rollout, Landing, Merge-preparation, Merge/Push-gate, and where the user's single push-approval sits — is specified in the stage-model chapter; landing is its second stage. This chapter lifts the checklist's *existence and intent* into the interaction model: it is the obligatory close that makes the morning structure real, governed by the same two-channel and plain-language rules as the rest of the user-facing output. The guiding posture is to leave the workspace better than we found it, and to treat any problem found along the way as ours to understand and resolve — without rewriting another memo's work.
+
+---
+
 ## Related
 
 - [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md) — the Full/Update revision flow that this interaction model wraps.
@@ -102,3 +157,5 @@ During the autonomous span (after the duty-of-care break), the user must be able
 - [15-prompt-generator.md](./15-prompt-generator.md) — the start-prompt that is Protocol B.
 - [00-overview.md](./00-overview.md) — conformance language.
 - [34-question-interface.md](./34-question-interface.md) — the option-scoring discipline behind the questions the user answers here.
+- [38-stage-model.md](./38-stage-model.md) — the full four-stage model (Rollout, Landing, Merge-preparation, Merge/Push-gate) that the landing checklist closes; the second stage.
+- [27-landing-the-plane.md](./27-landing-the-plane.md) — the landing-the-plane stage in full, of which the mandatory checklist here is the intent.

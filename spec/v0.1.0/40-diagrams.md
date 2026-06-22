@@ -63,6 +63,12 @@ A few orientation and scope conventions hold:
 
 ---
 
+## Structure First, Color Later — Also for Mockups
+
+The structure-before-color habit that already governs diagrams is the same discipline that governs UI mockups. A diagram is worked out as black-and-white structure first, and color is added only once the shape is right; a UI mockup follows the identical staging — a black-and-white wireframe first, color and refinement later. The reason is the same in both cases: settling the structure before the polish keeps the early conversation about what the picture *says*, not about how it looks. The asset side of this — where those mockups and exported diagrams are stored — is the `media/` asset convention in [06-memo-structure.md](./06-memo-structure.md).
+
+---
+
 ## Related
 
 - [35-memo-authoring.md](./35-memo-authoring.md) — diagrams as first-class memo content and the portrait-orientation rule these recommendations build on.

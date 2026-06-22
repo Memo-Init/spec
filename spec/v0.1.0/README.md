@@ -8,7 +8,7 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 
 ---
 
-## Core Chapters (00–40)
+## Core Chapters (00–44)
 
 | Document | Title | Mode |
 |----------|-------|------|
@@ -53,6 +53,9 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 | [38-stage-model.md](./38-stage-model.md) | Stage Model | Normative |
 | [39-release-and-pinning.md](./39-release-and-pinning.md) | Release and Pinning | Normative |
 | [40-diagrams.md](./40-diagrams.md) | Diagrams | Informative |
+| [42-plans.md](./42-plans.md) | Plans | Normative |
+| [43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md) | Skill Authoring & Quality | Normative |
+| [44-repository-and-outward-docs.md](./44-repository-and-outward-docs.md) | Repository Scaffolding & Outward Documentation | Normative |
 
 > Chapters 09–40 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer. Chapter 30 is the cross-cutting substrate page: it defines the ten primitives, the central glossary, and the concept map; new readers MAY read it first as a vocabulary, and authors return to it as the single source of truth for terms. Chapter 33 is the cross-cutting maintenance roof: it measures freshness and blast-radius across the primitives without adding an eleventh.
 

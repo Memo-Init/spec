@@ -122,10 +122,106 @@ Requirement-derived checks bind as finalization gates: a requirement **MAY** dec
 
 ---
 
+## Quality-Skill Rubrics
+
+The five quality skills are named above; this section specifies the internal rubrics they apply, so that two runs of the same skill over the same memo reach the same finding.
+
+### Balance — the over-/under-engineering scale
+
+`memo-balance` rates every chapter on a single signed five-point scale, where the sign carries the direction (negative = too much, positive = too little) and the magnitude carries the severity:
+
+| Rating | Meaning | Recommended action |
+|--------|---------|--------------------|
+| −2 | Heavily over-engineered | Cut substantially |
+| −1 | Slightly over-engineered | Tighten |
+| 0 | Calibrated | Right depth — leave as is |
+| +1 | Slightly under-engineered | Add detail |
+| +2 | Heavily under-engineered | Deepen urgently |
+
+The rating is evidence-backed: each non-zero score names the exact passage that is too detailed or too shallow. Over-engineering indicators include excessive detail on trivial aspects, premature optimization, edge cases documented before the happy path, and specs for features that may never be built. Under-engineering indicators include critical decisions mentioned but not explained, blocking dependencies deferred with "we'll figure it out later", security-relevant aspects glossed over, and missing failure-mode or error-handling strategy. Beyond per-chapter scores the skill also assesses cross-chapter balance — whether detail distribution matches priority distribution, so that a trivial chapter is not longer than a foundational one. The finalize gate treats an unaddressed −2 or +2 as the threshold for attention, and resolved critical under-engineering (security, data integrity) as a hard expectation.
+
+### Coherence — the maturity and severity scale
+
+`memo-coherence` produces an honest, unflinching review rather than a confirmation. It sorts every finding into four buckets — missing aspects, logical gaps, redundancies, and contradictions — and each finding carries a severity of high / medium / low. The skill also assigns the memo one overall **maturity** rating on a three-step scale:
+
+| Maturity | Meaning |
+|----------|---------|
+| Early | Core questions still open; not yet a coherent argument |
+| Solid | Argument holds; specific gaps remain |
+| Mature | Complete and internally consistent; ready to finalize |
+
+The review names the single biggest strength and the single biggest weakness, references concrete chapters and statements rather than vague concerns, and proposes concrete improvements. The finalize gate treats unresolved high-severity contradictions as the line between WARN and FAIL.
+
+### Evidence — the level tags, the inline format, and the language check
+
+`memo-evidence` assigns exactly one of the six evidence tags (the `[FACT]` … `[UNKNOWN]` set defined above) to every substantive statement. The tag is inserted **inline** at the start of the statement, in the form `[TAG] original statement text`; headings are not tagged, only content statements. From the tagged body the skill derives two artifacts: a classification summary (count and share per level) and a research-needs section that, for each `[ASSUMPTION]`, `[CONJECTURE]`, and `[UNKNOWN]`, names how the claim could be verified or what data would confirm it. The skill runs autonomously: the default disposition is to accept an `[ASSUMPTION]` as a working hypothesis and to keep a `[CONJECTURE]` while flagging it in research needs; only critical unverified items are surfaced.
+
+This skill also carries the **one-language-per-artefact** consistency check. A single artifact stays in one language and does not mix: code and code comments are English, the memo body is written in its memo language throughout. A statement that mixes two languages inside one artifact is a consistency finding — the surrounding language is the reference, and the off-language fragment is corrected toward it.
+
+### References — the status taxonomy, auto-fix policy, and the large-file threshold
+
+`memo-references` extracts every file path, line number, code snippet, and method/class reference in the memo and verifies each against the real codebase. Each reference resolves to one status:
+
+| Status | Meaning |
+|--------|---------|
+| Verified | File exists, line and snippet match — marked `[REF-OK]` |
+| Shifted | Snippet found, but at a different line than stated |
+| Moved | Snippet found, but in a different file |
+| Missing | Referenced file does not exist — marked `[REF-BROKEN]` |
+| Not found | Snippet not found anywhere in the codebase |
+| Stale | Method/class exists but its signature no longer matches the description |
+
+The **auto-fix policy** is: a Shifted or Moved reference is corrected in place automatically (the skill rewrites the line number or path and reports it — it does not ask). A Missing or Not-found reference is marked `[REF-BROKEN]` with a suggested fix and surfaced for a human decision, because inventing a target would be a guess. A finalize run FAILs the reference gate only while `[REF-BROKEN]` markers remain.
+
+For large codebases the skill switches strategy above a file-count threshold (on the order of one thousand files): rather than verifying sequentially it splits the work by repository or directory and fans the verification out to sub-agents, then aggregates their results and reports any sub-agent failure. Below the threshold it verifies sequentially in one pass.
+
+---
+
+## Finalize Sub-Gates
+
+The finalization gate is not a single check. Beyond the per-skill quality gates above, the finalize step runs several environment and decision sub-gates, each of which feeds the one consolidated query rather than runtime.
+
+### Sub-memo HARD-STOP
+
+A memo that was created autonomously as a sub-memo and has not yet received any user editing MUST NOT finalize. When the finalize step detects that the latest revision was produced autonomously and no user revision exists on top of it, it stops with a HARD-STOP verdict and no gate run: a sub-memo represents work the user has not yet shaped, so finalizing it would skip the one mandatory human touch. The resolution is for the user to give feedback first (creating a user revision), after which finalization can proceed normally.
+
+### Token-budget snapshot — the single legitimate paste point
+
+Finalization is the one and only point in the workflow where the remaining token budget is recorded. The user pastes a usage snapshot exactly once, here, and the parsed values (week-used percentage, reset time) travel into the readiness marker. This single-point rule exists so that runtime never has to re-paste: the budget is read passively from the marker afterward. Crucially, the **only** trusted source is the user-pasted snapshot — third-party token-tracking packages are vetoed by policy and are never read, scraped, or recommended as a budget source. A budget that is tight for the estimated scope is a WARN, not a blocker, and surfaces as a hint (with a scheduling suggestion) in the consolidated query.
+
+### Loop-suitability gate
+
+When the work is planned to run as an autonomous loop, the finalize step checks whether it actually suits one: the loop's units of work must be self-contained, each must carry machine-testable acceptance criteria, countermeasures must be embedded rather than assumed, and security-critical units must be bounded by an iteration cap. If the work is not loop-shaped the gate is N/A and is skipped; it is never a hard FAIL, only PASS / WARN / N/A — an autonomous loop is an option, not a requirement.
+
+### Dependency smoke-check
+
+At finalization, each affected repository with a manifest gets a dry install/load (a dry-run dependency resolution) so that a broken or unresolvable dependency is caught at the strategy-to-implementation boundary rather than minutes into rollout. A failing smoke-check is rework before rollout, not a runtime abort. This pairs with the per-repo stand check (clean tree, no stray branches, worktrees, or stashes) and tool-availability check in the environment block; every finding goes into the consolidated query, never silently mutated.
+
+### Rollout entry points + filesystem existence check
+
+The memo MUST carry a `## Rollout Entry Points` section listing at least one concrete, numbered path — the reading order an empty rollout context starts from. The gate FAILs if the section is missing, empty, or contains only template placeholders. For each listed path the gate then runs a filesystem existence check (directory existence for a trailing-slash path, file existence otherwise). A missing path here is a **WARN, not a FAIL**: some entry points are created by the rollout itself, so their absence at finalization is expected and is merely reported per path. The plausibility of the reading order (does it suit a cold start?) is surfaced as a recommendation, not a gate.
+
+---
+
+## The Reset-Recommendation Algorithm
+
+A long-running rollout degrades as its context fills. The system therefore recommends a context reset (a `/clear`) at the right moment — but only **recommends**: the agent cannot self-trigger a context clear. Clearing the context is a user action; the algorithm decides whether to surface the recommendation, and the user acts on it (or not).
+
+The recommendation is gated on a phase boundary and two utilization thresholds:
+
+- **Phase boundary required.** The check runs only at a phase boundary — a unit of work finished, a commit set, a phase checkbox updated. If the algorithm is invoked mid-unit it returns immediately with no recommendation. This hard guard exists because resetting mid-unit aborts the unit and lowers the success rate.
+- **High-load-with-scope-change.** At over 75% context utilization, if the next phase changes scope (a different repository, memo, or technology), recommend a reset.
+- **Critical.** At over 90% context utilization, recommend a reset regardless of scope change.
+
+The recommendation fires when, at a phase boundary, either the high-load-with-scope-change or the critical condition holds; otherwise no recommendation is surfaced, even above a threshold. The thresholds have a rationale: roughly the first quarter of the context window is the zone where attention is not yet degraded, so once utilization leaves that zone a boundary reset pays off. Each run records its outcome (recommendation or no-recommendation, with a reason and the last phase head) so the decision is auditable. The output is advisory only: a single recommendation line that names the utilization percentage and the next scope, surfaced once at the boundary — never an automatic clear.
+
+---
+
 ## Related
 
 - [10-proactive-research.md](./10-proactive-research.md) — the research that closes `[ASSUMPTION]` / `[CONJECTURE]` items before gate 1 and gate 2 are checked.
-- [12-rollout.md](./12-rollout.md) — the rollout that begins only after a `rollout-ready` verdict, and reads the rollout-handover document written at finalization.
+- [12-rollout.md](./12-rollout.md) — the rollout that begins only after a `rollout-ready` verdict, reads the rollout-handover document written at finalization, and is where the reset-recommendation algorithm fires at phase boundaries.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the context degradation the reset-recommendation algorithm guards against, and the handover zones that reuse the evidence tags.
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — `git-security` as a fixed gate and a fixed part of the git flow.
 - [23-requirements.md](./23-requirements.md) — the requirement model behind requirement-derived gates.
 - [00-overview.md](./00-overview.md) — conformance language.
