@@ -6,7 +6,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-06-24T20:40:20.473Z"
+generated_at: "2026-06-24T20:49:55.320Z"
 generated_from: "spec/workbench/0.1.0/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/31-browser-automation.md."
