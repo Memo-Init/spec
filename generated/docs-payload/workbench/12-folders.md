@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-06-24T20:49:55.320Z"
+generated_at: "2026-06-24T21:18:51.000Z"
 generated_from: "spec/workbench/0.1.0/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/12-folders.md."
@@ -28,7 +28,7 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `.trash/` | Mandatory | Recoverable trash; the deletion target (see [32-trash.md](/specification/trash/)). |
 | `context/` | Mandatory | **Processed** data — specifications, distilled research, Markdown/PDF documents. |
 | `repos/` | Mandatory | The project's git repositories (one domain per repository). |
-| `scripts/` | Mandatory | Environment and health scripts, in meaningful subfolders (see [21-environment-scripts.md](/specification/environment-scripts/)). |
+| `scripts/` | Mandatory | Environment and health scripts (see [21-environment-scripts.md](/specification/environment-scripts/)). |
 | `ABOUT.md` | Mandatory | Project documentation for humans. |
 | `CLAUDE.md` | Mandatory | The runbook for the AI. |
 | `data/` | Optional | **Raw** data — feeds and source material, as ingested, before processing. |

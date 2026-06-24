@@ -6,7 +6,7 @@ spec_file: "02-instances.md"
 order: 2
 section: "SOP"
 normative: false
-generated_at: "2026-06-24T20:49:55.320Z"
+generated_at: "2026-06-24T21:18:51.000Z"
 generated_from: "spec/sop/0.1.0/02-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/sop/0.1.0/02-instances.md."
@@ -35,7 +35,7 @@ Each instance fills in the four parts of the common denominator for its own scop
 The tie between an instance and the standard is deliberately light:
 
 - An SOP **references** this spec rather than copying it. It does not restate the definitions of Setup, Health, and Update; it points at them and then says how it realizes each.
-- This spec **does not import** an SOP's content. It names the instance and links to it; the instance remains the authority on its own scope.
+- This spec **does not import** an SOP's content; it names the instance and links to it.
 
 The result is a connecting layer with no duplication: the standard is stated once here, each SOP states only how it satisfies the standard, and a reader moves between them by following references rather than by reconciling repeated text.
 

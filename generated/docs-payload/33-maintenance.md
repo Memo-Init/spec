@@ -6,7 +6,7 @@ spec_file: "33-maintenance.md"
 order: 33
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T20:49:55.320Z"
+generated_at: "2026-06-24T21:18:51.000Z"
 generated_from: "spec/v0.1.0/33-maintenance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/33-maintenance.md."

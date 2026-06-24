@@ -6,7 +6,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: false
-generated_at: "2026-06-24T20:49:55.320Z"
+generated_at: "2026-06-24T21:18:51.000Z"
 generated_from: "spec/workbench/0.1.0/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/02-sop-entrypoint.md."
@@ -70,7 +70,7 @@ A reasonable shape for the future machine-tier spec — recorded here as guidanc
 - the security-hook system that filters dangerous shell commands;
 - the global hooks under `~/.claude/hooks/` (for example an environment-file guard and a commit-message guard);
 - the convention that real environment files live in the parent directory and that local tooling binds to loopback only;
-- the **deterministic enforcement of the SOP** via PreToolUse gates (the consuming side of the hooks contract in [23-hooks-contract.md](/specification/hooks-contract/)).
+- the **deterministic enforcement of the SOP** via PreToolUse gates (specified as a contract in [23-hooks-contract.md](/specification/hooks-contract/)).
 
 The division of responsibility is the load-bearing idea: **the workbench declares policy** — primarily through the manual `.workbench/` configuration ([22-config.md](/specification/config/)) — and **the machine tier enforces it**. Locating enforcement at the machine tier lets it apply where it must apply globally (`~/.claude/`), while the workbench itself stays portable. A future machine-tier spec should also make clear that it serves **only** projects under the workbench-folder system.
 

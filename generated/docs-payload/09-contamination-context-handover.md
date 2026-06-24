@@ -6,7 +6,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T20:49:55.320Z"
+generated_at: "2026-06-24T21:18:51.000Z"
 generated_from: "spec/v0.1.0/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/09-contamination-context-handover.md."

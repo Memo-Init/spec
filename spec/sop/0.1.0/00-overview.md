@@ -22,7 +22,7 @@ The value of a connecting layer is predictability. Without it, each SOP would be
 
 ## Hierarchy — Where This Spec Sits
 
-The SOP spec is **not** the highest authority. The core specification defines the conformance vocabulary (the RFC 2119 / BCP 14 key words); this spec does not redefine them. It also does not override any individual SOP: where a concrete SOP specifies its own behavior, that SOP governs its scope. This spec only defines the shared shape and the vocabulary for talking about it.
+The SOP spec is **not** the highest authority. The core specification defines the conformance vocabulary (the RFC 2119 / BCP 14 key words); this spec does not redefine them. This spec only defines the shared shape (the four parts below) and the vocabulary for talking about it; the content of each SOP lives in that SOP, not here.
 
 It is **versioned independently**, under `spec/sop/0.1.0/`, with its version recorded in `data/refs.manual.json` under the `sop` key. Being thin, it is expected to change slowly.
 
@@ -33,5 +33,5 @@ It is **versioned independently**, under `spec/sop/0.1.0/`, with its version rec
 | Document | Title | Mode |
 |----------|-------|------|
 | `00-overview.md` | Overview | Informative |
-| `01-common-denominator.md` | The Common Denominator — Setup, Health, Update, Extras | Normative |
+| `01-common-denominator.md` | The Common Denominator — Setup, Health, Update, Extras | Informative |
 | `02-instances.md` | SOP Instances and the Reference Model | Informative |

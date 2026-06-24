@@ -5323,7 +5323,7 @@ The workbench is the layer that holds many projects and the shared machinery the
 
 ## Single Source, Not Duplication
 
-The workbench provides its CLIs, standards, and conventions **once**, at the workbench level; an individual project carries only what is specific to it. The reasoning is operational rather than aesthetic: configuration that is copied into every project drifts. Each copy is edited independently, the copies diverge, and the divergence is discovered late — usually when a project behaves differently from its siblings for no documented reason.
+The workbench provides its CLIs, standards, and conventions **once**, at the workbench level; an individual project carries only what is specific to it. The reasoning is operational rather than aesthetic: configuration that is copied into every project drifts. Each copy is edited independently, and the copies diverge.
 
 Defining shared capability once means there is a single place to read it, a single place to change it, and no second copy to fall out of step. A project that needs a shared tool relies on the workbench-level definition rather than re-stating it. Where a project genuinely differs, that difference is declared explicitly (see the project configuration in [22-config.md](./22-config.md)) rather than expressed as a silent fork of a shared default.
 
@@ -5418,7 +5418,7 @@ A reasonable shape for the future machine-tier spec — recorded here as guidanc
 - the security-hook system that filters dangerous shell commands;
 - the global hooks under `~/.claude/hooks/` (for example an environment-file guard and a commit-message guard);
 - the convention that real environment files live in the parent directory and that local tooling binds to loopback only;
-- the **deterministic enforcement of the SOP** via PreToolUse gates (the consuming side of the hooks contract in [23-hooks-contract.md](./23-hooks-contract.md)).
+- the **deterministic enforcement of the SOP** via PreToolUse gates (specified as a contract in [23-hooks-contract.md](./23-hooks-contract.md)).
 
 The division of responsibility is the load-bearing idea: **the workbench declares policy** — primarily through the manual `.workbench/` configuration ([22-config.md](./22-config.md)) — and **the machine tier enforces it**. Locating enforcement at the machine tier lets it apply where it must apply globally (`~/.claude/`), while the workbench itself stays portable. A future machine-tier spec should also make clear that it serves **only** projects under the workbench-folder system.
 
@@ -5571,7 +5571,7 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `.trash/` | Mandatory | Recoverable trash; the deletion target (see [32-trash.md](./32-trash.md)). |
 | `context/` | Mandatory | **Processed** data — specifications, distilled research, Markdown/PDF documents. |
 | `repos/` | Mandatory | The project's git repositories (one domain per repository). |
-| `scripts/` | Mandatory | Environment and health scripts, in meaningful subfolders (see [21-environment-scripts.md](./21-environment-scripts.md)). |
+| `scripts/` | Mandatory | Environment and health scripts (see [21-environment-scripts.md](./21-environment-scripts.md)). |
 | `ABOUT.md` | Mandatory | Project documentation for humans. |
 | `CLAUDE.md` | Mandatory | The runbook for the AI. |
 | `data/` | Optional | **Raw** data — feeds and source material, as ingested, before processing. |
@@ -6409,7 +6409,7 @@ The value of a connecting layer is predictability. Without it, each SOP would be
 
 ## Hierarchy — Where This Spec Sits
 
-The SOP spec is **not** the highest authority. The core specification defines the conformance vocabulary (the RFC 2119 / BCP 14 key words); this spec does not redefine them. It also does not override any individual SOP: where a concrete SOP specifies its own behavior, that SOP governs its scope. This spec only defines the shared shape and the vocabulary for talking about it.
+The SOP spec is **not** the highest authority. The core specification defines the conformance vocabulary (the RFC 2119 / BCP 14 key words); this spec does not redefine them. This spec only defines the shared shape (the four parts below) and the vocabulary for talking about it; the content of each SOP lives in that SOP, not here.
 
 It is **versioned independently**, under `spec/sop/0.1.0/`, with its version recorded in `data/refs.manual.json` under the `sop` key. Being thin, it is expected to change slowly.
 
@@ -6420,7 +6420,7 @@ It is **versioned independently**, under `spec/sop/0.1.0/`, with its version rec
 | Document | Title | Mode |
 |----------|-------|------|
 | `00-overview.md` | Overview | Informative |
-| `01-common-denominator.md` | The Common Denominator — Setup, Health, Update, Extras | Normative |
+| `01-common-denominator.md` | The Common Denominator — Setup, Health, Update, Extras | Informative |
 | `02-instances.md` | SOP Instances and the Reference Model | Informative |
 
 ---
@@ -6433,40 +6433,42 @@ It is **versioned independently**, under `spec/sop/0.1.0/`, with its version rec
 | Depends on | [00-overview.md](./00-overview.md) |
 | Related | [02-instances.md](./02-instances.md) |
 
-Every SOP in the system provides the same four parts. This chapter defines them. An SOP **MUST** make each of the three core parts findable, and **MAY** add scope-specific extras. The four parts are the predictable shape on which the [SOP overview](./00-overview.md) rests.
+> **Informative.** This chapter describes the common shape every SOP is expected to take. It names the parts and what each is for; it does not impose conformance levels on the individual SOPs, which govern their own scope.
+
+Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP overview](./00-overview.md) rests.
 
 ---
 
 ## The Four Parts
 
-| Part | Question it answers | Required |
-|------|---------------------|----------|
-| **Setup** | How is the scope or environment created? | MUST |
-| **Health** | Does the scope run correctly? | MUST |
-| **Update** | How is the scope brought up to date? | MUST |
-| **Extras** | What is specific to this scope and nothing else? | MAY |
+| Part | Question it answers | Role |
+|------|---------------------|------|
+| **Setup** | How is the scope or environment created? | core |
+| **Health** | Does the scope run correctly? | core |
+| **Update** | How is the scope brought up to date? | core |
+| **Extras** | What is specific to this scope and nothing else? | scope-specific |
 
 ### Setup
 
-Setup describes how the scope comes into existence — what is created, in what order, and what the finished, ready state looks like. An SOP **MUST** define its Setup so that a fresh start reaches a known-good baseline without guesswork.
+Setup describes how the scope comes into existence — what is created, in what order, and what the finished, ready state looks like. An SOP's Setup is what lets a fresh start reach a known-good baseline without guesswork.
 
 ### Health
 
-Health is the check function: a way to ask "is this scope in order?" and get a definite answer. An SOP **MUST** define a Health check whose result is observable (a pass/fail signal, a report, or an equivalent), so that the state of the scope is verified rather than assumed.
+Health is the check function: a way to ask "is this scope in order?" and get a definite answer. An SOP's Health check produces an observable result (a pass/fail signal, a report, or an equivalent), so that the state of the scope is verified rather than assumed.
 
 ### Update
 
-Update describes how an existing scope is brought to the current expected state — how a change defined centrally reaches the scope. An SOP **MUST** define its Update path so that improvements propagate rather than being re-implemented per scope.
+Update describes how an existing scope is brought to the current expected state — how a change defined centrally reaches the scope. An SOP's Update path is what lets improvements propagate rather than being re-implemented per scope.
 
 ### Extras
 
-Extras are the parts that belong to one scope and not to SOPs in general. An SOP **MAY** define any number of extras. For example, the Workbench-SOP adds the wiki and the project conventions as extras; another scope would add its own. Extras **MUST NOT** be required of other SOPs.
+Extras are the parts that belong to one scope and not to SOPs in general. An SOP may have any number of extras. For example, the Workbench-SOP adds the wiki and the project conventions as extras; another scope would add its own. Extras are specific to their SOP and are not part of the common denominator.
 
 ---
 
 ## Why These Three Are the Core
 
-Setup, Health, and Update are the connecting core because they are the questions every scope faces regardless of what it is: how do I create it, how do I know it is well, and how do I keep it current. Health in particular is the load-bearing one — it is the part that the workbench's health-check scripts implement, and the part a maintainer reaches for first. Pinning these three to a single shape across all SOPs is what makes an unfamiliar SOP navigable.
+Setup, Health, and Update are the connecting core because they are the questions every scope faces regardless of what it is: how do I create it, how do I know it is well, and how do I keep it current. Health is the part the workbench's health-check scripts implement (see the Workbench-SOP). Keeping these three to a single shape across all SOPs is what makes an unfamiliar SOP navigable.
 
 ---
 
@@ -6507,7 +6509,7 @@ Each instance fills in the four parts of the common denominator for its own scop
 The tie between an instance and the standard is deliberately light:
 
 - An SOP **references** this spec rather than copying it. It does not restate the definitions of Setup, Health, and Update; it points at them and then says how it realizes each.
-- This spec **does not import** an SOP's content. It names the instance and links to it; the instance remains the authority on its own scope.
+- This spec **does not import** an SOP's content; it names the instance and links to it.
 
 The result is a connecting layer with no duplication: the standard is stated once here, each SOP states only how it satisfies the standard, and a reader moves between them by following references rather than by reconciling repeated text.
 

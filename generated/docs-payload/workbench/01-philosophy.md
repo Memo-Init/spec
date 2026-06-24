@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Workbench"
 normative: false
-generated_at: "2026-06-24T20:49:55.320Z"
+generated_at: "2026-06-24T21:18:51.000Z"
 generated_from: "spec/workbench/0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/01-philosophy.md."
@@ -21,7 +21,7 @@ The workbench is the layer that holds many projects and the shared machinery the
 
 ## Single Source, Not Duplication
 
-The workbench provides its CLIs, standards, and conventions **once**, at the workbench level; an individual project carries only what is specific to it. The reasoning is operational rather than aesthetic: configuration that is copied into every project drifts. Each copy is edited independently, the copies diverge, and the divergence is discovered late — usually when a project behaves differently from its siblings for no documented reason.
+The workbench provides its CLIs, standards, and conventions **once**, at the workbench level; an individual project carries only what is specific to it. The reasoning is operational rather than aesthetic: configuration that is copied into every project drifts. Each copy is edited independently, and the copies diverge.
 
 Defining shared capability once means there is a single place to read it, a single place to change it, and no second copy to fall out of step. A project that needs a shared tool relies on the workbench-level definition rather than re-stating it. Where a project genuinely differs, that difference is declared explicitly (see the project configuration in [22-config.md](/specification/config/)) rather than expressed as a silent fork of a shared default.
 

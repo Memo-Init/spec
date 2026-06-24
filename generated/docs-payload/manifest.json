@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-24T20:49:55.497Z",
+    "generated_at": "2026-06-24T21:18:51.964Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -646,10 +646,10 @@
                 "filename": "01-common-denominator.md",
                 "slug": "common-denominator",
                 "title": "The Common Denominator — Setup, Health, Update, Extras",
-                "description": "Every SOP in the system provides the same four parts. This chapter defines them. An SOP **MUST** make each of the three core parts findable, and **MAY** add scope-specific extras. The four parts are...",
+                "description": "Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on...",
                 "order": 1,
                 "section": "SOP",
-                "normative": true,
+                "normative": false,
                 "sidebar_group": "introduction"
             },
             {
@@ -669,7 +669,7 @@
         "core_files": 45,
         "workbench_files": 17,
         "sop_files": 3,
-        "normative_files": 56,
-        "informative_files": 9
+        "normative_files": 55,
+        "informative_files": 10
     }
 }

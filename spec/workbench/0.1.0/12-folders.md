@@ -21,7 +21,7 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `.trash/` | Mandatory | Recoverable trash; the deletion target (see [32-trash.md](./32-trash.md)). |
 | `context/` | Mandatory | **Processed** data — specifications, distilled research, Markdown/PDF documents. |
 | `repos/` | Mandatory | The project's git repositories (one domain per repository). |
-| `scripts/` | Mandatory | Environment and health scripts, in meaningful subfolders (see [21-environment-scripts.md](./21-environment-scripts.md)). |
+| `scripts/` | Mandatory | Environment and health scripts (see [21-environment-scripts.md](./21-environment-scripts.md)). |
 | `ABOUT.md` | Mandatory | Project documentation for humans. |
 | `CLAUDE.md` | Mandatory | The runbook for the AI. |
 | `data/` | Optional | **Raw** data — feeds and source material, as ingested, before processing. |
