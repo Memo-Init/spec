@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Workbench"
 normative: false
-generated_at: "2026-06-24T21:26:02.213Z"
+generated_at: "2026-06-24T22:34:55.546Z"
 generated_from: "spec/workbench/0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/01-philosophy.md."

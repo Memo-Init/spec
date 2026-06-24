@@ -6,7 +6,7 @@ spec_file: "42-plans.md"
 order: 42
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T21:26:02.213Z"
+generated_at: "2026-06-24T22:34:55.546Z"
 generated_from: "spec/v0.1.0/42-plans.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/42-plans.md."
