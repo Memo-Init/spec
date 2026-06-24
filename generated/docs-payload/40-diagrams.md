@@ -6,7 +6,7 @@ spec_file: "40-diagrams.md"
 order: 40
 section: "Specification"
 normative: false
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T16:49:32.085Z"
 generated_from: "spec/v0.1.0/40-diagrams.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/40-diagrams.md."

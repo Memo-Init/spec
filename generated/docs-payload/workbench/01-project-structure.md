@@ -6,7 +6,7 @@ spec_file: "01-project-structure.md"
 order: 1
 section: "Workbench"
 normative: true
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T16:49:32.085Z"
 generated_from: "spec/workbench/01-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/01-project-structure.md."

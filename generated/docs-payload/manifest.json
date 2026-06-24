@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-24T15:41:49.736Z",
+    "generated_at": "2026-06-24T16:49:32.270Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -364,6 +364,16 @@
             "sidebar_group": "initialisierung"
         },
         {
+            "filename": "36-agent-research-strategies.md",
+            "slug": "agent-research-strategies",
+            "title": "Agent and Research Strategies",
+            "description": "This chapter collects the **strategies** for deploying agents and research effectively — the reusable patterns that decide *how* work is fanned out and *how* expensive findings are reused. It is...",
+            "order": 36,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "agents"
+        },
+        {
             "filename": "36-agent-strategies.md",
             "slug": "agent-strategies",
             "title": "Agent Strategies",
@@ -529,10 +539,10 @@
         ]
     },
     "stats": {
-        "total_files": 52,
-        "core_files": 45,
+        "total_files": 53,
+        "core_files": 46,
         "workbench_files": 7,
-        "normative_files": 48,
+        "normative_files": 49,
         "informative_files": 4
     }
 }
