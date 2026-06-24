@@ -142,12 +142,28 @@ const detectNormative = ( { content } ) => {
 }
 
 
-// Rewrite intra-spec links "./NN-name.md" → "/specification/<slug>/". The leading
-// "./" and the "NN-" prefix are dropped; an optional #anchor is preserved.
+// Rewrite spec links to published routes; an optional #anchor is preserved.
+//
+// (1) Same-family intra-spec links "./NN-name.md" → "/specification/<slug>/". For
+//     workbench/sop pages, sync-spec re-routes "/specification/<slug>/" to the page's
+//     own family route (family-scoped), so same-family links land correctly.
+// (2) Cross-family links "../[../]<family>[/<version>]/NN-name.md" → the absolute route
+//     of the TARGET family: core "v<x.y.z>" → /specification/, workbench → /workbench/,
+//     sop → /sop/. The final route is emitted directly because sync-spec's re-routing is
+//     family-scoped and cannot fix a cross-family link (this is why such links previously
+//     survived unrewritten and 404'd on the site). Any depth of "../" and an optional
+//     version subdir are tolerated, so the rewrite is robust to where the source file sits.
 const rewriteSpecLinks = ( { content } ) => {
-    return content.replace(
+    const sameFamily = content.replace(
         /\]\(\.\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
         ( match, fname, anchor ) => `](/specification/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
+    )
+    return sameFamily.replace(
+        /\]\((?:\.\.\/)+(?:(v\d+\.\d+\.\d+)|(workbench|sop)(?:\/\d+\.\d+\.\d+)?)\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
+        ( match, coreVersion, family, fname, anchor ) => {
+            const route = coreVersion ? 'specification' : family
+            return `](/${ route }/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
+        }
     )
 }
 

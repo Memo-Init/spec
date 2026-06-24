@@ -6,7 +6,7 @@ spec_file: "13-knowledge-format-okf.md"
 order: 13
 section: "Workbench"
 normative: true
-generated_at: "2026-06-24T21:18:51.000Z"
+generated_at: "2026-06-24T21:26:02.213Z"
 generated_from: "spec/workbench/0.1.0/13-knowledge-format-okf.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/13-knowledge-format-okf.md."
@@ -63,7 +63,7 @@ A conformant external consumer reads `type` and the links and ignores the rest w
 
 ## Two Layers: Permissive Outward, Strict Inward
 
-OKF defines a **permissive consumer** — it tolerates broken links, missing optional fields, an absent `index.md`, and unknown `type` values rather than rejecting a bundle. That tolerance is the right posture for *interchange* between tools and organizations. It is **not** the posture for the wiki's own upkeep, where form strictness is what makes staleness and inconsistency detectable (the principle inherited from the contamination/handover concern, see [09-contamination-context-handover.md](../v0.1.0/09-contamination-context-handover.md)).
+OKF defines a **permissive consumer** — it tolerates broken links, missing optional fields, an absent `index.md`, and unknown `type` values rather than rejecting a bundle. That tolerance is the right posture for *interchange* between tools and organizations. It is **not** the posture for the wiki's own upkeep, where form strictness is what makes staleness and inconsistency detectable (the principle inherited from the contamination/handover concern, see [09-contamination-context-handover.md](/specification/contamination-context-handover/)).
 
 These two postures do not conflict; they are two layers. Outward, the bundle is a permissively-consumable OKF artifact. Inward, `wiki-lint` enforces a stricter contract. The strict inward check is specified next.
 
@@ -84,7 +84,7 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 ## What This Is Not
 
-- **Not a replacement for `context/`.** The sources stay primary and immutable; the wiki is the generated, present-tense view, and OKF is a label on that view (see [11-project-structure.md](/specification/project-structure/) and [26-memo-history.md](../v0.1.0/26-memo-history.md) for the wiki-vs-history boundary).
+- **Not a replacement for `context/`.** The sources stay primary and immutable; the wiki is the generated, present-tense view, and OKF is a label on that view (see [11-project-structure.md](/specification/project-structure/) and [26-memo-history.md](/specification/memo-history/) for the wiki-vs-history boundary).
 - **Not a new storage or runtime.** OKF prescribes no database, server, agent framework, or SDK. Conformance is a documentation-and-shape contract, nothing more.
 - **Not a migration of existing bundles.** Adoption is additive. An existing wiki becomes conformant on its next `wiki-ingest` rebuild, which produces a frontmatter-free `index.md` with the `okf_version` marker; no destructive rewrite is forced.
 
@@ -96,6 +96,6 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 - [11-project-structure.md](/specification/project-structure/) — `.wiki/` as an optional per-project bundle, and `context/` as the primary immutable source.
 - [14-project-architecture.md](/specification/project-architecture/) — the project-architecture bundle, the other consumer of this format (concept first, OKF as encoding).
 - [30-wiki.md](/specification/wiki/) — the wiki entry point, the format's primary consumer.
-- [24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
-- [26-memo-history.md](../v0.1.0/26-memo-history.md) — why the wiki answers in the present tense and the history carries the chronology.
+- [24-tools-registry.md](/specification/tools-registry/) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
+- [26-memo-history.md](/specification/memo-history/) — why the wiki answers in the present tense and the history carries the chronology.
 - [32-trash.md](/specification/trash/) — superseded wiki pages are trashed, not deleted.

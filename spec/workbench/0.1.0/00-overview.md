@@ -4,7 +4,7 @@
 |-------|-------|
 | Status | Draft |
 | Depends on | — (sibling-spec entry point) |
-| Related | [01-philosophy.md](./01-philosophy.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md), [11-project-structure.md](./11-project-structure.md), [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [32-trash.md](./32-trash.md), [Requirements](../v0.1.0/23-requirements.md), [Tools Registry](../v0.1.0/24-tools-registry.md) |
+| Related | [01-philosophy.md](./01-philosophy.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md), [11-project-structure.md](./11-project-structure.md), [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [32-trash.md](./32-trash.md), [Requirements](../../v0.1.0/23-requirements.md), [Tools Registry](../../v0.1.0/24-tools-registry.md) |
 
 > **Informative.** This document introduces the Workbench spec, its scope, and its place among the sibling specifications. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
 

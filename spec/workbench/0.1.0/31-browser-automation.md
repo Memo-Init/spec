@@ -4,9 +4,9 @@
 |---|---|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md), [12-folders.md](./12-folders.md) |
-| Related | [11-project-structure.md](./11-project-structure.md), [12-folders.md](./12-folders.md), [../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md), [32-trash.md](./32-trash.md) |
+| Related | [11-project-structure.md](./11-project-structure.md), [12-folders.md](./12-folders.md), [../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md), [32-trash.md](./32-trash.md) |
 
-The core specification's research chapter ([../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and how that research feeds the revision lifecycle. This document defines the research *method* — the concrete tooling a project uses to gather external information, and the cost discipline that governs which tool is chosen. The two are complementary: the core chapter says *what must be researched and when*, this chapter says *how the gathering is done*.
+The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and how that research feeds the revision lifecycle. This document defines the research *method* — the concrete tooling a project uses to gather external information, and the cost discipline that governs which tool is chosen. The two are complementary: the core chapter says *what must be researched and when*, this chapter says *how the gathering is done*.
 
 Browser automation lives at the project level. Each project that uses it carries its own `.playwright/` folder (an optional folder — see [12-folders.md](./12-folders.md)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
 
@@ -100,7 +100,7 @@ A **safety page limit** bounds the crawl, and the crawl **MUST** stay on the all
 
 ### The Combined Output Is Untrusted Data
 
-A scraped documentation file lands in `context/` and is **read back later** by a human or by an agent. To prevent a stray imperative buried in the scraped text from being mistaken for an instruction at read-back time, the combined file **MUST** begin with a banner that marks everything below it as untrusted *data*. This inward trust boundary is specified normatively in [../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md); the banner is its concrete enforcement at the point of capture.
+A scraped documentation file lands in `context/` and is **read back later** by a human or by an agent. To prevent a stray imperative buried in the scraped text from being mistaken for an instruction at read-back time, the combined file **MUST** begin with a banner that marks everything below it as untrusted *data*. This inward trust boundary is specified normatively in [../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md); the banner is its concrete enforcement at the point of capture.
 
 ---
 
@@ -136,5 +136,5 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 - [00-overview.md](./00-overview.md) — the workbench spec framing and the global helpers it exposes.
 - [12-folders.md](./12-folders.md) — the optional `.playwright/` folder in the project layout.
 - [11-project-structure.md](./11-project-structure.md) — the local guarantee that keeps `auth.json` and `output/` off the network.
-- [../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md) — the research *duty* this chapter's *method* serves, and the normative inward trust boundary on ingested web content.
+- [../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md) — the research *duty* this chapter's *method* serves, and the normative inward trust boundary on ingested web content.
 - [32-trash.md](./32-trash.md) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.

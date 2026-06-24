@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md), [10-root-and-projects.md](./10-root-and-projects.md) |
-| Related | [12-folders.md](./12-folders.md), [23-requirements.md](../v0.1.0/23-requirements.md), [32-trash.md](./32-trash.md) |
+| Related | [12-folders.md](./12-folders.md), [23-requirements.md](../../v0.1.0/23-requirements.md), [32-trash.md](./32-trash.md) |
 
 Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. The mandatory and optional folders are specified in [12-folders.md](./12-folders.md); the split between the workbench root and the projects beneath it in [10-root-and-projects.md](./10-root-and-projects.md). This chapter specifies the property those layouts exist to protect: the **local guarantee**.
 

@@ -4,7 +4,7 @@
 |-------|-------|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md), [11-project-structure.md](./11-project-structure.md) |
-| Related | [24-tools-registry.md](../v0.1.0/24-tools-registry.md), [26-memo-history.md](../v0.1.0/26-memo-history.md), [32-trash.md](./32-trash.md) |
+| Related | [24-tools-registry.md](../../v0.1.0/24-tools-registry.md), [26-memo-history.md](../../v0.1.0/26-memo-history.md), [32-trash.md](./32-trash.md) |
 
 OKF (the Open Knowledge Format) is the **storage format** the workbench uses for knowledge bundles — a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. Two bundles use it: the project wiki under `.wiki/` (the entry point, [30-wiki.md](./30-wiki.md)) and the project architecture under `context/architecture-okf/` (the repo graph, [14-project-architecture.md](./14-project-architecture.md)). This chapter is the **format reference**: it declares those bundles **conformant to OKF** — an open specification, Apache-2.0 — as a **non-destructive superset** that keeps richer frontmatter and adds nothing the format forbids. It is a format detail, not a headline: a reader understands "the wiki" and "the project architecture" as concepts in their own chapters, and comes here only for the on-disk encoding. Nothing here changes that `context/` is the primary, immutable source (see [11-project-structure.md](./11-project-structure.md)); OKF is a presentation and interchange label on the *generated* bundle, never a replacement for the sources it is distilled from.
 
@@ -56,7 +56,7 @@ A conformant external consumer reads `type` and the links and ignores the rest w
 
 ## Two Layers: Permissive Outward, Strict Inward
 
-OKF defines a **permissive consumer** — it tolerates broken links, missing optional fields, an absent `index.md`, and unknown `type` values rather than rejecting a bundle. That tolerance is the right posture for *interchange* between tools and organizations. It is **not** the posture for the wiki's own upkeep, where form strictness is what makes staleness and inconsistency detectable (the principle inherited from the contamination/handover concern, see [09-contamination-context-handover.md](../v0.1.0/09-contamination-context-handover.md)).
+OKF defines a **permissive consumer** — it tolerates broken links, missing optional fields, an absent `index.md`, and unknown `type` values rather than rejecting a bundle. That tolerance is the right posture for *interchange* between tools and organizations. It is **not** the posture for the wiki's own upkeep, where form strictness is what makes staleness and inconsistency detectable (the principle inherited from the contamination/handover concern, see [09-contamination-context-handover.md](../../v0.1.0/09-contamination-context-handover.md)).
 
 These two postures do not conflict; they are two layers. Outward, the bundle is a permissively-consumable OKF artifact. Inward, `wiki-lint` enforces a stricter contract. The strict inward check is specified next.
 
@@ -77,7 +77,7 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 ## What This Is Not
 
-- **Not a replacement for `context/`.** The sources stay primary and immutable; the wiki is the generated, present-tense view, and OKF is a label on that view (see [11-project-structure.md](./11-project-structure.md) and [26-memo-history.md](../v0.1.0/26-memo-history.md) for the wiki-vs-history boundary).
+- **Not a replacement for `context/`.** The sources stay primary and immutable; the wiki is the generated, present-tense view, and OKF is a label on that view (see [11-project-structure.md](./11-project-structure.md) and [26-memo-history.md](../../v0.1.0/26-memo-history.md) for the wiki-vs-history boundary).
 - **Not a new storage or runtime.** OKF prescribes no database, server, agent framework, or SDK. Conformance is a documentation-and-shape contract, nothing more.
 - **Not a migration of existing bundles.** Adoption is additive. An existing wiki becomes conformant on its next `wiki-ingest` rebuild, which produces a frontmatter-free `index.md` with the `okf_version` marker; no destructive rewrite is forced.
 
@@ -89,6 +89,6 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 - [11-project-structure.md](./11-project-structure.md) — `.wiki/` as an optional per-project bundle, and `context/` as the primary immutable source.
 - [14-project-architecture.md](./14-project-architecture.md) — the project-architecture bundle, the other consumer of this format (concept first, OKF as encoding).
 - [30-wiki.md](./30-wiki.md) — the wiki entry point, the format's primary consumer.
-- [24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
-- [26-memo-history.md](../v0.1.0/26-memo-history.md) — why the wiki answers in the present tense and the history carries the chronology.
+- [24-tools-registry.md](../../v0.1.0/24-tools-registry.md) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
+- [26-memo-history.md](../../v0.1.0/26-memo-history.md) — why the wiki answers in the present tense and the history carries the chronology.
 - [32-trash.md](./32-trash.md) — superseded wiki pages are trashed, not deleted.

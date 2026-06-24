@@ -6,7 +6,7 @@ spec_file: "44-repository-and-outward-docs.md"
 order: 44
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T21:18:51.000Z"
+generated_at: "2026-06-24T21:26:02.213Z"
 generated_from: "spec/v0.1.0/44-repository-and-outward-docs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/44-repository-and-outward-docs.md."

@@ -6,7 +6,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-06-24T21:18:51.000Z"
+generated_at: "2026-06-24T21:26:02.213Z"
 generated_from: "spec/workbench/0.1.0/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/30-wiki.md."
@@ -32,13 +32,13 @@ The user does not care which form a piece of knowledge is in — the wiki finds 
 
 ## The Wiki Indexes the Architecture — It Does Not Copy It
 
-The architecture is one of the things the wiki knows about, but the wiki **points at it, it does not duplicate it**. The wiki's index carries an entry that refers to the architecture bundle (`context/architecture-okf/`); the bundle stays the single source of truth, and the wiki never holds a second, drifting copy of the repo graph. This is the same no-copy rule the tools registry follows ([../v0.1.0/24-tools-registry.md](../v0.1.0/24-tools-registry.md)): a reference whose target owns the content, so an update changes one place. A deterministic consumer that needs the architecture follows the pointer to `memo architecture locate`; a human or agent browsing the wiki follows the same pointer by hand.
+The architecture is one of the things the wiki knows about, but the wiki **points at it, it does not duplicate it**. The wiki's index carries an entry that refers to the architecture bundle (`context/architecture-okf/`); the bundle stays the single source of truth, and the wiki never holds a second, drifting copy of the repo graph. This is the same no-copy rule the tools registry follows ([../../v0.1.0/24-tools-registry.md](/specification/tools-registry/)): a reference whose target owns the content, so an update changes one place. A deterministic consumer that needs the architecture follows the pointer to `memo architecture locate`; a human or agent browsing the wiki follows the same pointer by hand.
 
 ---
 
 ## Present Tense, Not Chronology
 
-The wiki answers in the **present tense**: a wiki page states what is understood to be true *now*, and a query returns the current consolidated understanding, optimized for fast answers. What the wiki is **not** is the timeline of how that understanding was reached — that is the chronicle ([../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md)). The wiki gives the current answer; the chronicle gives the provenance and the order of change. A memo that asks "what does the project know about X right now?" reaches for the wiki; one that asks "does a conclusion from an earlier memo still hold?" reaches for the chronicle. Keeping the two distinct stops the wiki's convenience from being mistaken for an audit trail.
+The wiki answers in the **present tense**: a wiki page states what is understood to be true *now*, and a query returns the current consolidated understanding, optimized for fast answers. What the wiki is **not** is the timeline of how that understanding was reached — that is the chronicle ([../../v0.1.0/26-memo-history.md](/specification/memo-history/)). The wiki gives the current answer; the chronicle gives the provenance and the order of change. A memo that asks "what does the project know about X right now?" reaches for the wiki; one that asks "does a conclusion from an earlier memo still hold?" reaches for the chronicle. Keeping the two distinct stops the wiki's convenience from being mistaken for an audit trail.
 
 ---
 
@@ -58,7 +58,7 @@ So "the wiki finds everything" holds for all projects; "the project has a struct
 The wiki is kept current by **two complementary triggers**, one at write time and one periodic:
 
 - **Ingest at landing.** When a memo lands, its new knowledge is folded into the wiki (the ingest step of landing). This keeps the wiki current as the project produces knowledge, at the moment the knowledge is finalized.
-- **Stale flag on the maintenance board.** Periodically, the maintenance discipline ([../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md) and the maintenance chapter) flags wiki pages that have drifted from their sources, so staleness that accrues between landings is still caught.
+- **Stale flag on the maintenance board.** Periodically, the maintenance discipline ([../../v0.1.0/26-memo-history.md](/specification/memo-history/) and the maintenance chapter) flags wiki pages that have drifted from their sources, so staleness that accrues between landings is still caught.
 
 Write-time freshness keeps the wiki growing correctly; periodic staleness detection catches the decay that write-time cannot see. Together they keep the entry point trustworthy.
 
@@ -76,5 +76,5 @@ The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](/sp
 
 - [14-project-architecture.md](/specification/project-architecture/) — the structured layer the wiki indexes and points at.
 - [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the on-disk format of both the wiki and the architecture bundle.
-- [../v0.1.0/24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
-- [../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md) — the chronicle, the present-tense wiki's chronological counterpart.
+- [../../v0.1.0/24-tools-registry.md](/specification/tools-registry/) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
+- [../../v0.1.0/26-memo-history.md](/specification/memo-history/) — the chronicle, the present-tense wiki's chronological counterpart.
