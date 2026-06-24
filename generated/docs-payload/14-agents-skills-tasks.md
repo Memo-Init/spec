@@ -6,7 +6,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T15:41:49.231Z"
 generated_from: "spec/v0.1.0/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/14-agents-skills-tasks.md."
@@ -38,7 +38,7 @@ A **skill** is the right shape when the procedure should run inside the caller's
 
 ## Agent Execution Primitives
 
-"Agent" is run in **three** distinct forms. This is the canonical typology; the orchestration machinery ([13-orchestration.md](/specification/orchestration/)) and the deployment strategies ([36-agent-research-strategies.md](/specification/agent-research-strategies/)) refer back to these types rather than redefining them.
+"Agent" is run in **three** distinct forms. This is the canonical typology; the orchestration machinery ([13-orchestration.md](/specification/orchestration/)) and the deployment strategies ([36-agent-strategies.md](/specification/agent-strategies/)) refer back to these types rather than redefining them.
 
 | Type | Mechanism | Context | Return |
 |------|-----------|---------|--------|
@@ -106,7 +106,7 @@ The `null` primary plus the `scope` marker is the honest signal: *acknowledged o
 
 - [15-prompt-generator.md](/specification/prompt-generator/) — the deterministic compositor that produces an agent's per-invocation start-prompt.
 - [13-orchestration.md](/specification/orchestration/) — the machinery (team roles, dials, state) that runs the agent types defined here, and the model-driven-fan-out vs Dynamic-Workflow distinction.
-- [36-agent-research-strategies.md](/specification/agent-research-strategies/) — the deployment strategies that reference these types (e.g. distillate-fan-out mapped onto type (a)/(c)).
+- [36-agent-strategies.md](/specification/agent-strategies/) — the agent deployment strategies that reference these types (Fan-Out by Unit); the distillate-fan-out research strategy mapped onto type (a)/(c) is in [10-proactive-research.md](/specification/proactive-research/).
 - [12-rollout.md](/specification/rollout/) — the rollout whose Evaluate phase is run by the migrated evaluators.
 - [09-contamination-context-handover.md](/specification/contamination-context-handover/) — the empty-context rule that makes evaluators the natural first migration.
 - [00-overview.md](/specification/overview/) — conformance language.

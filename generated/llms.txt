@@ -232,7 +232,7 @@ The packing has bounds, and they are firm:
 
 Within those bounds the topic count is **at least three, with no upper cap**. The optimization is explicitly for **large, multi-topic inputs**: a single-topic memo is possible but is not the target case. The system is tuned for a developer who has thought through many related things at once and wants them packed into one well-ordered departure.
 
-The aim of all this is **moving forward** — innovation and shipped progress — not automation for its own sake. Packing the train densely is in service of pushing more worked-through topics out into the world per departure. The economics of front-loading the expensive research once and reusing it across the packed topics — the distillation economy that makes a densely packed train affordable — is described in [36-agent-research-strategies.md](./36-agent-research-strategies.md).
+The aim of all this is **moving forward** — innovation and shipped progress — not automation for its own sake. Packing the train densely is in service of pushing more worked-through topics out into the world per departure. The economics of front-loading the expensive research once and reusing it across the packed topics — the distillation economy that makes a densely packed train affordable — is described in [10-proactive-research.md](./10-proactive-research.md) (Distillate-Fan-Out).
 
 ---
 
@@ -774,7 +774,7 @@ The question handover uses a **hybrid**: a lenient human-readable markdown F-for
     "title": "Example question",
     "background": "background",
     "question": "the question",
-    "aiRecommendation": "the recommendation",
+    "recommendation": "the recommendation",
     "type": "single",
     "options": [
       { "key": "A", "label": "first option", "kind": "option" },
@@ -785,7 +785,9 @@ The question handover uses a **hybrid**: a lenient human-readable markdown F-for
 ]
 ```
 
-Authority rule: **when a `questions-json` block is present, it is authoritative.** The parser (`parseQuestionJsonBlock`) treats it as the source of truth, and the human-readable markdown is rendered from it deterministically (`renderQuestionsMarkdown`), so the two cannot drift. A malformed block never crashes the parse path: it yields a not-found result with an error string that the validator can translate into a validation code, rather than throwing. When no `questions-json` block exists, the lenient markdown parse applies.
+Authority rule — **single source (open questions):** when a `questions-json` block is present, it is the **single authored source** for the open questions. The parser (`parseQuestionJsonBlock`) treats it as the source of truth, and the human-readable markdown is **generated** from it deterministically (`renderQuestionsMarkdown`) — it is **not** written by hand, so the two cannot drift and the whole render-vs-validate mismatch class disappears structurally. An open question therefore carries **no** `### F{N}` mirror; it lives in the json block only. A malformed block never crashes the parse path: it yields a not-found result with an error string that the validator translates into a validation code, rather than throwing. When no `questions-json` block exists, the lenient markdown parse applies.
+
+Consequently the question-count cross-check (`MEMO-025`) applies only to the **markdown-only** path. When a json block is present it is authoritative and the heading count is not cross-checked against it — because **answered** questions keep their `### F{N}` records (the answered-pair below, read by [41-mental-model.md](./41-mental-model.md)) while **open** questions have no heading, so the two counts legitimately differ. What the renderer needs to draw a card — including each option's `kind` ∈ `{option, custom, topic}` — is one shared render contract; an invalid `kind` (e.g. `normal`) is rejected fail-loud when the revision is registered (`MEMO-033`), not silently dropped on the user's screen.
 
 The JSON block delivers a machine-authoritative question set for the AI→software handover while keeping the markdown layer human-readable.
 
@@ -842,6 +844,14 @@ Append-only is not only a safeguard against accidental overwrites; it is the inf
 A revision is **expensive** — it represents many tokens of reasoning. This is what makes a living-edit-of-a-single-file approach risky for this particular artifact. We respect that approach; it is a reasonable design in many settings, and the trade-off here is specific, not a verdict on it. The trade-off is this: when a single growing file is the only copy, a highly filled state (a file that has grown into the hundreds of thousands of tokens) is itself subject to context rot, and there is no earlier clean state to fall back to. On the private `.memo/` layer there is also no git history (the tree is structurally local and un-versioned, see [06-memo-structure.md](./06-memo-structure.md)), so an in-place corruption of that one file is total loss of **both** the memo and the tokens that went into it. Separate revision files give back exactly the fallback that git would otherwise provide.
 
 Context is also driven up **from the outside**, not only by the memo's own growth. A research pass that drives a browser (for example Playwright) or sweeps many sources pours external material into the working context and fills it faster than the prose alone would. That is a second, independent reason to commit a new state as a **new revision** rather than mutating the current file in place: the next clean state should start from a deliberate, readable snapshot, not from a file that has absorbed an unbounded amount of external context.
+
+---
+
+## Scope May Grow Across Revisions
+
+A memo's scope is allowed to **grow** while it is being revised. When the user adds a new request mid-revision — a topic, a fix, a whole extra part — that request is **taken into the same memo and worked through there**. It is never unilaterally exported into a follow-up memo, a sub-memo, or a "later" container.
+
+The rule: **you have to accept what the memo demands — including what arrives in a revision.** The well-known "accept the multi-topic input, do not split it" instinct is anchored at the *initial* input ([01-philosophy.md](./01-philosophy.md), [05-memo-strategies.md](./05-memo-strategies.md)); this is its revision-time companion. Mechanically a revision is still append-only (a new `REV-XX.md`, never an in-place edit), and the added scope becomes new chapters and new `### F{N}` questions in that next revision. The only sanctioned way to split off work is an explicit user question (per C7, [29-behavioral-guardrails.md](./29-behavioral-guardrails.md)); absent that recorded decision the work stays in the current memo. Deferring a genuinely out-of-scope finding is likewise a parked research note in `context/`, not a follow-up memo (C8).
 
 ---
 
@@ -1277,12 +1287,28 @@ Research draws material from outside the local context — scraped pages, fetche
 
 ---
 
+## Distillate-Fan-Out
+
+Deep research is **expensive to run and cheap to reuse**, so it should be run **once** and then **distilled** into a compact, structured artifact that many cheaper sub-agents are seeded from — instead of paying for the same broad research inside every sub-agent. This is the headline strategy for turning one research pass into many units of work.
+
+1. **Research once, deeply.** A single expensive pass (broad web/codebase sweep, many sources) produces the raw findings. Large raw output goes to the memo's `context/` (see "Large Research Goes to `context/`" above), never inline.
+2. **Distill.** The raw findings are reduced to a **distillate** — a compact, reusable artifact that carries only what the downstream work needs. The distillate is frequently a **structured dataset** (the data payload of [35-memo-authoring.md](./35-memo-authoring.md)): one record per unit of work.
+3. **Fan out cheaply.** Each record of the distillate **seeds one sub-agent** with a small, self-contained brief. The sub-agents run in parallel under the orchestration machinery ([13-orchestration.md](./13-orchestration.md)); none repeats the expensive research, because the distillate already carries it.
+
+The payoff is that the costly part happens once and the parallel part is cheap and uniform. The same dataset that renders a generated table ([35-memo-authoring.md](./35-memo-authoring.md)) is the fan-out seed — the table is for the human reader, the records are for the sub-agents. The goal-optimization pipeline is an instance of this shape: a goal's accumulated findings are distilled into an init-transcript that seeds a follow-up memo (see [31-goals.md](./31-goals.md)).
+
+**Mapped onto the agent-execution primitives ([14-agents-skills-tasks.md](./14-agents-skills-tasks.md)):** the one expensive research pass (step 1) runs as a single ephemeral sub-agent (type a) or a deterministic workflow (type c); the cheap fan-out (step 3) uses **type (a)** ephemeral sub-agents when there are a few records, and is the **canonical use of type (c)** — a deterministic workflow — when the records number in the dozens or hundreds. Persistent agents (type b) are **not** the default here: the strategy depends on the fan-out workers being stateless and uniform. The agent-deployment side of this strategy — choosing the unit boundary the workers are split along — is [36-agent-strategies.md](./36-agent-strategies.md) (Fan-Out by Unit).
+
+---
+
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline whose final step derives the research topics this chapter consumes.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the pointer principle (`context/` reference over re-narration) and the revision-2 contamination scan.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels research output is tagged with, and the `[Research open]` finalization gate.
 - [../workbench/05-browser-automation.md](../workbench/05-browser-automation.md) — the research *method*: the CLI-vs-MCP cost policy, the `.playwright/` structure, the scrape queue, and the tool-selection decision tree.
+- [35-memo-authoring.md](./35-memo-authoring.md) — the data payload that a research distillate becomes (one record per unit of work), doubling as the fan-out seed.
+- [36-agent-strategies.md](./36-agent-strategies.md) — the agent-deployment side of the fan-out (Fan-Out by Unit, Fresh-Context Evaluation).
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -1901,7 +1927,7 @@ The Worker↔Evaluator limit deserves emphasis: hitting three iterations without
 - [23-requirements.md](./23-requirements.md) — the hard/should-apply requirement tiers that seed the contract and drive the coverage gate.
 - [31-goals.md](./31-goals.md) — the goal-scoring layer; the utilization gate's built-but-unwired check is the same "PASS ≠ reality" honesty applied at evaluation.
 - [33-maintenance.md](./33-maintenance.md) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
-- [36-agent-research-strategies.md](./36-agent-research-strategies.md) — the strategy/pattern layer (Distillate-Fan-Out, fan-out by unit) above this machinery.
+- [36-agent-strategies.md](./36-agent-strategies.md) — the agent strategy/pattern layer (Fan-Out by Unit, Fresh-Context Evaluation) above this machinery; the research-reuse strategy (Distillate-Fan-Out) is in [10-proactive-research.md](./10-proactive-research.md).
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -1939,7 +1965,7 @@ A **skill** is the right shape when the procedure should run inside the caller's
 
 ## Agent Execution Primitives
 
-"Agent" is run in **three** distinct forms. This is the canonical typology; the orchestration machinery ([13-orchestration.md](./13-orchestration.md)) and the deployment strategies ([36-agent-research-strategies.md](./36-agent-research-strategies.md)) refer back to these types rather than redefining them.
+"Agent" is run in **three** distinct forms. This is the canonical typology; the orchestration machinery ([13-orchestration.md](./13-orchestration.md)) and the deployment strategies ([36-agent-strategies.md](./36-agent-strategies.md)) refer back to these types rather than redefining them.
 
 | Type | Mechanism | Context | Return |
 |------|-----------|---------|--------|
@@ -2007,7 +2033,7 @@ The `null` primary plus the `scope` marker is the honest signal: *acknowledged o
 
 - [15-prompt-generator.md](./15-prompt-generator.md) — the deterministic compositor that produces an agent's per-invocation start-prompt.
 - [13-orchestration.md](./13-orchestration.md) — the machinery (team roles, dials, state) that runs the agent types defined here, and the model-driven-fan-out vs Dynamic-Workflow distinction.
-- [36-agent-research-strategies.md](./36-agent-research-strategies.md) — the deployment strategies that reference these types (e.g. distillate-fan-out mapped onto type (a)/(c)).
+- [36-agent-strategies.md](./36-agent-strategies.md) — the agent deployment strategies that reference these types (Fan-Out by Unit); the distillate-fan-out research strategy mapped onto type (a)/(c) is in [10-proactive-research.md](./10-proactive-research.md).
 - [12-rollout.md](./12-rollout.md) — the rollout whose Evaluate phase is run by the migrated evaluators.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context rule that makes evaluators the natural first migration.
 - [00-overview.md](./00-overview.md) — conformance language.
@@ -2236,31 +2262,9 @@ Git is used here as **backup and findability**, not as a deployment trigger. The
 
 ## The Memo ID
 
-The canonical identifier for a work package is:
+The canonical work-package identifier — `{CTX}-M{NNN}-{PP}-{RR}`, its segments, the `{CTX}` prefix rule, and the three reference levels (PRD / phase / memo) — is **defined in [35-memo-authoring.md](./35-memo-authoring.md#the-memo-id)**, next to the act of authoring that creates it. This chapter does not repeat that definition; it specifies how the ID is **used** in the git workflow.
 
-```
-{CTX}-M{NNN}-{PP}-{RR}
-```
-
-| Segment | Meaning | Example |
-|---------|---------|---------|
-| `{CTX}` | Short project/context prefix (2–6 uppercase letters). Distinguishes memos from different projects or areas that share the same repo or search space. | `FMC`, `MEMO`, `WIKI` |
-| `M` | Fixed memo marker | `M` |
-| `{NNN}` | 3-digit memo number | `024` |
-| `{PP}` | 2-digit phase number | `05` |
-| `{RR}` | 2-digit PRD number within the phase | `02` |
-
-The `{CTX}` prefix is **REQUIRED** when memos from more than one project can appear in the same search space (shared repository, shared issue tracker, or shared commit log). When a project runs in a fully isolated repository with no cross-project overlap, `{CTX}` **MAY** be omitted and the short form `M{NNN}-{PP}-{RR}` is used. A project **MUST** choose its prefix once and apply it consistently — mixing prefixed and unprefixed forms within one project is not permitted.
-
-The ID addresses three reference levels:
-
-| Level | Format | Example | Meaning |
-|-------|--------|---------|---------|
-| PRD (full) | `{CTX}-M{NNN}-{PP}-{RR}` | `FMC-M024-05-02` | FlowMCP memo 024, phase 5, PRD 2 |
-| Phase | `{CTX}-M{NNN}-{PP}` | `FMC-M024-05` | FlowMCP memo 024, phase 5 |
-| Memo | `{CTX}-M{NNN}` | `FMC-M024` | FlowMCP memo 024 |
-
-The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{NNN}-{PP}` with a leading zero; an old `PRD-{NNN}` becomes the full `M{NNN}-{PP}-{RR}`. Addressing work by ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](./16-git-security-versioning.md)).
+In short form, the ID is `{CTX}-M{NNN}-{PP}-{RR}` (the `{CTX}` prefix MAY be dropped in a fully isolated repository, giving `M{NNN}-{PP}-{RR}`). Addressing work by this ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](./16-git-security-versioning.md)). Everything below — question IDs, the issue/commit mapping, branch naming, and the findability references — builds on that one identifier.
 
 ---
 
@@ -3567,7 +3571,9 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 - The agent MUST NOT unilaterally export work into a follow-up memo, a sub-memo, or any deferred container.
 - A follow-up memo is created ONLY when the user explicitly chooses it. The choice is recorded as a memo question entry (`### F{N}`); until that question is answered in favor of a split, the work stays in the current memo.
 
-A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
+A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags. The same instinct holds **across revisions**: a memo's scope may grow while it is revised, and a request that arrives mid-revision is worked into the same memo, never exported — the revision-time companion to this rule is stated in [07-revisions-and-questions.md](./07-revisions-and-questions.md) ("Scope May Grow Across Revisions").
+
+**Inclusion is the default — curation is also the user's decision.** C7 forbids unilaterally *exporting* work; its mirror image forbids unilaterally *excluding* it. When several findings surface, the default is to **take them all in**; the agent does not quietly pick which ones "make it" into the memo. A finding is left out ONLY when the user explicitly rejects it — the same recorded-decision bar that governs a split. Silently curating which findings are included is the same unsanctioned-deferral failure as silently exporting work, just inverted.
 
 ## C8 — Fix What You Find, Within YAGNI
 
@@ -3593,7 +3599,7 @@ The same logic governs scope that genuinely must be deferred. Deferred scope is 
 
 ---
 
-# 30. Primitives
+# 30. Glossar
 
 | Field | Value |
 |-------|-------|
@@ -4206,14 +4212,9 @@ The parser is **tolerant**: for back-compat it still accepts the legacy German f
 
 ### Interplay with the Question-Count Gate
 
-The **question-count lint gate** counts the `### F{N}` markdown headings in a memo and compares that count to the number of questions in the `questions-json` block; a mismatch is a violation. The two channels MUST therefore stay in **1:1 correspondence** — a question present in one MUST be present in the other, so the counts are equal.
+The **question-count lint gate (MEMO-025)** applies to the **markdown-only** path: when a memo carries no `questions-json` block, every `### F{N}` heading MUST parse into exactly one question and vice versa, so a heading the parser silently misses is still caught.
 
-The recurring failure is **asymmetry**: a json block carrying only the still-open questions while every answered question keeps its `### F{N}` heading — the heading count then exceeds the json count and the gate fires. Two ways to stay symmetric:
-
-- **Mirror** every question in both the `questions-json` block and as a `### F{N}` heading (equal counts; json authoritative, markdown the human-readable mirror); or
-- **Drop from both** — a question moved to a non-`### F{N}` prose form (e.g. a fully answered question summarized in prose) is also removed from the json block, so neither count includes it.
-
-Either way the invariant holds: `count(### F{N} headings) == count(questions in the json block)`.
+When a `questions-json` block **is** present it is the single source (07's authority rule), and the count gate **does not** cross-check the `### F{N}` heading count against it. This is the single-source split defined in [07-revisions-and-questions.md](./07-revisions-and-questions.md): **open** questions live in the json block only — there is no hand-written `### F{N}` mirror, the human-readable form is generated by `renderQuestionsMarkdown` — while **answered** questions keep their `### F{N}` decision records (the `AI recommendation` vs `user decision` pair that [41-mental-model.md](./41-mental-model.md) reads). The two artefacts legitimately differ in count, so cross-checking them would misfire; the json is trusted instead. Authoring rule: **pose open questions only as `questions-json`, never as extra `### F{N}` headings.** What the renderer needs to draw a question as a card — including each option's `kind` ∈ `{option, custom, topic}` — is the one shared render contract; an invalid `kind` is rejected fail-loud at registration (MEMO-033), not silently dropped at the screen.
 
 ## Related
 
@@ -4242,6 +4243,34 @@ A memo is the unit of thinking-before-building: a numbered, local working docume
 
 Authoring a memo is therefore not note-taking but **structured argument**: each chapter states a concern, weighs the options behind it (the question interface, [34-question-interface.md](./34-question-interface.md)), and records the decision and its evidence. The strategy a memo follows — its type and the depth it warrants — is covered in [05-memo-strategies.md](./05-memo-strategies.md); this chapter assumes that frame and focuses on the mechanics of writing the content down.
 
+## The Memo ID
+
+Every memo carries a stable identifier from the moment it is authored, and that identifier follows the work down to the phase and PRD it later produces. Defining it here — at the point of authoring — keeps the definition next to the act that creates it; [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) then specifies how the ID is *used* in commits, branches, and references. The canonical identifier for a work package is:
+
+```
+{CTX}-M{NNN}-{PP}-{RR}
+```
+
+| Segment | Meaning | Example |
+|---------|---------|---------|
+| `{CTX}` | Short project/context prefix (2–6 uppercase letters). Distinguishes memos from different projects or areas that share the same repo or search space. | `FMC`, `MEMO`, `WIKI` |
+| `M` | Fixed memo marker | `M` |
+| `{NNN}` | 3-digit memo number | `024` |
+| `{PP}` | 2-digit phase number | `05` |
+| `{RR}` | 2-digit PRD number within the phase | `02` |
+
+The `{CTX}` prefix is **REQUIRED** when memos from more than one project can appear in the same search space (shared repository, shared issue tracker, or shared commit log). When a project runs in a fully isolated repository with no cross-project overlap, `{CTX}` **MAY** be omitted and the short form `M{NNN}-{PP}-{RR}` is used. A project **MUST** choose its prefix once and apply it consistently — mixing prefixed and unprefixed forms within one project is not permitted.
+
+The ID addresses three reference levels:
+
+| Level | Format | Example | Meaning |
+|-------|--------|---------|---------|
+| PRD (full) | `{CTX}-M{NNN}-{PP}-{RR}` | `FMC-M024-05-02` | FlowMCP memo 024, phase 5, PRD 2 |
+| Phase | `{CTX}-M{NNN}-{PP}` | `FMC-M024-05` | FlowMCP memo 024, phase 5 |
+| Memo | `{CTX}-M{NNN}` | `FMC-M024` | FlowMCP memo 024 |
+
+The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{NNN}-{PP}` with a leading zero; an old `PRD-{NNN}` becomes the full `M{NNN}-{PP}-{RR}`. Addressing work by ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](./16-git-security-versioning.md)).
+
 ## Tables and Generated Data
 
 Repetition in a memo's content has two thresholds, and crossing each one changes how the content is authored. The thresholds are deliberate, low, and meant to be applied without agonizing over the exact count.
@@ -4258,7 +4287,7 @@ When the set reaches **eight or more entries**, stop hand-typing the table. Inst
 - A small **script** loads the JSON and renders the Markdown table deterministically, writing an output file that carries a header stating it is generated and **must not be hand-edited — the JSON is the source**.
 - The payload is **revision-spanning**: it persists across revisions, so the table is re-rendered, never re-typed, when the data changes.
 
-Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](./10-proactive-research.md) and [36-agent-research-strategies.md](./36-agent-research-strategies.md)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
+Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](./10-proactive-research.md) and [36-agent-strategies.md](./36-agent-strategies.md)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
 
 ## Diagrams in Memos (Mermaid and Vega-Lite)
 
@@ -4295,31 +4324,19 @@ The intro-prose and `## Related` requirements are **machine-enforced** by the sp
 
 ---
 
-# 36. Agent and Research Strategies
+# 36. Agent Strategies
 
 | Field | Value |
 |-------|-------|
 | Status | Draft |
-| Depends on | [./13-orchestration.md](./13-orchestration.md), [./10-proactive-research.md](./10-proactive-research.md) |
-| Related | [./14-agents-skills-tasks.md](./14-agents-skills-tasks.md), [./31-goals.md](./31-goals.md), [./35-memo-authoring.md](./35-memo-authoring.md), [./09-contamination-context-handover.md](./09-contamination-context-handover.md) |
+| Depends on | [./13-orchestration.md](./13-orchestration.md), [./14-agents-skills-tasks.md](./14-agents-skills-tasks.md) |
+| Related | [./10-proactive-research.md](./10-proactive-research.md), [./31-goals.md](./31-goals.md), [./09-contamination-context-handover.md](./09-contamination-context-handover.md), [./35-memo-authoring.md](./35-memo-authoring.md) |
 
-This chapter collects the **strategies** for deploying agents and research effectively — the reusable patterns that decide *how* work is fanned out and *how* expensive findings are reused. It is deliberately the pattern layer, not the machinery: the orchestration mechanics (Generate → Execute → Evaluate, agent teams, parallelism dials, state and recovery) live in [13-orchestration.md](./13-orchestration.md), the research lifecycle (when to research, sub-agent spawning, where large output goes) lives in [10-proactive-research.md](./10-proactive-research.md), and the skill-versus-agent distinction lives in [14-agents-skills-tasks.md](./14-agents-skills-tasks.md). Here we name the patterns that sit above all three, so a strategy can be chosen by name rather than re-derived each time.
-
-## Distillate-Fan-Out
-
-The headline strategy. Deep research is **expensive to run and cheap to reuse**, so it should be run **once** and then **distilled** into a compact, structured artifact that many cheaper sub-agents are seeded from — instead of paying for the same broad research inside every sub-agent.
-
-1. **Research once, deeply.** A single expensive pass (broad web/codebase sweep, many sources) produces the raw findings. Large raw output goes to the memo's `context/` ([10-proactive-research.md](./10-proactive-research.md)), never inline.
-2. **Distill.** The raw findings are reduced to a **distillate** — a compact, reusable artifact that carries only what the downstream work needs. The distillate is frequently a **structured dataset** (the data payload of [35-memo-authoring.md](./35-memo-authoring.md)): one record per unit of work.
-3. **Fan out cheaply.** Each record of the distillate **seeds one sub-agent** with a small, self-contained brief. The sub-agents run in parallel under the orchestration machinery ([13-orchestration.md](./13-orchestration.md)); none repeats the expensive research, because the distillate already carries it.
-
-The payoff is that the costly part happens once and the parallel part is cheap and uniform. The same dataset that renders a generated table ([35-memo-authoring.md](./35-memo-authoring.md)) is the fan-out seed — the table is for the human reader, the records are for the sub-agents. The goal-optimization pipeline is an instance of this shape: a goal's accumulated findings are distilled into an init-transcript that seeds a follow-up memo (see [31-goals.md](./31-goals.md)).
-
-**Mapped onto the agent-execution primitives ([14-agents-skills-tasks.md](./14-agents-skills-tasks.md)):** the one expensive research pass (step 1) runs as a single ephemeral sub-agent (type a) or a deterministic workflow (type c); the cheap fan-out (step 3) uses **type (a)** ephemeral sub-agents when there are a few records, and is the **canonical use of type (c)** — a deterministic workflow — when the records number in the dozens or hundreds (its high agent cap and script-repeatability are built for exactly that). Persistent agents (type b) are **not** the default here: the strategy depends on the fan-out workers being stateless and uniform, where type (b) fits iterative single-worker dialogue instead. This is a strategy choosing a type, not a new type.
+This chapter collects the **strategies** for deploying agents effectively — the reusable patterns that decide *how* work is fanned out across sub-agents. It is deliberately the pattern layer, not the machinery: the orchestration mechanics (Generate → Execute → Evaluate, agent teams, parallelism dials, state and recovery) live in [13-orchestration.md](./13-orchestration.md), and the skill-versus-agent distinction and the three agent forms live in [14-agents-skills-tasks.md](./14-agents-skills-tasks.md). The research-reuse strategy that seeds a fan-out — **Distillate-Fan-Out** — sits with the research lifecycle in [10-proactive-research.md](./10-proactive-research.md); the agent-deployment patterns below build on it. Here we name the patterns that sit above the machinery, so a strategy can be chosen by name rather than re-derived each time.
 
 ## Fan-Out by Unit
 
-When work decomposes into independent units — one repo, one file, one chapter, one goal — the strategy is **one agent per unit**, run in parallel, each agent scoped to exactly its unit. This keeps each context small and the work embarrassingly parallel, and it makes a missing or failed unit visible as a single gap rather than a silent omission. The degree of parallelism is a dial set by the orchestrator ([13-orchestration.md](./13-orchestration.md)); the strategy here is only the decomposition: pick a unit boundary along which the work is genuinely independent, and assign one agent to each.
+When work decomposes into independent units — one repo, one file, one chapter, one goal — the strategy is **one agent per unit**, run in parallel, each agent scoped to exactly its unit. This keeps each context small and the work embarrassingly parallel, and it makes a missing or failed unit visible as a single gap rather than a silent omission. The degree of parallelism is a dial set by the orchestrator ([13-orchestration.md](./13-orchestration.md)); the strategy here is only the decomposition: pick a unit boundary along which the work is genuinely independent, and assign one agent to each. This is the agent-deployment counterpart of the research-side **Distillate-Fan-Out** ([10-proactive-research.md](./10-proactive-research.md)) — where that strategy seeds the workers cheaply from one expensive pass, this one fixes the boundary along which they are split.
 
 ## Fresh-Context Evaluation
 
@@ -4328,10 +4345,10 @@ Measurement and grading are **never** done by the session that did the work — 
 ## Related
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestration machinery these strategies run on (the boundary: machinery there, patterns here).
-- [10-proactive-research.md](./10-proactive-research.md) — the research lifecycle and where large research output is stored.
-- [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the skill-versus-agent distinction underneath these strategies.
-- [35-memo-authoring.md](./35-memo-authoring.md) — the data payload that doubles as the fan-out seed.
+- [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the three agent forms and the skill-versus-agent distinction underneath these strategies.
+- [10-proactive-research.md](./10-proactive-research.md) — the research lifecycle and the Distillate-Fan-Out strategy that seeds an agent fan-out.
 - [31-goals.md](./31-goals.md) — fresh-context scoring, an instance of fresh-context evaluation.
+- [35-memo-authoring.md](./35-memo-authoring.md) — the data payload that doubles as the fan-out seed.
 
 ---
 
@@ -4424,7 +4441,7 @@ Contamination describes the model's own degraded **output** context; transcript 
 
 ---
 
-# 38. Stage Model
+# 38. Execution Model
 
 | Field | Value |
 |-------|-------|

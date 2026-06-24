@@ -118,7 +118,7 @@ The packing has bounds, and they are firm:
 
 Within those bounds the topic count is **at least three, with no upper cap**. The optimization is explicitly for **large, multi-topic inputs**: a single-topic memo is possible but is not the target case. The system is tuned for a developer who has thought through many related things at once and wants them packed into one well-ordered departure.
 
-The aim of all this is **moving forward** — innovation and shipped progress — not automation for its own sake. Packing the train densely is in service of pushing more worked-through topics out into the world per departure. The economics of front-loading the expensive research once and reusing it across the packed topics — the distillation economy that makes a densely packed train affordable — is described in [36-agent-research-strategies.md](./36-agent-research-strategies.md).
+The aim of all this is **moving forward** — innovation and shipped progress — not automation for its own sake. Packing the train densely is in service of pushing more worked-through topics out into the world per departure. The economics of front-loading the expensive research once and reusing it across the packed topics — the distillation economy that makes a densely packed train affordable — is described in [10-proactive-research.md](./10-proactive-research.md) (Distillate-Fan-Out).
 
 ---
 

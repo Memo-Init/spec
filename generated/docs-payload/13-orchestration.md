@@ -6,7 +6,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T15:41:49.231Z"
 generated_from: "spec/v0.1.0/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/13-orchestration.md."
@@ -276,5 +276,5 @@ The Worker↔Evaluator limit deserves emphasis: hitting three iterations without
 - [23-requirements.md](/specification/requirements/) — the hard/should-apply requirement tiers that seed the contract and drive the coverage gate.
 - [31-goals.md](/specification/goals/) — the goal-scoring layer; the utilization gate's built-but-unwired check is the same "PASS ≠ reality" honesty applied at evaluation.
 - [33-maintenance.md](/specification/maintenance/) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
-- [36-agent-research-strategies.md](/specification/agent-research-strategies/) — the strategy/pattern layer (Distillate-Fan-Out, fan-out by unit) above this machinery.
+- [36-agent-strategies.md](/specification/agent-strategies/) — the agent strategy/pattern layer (Fan-Out by Unit, Fresh-Context Evaluation) above this machinery; the research-reuse strategy (Distillate-Fan-Out) is in [10-proactive-research.md](/specification/proactive-research/).
 - [00-overview.md](/specification/overview/) — conformance language.

@@ -1,12 +1,12 @@
 ---
-title: "Stage Model"
+title: "Execution Model"
 description: "The most reliable way to leave a thread half-finished is to mistake the end of the rollout for the end of the work. The rollout closes when Evaluate passes, but a passed Evaluate is only the first of..."
 spec_version: "0.1.0"
 spec_file: "38-stage-model.md"
 order: 38
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T15:41:49.231Z"
 generated_from: "spec/v0.1.0/38-stage-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/38-stage-model.md."

@@ -6,7 +6,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T15:41:49.231Z"
 generated_from: "spec/v0.1.0/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/07-revisions-and-questions.md."
@@ -74,7 +74,7 @@ The question handover uses a **hybrid**: a lenient human-readable markdown F-for
     "title": "Example question",
     "background": "background",
     "question": "the question",
-    "aiRecommendation": "the recommendation",
+    "recommendation": "the recommendation",
     "type": "single",
     "options": [
       { "key": "A", "label": "first option", "kind": "option" },
@@ -85,7 +85,9 @@ The question handover uses a **hybrid**: a lenient human-readable markdown F-for
 ]
 ```
 
-Authority rule: **when a `questions-json` block is present, it is authoritative.** The parser (`parseQuestionJsonBlock`) treats it as the source of truth, and the human-readable markdown is rendered from it deterministically (`renderQuestionsMarkdown`), so the two cannot drift. A malformed block never crashes the parse path: it yields a not-found result with an error string that the validator can translate into a validation code, rather than throwing. When no `questions-json` block exists, the lenient markdown parse applies.
+Authority rule — **single source (open questions):** when a `questions-json` block is present, it is the **single authored source** for the open questions. The parser (`parseQuestionJsonBlock`) treats it as the source of truth, and the human-readable markdown is **generated** from it deterministically (`renderQuestionsMarkdown`) — it is **not** written by hand, so the two cannot drift and the whole render-vs-validate mismatch class disappears structurally. An open question therefore carries **no** `### F{N}` mirror; it lives in the json block only. A malformed block never crashes the parse path: it yields a not-found result with an error string that the validator translates into a validation code, rather than throwing. When no `questions-json` block exists, the lenient markdown parse applies.
+
+Consequently the question-count cross-check (`MEMO-025`) applies only to the **markdown-only** path. When a json block is present it is authoritative and the heading count is not cross-checked against it — because **answered** questions keep their `### F{N}` records (the answered-pair below, read by [41-mental-model.md](/specification/mental-model/)) while **open** questions have no heading, so the two counts legitimately differ. What the renderer needs to draw a card — including each option's `kind` ∈ `{option, custom, topic}` — is one shared render contract; an invalid `kind` (e.g. `normal`) is rejected fail-loud when the revision is registered (`MEMO-033`), not silently dropped on the user's screen.
 
 The JSON block delivers a machine-authoritative question set for the AI→software handover while keeping the markdown layer human-readable.
 
@@ -142,6 +144,14 @@ Append-only is not only a safeguard against accidental overwrites; it is the inf
 A revision is **expensive** — it represents many tokens of reasoning. This is what makes a living-edit-of-a-single-file approach risky for this particular artifact. We respect that approach; it is a reasonable design in many settings, and the trade-off here is specific, not a verdict on it. The trade-off is this: when a single growing file is the only copy, a highly filled state (a file that has grown into the hundreds of thousands of tokens) is itself subject to context rot, and there is no earlier clean state to fall back to. On the private `.memo/` layer there is also no git history (the tree is structurally local and un-versioned, see [06-memo-structure.md](/specification/memo-structure/)), so an in-place corruption of that one file is total loss of **both** the memo and the tokens that went into it. Separate revision files give back exactly the fallback that git would otherwise provide.
 
 Context is also driven up **from the outside**, not only by the memo's own growth. A research pass that drives a browser (for example Playwright) or sweeps many sources pours external material into the working context and fills it faster than the prose alone would. That is a second, independent reason to commit a new state as a **new revision** rather than mutating the current file in place: the next clean state should start from a deliberate, readable snapshot, not from a file that has absorbed an unbounded amount of external context.
+
+---
+
+## Scope May Grow Across Revisions
+
+A memo's scope is allowed to **grow** while it is being revised. When the user adds a new request mid-revision — a topic, a fix, a whole extra part — that request is **taken into the same memo and worked through there**. It is never unilaterally exported into a follow-up memo, a sub-memo, or a "later" container.
+
+The rule: **you have to accept what the memo demands — including what arrives in a revision.** The well-known "accept the multi-topic input, do not split it" instinct is anchored at the *initial* input ([01-philosophy.md](/specification/philosophy/), [05-memo-strategies.md](/specification/memo-strategies/)); this is its revision-time companion. Mechanically a revision is still append-only (a new `REV-XX.md`, never an in-place edit), and the added scope becomes new chapters and new `### F{N}` questions in that next revision. The only sanctioned way to split off work is an explicit user question (per C7, [29-behavioral-guardrails.md](/specification/behavioral-guardrails/)); absent that recorded decision the work stays in the current memo. Deferring a genuinely out-of-scope finding is likewise a parked research note in `context/`, not a follow-up memo (C8).
 
 ---
 

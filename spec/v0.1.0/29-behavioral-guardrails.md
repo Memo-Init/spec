@@ -57,7 +57,9 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 - The agent MUST NOT unilaterally export work into a follow-up memo, a sub-memo, or any deferred container.
 - A follow-up memo is created ONLY when the user explicitly chooses it. The choice is recorded as a memo question entry (`### F{N}`); until that question is answered in favor of a split, the work stays in the current memo.
 
-A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
+A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags. The same instinct holds **across revisions**: a memo's scope may grow while it is revised, and a request that arrives mid-revision is worked into the same memo, never exported — the revision-time companion to this rule is stated in [07-revisions-and-questions.md](./07-revisions-and-questions.md) ("Scope May Grow Across Revisions").
+
+**Inclusion is the default — curation is also the user's decision.** C7 forbids unilaterally *exporting* work; its mirror image forbids unilaterally *excluding* it. When several findings surface, the default is to **take them all in**; the agent does not quietly pick which ones "make it" into the memo. A finding is left out ONLY when the user explicitly rejects it — the same recorded-decision bar that governs a split. Silently curating which findings are included is the same unsanctioned-deferral failure as silently exporting work, just inverted.
 
 ## C8 — Fix What You Find, Within YAGNI
 

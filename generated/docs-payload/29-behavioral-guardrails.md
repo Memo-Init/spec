@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T15:41:49.231Z"
 generated_from: "spec/v0.1.0/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/29-behavioral-guardrails.md."
@@ -65,7 +65,9 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 - The agent MUST NOT unilaterally export work into a follow-up memo, a sub-memo, or any deferred container.
 - A follow-up memo is created ONLY when the user explicitly chooses it. The choice is recorded as a memo question entry (`### F{N}`); until that question is answered in favor of a split, the work stays in the current memo.
 
-A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags.
+A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags. The same instinct holds **across revisions**: a memo's scope may grow while it is revised, and a request that arrives mid-revision is worked into the same memo, never exported — the revision-time companion to this rule is stated in [07-revisions-and-questions.md](/specification/revisions-and-questions/) ("Scope May Grow Across Revisions").
+
+**Inclusion is the default — curation is also the user's decision.** C7 forbids unilaterally *exporting* work; its mirror image forbids unilaterally *excluding* it. When several findings surface, the default is to **take them all in**; the agent does not quietly pick which ones "make it" into the memo. A finding is left out ONLY when the user explicitly rejects it — the same recorded-decision bar that governs a split. Silently curating which findings are included is the same unsanctioned-deferral failure as silently exporting work, just inverted.
 
 ## C8 — Fix What You Find, Within YAGNI
 

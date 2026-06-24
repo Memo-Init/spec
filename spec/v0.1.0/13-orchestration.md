@@ -269,5 +269,5 @@ The Worker↔Evaluator limit deserves emphasis: hitting three iterations without
 - [23-requirements.md](./23-requirements.md) — the hard/should-apply requirement tiers that seed the contract and drive the coverage gate.
 - [31-goals.md](./31-goals.md) — the goal-scoring layer; the utilization gate's built-but-unwired check is the same "PASS ≠ reality" honesty applied at evaluation.
 - [33-maintenance.md](./33-maintenance.md) — the maintenance roof; the pin-vs-head freshness check is the same deterministic drift sensor it scores with.
-- [36-agent-research-strategies.md](./36-agent-research-strategies.md) — the strategy/pattern layer (Distillate-Fan-Out, fan-out by unit) above this machinery.
+- [36-agent-strategies.md](./36-agent-strategies.md) — the agent strategy/pattern layer (Fan-Out by Unit, Fresh-Context Evaluation) above this machinery; the research-reuse strategy (Distillate-Fan-Out) is in [10-proactive-research.md](./10-proactive-research.md).
 - [00-overview.md](./00-overview.md) — conformance language.

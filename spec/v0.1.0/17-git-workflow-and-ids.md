@@ -12,31 +12,9 @@ Git is used here as **backup and findability**, not as a deployment trigger. The
 
 ## The Memo ID
 
-The canonical identifier for a work package is:
+The canonical work-package identifier — `{CTX}-M{NNN}-{PP}-{RR}`, its segments, the `{CTX}` prefix rule, and the three reference levels (PRD / phase / memo) — is **defined in [35-memo-authoring.md](./35-memo-authoring.md#the-memo-id)**, next to the act of authoring that creates it. This chapter does not repeat that definition; it specifies how the ID is **used** in the git workflow.
 
-```
-{CTX}-M{NNN}-{PP}-{RR}
-```
-
-| Segment | Meaning | Example |
-|---------|---------|---------|
-| `{CTX}` | Short project/context prefix (2–6 uppercase letters). Distinguishes memos from different projects or areas that share the same repo or search space. | `FMC`, `MEMO`, `WIKI` |
-| `M` | Fixed memo marker | `M` |
-| `{NNN}` | 3-digit memo number | `024` |
-| `{PP}` | 2-digit phase number | `05` |
-| `{RR}` | 2-digit PRD number within the phase | `02` |
-
-The `{CTX}` prefix is **REQUIRED** when memos from more than one project can appear in the same search space (shared repository, shared issue tracker, or shared commit log). When a project runs in a fully isolated repository with no cross-project overlap, `{CTX}` **MAY** be omitted and the short form `M{NNN}-{PP}-{RR}` is used. A project **MUST** choose its prefix once and apply it consistently — mixing prefixed and unprefixed forms within one project is not permitted.
-
-The ID addresses three reference levels:
-
-| Level | Format | Example | Meaning |
-|-------|--------|---------|---------|
-| PRD (full) | `{CTX}-M{NNN}-{PP}-{RR}` | `FMC-M024-05-02` | FlowMCP memo 024, phase 5, PRD 2 |
-| Phase | `{CTX}-M{NNN}-{PP}` | `FMC-M024-05` | FlowMCP memo 024, phase 5 |
-| Memo | `{CTX}-M{NNN}` | `FMC-M024` | FlowMCP memo 024 |
-
-The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{NNN}-{PP}` with a leading zero; an old `PRD-{NNN}` becomes the full `M{NNN}-{PP}-{RR}`. Addressing work by ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](./16-git-security-versioning.md)).
+In short form, the ID is `{CTX}-M{NNN}-{PP}-{RR}` (the `{CTX}` prefix MAY be dropped in a fully isolated repository, giving `M{NNN}-{PP}-{RR}`). Addressing work by this ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](./16-git-security-versioning.md)). Everything below — question IDs, the issue/commit mapping, branch naming, and the findability references — builds on that one identifier.
 
 ---
 

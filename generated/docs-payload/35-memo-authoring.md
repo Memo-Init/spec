@@ -6,7 +6,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T15:41:49.231Z"
 generated_from: "spec/v0.1.0/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/35-memo-authoring.md."
@@ -20,6 +20,34 @@ Where [06-memo-structure.md](/specification/memo-structure/) defines the on-disk
 A memo is the unit of thinking-before-building: a numbered, local working document that captures the reasoning, decisions, open questions, and research behind a piece of work, and that outlives any single session. It is the highest authority over its own rollout (see [30-primitives.md](/specification/primitives/)) and the place where dictated reasoning and half-formed decisions are preserved verbatim without risk of exposure, because memo content is structurally local and never uploaded ([06-memo-structure.md](/specification/memo-structure/)).
 
 Authoring a memo is therefore not note-taking but **structured argument**: each chapter states a concern, weighs the options behind it (the question interface, [34-question-interface.md](/specification/question-interface/)), and records the decision and its evidence. The strategy a memo follows — its type and the depth it warrants — is covered in [05-memo-strategies.md](/specification/memo-strategies/); this chapter assumes that frame and focuses on the mechanics of writing the content down.
+
+## The Memo ID
+
+Every memo carries a stable identifier from the moment it is authored, and that identifier follows the work down to the phase and PRD it later produces. Defining it here — at the point of authoring — keeps the definition next to the act that creates it; [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) then specifies how the ID is *used* in commits, branches, and references. The canonical identifier for a work package is:
+
+```
+{CTX}-M{NNN}-{PP}-{RR}
+```
+
+| Segment | Meaning | Example |
+|---------|---------|---------|
+| `{CTX}` | Short project/context prefix (2–6 uppercase letters). Distinguishes memos from different projects or areas that share the same repo or search space. | `FMC`, `MEMO`, `WIKI` |
+| `M` | Fixed memo marker | `M` |
+| `{NNN}` | 3-digit memo number | `024` |
+| `{PP}` | 2-digit phase number | `05` |
+| `{RR}` | 2-digit PRD number within the phase | `02` |
+
+The `{CTX}` prefix is **REQUIRED** when memos from more than one project can appear in the same search space (shared repository, shared issue tracker, or shared commit log). When a project runs in a fully isolated repository with no cross-project overlap, `{CTX}` **MAY** be omitted and the short form `M{NNN}-{PP}-{RR}` is used. A project **MUST** choose its prefix once and apply it consistently — mixing prefixed and unprefixed forms within one project is not permitted.
+
+The ID addresses three reference levels:
+
+| Level | Format | Example | Meaning |
+|-------|--------|---------|---------|
+| PRD (full) | `{CTX}-M{NNN}-{PP}-{RR}` | `FMC-M024-05-02` | FlowMCP memo 024, phase 5, PRD 2 |
+| Phase | `{CTX}-M{NNN}-{PP}` | `FMC-M024-05` | FlowMCP memo 024, phase 5 |
+| Memo | `{CTX}-M{NNN}` | `FMC-M024` | FlowMCP memo 024 |
+
+The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{NNN}-{PP}` with a leading zero; an old `PRD-{NNN}` becomes the full `M{NNN}-{PP}-{RR}`. Addressing work by ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](/specification/git-security-versioning/)).
 
 ## Tables and Generated Data
 
@@ -37,7 +65,7 @@ When the set reaches **eight or more entries**, stop hand-typing the table. Inst
 - A small **script** loads the JSON and renders the Markdown table deterministically, writing an output file that carries a header stating it is generated and **must not be hand-edited — the JSON is the source**.
 - The payload is **revision-spanning**: it persists across revisions, so the table is re-rendered, never re-typed, when the data changes.
 
-Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](/specification/proactive-research/) and [36-agent-research-strategies.md](/specification/agent-research-strategies/)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
+Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](/specification/proactive-research/) and [36-agent-strategies.md](/specification/agent-strategies/)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
 
 ## Diagrams in Memos (Mermaid and Vega-Lite)
 

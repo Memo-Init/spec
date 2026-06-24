@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-22T21:29:46.061Z",
+    "generated_at": "2026-06-24T15:41:49.736Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -31,7 +31,7 @@
             "order": 2,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "introduction"
         },
         {
             "filename": "03-input-paths.md",
@@ -61,7 +61,7 @@
             "order": 5,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "input"
+            "sidebar_group": "initialisierung"
         },
         {
             "filename": "06-memo-structure.md",
@@ -71,7 +71,7 @@
             "order": 6,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "input"
+            "sidebar_group": "initialisierung"
         },
         {
             "filename": "07-revisions-and-questions.md",
@@ -81,7 +81,7 @@
             "order": 7,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "input"
+            "sidebar_group": "revision"
         },
         {
             "filename": "08-phases-and-prds.md",
@@ -111,7 +111,7 @@
             "order": 10,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "finalization"
+            "sidebar_group": "initialisierung"
         },
         {
             "filename": "11-quality-and-finalization.md",
@@ -121,7 +121,7 @@
             "order": 11,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "finalization"
+            "sidebar_group": "revision"
         },
         {
             "filename": "12-rollout.md",
@@ -151,7 +151,7 @@
             "order": 14,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "agents"
         },
         {
             "filename": "15-prompt-generator.md",
@@ -161,7 +161,7 @@
             "order": 15,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "agents"
         },
         {
             "filename": "16-git-security-versioning.md",
@@ -171,7 +171,7 @@
             "order": 16,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "behavior"
+            "sidebar_group": "git"
         },
         {
             "filename": "17-git-workflow-and-ids.md",
@@ -181,7 +181,7 @@
             "order": 17,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "behavior"
+            "sidebar_group": "git"
         },
         {
             "filename": "18-multidimensionality.md",
@@ -191,7 +191,7 @@
             "order": 18,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "behavior"
         },
         {
             "filename": "19-internal-vs-external-communication.md",
@@ -201,7 +201,7 @@
             "order": 19,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "behavior"
+            "sidebar_group": "git"
         },
         {
             "filename": "20-flow-full-vs-update-revisions.md",
@@ -211,7 +211,7 @@
             "order": 20,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "revision"
         },
         {
             "filename": "21-human-computer-interaction.md",
@@ -231,7 +231,7 @@
             "order": 22,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "execution"
+            "sidebar_group": "procedure"
         },
         {
             "filename": "23-requirements.md",
@@ -261,7 +261,7 @@
             "order": 25,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "execution"
         },
         {
             "filename": "26-memo-history.md",
@@ -306,12 +306,12 @@
         {
             "filename": "30-primitives.md",
             "slug": "primitives",
-            "title": "Primitives",
+            "title": "Glossar",
             "description": "This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail...",
             "order": 30,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "introduction"
         },
         {
             "filename": "31-goals.md",
@@ -331,7 +331,7 @@
             "order": 32,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "execution"
         },
         {
             "filename": "33-maintenance.md",
@@ -351,7 +351,7 @@
             "order": 34,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "behavior"
+            "sidebar_group": "revision"
         },
         {
             "filename": "35-memo-authoring.md",
@@ -361,17 +361,17 @@
             "order": 35,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "input"
+            "sidebar_group": "initialisierung"
         },
         {
-            "filename": "36-agent-research-strategies.md",
-            "slug": "agent-research-strategies",
-            "title": "Agent and Research Strategies",
-            "description": "This chapter collects the **strategies** for deploying agents and research effectively — the reusable patterns that decide *how* work is fanned out and *how* expensive findings are reused. It is...",
+            "filename": "36-agent-strategies.md",
+            "slug": "agent-strategies",
+            "title": "Agent Strategies",
+            "description": "This chapter collects the **strategies** for deploying agents effectively — the reusable patterns that decide *how* work is fanned out across sub-agents. It is deliberately the pattern layer, not the...",
             "order": 36,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "execution"
+            "sidebar_group": "agents"
         },
         {
             "filename": "37-transcript-reliability.md",
@@ -381,17 +381,17 @@
             "order": 37,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "input"
         },
         {
             "filename": "38-stage-model.md",
             "slug": "stage-model",
-            "title": "Stage Model",
+            "title": "Execution Model",
             "description": "The most reliable way to leave a thread half-finished is to mistake the end of the rollout for the end of the work. The rollout closes when Evaluate passes, but a passed Evaluate is only the first of...",
             "order": 38,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "execution"
         },
         {
             "filename": "39-release-and-pinning.md",
@@ -401,7 +401,7 @@
             "order": 39,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "git"
         },
         {
             "filename": "40-diagrams.md",
@@ -411,7 +411,7 @@
             "order": 40,
             "section": "Specification",
             "normative": false,
-            "sidebar_group": "foundations"
+            "sidebar_group": "revision"
         },
         {
             "filename": "41-mental-model.md",
@@ -421,7 +421,7 @@
             "order": 41,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "health"
+            "sidebar_group": "behavior"
         },
         {
             "filename": "42-plans.md",
@@ -431,7 +431,7 @@
             "order": 42,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "execution"
         },
         {
             "filename": "43-skill-authoring-and-quality.md",
@@ -441,7 +441,7 @@
             "order": 43,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "skills"
         },
         {
             "filename": "44-repository-and-outward-docs.md",
@@ -451,7 +451,7 @@
             "order": 44,
             "section": "Specification",
             "normative": true,
-            "sidebar_group": "foundations"
+            "sidebar_group": "git"
         }
     ],
     "workbench": {

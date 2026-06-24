@@ -91,10 +91,26 @@ Research draws material from outside the local context — scraped pages, fetche
 
 ---
 
+## Distillate-Fan-Out
+
+Deep research is **expensive to run and cheap to reuse**, so it should be run **once** and then **distilled** into a compact, structured artifact that many cheaper sub-agents are seeded from — instead of paying for the same broad research inside every sub-agent. This is the headline strategy for turning one research pass into many units of work.
+
+1. **Research once, deeply.** A single expensive pass (broad web/codebase sweep, many sources) produces the raw findings. Large raw output goes to the memo's `context/` (see "Large Research Goes to `context/`" above), never inline.
+2. **Distill.** The raw findings are reduced to a **distillate** — a compact, reusable artifact that carries only what the downstream work needs. The distillate is frequently a **structured dataset** (the data payload of [35-memo-authoring.md](./35-memo-authoring.md)): one record per unit of work.
+3. **Fan out cheaply.** Each record of the distillate **seeds one sub-agent** with a small, self-contained brief. The sub-agents run in parallel under the orchestration machinery ([13-orchestration.md](./13-orchestration.md)); none repeats the expensive research, because the distillate already carries it.
+
+The payoff is that the costly part happens once and the parallel part is cheap and uniform. The same dataset that renders a generated table ([35-memo-authoring.md](./35-memo-authoring.md)) is the fan-out seed — the table is for the human reader, the records are for the sub-agents. The goal-optimization pipeline is an instance of this shape: a goal's accumulated findings are distilled into an init-transcript that seeds a follow-up memo (see [31-goals.md](./31-goals.md)).
+
+**Mapped onto the agent-execution primitives ([14-agents-skills-tasks.md](./14-agents-skills-tasks.md)):** the one expensive research pass (step 1) runs as a single ephemeral sub-agent (type a) or a deterministic workflow (type c); the cheap fan-out (step 3) uses **type (a)** ephemeral sub-agents when there are a few records, and is the **canonical use of type (c)** — a deterministic workflow — when the records number in the dozens or hundreds. Persistent agents (type b) are **not** the default here: the strategy depends on the fan-out workers being stateless and uniform. The agent-deployment side of this strategy — choosing the unit boundary the workers are split along — is [36-agent-strategies.md](./36-agent-strategies.md) (Fan-Out by Unit).
+
+---
+
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline whose final step derives the research topics this chapter consumes.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the pointer principle (`context/` reference over re-narration) and the revision-2 contamination scan.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels research output is tagged with, and the `[Research open]` finalization gate.
 - [../workbench/05-browser-automation.md](../workbench/05-browser-automation.md) — the research *method*: the CLI-vs-MCP cost policy, the `.playwright/` structure, the scrape queue, and the tool-selection decision tree.
+- [35-memo-authoring.md](./35-memo-authoring.md) — the data payload that a research distillate becomes (one record per unit of work), doubling as the fan-out seed.
+- [36-agent-strategies.md](./36-agent-strategies.md) — the agent-deployment side of the fan-out (Fan-Out by Unit, Fresh-Context Evaluation).
 - [00-overview.md](./00-overview.md) — conformance language.

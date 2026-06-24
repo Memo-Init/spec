@@ -1,4 +1,4 @@
-# 30. Primitives
+# 30. Glossar
 
 | Field | Value |
 |-------|-------|

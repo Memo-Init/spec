@@ -59,20 +59,30 @@ const slugFromFilename = ( { filename } ) => {
 
 
 // Sidebar mapping: 00-01 are the introduction (overview + philosophy); the
-// remaining chapters are grouped into one-word topic categories (Memo 011 Kap 5).
-// Workbench files form their own group. Chapters not listed in the memo mapping
-// (currently 14, 15) fall through to DEFAULT_GROUP — a deliberate choice so no
-// chapter is ever left unmapped (PRD-005 "Vollständigkeit" assertion).
-const DEFAULT_GROUP = 'foundations'
+// remaining chapters are grouped into one-word topic categories (Memo 041 Teil A —
+// the order->group payload .memo/memos/041-.../context/category-remapping.json is the
+// single source of truth for this table). The umbrella groups `foundations` and
+// `finalization` were dissolved (Memo 041 F2=A) into the finer 12-group set:
+// introduction, input, initialisierung, revision, execution, procedure, behavior,
+// health, agents, git, skills (+ workbench, which is its own separate payload).
+// Workbench files form their own group. Any chapter not listed here falls through to
+// DEFAULT_GROUP — set to `introduction` so an accidentally-unmapped chapter surfaces at
+// the very top of the sidebar where it is immediately noticed and fixed (fail-loud), and
+// never points at a dissolved group (PRD-005 "Vollständigkeit" assertion). Every current
+// chapter 02-44 is mapped explicitly, so the default never triggers today.
+const DEFAULT_GROUP = 'introduction'
 const SIDEBAR_GROUP_BY_ORDER = {
-    3: 'input', 4: 'input', 5: 'input', 6: 'input', 7: 'input',
-    8: 'execution', 12: 'execution', 13: 'execution', 22: 'execution', 27: 'execution',
-    10: 'finalization', 11: 'finalization',
-    23: 'procedure', 24: 'procedure',
-    26: 'health', 31: 'health', 33: 'health', 41: 'health',
-    9: 'behavior', 16: 'behavior', 17: 'behavior', 19: 'behavior', 21: 'behavior', 28: 'behavior', 29: 'behavior', 34: 'behavior',
-    35: 'input', 36: 'execution',
-    2: 'foundations', 18: 'foundations', 20: 'foundations', 25: 'foundations'
+    2: 'introduction', 30: 'introduction',
+    3: 'input', 4: 'input', 37: 'input',
+    5: 'initialisierung', 6: 'initialisierung', 10: 'initialisierung', 35: 'initialisierung',
+    7: 'revision', 11: 'revision', 20: 'revision', 34: 'revision', 40: 'revision',
+    8: 'execution', 12: 'execution', 13: 'execution', 25: 'execution', 27: 'execution', 32: 'execution', 38: 'execution', 42: 'execution',
+    22: 'procedure', 23: 'procedure', 24: 'procedure',
+    9: 'behavior', 18: 'behavior', 21: 'behavior', 28: 'behavior', 29: 'behavior', 41: 'behavior',
+    26: 'health', 31: 'health', 33: 'health',
+    14: 'agents', 15: 'agents', 36: 'agents',
+    16: 'git', 17: 'git', 19: 'git', 39: 'git', 44: 'git',
+    43: 'skills'
 }
 const sidebarGroupFromFilename = ( { filename, group } ) => {
     if( group === 'workbench' ) return 'workbench'

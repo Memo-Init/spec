@@ -31,7 +31,7 @@ A **skill** is the right shape when the procedure should run inside the caller's
 
 ## Agent Execution Primitives
 
-"Agent" is run in **three** distinct forms. This is the canonical typology; the orchestration machinery ([13-orchestration.md](./13-orchestration.md)) and the deployment strategies ([36-agent-research-strategies.md](./36-agent-research-strategies.md)) refer back to these types rather than redefining them.
+"Agent" is run in **three** distinct forms. This is the canonical typology; the orchestration machinery ([13-orchestration.md](./13-orchestration.md)) and the deployment strategies ([36-agent-strategies.md](./36-agent-strategies.md)) refer back to these types rather than redefining them.
 
 | Type | Mechanism | Context | Return |
 |------|-----------|---------|--------|
@@ -99,7 +99,7 @@ The `null` primary plus the `scope` marker is the honest signal: *acknowledged o
 
 - [15-prompt-generator.md](./15-prompt-generator.md) — the deterministic compositor that produces an agent's per-invocation start-prompt.
 - [13-orchestration.md](./13-orchestration.md) — the machinery (team roles, dials, state) that runs the agent types defined here, and the model-driven-fan-out vs Dynamic-Workflow distinction.
-- [36-agent-research-strategies.md](./36-agent-research-strategies.md) — the deployment strategies that reference these types (e.g. distillate-fan-out mapped onto type (a)/(c)).
+- [36-agent-strategies.md](./36-agent-strategies.md) — the agent deployment strategies that reference these types (Fan-Out by Unit); the distillate-fan-out research strategy mapped onto type (a)/(c) is in [10-proactive-research.md](./10-proactive-research.md).
 - [12-rollout.md](./12-rollout.md) — the rollout whose Evaluate phase is run by the migrated evaluators.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context rule that makes evaluators the natural first migration.
 - [00-overview.md](./00-overview.md) — conformance language.

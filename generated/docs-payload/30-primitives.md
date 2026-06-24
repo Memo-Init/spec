@@ -1,12 +1,12 @@
 ---
-title: "Primitives"
+title: "Glossar"
 description: "This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail..."
 spec_version: "0.1.0"
 spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-06-22T21:29:45.860Z"
+generated_at: "2026-06-24T15:41:49.231Z"
 generated_from: "spec/v0.1.0/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/30-primitives.md."
