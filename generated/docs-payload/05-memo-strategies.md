@@ -6,7 +6,7 @@ spec_file: "05-memo-strategies.md"
 order: 5
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T16:49:32.085Z"
+generated_at: "2026-06-24T20:40:20.473Z"
 generated_from: "spec/v0.1.0/05-memo-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/05-memo-strategies.md."

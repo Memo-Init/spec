@@ -51,7 +51,7 @@ The memo-init specification is published across a small organization of reposito
 ```mermaid
 flowchart TD
     subgraph ORG["GitHub org: memo-init"]
-        SPEC["spec\nRFC + workbench sub-spec"]
+        SPEC["spec\nRFC + workbench spec"]
         GH[".github\norg profile"]
         SITE["memo-init.github.io\nAstro + Starlight"]
         VIEW["viewer\nmemo viewer"]
@@ -74,7 +74,7 @@ The six repositories are bootstrapped from an existing public reference organiza
 
 | Repository | Role |
 |------------|------|
-| `spec` | This RFC-style specification plus the workbench sub-spec and the generators that publish it. |
+| `spec` | This RFC-style specification plus the workbench spec and the generators that publish it. |
 | `.github` | Organization profile, generated via a badge-table tool. Must be named `.github`. |
 | `memo-init.github.io` | Static website (Astro + Starlight) that serves the docs and `llms.txt`. |
 | `viewer` | The memo viewer, extracted from the toolkit editor. Core-like: depends directly on the spec. |

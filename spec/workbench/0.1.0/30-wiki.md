@@ -1,19 +1,12 @@
----
-title: "The Wiki — Entry Point"
-description: "The wiki is the **entry point** — the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project..."
-spec_version: "0.1.0"
-spec_file: "04-wiki.md"
-order: 4
-section: "Workbench"
-normative: true
-generated_at: "2026-06-24T16:49:32.085Z"
-generated_from: "spec/workbench/04-wiki.md"
-generator: "scripts/generate-docs-payload.mjs"
-edit_warning: "This file is auto-generated. Source: spec/workbench/04-wiki.md."
----
+# 30. The Wiki — Entry Point
 
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md), [14-project-architecture.md](./14-project-architecture.md) |
+| Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [20-cli.md](./20-cli.md), [../v0.1.0/24-tools-registry.md](../v0.1.0/24-tools-registry.md), [../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md) |
 
-The wiki is the **entry point** — the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; its on-disk format is OKF ([02-knowledge-format-okf.md](/specification/knowledge-format-okf/)).
+The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; its on-disk format is OKF ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)).
 
 ---
 
@@ -23,7 +16,7 @@ Two kinds of knowledge sit beneath the wiki, and the wiki is the entry point ove
 
 | Layer | What | Form |
 |-------|------|------|
-| **Structured** | the project architecture — which repos exist, how they connect ([03-project-architecture.md](/specification/project-architecture/)) | OKF nodes + edges |
+| **Structured** | the project architecture — which repos exist, how they connect ([14-project-architecture.md](./14-project-architecture.md)) | OKF nodes + edges |
 | **Unstructured** | research piles, `context/` files, distilled decisions — everything else the project holds | any form; the wiki categorizes and files it |
 
 The user does not care which form a piece of knowledge is in — the wiki finds it. That is the whole point of a single entry point: knowledge is reached *through the wiki*, not by knowing in advance where each kind of thing lives.
@@ -47,7 +40,7 @@ The wiki answers in the **present tense**: a wiki page states what is understood
 The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required:
 
 - **Every project** — internal or foreign — gets a wiki, because every project has unstructured knowledge worth categorizing and querying. The wiki is the entry point for all of them.
-- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([03-project-architecture.md](/specification/project-architecture/)).
+- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([14-project-architecture.md](./14-project-architecture.md)).
 
 So "the wiki finds everything" holds for all projects; "the project has a structured architecture" holds for the internal ones.
 
@@ -64,9 +57,17 @@ Write-time freshness keeps the wiki growing correctly; periodic staleness detect
 
 ---
 
+## The About Convention — Scripts Folders Feed the Wiki
+
+The wiki's discovery reach extends to the project's **scripts**. When something is written into a `scripts/` subfolder, that subfolder **SHOULD** carry an **`About`** — a short description of what the folder is for — and that `About` is **ingested into the wiki**. This is the third ingest source, alongside landing-time ingest and periodic staleness detection.
+
+The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](./20-cli.md)): a scripts subfolder already carries its meaning in its name; the `About` records that meaning in prose, and ingesting it means the wiki can **answer** for what a scripts folder does rather than leaving a reader to infer it from the name alone. The effect is that the discovery system reaches the project's operational scripts the same way it reaches its research and architecture — ask the wiki, and the answer is there.
+
+---
+
 ## Related
 
-- [03-project-architecture.md](/specification/project-architecture/) — the structured layer the wiki indexes and points at.
-- [02-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the on-disk format of both the wiki and the architecture bundle.
+- [14-project-architecture.md](./14-project-architecture.md) — the structured layer the wiki indexes and points at.
+- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the on-disk format of both the wiki and the architecture bundle.
 - [../v0.1.0/24-tools-registry.md](../v0.1.0/24-tools-registry.md) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
 - [../v0.1.0/26-memo-history.md](../v0.1.0/26-memo-history.md) — the chronicle, the present-tense wiki's chronological counterpart.

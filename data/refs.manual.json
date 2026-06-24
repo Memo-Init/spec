@@ -6,6 +6,18 @@
         "historicalVersions": [ "0.1.0" ],
         "specDir": "spec/v0.1.0"
     },
+    "workbench": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "spec/workbench/0.1.0",
+        "url": "https://memo-init.github.io/workbench/overview/"
+    },
+    "sop": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "spec/sop/0.1.0",
+        "url": "https://memo-init.github.io/sop/overview/"
+    },
     "docs": {
         "canonical": "https://memo-init.github.io",
         "entryPoints": {

@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-24T16:49:32.270Z",
+    "generated_at": "2026-06-24T20:40:21.045Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -364,16 +364,6 @@
             "sidebar_group": "initialisierung"
         },
         {
-            "filename": "36-agent-research-strategies.md",
-            "slug": "agent-research-strategies",
-            "title": "Agent and Research Strategies",
-            "description": "This chapter collects the **strategies** for deploying agents and research effectively — the reusable patterns that decide *how* work is fanned out and *how* expensive findings are reused. It is...",
-            "order": 36,
-            "section": "Specification",
-            "normative": true,
-            "sidebar_group": "agents"
-        },
-        {
             "filename": "36-agent-strategies.md",
             "slug": "agent-strategies",
             "title": "Agent Strategies",
@@ -465,84 +455,221 @@
         }
     ],
     "workbench": {
+        "version": "0.1.0",
         "files": [
             {
                 "filename": "00-overview.md",
                 "slug": "overview",
                 "title": "Overview",
-                "description": "This is the entry point for the **workbench sub-spec** of the memo-init specification. The workbench is the meta-orchestration layer that holds all projects, their tools, and their shared...",
+                "description": "This is the entry point for the **Workbench specification** — a standalone sibling of the memo-init core specification. The workbench is the meta-orchestration layer that holds all projects, their...",
                 "order": 0,
                 "section": "Workbench",
                 "normative": false,
-                "sidebar_group": "workbench"
+                "sidebar_group": "introduction"
             },
             {
-                "filename": "01-project-structure.md",
-                "slug": "project-structure",
-                "title": "Project Structure",
-                "description": "Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. A predictable layout is what lets the workbench audit check structure mechanically (see...",
+                "filename": "01-philosophy.md",
+                "slug": "philosophy",
+                "title": "Philosophy",
+                "description": "The workbench is the layer that holds many projects and the shared machinery they draw on. Its design rests on three convictions: that shared capability should be defined **once** and not copied into...",
                 "order": 1,
                 "section": "Workbench",
-                "normative": true,
-                "sidebar_group": "workbench"
+                "normative": false,
+                "sidebar_group": "introduction"
             },
             {
-                "filename": "02-knowledge-format-okf.md",
+                "filename": "02-sop-entrypoint.md",
+                "slug": "sop-entrypoint",
+                "title": "Workbench-SOP and the Two-Level Model",
+                "description": "This chapter defines how an agent enters the workbench and the two levels of operation it distinguishes. The workbench-SOP is the smallest entry point: the thing an agent reads first, on every fresh...",
+                "order": 2,
+                "section": "Workbench",
+                "normative": false,
+                "sidebar_group": "introduction"
+            },
+            {
+                "filename": "10-root-and-projects.md",
+                "slug": "root-and-projects",
+                "title": "Root and Projects",
+                "description": "The workbench has **two structural levels**: the workbench root, and the projects beneath it. They have different layouts and different jobs, and keeping them distinct is a precondition for...",
+                "order": 10,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "11-project-structure.md",
+                "slug": "project-structure",
+                "title": "Project Structure & Local Guarantee",
+                "description": "Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. The mandatory and optional folders are specified in [12-folders.md](./12-folders.md); the split between...",
+                "order": 11,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "12-folders.md",
+                "slug": "folders",
+                "title": "Project Folders — Mandatory and Optional",
+                "description": "Every project under `projects/{name}/` **MUST** follow a single, predictable layout. A predictable layout is what lets the workbench audit check structure mechanically and what lets a memo assume...",
+                "order": 12,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "13-knowledge-format-okf.md",
                 "slug": "knowledge-format-okf",
                 "title": "Knowledge Format — OKF Conformance",
                 "description": "OKF (the Open Knowledge Format) is the **storage format** the workbench uses for knowledge bundles — a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. Two...",
-                "order": 2,
+                "order": 13,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "workbench"
+                "sidebar_group": "folders"
             },
             {
-                "filename": "03-project-architecture.md",
+                "filename": "14-project-architecture.md",
                 "slug": "project-architecture",
                 "title": "Project Architecture",
                 "description": "A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges...",
-                "order": 3,
+                "order": 14,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "workbench"
+                "sidebar_group": "folders"
             },
             {
-                "filename": "04-wiki.md",
+                "filename": "20-cli.md",
+                "slug": "cli",
+                "title": "CLI Convention — Branch/Leaf",
+                "description": "The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This convention is settled at the specification and website level — it is...",
+                "order": 20,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "cli"
+            },
+            {
+                "filename": "21-environment-scripts.md",
+                "slug": "environment-scripts",
+                "title": "Environment & Health Scripts",
+                "description": "A project's `scripts/` folder holds the executable entry points that bring its environment up, tear it down, and check that it is healthy. This chapter specifies the script family, the boot contract...",
+                "order": 21,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "cli"
+            },
+            {
+                "filename": "22-config.md",
+                "slug": "config",
+                "title": "The `.workbench/` Configuration",
+                "description": "A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository as inward- or outward-facing, and it is the **single source**...",
+                "order": 22,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "cli"
+            },
+            {
+                "filename": "23-hooks-contract.md",
+                "slug": "hooks-contract",
+                "title": "Hooks Contract",
+                "description": "Deterministic enforcement of workbench policy is delegated to Claude Code hooks. This chapter specifies the **contract** between the workbench and a hook: what the workbench provides for a hook to...",
+                "order": 23,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "cli"
+            },
+            {
+                "filename": "24-skills-scope.md",
+                "slug": "skills-scope",
+                "title": "Skills in the Workbench Scope",
+                "description": "The skills that operate at the workbench level are organized around the **common SOP standard**: a workbench skill serves the Setup, Health, and Update of the workbench scope, plus the scope-specific...",
+                "order": 24,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "cli"
+            },
+            {
+                "filename": "30-wiki.md",
                 "slug": "wiki",
                 "title": "The Wiki — Entry Point",
-                "description": "The wiki is the **entry point** — the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project...",
-                "order": 4,
+                "description": "The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo...",
+                "order": 30,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "workbench"
+                "sidebar_group": "tools"
             },
             {
-                "filename": "05-browser-automation.md",
+                "filename": "31-browser-automation.md",
                 "slug": "browser-automation",
                 "title": "Browser Automation & Research Method",
                 "description": "The core specification's research chapter ([../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and how that...",
-                "order": 5,
+                "order": 31,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "workbench"
+                "sidebar_group": "tools"
             },
             {
-                "filename": "06-trash.md",
+                "filename": "32-trash.md",
                 "slug": "trash",
                 "title": "Trash",
                 "description": "Work in a project is exploratory and often half-formed. Material that looks discardable today may be needed tomorrow, and an irreversible deletion in an autonomous loop is a class of mistake that...",
-                "order": 6,
+                "order": 32,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "workbench"
+                "sidebar_group": "tools"
+            },
+            {
+                "filename": "40-architecture-diagram.md",
+                "slug": "architecture-diagram",
+                "title": "Architecture Diagram",
+                "description": "The diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP spec, with the machine tier drawn dashed because it...",
+                "order": 40,
+                "section": "Workbench",
+                "normative": false,
+                "sidebar_group": "reference"
+            }
+        ]
+    },
+    "sop": {
+        "version": "0.1.0",
+        "files": [
+            {
+                "filename": "00-overview.md",
+                "slug": "overview",
+                "title": "Overview",
+                "description": "This is the entry point for the **SOP spec** — a standalone sibling of the memo-init core specification and the Workbench spec. It is deliberately **thin**. Its single job is to make the various...",
+                "order": 0,
+                "section": "SOP",
+                "normative": false,
+                "sidebar_group": "introduction"
+            },
+            {
+                "filename": "01-common-denominator.md",
+                "slug": "common-denominator",
+                "title": "The Common Denominator — Setup, Health, Update, Extras",
+                "description": "Every SOP in the system provides the same four parts. This chapter defines them. An SOP **MUST** make each of the three core parts findable, and **MAY** add scope-specific extras. The four parts are...",
+                "order": 1,
+                "section": "SOP",
+                "normative": true,
+                "sidebar_group": "introduction"
+            },
+            {
+                "filename": "02-instances.md",
+                "slug": "instances",
+                "title": "SOP Instances and the Reference Model",
+                "description": "The SOP spec defines a shape; the concrete SOPs **are** that shape, filled in for their scope. This chapter records the existing instances and the lightweight reference model that ties them back to...",
+                "order": 2,
+                "section": "SOP",
+                "normative": false,
+                "sidebar_group": "introduction"
             }
         ]
     },
     "stats": {
-        "total_files": 53,
-        "core_files": 46,
-        "workbench_files": 7,
-        "normative_files": 49,
-        "informative_files": 4
+        "total_files": 65,
+        "core_files": 45,
+        "workbench_files": 17,
+        "sop_files": 3,
+        "normative_files": 56,
+        "informative_files": 9
     }
 }

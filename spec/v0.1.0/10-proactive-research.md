@@ -110,7 +110,7 @@ The payoff is that the costly part happens once and the parallel part is cheap a
 - [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline whose final step derives the research topics this chapter consumes.
 - [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the pointer principle (`context/` reference over re-narration) and the revision-2 contamination scan.
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the evidence levels research output is tagged with, and the `[Research open]` finalization gate.
-- [../workbench/05-browser-automation.md](../workbench/05-browser-automation.md) — the research *method*: the CLI-vs-MCP cost policy, the `.playwright/` structure, the scrape queue, and the tool-selection decision tree.
+- [../workbench/31-browser-automation.md](../workbench/31-browser-automation.md) — the research *method*: the CLI-vs-MCP cost policy, the `.playwright/` structure, the scrape queue, and the tool-selection decision tree.
 - [35-memo-authoring.md](./35-memo-authoring.md) — the data payload that a research distillate becomes (one record per unit of work), doubling as the fan-out seed.
 - [36-agent-strategies.md](./36-agent-strategies.md) — the agent-deployment side of the fan-out (Fan-Out by Unit, Fresh-Context Evaluation).
 - [00-overview.md](./00-overview.md) — conformance language.

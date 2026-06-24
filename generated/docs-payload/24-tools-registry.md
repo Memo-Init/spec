@@ -6,7 +6,7 @@ spec_file: "24-tools-registry.md"
 order: 24
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T16:49:32.085Z"
+generated_at: "2026-06-24T20:40:20.473Z"
 generated_from: "spec/v0.1.0/24-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/24-tools-registry.md."
@@ -59,7 +59,7 @@ The checklist makes tool reachability a planning-time concern. Combined with the
 
 The registry is a place of **references, not copies** — and three project-wide entry points are registered here the same way a tool is: by a `location` pointer to where each one is fully specified, never by restating it.
 
-- **The wiki** is registered as a tool — the entry point for querying the project's accumulated knowledge. Its full concept (the bottleneck over the structured architecture and the unstructured material beneath it) lives in its own chapter; the registry only records that it exists, what it is for, and where it lives. See [The Wiki — Entry Point](../workbench/04-wiki.md).
+- **The wiki** is registered as a tool — the entry point for querying the project's accumulated knowledge. Its full concept (the bottleneck over the structured architecture and the unstructured material beneath it) lives in its own chapter; the registry only records that it exists, what it is for, and where it lives. See [The Wiki — Entry Point](../workbench/30-wiki.md).
 - **The chronicle** is the timeline counterpart — registered as the reference for "how the project's knowledge was reached", distinct from the wiki's present-tense answer. See [26-memo-history.md](/specification/memo-history/).
 - **The self-describing command tree** is the registry's runtime sibling: the CLI describes its own commands, so the inventory of *what the project's own tooling can do* is discoverable rather than re-listed here. See [22-tree-cli-recommended-way.md](/specification/tree-cli-recommended-way/).
 

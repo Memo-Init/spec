@@ -6,7 +6,7 @@ spec_file: "25-strands.md"
 order: 25
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T16:49:32.085Z"
+generated_at: "2026-06-24T20:40:20.473Z"
 generated_from: "spec/v0.1.0/25-strands.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/25-strands.md."
@@ -37,10 +37,10 @@ A memo whose `## Phase-Hints` dependency graph resolves into four independent ch
 |-------------------|-----------------------|----------------------------------|
 | A | the strategy/verification phases and everything that `depends-on` them | Strategy / Verification |
 | B | the spec-authoring phases linked by `depends-on` | Spec-Authoring |
-| C | the sub-spec phases linked by `depends-on` | Sub-Spec |
+| C | the workbench-spec phases linked by `depends-on` | Workbench |
 | D | the bootstrap phases linked by `depends-on` | Bootstrap |
 
-These strands are not assigned; they **fall out** of the dependency tree. Chain A is the closure rooted in the phases that establish the verified factual base and the strategy. Chain B is the closure over the phases that author the core chapters; chain C the sub-spec; chain D the organization-and-repository bootstrap. The topic column merely *names* what each emergent chain happens to touch — it is a description after the fact, not the basis on which the strand was formed. Each chain's PRDs carry the requirements and tools that path needs — documentation rules where the chain authors docs, repository and code rules where it bootstraps.
+These strands are not assigned; they **fall out** of the dependency tree. Chain A is the closure rooted in the phases that establish the verified factual base and the strategy. Chain B is the closure over the phases that author the core chapters; chain C the workbench spec; chain D the organization-and-repository bootstrap. The topic column merely *names* what each emergent chain happens to touch — it is a description after the fact, not the basis on which the strand was formed. Each chain's PRDs carry the requirements and tools that path needs — documentation rules where the chain authors docs, repository and code rules where it bootstraps.
 
 A smaller, mixed memo shows the same emergence: if the `core` code phases and the `docs/frontend` phases share no `depends-on` edge, the dependency graph resolves into **two strands** — not because the author grouped them by theme, but because the two dependency chains never converge. Had a phase depended across the two, the closure would have merged them into one strand.
 

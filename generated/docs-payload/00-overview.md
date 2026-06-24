@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-06-24T16:49:32.085Z"
+generated_at: "2026-06-24T20:40:20.473Z"
 generated_from: "spec/v0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/00-overview.md."
@@ -58,7 +58,7 @@ The memo-init specification is published across a small organization of reposito
 ```mermaid
 flowchart TD
     subgraph ORG["GitHub org: memo-init"]
-        SPEC["spec\nRFC + workbench sub-spec"]
+        SPEC["spec\nRFC + workbench spec"]
         GH[".github\norg profile"]
         SITE["memo-init.github.io\nAstro + Starlight"]
         VIEW["viewer\nmemo viewer"]
@@ -81,7 +81,7 @@ The six repositories are bootstrapped from an existing public reference organiza
 
 | Repository | Role |
 |------------|------|
-| `spec` | This RFC-style specification plus the workbench sub-spec and the generators that publish it. |
+| `spec` | This RFC-style specification plus the workbench spec and the generators that publish it. |
 | `.github` | Organization profile, generated via a badge-table tool. Must be named `.github`. |
 | `memo-init.github.io` | Static website (Astro + Starlight) that serves the docs and `llms.txt`. |
 | `viewer` | The memo viewer, extracted from the toolkit editor. Core-like: depends directly on the spec. |

@@ -1,19 +1,12 @@
----
-title: "Project Architecture"
-description: "A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges..."
-spec_version: "0.1.0"
-spec_file: "03-project-architecture.md"
-order: 3
-section: "Workbench"
-normative: true
-generated_at: "2026-06-24T16:49:32.085Z"
-generated_from: "spec/workbench/03-project-architecture.md"
-generator: "scripts/generate-docs-payload.mjs"
-edit_warning: "This file is auto-generated. Source: spec/workbench/03-project-architecture.md."
----
+# 14. Project Architecture
 
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md), [11-project-structure.md](./11-project-structure.md) |
+| Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [30-wiki.md](./30-wiki.md), [../v0.1.0/33-maintenance.md](../v0.1.0/33-maintenance.md), [../v0.1.0/23-requirements.md](../v0.1.0/23-requirements.md) |
 
-A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges between them, and the provenance that says when each edge was last verified. This chapter is about that content first; the on-disk encoding (a knowledge bundle in OKF, [02-knowledge-format-okf.md](/specification/knowledge-format-okf/)) is a detail named at the end, not the headline. The shift is deliberate: ask *what the architecture is* before asking *what format it is stored in*.
+A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges between them, and the provenance that says when each edge was last verified. This chapter is about that content first; the on-disk encoding (a knowledge bundle in OKF, [13-knowledge-format-okf.md](./13-knowledge-format-okf.md)) is a detail named at the end, not the headline. The shift is deliberate: ask *what the architecture is* before asking *what format it is stored in*.
 
 ---
 
@@ -31,7 +24,7 @@ Even a single-repo project has an architecture — a trivial one. As soon as a p
 
 A memo that needs the architecture **MUST be able to find it through a single entry point**, rather than guessing a path or re-deriving the structure each time. This is the bottleneck principle: there is one door, and everything goes through it.
 
-- For an agent or a human, the door is the **wiki** ([04-wiki.md](/specification/wiki/)): the wiki indexes the architecture as one of the things it knows about, pointing at the bundle rather than copying it.
+- For an agent or a human, the door is the **wiki** ([30-wiki.md](./30-wiki.md)): the wiki indexes the architecture as one of the things it knows about, pointing at the bundle rather than copying it.
 - For deterministic code, the door is **`memo architecture locate`**: a thin resolver that reads the bundle and returns where it is, what nodes it holds, and which repos have no node yet. It replaces paths that would otherwise be repeated in prose across several skills — one resolver, consulted, instead of a convention re-guessed.
 
 The point of the single door is that the architecture's location stops being tribal knowledge embedded in each consumer and becomes a declared, resolvable fact.
@@ -70,14 +63,14 @@ The advisory severity is what makes this work: a research-heavy foreign project 
 
 ## OKF Is the Storage Format
 
-The architecture is stored as an **OKF knowledge bundle** ([02-knowledge-format-okf.md](/specification/knowledge-format-okf/)): one node document per repo (`type: repo` plus the role fields as extension keys), the edges declared in the body, all under `context/architecture-okf/`. OKF is named here only as the *encoding* — the concept above stands on its own, and a reader needs to understand "project architecture" without first understanding "OKF". The bundle directory keeps its `-okf` suffix as a file convention; the visible term for the concept is **project architecture**.
+The architecture is stored as an **OKF knowledge bundle** ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)): one node document per repo (`type: repo` plus the role fields as extension keys), the edges declared in the body, all under `context/architecture-okf/`. OKF is named here only as the *encoding* — the concept above stands on its own, and a reader needs to understand "project architecture" without first understanding "OKF". The bundle directory keeps its `-okf` suffix as a file convention; the visible term for the concept is **project architecture**.
 
 ---
 
 ## Related
 
-- [02-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the storage format the architecture (and the wiki) is encoded in.
-- [04-wiki.md](/specification/wiki/) — the wiki as the entry point that indexes the architecture among everything else.
+- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the storage format the architecture (and the wiki) is encoded in.
+- [30-wiki.md](./30-wiki.md) — the wiki as the entry point that indexes the architecture among everything else.
 - [../v0.1.0/33-maintenance.md](../v0.1.0/33-maintenance.md) — maintenance scores the architecture bundle as a unit and keeps its provenance pins fresh.
 - [../v0.1.0/23-requirements.md](../v0.1.0/23-requirements.md) — the requirements layer the advisory presence requirement is expressed in.
-- [01-project-structure.md](/specification/project-structure/) — `context/` as the primary immutable source, where the bundle lives.
+- [11-project-structure.md](./11-project-structure.md) — `context/` as the primary immutable source, where the bundle lives.

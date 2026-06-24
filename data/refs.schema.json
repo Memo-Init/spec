@@ -24,6 +24,28 @@
                 "specDir": { "type": "string", "pattern": "^spec/v\\d+\\.\\d+\\.\\d+$" }
             }
         },
+        "workbench": {
+            "type": "object",
+            "required": [ "currentVersion", "recommendedRelease", "specDir", "url" ],
+            "additionalProperties": false,
+            "properties": {
+                "currentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+                "recommendedRelease": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+                "specDir": { "type": "string", "pattern": "^spec/workbench/\\d+\\.\\d+\\.\\d+$" },
+                "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
+            }
+        },
+        "sop": {
+            "type": "object",
+            "required": [ "currentVersion", "recommendedRelease", "specDir", "url" ],
+            "additionalProperties": false,
+            "properties": {
+                "currentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+                "recommendedRelease": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+                "specDir": { "type": "string", "pattern": "^spec/sop/\\d+\\.\\d+\\.\\d+$" },
+                "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
+            }
+        },
         "docs": {
             "type": "object",
             "required": [ "canonical", "entryPoints" ],

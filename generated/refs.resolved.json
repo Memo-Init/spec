@@ -8,6 +8,18 @@
         ],
         "specDir": "spec/v0.1.0"
     },
+    "workbench": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "spec/workbench/0.1.0",
+        "url": "https://memo-init.github.io/workbench/overview/"
+    },
+    "sop": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "spec/sop/0.1.0",
+        "url": "https://memo-init.github.io/sop/overview/"
+    },
     "docs": {
         "canonical": "https://memo-init.github.io",
         "entryPoints": {
@@ -31,8 +43,8 @@
         ]
     },
     "generated": {
-        "at": "2026-06-24T16:49:31.937Z",
-        "fromCommit": "d62b403",
+        "at": "2026-06-24T20:40:19.912Z",
+        "fromCommit": "3542546",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {

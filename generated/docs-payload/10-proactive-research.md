@@ -6,7 +6,7 @@ spec_file: "10-proactive-research.md"
 order: 10
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T16:49:32.085Z"
+generated_at: "2026-06-24T20:40:20.473Z"
 generated_from: "spec/v0.1.0/10-proactive-research.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/10-proactive-research.md."
@@ -117,7 +117,7 @@ The payoff is that the costly part happens once and the parallel part is cheap a
 - [04-input-pipeline.md](/specification/input-pipeline/) — the five-step pipeline whose final step derives the research topics this chapter consumes.
 - [09-contamination-context-handover.md](/specification/contamination-context-handover/) — the pointer principle (`context/` reference over re-narration) and the revision-2 contamination scan.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the evidence levels research output is tagged with, and the `[Research open]` finalization gate.
-- [../workbench/05-browser-automation.md](../workbench/05-browser-automation.md) — the research *method*: the CLI-vs-MCP cost policy, the `.playwright/` structure, the scrape queue, and the tool-selection decision tree.
+- [../workbench/31-browser-automation.md](../workbench/31-browser-automation.md) — the research *method*: the CLI-vs-MCP cost policy, the `.playwright/` structure, the scrape queue, and the tool-selection decision tree.
 - [35-memo-authoring.md](/specification/memo-authoring/) — the data payload that a research distillate becomes (one record per unit of work), doubling as the fan-out seed.
 - [36-agent-strategies.md](/specification/agent-strategies/) — the agent-deployment side of the fan-out (Fan-Out by Unit, Fresh-Context Evaluation).
 - [00-overview.md](/specification/overview/) — conformance language.

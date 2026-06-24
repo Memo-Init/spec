@@ -1,14 +1,21 @@
-# 05. Browser Automation & Research Method
+---
+title: "Browser Automation & Research Method"
+description: "The core specification's research chapter ([../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and how that..."
+workbench_version: "0.1.0"
+spec_file: "31-browser-automation.md"
+order: 31
+section: "Workbench"
+normative: true
+generated_at: "2026-06-24T20:40:20.473Z"
+generated_from: "spec/workbench/0.1.0/31-browser-automation.md"
+generator: "scripts/generate-docs-payload.mjs"
+edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/31-browser-automation.md."
+---
 
-| Field | Value |
-|-------|-------|
-| Status | Draft |
-| Depends on | [00-overview.md](./00-overview.md), [01-project-structure.md](./01-project-structure.md) |
-| Related | [01-project-structure.md](./01-project-structure.md), [../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md), [06-trash.md](./06-trash.md) |
 
 The core specification's research chapter ([../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and how that research feeds the revision lifecycle. This document defines the research *method* — the concrete tooling a project uses to gather external information, and the cost discipline that governs which tool is chosen. The two are complementary: the core chapter says *what must be researched and when*, this chapter says *how the gathering is done*.
 
-Browser automation lives at the project level. Each project carries its own `.playwright/` folder (see [01-project-structure.md](./01-project-structure.md)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
+Browser automation lives at the project level. Each project that uses it carries its own `.playwright/` folder (an optional folder — see [12-folders.md](/specification/folders/)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
 
 ---
 
@@ -65,7 +72,7 @@ Every project that uses browser automation **MUST** keep it inside a `.playwrigh
 
 The captured session file `auth.json` carries live authentication state — cookies and tokens equivalent to being logged in. It **MUST** be treated as a secret:
 
-- `auth.json` **MUST NOT** be committed. It belongs in `.gitignore`, and because the project root is local-only (see [01-project-structure.md](./01-project-structure.md)) it cannot leave the machine through `repos/` either.
+- `auth.json` **MUST NOT** be committed. It belongs in `.gitignore`, and because the project root is local-only (see [11-project-structure.md](/specification/project-structure/)) it cannot leave the machine through `repos/` either.
 - Credentials used to *produce* a session **MUST NOT** be hardcoded into scripts. They are read from the project runbook or environment, never embedded in committed code.
 - Scripts **MUST** check for an existing valid session before re-authenticating, so a stored session is reused rather than needlessly regenerated.
 
@@ -133,7 +140,8 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 
 ## Related
 
-- [00-overview.md](./00-overview.md) — the workbench sub-spec framing and the global helpers it exposes.
-- [01-project-structure.md](./01-project-structure.md) — the `.playwright/` folder in the mandatory project layout, and the local guarantee that keeps `auth.json` and `output/` off the network.
+- [00-overview.md](/specification/overview/) — the workbench spec framing and the global helpers it exposes.
+- [12-folders.md](/specification/folders/) — the optional `.playwright/` folder in the project layout.
+- [11-project-structure.md](/specification/project-structure/) — the local guarantee that keeps `auth.json` and `output/` off the network.
 - [../v0.1.0/10-proactive-research.md](../v0.1.0/10-proactive-research.md) — the research *duty* this chapter's *method* serves, and the normative inward trust boundary on ingested web content.
-- [06-trash.md](./06-trash.md) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.
+- [32-trash.md](/specification/trash/) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.

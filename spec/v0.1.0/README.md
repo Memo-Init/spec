@@ -82,6 +82,6 @@ Readers who only need the rules of authoring a memo can read 03–08; readers bu
 
 ## Workbench Sub-Spec
 
-A separate, **independently versioned** `workbench/` sub-spec documents the project-level organization that sits above individual memos: project-versus-repo structure, the local guarantee, and the trash discipline. Requirements profiles, the tools registry, strands, and memo history have been promoted to top-level core chapters (23–26) and are no longer workbench-sub-spec content. The core chapters above describe the memo; the `workbench/` sub-spec describes the project structure the memo lives in.
+A separate, **independently versioned** `workbench/` sibling spec documents the project-level organization that sits above individual memos: project-versus-repo structure, the local guarantee, and the trash discipline. Requirements profiles, the tools registry, strands, and memo history have been promoted to top-level core chapters (23–26) and are no longer workbench-spec content. The core chapters above describe the memo; the `workbench/` sibling spec describes the project structure the memo lives in.
 
-See `workbench/00-overview.md` for the sub-spec entry point.
+See `workbench/00-overview.md` for the sibling-spec entry point.

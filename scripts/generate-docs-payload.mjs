@@ -1,18 +1,24 @@
 #!/usr/bin/env node
 // generate-docs-payload.mjs — memo-init spec → docs payload
 //
-// Reads every chapter in spec/v<version>/*.md (core) and spec/workbench/*.md
-// (sub-spec), prepends YAML frontmatter with discovery metadata, rewrites
-// intra-spec links ./NN-name.md → /specification/<slug>/, and writes the result
-// to generated/docs-payload/<NN-name>.md (core) and
-// generated/docs-payload/workbench/<NN-name>.md (workbench).
+// Reads every chapter in three sibling spec families and prepends YAML
+// frontmatter with discovery metadata, rewrites intra-spec links
+// ./NN-name.md → /specification/<slug>/, and writes the result to
+// generated/docs-payload/:
+//   core      spec/v<spec_version>/*.md          → docs-payload/<NN-name>.md
+//   workbench spec/workbench/<wb_version>/*.md    → docs-payload/workbench/<NN-name>.md
+//   sop       spec/sop/<sop_version>/*.md         → docs-payload/sop/<NN-name>.md
 //
-// memo-init is simpler than FlowMCP: no grading or best-practice tracks, no
-// metadata-footer relocation. The chapters already carry a "## Related" footer.
+// Each family carries its OWN version line (refs.manual.json keys spec /
+// workbench / sop) and stamps a per-family version frontmatter field
+// (spec_version / workbench_version / sop_version) — mirroring FlowMCP's
+// grading_version / best_practice_version. The payload layout stays flat per
+// family (the version rides in frontmatter, not the payload path), so the
+// site sync paths stay stable.
 //
 // Output format documented in generated/README.md.
 
-import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises'
+import { readdir, readFile, writeFile, mkdir, rm } from 'node:fs/promises'
 import { readFileSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -22,18 +28,28 @@ import { execSync } from 'node:child_process'
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 
-// Spec content version is the curated value in data/refs.manual.json
-// (spec.currentVersion) — the same single source generate-refs uses.
+// Per-family content versions are the curated values in data/refs.manual.json
+// (spec / workbench / sop .currentVersion) — the same single source generate-refs uses.
 const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
-const SPEC_VERSION = REFS_MANUAL?.spec?.currentVersion
-if( typeof SPEC_VERSION !== 'string' || SPEC_VERSION.length === 0 ) {
-    throw new Error( '[generate-docs-payload] data/refs.manual.json spec.currentVersion missing or empty' )
+
+const readFamilyVersion = ( { family } ) => {
+    const version = REFS_MANUAL?.[ family ]?.currentVersion
+    if( typeof version !== 'string' || version.length === 0 ) {
+        throw new Error( `[generate-docs-payload] data/refs.manual.json ${ family }.currentVersion missing or empty` )
+    }
+    return version
 }
 
+const SPEC_VERSION = readFamilyVersion( { family: 'spec' } )
+const WORKBENCH_VERSION = readFamilyVersion( { family: 'workbench' } )
+const SOP_VERSION = readFamilyVersion( { family: 'sop' } )
+
 const SPEC_DIR = join( REPO, `spec/v${ SPEC_VERSION }` )
-const WORKBENCH_DIR = join( REPO, 'spec/workbench' )
+const WORKBENCH_DIR = join( REPO, `spec/workbench/${ WORKBENCH_VERSION }` )
+const SOP_DIR = join( REPO, `spec/sop/${ SOP_VERSION }` )
 const PAYLOAD_DIR = join( REPO, 'generated/docs-payload' )
 const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
+const SOP_PAYLOAD_DIR = join( PAYLOAD_DIR, 'sop' )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 
@@ -136,14 +152,13 @@ const rewriteSpecLinks = ( { content } ) => {
 }
 
 
-const buildFrontmatter = ( { filename, title, description, order, section, normative, sourceRelBase, sourceCommit, now } ) => {
+const buildFrontmatter = ( { filename, title, description, order, section, normative, versionField, versionValue, sourceRelBase, sourceCommit, now } ) => {
     const relativeSourcePath = `${ sourceRelBase }/${ filename }`
-    const sourceUrl = `${ REFS_MANUAL.github.specRepo }/blob/${ sourceCommit }/${ relativeSourcePath }`
     const lines = []
     lines.push( '---' )
     lines.push( `title: "${ escapeYamlString( { value: title } ) }"` )
     lines.push( `description: "${ escapeYamlString( { value: description } ) }"` )
-    lines.push( `spec_version: "${ SPEC_VERSION }"` )
+    lines.push( `${ versionField }: "${ versionValue }"` )
     lines.push( `spec_file: "${ filename }"` )
     lines.push( `order: ${ order }` )
     lines.push( `section: "${ section }"` )
@@ -157,7 +172,7 @@ const buildFrontmatter = ( { filename, title, description, order, section, norma
 }
 
 
-const generateFile = async ( { filename, sourceDir, targetDir, section, sourceRelBase, sourceCommit, now } ) => {
+const generateFile = async ( { filename, sourceDir, targetDir, section, versionField, versionValue, sourceRelBase, sourceCommit, now } ) => {
     const sourcePath = join( sourceDir, filename )
     const content = await readFile( sourcePath, 'utf-8' )
 
@@ -166,7 +181,7 @@ const generateFile = async ( { filename, sourceDir, targetDir, section, sourceRe
     const order = orderFromFilename( { filename } )
     const normative = detectNormative( { content } )
 
-    const frontmatter = buildFrontmatter( { filename, title, description, order, section, normative, sourceRelBase, sourceCommit, now } )
+    const frontmatter = buildFrontmatter( { filename, title, description, order, section, normative, versionField, versionValue, sourceRelBase, sourceCommit, now } )
 
     // Rewrite intra-spec links, then strip the leading H1 (the docs site renders
     // the page title from the frontmatter, so the body H1 would be a duplicate),
@@ -193,18 +208,39 @@ const collectChapters = async ( { sourceDir } ) => {
 }
 
 
-const generatePass = async ( { label, sourceDir, targetDir, section, sourceRelBase, sourceCommit, now } ) => {
+// Remove stale generated chapter files (NN-*.md) before regenerating, so a renamed
+// or removed source chapter never lingers in the payload. Only NN-prefixed .md files
+// are touched — manifest.json and the workbench/ + sop/ subdirs are left intact.
+const cleanTargetDir = async ( { targetDir } ) => {
+    let names
+    try {
+        names = await readdir( targetDir )
+    } catch( error ) {
+        return
+    }
+    const stale = names.filter( ( name ) => /^\d{2}-.*\.md$/.test( name ) )
+    await Promise.all( stale.map( ( name ) => rm( join( targetDir, name ), { force: true } ) ) )
+}
+
+
+const generatePass = async ( { label, sourceDir, targetDir, section, versionField, versionValue, sourceRelBase, sourceCommit, now } ) => {
     await mkdir( targetDir, { recursive: true } )
+    await cleanTargetDir( { targetDir } )
     const chapters = await collectChapters( { sourceDir } )
 
-    console.log( `Generating ${ label } payload from ${ chapters.length } files (version=${ SPEC_VERSION }, source_commit=${ sourceCommit })...` )
-    const results = []
-    for( const filename of chapters ) {
-        const result = await generateFile( { filename, sourceDir, targetDir, section, sourceRelBase, sourceCommit, now } )
-        results.push( result )
+    console.log( `Generating ${ label } payload from ${ chapters.length } files (${ versionField }=${ versionValue }, source_commit=${ sourceCommit })...` )
+    const results = await Promise.all( chapters.map( async ( filename ) => {
+        const result = await generateFile( { filename, sourceDir, targetDir, section, versionField, versionValue, sourceRelBase, sourceCommit, now } )
         console.log( `  ✓ ${ filename } → ${ result.title }` )
-    }
+        return result
+    } ) )
     return results
+}
+
+
+const reportPass = ( { label, results, targetDir } ) => {
+    console.log( `\nGenerated ${ results.length } ${ label } files in ${ targetDir }` )
+    console.log( `Normative: ${ results.filter( ( r ) => r.normative ).length }, Informative: ${ results.filter( ( r ) => !r.normative ).length }` )
 }
 
 
@@ -217,24 +253,39 @@ const main = async () => {
         sourceDir: SPEC_DIR,
         targetDir: PAYLOAD_DIR,
         section: 'Specification',
+        versionField: 'spec_version',
+        versionValue: SPEC_VERSION,
         sourceRelBase: `spec/v${ SPEC_VERSION }`,
         sourceCommit,
         now
     } )
-    console.log( `\nGenerated ${ coreResults.length } core files in ${ PAYLOAD_DIR }` )
-    console.log( `Normative: ${ coreResults.filter( ( r ) => r.normative ).length }, Informative: ${ coreResults.filter( ( r ) => !r.normative ).length }` )
+    reportPass( { label: 'core', results: coreResults, targetDir: PAYLOAD_DIR } )
 
     const workbenchResults = await generatePass( {
         label: 'workbench',
         sourceDir: WORKBENCH_DIR,
         targetDir: WORKBENCH_PAYLOAD_DIR,
         section: 'Workbench',
-        sourceRelBase: 'spec/workbench',
+        versionField: 'workbench_version',
+        versionValue: WORKBENCH_VERSION,
+        sourceRelBase: `spec/workbench/${ WORKBENCH_VERSION }`,
         sourceCommit,
         now
     } )
-    console.log( `\nGenerated ${ workbenchResults.length } workbench files in ${ WORKBENCH_PAYLOAD_DIR }` )
-    console.log( `Normative: ${ workbenchResults.filter( ( r ) => r.normative ).length }, Informative: ${ workbenchResults.filter( ( r ) => !r.normative ).length }` )
+    reportPass( { label: 'workbench', results: workbenchResults, targetDir: WORKBENCH_PAYLOAD_DIR } )
+
+    const sopResults = await generatePass( {
+        label: 'sop',
+        sourceDir: SOP_DIR,
+        targetDir: SOP_PAYLOAD_DIR,
+        section: 'SOP',
+        versionField: 'sop_version',
+        versionValue: SOP_VERSION,
+        sourceRelBase: `spec/sop/${ SOP_VERSION }`,
+        sourceCommit,
+        now
+    } )
+    reportPass( { label: 'sop', results: sopResults, targetDir: SOP_PAYLOAD_DIR } )
 }
 
 
