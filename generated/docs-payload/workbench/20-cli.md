@@ -6,7 +6,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-06-24T22:34:55.546Z"
+generated_at: "2026-06-25T18:01:17.107Z"
 generated_from: "spec/workbench/0.1.0/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/20-cli.md."
@@ -42,8 +42,90 @@ The **folder name is the unit of meaning**. This connects to the About conventio
 
 ---
 
+## Runtime Call-Validation — the "After" Measurement
+
+Beyond defining the command convention, the workbench CLI provides one capability that is itself a leaf of the command tree: **runtime call-validation**. It is the **"after" half** of checkability — the counterpart to the entry-point pre-condition, which is the "before" half ([23-hooks-contract.md](/specification/hooks-contract/)). Once a session has run, the CLI inspects what was recorded and measures **which skills and tools were actually invoked**, answering questions a pre-hook cannot answer in advance — most importantly, **"was the SOP actually read this session?"**. A pre-hook gates the call; this measures, after the fact, what really happened.
+
+### Where Sessions Live
+
+The measurement reads the session transcripts Claude Code writes to disk:
+
+- **Main session:** `~/.claude/projects/<project-slug>/<session-uuid>.jsonl`.
+- **Sub-agents:** `<session-uuid>/subagents/agent-<agent-id>.jsonl`, each with a `.meta.json` sidecar.
+
+Both levels log `Skill` tool-use entries and tool calls, so a skill loaded in a sub-agent is visible too. (No `SubagentStop` hook is assumed; the transcript files are the source.)
+
+### Three Signals That a Skill Ran
+
+Whether a given skill (for example the SOP) ran is **deterministically detectable post-hoc** from three greppable signals in a transcript:
+
+1. A `Skill` tool-use entry naming the skill (`"skill": "<name>"`).
+2. A `Base directory …/skills/<name>` line emitted when the skill loads.
+3. An attribution field recording the active skill.
+
+Any one signal is evidence the skill ran; their absence across a session is evidence it did not.
+
+### The Workbench Registry — the "What to Search"
+
+The CLI does not hardcode what to look for; it reads a project's **`.workbench/registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/specification/sop-entrypoint/)). The registry lists the SOPs, skills, and add-ons that *could* be used, each with the signals that prove it was:
+
+```jsonc
+// .workbench/registry.json — the "what to search": every searchable skill / add-on / requirement
+{
+  "skills": [
+    { "id": "<skill-id>", "role": "orchestrator | component",
+      "signals": ["skill:<skill-id>", "path:/skills/<skill-id>", "attributionSkill:<skill-id>"] }
+  ],
+  "addons": [
+    { "name": "<addon>", "cli": "<addon-cli>", "signals": ["bash:<addon-cli> ", "skill:<usage-skill>"] }
+  ],
+  "requirements": [
+    { "id": "<requirement-id>", "entrypoint": "<entry-point>", "requires": "<skill-id>", "when": "pre | post" }
+  ]
+}
+```
+
+### The Matrix — the CLI's Structured Output
+
+Given a set of session IDs and the registry, the CLI scans the transcripts and returns a **structured matrix**: per session, which registered skill or add-on was used, with the evidence that proves it. The output is machine-readable, in the manner of the existing CLI JSON envelopes:
+
+```jsonc
+{
+  "session": "<session-uuid>",
+  "matrix": [
+    { "id": "<sop-skill>", "kind": "skill", "used": true,  "evidence": "skill:<sop-skill> @ <uuid>.jsonl:<line>" },
+    { "id": "<addon>",     "kind": "addon", "used": false, "evidence": null }
+  ]
+}
+```
+
+### The Memo ↔ Workbench Split
+
+The validation is split across the two systems by what each one *knows*. The memo system knows **which** sessions exist and what their use **means**; the workbench knows **what** can be searched for:
+
+| Step | Who | Detail |
+|------|-----|--------|
+| 1. Collect the session IDs | **Memo** | the memo agent knows the sub-agents it spawned and their IDs. |
+| 2. Hand the IDs over | Memo → Workbench CLI | — |
+| 3. Hold the registry of possibilities | **Workbench** | the `.workbench/registry.json` — the "what to search". |
+| 4. Search signals, build the matrix | **Workbench CLI** | takes the IDs and the registry, scans the transcripts, returns the structured matrix. |
+| 5. Interpret the matrix | **Memo** | checks the matrix against requirements and intent. |
+
+So **the memo collects IDs and interprets; the workbench holds the registry, searches the signals, and builds the matrix.** The division follows from knowledge: the workbench "knows all tools and SOPs", so it owns the *what-to-search*; the memo system carries the *which-sessions* and the *meaning*. A per-memo-scoped system interprets a project-wide matrix because interpretation is an **intent/requirements** check — only the memo system holds the requirements and the memo context. The workbench returns an already-matched, structured matrix; the memo reads it as a dataset, so the scope boundary is preserved.
+
+### Requirements on Top
+
+Because the matrix is a structured fact, **post-hoc requirements** can be expressed against it — for example, "the init entry point may run only if the SOP was read this session". This is the after-the-fact counterpart of the entry-point pre-condition ([23-hooks-contract.md](/specification/hooks-contract/)) and is registered like any other validation family ([25-validation-overview.md](/specification/validation-overview/)).
+
+> **Spec now, build deferred.** This chapter fixes the path schema, the registry shape, the matrix output, and the memo-vs-workbench split. Building the workbench CLI leaf and the memo-side ID-collection/interpretation is a later, separate step.
+
+---
+
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.
+- [23-hooks-contract.md](/specification/hooks-contract/) — the entry-point pre-condition, the "before" half this measurement complements.
+- [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
+- [25-validation-overview.md](/specification/validation-overview/) — the validation wayfinder where runtime call-validation is registered.
 - [21-environment-scripts.md](/specification/environment-scripts/) — the script families that follow the subfolder rule.
 - [30-wiki.md](/specification/wiki/) — the About convention that records what a scripts subfolder is for.

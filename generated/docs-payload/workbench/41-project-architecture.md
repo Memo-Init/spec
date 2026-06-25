@@ -2,14 +2,14 @@
 title: "Project Architecture"
 description: "A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges..."
 workbench_version: "0.1.0"
-spec_file: "14-project-architecture.md"
-order: 14
+spec_file: "41-project-architecture.md"
+order: 41
 section: "Workbench"
 normative: true
-generated_at: "2026-06-24T22:34:55.546Z"
-generated_from: "spec/workbench/0.1.0/14-project-architecture.md"
+generated_at: "2026-06-25T18:01:17.107Z"
+generated_from: "spec/workbench/0.1.0/41-project-architecture.md"
 generator: "scripts/generate-docs-payload.mjs"
-edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/14-project-architecture.md."
+edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/41-project-architecture.md."
 ---
 
 

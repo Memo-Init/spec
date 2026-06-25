@@ -6,7 +6,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-06-24T22:34:55.546Z"
+generated_at: "2026-06-25T18:01:17.107Z"
 generated_from: "spec/workbench/0.1.0/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/30-wiki.md."
@@ -23,7 +23,7 @@ Two kinds of knowledge sit beneath the wiki, and the wiki is the entry point ove
 
 | Layer | What | Form |
 |-------|------|------|
-| **Structured** | the project architecture — which repos exist, how they connect ([14-project-architecture.md](/specification/project-architecture/)) | OKF nodes + edges |
+| **Structured** | the project architecture — which repos exist, how they connect ([41-project-architecture.md](/specification/project-architecture/)) | OKF nodes + edges |
 | **Unstructured** | research piles, `context/` files, distilled decisions — everything else the project holds | any form; the wiki categorizes and files it |
 
 The user does not care which form a piece of knowledge is in — the wiki finds it. That is the whole point of a single entry point: knowledge is reached *through the wiki*, not by knowing in advance where each kind of thing lives.
@@ -47,7 +47,7 @@ The wiki answers in the **present tense**: a wiki page states what is understood
 The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required:
 
 - **Every project** — internal or foreign — gets a wiki, because every project has unstructured knowledge worth categorizing and querying. The wiki is the entry point for all of them.
-- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([14-project-architecture.md](/specification/project-architecture/)).
+- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([41-project-architecture.md](/specification/project-architecture/)).
 
 So "the wiki finds everything" holds for all projects; "the project has a structured architecture" holds for the internal ones.
 
@@ -74,7 +74,7 @@ The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](/sp
 
 ## Related
 
-- [14-project-architecture.md](/specification/project-architecture/) — the structured layer the wiki indexes and points at.
+- [41-project-architecture.md](/specification/project-architecture/) — the structured layer the wiki indexes and points at.
 - [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the on-disk format of both the wiki and the architecture bundle.
 - [../../v0.1.0/24-tools-registry.md](/specification/tools-registry/) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
 - [../../v0.1.0/26-memo-history.md](/specification/memo-history/) — the chronicle, the present-tense wiki's chronological counterpart.

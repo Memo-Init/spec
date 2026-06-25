@@ -5245,6 +5245,8 @@ The defining mental shift of the workbench is that the unit of organization is t
 
 This distinction is what [11-project-structure.md](./11-project-structure.md) makes concrete, and the separation of the workbench root from the projects beneath it is drawn in [10-root-and-projects.md](./10-root-and-projects.md).
 
+The workbench **core** — its folders, CLIs, and conventions — is independent of the memo system: a project can use the layout without any memo ever being written, even though the memo system is the recommended add-on that normally drives it. The core-vs-add-on split among the registered folders is drawn in [12-folders.md](./12-folders.md).
+
 ---
 
 ## What the Workbench Level Checks
@@ -5294,16 +5296,22 @@ The Workbench spec contains the following chapters, grouped into the navigation 
 | `11-project-structure.md` | Project Structure & Local Guarantee | Folders | Normative |
 | `12-folders.md` | Project Folders — Mandatory and Optional | Folders | Normative |
 | `13-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Folders | Normative |
-| `14-project-architecture.md` | Project Architecture | Folders | Normative |
+| `15-repos.md` | The `repos/` Folder | Folders | Normative |
+| `16-context.md` | The `context/` Folder | Folders | Normative |
+| `17-memo-store.md` | The `.memo/` Folder | Folders | Normative |
+| `18-design.md` | The `design/` Folder & the DESIGN.md Convention | Folders | Normative |
 | `20-cli.md` | CLI Convention — Branch/Leaf | CLI & Scripts | Normative |
 | `21-environment-scripts.md` | Environment & Health Scripts | CLI & Scripts | Normative |
 | `22-config.md` | The `.workbench/` Configuration | CLI & Scripts | Normative |
 | `23-hooks-contract.md` | Hooks Contract | CLI & Scripts | Normative |
 | `24-skills-scope.md` | Skills in the Workbench Scope | CLI & Scripts | Normative |
+| `25-validation-overview.md` | Validation Overview | CLI & Scripts | Informative |
+| `26-addons.md` | The Add-On Model | CLI & Scripts | Normative |
 | `30-wiki.md` | The Wiki — Entry Point | Tools | Normative |
 | `31-browser-automation.md` | Browser Automation | Tools | Normative |
 | `32-trash.md` | Trash — No Deletion, Only `.trash/` | Tools | Normative |
 | `40-architecture-diagram.md` | Architecture Diagram | Reference | Informative |
+| `41-project-architecture.md` | Project Architecture | Reference | Normative |
 
 ---
 
@@ -5397,6 +5405,29 @@ The workbench level **SHOULD** make this determination cheap — a predictable l
 
 ---
 
+## The SOP Is a Signpost, Not a Container
+
+The workbench-SOP does not *contain* the procedures for everything in the workbench; it **points** to them. It is a **signpost** — a connecting layer, not a container — in the spirit of a dynamic `CLAUDE.md` that loads per session, carries the current inventory of tools, and routes downward to the skills and specs that hold the detail. The workbench-SOP names the levels and the tools that are present, and for each one it points at that tool's own SOP.
+
+This is why **SOPs contain SOPs**. The workbench-SOP references each **add-on's** SOP ([26-addons.md](./26-addons.md)) — the memo system's SOP first among them, as the weightiest add-on — and each add-on SOP is itself Setup/Health/Update plus its extras. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
+
+```
+Workbench-SOP (signpost — knows the levels and the add-ons present)
+├── memo-SOP        (the weightiest add-on's SOP)
+├── flowmcp-SOP     (a large add-on's SOP)
+└── …               (each add-on: Setup · Health · Update · Extras)
+```
+
+The machine-readable form of this signpost is the **workbench registry** (`.workbench/registry.json`): the same list of SOPs, skills, and add-ons that the signpost expresses in prose, in a form a tool can read. Its fields and its use by the runtime call-validation are specified in [20-cli.md](./20-cli.md).
+
+---
+
+## SOP-Native, Not Inert Files
+
+The signpost works only because the things it points at are **SOP-native** rather than inert files. A good static file in the workbench is **declared** (it is a registered folder or a named policy), **consumed by a named process** (a skill, a hook, the wiki), and **health-checked**. A registered folder, for instance, is declared in the contract, its content is checked on write, its entry point is validated, its usage is measured after the fact, and it is findable through the wiki — it is governed, not magic. The signpost can route to a thing precisely because that thing announces what it is and what consumes it, instead of sitting as one more file in an undifferentiated pile.
+
+---
+
 ## Deterministic Enforcement Is the Machine Tier's Job
 
 Self-discovery describes what an agent *should* do. Making it **deterministic** — guaranteeing that the correct SOP is loaded before a tool runs, regardless of model behavior — is the job of the **machine tier**, through Claude Code hooks. The workbench level declares the policy; the machine tier enforces it. The contract between the two is specified in [23-hooks-contract.md](./23-hooks-contract.md); the enforcement mechanism itself is out of scope for this spec (below).
@@ -5430,6 +5461,8 @@ The division of responsibility is the load-bearing idea: **the workbench declare
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project boundary.
 - [22-config.md](./22-config.md) — the `.workbench/` configuration, where the workbench declares policy.
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract the machine tier consumes to enforce policy.
+- [26-addons.md](./26-addons.md) — the add-on SOPs the signpost points at, the memo system first among them.
+- [20-cli.md](./20-cli.md) — the `.workbench/registry.json`, the machine-readable form of the signpost.
 - [The SOP spec](/sop/overview/) — the common SOP standard of which the workbench-SOP is an instance.
 
 ---
@@ -5560,6 +5593,20 @@ Every project under `projects/{name}/` **MUST** follow a single, predictable lay
 
 ---
 
+## Registered Folders — A Shared, Named Vocabulary
+
+The workbench's core idea is that a project's top-level folders are a **registered vocabulary**: a fixed set of names, identical in every project, each with a declared meaning. Because the names are the same everywhere, a developer moving between projects — and an agent reading a project for the first time — already knows where context, repositories, scripts, and tooling live. The shared layout is a shared *working mentality*, not merely a directory listing; standardizing the first place a thing is put is worth the cost, because the alternative is every project doing it differently.
+
+Three properties make a folder **registered**:
+
+- **A stable name.** The folder is referred to by exactly one name across all projects (`repos/`, `context/`, `.memo/`); the name is a load-bearing identifier, not a project-local choice.
+- **A required-or-optional status.** Each registered folder is either mandatory (every project has it) or optional (a project adds it when it needs it).
+- **A declared meaning.** Each folder has one purpose and, where it is non-trivial, its own chapter or convention that says what belongs in it.
+
+The contract table in the next section **is** this registry: the single, authoritative list of registered folders. Tooling that needs the list — the project-setup helper, the structure audit — **SHOULD derive it from this registry** rather than restate it. A hardcoded copy in a tool is drift, and this registry is the source it must agree with.
+
+---
+
 ## The Folder Contract
 
 Folder names are load-bearing identifiers and are reproduced verbatim. The workbench audit reports any missing mandatory path as a structural finding and any unexpected top-level entry for review.
@@ -5576,13 +5623,27 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `CLAUDE.md` | Mandatory | The runbook for the AI. |
 | `data/` | Optional | **Raw** data — feeds and source material, as ingested, before processing. |
 | `.workbench/` | Optional | The manual project configuration (see [22-config.md](./22-config.md)). |
-| `.playwright/` | Optional | Browser-automation session, scripts, and output — only when the project does browser automation (see [31-browser-automation.md](./31-browser-automation.md)). |
+| `.browser/` | Optional | Browser-automation session, scripts, and output — only when the project does browser automation; legacy alias `.playwright/` (see [31-browser-automation.md](./31-browser-automation.md)). |
 | `.wiki/` | Optional | LLM-generated project wiki, an OKF-conformant knowledge bundle (see [30-wiki.md](./30-wiki.md)). |
 | `proofs/` | Optional | Proofs captured when a view changes (see "Specialized folders" below). |
 | `snapshots/` | Optional | Application snapshots (see "Specialized folders" below). |
+| `design/` | Optional | Design system and visual sources — `DESIGN.md`, variants, and `.pen` files (see [18-design.md](./18-design.md)). |
 | `.tmp/` | Optional | Working scratch space; ephemeral material that may be discarded. |
 
 A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it.
+
+---
+
+## The Dot-Prefix Convention
+
+Whether a registered folder's name begins with a dot is **not arbitrary** — it encodes what kind of thing the folder holds:
+
+- A name **begins with `.`** when the folder is **generated or local machinery**: tooling configuration and local-only artifacts that are not authored by hand and, in several cases, never leave the machine (`.claude/`, `.memo/`, `.trash/`, `.workbench/`, `.wiki/`, `.browser/`, `.tmp/`).
+- A name **carries no prefix** when the folder holds **authored, user-facing content** — the substantive material a person creates and reads (`context/`, `repos/`, `scripts/`, `proofs/`, `snapshots/`, `data/`, `design/`).
+
+The dot carries two reinforcing meanings — *hidden from casual view* and, for the local-only stores, *never pushed* — and it gives the machine a cheap, structural signal: a folder-aware tool can tell generated machinery from authored content by the leading character alone. `scripts/` is the deliberate edge case — it holds tooling, but it is authored and run by people, so it follows the no-dot, content rule.
+
+A new registered folder **MUST** follow this convention: a dot for generated or local machinery, no dot for authored content.
 
 ---
 
@@ -5597,15 +5658,53 @@ A project that only ever works with processed documents has a `context/` and no 
 
 ---
 
+## Conventions and Add-Ons
+
+Two distinct things attach to folders, and the spec keeps them apart:
+
+| Term | What it is | Examples |
+|------|-----------|----------|
+| **Convention** | A named **standard or format** that the *content* of a folder follows. | OKF for `context/architecture-okf/` and `.wiki/` ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)); DESIGN.md for `design/`. |
+| **Add-On** | A **tool** that reserves an area of the project and may use or bring conventions of its own. | The memo system, `flowmcp`, `get-sheet`, `ytAi`. |
+
+A Convention answers *what format does this folder's content take?*; an Add-On answers *which tool reserves space here and operates on it?*. The two compose: an add-on may write into a folder whose content follows a convention. The convention model — how a folder declares the standard its content follows — is developed across this Folders category (OKF in [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) is the first instance); the add-on model — how a tool reserves an area and where its data lives — is specified in the add-on chapter ([26-addons.md](./26-addons.md)).
+
+---
+
+## The Convention Model
+
+A **convention** is the named standard a folder's *content* follows. The workbench does not impose one universal schema on everything; it **separates domains by folder** and lets each folder declare the convention that fits its material. A convention is named, documented in its folder's chapter, and — where possible — checked when content is written.
+
+| Folder | Domain | Convention | Status |
+|--------|--------|-----------|--------|
+| `context/architecture-okf/`, `.wiki/` | Architecture / knowledge | OKF ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)) | established |
+| `design/` | Design system | DESIGN.md ([18-design.md](./18-design.md)) | new |
+| `scripts/` | Environment startup | startup-script convention ([21-environment-scripts.md](./21-environment-scripts.md)) | proposed |
+
+OKF was the **first** convention and DESIGN.md the **second**; neither is privileged, and a convention is **replaceable** — if a format is superseded, the folder and its role survive and the standard is swapped. The ordering rule is **spec-first**: a convention is defined here before the tooling that enforces or generates it is built.
+
+---
+
+## The Workbench Core Is Independent of the Memo System
+
+The registered folders divide into two groups, and the division is deliberate:
+
+- The **workbench core** — `context/`, `repos/`, `scripts/`, `.trash/`, and the authored project files — is **independent of the memo system**. A project can use the workbench layout, the CLIs, the wiki, and the trash policy without any memo ever being written.
+- The **memo system's footprint** — `.memo/` (the memo store) and the memo-specific skills inside `.claude/` — is the on-disk presence of an **add-on**: the memo system. It is the **recommended default** way of working, which is why `.memo/` appears as mandatory in the contract above; but its mandatory status is the footprint of that recommended add-on, not a requirement of the bare workbench.
+
+In practice the two are rarely separated: reading and writing a project's work runs **through the memo system** as the normal mode, so a real project almost always carries `.memo/`. "The core is usable without the memo system" is a statement about *dependency*, not about *typical use* — the workbench does not depend on the memo system, even though it is normally driven by it. The memo system is the **weightiest of the workbench's add-ons**; the single, authoritative statement of that — one add-on model for all tools, the memo system merely heavier — lives in the add-on chapter ([26-addons.md](./26-addons.md)).
+
+---
+
 ## Specialized Folders May Live Under `.tmp/`
 
 `proofs/` and `snapshots/` are **specialized**: they matter to projects that capture view proofs or application snapshots and are irrelevant to others. Such a project **MAY** keep them as top-level folders, or **MAY** place them under `.tmp/` when the captured material is ephemeral and need not persist. Either placement is conformant; the choice follows from whether the proofs and snapshots are kept as durable artifacts or as throwaway working material.
 
 ---
 
-## `.playwright/` Is Optional
+## `.browser/` Is Optional
 
-Browser automation is not universal. A project carries `.playwright/` **only if** it actually performs browser automation; a project that does none **MUST NOT** be expected to have it. When present, the folder follows the normative conventions in [31-browser-automation.md](./31-browser-automation.md).
+Browser automation is not universal. A project carries `.browser/` **only if** it actually performs browser automation; a project that does none **MUST NOT** be expected to have it. When present, the folder is named `.browser/` (legacy alias `.playwright/`) and follows the normative conventions in [31-browser-automation.md](./31-browser-automation.md).
 
 ---
 
@@ -5615,11 +5714,34 @@ The optional `.workbench/` folder is where a project's **manual** configuration 
 
 ---
 
+## Per-Folder Pages
+
+Several registered folders carry enough depth to have their own page; this chapter is the **hub**, and those pages are its spokes. A reader looking for one folder goes straight to its page:
+
+| Folder | Page |
+|--------|------|
+| `repos/` | [15-repos.md](./15-repos.md) |
+| `context/` | [16-context.md](./16-context.md) |
+| `context/architecture-okf/` | [41-project-architecture.md](./41-project-architecture.md) (concept) · [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) (format) |
+| `.memo/` | [17-memo-store.md](./17-memo-store.md) |
+| `design/` | [18-design.md](./18-design.md) |
+| `.wiki/` | [30-wiki.md](./30-wiki.md) |
+| `.browser/` | [31-browser-automation.md](./31-browser-automation.md) |
+| `.trash/` | [32-trash.md](./32-trash.md) |
+
+Folders without a dedicated page (for example `scripts/`, `proofs/`, `snapshots/`, `.tmp/`) are specified by their row in the contract above and, where relevant, by a CLI or tools chapter — `scripts/` by [21-environment-scripts.md](./21-environment-scripts.md). The **wiki sits one level above the folders** as the search engine across all of them: it indexes the separated domains so a reader can find material without first knowing which folder holds it ([30-wiki.md](./30-wiki.md)).
+
+**The registry is authoritative for tooling.** Where a tool — the project-setup helper, the structure audit — carries its own list of folders, that list **MUST** agree with this registry. A tool that treats an *optional* folder (`.browser/`, `proofs/`, `snapshots/`, `.wiki/`) as mandatory has drifted from the registry and is the copy to reconcile, not the source.
+
+---
+
 ## Related
 
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project split.
 - [11-project-structure.md](./11-project-structure.md) — the local guarantee that protects this layout.
+- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, a convention used by the wiki and architecture folders.
 - [22-config.md](./22-config.md) — the `.workbench/` configuration.
+- [26-addons.md](./26-addons.md) — the add-on model; the memo system as the weightiest recommended add-on.
 - [32-trash.md](./32-trash.md) — why deletion routes through `.trash/`.
 
 ---
@@ -5632,7 +5754,7 @@ The optional `.workbench/` folder is where a project's **manual** configuration 
 | Depends on | [00-overview.md](./00-overview.md), [11-project-structure.md](./11-project-structure.md) |
 | Related | [24-tools-registry.md](../../v0.1.0/24-tools-registry.md), [26-memo-history.md](../../v0.1.0/26-memo-history.md), [32-trash.md](./32-trash.md) |
 
-OKF (the Open Knowledge Format) is the **storage format** the workbench uses for knowledge bundles — a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. Two bundles use it: the project wiki under `.wiki/` (the entry point, [30-wiki.md](./30-wiki.md)) and the project architecture under `context/architecture-okf/` (the repo graph, [14-project-architecture.md](./14-project-architecture.md)). This chapter is the **format reference**: it declares those bundles **conformant to OKF** — an open specification, Apache-2.0 — as a **non-destructive superset** that keeps richer frontmatter and adds nothing the format forbids. It is a format detail, not a headline: a reader understands "the wiki" and "the project architecture" as concepts in their own chapters, and comes here only for the on-disk encoding. Nothing here changes that `context/` is the primary, immutable source (see [11-project-structure.md](./11-project-structure.md)); OKF is a presentation and interchange label on the *generated* bundle, never a replacement for the sources it is distilled from.
+OKF (the Open Knowledge Format) is the **storage format** the workbench uses for knowledge bundles — a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. Two bundles use it: the project wiki under `.wiki/` (the entry point, [30-wiki.md](./30-wiki.md)) and the project architecture under `context/architecture-okf/` (the repo graph, [41-project-architecture.md](./41-project-architecture.md)). This chapter is the **format reference**: it declares those bundles **conformant to OKF** — an open specification, Apache-2.0 — as a **non-destructive superset** that keeps richer frontmatter and adds nothing the format forbids. It is a format detail, not a headline: a reader understands "the wiki" and "the project architecture" as concepts in their own chapters, and comes here only for the on-disk encoding. Nothing here changes that `context/` is the primary, immutable source (see [11-project-structure.md](./11-project-structure.md)); OKF is a presentation and interchange label on the *generated* bundle, never a replacement for the sources it is distilled from.
 
 ---
 
@@ -5713,7 +5835,7 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 - [00-overview.md](./00-overview.md) — the workbench spec and its independent versioning, where the format version is read from refs data.
 - [11-project-structure.md](./11-project-structure.md) — `.wiki/` as an optional per-project bundle, and `context/` as the primary immutable source.
-- [14-project-architecture.md](./14-project-architecture.md) — the project-architecture bundle, the other consumer of this format (concept first, OKF as encoding).
+- [41-project-architecture.md](./41-project-architecture.md) — the project-architecture bundle, the other consumer of this format (concept first, OKF as encoding).
 - [30-wiki.md](./30-wiki.md) — the wiki entry point, the format's primary consumer.
 - [24-tools-registry.md](../../v0.1.0/24-tools-registry.md) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
 - [26-memo-history.md](../../v0.1.0/26-memo-history.md) — why the wiki answers in the present tense and the history carries the chronology.
@@ -5721,82 +5843,204 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 ---
 
-# 14. Project Architecture
+# 15. The `repos/` Folder
 
-| Field | Value |
-|-------|-------|
+| | |
+|---|---|
 | Status | Draft |
-| Depends on | [00-overview.md](./00-overview.md), [11-project-structure.md](./11-project-structure.md) |
-| Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [30-wiki.md](./30-wiki.md), [../../v0.1.0/33-maintenance.md](../../v0.1.0/33-maintenance.md), [../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md) |
+| Depends on | [11-project-structure.md](./11-project-structure.md), [12-folders.md](./12-folders.md) |
+| Related | [22-config.md](./22-config.md), [41-project-architecture.md](./41-project-architecture.md) |
 
-A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges between them, and the provenance that says when each edge was last verified. This chapter is about that content first; the on-disk encoding (a knowledge bundle in OKF, [13-knowledge-format-okf.md](./13-knowledge-format-okf.md)) is a detail named at the end, not the headline. The shift is deliberate: ask *what the architecture is* before asking *what format it is stored in*.
-
----
-
-## Every Project Has an Architecture
-
-Even a single-repo project has an architecture — a trivial one. As soon as a project holds more than one repository, the relationships between them carry real information: which repo is the source another is induced from, which repo consumes another's output, which dependency is externally visible. That graph is the architecture, and it is the **Soll** (the declared target state) against which the real repositories are measured.
-
-- **Nodes are repos.** One node per repository, each carrying its role: a human title, whether it faces inward or outward, and the source it is pinned to (`repos/<name> @ <commit>`).
-- **Edges are declared relationships** between repos — `set` (a real, justified edge), `justified-omit` (deliberately no edge, with a reason), or `blocked`. Each edge carries a provenance commit so drift from it is a *count*, not a guess (see [../../v0.1.0/33-maintenance.md](../../v0.1.0/33-maintenance.md)).
-- **The bundle is the Soll, the score is separate.** The architecture bundle carries the *structure*; the maintenance store carries the *score* taken against it. Keeping the two apart is what lets the structure be authored by hand and the score be measured in a fresh context.
+`repos/` is the one place in a project where git lives. It holds the project's repositories — and **only** the repositories — so that everything shareable is isolated behind an explicit boundary while the rest of the project stays local. This is the per-folder page for `repos/`; the rules it gathers are specified normatively in the chapters it links to.
 
 ---
 
-## The Entry Point — A Memo Must Find the Architecture, Never Rediscover It
+## One Domain Per Repository
 
-A memo that needs the architecture **MUST be able to find it through a single entry point**, rather than guessing a path or re-deriving the structure each time. This is the bottleneck principle: there is one door, and everything goes through it.
-
-- For an agent or a human, the door is the **wiki** ([30-wiki.md](./30-wiki.md)): the wiki indexes the architecture as one of the things it knows about, pointing at the bundle rather than copying it.
-- For deterministic code, the door is **`memo architecture locate`**: a thin resolver that reads the bundle and returns where it is, what nodes it holds, and which repos have no node yet. It replaces paths that would otherwise be repeated in prose across several skills — one resolver, consulted, instead of a convention re-guessed.
-
-The point of the single door is that the architecture's location stops being tribal knowledge embedded in each consumer and becomes a declared, resolvable fact.
+A repository under `repos/<name>/` is a **single-domain code unit**. A project is a coherent context that may hold several such repositories — one per domain — rather than a single repository carrying unrelated concerns. The project, not the repository, is the unit of organization (see [00-overview.md](./00-overview.md)); `repos/` is where that project's code is partitioned into domains, each its own git unit.
 
 ---
 
-## Presence Is Measured, Not Assumed
+## The Only Git Units in the Project
 
-Every project **SHOULD** store its architecture as a bundle, so that a memo always has the structural ground it needs. Whether it does is a **measured** property, in the same spirit as goal and maintenance scoring:
-
-- A **presence requirement** (advisory severity) states the expectation: the architecture is present as a bundle, and a memo can find it via the entry point. Advisory — not a blocker — because a project with no repositories has a trivial or empty architecture, and that is acceptable, not a failure.
-- The **wiki health check** flags absence at the moment it matters: `wiki-lint` runs automatically before a memo starts, so a project whose architecture bundle is missing is surfaced right there as a non-blocking warning. The check reports the *complete absence* of the bundle (and MAY report repos that exist with no node).
-
-Because the requirement is advisory and the check is non-blocking, presence becomes visible without becoming a gate — a project is reminded, never stopped.
+Every repository under `repos/` is its own git unit, and they are the **only** git units in the project. Neither the project root nor `.memo/` is a repository — that absence is the structural basis of the local guarantee ([11-project-structure.md](./11-project-structure.md)). The consequence is sharp: material that needs to be shared is placed in a repository under `repos/`, and material that must stay local is kept anywhere outside it. Pushing is therefore a deliberate act scoped to a single repository, never something that can sweep up the whole project.
 
 ---
 
-## Maintenance Keeps the Architecture Fresh
+## Each Repository Declares Its Facing
 
-Keeping the architecture current is one of maintenance's jobs, not a separate mechanism. The architecture bundle is itself a maintenance unit: each node pins its sources and edges to a commit, and the maintainer compares the **declared** architecture against the **real** one (`git log <pin>..HEAD`), flagging edges that have drifted from their pinned commit and edges that exist in reality but are absent or marked `justified-omit` in the node — the Soll itself can be stale. Re-verification re-stamps the provenance pin after a fresh-context check (see [../../v0.1.0/33-maintenance.md](../../v0.1.0/33-maintenance.md)). So the architecture is kept honest from two sides: the wiki flags absence when a memo starts, maintenance flags staleness and gaps periodically.
-
----
-
-## Internal Projects vs. Foreign Projects
-
-The complexity of the architecture **scales with the repositories**, and is not forced where it does not fit:
-
-| Project kind | Architecture bundle | Wiki |
-|--------------|---------------------|------|
-| **Internal** (a real multi-repo system with a clear target structure) | the default — repo nodes, edges, provenance | the entry point over everything |
-| **Foreign / research** (a sibling project that is mostly unstructured research, with little or no repo structure of its own) | not forced — minimal or empty is acceptable | the wiki alone carries the unstructured material |
-
-The advisory severity is what makes this work: a research-heavy foreign project that has no architecture bundle is flagged "no architecture", and for that kind of project the flag is an **accepted state**, not an error. The full architecture — edges, justified-omits, blast-radius — earns its cost only where repositories are genuinely interconnected.
-
----
-
-## OKF Is the Storage Format
-
-The architecture is stored as an **OKF knowledge bundle** ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)): one node document per repo (`type: repo` plus the role fields as extension keys), the edges declared in the body, all under `context/architecture-okf/`. OKF is named here only as the *encoding* — the concept above stands on its own, and a reader needs to understand "project architecture" without first understanding "OKF". The bundle directory keeps its `-okf` suffix as a file convention; the visible term for the concept is **project architecture**.
+A repository is classified **inward** or **outward** facing, and the classification is declared once in the project configuration ([22-config.md](./22-config.md)). The facing drives the coordination convention (rule C1): an **outward** repository routes coordination through public **Issues**; an **inward** repository routes it through the **memo ID**. The same `facing` attribute is the one the project-architecture bundle records per repository ([41-project-architecture.md](./41-project-architecture.md)), so a repository's role is stated in one vocabulary and read consistently by both the configuration and the architecture graph.
 
 ---
 
 ## Related
 
-- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the storage format the architecture (and the wiki) is encoded in.
-- [30-wiki.md](./30-wiki.md) — the wiki as the entry point that indexes the architecture among everything else.
-- [../../v0.1.0/33-maintenance.md](../../v0.1.0/33-maintenance.md) — maintenance scores the architecture bundle as a unit and keeps its provenance pins fresh.
-- [../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md) — the requirements layer the advisory presence requirement is expressed in.
-- [11-project-structure.md](./11-project-structure.md) — `context/` as the primary immutable source, where the bundle lives.
+- [11-project-structure.md](./11-project-structure.md) — the local guarantee: `repos/` as the only sanctioned home for shareable code.
+- [12-folders.md](./12-folders.md) — the folder contract this page is the registered entry for.
+- [22-config.md](./22-config.md) — the `facing` declaration and rule C1.
+- [41-project-architecture.md](./41-project-architecture.md) — the repositories as nodes in the project's architecture graph.
+
+---
+
+# 16. The `context/` Folder
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [11-project-structure.md](./11-project-structure.md), [12-folders.md](./12-folders.md) |
+| Related | [10-root-and-projects.md](./10-root-and-projects.md), [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [30-wiki.md](./30-wiki.md), [41-project-architecture.md](./41-project-architecture.md) |
+
+`context/` is the project's store of **processed, authored knowledge** — the specifications, distilled research, and Markdown or PDF documents a memo draws on. It is the worked, readable side of a project's information, kept apart from raw input and from generated machinery. This is the per-folder page for `context/`; the distinctions it gathers are specified in the chapters it links to.
+
+---
+
+## Processed, Not Raw
+
+`context/` holds **processed** material; raw feeds and dumps live in the optional `data/` folder. The split is by state of processing — `data/` is the input side, `context/` is the worked result produced from it (and from elsewhere). Keeping them apart stops raw dumps from polluting the readable research store; the full distinction is in [12-folders.md](./12-folders.md).
+
+---
+
+## The Primary, Immutable Source
+
+`context/` is a project's **primary, immutable source**: the durable ground that memos and generated bundles are distilled *from*, never a derivative that can be regenerated. Because the project root is local ([11-project-structure.md](./11-project-structure.md)), the contents of `context/` stay on the machine by construction — which is exactly why sensitive, half-formed research can live here safely. A generated artifact (a wiki page, an architecture bundle) is a *presentation* of this source and never a replacement for it.
+
+`context/` also exists at two scopes: the **global** `context/` at the workbench root holds cross-project standards, while a project's `context/` holds documents specific to it. A document must sit at the level at which it applies (see [10-root-and-projects.md](./10-root-and-projects.md)).
+
+---
+
+## A Folder Speaks Its Own Domain Language
+
+Different folders carry different **domain languages**, and `context/` is where several of them live as sub-folders rather than being merged into one format. The project architecture is stored under `context/architecture-okf/` in OKF ([41-project-architecture.md](./41-project-architecture.md), [13-knowledge-format-okf.md](./13-knowledge-format-okf.md)); other distilled research sits alongside it as plain Markdown. The workbench does not force one universal schema onto everything — it **separates by folder** and lets each sub-domain keep the convention that fits it. The layer that unifies these separated domains for retrieval is the wiki, which indexes across them as the project's search entry point ([30-wiki.md](./30-wiki.md)).
+
+---
+
+## Related
+
+- [12-folders.md](./12-folders.md) — `data` (raw) vs. `context` (processed), and the folder contract this page is the registered entry for.
+- [11-project-structure.md](./11-project-structure.md) — `context/` as the primary immutable source kept local.
+- [10-root-and-projects.md](./10-root-and-projects.md) — the global vs. project `context/` distinction.
+- [30-wiki.md](./30-wiki.md) — the wiki as the search layer that indexes across `context/`.
+- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the convention used by the architecture bundle under `context/`.
+
+---
+
+# 17. The `.memo/` Folder
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [11-project-structure.md](./11-project-structure.md), [12-folders.md](./12-folders.md) |
+| Related | [26-addons.md](./26-addons.md), [../../v0.1.0/06-memo-structure.md](../../v0.1.0/06-memo-structure.md), [../../v0.1.0/02-memo-sop-entrypoint.md](../../v0.1.0/02-memo-sop-entrypoint.md) |
+
+`.memo/` is the on-disk footprint of the **memo system** — the workbench's weightiest add-on, and its recommended default mode of working ([26-addons.md](./26-addons.md)). This is the per-folder page for `.memo/`: it specifies the folder's *role* and *top-level layout* in the workbench. The memo *lifecycle* — input, revisions, questions, phases, rollout — is the subject of the core specification ([../../v0.1.0/06-memo-structure.md](../../v0.1.0/06-memo-structure.md)) and is not restated here.
+
+---
+
+## The Footprint of an Add-On
+
+`.memo/` is the data area the memo-system add-on reserves in a project, in the pattern every add-on follows: the tool is provided globally, and its per-project working data is written under a declared folder ([26-addons.md](./26-addons.md)). Its dot prefix marks it as generated, local machinery — and because the project root is local, `.memo/` is **never a git repository** and its contents never leave the machine ([11-project-structure.md](./11-project-structure.md)). The memo system is the recommended default, which is why a real project almost always carries `.memo/`; the workbench *core*, however, does not depend on it ([12-folders.md](./12-folders.md)).
+
+---
+
+## Top-Level Layout
+
+`.memo/` separates the **memos** from the **shared stores** they draw on. Memos live under `.memo/memos/`, one directory per memo; the stores sit directly under `.memo/`, independent of any single memo:
+
+| Path | Holds |
+|------|-------|
+| `memos/<NNN-slug>/` | One memo each — its revisions, topics, context, transcripts, validation, and rollout working files. |
+| `_requirements/` | The requirements store — registry, schema, and reports. |
+| `_references/` | Shared reference material cited across memos. |
+| `transcripts/` | Staged input transcripts before they become a memo or a revision. |
+| `chronic/` | The narrated chronicle — a flat, append-only record across memos. |
+| `plans/` | Plans, each composed of one or more finalized memos. |
+| `strands/` | Emergent cross-memo strands. |
+| `_archive/` | Frozen legacy material that predates the current numbering. |
+| `config.json` | The project's memo configuration, including its branch/ID prefix. |
+
+The canonical layout places memos under `.memo/memos/<NNN-slug>/`; a flat legacy layout (`<NNN-slug>/` directly under `.memo/`) **MAY** still be read for backward compatibility but is not the target for new memos.
+
+---
+
+## Related
+
+- [26-addons.md](./26-addons.md) — the add-on model `.memo/` is the heaviest instance of.
+- [11-project-structure.md](./11-project-structure.md) — why `.memo/` is never a git repository.
+- [12-folders.md](./12-folders.md) — the folder contract and the core-vs-add-on split this page is the registered entry for.
+- [../../v0.1.0/06-memo-structure.md](../../v0.1.0/06-memo-structure.md) — the memo structure and lifecycle the core specification owns.
+- [../../v0.1.0/02-memo-sop-entrypoint.md](../../v0.1.0/02-memo-sop-entrypoint.md) — the memo SOP entry point.
+
+---
+
+# 18. The `design/` Folder & the DESIGN.md Convention
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [12-folders.md](./12-folders.md) |
+| Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [23-hooks-contract.md](./23-hooks-contract.md), [30-wiki.md](./30-wiki.md) |
+
+`design/` is the optional, project-level folder that holds a project's **design system** and its visual sources. Its content follows a named convention — **DESIGN.md** — in the same way the architecture folder's content follows OKF. This chapter specifies the folder and the convention together: `design/` is the registered home, and DESIGN.md is the standard its primary file is written to.
+
+---
+
+## What DESIGN.md Is
+
+DESIGN.md is a **design-system format**: a single Markdown file that captures the foundation a design rests on — its colors, typography, icons, elevation, shapes, and the do's and don'ts that govern their use — as YAML design tokens plus a set of canonical prose sections. It is deliberately Markdown rather than JSON, so the design system is readable and reviewable in the same medium as the rest of a project's authored knowledge, and so an agent can consume it as plain text. A small command-line surface (lint, diff, export, and a schema command) operates on the file; the export path emits to interchange targets rather than locking the tokens into one renderer.
+
+DESIGN.md is an external, open format (Apache-2.0). The name collides with an unrelated convention in another tool that uses a lowercase `design.md` for software architecture; in this spec, **DESIGN.md is the visual design system** and the architecture is a separate concern ([41-project-architecture.md](./41-project-architecture.md)).
+
+---
+
+## `design/` Is a Convention Folder
+
+`design/` is **optional**, carries **no dot** (it holds authored, user-facing content, like `proofs/` and `snapshots/`), and lives at the **project level** — design is per-project, not a cross-project shared tool. The folder holds:
+
+- **`DESIGN.md`** — the active design-system convention for the project.
+- **Variants** — alternative design directions kept side by side as separate files, the way several designs are explored in folders rather than overwriting one.
+- **`.pen` and visual sources** — the wireframes and mockups the design is drawn in.
+
+The folder is a registered, optional entry in the contract ([12-folders.md](./12-folders.md)); a project adds it when it does design work and omits it otherwise.
+
+---
+
+## Foundation and Reference
+
+A project's design surface has two layers, and DESIGN.md occupies the first:
+
+- **DESIGN.md is the foundation** — the design *system*: the tokens and rules that everything else is derived from.
+- **The `.pen` files, HTML, and screenshots are the reference** — the concrete *visuals* that show the system applied. Captured view proofs live in `proofs/` ([12-folders.md](./12-folders.md)).
+
+Skills stack **on top of** this foundation rather than replacing it: a design-generation or design-diff skill reads DESIGN.md as the foundation and produces or checks the visual reference against it. The layering is additive — the foundation is authored once, and the visual references and skills build on it.
+
+---
+
+## Adoption Without Schema Lock-In
+
+DESIGN.md addresses a real problem — design drift when several agents touch a project's UI without a shared source of truth — with a flat, readable format that exports to neutral interchange targets (W3C Design Token Community Group format, and Tailwind), so adopting it does **not** lock a project into one toolchain. Its risks are equally real: the underlying token schema is still `alpha`, the format does not enforce itself, documentation can drift from the implementation, and carrying it adds token cost.
+
+The workbench's position is to **adopt the pattern, governed, without binding to the schema**. DESIGN.md is treated as the project's first design **convention** — the named standard `design/` follows today — and an explicitly *replaceable* one: if the format is superseded, the folder and its role survive and the convention is swapped, exactly as any convention can be. The value adopted is the *discipline* (a declared, single design foundation), not a permanent commitment to one evolving external schema.
+
+---
+
+## SOP-Native Governance
+
+`design/` is governed the way every good registered folder is, rather than left as an inert file:
+
+- **Declared.** It is a registered folder with this chapter as its contract.
+- **Checked on write.** A write-time lint can validate a DESIGN.md against the convention (its frontmatter and required sections) at the moment it is written, the same mechanism applied to other folders' content ([23-hooks-contract.md](./23-hooks-contract.md)).
+- **Findable.** The wiki indexes `design/` among the project's domains, so the design system is discoverable alongside everything else ([30-wiki.md](./30-wiki.md)).
+
+The **spec comes first**: the folder and convention are defined here before any design-specific skill is built. A dedicated setup skill for `design/` is a later, separate step and is not part of this contract.
+
+---
+
+## Related
+
+- [12-folders.md](./12-folders.md) — the folder contract and the convention model `design/` is a registered, optional instance of.
+- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the sibling convention for the architecture and wiki folders.
+- [23-hooks-contract.md](./23-hooks-contract.md) — the write-time lint that can check a DESIGN.md against its convention.
+- [30-wiki.md](./30-wiki.md) — the wiki as the search layer that indexes `design/`.
 
 ---
 
@@ -5837,9 +6081,91 @@ The **folder name is the unit of meaning**. This connects to the About conventio
 
 ---
 
+## Runtime Call-Validation — the "After" Measurement
+
+Beyond defining the command convention, the workbench CLI provides one capability that is itself a leaf of the command tree: **runtime call-validation**. It is the **"after" half** of checkability — the counterpart to the entry-point pre-condition, which is the "before" half ([23-hooks-contract.md](./23-hooks-contract.md)). Once a session has run, the CLI inspects what was recorded and measures **which skills and tools were actually invoked**, answering questions a pre-hook cannot answer in advance — most importantly, **"was the SOP actually read this session?"**. A pre-hook gates the call; this measures, after the fact, what really happened.
+
+### Where Sessions Live
+
+The measurement reads the session transcripts Claude Code writes to disk:
+
+- **Main session:** `~/.claude/projects/<project-slug>/<session-uuid>.jsonl`.
+- **Sub-agents:** `<session-uuid>/subagents/agent-<agent-id>.jsonl`, each with a `.meta.json` sidecar.
+
+Both levels log `Skill` tool-use entries and tool calls, so a skill loaded in a sub-agent is visible too. (No `SubagentStop` hook is assumed; the transcript files are the source.)
+
+### Three Signals That a Skill Ran
+
+Whether a given skill (for example the SOP) ran is **deterministically detectable post-hoc** from three greppable signals in a transcript:
+
+1. A `Skill` tool-use entry naming the skill (`"skill": "<name>"`).
+2. A `Base directory …/skills/<name>` line emitted when the skill loads.
+3. An attribution field recording the active skill.
+
+Any one signal is evidence the skill ran; their absence across a session is evidence it did not.
+
+### The Workbench Registry — the "What to Search"
+
+The CLI does not hardcode what to look for; it reads a project's **`.workbench/registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)). The registry lists the SOPs, skills, and add-ons that *could* be used, each with the signals that prove it was:
+
+```jsonc
+// .workbench/registry.json — the "what to search": every searchable skill / add-on / requirement
+{
+  "skills": [
+    { "id": "<skill-id>", "role": "orchestrator | component",
+      "signals": ["skill:<skill-id>", "path:/skills/<skill-id>", "attributionSkill:<skill-id>"] }
+  ],
+  "addons": [
+    { "name": "<addon>", "cli": "<addon-cli>", "signals": ["bash:<addon-cli> ", "skill:<usage-skill>"] }
+  ],
+  "requirements": [
+    { "id": "<requirement-id>", "entrypoint": "<entry-point>", "requires": "<skill-id>", "when": "pre | post" }
+  ]
+}
+```
+
+### The Matrix — the CLI's Structured Output
+
+Given a set of session IDs and the registry, the CLI scans the transcripts and returns a **structured matrix**: per session, which registered skill or add-on was used, with the evidence that proves it. The output is machine-readable, in the manner of the existing CLI JSON envelopes:
+
+```jsonc
+{
+  "session": "<session-uuid>",
+  "matrix": [
+    { "id": "<sop-skill>", "kind": "skill", "used": true,  "evidence": "skill:<sop-skill> @ <uuid>.jsonl:<line>" },
+    { "id": "<addon>",     "kind": "addon", "used": false, "evidence": null }
+  ]
+}
+```
+
+### The Memo ↔ Workbench Split
+
+The validation is split across the two systems by what each one *knows*. The memo system knows **which** sessions exist and what their use **means**; the workbench knows **what** can be searched for:
+
+| Step | Who | Detail |
+|------|-----|--------|
+| 1. Collect the session IDs | **Memo** | the memo agent knows the sub-agents it spawned and their IDs. |
+| 2. Hand the IDs over | Memo → Workbench CLI | — |
+| 3. Hold the registry of possibilities | **Workbench** | the `.workbench/registry.json` — the "what to search". |
+| 4. Search signals, build the matrix | **Workbench CLI** | takes the IDs and the registry, scans the transcripts, returns the structured matrix. |
+| 5. Interpret the matrix | **Memo** | checks the matrix against requirements and intent. |
+
+So **the memo collects IDs and interprets; the workbench holds the registry, searches the signals, and builds the matrix.** The division follows from knowledge: the workbench "knows all tools and SOPs", so it owns the *what-to-search*; the memo system carries the *which-sessions* and the *meaning*. A per-memo-scoped system interprets a project-wide matrix because interpretation is an **intent/requirements** check — only the memo system holds the requirements and the memo context. The workbench returns an already-matched, structured matrix; the memo reads it as a dataset, so the scope boundary is preserved.
+
+### Requirements on Top
+
+Because the matrix is a structured fact, **post-hoc requirements** can be expressed against it — for example, "the init entry point may run only if the SOP was read this session". This is the after-the-fact counterpart of the entry-point pre-condition ([23-hooks-contract.md](./23-hooks-contract.md)) and is registered like any other validation family ([25-validation-overview.md](./25-validation-overview.md)).
+
+> **Spec now, build deferred.** This chapter fixes the path schema, the registry shape, the matrix output, and the memo-vs-workbench split. Building the workbench CLI leaf and the memo-side ID-collection/interpretation is a later, separate step.
+
+---
+
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.
+- [23-hooks-contract.md](./23-hooks-contract.md) — the entry-point pre-condition, the "before" half this measurement complements.
+- [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
+- [25-validation-overview.md](./25-validation-overview.md) — the validation wayfinder where runtime call-validation is registered.
 - [21-environment-scripts.md](./21-environment-scripts.md) — the script families that follow the subfolder rule.
 - [30-wiki.md](./30-wiki.md) — the About convention that records what a scripts subfolder is for.
 
@@ -5909,7 +6235,7 @@ These checks **categorize** the workbench state rather than building anything. T
 |---|---|
 | Status | Draft |
 | Depends on | [12-folders.md](./12-folders.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
-| Related | [23-hooks-contract.md](./23-hooks-contract.md), [14-project-architecture.md](./14-project-architecture.md) |
+| Related | [23-hooks-contract.md](./23-hooks-contract.md), [41-project-architecture.md](./41-project-architecture.md) |
 
 A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository as inward- or outward-facing, and it is the **single source** from which deterministic enforcement (notably hooks) is derived. This chapter specifies what the configuration holds and the principle by which other things are derived from it.
 
@@ -5932,7 +6258,18 @@ The core content of the configuration is a per-repository **facing** classificat
 | **inward** | Local-only; never pushed to a public remote. Coordination and references use the memo ID. |
 | **outward** | Published to a public remote. Coordination and references use GitHub Issues. |
 
-The `facing` attribute is the same field the project-architecture knowledge bundle records for a repository (see [14-project-architecture.md](./14-project-architecture.md)); the configuration is where a project **declares** it. The classification drives a concrete downstream rule — the workbench's egress convention (rule C1): an **outward** repository routes coordination through **Issues**, an **inward** repository through the **memo ID**. Stating `facing` once is what lets that rule be applied consistently and, where desired, enforced.
+The `facing` attribute is the same field the project-architecture knowledge bundle records for a repository (see [41-project-architecture.md](./41-project-architecture.md)); the configuration is where a project **declares** it. The classification drives a concrete downstream rule — the workbench's egress convention (rule C1): an **outward** repository routes coordination through **Issues**, an **inward** repository through the **memo ID**. Stating `facing` once is what lets that rule be applied consistently and, where desired, enforced.
+
+---
+
+## Beyond Facing — Other Declared Files
+
+The facing classification is the configuration's core, but `.workbench/` is the home for the project's **declarations** generally — the same single-source principle applies to anything a tool or hook needs to read deterministically. Two other files are specified today:
+
+- **`folder-lints.json`** — the project-local map that drives the write-time content lint: each entry binds a folder and filename pattern to a linter and a severity, and a single global hook consumes the map ([23-hooks-contract.md](./23-hooks-contract.md)).
+- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): the list of skills, add-ons, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](./20-cli.md)).
+
+Like the facing configuration, both are **manual** — never silently generated or overwritten.
 
 ---
 
@@ -5948,7 +6285,7 @@ The principle is the division of responsibility introduced in [02-sop-entrypoint
 
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract that consumes this configuration.
 - [12-folders.md](./12-folders.md) — `.workbench/` as the optional folder that holds this configuration.
-- [14-project-architecture.md](./14-project-architecture.md) — `facing` as a recorded repository attribute.
+- [41-project-architecture.md](./41-project-architecture.md) — `facing` as a recorded repository attribute.
 
 ---
 
@@ -5997,6 +6334,73 @@ A hook is a `PreToolUse` gate: it fires **before** a tool runs and decides wheth
 
 ---
 
+## Write-Time Content Linting
+
+The contract above gates a tool by *policy decision* — "may this run?". A second, complementary use of the same `PreToolUse` surface gates a write by **content**: it inspects what is about to be written and rejects content that violates a folder's convention **before** it lands. This is the workbench's first-line **data-quality gate** — bad content is stopped at the moment of writing rather than found later.
+
+- **Matcher.** `Write|Edit` — the hook fires before a file is created or modified.
+- **Input.** The hook reads `tool_input` — for a `Write`, the full `tool_input.content` and the target path; for an `Edit`, the diff being applied.
+- **Policy is project-local, the mechanism is global.** The *what-to-check* lives in the project under `.workbench/` as a `folder-lints.json` map ([22-config.md](./22-config.md)); the *how-to-check* is one global hook that reads that map. Each entry binds a folder to a linter:
+
+```jsonc
+// .workbench/folder-lints.json — project-local policy; one global hook consumes it
+{
+  "lints": [
+    { "folder": "design/",  "pattern": "DESIGN.md", "linter": "design-frontmatter", "severity": "error" },
+    { "folder": "context/", "pattern": "*.md",       "linter": "untrusted-banner",   "severity": "warn" }
+  ]
+}
+```
+
+An entry is `{ folder, pattern, linter, severity }`: which folder and filename pattern the rule covers, which linter validates the content, and whether a failure blocks (`error`) or only warns (`warn`).
+
+### Honest Limits
+
+The write-lint is a genuine improvement, not a perimeter, and its boundaries are stated plainly so it is not mistaken for one:
+
+- It gates **only Claude tool writes** (`Write`, `Edit`). Content written by `cp`, `mv`, an external process, or a tool's own database writes is **not** seen by the hook.
+- On an `Edit`, the hook sees **only the diff**, not the resulting whole file, so a whole-file invariant can be enforced only on a full `Write`.
+- A shell **redirection** (`> file`) bypasses the hook entirely, because it is not a `Write`/`Edit` tool call.
+
+These limits are why the write-lint is a *first-line* gate paired with after-the-fact runtime validation, not a substitute for it.
+
+---
+
+## Entry-Point Pre-Conditions
+
+An **entry point** — a public skill such as `memo-init`, `memo-finalize`, or `memo-plan` — is where work *enters* the system, and it is exactly where a pre-condition should be checked: a `PreToolUse` hook with a `Skill` matcher fires **before** the entry point runs and can refuse it when its pre-conditions are not met. Because every skill is invoked through one generic `Skill` tool, a single matcher form (`Skill(<name>)`) can gate any named entry point.
+
+This is the **"before" half** of checkability: the gate runs *before* the action. Its "after" counterpart — measuring, from the transcript, which skills actually ran — is the runtime call-validation specified in [20-cli.md](./20-cli.md).
+
+**Two equivalent ways for a hook to block**, both already part of the consuming-side contract:
+
+```jsonc
+// (a) Exit-code path: write the reason to stderr and exit 2 → the call is blocked
+//     stderr: "memo-finalize refused: quality gates have not run (pre-condition)."
+//     exit 2
+
+// (b) JSON path (structured, preferred): stdout JSON drives the decision
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",            // "allow" | "deny" | "ask"
+    "permissionDecisionReason": "memo-finalize: quality gates have not run"
+  }
+}
+```
+
+**A pre-condition catalog** the contract makes expressible (the conditions are illustrative; detecting "did X run this session" is by transcript inspection, above):
+
+| Entry point | Pre-condition | Reaction |
+|-------------|---------------|----------|
+| `memo-init` | input processing has run; the memo does not already exist | ask / deny |
+| `memo-finalize` | the quality gates have run; the trigger is the user, not an autonomous step | ask |
+| `memo-plan` | a finalized memo exists; plan integrity holds | deny when no memo |
+
+A pre-condition belongs at the entry point because an entry point is a **public method** of the system — the surface through which input, and therefore contamination, enters. Validating there is what keeps the interior clean; the principle is developed in [24-skills-scope.md](./24-skills-scope.md).
+
+---
+
 ## The 70/30 Split
 
 Hooks do not replace model judgment; they bound it. The realistic division:
@@ -6025,7 +6429,10 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ## Related
 
-- [22-config.md](./22-config.md) — the `.workbench/` configuration a hook reads.
+- [25-validation-overview.md](./25-validation-overview.md) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.
+- [22-config.md](./22-config.md) — the `.workbench/` configuration a hook reads, including `folder-lints.json`.
+- [18-design.md](./18-design.md) — a folder whose content (`DESIGN.md`) the write-lint can check.
+- [20-cli.md](./20-cli.md) — the runtime call-validation, the "after" counterpart of the entry-point pre-condition.
 - [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the level boundary and the deferred machine-tier spec.
 - [21-environment-scripts.md](./21-environment-scripts.md) — health checks, the other deterministic workbench verification.
 
@@ -6056,6 +6463,8 @@ A workbench skill is an instance of the common SOP denominator ([the SOP common 
 
 Organizing workbench skills this way means a reader who knows the SOP standard already knows the shape of the workbench skill set: it is Setup/Health/Update plus the workbench's own extras, not an ad-hoc collection.
 
+The same four-part frame generalizes beyond workbench skills to **every add-on**: each add-on's SOP is Setup/Health/Update plus its own tool-specific Extras, scaled to the add-on's weight ([26-addons.md](./26-addons.md)).
+
 ---
 
 ## Where the Existing Capabilities Fall
@@ -6071,11 +6480,209 @@ The memo-toolkit capabilities are loaded **dynamically** (progressive disclosure
 
 ---
 
+## Orchestrators and Components
+
+Workbench and add-on skills split into two roles, by analogy with a class that has public and private methods:
+
+| Role | Analogy | Visibility |
+|------|---------|------------|
+| **Orchestrator** | a class's **public method** | A user-facing entry point that defines a flow and is invoked from outside. |
+| **Component** | a class's **private method** | A reusable building block called *by* orchestrators, not directly by the user. |
+
+A **component** is a part used in several places rather than a standalone entry point — research is the clearest example, reused at multiple points in the memo lifecycle. Components exist today only implicitly; naming the role makes the structure explicit. A skill declares its role in frontmatter:
+
+```yaml
+role: orchestrator   # a user-facing entry point
+# or
+role: component      # a reusable building block, not in the user-callable catalog
+```
+
+A skill marked `role: component` is **taken out of the user-callable catalog**: it is private by default, the same posture as a class method that is private unless deliberately exposed. The default is private; an orchestrator is the deliberate exception that is made public.
+
+---
+
+## The Public-Method Validation Boundary
+
+Why the orchestrator/component split matters is a **systems** argument, stated by analogy with a class:
+
+> A class is a system. Input — and therefore **contamination** — enters through its **public methods**. So the public methods must be **validated**. That is how you build an engine with no internal problems.
+
+The consequences are concrete:
+
+- Validation belongs at the **public entry points** (the orchestrators), because that is the one surface through which outside input enters. Components, being internal, are not called from outside and do not carry the same boundary check.
+- The check is on **content, not only types** — not just "is this the right shape?" but "**does this make sense?**". Type-checking the input is necessary and not sufficient.
+- **The stricter the public methods, the calmer the interior.** Rigor at the boundary is what lets the inside of the system relax; a lax boundary pushes defensive checks into every internal step.
+
+This is the same boundary the two checkability mechanisms act on: the **entry-point pre-condition** checks it *before* the call ([23-hooks-contract.md](./23-hooks-contract.md)), and the **runtime call-validation** measures it *after* ([20-cli.md](./20-cli.md)). The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
+
+---
+
 ## Related
 
+- [26-addons.md](./26-addons.md) — the add-on model the Setup/Health/Update/Extras frame generalizes to.
+- [23-hooks-contract.md](./23-hooks-contract.md) — the entry-point pre-condition that guards a public method *before* the call.
+- [20-cli.md](./20-cli.md) — the runtime call-validation that measures the boundary *after* the call.
 - [The SOP common denominator](/sop/common-denominator/) — the Setup/Health/Update standard these skills realize.
 - [21-environment-scripts.md](./21-environment-scripts.md) — the health checks the audit skill performs.
 - [31-browser-automation.md](./31-browser-automation.md) — the project-level browser-automation method.
+
+---
+
+# 25. Validation Overview
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [23-hooks-contract.md](./23-hooks-contract.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
+| Related | [22-config.md](./22-config.md), [20-cli.md](./20-cli.md), [21-environment-scripts.md](./21-environment-scripts.md), [32-trash.md](./32-trash.md) |
+
+> **Informative.** This chapter is a **wayfinder**: it gathers the workbench's validation rules in one place and points at the chapter where each is specified. It introduces no new rule of its own — every entry below is normative *there*, not here.
+
+The workbench's checks are deliberately spread across the chapters they belong to — the hook contract, the configuration, the trash policy, the scripts. That keeps each rule next to the thing it governs, but it makes the *set* of rules hard to see. This page is the index that makes the set visible: a reader who asks "what does the workbench actually validate, and where is it defined?" starts here and follows the link. The pattern mirrors a published rule-registry — a stable family name on the left, the defining chapter on the right.
+
+---
+
+## The Validation Families
+
+Each family has a stable name (the wayfinder handle), a short statement of what it checks, **when** it fires relative to the action, and the chapter that specifies it.
+
+| Family | Checks | When | Defined in |
+|--------|--------|------|------------|
+| `WRITE-LINT` | Content matches the target folder's convention before it is written | before (on `Write`/`Edit`) | [23-hooks-contract.md](./23-hooks-contract.md) |
+| `ENTRY-PRE` | An entry point's pre-conditions are met before it runs | before (on `Skill`) | [23-hooks-contract.md](./23-hooks-contract.md) |
+| `RUNTIME-VAL` | Which skills and tools actually ran this session | after (from the transcript) | [20-cli.md](./20-cli.md) |
+| `EGRESS-C1` | Inward routes through the memo ID, outward through Issues | on coordination / push | [22-config.md](./22-config.md), [11-project-structure.md](./11-project-structure.md) |
+| `TRASH` | Deletion routes through `.trash/` rather than a hard delete | on delete | [32-trash.md](./32-trash.md) |
+| `HEALTH` | Project structure and global-tool reachability | on demand / before a memo | [21-environment-scripts.md](./21-environment-scripts.md) |
+| `DEPWATCH` | A dependency is safe before it is installed | before install | [00-overview.md](./00-overview.md) |
+
+A second group of rules is **declared** by the workbench but **enforced at the machine tier**, whose hook scripts are out of scope for this spec ([02-sop-entrypoint.md](./02-sop-entrypoint.md)). They are listed so the wayfinder is complete:
+
+| Family | Checks | When | Declared by |
+|--------|--------|------|-------------|
+| `ENV-GUARD` | A write to a `.env` file is refused | before (on `Write`/`Edit`) | [23-hooks-contract.md](./23-hooks-contract.md) |
+| `NO-DESTRUCT` | A destructive shell command is rewritten or refused | before (on `Bash`) | [23-hooks-contract.md](./23-hooks-contract.md) |
+| `ATTRIB-GUARD` | A commit message carries no unapproved AI-attribution trailer | before a commit | [23-hooks-contract.md](./23-hooks-contract.md) |
+
+---
+
+## Severity
+
+A validation family blocks or warns; the two outcomes are kept distinct so a warning is never silently treated as a hard stop:
+
+- **block** — the action is refused (`exit 2` or `permissionDecision: "deny"`). Structural, high-risk rules use this: `ENTRY-PRE` on a missing prerequisite, `ENV-GUARD`, `NO-DESTRUCT`, `EGRESS-C1` on an inward push.
+- **warn** — the action proceeds, but a finding is surfaced. Advisory rules use this: a `HEALTH` finding, a `WRITE-LINT` entry whose severity is `warn`.
+
+The severity of a configurable rule (notably `WRITE-LINT`) is set per entry in `.workbench/folder-lints.json` ([22-config.md](./22-config.md)); the structural rules are block by nature.
+
+---
+
+## Hub and Detail
+
+This page is the **hub**; each family's chapter is the **detail**. The contract for the hook-based families — their inputs, their two block paths, the transcript-inspection rule — is specified once in [23-hooks-contract.md](./23-hooks-contract.md), and the families that are not hooks (`TRASH`, `HEALTH`, `EGRESS-C1`, `DEPWATCH`) point at their own chapters. Adding a new validation rule means specifying it in its chapter **and** giving it a row here, so the set never silently grows beyond what this wayfinder lists.
+
+---
+
+## Related
+
+- [23-hooks-contract.md](./23-hooks-contract.md) — the contract for every hook-based family, and the hub for the "before" and "after" checkability mechanisms.
+- [20-cli.md](./20-cli.md) — the runtime call-validation (`RUNTIME-VAL`), the "after" measurement.
+- [22-config.md](./22-config.md) — `.workbench/` policy, including `folder-lints.json` severities.
+- [32-trash.md](./32-trash.md) — the trash-routing rule.
+- [21-environment-scripts.md](./21-environment-scripts.md) — the health checks.
+
+---
+
+# 26. The Add-On Model
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [12-folders.md](./12-folders.md), [24-skills-scope.md](./24-skills-scope.md) |
+| Related | [22-config.md](./22-config.md), [20-cli.md](./20-cli.md), [25-validation-overview.md](./25-validation-overview.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
+
+An **add-on** is a tool that plugs into the workbench: it is provided globally, it reserves a small declared area inside a project, and it follows a common SOP so that every add-on is operated the same way. This chapter specifies the add-on model — where an add-on may write, the SOP it follows, its standard entry points, and the relationship between its CLI and its skill. The taxonomy that distinguishes an add-on (a tool) from a convention (a content format) is in [12-folders.md](./12-folders.md).
+
+---
+
+## The Memo System Is the Weightiest Add-On
+
+The single, authoritative statement about the memo system's place is made here, so it is not repeated inconsistently elsewhere: **the memo system is an add-on — the weightiest, recommended one.** There is **one** add-on model for every tool; the memo system is not a conceptual special case, only a heavier instance of the same model. It is the recommended default way of working, which is why a real project almost always carries it, but the workbench *core* does not depend on it ([12-folders.md](./12-folders.md)). Other chapters that touch this — the folder split, the SOP signpost — point **here** rather than restating it.
+
+---
+
+## Tool Global, Data Project-Bound
+
+The defining tension an add-on resolves is that the **tool is global** while its **data is project-bound**. The model holds both at once:
+
+- **Declaration and policy** go into the project's `.workbench/` area — a tool **MAY** reserve a small descriptor there for its project-specific configuration ([22-config.md](./22-config.md)).
+- **Work data** goes into the project's existing content folders — `data/` for raw input, `context/` for processed material ([12-folders.md](./12-folders.md)) — and, as the normal mode, flows **through the memo system** rather than into a private store.
+- An add-on **MUST NOT** claim its own new top-level project folder for its data; the registered-folder contract flags an unexpected top-level entry for review ([12-folders.md](./12-folders.md)).
+
+The reservation is for *configuration and the specific*, not for bulk data. This also bounds what can be checked: the effective lint surface for an add-on is its small `.workbench/` descriptor, **not** the gigabytes of data a tool may keep in its own global store. A tool needs an area to differing degrees — the memo system needs one for certain, a lighter tool may need only a descriptor or none.
+
+---
+
+## The Add-On Landscape
+
+Add-ons span a wide size range, and the model is not forced uniformly onto all of them — the weight of the add-on sets how much SOP it needs:
+
+| Add-on | Weight | Data | Custom steps |
+|--------|--------|------|--------------|
+| **memo system** | heaviest | `.memo/` + `context/` | the full memo lifecycle |
+| **FlowMCP** | very large | global store (`~/.flowmcp/`, multi-GB) | search/list → call; many provider keys |
+| **get-sheet** | medium | two-tier config | unlock → upload → format |
+| **depwatch** | small/medium | global | gate before an install |
+| **ytAi** | small | none (stdout only) | one command |
+
+A heavy add-on earns a deep SOP with real Setup, Health, Update, and several Extras; a one-command tool needs little more than a single entry point. The point is one frame at all sizes, scaled to weight — not a separate model per tool.
+
+---
+
+## The Per-Add-On SOP
+
+Every add-on follows the same four-part SOP — the common denominator the workbench skills already use ([24-skills-scope.md](./24-skills-scope.md)):
+
+| Part | For an add-on |
+|------|---------------|
+| **Setup** | Bring the add-on into its expected state for a project (link the CLI, write the `.workbench/` descriptor). |
+| **Health** | Report whether the add-on is correctly installed and reachable, and whether its declared state is intact. |
+| **Update** | Roll a central improvement to the add-on out to the projects that consume it. |
+| **Extras** | The tool-specific capabilities — the only part that differs between add-ons. |
+
+The **frame is identical** across add-ons; only the Extras are tool-specific. The integration between an add-on and the workbench falls into a few recurring **cascades** — *data* (where its material lands), *gate* (a check it enforces, such as a pre-install gate), *config* (what it declares in `.workbench/`), and *knowledge* (what it contributes to the wiki). Naming the cascade kind makes an add-on's footprint predictable.
+
+---
+
+## Standard Entry Points — Health and Migrate
+
+Two entry points are **normalized across all add-ons** so that tooling can drive any add-on without special-casing it:
+
+- **Health** — a uniform "is this add-on in order?" check.
+- **Migrate** — a uniform "bring this add-on's project data to the current shape" step (for many add-ons this slot is currently empty; that is acceptable).
+
+Existing tools expose these under divergent names (`memo health`, `flowmcp status`, `getsheet info`, `depwatch session`). Those names are kept as **aliases** of the standard entry points; the normalization is to a common vocabulary, and renaming an existing tool is deliberately **deferred** rather than forced now.
+
+---
+
+## CLI Is the Standard Entry, the Skill Orchestrates
+
+An add-on is reachable two ways, with a clear division of labor:
+
+- The **CLI** (`<tool> health`, `<tool> migrate`) is the **standard entry point** — deterministic, machine-checkable, and **greppable**. Because the call is a plain command, an after-the-fact validator can detect from the transcript that it ran ([20-cli.md](./20-cli.md), [25-validation-overview.md](./25-validation-overview.md)).
+- The **skill** is the **orchestrator** above it — the AI-facing entry point that sequences steps, asks the right questions, and calls the CLI to do the deterministic work.
+
+**Standardization happens at the CLI level**, because that is the layer a validator can verify mechanically. The skill provides judgment; the CLI provides the checkable, repeatable action. This is the same split the workbench applies to its own skills ([24-skills-scope.md](./24-skills-scope.md)) and the seam the runtime call-validation measures against.
+
+---
+
+## Related
+
+- [12-folders.md](./12-folders.md) — the Convention-vs-Add-On taxonomy and the core-vs-add-on folder split.
+- [24-skills-scope.md](./24-skills-scope.md) — the Setup/Health/Update/Extras SOP an add-on's skill realizes.
+- [22-config.md](./22-config.md) — the `.workbench/` descriptor an add-on declares.
+- [20-cli.md](./20-cli.md) — the Branch/Leaf CLI convention an add-on's standard entry follows.
+- [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the Workbench-SOP that points at each add-on's SOP.
 
 ---
 
@@ -6084,7 +6691,7 @@ The memo-toolkit capabilities are loaded **dynamically** (progressive disclosure
 | | |
 |---|---|
 | Status | Draft |
-| Depends on | [00-overview.md](./00-overview.md), [14-project-architecture.md](./14-project-architecture.md) |
+| Depends on | [00-overview.md](./00-overview.md), [41-project-architecture.md](./41-project-architecture.md) |
 | Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [20-cli.md](./20-cli.md), [../../v0.1.0/24-tools-registry.md](../../v0.1.0/24-tools-registry.md), [../../v0.1.0/26-memo-history.md](../../v0.1.0/26-memo-history.md) |
 
 The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; its on-disk format is OKF ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)).
@@ -6097,7 +6704,7 @@ Two kinds of knowledge sit beneath the wiki, and the wiki is the entry point ove
 
 | Layer | What | Form |
 |-------|------|------|
-| **Structured** | the project architecture — which repos exist, how they connect ([14-project-architecture.md](./14-project-architecture.md)) | OKF nodes + edges |
+| **Structured** | the project architecture — which repos exist, how they connect ([41-project-architecture.md](./41-project-architecture.md)) | OKF nodes + edges |
 | **Unstructured** | research piles, `context/` files, distilled decisions — everything else the project holds | any form; the wiki categorizes and files it |
 
 The user does not care which form a piece of knowledge is in — the wiki finds it. That is the whole point of a single entry point: knowledge is reached *through the wiki*, not by knowing in advance where each kind of thing lives.
@@ -6121,7 +6728,7 @@ The wiki answers in the **present tense**: a wiki page states what is understood
 The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required:
 
 - **Every project** — internal or foreign — gets a wiki, because every project has unstructured knowledge worth categorizing and querying. The wiki is the entry point for all of them.
-- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([14-project-architecture.md](./14-project-architecture.md)).
+- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([41-project-architecture.md](./41-project-architecture.md)).
 
 So "the wiki finds everything" holds for all projects; "the project has a structured architecture" holds for the internal ones.
 
@@ -6148,7 +6755,7 @@ The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](./2
 
 ## Related
 
-- [14-project-architecture.md](./14-project-architecture.md) — the structured layer the wiki indexes and points at.
+- [41-project-architecture.md](./41-project-architecture.md) — the structured layer the wiki indexes and points at.
 - [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the on-disk format of both the wiki and the architecture bundle.
 - [../../v0.1.0/24-tools-registry.md](../../v0.1.0/24-tools-registry.md) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
 - [../../v0.1.0/26-memo-history.md](../../v0.1.0/26-memo-history.md) — the chronicle, the present-tense wiki's chronological counterpart.
@@ -6165,7 +6772,9 @@ The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](./2
 
 The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and how that research feeds the revision lifecycle. This document defines the research *method* — the concrete tooling a project uses to gather external information, and the cost discipline that governs which tool is chosen. The two are complementary: the core chapter says *what must be researched and when*, this chapter says *how the gathering is done*.
 
-Browser automation lives at the project level. Each project that uses it carries its own `.playwright/` folder (an optional folder — see [12-folders.md](./12-folders.md)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
+Browser automation lives at the project level. Each project that uses it carries its own `.browser/` folder (an optional folder — see [12-folders.md](./12-folders.md)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
+
+> **Folder name — `.browser/`, alias `.playwright/`.** The folder is named `.browser/`: the dot marks it as local machinery (see [12-folders.md](./12-folders.md)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is an accepted **alias** of the same folder — a project that still uses that name remains conformant, and the physical migration of existing projects to `.browser/` is deliberately **deferred**, to be done at each project's own pace.
 
 ---
 
@@ -6197,12 +6806,12 @@ The pattern that bridges the two is **session transfer**: when a first login gen
 
 ---
 
-## The `.playwright/` Project Structure
+## The `.browser/` Project Structure
 
-Every project that uses browser automation **MUST** keep it inside a `.playwright/` folder at the project root. The folder separates three concerns — the captured session, the reusable scripts, and the produced output.
+Every project that uses browser automation **MUST** keep it inside a `.browser/` folder at the project root. The folder separates three concerns — the captured session, the reusable scripts, and the produced output.
 
 ```
-.playwright/
+.browser/
 ├── auth.json              # captured session — secret, never committed
 ├── output/                # produced artifacts — local-only
 │   ├── screenshots/
@@ -6291,7 +6900,7 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 ## Related
 
 - [00-overview.md](./00-overview.md) — the workbench spec framing and the global helpers it exposes.
-- [12-folders.md](./12-folders.md) — the optional `.playwright/` folder in the project layout.
+- [12-folders.md](./12-folders.md) — the optional `.browser/` folder in the project layout.
 - [11-project-structure.md](./11-project-structure.md) — the local guarantee that keeps `auth.json` and `output/` off the network.
 - [../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md) — the research *duty* this chapter's *method* serves, and the normative inward trust boundary on ingested web content.
 - [32-trash.md](./32-trash.md) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.
@@ -6347,7 +6956,7 @@ Destructive recursive removal is **forbidden**.
 | Depends on | [00-overview.md](./00-overview.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 | Related | [10-root-and-projects.md](./10-root-and-projects.md), [The SOP spec](/sop/overview/) |
 
-> **Informative.** This chapter is a single diagram that summarizes the structures specified in the preceding chapters. It carries no requirements of its own.
+> **Informative.** This chapter collects the architecture diagrams that summarize the structures specified in the preceding chapters. They carry no requirements of their own.
 
 The diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP spec, with the machine tier drawn dashed because it is out of scope for this spec. The lower group shows the **three sibling spec families** that live side by side in `repos/spec`, each with its own version line.
 
@@ -6375,11 +6984,170 @@ The upper flow reads top-down: a fresh context loads the workbench-SOP, which us
 
 ---
 
+## Registered Folders, Conventions, and Add-Ons
+
+The registered folders are the shared vocabulary; conventions are the formats their content follows; add-ons are tools that reserve an area and use conventions; and the wiki sits one level above as the search engine across all of them ([12-folders.md](./12-folders.md), [26-addons.md](./26-addons.md)).
+
+```mermaid
+flowchart TD
+    WIKI["Wiki — search engine across the whole workbench"]
+    REG["Registered Folders (hub: 12-folders)"] --> F1["context/architecture-okf<br/>Convention: OKF"]
+    REG --> F2["design/<br/>Convention: DESIGN.md"]
+    REG --> F3["scripts/<br/>Convention: startup-script"]
+    ADDON["Add-Ons = tools<br/>FlowMCP · ytAi · get-sheet · memo system"] -.->|"reserve an area, use conventions"| REG
+    WIKI --> REG
+    F1 --> WIKI
+    F2 --> WIKI
+    F3 --> WIKI
+```
+
+A Convention is the format inside a folder; an Add-On is a tool. The wiki indexes the separated domains so a reader finds material without first knowing which folder holds it.
+
+---
+
+## The Validation Boundary — Before and After
+
+Validation sits at the public entry points, the surface through which input enters. A pre-hook checks pre-conditions **before** the call; the runtime call-validation measures, **after**, what actually ran ([23-hooks-contract.md](./23-hooks-contract.md), [20-cli.md](./20-cli.md), [24-skills-scope.md](./24-skills-scope.md)).
+
+```mermaid
+flowchart TD
+    CALL["AI calls an entry point<br/>(public method: memo-init / finalize / plan)"]
+    PRE["Pre-hook — matcher Skill — BEFORE<br/>gatekeeper: pre-conditions met? exit 2 / JSON deny"]
+    CALL --> PRE
+    PRE -->|"yes"| RUN["Entry point + sub-agents run<br/>transcript written to disk"]
+    PRE -->|"no"| BLOCK["deny / ask"]
+    RUN --> LOG[("subagents/agent-id.jsonl + uuid.jsonl")]
+    LOG --> SCAN["Runtime call-validation — AFTER"]
+```
+
+Contamination enters through the public methods, so that is where the validation layer lives — a pre-hook in front, the transcript-based measurement behind.
+
+---
+
+## Session Validation — Memo Collects, Workbench Builds
+
+The "after" measurement is split across the two systems: the memo collects the session IDs and interprets the result; the workbench holds the registry, searches the transcripts for the signals, and returns the matrix ([20-cli.md](./20-cli.md)).
+
+```mermaid
+flowchart TD
+    MEMO1["Memo agent: collects session IDs<br/>knows its spawned sub-agents"] --> IDS["session IDs"]
+    IDS --> WCLI["Workbench CLI"]
+    REGISTRY[(".workbench/registry.json<br/>SOPs / skills / add-ons + signals")] --> WCLI
+    WCLI --> SCAN2["scans transcripts for signals"]
+    SCAN2 --> MATRIX["structured matrix back:<br/>session × skill/tool → used + evidence"]
+    MATRIX --> MEMO2["Memo agent: interprets<br/>checks requirements, e.g. init only if the SOP was read"]
+```
+
+The memo knows *which* sessions exist and what their use *means*; the workbench knows *what* to search for. The matrix is the structured hand-off between the two.
+
+---
+
+## The Signpost Cascade and Orchestrator/Component
+
+The workbench-SOP is a signpost that references the add-on SOPs; each skill is either an orchestrator (a public entry point) or a component (a private, reusable part) ([02-sop-entrypoint.md](./02-sop-entrypoint.md), [24-skills-scope.md](./24-skills-scope.md)).
+
+```mermaid
+flowchart TD
+    CLAUDE["CLAUDE.md — dynamic signpost, per session"] --> WSOP["Workbench-SOP — references the add-on SOPs"]
+    WSOP --> MSOP["memo-SOP (weightiest add-on)"]
+    WSOP --> FSOP["flowmcp-SOP"]
+    MSOP --> ORCH["Orchestrator = public method / entry point<br/>validated (pre-hook + runtime)"]
+    ORCH --> COMP["Component = private, reusable, not user-callable<br/>e.g. research at several points"]
+```
+
+The signpost routes downward without becoming a container; the orchestrator is the validated public surface, the component the private interior it calls.
+
+---
+
 ## Related
 
 - [00-overview.md](./00-overview.md) — the sibling-spec framing the lower group depicts.
-- [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the two-level model and the machine-tier exclusion the upper flow depicts.
+- [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the two-level model, the SOP signpost, and the machine-tier exclusion.
+- [12-folders.md](./12-folders.md) — the registered folders, conventions, and the core-vs-add-on split.
+- [26-addons.md](./26-addons.md) — the add-on model the third diagram depicts.
+- [23-hooks-contract.md](./23-hooks-contract.md) — the pre-hook half of the validation boundary.
+- [20-cli.md](./20-cli.md) — the runtime call-validation and the Memo↔Workbench split.
+- [24-skills-scope.md](./24-skills-scope.md) — the orchestrator/component split.
 - [The SOP spec](/sop/overview/) — the thin connecting layer in the diagram.
+
+---
+
+# 41. Project Architecture
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md), [11-project-structure.md](./11-project-structure.md) |
+| Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [30-wiki.md](./30-wiki.md), [../../v0.1.0/33-maintenance.md](../../v0.1.0/33-maintenance.md), [../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md) |
+
+A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges between them, and the provenance that says when each edge was last verified. This chapter is about that content first; the on-disk encoding (a knowledge bundle in OKF, [13-knowledge-format-okf.md](./13-knowledge-format-okf.md)) is a detail named at the end, not the headline. The shift is deliberate: ask *what the architecture is* before asking *what format it is stored in*.
+
+---
+
+## Every Project Has an Architecture
+
+Even a single-repo project has an architecture — a trivial one. As soon as a project holds more than one repository, the relationships between them carry real information: which repo is the source another is induced from, which repo consumes another's output, which dependency is externally visible. That graph is the architecture, and it is the **Soll** (the declared target state) against which the real repositories are measured.
+
+- **Nodes are repos.** One node per repository, each carrying its role: a human title, whether it faces inward or outward, and the source it is pinned to (`repos/<name> @ <commit>`).
+- **Edges are declared relationships** between repos — `set` (a real, justified edge), `justified-omit` (deliberately no edge, with a reason), or `blocked`. Each edge carries a provenance commit so drift from it is a *count*, not a guess (see [../../v0.1.0/33-maintenance.md](../../v0.1.0/33-maintenance.md)).
+- **The bundle is the Soll, the score is separate.** The architecture bundle carries the *structure*; the maintenance store carries the *score* taken against it. Keeping the two apart is what lets the structure be authored by hand and the score be measured in a fresh context.
+
+---
+
+## The Entry Point — A Memo Must Find the Architecture, Never Rediscover It
+
+A memo that needs the architecture **MUST be able to find it through a single entry point**, rather than guessing a path or re-deriving the structure each time. This is the bottleneck principle: there is one door, and everything goes through it.
+
+- For an agent or a human, the door is the **wiki** ([30-wiki.md](./30-wiki.md)): the wiki indexes the architecture as one of the things it knows about, pointing at the bundle rather than copying it.
+- For deterministic code, the door is **`memo architecture locate`**: a thin resolver that reads the bundle and returns where it is, what nodes it holds, and which repos have no node yet. It replaces paths that would otherwise be repeated in prose across several skills — one resolver, consulted, instead of a convention re-guessed.
+
+The point of the single door is that the architecture's location stops being tribal knowledge embedded in each consumer and becomes a declared, resolvable fact.
+
+---
+
+## Presence Is Measured, Not Assumed
+
+Every project **SHOULD** store its architecture as a bundle, so that a memo always has the structural ground it needs. Whether it does is a **measured** property, in the same spirit as goal and maintenance scoring:
+
+- A **presence requirement** (advisory severity) states the expectation: the architecture is present as a bundle, and a memo can find it via the entry point. Advisory — not a blocker — because a project with no repositories has a trivial or empty architecture, and that is acceptable, not a failure.
+- The **wiki health check** flags absence at the moment it matters: `wiki-lint` runs automatically before a memo starts, so a project whose architecture bundle is missing is surfaced right there as a non-blocking warning. The check reports the *complete absence* of the bundle (and MAY report repos that exist with no node).
+
+Because the requirement is advisory and the check is non-blocking, presence becomes visible without becoming a gate — a project is reminded, never stopped.
+
+---
+
+## Maintenance Keeps the Architecture Fresh
+
+Keeping the architecture current is one of maintenance's jobs, not a separate mechanism. The architecture bundle is itself a maintenance unit: each node pins its sources and edges to a commit, and the maintainer compares the **declared** architecture against the **real** one (`git log <pin>..HEAD`), flagging edges that have drifted from their pinned commit and edges that exist in reality but are absent or marked `justified-omit` in the node — the Soll itself can be stale. Re-verification re-stamps the provenance pin after a fresh-context check (see [../../v0.1.0/33-maintenance.md](../../v0.1.0/33-maintenance.md)). So the architecture is kept honest from two sides: the wiki flags absence when a memo starts, maintenance flags staleness and gaps periodically.
+
+---
+
+## Internal Projects vs. Foreign Projects
+
+The complexity of the architecture **scales with the repositories**, and is not forced where it does not fit:
+
+| Project kind | Architecture bundle | Wiki |
+|--------------|---------------------|------|
+| **Internal** (a real multi-repo system with a clear target structure) | the default — repo nodes, edges, provenance | the entry point over everything |
+| **Foreign / research** (a sibling project that is mostly unstructured research, with little or no repo structure of its own) | not forced — minimal or empty is acceptable | the wiki alone carries the unstructured material |
+
+The advisory severity is what makes this work: a research-heavy foreign project that has no architecture bundle is flagged "no architecture", and for that kind of project the flag is an **accepted state**, not an error. The full architecture — edges, justified-omits, blast-radius — earns its cost only where repositories are genuinely interconnected.
+
+---
+
+## OKF Is the Storage Format
+
+The architecture is stored as an **OKF knowledge bundle** ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)): one node document per repo (`type: repo` plus the role fields as extension keys), the edges declared in the body, all under `context/architecture-okf/`. OKF is named here only as the *encoding* — the concept above stands on its own, and a reader needs to understand "project architecture" without first understanding "OKF". The bundle directory keeps its `-okf` suffix as a file convention; the visible term for the concept is **project architecture**.
+
+---
+
+## Related
+
+- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the storage format the architecture (and the wiki) is encoded in.
+- [30-wiki.md](./30-wiki.md) — the wiki as the entry point that indexes the architecture among everything else.
+- [../../v0.1.0/33-maintenance.md](../../v0.1.0/33-maintenance.md) — maintenance scores the architecture bundle as a unit and keeps its provenance pins fresh.
+- [../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md) — the requirements layer the advisory presence requirement is expressed in.
+- [11-project-structure.md](./11-project-structure.md) — `context/` as the primary immutable source, where the bundle lives.
 
 ========================================
 # SOP Spec v0.1.0

@@ -6,7 +6,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-06-24T22:34:55.546Z"
+generated_at: "2026-06-25T18:01:17.107Z"
 generated_from: "spec/workbench/0.1.0/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/22-config.md."
@@ -34,7 +34,18 @@ The core content of the configuration is a per-repository **facing** classificat
 | **inward** | Local-only; never pushed to a public remote. Coordination and references use the memo ID. |
 | **outward** | Published to a public remote. Coordination and references use GitHub Issues. |
 
-The `facing` attribute is the same field the project-architecture knowledge bundle records for a repository (see [14-project-architecture.md](/specification/project-architecture/)); the configuration is where a project **declares** it. The classification drives a concrete downstream rule — the workbench's egress convention (rule C1): an **outward** repository routes coordination through **Issues**, an **inward** repository through the **memo ID**. Stating `facing` once is what lets that rule be applied consistently and, where desired, enforced.
+The `facing` attribute is the same field the project-architecture knowledge bundle records for a repository (see [41-project-architecture.md](/specification/project-architecture/)); the configuration is where a project **declares** it. The classification drives a concrete downstream rule — the workbench's egress convention (rule C1): an **outward** repository routes coordination through **Issues**, an **inward** repository through the **memo ID**. Stating `facing` once is what lets that rule be applied consistently and, where desired, enforced.
+
+---
+
+## Beyond Facing — Other Declared Files
+
+The facing classification is the configuration's core, but `.workbench/` is the home for the project's **declarations** generally — the same single-source principle applies to anything a tool or hook needs to read deterministically. Two other files are specified today:
+
+- **`folder-lints.json`** — the project-local map that drives the write-time content lint: each entry binds a folder and filename pattern to a linter and a severity, and a single global hook consumes the map ([23-hooks-contract.md](/specification/hooks-contract/)).
+- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/specification/sop-entrypoint/)): the list of skills, add-ons, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](/specification/cli/)).
+
+Like the facing configuration, both are **manual** — never silently generated or overwritten.
 
 ---
 
@@ -50,4 +61,4 @@ The principle is the division of responsibility introduced in [02-sop-entrypoint
 
 - [23-hooks-contract.md](/specification/hooks-contract/) — the contract that consumes this configuration.
 - [12-folders.md](/specification/folders/) — `.workbench/` as the optional folder that holds this configuration.
-- [14-project-architecture.md](/specification/project-architecture/) — `facing` as a recorded repository attribute.
+- [41-project-architecture.md](/specification/project-architecture/) — `facing` as a recorded repository attribute.

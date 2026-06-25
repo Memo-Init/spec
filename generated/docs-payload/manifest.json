@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-24T22:34:55.715Z",
+    "generated_at": "2026-06-25T18:01:17.680Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -528,11 +528,41 @@
                 "sidebar_group": "folders"
             },
             {
-                "filename": "14-project-architecture.md",
-                "slug": "project-architecture",
-                "title": "Project Architecture",
-                "description": "A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges...",
-                "order": 14,
+                "filename": "15-repos.md",
+                "slug": "repos",
+                "title": "The `repos/` Folder",
+                "description": "`repos/` is the one place in a project where git lives. It holds the project's repositories — and **only** the repositories — so that everything shareable is isolated behind an explicit boundary...",
+                "order": 15,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "16-context.md",
+                "slug": "context",
+                "title": "The `context/` Folder",
+                "description": "`context/` is the project's store of **processed, authored knowledge** — the specifications, distilled research, and Markdown or PDF documents a memo draws on. It is the worked, readable side of a...",
+                "order": 16,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "17-memo-store.md",
+                "slug": "memo-store",
+                "title": "The `.memo/` Folder",
+                "description": "`.memo/` is the on-disk footprint of the **memo system** — the workbench's weightiest add-on, and its recommended default mode of working ([26-addons.md](./26-addons.md)). This is the per-folder page...",
+                "order": 17,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "18-design.md",
+                "slug": "design",
+                "title": "The `design/` Folder & the DESIGN.md Convention",
+                "description": "`design/` is the optional, project-level folder that holds a project's **design system** and its visual sources. Its content follows a named convention — **DESIGN.md** — in the same way the...",
+                "order": 18,
                 "section": "Workbench",
                 "normative": true,
                 "sidebar_group": "folders"
@@ -588,6 +618,26 @@
                 "sidebar_group": "cli"
             },
             {
+                "filename": "25-validation-overview.md",
+                "slug": "validation-overview",
+                "title": "Validation Overview",
+                "description": "The workbench's checks are deliberately spread across the chapters they belong to — the hook contract, the configuration, the trash policy, the scripts. That keeps each rule next to the thing it...",
+                "order": 25,
+                "section": "Workbench",
+                "normative": false,
+                "sidebar_group": "cli"
+            },
+            {
+                "filename": "26-addons.md",
+                "slug": "addons",
+                "title": "The Add-On Model",
+                "description": "An **add-on** is a tool that plugs into the workbench: it is provided globally, it reserves a small declared area inside a project, and it follows a common SOP so that every add-on is operated the...",
+                "order": 26,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "cli"
+            },
+            {
                 "filename": "30-wiki.md",
                 "slug": "wiki",
                 "title": "The Wiki — Entry Point",
@@ -625,6 +675,16 @@
                 "order": 40,
                 "section": "Workbench",
                 "normative": false,
+                "sidebar_group": "reference"
+            },
+            {
+                "filename": "41-project-architecture.md",
+                "slug": "project-architecture",
+                "title": "Project Architecture",
+                "description": "A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges...",
+                "order": 41,
+                "section": "Workbench",
+                "normative": true,
                 "sidebar_group": "reference"
             }
         ]
@@ -665,11 +725,11 @@
         ]
     },
     "stats": {
-        "total_files": 65,
+        "total_files": 71,
         "core_files": 45,
-        "workbench_files": 17,
+        "workbench_files": 23,
         "sop_files": 3,
-        "normative_files": 55,
-        "informative_files": 10
+        "normative_files": 60,
+        "informative_files": 11
     }
 }

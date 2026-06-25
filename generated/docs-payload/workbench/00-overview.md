@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-24T22:34:55.546Z"
+generated_at: "2026-06-25T18:01:17.107Z"
 generated_from: "spec/workbench/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/00-overview.md."
@@ -66,6 +66,8 @@ The defining mental shift of the workbench is that the unit of organization is t
 
 This distinction is what [11-project-structure.md](/specification/project-structure/) makes concrete, and the separation of the workbench root from the projects beneath it is drawn in [10-root-and-projects.md](/specification/root-and-projects/).
 
+The workbench **core** — its folders, CLIs, and conventions — is independent of the memo system: a project can use the layout without any memo ever being written, even though the memo system is the recommended add-on that normally drives it. The core-vs-add-on split among the registered folders is drawn in [12-folders.md](/specification/folders/).
+
 ---
 
 ## What the Workbench Level Checks
@@ -115,13 +117,19 @@ The Workbench spec contains the following chapters, grouped into the navigation 
 | `11-project-structure.md` | Project Structure & Local Guarantee | Folders | Normative |
 | `12-folders.md` | Project Folders — Mandatory and Optional | Folders | Normative |
 | `13-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Folders | Normative |
-| `14-project-architecture.md` | Project Architecture | Folders | Normative |
+| `15-repos.md` | The `repos/` Folder | Folders | Normative |
+| `16-context.md` | The `context/` Folder | Folders | Normative |
+| `17-memo-store.md` | The `.memo/` Folder | Folders | Normative |
+| `18-design.md` | The `design/` Folder & the DESIGN.md Convention | Folders | Normative |
 | `20-cli.md` | CLI Convention — Branch/Leaf | CLI & Scripts | Normative |
 | `21-environment-scripts.md` | Environment & Health Scripts | CLI & Scripts | Normative |
 | `22-config.md` | The `.workbench/` Configuration | CLI & Scripts | Normative |
 | `23-hooks-contract.md` | Hooks Contract | CLI & Scripts | Normative |
 | `24-skills-scope.md` | Skills in the Workbench Scope | CLI & Scripts | Normative |
+| `25-validation-overview.md` | Validation Overview | CLI & Scripts | Informative |
+| `26-addons.md` | The Add-On Model | CLI & Scripts | Normative |
 | `30-wiki.md` | The Wiki — Entry Point | Tools | Normative |
 | `31-browser-automation.md` | Browser Automation | Tools | Normative |
 | `32-trash.md` | Trash — No Deletion, Only `.trash/` | Tools | Normative |
 | `40-architecture-diagram.md` | Architecture Diagram | Reference | Informative |
+| `41-project-architecture.md` | Project Architecture | Reference | Normative |

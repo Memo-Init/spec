@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-06-24T22:34:55.546Z"
+generated_at: "2026-06-25T18:01:17.107Z"
 generated_from: "spec/v0.1.0/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/29-behavioral-guardrails.md."
