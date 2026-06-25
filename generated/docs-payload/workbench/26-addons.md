@@ -6,7 +6,7 @@ spec_file: "26-addons.md"
 order: 26
 section: "Workbench"
 normative: true
-generated_at: "2026-06-25T18:01:17.107Z"
+generated_at: "2026-06-25T18:46:44.485Z"
 generated_from: "spec/workbench/0.1.0/26-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/26-addons.md."
