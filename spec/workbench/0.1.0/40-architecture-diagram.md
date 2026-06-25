@@ -6,7 +6,7 @@
 | Depends on | [00-overview.md](./00-overview.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 | Related | [10-root-and-projects.md](./10-root-and-projects.md), [The SOP spec](/sop/overview/) |
 
-> **Informative.** This chapter is a single diagram that summarizes the structures specified in the preceding chapters. It carries no requirements of its own.
+> **Informative.** This chapter collects the architecture diagrams that summarize the structures specified in the preceding chapters. They carry no requirements of their own.
 
 The diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP spec, with the machine tier drawn dashed because it is out of scope for this spec. The lower group shows the **three sibling spec families** that live side by side in `repos/spec`, each with its own version line.
 
@@ -34,8 +34,88 @@ The upper flow reads top-down: a fresh context loads the workbench-SOP, which us
 
 ---
 
+## Registered Folders, Conventions, and Add-Ons
+
+The registered folders are the shared vocabulary; conventions are the formats their content follows; add-ons are tools that reserve an area and use conventions; and the wiki sits one level above as the search engine across all of them ([12-folders.md](./12-folders.md), [26-addons.md](./26-addons.md)).
+
+```mermaid
+flowchart TD
+    WIKI["Wiki — search engine across the whole workbench"]
+    REG["Registered Folders (hub: 12-folders)"] --> F1["context/architecture-okf<br/>Convention: OKF"]
+    REG --> F2["design/<br/>Convention: DESIGN.md"]
+    REG --> F3["scripts/<br/>Convention: startup-script"]
+    ADDON["Add-Ons = tools<br/>FlowMCP · ytAi · get-sheet · memo system"] -.->|"reserve an area, use conventions"| REG
+    WIKI --> REG
+    F1 --> WIKI
+    F2 --> WIKI
+    F3 --> WIKI
+```
+
+A Convention is the format inside a folder; an Add-On is a tool. The wiki indexes the separated domains so a reader finds material without first knowing which folder holds it.
+
+---
+
+## The Validation Boundary — Before and After
+
+Validation sits at the public entry points, the surface through which input enters. A pre-hook checks pre-conditions **before** the call; the runtime call-validation measures, **after**, what actually ran ([23-hooks-contract.md](./23-hooks-contract.md), [20-cli.md](./20-cli.md), [24-skills-scope.md](./24-skills-scope.md)).
+
+```mermaid
+flowchart TD
+    CALL["AI calls an entry point<br/>(public method: memo-init / finalize / plan)"]
+    PRE["Pre-hook — matcher Skill — BEFORE<br/>gatekeeper: pre-conditions met? exit 2 / JSON deny"]
+    CALL --> PRE
+    PRE -->|"yes"| RUN["Entry point + sub-agents run<br/>transcript written to disk"]
+    PRE -->|"no"| BLOCK["deny / ask"]
+    RUN --> LOG[("subagents/agent-id.jsonl + uuid.jsonl")]
+    LOG --> SCAN["Runtime call-validation — AFTER"]
+```
+
+Contamination enters through the public methods, so that is where the validation layer lives — a pre-hook in front, the transcript-based measurement behind.
+
+---
+
+## Session Validation — Memo Collects, Workbench Builds
+
+The "after" measurement is split across the two systems: the memo collects the session IDs and interprets the result; the workbench holds the registry, searches the transcripts for the signals, and returns the matrix ([20-cli.md](./20-cli.md)).
+
+```mermaid
+flowchart TD
+    MEMO1["Memo agent: collects session IDs<br/>knows its spawned sub-agents"] --> IDS["session IDs"]
+    IDS --> WCLI["Workbench CLI"]
+    REGISTRY[(".workbench/registry.json<br/>SOPs / skills / add-ons + signals")] --> WCLI
+    WCLI --> SCAN2["scans transcripts for signals"]
+    SCAN2 --> MATRIX["structured matrix back:<br/>session × skill/tool → used + evidence"]
+    MATRIX --> MEMO2["Memo agent: interprets<br/>checks requirements, e.g. init only if the SOP was read"]
+```
+
+The memo knows *which* sessions exist and what their use *means*; the workbench knows *what* to search for. The matrix is the structured hand-off between the two.
+
+---
+
+## The Signpost Cascade and Orchestrator/Component
+
+The workbench-SOP is a signpost that references the add-on SOPs; each skill is either an orchestrator (a public entry point) or a component (a private, reusable part) ([02-sop-entrypoint.md](./02-sop-entrypoint.md), [24-skills-scope.md](./24-skills-scope.md)).
+
+```mermaid
+flowchart TD
+    CLAUDE["CLAUDE.md — dynamic signpost, per session"] --> WSOP["Workbench-SOP — references the add-on SOPs"]
+    WSOP --> MSOP["memo-SOP (weightiest add-on)"]
+    WSOP --> FSOP["flowmcp-SOP"]
+    MSOP --> ORCH["Orchestrator = public method / entry point<br/>validated (pre-hook + runtime)"]
+    ORCH --> COMP["Component = private, reusable, not user-callable<br/>e.g. research at several points"]
+```
+
+The signpost routes downward without becoming a container; the orchestrator is the validated public surface, the component the private interior it calls.
+
+---
+
 ## Related
 
 - [00-overview.md](./00-overview.md) — the sibling-spec framing the lower group depicts.
-- [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the two-level model and the machine-tier exclusion the upper flow depicts.
+- [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the two-level model, the SOP signpost, and the machine-tier exclusion.
+- [12-folders.md](./12-folders.md) — the registered folders, conventions, and the core-vs-add-on split.
+- [26-addons.md](./26-addons.md) — the add-on model the third diagram depicts.
+- [23-hooks-contract.md](./23-hooks-contract.md) — the pre-hook half of the validation boundary.
+- [20-cli.md](./20-cli.md) — the runtime call-validation and the Memo↔Workbench split.
+- [24-skills-scope.md](./24-skills-scope.md) — the orchestrator/component split.
 - [The SOP spec](/sop/overview/) — the thin connecting layer in the diagram.

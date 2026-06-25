@@ -42,6 +42,29 @@ The workbench level **SHOULD** make this determination cheap — a predictable l
 
 ---
 
+## The SOP Is a Signpost, Not a Container
+
+The workbench-SOP does not *contain* the procedures for everything in the workbench; it **points** to them. It is a **signpost** — a connecting layer, not a container — in the spirit of a dynamic `CLAUDE.md` that loads per session, carries the current inventory of tools, and routes downward to the skills and specs that hold the detail. The workbench-SOP names the levels and the tools that are present, and for each one it points at that tool's own SOP.
+
+This is why **SOPs contain SOPs**. The workbench-SOP references each **add-on's** SOP ([26-addons.md](./26-addons.md)) — the memo system's SOP first among them, as the weightiest add-on — and each add-on SOP is itself Setup/Health/Update plus its extras. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
+
+```
+Workbench-SOP (signpost — knows the levels and the add-ons present)
+├── memo-SOP        (the weightiest add-on's SOP)
+├── flowmcp-SOP     (a large add-on's SOP)
+└── …               (each add-on: Setup · Health · Update · Extras)
+```
+
+The machine-readable form of this signpost is the **workbench registry** (`.workbench/registry.json`): the same list of SOPs, skills, and add-ons that the signpost expresses in prose, in a form a tool can read. Its fields and its use by the runtime call-validation are specified in [20-cli.md](./20-cli.md).
+
+---
+
+## SOP-Native, Not Inert Files
+
+The signpost works only because the things it points at are **SOP-native** rather than inert files. A good static file in the workbench is **declared** (it is a registered folder or a named policy), **consumed by a named process** (a skill, a hook, the wiki), and **health-checked**. A registered folder, for instance, is declared in the contract, its content is checked on write, its entry point is validated, its usage is measured after the fact, and it is findable through the wiki — it is governed, not magic. The signpost can route to a thing precisely because that thing announces what it is and what consumes it, instead of sitting as one more file in an undifferentiated pile.
+
+---
+
 ## Deterministic Enforcement Is the Machine Tier's Job
 
 Self-discovery describes what an agent *should* do. Making it **deterministic** — guaranteeing that the correct SOP is loaded before a tool runs, regardless of model behavior — is the job of the **machine tier**, through Claude Code hooks. The workbench level declares the policy; the machine tier enforces it. The contract between the two is specified in [23-hooks-contract.md](./23-hooks-contract.md); the enforcement mechanism itself is out of scope for this spec (below).
@@ -75,4 +98,6 @@ The division of responsibility is the load-bearing idea: **the workbench declare
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project boundary.
 - [22-config.md](./22-config.md) — the `.workbench/` configuration, where the workbench declares policy.
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract the machine tier consumes to enforce policy.
+- [26-addons.md](./26-addons.md) — the add-on SOPs the signpost points at, the memo system first among them.
+- [20-cli.md](./20-cli.md) — the `.workbench/registry.json`, the machine-readable form of the signpost.
 - [The SOP spec](/sop/overview/) — the common SOP standard of which the workbench-SOP is an instance.

@@ -43,6 +43,73 @@ A hook is a `PreToolUse` gate: it fires **before** a tool runs and decides wheth
 
 ---
 
+## Write-Time Content Linting
+
+The contract above gates a tool by *policy decision* — "may this run?". A second, complementary use of the same `PreToolUse` surface gates a write by **content**: it inspects what is about to be written and rejects content that violates a folder's convention **before** it lands. This is the workbench's first-line **data-quality gate** — bad content is stopped at the moment of writing rather than found later.
+
+- **Matcher.** `Write|Edit` — the hook fires before a file is created or modified.
+- **Input.** The hook reads `tool_input` — for a `Write`, the full `tool_input.content` and the target path; for an `Edit`, the diff being applied.
+- **Policy is project-local, the mechanism is global.** The *what-to-check* lives in the project under `.workbench/` as a `folder-lints.json` map ([22-config.md](./22-config.md)); the *how-to-check* is one global hook that reads that map. Each entry binds a folder to a linter:
+
+```jsonc
+// .workbench/folder-lints.json — project-local policy; one global hook consumes it
+{
+  "lints": [
+    { "folder": "design/",  "pattern": "DESIGN.md", "linter": "design-frontmatter", "severity": "error" },
+    { "folder": "context/", "pattern": "*.md",       "linter": "untrusted-banner",   "severity": "warn" }
+  ]
+}
+```
+
+An entry is `{ folder, pattern, linter, severity }`: which folder and filename pattern the rule covers, which linter validates the content, and whether a failure blocks (`error`) or only warns (`warn`).
+
+### Honest Limits
+
+The write-lint is a genuine improvement, not a perimeter, and its boundaries are stated plainly so it is not mistaken for one:
+
+- It gates **only Claude tool writes** (`Write`, `Edit`). Content written by `cp`, `mv`, an external process, or a tool's own database writes is **not** seen by the hook.
+- On an `Edit`, the hook sees **only the diff**, not the resulting whole file, so a whole-file invariant can be enforced only on a full `Write`.
+- A shell **redirection** (`> file`) bypasses the hook entirely, because it is not a `Write`/`Edit` tool call.
+
+These limits are why the write-lint is a *first-line* gate paired with after-the-fact runtime validation, not a substitute for it.
+
+---
+
+## Entry-Point Pre-Conditions
+
+An **entry point** — a public skill such as `memo-init`, `memo-finalize`, or `memo-plan` — is where work *enters* the system, and it is exactly where a pre-condition should be checked: a `PreToolUse` hook with a `Skill` matcher fires **before** the entry point runs and can refuse it when its pre-conditions are not met. Because every skill is invoked through one generic `Skill` tool, a single matcher form (`Skill(<name>)`) can gate any named entry point.
+
+This is the **"before" half** of checkability: the gate runs *before* the action. Its "after" counterpart — measuring, from the transcript, which skills actually ran — is the runtime call-validation specified in [20-cli.md](./20-cli.md).
+
+**Two equivalent ways for a hook to block**, both already part of the consuming-side contract:
+
+```jsonc
+// (a) Exit-code path: write the reason to stderr and exit 2 → the call is blocked
+//     stderr: "memo-finalize refused: quality gates have not run (pre-condition)."
+//     exit 2
+
+// (b) JSON path (structured, preferred): stdout JSON drives the decision
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",            // "allow" | "deny" | "ask"
+    "permissionDecisionReason": "memo-finalize: quality gates have not run"
+  }
+}
+```
+
+**A pre-condition catalog** the contract makes expressible (the conditions are illustrative; detecting "did X run this session" is by transcript inspection, above):
+
+| Entry point | Pre-condition | Reaction |
+|-------------|---------------|----------|
+| `memo-init` | input processing has run; the memo does not already exist | ask / deny |
+| `memo-finalize` | the quality gates have run; the trigger is the user, not an autonomous step | ask |
+| `memo-plan` | a finalized memo exists; plan integrity holds | deny when no memo |
+
+A pre-condition belongs at the entry point because an entry point is a **public method** of the system — the surface through which input, and therefore contamination, enters. Validating there is what keeps the interior clean; the principle is developed in [24-skills-scope.md](./24-skills-scope.md).
+
+---
+
 ## The 70/30 Split
 
 Hooks do not replace model judgment; they bound it. The realistic division:
@@ -71,6 +138,9 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ## Related
 
-- [22-config.md](./22-config.md) — the `.workbench/` configuration a hook reads.
+- [25-validation-overview.md](./25-validation-overview.md) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.
+- [22-config.md](./22-config.md) — the `.workbench/` configuration a hook reads, including `folder-lints.json`.
+- [18-design.md](./18-design.md) — a folder whose content (`DESIGN.md`) the write-lint can check.
+- [20-cli.md](./20-cli.md) — the runtime call-validation, the "after" counterpart of the entry-point pre-condition.
 - [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the level boundary and the deferred machine-tier spec.
 - [21-environment-scripts.md](./21-environment-scripts.md) — health checks, the other deterministic workbench verification.

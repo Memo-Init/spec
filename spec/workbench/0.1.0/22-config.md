@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Depends on | [12-folders.md](./12-folders.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
-| Related | [23-hooks-contract.md](./23-hooks-contract.md), [14-project-architecture.md](./14-project-architecture.md) |
+| Related | [23-hooks-contract.md](./23-hooks-contract.md), [41-project-architecture.md](./41-project-architecture.md) |
 
 A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository as inward- or outward-facing, and it is the **single source** from which deterministic enforcement (notably hooks) is derived. This chapter specifies what the configuration holds and the principle by which other things are derived from it.
 
@@ -27,7 +27,18 @@ The core content of the configuration is a per-repository **facing** classificat
 | **inward** | Local-only; never pushed to a public remote. Coordination and references use the memo ID. |
 | **outward** | Published to a public remote. Coordination and references use GitHub Issues. |
 
-The `facing` attribute is the same field the project-architecture knowledge bundle records for a repository (see [14-project-architecture.md](./14-project-architecture.md)); the configuration is where a project **declares** it. The classification drives a concrete downstream rule — the workbench's egress convention (rule C1): an **outward** repository routes coordination through **Issues**, an **inward** repository through the **memo ID**. Stating `facing` once is what lets that rule be applied consistently and, where desired, enforced.
+The `facing` attribute is the same field the project-architecture knowledge bundle records for a repository (see [41-project-architecture.md](./41-project-architecture.md)); the configuration is where a project **declares** it. The classification drives a concrete downstream rule — the workbench's egress convention (rule C1): an **outward** repository routes coordination through **Issues**, an **inward** repository through the **memo ID**. Stating `facing` once is what lets that rule be applied consistently and, where desired, enforced.
+
+---
+
+## Beyond Facing — Other Declared Files
+
+The facing classification is the configuration's core, but `.workbench/` is the home for the project's **declarations** generally — the same single-source principle applies to anything a tool or hook needs to read deterministically. Two other files are specified today:
+
+- **`folder-lints.json`** — the project-local map that drives the write-time content lint: each entry binds a folder and filename pattern to a linter and a severity, and a single global hook consumes the map ([23-hooks-contract.md](./23-hooks-contract.md)).
+- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): the list of skills, add-ons, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](./20-cli.md)).
+
+Like the facing configuration, both are **manual** — never silently generated or overwritten.
 
 ---
 
@@ -43,4 +54,4 @@ The principle is the division of responsibility introduced in [02-sop-entrypoint
 
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract that consumes this configuration.
 - [12-folders.md](./12-folders.md) — `.workbench/` as the optional folder that holds this configuration.
-- [14-project-architecture.md](./14-project-architecture.md) — `facing` as a recorded repository attribute.
+- [41-project-architecture.md](./41-project-architecture.md) — `facing` as a recorded repository attribute.

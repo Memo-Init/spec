@@ -8,7 +8,9 @@
 
 The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and how that research feeds the revision lifecycle. This document defines the research *method* — the concrete tooling a project uses to gather external information, and the cost discipline that governs which tool is chosen. The two are complementary: the core chapter says *what must be researched and when*, this chapter says *how the gathering is done*.
 
-Browser automation lives at the project level. Each project that uses it carries its own `.playwright/` folder (an optional folder — see [12-folders.md](./12-folders.md)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
+Browser automation lives at the project level. Each project that uses it carries its own `.browser/` folder (an optional folder — see [12-folders.md](./12-folders.md)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
+
+> **Folder name — `.browser/`, alias `.playwright/`.** The folder is named `.browser/`: the dot marks it as local machinery (see [12-folders.md](./12-folders.md)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is an accepted **alias** of the same folder — a project that still uses that name remains conformant, and the physical migration of existing projects to `.browser/` is deliberately **deferred**, to be done at each project's own pace.
 
 ---
 
@@ -40,12 +42,12 @@ The pattern that bridges the two is **session transfer**: when a first login gen
 
 ---
 
-## The `.playwright/` Project Structure
+## The `.browser/` Project Structure
 
-Every project that uses browser automation **MUST** keep it inside a `.playwright/` folder at the project root. The folder separates three concerns — the captured session, the reusable scripts, and the produced output.
+Every project that uses browser automation **MUST** keep it inside a `.browser/` folder at the project root. The folder separates three concerns — the captured session, the reusable scripts, and the produced output.
 
 ```
-.playwright/
+.browser/
 ├── auth.json              # captured session — secret, never committed
 ├── output/                # produced artifacts — local-only
 │   ├── screenshots/
@@ -134,7 +136,7 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 ## Related
 
 - [00-overview.md](./00-overview.md) — the workbench spec framing and the global helpers it exposes.
-- [12-folders.md](./12-folders.md) — the optional `.playwright/` folder in the project layout.
+- [12-folders.md](./12-folders.md) — the optional `.browser/` folder in the project layout.
 - [11-project-structure.md](./11-project-structure.md) — the local guarantee that keeps `auth.json` and `output/` off the network.
 - [../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md) — the research *duty* this chapter's *method* serves, and the normative inward trust boundary on ingested web content.
 - [32-trash.md](./32-trash.md) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.
