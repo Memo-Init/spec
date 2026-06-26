@@ -6,7 +6,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-06-26T21:14:26.848Z"
+generated_at: "2026-06-26T21:26:44.321Z"
 generated_from: "spec/session/0.1.0/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/02-enforcement.md."

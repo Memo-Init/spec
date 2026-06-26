@@ -6,7 +6,7 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T21:14:26.848Z"
+generated_at: "2026-06-26T21:26:44.321Z"
 generated_from: "spec/workbench/0.1.0/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/19-tmp.md."

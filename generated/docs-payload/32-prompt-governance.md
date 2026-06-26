@@ -6,7 +6,7 @@ spec_file: "32-prompt-governance.md"
 order: 32
 section: "Specification"
 normative: true
-generated_at: "2026-06-26T21:14:26.848Z"
+generated_at: "2026-06-26T21:26:44.321Z"
 generated_from: "spec/v0.1.0/32-prompt-governance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/32-prompt-governance.md."
