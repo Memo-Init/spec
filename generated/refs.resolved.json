@@ -20,6 +20,12 @@
         "specDir": "spec/sop/0.1.0",
         "url": "https://memo-init.github.io/sop/overview/"
     },
+    "session": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "spec/session/0.1.0",
+        "url": "https://memo-init.github.io/session/overview/"
+    },
     "docs": {
         "canonical": "https://memo-init.github.io",
         "entryPoints": {
@@ -43,8 +49,8 @@
         ]
     },
     "generated": {
-        "at": "2026-06-26T15:10:37.125Z",
-        "fromCommit": "b16b115",
+        "at": "2026-06-26T16:04:17.863Z",
+        "fromCommit": "d63987b",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {

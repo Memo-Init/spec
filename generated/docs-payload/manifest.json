@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-26T15:10:37.455Z",
+    "generated_at": "2026-06-26T16:04:18.686Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -734,12 +734,58 @@
             }
         ]
     },
+    "session": {
+        "version": "0.1.0",
+        "files": [
+            {
+                "filename": "00-overview.md",
+                "slug": "overview",
+                "title": "Overview",
+                "description": "This is the entry point for the **Session spec** — a standalone sibling of the memo-init core specification, the Workbench spec, and the SOP spec. It specifies the **Session Genesis Root**...",
+                "order": 0,
+                "section": "Session",
+                "normative": false,
+                "sidebar_group": "introduction"
+            },
+            {
+                "filename": "01-genesis-root.md",
+                "slug": "genesis-root",
+                "title": "The Session Genesis Root",
+                "description": "The Session Genesis Root (`session-sop`) is the lowest tier of the system. It owns three things that are global **per session**: the **session identity**, the **per-session security level**, and the...",
+                "order": 1,
+                "section": "Session",
+                "normative": true,
+                "sidebar_group": "introduction"
+            },
+            {
+                "filename": "02-enforcement.md",
+                "slug": "enforcement",
+                "title": "Deterministic Enforcement",
+                "description": "Self-discovery describes what an agent *should* do. Making it **deterministic** — guaranteeing the required predecessor SOP was active before a gated entry point runs, regardless of model behaviour —...",
+                "order": 2,
+                "section": "Session",
+                "normative": true,
+                "sidebar_group": "introduction"
+            },
+            {
+                "filename": "03-recovery.md",
+                "slug": "recovery",
+                "title": "Recovery and Fail-Safety",
+                "description": "A gate that sits at the genesis tier governs *every* gated tool call in *every* session. The cost of it going wrong is therefore high, and recoverability is a first-class requirement, not an...",
+                "order": 3,
+                "section": "Session",
+                "normative": true,
+                "sidebar_group": "introduction"
+            }
+        ]
+    },
     "stats": {
-        "total_files": 72,
+        "total_files": 76,
         "core_files": 46,
         "workbench_files": 22,
         "sop_files": 4,
-        "normative_files": 61,
-        "informative_files": 11
+        "session_files": 4,
+        "normative_files": 64,
+        "informative_files": 12
     }
 }

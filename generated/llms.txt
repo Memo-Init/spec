@@ -5458,9 +5458,24 @@ An agent **MUST** determine which level it is operating at before it acts, becau
 
 ---
 
-## Why There Is No Machine Level
+## The Machine Level Is the Session Genesis Tier
 
-A third, lower level — the **machine** (the host, the global `~/.claude/` configuration, the operating system) — is **not** part of this two-level model. The workbench begins at the **workbench folder**: projects and Claude Code instances elsewhere on the same machine are out of its scope. The machine tier is real, but it is **not used by the workbench system as a level of operation**, and it is specified separately (see "The Machine Tier" below).
+A third, lower level — the **machine** (the host, the global `~/.claude/` configuration, the operating system) — sits **below** the two-level workbench model. The workbench system still operates at exactly two levels (Workbench and Project): the machine tier is **not** a third *level of operation*. But it is no longer left unspecified. It is now specified as the **Session Genesis Root** — `session-sop` — in its own sibling family, the [Session spec](/session/overview/).
+
+The genesis tier owns what is global per **session** rather than per workbench: the session identity, the per-session security/trust level, and the **deterministic PreToolUse enforcement** that guarantees the right SOP is loaded before a tool runs. The workbench is a **convention layered above** this genesis root; `CLAUDE.md` loads `session-sop` first, and the upper layers inherit the session identity and security level it establishes.
+
+### The Full SOP Chain (declared; enforced once the skills exist)
+
+The entry-point chain is, bottom-up:
+
+```
+session-sop  (Genesis Root — session identity, security level, PreToolUse enforcement)
+  ↑ workbench-sop   (workbench convention)
+  ↑ memo-sop        (memo process)
+  ↑ memo-init / flowmcp / …  (domain entry points)
+```
+
+The chain is **normatively declared in full**, but each edge is **enforced only once both of its endpoint skills exist**. Declaring an edge whose target skill is not yet built (e.g. `workbench-sop` before it is implemented) MUST NOT create an unsatisfiable precondition: the enforcement gate treats an edge to an absent skill as a configuration error and **fails open** (see [23-hooks-contract.md](./23-hooks-contract.md)). This "declared now, enforced when present" rule is what lets the full chain be written down before every link is built, without ever locking the machine out of its own tools.
 
 ---
 
@@ -5510,13 +5525,13 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ---
 
-## The Machine Tier (Out of Scope)
+## The Machine Tier (Genesis Root Now Specified; Broader Host Still Future)
 
-> **Informative.** This section records a deliberate scope boundary and the rationale for it. It is forward-looking guidance, not a normative requirement of this spec.
+> **Informative.** This section records the scope boundary as it now stands and the rationale for it. The genesis/enforcement slice of the machine tier is specified (the [Session spec](/session/overview/)); the broader host-wide machine spec is still forward-looking guidance.
 
-The machine tier is **deliberately excluded** from this specification and left to a separate, future machine-tier spec. The reason follows from the level model above: the workbench begins in the workbench folder, while the machine tier governs the host globally (`~/.claude/`, the OS, every Claude Code project on the machine, not only those under the workbench).
+The **enforcement slice** of the machine tier — the Session Genesis Root that owns session identity, the per-session security level, and the deterministic PreToolUse SOP enforcement — is **now specified** in the sibling [Session spec](/session/overview/). What remains deliberately deferred to a separate, future host-wide machine spec is everything else the host governs globally (`~/.claude/` at large, the OS, every Claude Code project on the machine, not only those under the workbench).
 
-The existing arrangement is left as it is for now. In particular:
+The existing arrangement is otherwise left as it is for now. In particular:
 
 - **The git workflow stays at the project/memo level.** Git flow and the memo-ID convention remain where they are today. The clean three-way cut between machine, workbench, and project is sound in principle but is **deferred** until the hook mechanics are well understood.
 
@@ -5541,6 +5556,7 @@ The division of responsibility is the load-bearing idea: **the workbench declare
 - [20-cli.md](./20-cli.md) — the `.workbench/registry.json`, the machine-readable form of the signpost.
 - [24-skills-scope.md](./24-skills-scope.md) — how each add-on SOP fans out into orchestrators and components, one level below this cascade.
 - [The SOP spec](/sop/overview/) — the common SOP standard of which the workbench-SOP is an instance.
+- [The Session spec](/session/overview/) — the Session Genesis Root (`session-sop`): session identity, per-session security level, and the deterministic PreToolUse enforcement the workbench-SOP relies on.
 
 ---
 
@@ -7652,3 +7668,284 @@ Together these keep an SOP scannable: a reader sees the structure from the headi
 - [00-overview.md](./00-overview.md) — why a thin connecting layer exists.
 - [01-common-denominator.md](./01-common-denominator.md) — the four parts every SOP shares.
 - [02-instances.md](./02-instances.md) — the existing SOPs as instances, and the inheritance declaration.
+
+========================================
+# Session Spec v0.1.0
+========================================
+
+# 00. Overview
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | — (sibling-spec entry point) |
+| Related | [01-genesis-root.md](./01-genesis-root.md), [02-enforcement.md](./02-enforcement.md), [03-recovery.md](./03-recovery.md) |
+
+> **Informative.** This document introduces the Session spec, its scope, and its place among the sibling specifications. It does not itself carry normative requirements beyond those defined in [01-genesis-root.md](./01-genesis-root.md) and [02-enforcement.md](./02-enforcement.md).
+
+This is the entry point for the **Session spec** — a standalone sibling of the memo-init core specification, the Workbench spec, and the SOP spec. It specifies the **Session Genesis Root** (`session-sop`): the lowest tier of the system, the thing that is global **per session** rather than per workbench or per project.
+
+The Workbench spec's entry point ([workbench/02-sop-entrypoint.md](/workbench/sop-entrypoint/)) records that the machine tier was once left out of scope. This family fills the **enforcement slice** of that gap: the session identity, the per-session security/trust level, and the deterministic PreToolUse enforcement that guarantees the correct SOP is loaded before a tool runs. The broader host-wide machine spec (the security-hook system, the env-file guard, the OS arrangement) remains future work; this family covers only the **genesis root** that the upper layers depend on.
+
+---
+
+## Why the Session Is the Genesis Root
+
+The session is the one scope that exists **before** any workbench convention. A Claude Code session has an identity (its `sessionId`), it has a transcript, and it fires PreToolUse hooks — all of this independent of whether the session happens to be running inside a workbench, a single project, or nowhere in particular. Because it is the **first** thing that exists, it is the right place to anchor the chain of SOPs: `CLAUDE.md` loads `session-sop` first, and the upper layers — `workbench-sop`, `memo-sop`, the domain entry points — inherit the identity and security level it establishes.
+
+```
+session-sop  (this family — the Genesis Root)
+  ↑ workbench-sop   (convention above the genesis root)
+  ↑ memo-sop        (memo process)
+  ↑ memo-init / flowmcp / …  (domain entry points)
+```
+
+---
+
+## The Three Chapters
+
+| Chapter | Holds |
+|---------|-------|
+| [01-genesis-root.md](./01-genesis-root.md) | The tier model, session identity (`flag > env > null`), the per-session security level, and the full declared SOP chain. |
+| [02-enforcement.md](./02-enforcement.md) | The deterministic PreToolUse gate: the three-state fail-safe contract, the project-scoped registry, jq-structured signals, and "declared, enforced once the skills exist". |
+| [03-recovery.md](./03-recovery.md) | The fail-safe guarantees in operational form: kill-switch, sentinel, SessionStart canary, and the recovery runbook. |
+
+---
+
+## Related
+
+- [The SOP spec](/sop/overview/) — the common SOP standard `session-sop` is an instance of.
+- [The Workbench spec](/workbench/overview/) — the convention layered above the genesis root; its [SOP entry point](/workbench/sop-entrypoint/) routes through this tier.
+- [workbench/23-hooks-contract.md](/workbench/hooks-contract/) — the PreToolUse contract this family's enforcement realizes.
+
+---
+
+# 01. The Session Genesis Root
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [00-overview.md](./00-overview.md) |
+| Related | [02-enforcement.md](./02-enforcement.md), [03-recovery.md](./03-recovery.md), [The SOP spec](/sop/overview/) |
+
+The Session Genesis Root (`session-sop`) is the lowest tier of the system. It owns three things that are global **per session**: the **session identity**, the **per-session security level**, and the anchoring of the **SOP chain**. This chapter specifies what the tier owns and how identity resolves; the deterministic enforcement is specified in [02-enforcement.md](./02-enforcement.md).
+
+---
+
+## The Tier Model
+
+| Tier | Owns | Artifact |
+|------|------|----------|
+| **session-sop** (Genesis Root, global per session) | session identity, self-classification, per-session security level, PreToolUse enforcement | `~/.claude/` + this family |
+| ↑ workbench-sop | workbench convention | the Workbench spec |
+| ↑ memo-sop | memo process | the SOP/core specs + skill |
+| ↑ memo-init / flowmcp | domain entry points | skills |
+
+The upper layers **inherit** and **read** the identity and security level the genesis root establishes. The build direction is **bottom-up**: the genesis root exists first; each layer above it is a convention that assumes the layer below.
+
+---
+
+## Session Identity
+
+A session has an ambient identity that any tool MAY resolve deterministically. The identity has two fields, each resolved with the precedence **flag > env > null**:
+
+| Field | Flag | Environment tier | Default |
+|-------|------|------------------|---------|
+| `sessionId` | `--session-id` | `CLAUDE_SESSION_ID` | `null` |
+| `memoId` (optional second protocol) | `--memo-id` | `MEMO_ID` | `null` |
+
+The resolution MUST be **no-silent-default**: when neither a flag nor an environment value is present, the field resolves to `null` with an explicit source of `"none"`, never to a guessed value. The reference resolver is the CLI leaf `memo session resolve` ([workbench/20-cli.md](/workbench/cli/)).
+
+`memoId` is a strictly **optional** second protocol: a session MAY carry an ambient memo id out of band, but the system MUST function when it is absent. No behaviour depends on `memoId` being set.
+
+---
+
+## Self-Classification (display-only in this version)
+
+A session MAY declare metadata about itself — its tier and a requested trust level — in a structured `session-sop-metadata` form. In this version of the spec that self-label is **display-only**: it is surfaced (e.g. in the statusline) but no privilege is granted from it. A consumer that reads a self-declared `requestedTier` to GRANT capability is explicitly **out of scope** here, because a self-granted privilege is only sound while no consumer trusts it. The monotonicity property (a session can never label itself into *more* privilege than it was started with) holds precisely because there is no GRANT consumer yet; introducing one is deferred to a follow-up.
+
+---
+
+## The Per-Session Security Level
+
+The genesis root owns a **per-session security/trust level** that upper layers read rather than redefine. The level is a property of the session as a whole; it is the anchor the Trust Axis of research ([workbench/31-browser-automation.md](/workbench/browser-automation/)) and the egress gate ([03-recovery.md](./03-recovery.md), [02-enforcement.md](./02-enforcement.md)) refer to when deciding whether untrusted content may enter a context. The level is established at session start and is **not** elevated by a self-label (see above).
+
+---
+
+## The Full SOP Chain — Declared, Enforced Once the Skills Exist
+
+The genesis root anchors the full entry-point chain:
+
+```
+memo-init → memo-sop → workbench-sop → session-sop
+```
+
+The chain is **declared in full** as the normative target. But each edge is **enforced only once both of its endpoint skills exist on disk**. This is the load-bearing safety rule of the whole family:
+
+- An edge whose required skill is **not yet built** (for example `workbench-sop` before it is implemented) MUST be treated by the enforcement gate as a **configuration error that fails open** — never as an unsatisfiable precondition that locks the machine out of its own tools (the lockout hazard, formally the EDGEVALID requirement in [02-enforcement.md](./02-enforcement.md)).
+- A `registry-validate` build step ([workbench/20-cli.md](/workbench/cli/)) MAY refuse, at build time, a registry that declares an edge to an absent skill — so dangling edges are caught deterministically before they ship, rather than at runtime.
+
+"Declared now, enforced when present" is what lets the full chain be written down before every link is built. In this version, the only **active** edge is the single project-scoped edge `memo-init → memo-sop`; `workbench-sop` and the global registry that would activate the upper edges are a follow-up.
+
+---
+
+## Related
+
+- [02-enforcement.md](./02-enforcement.md) — how the chain is enforced deterministically at PreToolUse.
+- [03-recovery.md](./03-recovery.md) — the fail-safe guarantees that keep the genesis tier always recoverable.
+- [workbench/02-sop-entrypoint.md](/workbench/sop-entrypoint/) — the workbench's view of this tier as the layer below it.
+
+---
+
+# 02. Deterministic Enforcement
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [01-genesis-root.md](./01-genesis-root.md) |
+| Related | [03-recovery.md](./03-recovery.md), [workbench/23-hooks-contract.md](/workbench/hooks-contract/), [workbench/20-cli.md](/workbench/cli/) |
+
+Self-discovery describes what an agent *should* do. Making it **deterministic** — guaranteeing the required predecessor SOP was active before a gated entry point runs, regardless of model behaviour — is the job of the genesis tier, through a Claude Code **PreToolUse hook**. This chapter specifies the contract that hook MUST satisfy. The concrete reference implementation is `sop-precondition.sh`; the contract it realizes is shared with [workbench/23-hooks-contract.md](/workbench/hooks-contract/).
+
+---
+
+## The Project-Scoped Registry
+
+The machine-readable form of the SOP chain is a **registry**. In this version the active registry is **project-scoped** (`.workbench/registry.json`), declaring the skills and the when:pre edges for one project:
+
+```json
+{ "skills": [ { "id": "memo-init", "signals": ["attributionSkill:memo-init"] },
+              { "id": "memo-sop",  "signals": ["attributionSkill:memo-sop"]  } ],
+  "requirements": [ { "id": "REQ-061", "entrypoint": "memo-init",
+                      "requires": "memo-sop", "when": "pre" } ] }
+```
+
+A global/genesis-tier registry at `~/.claude/session/registry.json` (note: the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is a follow-up. The registry file is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](./03-recovery.md)).
+
+---
+
+## The Signal Is Structured, Never a Substring
+
+The predecessor signal MUST be read **jq-structured** from the harness-authored `attributionSkill` field of the session transcript. It MUST NOT be a raw substring match over transcript text: transcript content includes user- and model-influenced text, so a substring grep over it is a **forgeable gate**. Only the structured `attributionSkill` value — which the harness, not the model, writes — is trusted. The scan MUST be bounded and BSD-safe (`tail -r` + early-exit, never `tac`).
+
+---
+
+## The Three-State Contract
+
+The gate has exactly three outcomes. Two are decisions; the third is the fail-safe.
+
+| State | Meaning | Exit |
+|-------|---------|------|
+| **ALLOW** | not gated, carved out, or the predecessor signal is present | 0 |
+| **DENY** | the transcript is readable AND the required predecessor is genuinely absent | 2 |
+| **ERROR (fail-open)** | any infrastructure or configuration problem | 0 + stderr note |
+
+The decision table the reference hook MUST implement:
+
+| Condition | Result | Exit |
+|-----------|--------|------|
+| kill-switch set (`$SESSION_SOP_DISABLE` or the sentinel) | ALLOW | 0 |
+| tool ≠ `Skill` | ALLOW | 0 |
+| `jq` missing · `transcript_path` empty/unreadable · registry malformed | ERROR (fail-open) | 0 |
+| `transcript_path` is a subagent transcript (`…/subagents/agent-*.jsonl`) | ALLOW (carve-out) | 0 |
+| the entry point is not gated by a when:pre edge | ALLOW | 0 |
+| the required skill is **not installed** (dangling edge) | ERROR (fail-open) | 0 |
+| transcript readable AND predecessor `attributionSkill` found (jq) | ALLOW | 0 |
+| transcript readable AND predecessor genuinely absent | DENY | 2 |
+
+The governing principle: **the gate never fail-CLOSES on infrastructure trouble** (FAILOPEN), and **never produces an unrecoverable lockout** (EDGEVALID). A DENY is a *redirect*, not a dead end — its message tells the agent to read the predecessor SOP first, after which the same entry point passes.
+
+---
+
+## Required Properties
+
+| Requirement | Statement |
+|-------------|-----------|
+| **REQ-SS-FAILOPEN** | Any infra/config problem ⇒ ALLOW (exit 0) with a stderr note. Never deny on trouble. |
+| **REQ-SS-SIGNAL** | The predecessor signal is matched jq-structured on `attributionSkill`, never as a substring. |
+| **REQ-SS-EDGEVALID** | An edge to a non-installed skill fails open; a build-time `registry-validate` MAY refuse it. |
+| **REQ-SS-SUBAGENT** | A subagent transcript is carved out (ALLOW) — it carries no parent attribution chain. |
+| **REQ-SS-BSD** | The transcript scan is bounded + BSD-safe (`tail -r`, early-exit), never `tac`. |
+| **REQ-SS-KILLSWITCH** | A kill-switch (env var + sentinel file) short-circuits to ALLOW as the first action. |
+| **REQ-SS-CANARY** | A SessionStart canary re-verifies the gate against known fixtures and auto-disables on drift. |
+| **REQ-SS-NOWRITE** | Live `~/.claude/` config (settings.json, CLAUDE.md) is changed only additively via a reviewed diff, never auto-written. |
+| **REQ-SS-WORKFLOW** | The gate MUST NOT block the memo workflow: `memo-init` / `memo-plan` / `memo-revision-*` run under the active gate (a DENY only redirects through the predecessor SOP). |
+
+---
+
+## Wiring Is Additive and Reviewed (REQ-SS-NOWRITE)
+
+The gate is wired into `~/.claude/settings.json` as a PreToolUse hook on the `Skill` matcher, **additively**: the existing `*` and `Write|Edit` hooks remain. Because `settings.json` is the single point of failure for all hooks, it MUST NOT be auto-written — a change is presented as an exact diff, backed up, validated with `jq`, and the matcher is asserted present after the edit. The same discipline applies to the `~/.claude/CLAUDE.md` genesis block.
+
+---
+
+## Related
+
+- [03-recovery.md](./03-recovery.md) — the kill-switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
+- [workbench/23-hooks-contract.md](/workbench/hooks-contract/) — the workbench-side statement of the same PreToolUse contract.
+- [workbench/20-cli.md](/workbench/cli/) — `memo session resolve` and `memo session registry-validate`.
+
+---
+
+# 03. Recovery and Fail-Safety
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [02-enforcement.md](./02-enforcement.md) |
+| Related | [01-genesis-root.md](./01-genesis-root.md), [workbench/23-hooks-contract.md](/workbench/hooks-contract/) |
+
+A gate that sits at the genesis tier governs *every* gated tool call in *every* session. The cost of it going wrong is therefore high, and recoverability is a first-class requirement, not an afterthought. This chapter specifies the operational guarantees that keep the genesis tier always recoverable.
+
+---
+
+## The Kill-Switch (REQ-SS-KILLSWITCH)
+
+Recovery MUST always be possible, even when the gate itself is misbehaving. Two equivalent kill-switches disable the gate, checked as the **first action** of the hook, before any parsing can fail:
+
+| Kill-switch | Use |
+|-------------|-----|
+| `SESSION_SOP_DISABLE=1` (environment variable) | per-shell / per-session disable |
+| `~/.claude/session/DISABLED` (sentinel file) | persistent disable until removed |
+
+Either present ⇒ the gate exits 0 (ALLOW) immediately. Removing both re-arms the gate.
+
+---
+
+## The SessionStart Canary (REQ-SS-CANARY)
+
+The most dangerous failure mode is a **silent fail-open after a harness or contract update**: the gate stops enforcing and nobody notices. The canary defends against exactly this. At SessionStart it feeds the live gate two synthetic fixtures with known-good answers:
+
+- a transcript **with** the predecessor signal ⇒ must ALLOW (exit 0);
+- a transcript **without** it ⇒ must DENY (exit 2).
+
+On **any** drift from those expected outcomes the canary MUST (a) shout to stderr and (b) **auto-engage the kill-switch** by writing the sentinel — so a gate that can no longer be trusted **disables itself** rather than continuing to mis-gate. The canary itself never blocks the session (always exit 0).
+
+---
+
+## Registry Protection (REQ-SS-EDGEVALID / R9)
+
+The registry is a privilege file: a silent rewrite could disable the gate or forge an edge. Tool-driven Write/Edit of a `.workbench/registry.json` (or the global `~/.claude/session/registry.json`) MUST be refused by a guard hook; edits go through a reviewed diff, after which `memo session registry-validate` confirms no edge dangles.
+
+---
+
+## Egress Quarantine Is Opt-In and Fail-Open
+
+The riskiest gate is the **fetch/egress** gate, because its collateral is broad and it inverts the default-trust posture. It is therefore **opt-in and default-off**: it does nothing unless a project explicitly enables it via a `.workbench/fetch-gate.json` marker (`{ "enabled": true, "allowlist": [...] }`). When enabled it is a **bounded, logged quarantine** — an allowlist, not an allow-all — and it remains **fail-open** (missing marker, empty `transcript_path`, or missing `jq` ⇒ ALLOW). Substring detection of `curl`/`wget` can never be complete; real egress control belongs to a future host-wide machine spec. The opt-in gate is a mitigation, not that control.
+
+---
+
+## The Recovery Runbook
+
+The operational steps — how to disable, diagnose, and re-arm the gate — live in the project's recovery runbook (`context/session-sop-recovery-runbook.md`). Its essence:
+
+1. **Disable now:** `export SESSION_SOP_DISABLE=1` (this shell) or `touch ~/.claude/session/DISABLED` (persistent).
+2. **Diagnose:** run the gate against a known-good fixture; check `~/.claude/session/fetch-gate.log` and the canary's stderr.
+3. **Re-arm:** remove the sentinel / unset the variable once the cause is fixed and the canary is green.
+
+---
+
+## Related
+
+- [02-enforcement.md](./02-enforcement.md) — the three-state contract these guarantees protect.
+- [01-genesis-root.md](./01-genesis-root.md) — the tier model and the "declared, enforced once present" chain rule.
