@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-06-26T16:04:18.195Z"
+generated_at: "2026-06-26T18:22:47.793Z"
 generated_from: "spec/session/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/00-overview.md."

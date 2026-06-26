@@ -6,7 +6,7 @@ spec_file: "01-genesis-root.md"
 order: 1
 section: "Session"
 normative: true
-generated_at: "2026-06-26T16:04:18.195Z"
+generated_at: "2026-06-26T18:22:47.793Z"
 generated_from: "spec/session/0.1.0/01-genesis-root.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/01-genesis-root.md."

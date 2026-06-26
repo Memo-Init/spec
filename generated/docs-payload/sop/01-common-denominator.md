@@ -6,7 +6,7 @@ spec_file: "01-common-denominator.md"
 order: 1
 section: "SOP"
 normative: false
-generated_at: "2026-06-26T16:04:18.195Z"
+generated_at: "2026-06-26T18:22:47.793Z"
 generated_from: "spec/sop/0.1.0/01-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/sop/0.1.0/01-common-denominator.md."
