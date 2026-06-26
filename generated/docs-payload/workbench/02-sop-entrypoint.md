@@ -6,14 +6,14 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: false
-generated_at: "2026-06-26T13:58:57.404Z"
+generated_at: "2026-06-26T15:10:37.273Z"
 generated_from: "spec/workbench/0.1.0/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/02-sop-entrypoint.md."
 ---
 
 
-This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard ([SOP spec](/sop/overview/)) — the **Root-SOP** and the **Projects-SOP** (registered as the [two workbench instances](/sop/root-and-projects-sops/)). This entry point does not itself hold either procedure; it names the two levels and **routes** to whichever instance the agent's location selects, and each instance **extends** the standard by realizing its **Setup**, **Health**, and **Update** for its level — plus the workbench's own **extras** (the wiki and project conventions). It is the smallest entry point: the thing an agent reads first, on every fresh start, to learn where it is and what it may do. The standard's definitions live in the [SOP spec](/sop/overview/) and are referenced here, not restated; this chapter adds how an agent enters the workbench and the two levels — and the two SOPs — it distinguishes.
+This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard ([SOP spec](/sop/overview/)) — the **Root-SOP** and the **Projects-SOP** (named in the SOP [instance register](/sop/instances/)). This entry point does not itself hold either procedure; it names the two levels and **routes** to whichever instance the agent's location selects, and each instance **extends** the standard by realizing its **Setup**, **Health**, and **Update** for its level — plus the workbench's own **extras** (the wiki and project conventions). It is the smallest entry point: the thing an agent reads first, on every fresh start, to learn where it is and what it may do. The standard's definitions live in the [SOP spec](/sop/overview/) and are referenced here, not restated; this chapter adds how an agent enters the workbench and the two levels — and the two SOPs — it distinguishes.
 
 ---
 
@@ -26,7 +26,7 @@ The workbench distinguishes exactly **two** levels of operation. Each level has 
 | **Workbench** | the system of projects runs | No project work. Setup, health, and update of the workbenches themselves — does each project exist with the expected structure, are the shared tools reachable. |
 | **Project** | project-specific work runs | Project-related work is carried out — memos, repositories, the project's own tooling. |
 
-An agent **MUST** determine which level it is operating at before it acts, because the permitted actions differ: at the workbench level it organizes and checks; at the project level it does the project's work. Each level is governed by its **own** thin SOP — the **Workbench level by the Root-SOP**, the **Project level by the Projects-SOP** — and this entry point routes to the matching one by the agent's location. The two SOPs and their routing are specified in [10-root-and-projects.md](/specification/root-and-projects/), which also draws the boundary between the workbench root and the projects beneath it, and they are registered as the two workbench instances in the SOP spec ([the two instances](/sop/root-and-projects-sops/)).
+An agent **MUST** determine which level it is operating at before it acts, because the permitted actions differ: at the workbench level it organizes and checks; at the project level it does the project's work. Each level is governed by its **own** thin SOP — the **Workbench level by the Root-SOP**, the **Project level by the Projects-SOP** — and this entry point routes to the matching one by the agent's location. The two SOPs and their routing are specified in [10-root-and-projects.md](/specification/root-and-projects/), which also draws the boundary between the workbench root and the projects beneath it, and they are named as the two workbench instances in the SOP [instance register](/sop/instances/).
 
 ---
 

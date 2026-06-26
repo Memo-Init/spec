@@ -6,7 +6,7 @@ spec_file: "02-instances.md"
 order: 2
 section: "SOP"
 normative: false
-generated_at: "2026-06-26T13:58:57.404Z"
+generated_at: "2026-06-26T15:10:37.273Z"
 generated_from: "spec/sop/0.1.0/02-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/sop/0.1.0/02-instances.md."
@@ -27,7 +27,7 @@ The SOP spec defines a shape; the concrete SOPs **are** that shape, filled in fo
 | **Root-SOP** | the workbench-root level — organize, do not develop | Workbench spec — reached through the [Workbench-SOP entry point](/workbench/sop-entrypoint/) |
 | **Projects-SOP** | the project level — one project's own work | Workbench spec — reached through the [Workbench-SOP entry point](/workbench/sop-entrypoint/) |
 
-The workbench scope contributes **two** instances, not one: it has two structural levels (root and project), and each level is its own thin SOP. The **Workbench-SOP** is the **entry point** that routes between them by the agent's location — a signpost, not a third instance. The two instances and the routing are recorded in [04-root-and-projects-sops.md](/specification/root-and-projects-sops/).
+The workbench scope contributes **two** instances, not one: it has two structural levels (root and project), and each level is its own thin SOP. The **Workbench-SOP** is the **entry point** that routes between them by the agent's location — a signpost, not a third instance. These two instances are named here; their full procedure and the routing between them are workbench-specific and live in the Workbench spec ([Root and Projects](/workbench/root-and-projects/)), not restated here.
 
 Each instance fills in the four parts of the common denominator for its own scope: its Setup creates that scope, its Health checks that scope, its Update keeps that scope current, and its extras cover what is unique to it. Future SOPs join the table by doing the same.
 
@@ -60,6 +60,6 @@ Each instance **SHOULD** also name its **entry points** — the holistic "what t
 
 - [00-overview.md](/specification/overview/) — the purpose of the SOP spec.
 - [01-common-denominator.md](/specification/common-denominator/) — the four parts each instance fills in.
-- [04-root-and-projects-sops.md](/specification/root-and-projects-sops/) — the two workbench instances (Root-SOP, Projects-SOP) and the routing between them.
+- [Root and Projects](/workbench/root-and-projects/) — the two workbench instances (Root-SOP, Projects-SOP) and the routing between them, specified in the Workbench spec.
 - [The Workbench-SOP entry point](/workbench/sop-entrypoint/) — the signpost that routes to the two workbench instances.
 - [The memo-init SOP entry point](/specification/memo-sop-entrypoint/) — the memo-lifecycle instance.

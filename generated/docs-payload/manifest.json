@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-26T13:58:57.517Z",
+    "generated_at": "2026-06-26T15:10:37.455Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -731,25 +731,15 @@
                 "section": "SOP",
                 "normative": false,
                 "sidebar_group": "introduction"
-            },
-            {
-                "filename": "04-root-and-projects-sops.md",
-                "slug": "root-and-projects-sops",
-                "title": "The Workbench Instances — Root-SOP and Projects-SOP",
-                "description": "The Workbench spec has **two structural levels** — the workbench root and the projects beneath it ([Root and Projects](/workbench/root-and-projects/)). Each level is governed by its **own thin SOP**,...",
-                "order": 4,
-                "section": "SOP",
-                "normative": false,
-                "sidebar_group": "introduction"
             }
         ]
     },
     "stats": {
-        "total_files": 73,
+        "total_files": 72,
         "core_files": 46,
         "workbench_files": 22,
-        "sop_files": 5,
+        "sop_files": 4,
         "normative_files": 61,
-        "informative_files": 12
+        "informative_files": 11
     }
 }
