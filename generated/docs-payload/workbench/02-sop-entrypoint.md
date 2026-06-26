@@ -6,7 +6,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: false
-generated_at: "2026-06-26T15:10:37.273Z"
+generated_at: "2026-06-26T16:04:18.195Z"
 generated_from: "spec/workbench/0.1.0/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/02-sop-entrypoint.md."
@@ -30,9 +30,24 @@ An agent **MUST** determine which level it is operating at before it acts, becau
 
 ---
 
-## Why There Is No Machine Level
+## The Machine Level Is the Session Genesis Tier
 
-A third, lower level — the **machine** (the host, the global `~/.claude/` configuration, the operating system) — is **not** part of this two-level model. The workbench begins at the **workbench folder**: projects and Claude Code instances elsewhere on the same machine are out of its scope. The machine tier is real, but it is **not used by the workbench system as a level of operation**, and it is specified separately (see "The Machine Tier" below).
+A third, lower level — the **machine** (the host, the global `~/.claude/` configuration, the operating system) — sits **below** the two-level workbench model. The workbench system still operates at exactly two levels (Workbench and Project): the machine tier is **not** a third *level of operation*. But it is no longer left unspecified. It is now specified as the **Session Genesis Root** — `session-sop` — in its own sibling family, the [Session spec](/session/overview/).
+
+The genesis tier owns what is global per **session** rather than per workbench: the session identity, the per-session security/trust level, and the **deterministic PreToolUse enforcement** that guarantees the right SOP is loaded before a tool runs. The workbench is a **convention layered above** this genesis root; `CLAUDE.md` loads `session-sop` first, and the upper layers inherit the session identity and security level it establishes.
+
+### The Full SOP Chain (declared; enforced once the skills exist)
+
+The entry-point chain is, bottom-up:
+
+```
+session-sop  (Genesis Root — session identity, security level, PreToolUse enforcement)
+  ↑ workbench-sop   (workbench convention)
+  ↑ memo-sop        (memo process)
+  ↑ memo-init / flowmcp / …  (domain entry points)
+```
+
+The chain is **normatively declared in full**, but each edge is **enforced only once both of its endpoint skills exist**. Declaring an edge whose target skill is not yet built (e.g. `workbench-sop` before it is implemented) MUST NOT create an unsatisfiable precondition: the enforcement gate treats an edge to an absent skill as a configuration error and **fails open** (see [23-hooks-contract.md](/specification/hooks-contract/)). This "declared now, enforced when present" rule is what lets the full chain be written down before every link is built, without ever locking the machine out of its own tools.
 
 ---
 
@@ -82,13 +97,13 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ---
 
-## The Machine Tier (Out of Scope)
+## The Machine Tier (Genesis Root Now Specified; Broader Host Still Future)
 
-> **Informative.** This section records a deliberate scope boundary and the rationale for it. It is forward-looking guidance, not a normative requirement of this spec.
+> **Informative.** This section records the scope boundary as it now stands and the rationale for it. The genesis/enforcement slice of the machine tier is specified (the [Session spec](/session/overview/)); the broader host-wide machine spec is still forward-looking guidance.
 
-The machine tier is **deliberately excluded** from this specification and left to a separate, future machine-tier spec. The reason follows from the level model above: the workbench begins in the workbench folder, while the machine tier governs the host globally (`~/.claude/`, the OS, every Claude Code project on the machine, not only those under the workbench).
+The **enforcement slice** of the machine tier — the Session Genesis Root that owns session identity, the per-session security level, and the deterministic PreToolUse SOP enforcement — is **now specified** in the sibling [Session spec](/session/overview/). What remains deliberately deferred to a separate, future host-wide machine spec is everything else the host governs globally (`~/.claude/` at large, the OS, every Claude Code project on the machine, not only those under the workbench).
 
-The existing arrangement is left as it is for now. In particular:
+The existing arrangement is otherwise left as it is for now. In particular:
 
 - **The git workflow stays at the project/memo level.** Git flow and the memo-ID convention remain where they are today. The clean three-way cut between machine, workbench, and project is sound in principle but is **deferred** until the hook mechanics are well understood.
 
@@ -113,3 +128,4 @@ The division of responsibility is the load-bearing idea: **the workbench declare
 - [20-cli.md](/specification/cli/) — the `.workbench/registry.json`, the machine-readable form of the signpost.
 - [24-skills-scope.md](/specification/skills-scope/) — how each add-on SOP fans out into orchestrators and components, one level below this cascade.
 - [The SOP spec](/sop/overview/) — the common SOP standard of which the workbench-SOP is an instance.
+- [The Session spec](/session/overview/) — the Session Genesis Root (`session-sop`): session identity, per-session security level, and the deterministic PreToolUse enforcement the workbench-SOP relies on.
