@@ -14,10 +14,11 @@ Every project under `projects/{name}/` **MUST** follow a single, predictable lay
 
 The workbench's core idea is that a project's top-level folders are a **registered vocabulary**: a fixed set of names, identical in every project, each with a declared meaning. Because the names are the same everywhere, a developer moving between projects — and an agent reading a project for the first time — already knows where context, repositories, scripts, and tooling live. The shared layout is a shared *working mentality*, not merely a directory listing; standardizing the first place a thing is put is worth the cost, because the alternative is every project doing it differently.
 
-Three properties make a folder **registered**:
+Four properties make a folder **registered**:
 
 - **A stable name.** The folder is referred to by exactly one name across all projects (`repos/`, `context/`, `.memo/`); the name is a load-bearing identifier, not a project-local choice.
 - **A required-or-optional status.** Each registered folder is either mandatory (every project has it) or optional (a project adds it when it needs it).
+- **A level.** Each registered folder lives at the workbench **root**, at the **project** level, or — like `context/` — at **both**; the level says where the name is expected (see [10-root-and-projects.md](./10-root-and-projects.md)).
 - **A declared meaning.** Each folder has one purpose and, where it is non-trivial, its own chapter or convention that says what belongs in it.
 
 The contract table in the next section **is** this registry: the single, authoritative list of registered folders. Tooling that needs the list — the project-setup helper, the structure audit — **SHOULD derive it from this registry** rather than restate it. A hardcoded copy in a tool is drift, and this registry is the source it must agree with.
@@ -28,26 +29,28 @@ The contract table in the next section **is** this registry: the single, authori
 
 Folder names are load-bearing identifiers and are reproduced verbatim. The workbench audit reports any missing mandatory path as a structural finding and any unexpected top-level entry for review.
 
-| Path | Status | Purpose |
-|------|--------|---------|
-| `.claude/` | Mandatory | Claude Code settings and project-local skills. |
-| `.memo/` | Mandatory | Memos and their shared stores; see [11-project-structure.md](./11-project-structure.md). |
-| `.trash/` | Mandatory | Recoverable trash; the deletion target (see [32-trash.md](./32-trash.md)). |
-| `context/` | Mandatory | **Processed** data — specifications, distilled research, Markdown/PDF documents. |
-| `repos/` | Mandatory | The project's git repositories (one domain per repository). |
-| `scripts/` | Mandatory | Environment and health scripts (see [21-environment-scripts.md](./21-environment-scripts.md)). |
-| `ABOUT.md` | Mandatory | Project documentation for humans. |
-| `CLAUDE.md` | Mandatory | The runbook for the AI. |
-| `data/` | Optional | **Raw** data — feeds and source material, as ingested, before processing. |
-| `.workbench/` | Optional | The manual project configuration (see [22-config.md](./22-config.md)). |
-| `.browser/` | Optional | Browser-automation session, scripts, and output — only when the project does browser automation; legacy alias `.playwright/` (see [31-browser-automation.md](./31-browser-automation.md)). |
-| `.wiki/` | Optional | LLM-generated project wiki, an OKF-conformant knowledge bundle (see [30-wiki.md](./30-wiki.md)). |
-| `proofs/` | Optional | Proofs captured when a view changes (see "Specialized folders" below). |
-| `snapshots/` | Optional | Application snapshots (see "Specialized folders" below). |
-| `design/` | Optional | Design system and visual sources — `DESIGN.md`, variants, and `.pen` files (see [18-design.md](./18-design.md)). |
-| `.tmp/` | Optional | Working scratch space; ephemeral material that may be discarded. |
+| Path | Status | Level | Purpose |
+|------|--------|-------|---------|
+| `.claude/` | Mandatory | Project | Claude Code settings and project-local skills. |
+| `.memo/` | Mandatory | Project | Memos and their shared stores; see [11-project-structure.md](./11-project-structure.md). |
+| `.trash/` | Mandatory | Project | Recoverable trash; the deletion target (see [32-trash.md](./32-trash.md)). |
+| `context/` | Mandatory | Both | **Processed**, derived material — specifications, distilled research, Markdown/PDF documents. Also exists at the root for cross-project standards (see [10-root-and-projects.md](./10-root-and-projects.md)). |
+| `repos/` | Mandatory | Project | The project's git repositories (one domain per repository). |
+| `scripts/` | Mandatory | Project | Environment and health scripts (see [21-environment-scripts.md](./21-environment-scripts.md)). |
+| `ABOUT.md` | Mandatory | Project | Project documentation for humans. |
+| `CLAUDE.md` | Mandatory | Project | The runbook for the AI. |
+| `data/` | Optional | Project | **Raw inputs** — feeds and source material, as ingested, before processing; the input side that `context/` is derived from. |
+| `.workbench/` | Optional | Project | The manual project configuration (see [22-config.md](./22-config.md)). |
+| `.browser/` | Optional | Project | Browser-automation session, scripts, and output — only when the project does browser automation; legacy alias `.playwright/` (see [31-browser-automation.md](./31-browser-automation.md)). |
+| `.wiki/` | Optional | Project | LLM-generated project wiki, an OKF-conformant knowledge bundle (see [30-wiki.md](./30-wiki.md)). |
+| `proofs/` | Optional | Project | Proofs captured when a view changes (see "Specialized folders" below). |
+| `snapshots/` | Optional | Project | Application snapshots (see "Specialized folders" below). |
+| `design/` | Optional | Project | Design system and visual sources — `DESIGN.md`, variants, and `.pen` files (see [18-design.md](./18-design.md)). |
+| `.tmp/` | Optional | Project | Scratch / temporary working area — transient material, not durable knowledge and not committed (see [32-trash.md](./32-trash.md)). |
 
 A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it.
+
+The **Level** column records where each name is expected. The rows above are the **project-level** contract for folders under `projects/{name}/`; `context/` is marked **Both** because the same name is also a registered folder at the workbench root, where it holds cross-project standards. The root-only folders — `cli/`, `projects/`, `templates/`, and the root `context/` — are registered in [10-root-and-projects.md](./10-root-and-projects.md), not restated here.
 
 ---
 
@@ -64,14 +67,16 @@ A new registered folder **MUST** follow this convention: a dot for generated or 
 
 ---
 
-## `data` Is Raw, `context` Is Processed
+## `data/` Is Raw Input, `context/` Is Processed
 
 The distinction between `data/` and `context/` is by **state of processing**, and it is the reason both exist:
 
-- **`data/`** holds **raw** material — feeds, dumps, and source files exactly as they arrive. It is the input side.
-- **`context/`** holds **processed** material — the Markdown, PDFs, and distilled research produced *from* the raw data (and from elsewhere). It is the worked, readable side that memos draw on.
+- **`data/`** holds **raw inputs** — feeds, dumps, and source files exactly as they arrive. It is the input side: material the project ingests but does not author.
+- **`context/`** holds **processed, derived** material — the Markdown, PDFs, and distilled research produced *from* the raw data (and from elsewhere). It is the worked, readable side that memos draw on.
 
-A project that only ever works with processed documents has a `context/` and no `data/`; a project that ingests raw feeds keeps them in `data/` and writes the distilled result into `context/`. Keeping the two apart prevents raw dumps from polluting the readable research store.
+The contract is directional: `data/` is the input, `context/` is what is derived from it. A project that only ever works with processed documents has a `context/` and no `data/`; a project that ingests raw feeds keeps them in `data/` and writes the distilled result into `context/`. Keeping the two apart prevents raw dumps from polluting the readable research store.
+
+Both differ from `.tmp/`, the third, transient tier: `data/` and `context/` are **durable knowledge** (the raw inputs and the processed result are both kept), whereas `.tmp/` is **scratch space** for ephemeral working material that may be discarded at any time and is not committed as knowledge (see [32-trash.md](./32-trash.md)).
 
 ---
 

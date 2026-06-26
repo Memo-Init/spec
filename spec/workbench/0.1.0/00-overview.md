@@ -99,7 +99,10 @@ This spec covers the workbench's **specification text and conventions**. Two thi
 
 ## Document Index
 
-The Workbench spec contains the following chapters, grouped into the navigation categories Introduction, Folders, CLI & Scripts, Tools, and Reference. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.)
+The Workbench spec contains the following chapters, grouped into the navigation categories Introduction, Folders, CLI & Scripts, **Core**, **Wiki**, Tools, and Reference. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.)
+
+- **Core** is the config (`.workbench/`, the producing side) and the hooks contract (the consuming side) — a mutually-defining policy/enforcement pair, together with the two-level model. They define each other and form the workbench's policy core, distinct from the general CLI/Scripts.
+- **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `DESIGN.md` (the design convention); OKF therefore sits conceptually under the wiki rather than standing alone.
 
 | Document | Title | Group | Mode |
 |----------|-------|-------|------|
@@ -109,19 +112,19 @@ The Workbench spec contains the following chapters, grouped into the navigation 
 | `10-root-and-projects.md` | Root and Projects | Folders | Normative |
 | `11-project-structure.md` | Project Structure & Local Guarantee | Folders | Normative |
 | `12-folders.md` | Project Folders — Mandatory and Optional | Folders | Normative |
-| `13-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Folders | Normative |
+| `13-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Wiki | Normative |
 | `15-repos.md` | The `repos/` Folder | Folders | Normative |
 | `16-context.md` | The `context/` Folder | Folders | Normative |
 | `17-memo-store.md` | The `.memo/` Folder | Folders | Normative |
 | `18-design.md` | The `design/` Folder & the DESIGN.md Convention | Folders | Normative |
 | `20-cli.md` | CLI Convention — Branch/Leaf | CLI & Scripts | Normative |
 | `21-environment-scripts.md` | Environment & Health Scripts | CLI & Scripts | Normative |
-| `22-config.md` | The `.workbench/` Configuration | CLI & Scripts | Normative |
-| `23-hooks-contract.md` | Hooks Contract | CLI & Scripts | Normative |
+| `22-config.md` | The `.workbench/` Configuration | Core | Normative |
+| `23-hooks-contract.md` | Hooks Contract | Core | Normative |
 | `24-skills-scope.md` | Skills in the Workbench Scope | CLI & Scripts | Normative |
 | `25-validation-overview.md` | Validation Overview | CLI & Scripts | Informative |
 | `26-addons.md` | The Add-On Model | CLI & Scripts | Normative |
-| `30-wiki.md` | The Wiki — Entry Point | Tools | Normative |
+| `30-wiki.md` | The Wiki — Entry Point | Wiki | Normative |
 | `31-browser-automation.md` | Browser Automation | Tools | Normative |
 | `32-trash.md` | Trash — No Deletion, Only `.trash/` | Tools | Normative |
 | `40-architecture-diagram.md` | Architecture Diagram | Reference | Informative |
