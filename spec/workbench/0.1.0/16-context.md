@@ -38,7 +38,7 @@ Content **SHOULD** be organized under a **per-topic sub-folder** of `context/` r
 
 ## Related
 
-- [12-folders.md](./12-folders.md) — `data` (raw) vs. `context` (processed), and the folder contract this page is the registered entry for.
+- [12-folders.md](./12-folders.md) — `data/` (raw) vs. `context/` (processed), and the folder contract this page is the registered entry for.
 - [11-project-structure.md](./11-project-structure.md) — `context/` as the primary immutable source kept local.
 - [10-root-and-projects.md](./10-root-and-projects.md) — the global vs. project `context/` distinction.
 - [30-wiki.md](./30-wiki.md) — the wiki as the search layer that indexes across `context/`.
