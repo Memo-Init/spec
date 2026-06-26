@@ -1,12 +1,12 @@
 ---
-title: "The `.memo/` Folder"
+title: ".memo/"
 description: "`.memo/` is the on-disk footprint of the **memo system** — the workbench's weightiest add-on, and its recommended default mode of working ([26-addons.md](./26-addons.md)). This is the per-folder page..."
 workbench_version: "0.1.0"
 spec_file: "17-memo-store.md"
 order: 17
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T10:09:30.468Z"
+generated_at: "2026-06-26T13:33:49.524Z"
 generated_from: "spec/workbench/0.1.0/17-memo-store.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/17-memo-store.md."

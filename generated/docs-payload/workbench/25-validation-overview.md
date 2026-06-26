@@ -6,7 +6,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: false
-generated_at: "2026-06-26T10:09:30.468Z"
+generated_at: "2026-06-26T13:33:49.524Z"
 generated_from: "spec/workbench/0.1.0/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/25-validation-overview.md."
@@ -21,25 +21,25 @@ The workbench's checks are deliberately spread across the chapters they belong t
 
 ## The Validation Families
 
-Each family has a stable name (the wayfinder handle), a short statement of what it checks, **when** it fires relative to the action, and the chapter that specifies it.
+Each family has a stable name (the wayfinder handle), a short statement of what it checks, **when** it fires relative to the action, the **mechanism** that enforces it, and the chapter that specifies it.
 
-| Family | Checks | When | Defined in |
-|--------|--------|------|------------|
-| `WRITE-LINT` | Content matches the target folder's convention before it is written | before (on `Write`/`Edit`) | [23-hooks-contract.md](/specification/hooks-contract/) |
-| `ENTRY-PRE` | An entry point's pre-conditions are met before it runs | before (on `Skill`) | [23-hooks-contract.md](/specification/hooks-contract/) |
-| `RUNTIME-VAL` | Which skills and tools actually ran this session | after (from the transcript) | [20-cli.md](/specification/cli/) |
-| `EGRESS-C1` | Inward routes through the memo ID, outward through Issues | on coordination / push | [22-config.md](/specification/config/), [11-project-structure.md](/specification/project-structure/) |
-| `TRASH` | Deletion routes through `.trash/` rather than a hard delete | on delete | [32-trash.md](/specification/trash/) |
-| `HEALTH` | Project structure and global-tool reachability | on demand / before a memo | [21-environment-scripts.md](/specification/environment-scripts/) |
-| `INSTALL-GATE` | A dependency is safe before it is installed | before install | [00-overview.md](/specification/overview/) |
+| Family | Checks | When | Mechanism | Defined in |
+|--------|--------|------|-----------|------------|
+| `WRITE-LINT` | Content matches the target folder's convention before it is written | before (on `Write`/`Edit`) | PreToolUse hook | [23-hooks-contract.md](/specification/hooks-contract/) |
+| `ENTRY-PRE` | An entry point's pre-conditions are met before it runs | before (on `Skill`) | PreToolUse hook | [23-hooks-contract.md](/specification/hooks-contract/) |
+| `RUNTIME-VAL` | Which skills and tools actually ran this session | after (from the transcript) | transcript scan | [20-cli.md](/specification/cli/) |
+| `EGRESS-C1` | Inward routes through the memo ID, outward through Issues | on coordination / push | push / coordination gate | [22-config.md](/specification/config/), [11-project-structure.md](/specification/project-structure/) |
+| `TRASH` | Deletion routes through `.trash/` rather than a hard delete | on delete | command rewrite | [32-trash.md](/specification/trash/) |
+| `HEALTH` | Project structure and global-tool reachability | on demand / before a memo | CLI / script | [21-environment-scripts.md](/specification/environment-scripts/) |
+| `INSTALL-GATE` | A dependency is safe before it is installed | before install | pre-install gate | [00-overview.md](/specification/overview/) |
 
 A second group of rules is **declared** by the workbench but **enforced at the machine tier**, whose hook scripts are out of scope for this spec ([02-sop-entrypoint.md](/specification/sop-entrypoint/)). They are listed so the wayfinder is complete:
 
-| Family | Checks | When | Declared by |
-|--------|--------|------|-------------|
-| `ENV-GUARD` | A write to a `.env` file is refused | before (on `Write`/`Edit`) | [23-hooks-contract.md](/specification/hooks-contract/) |
-| `NO-DESTRUCT` | A destructive shell command is rewritten or refused | before (on `Bash`) | [23-hooks-contract.md](/specification/hooks-contract/) |
-| `ATTRIB-GUARD` | A commit message carries no unapproved AI-attribution trailer | before a commit | [23-hooks-contract.md](/specification/hooks-contract/) |
+| Family | Checks | When | Mechanism | Declared by |
+|--------|--------|------|-----------|-------------|
+| `ENV-GUARD` | A write to a `.env` file is refused | before (on `Write`/`Edit`) | PreToolUse hook | [23-hooks-contract.md](/specification/hooks-contract/) |
+| `NO-DESTRUCT` | A destructive shell command is rewritten or refused | before (on `Bash`) | PreToolUse hook | [23-hooks-contract.md](/specification/hooks-contract/) |
+| `ATTRIB-GUARD` | A commit message carries no unapproved AI-attribution trailer | before a commit | commit-msg hook | [23-hooks-contract.md](/specification/hooks-contract/) |
 
 ---
 

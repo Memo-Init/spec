@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T10:09:30.468Z"
+generated_at: "2026-06-26T13:33:49.524Z"
 generated_from: "spec/workbench/0.1.0/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/12-folders.md."
@@ -74,7 +74,7 @@ A new registered folder **MUST** follow this convention: a dot for generated or 
 
 ---
 
-## `data/` Is Raw Input, `context/` Is Processed
+## `data/` vs `context/`
 
 The distinction between `data/` and `context/` is by **state of processing**, and it is the reason both exist:
 
@@ -130,7 +130,7 @@ OKF was the **first** convention and DESIGN.md the **second**; neither is privil
 
 ---
 
-## The Workbench Core Is Independent of the Memo System
+## Core Is Independent of the Memo System
 
 The registered folders divide into two groups, and the division is deliberate:
 

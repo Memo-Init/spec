@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-26T10:09:30.652Z",
+    "generated_at": "2026-06-26T13:33:50.448Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -452,6 +452,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "git"
+        },
+        {
+            "filename": "45-implementation-fidelity-audit.md",
+            "slug": "implementation-fidelity-audit",
+            "title": "Implementation-Fidelity Audit",
+            "description": "A memo's completeness gate guards exactly one seam — the revision-to-finalization transition — once, at topic granularity. That gate is defined in...",
+            "order": 45,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "health"
         }
     ],
     "workbench": {
@@ -481,7 +491,7 @@
                 "filename": "02-sop-entrypoint.md",
                 "slug": "sop-entrypoint",
                 "title": "Workbench-SOP and the Two-Level Model",
-                "description": "This is the **Workbench-SOP**: one instance of the common SOP standard ([SOP spec](/sop/overview/)) that it **extends**, and the rest of this chapter is how it realizes that standard's **Setup**,...",
+                "description": "This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard...",
                 "order": 2,
                 "section": "Workbench",
                 "normative": false,
@@ -530,7 +540,7 @@
             {
                 "filename": "15-repos.md",
                 "slug": "repos",
-                "title": "The `repos/` Folder",
+                "title": "repos/",
                 "description": "`repos/` is the one place in a project where git lives. It holds the project's repositories — and **only** the repositories — so that everything shareable is isolated behind an explicit boundary...",
                 "order": 15,
                 "section": "Workbench",
@@ -540,7 +550,7 @@
             {
                 "filename": "16-context.md",
                 "slug": "context",
-                "title": "The `context/` Folder",
+                "title": "context/",
                 "description": "`context/` is the project's store of **processed, authored knowledge** — the specifications, distilled research, and Markdown or PDF documents a memo draws on. It is the worked, readable side of a...",
                 "order": 16,
                 "section": "Workbench",
@@ -550,7 +560,7 @@
             {
                 "filename": "17-memo-store.md",
                 "slug": "memo-store",
-                "title": "The `.memo/` Folder",
+                "title": ".memo/",
                 "description": "`.memo/` is the on-disk footprint of the **memo system** — the workbench's weightiest add-on, and its recommended default mode of working ([26-addons.md](./26-addons.md)). This is the per-folder page...",
                 "order": 17,
                 "section": "Workbench",
@@ -560,12 +570,12 @@
             {
                 "filename": "18-design.md",
                 "slug": "design",
-                "title": "The `design/` Folder & the DESIGN.md Convention",
+                "title": "design/ & DESIGN.md",
                 "description": "`design/` is the optional, project-level folder that holds a project's **design system** and its visual sources. Its content follows a named convention — **DESIGN.md** — in the same way the...",
                 "order": 18,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "folders"
+                "sidebar_group": "wiki"
             },
             {
                 "filename": "20-cli.md",
@@ -590,7 +600,7 @@
             {
                 "filename": "22-config.md",
                 "slug": "config",
-                "title": "The `.workbench/` Configuration",
+                "title": ".workbench/",
                 "description": "A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository's **status** — its visibility, its remote, and its facing —...",
                 "order": 22,
                 "section": "Workbench",
@@ -625,7 +635,7 @@
                 "order": 25,
                 "section": "Workbench",
                 "normative": false,
-                "sidebar_group": "cli"
+                "sidebar_group": "core"
             },
             {
                 "filename": "26-addons.md",
@@ -635,7 +645,7 @@
                 "order": 26,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "cli"
+                "sidebar_group": "folders"
             },
             {
                 "filename": "30-wiki.md",
@@ -665,27 +675,17 @@
                 "order": 32,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "tools"
-            },
-            {
-                "filename": "40-architecture-diagram.md",
-                "slug": "architecture-diagram",
-                "title": "Architecture Diagram",
-                "description": "The core diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP spec, with the machine tier drawn dashed...",
-                "order": 40,
-                "section": "Workbench",
-                "normative": false,
-                "sidebar_group": "reference"
+                "sidebar_group": "folders"
             },
             {
                 "filename": "41-project-architecture.md",
                 "slug": "project-architecture",
-                "title": "Project Architecture",
-                "description": "A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges...",
+                "title": "Architecture",
+                "description": "This chapter holds the workbench's architecture at two scales: the **core diagram** that summarizes the system's overall structure — the two-level model and the three sibling spec families — and the...",
                 "order": 41,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "reference"
+                "sidebar_group": "core"
             }
         ]
     },
@@ -731,15 +731,25 @@
                 "section": "SOP",
                 "normative": false,
                 "sidebar_group": "introduction"
+            },
+            {
+                "filename": "04-root-and-projects-sops.md",
+                "slug": "root-and-projects-sops",
+                "title": "The Workbench Instances — Root-SOP and Projects-SOP",
+                "description": "The Workbench spec has **two structural levels** — the workbench root and the projects beneath it ([Root and Projects](/workbench/root-and-projects/)). Each level is governed by its **own thin SOP**,...",
+                "order": 4,
+                "section": "SOP",
+                "normative": false,
+                "sidebar_group": "introduction"
             }
         ]
     },
     "stats": {
-        "total_files": 72,
-        "core_files": 45,
-        "workbench_files": 23,
-        "sop_files": 4,
-        "normative_files": 60,
+        "total_files": 73,
+        "core_files": 46,
+        "workbench_files": 22,
+        "sop_files": 5,
+        "normative_files": 61,
         "informative_files": 12
     }
 }
