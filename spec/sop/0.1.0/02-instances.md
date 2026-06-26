@@ -17,7 +17,10 @@ The SOP spec defines a shape; the concrete SOPs **are** that shape, filled in fo
 | SOP | Scope | Where it lives |
 |-----|-------|----------------|
 | **memo-init SOP** | a single memo's lifecycle | core specification — [entry point](/specification/memo-sop-entrypoint/) |
-| **Workbench-SOP** | the workbench and its projects | Workbench spec — [entry point](/workbench/sop-entrypoint/) |
+| **Root-SOP** | the workbench-root level — organize, do not develop | Workbench spec — reached through the [Workbench-SOP entry point](/workbench/sop-entrypoint/) |
+| **Projects-SOP** | the project level — one project's own work | Workbench spec — reached through the [Workbench-SOP entry point](/workbench/sop-entrypoint/) |
+
+The workbench scope contributes **two** instances, not one: it has two structural levels (root and project), and each level is its own thin SOP. The **Workbench-SOP** is the **entry point** that routes between them by the agent's location — a signpost, not a third instance. The two instances and the routing are recorded in [04-root-and-projects-sops.md](./04-root-and-projects-sops.md).
 
 Each instance fills in the four parts of the common denominator for its own scope: its Setup creates that scope, its Health checks that scope, its Update keeps that scope current, and its extras cover what is unique to it. Future SOPs join the table by doing the same.
 
@@ -50,5 +53,6 @@ Each instance **SHOULD** also name its **entry points** — the holistic "what t
 
 - [00-overview.md](./00-overview.md) — the purpose of the SOP spec.
 - [01-common-denominator.md](./01-common-denominator.md) — the four parts each instance fills in.
-- [The Workbench-SOP](/workbench/sop-entrypoint/) — the workbench instance.
+- [04-root-and-projects-sops.md](./04-root-and-projects-sops.md) — the two workbench instances (Root-SOP, Projects-SOP) and the routing between them.
+- [The Workbench-SOP entry point](/workbench/sop-entrypoint/) — the signpost that routes to the two workbench instances.
 - [The memo-init SOP entry point](/specification/memo-sop-entrypoint/) — the memo-lifecycle instance.

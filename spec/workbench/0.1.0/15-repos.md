@@ -1,4 +1,4 @@
-# 15. The `repos/` Folder
+# 15. repos/
 
 | | |
 |---|---|

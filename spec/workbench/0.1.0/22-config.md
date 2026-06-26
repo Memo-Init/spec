@@ -1,4 +1,4 @@
-# 22. The `.workbench/` Configuration
+# 22. .workbench/
 
 | | |
 |---|---|
@@ -62,6 +62,8 @@ Like the facing configuration, both are **manual** — never silently generated 
 ## Derivation — One Source, Many Consumers
 
 The configuration is valuable because other things are **derived** from it rather than re-declared. The primary consumer is the **hooks contract** ([23-hooks-contract.md](./23-hooks-contract.md)): the manual declaration of facing (and of other project policy) is what a hook reads to decide, deterministically, whether an action is allowed — for example, whether a push to a repository declared inward should be blocked.
+
+The **memo system** is the other consumer of `facing`: it is the add-on that reads the inward/outward classification to route coordination — an **inward** repository's work is coordinated through the **memo ID**, an **outward** repository's through **Issues** (rule C1). The configuration declares the facing once; the hooks contract enforces it, and the memo system obeys it when it decides how a repository's commits are referenced.
 
 The principle is the division of responsibility introduced in [02-sop-entrypoint.md](./02-sop-entrypoint.md): **the workbench declares policy** here, in the `.workbench/` configuration; **the machine tier enforces it** through hooks. The configuration is therefore the contract surface between the two — the single, manual, readable source that enforcement consumes. What enforcement may read and how it behaves is specified next.
 

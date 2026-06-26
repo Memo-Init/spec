@@ -4,8 +4,8 @@
 # memo-init / spec
 
 The **memo-init specification** — an inductive, RFC-style description of the
-memo-system (memo-driven, agentic software engineering) plus the **workbench
-sub-spec**.
+memo-system (memo-driven, agentic software engineering) plus the **workbench**
+and **SOP** sibling specs.
 
 The spec is not invented top-down: it is **induced** from the live memo-toolkit,
 so it documents the real, verified system rather than an idealized model. It uses
@@ -36,12 +36,13 @@ npm run build
 
 ## Features
 
-The repository is organized into a hand-written core spec, a workbench sub-spec,
-and a generated machine-readable layer:
+The repository is organized into a hand-written core spec, two sibling specs
+(workbench and SOP), and a generated machine-readable layer:
 
 ```
-spec/v0.1.0/        Core spec chapters 00..36 (hand-written)
-spec/workbench/     Sub-spec: project structure, requirements, tools, strands, wiki, trash
+spec/v0.1.0/        Core spec chapters (hand-written) — a single memo's lifecycle
+spec/workbench/     Workbench sibling spec: project structure, folders, CLI & scripts, config, wiki, trash
+spec/sop/           SOP sibling spec: the thin SOP standard (common denominator, instances, conventions)
 data/               refs.manual.json (source of truth) + refs.schema.json (AJV)
 generated/          DO NOT EDIT — llms.txt, refs.resolved.json, docs-payload/ + manifest.json
 scripts/            generate-refs / -docs-payload / -manifest / -llms-txt (.mjs)
@@ -49,9 +50,11 @@ personas/           3-5 audience personas + entry-points + tone-guide
 .github/workflows/  generate + cross-repo dispatch (spec-updated / refs-updated)
 ```
 
-- **Core spec:** chapters `00..36` under `spec/v0.1.0/`, hand-written.
-- **Workbench sub-spec:** project structure, requirements, tools, strands, wiki,
-  trash under `spec/workbench/`.
+- **Core spec:** the numbered chapters under `spec/v0.1.0/`, hand-written.
+- **Workbench sibling spec:** project structure, folders, CLI & scripts, config,
+  wiki, trash under `spec/workbench/`.
+- **SOP sibling spec:** the thin SOP standard — common denominator, instances,
+  conventions — under `spec/sop/`.
 - **References:** `data/refs.manual.json` is the source of truth (validated by
   `data/refs.schema.json`); the active version is resolved there, never
   hardcoded.

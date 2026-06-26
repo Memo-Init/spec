@@ -67,7 +67,7 @@ A new registered folder **MUST** follow this convention: a dot for generated or 
 
 ---
 
-## `data/` Is Raw Input, `context/` Is Processed
+## `data/` vs `context/`
 
 The distinction between `data/` and `context/` is by **state of processing**, and it is the reason both exist:
 
@@ -123,7 +123,7 @@ OKF was the **first** convention and DESIGN.md the **second**; neither is privil
 
 ---
 
-## The Workbench Core Is Independent of the Memo System
+## Core Is Independent of the Memo System
 
 The registered folders divide into two groups, and the division is deliberate:
 
