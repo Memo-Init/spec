@@ -6,7 +6,7 @@ spec_file: "02-instances.md"
 order: 2
 section: "SOP"
 normative: false
-generated_at: "2026-06-26T13:33:49.524Z"
+generated_at: "2026-06-26T13:58:57.404Z"
 generated_from: "spec/sop/0.1.0/02-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/sop/0.1.0/02-instances.md."
