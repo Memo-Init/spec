@@ -6,7 +6,7 @@ spec_file: "01-common-denominator.md"
 order: 1
 section: "SOP"
 normative: false
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/sop/0.1.0/01-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/sop/0.1.0/01-common-denominator.md."
@@ -56,3 +56,4 @@ Setup, Health, and Update are the connecting core because they are the questions
 
 - [00-overview.md](/specification/overview/) — why a thin connecting layer exists.
 - [02-instances.md](/specification/instances/) — the existing SOPs as instances of this shape.
+- [03-conventions.md](/specification/conventions/) — the naming and brevity conventions shared across SOPs.

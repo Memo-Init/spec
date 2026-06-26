@@ -6,7 +6,7 @@
 | Depends on | [12-folders.md](./12-folders.md), [24-skills-scope.md](./24-skills-scope.md) |
 | Related | [22-config.md](./22-config.md), [20-cli.md](./20-cli.md), [25-validation-overview.md](./25-validation-overview.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 
-An **add-on** is a tool that plugs into the workbench: it is provided globally, it reserves a small declared area inside a project, and it follows a common SOP so that every add-on is operated the same way. This chapter specifies the add-on model — where an add-on may write, the SOP it follows, its standard entry points, and the relationship between its CLI and its skill. The taxonomy that distinguishes an add-on (a tool) from a convention (a content format) is in [12-folders.md](./12-folders.md).
+An **add-on** is a tool that plugs into the workbench: it is provided globally, it reserves a small declared area inside a project, and it follows a common SOP so that every add-on is operated the same way. This chapter specifies the add-on model — where an add-on may write, the SOP it follows, its standard entry points, and the relationship between its CLI and its skill. The taxonomy that distinguishes an add-on (a tool) from a convention (a content format) is in [12-folders.md](./12-folders.md), which also carries the diagram of how registered folders, conventions, add-ons, and the wiki relate.
 
 ---
 
@@ -35,10 +35,10 @@ Add-ons span a wide size range, and the model is not forced uniformly onto all o
 | Add-on | Weight | Data | Custom steps |
 |--------|--------|------|--------------|
 | **memo system** | heaviest | `.memo/` + `context/` | the full memo lifecycle |
-| **FlowMCP** | very large | global store (`~/.flowmcp/`, multi-GB) | search/list → call; many provider keys |
-| **get-sheet** | medium | two-tier config | unlock → upload → format |
-| **depwatch** | small/medium | global | gate before an install |
-| **ytAi** | small | none (stdout only) | one command |
+| **a very large add-on** | very large | a multi-GB global store; many provider keys | search/list → call |
+| **a medium add-on** | medium | a two-tier config | unlock → upload → format |
+| **a small add-on** | small/medium | a global store | a gate before an install |
+| **a one-command add-on** | small | none (stdout only) | one command |
 
 A heavy add-on earns a deep SOP with real Setup, Health, Update, and several Extras; a one-command tool needs little more than a single entry point. The point is one frame at all sizes, scaled to weight — not a separate model per tool.
 
@@ -66,7 +66,7 @@ Two entry points are **normalized across all add-ons** so that tooling can drive
 - **Health** — a uniform "is this add-on in order?" check.
 - **Migrate** — a uniform "bring this add-on's project data to the current shape" step (for many add-ons this slot is currently empty; that is acceptable).
 
-Existing tools expose these under divergent names (`memo health`, `flowmcp status`, `getsheet info`, `depwatch session`). Those names are kept as **aliases** of the standard entry points; the normalization is to a common vocabulary, and renaming an existing tool is deliberately **deferred** rather than forced now.
+Existing tools expose these under divergent names (`memo health`, and the various tool-specific status/info/session verbs an add-on already ships). Those names are kept as **aliases** of the standard entry points; the normalization is to a common vocabulary, and renaming an existing tool is deliberately **deferred** rather than forced now.
 
 ---
 
@@ -83,7 +83,7 @@ An add-on is reachable two ways, with a clear division of labor:
 
 ## Related
 
-- [12-folders.md](./12-folders.md) — the Convention-vs-Add-On taxonomy and the core-vs-add-on folder split.
+- [12-folders.md](./12-folders.md) — the Convention-vs-Add-On taxonomy, the core-vs-add-on folder split, and the registered-folders / convention / add-on / wiki diagram.
 - [24-skills-scope.md](./24-skills-scope.md) — the Setup/Health/Update/Extras SOP an add-on's skill realizes.
 - [22-config.md](./22-config.md) — the `.workbench/` descriptor an add-on declares.
 - [20-cli.md](./20-cli.md) — the Branch/Leaf CLI convention an add-on's standard entry follows.

@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Depends on | — (sibling-spec entry point) |
-| Related | [01-common-denominator.md](./01-common-denominator.md), [02-instances.md](./02-instances.md) |
+| Related | [01-common-denominator.md](./01-common-denominator.md), [02-instances.md](./02-instances.md), [03-conventions.md](./03-conventions.md) |
 
 > **Informative.** This document introduces the SOP spec, its scope, and its place among the sibling specifications. It does not itself carry normative requirements beyond the common denominator defined in [01-common-denominator.md](./01-common-denominator.md).
 
@@ -35,3 +35,4 @@ It is **versioned independently**, under `spec/sop/0.1.0/`, with its version rec
 | `00-overview.md` | Overview | Informative |
 | `01-common-denominator.md` | The Common Denominator — Setup, Health, Update, Extras | Informative |
 | `02-instances.md` | SOP Instances and the Reference Model | Informative |
+| `03-conventions.md` | Conventions — Naming and Brevity | Informative |

@@ -6,7 +6,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/workbench/0.1.0/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/20-cli.md."
@@ -31,6 +31,23 @@ A workbench CLI **SHOULD** be structured this way so that an agent can discover 
 ## `npm link` Is Only a Registration Mechanism
 
 Making a CLI globally callable — for example via `npm link` — is **only a registration mechanism**. It puts the command on the path; it says nothing about the command's design. The Branch/Leaf convention is the design contract, and it stands independently of how the binary is registered. Registration and convention **MUST NOT** be conflated: a tool is not "well-formed" because it is linked, only because its command tree is self-describing.
+
+---
+
+## `registry.json` Is the Self-Discovery Source
+
+An agent **MUST** discover the workbench's available CLIs, skills, and add-ons **deterministically by reading `.workbench/registry.json`**. It **MUST NOT** discover them by reading a `CLAUDE.md` or by inferring them from the shape of the filesystem. The registry is the **single discovery source**: one declared file answers "what is part of this workbench?", so discovery does not depend on prose that can drift or on a tree walk that can guess wrong.
+
+Discovery and preconditions are **unified in one file**. The same `registry.json` that lists `skills[]` and `addons[]` (discovery) also carries `requirements[]` — the precondition dependency table ([23-hooks-contract.md](/specification/hooks-contract/)). One source therefore answers both questions at once:
+
+- **"What exists?"** — the `skills[]` and `addons[]` arrays.
+- **"What must run first?"** — the `requirements[]` array, with its `when: "pre" | "post"` timing.
+
+This is the same registry whose shape, signals, and pre/post split are specified below; here it is named as the *discovery* source, not only the *validation* source.
+
+`npm link` and the registry play different roles and **MUST NOT** be conflated. Linking is **only the registration mechanism** (see [`npm link` Is Only a Registration Mechanism](#npm-link-is-only-a-registration-mechanism)) — it puts a CLI on the path. The registry is what makes that CLI **discoverable** as a declared part of the workbench. **Registration ≠ discovery:** a linked binary the registry does not list is on the path but is not part of the discoverable workbench surface.
+
+The **naming convention** for the discovery handle (the prefix-plus-hyphen scheme) is defined once in the SOP standard's conventions chapter ([/sop/conventions/](/sop/conventions/)); it is referenced here and **MUST NOT** be restated.
 
 ---
 
@@ -113,9 +130,32 @@ The validation is split across the two systems by what each one *knows*. The mem
 
 So **the memo collects IDs and interprets; the workbench holds the registry, searches the signals, and builds the matrix.** The division follows from knowledge: the workbench "knows all tools and SOPs", so it owns the *what-to-search*; the memo system carries the *which-sessions* and the *meaning*. A per-memo-scoped system interprets a project-wide matrix because interpretation is an **intent/requirements** check — only the memo system holds the requirements and the memo context. The workbench returns an already-matched, structured matrix; the memo reads it as a dataset, so the scope boundary is preserved.
 
+#### Session Validation Is a CLI Function the Memo Uses
+
+Session validation is a **workbench CLI function the memo uses**, not work the memo does itself: the workbench CLI holds the registry, searches the transcripts, and builds the matrix, while the memo only supplies the session IDs and interprets the result.
+
+```mermaid
+flowchart TD
+    MEMO1["Memo agent: collects session IDs<br/>knows its spawned sub-agents"] --> IDS["session IDs"]
+    IDS --> WCLI["Workbench CLI: holds registry, searches, builds matrix"]
+    REGISTRY[(".workbench/registry.json<br/>SOPs / skills / add-ons + signals")] --> WCLI
+    WCLI --> SCAN2["scans transcripts for signals"]
+    SCAN2 --> MATRIX["structured matrix back:<br/>session × skill/tool → used + evidence"]
+    MATRIX --> MEMO2["Memo agent: interprets<br/>checks requirements, e.g. init only if the SOP was read"]
+```
+
 ### Requirements on Top
 
 Because the matrix is a structured fact, **post-hoc requirements** can be expressed against it — for example, "the init entry point may run only if the SOP was read this session". This is the after-the-fact counterpart of the entry-point pre-condition ([23-hooks-contract.md](/specification/hooks-contract/)) and is registered like any other validation family ([25-validation-overview.md](/specification/validation-overview/)).
+
+### Pre and Post Share One Registry
+
+The post-hoc matrix above and the new pre-gate read the **same** `.workbench/registry.json` and the **same** transcript signals — they differ only in *when* they read. The `requirements[]` entries split by their `when` field:
+
+- **`when: "pre"`** entries are consumed by the **`PreToolUse` precondition hook** ([23-hooks-contract.md](/specification/hooks-contract/)). This **pulls the session-JSONL signal scan from post-hoc to a pre-gate**: the same three signals that prove a skill ran are checked *before* the entry point runs, so an unmet predecessor blocks the call instead of being reported after the fact.
+- **`when: "post"`** entries feed the after-the-fact matrix described above.
+
+So it is **one registry, one signal scan, two timings**. The seed first edge is **REQ-061** — `{ entrypoint: "memo-init", requires: "memo-sop", when: "pre" }` — the `memo-init → memo-sop` precondition that the pre-gate resolves deterministically.
 
 > **Spec now, build deferred.** This chapter fixes the path schema, the registry shape, the matrix output, and the memo-vs-workbench split. Building the workbench CLI leaf and the memo-side ID-collection/interpretation is a later, separate step.
 
@@ -124,6 +164,7 @@ Because the matrix is a structured fact, **post-hoc requirements** can be expres
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.
+- [/sop/conventions/](/sop/conventions/) — the SOP standard's conventions chapter that defines the naming convention (the discovery handle).
 - [23-hooks-contract.md](/specification/hooks-contract/) — the entry-point pre-condition, the "before" half this measurement complements.
 - [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
 - [25-validation-overview.md](/specification/validation-overview/) — the validation wayfinder where runtime call-validation is registered.

@@ -6,7 +6,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/workbench/0.1.0/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/16-context.md."
@@ -37,9 +37,15 @@ Different folders carry different **domain languages**, and `context/` is where 
 
 ---
 
+## Organize Under Per-Topic Sub-Folders
+
+Content **SHOULD** be organized under a **per-topic sub-folder** of `context/` rather than left as loose files at the folder root. `context/architecture-okf/` is the established instance of this: a named sub-folder gathers one topic's material; other distilled research follows the same shape, one sub-folder per topic. The rationale is a **uniform, discoverable structure** across the workbench — when every project groups its `context/` the same way, a reader (and an agent indexing the folder) finds a topic by its sub-folder instead of sifting a flat heap of files, and the wiki can index a coherent domain rather than scattered documents. A single stray file at the root is tolerable, but a topic with more than one file belongs in its own sub-folder.
+
+---
+
 ## Related
 
-- [12-folders.md](/specification/folders/) — `data` (raw) vs. `context` (processed), and the folder contract this page is the registered entry for.
+- [12-folders.md](/specification/folders/) — `data/` (raw) vs. `context/` (processed), and the folder contract this page is the registered entry for.
 - [11-project-structure.md](/specification/project-structure/) — `context/` as the primary immutable source kept local.
 - [10-root-and-projects.md](/specification/root-and-projects/) — the global vs. project `context/` distinction.
 - [30-wiki.md](/specification/wiki/) — the wiki as the search layer that indexes across `context/`.

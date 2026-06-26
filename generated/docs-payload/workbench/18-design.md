@@ -6,7 +6,7 @@ spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/workbench/0.1.0/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/18-design.md."
@@ -34,6 +34,8 @@ DESIGN.md is an external, open format (Apache-2.0). The name collides with an un
 - **`.pen` and visual sources** — the wireframes and mockups the design is drawn in.
 
 The folder is a registered, optional entry in the contract ([12-folders.md](/specification/folders/)); a project adds it when it does design work and omits it otherwise.
+
+When a project carries more than one design surface — several views, screens, or design directions — that content **SHOULD** be organized under a **per-topic sub-folder** of `design/` (one sub-folder per view or direction, each with its own `DESIGN.md`, variants, and `.pen` sources) rather than as loose files at the folder root. The rationale matches the rest of the workbench: a **uniform, discoverable structure**, so a reader finds a given surface by its sub-folder and the wiki indexes a coherent design domain. A single design surface may sit at the folder root; once there is more than one, each gets its own sub-folder.
 
 ---
 

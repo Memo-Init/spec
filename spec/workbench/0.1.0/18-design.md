@@ -28,6 +28,8 @@ DESIGN.md is an external, open format (Apache-2.0). The name collides with an un
 
 The folder is a registered, optional entry in the contract ([12-folders.md](./12-folders.md)); a project adds it when it does design work and omits it otherwise.
 
+When a project carries more than one design surface — several views, screens, or design directions — that content **SHOULD** be organized under a **per-topic sub-folder** of `design/` (one sub-folder per view or direction, each with its own `DESIGN.md`, variants, and `.pen` sources) rather than as loose files at the folder root. The rationale matches the rest of the workbench: a **uniform, discoverable structure**, so a reader finds a given surface by its sub-folder and the wiki indexes a coherent design domain. A single design surface may sit at the folder root; once there is more than one, each gets its own sub-folder.
+
 ---
 
 ## Foundation and Reference

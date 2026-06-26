@@ -32,7 +32,19 @@ Destructive recursive removal is **forbidden**.
 
 ---
 
+## `.tmp/` Is Scratch Space, Not a Trash Can
+
+`.tmp/` is the project's optional **scratch / temporary working area**: a place for ephemeral, transient material produced while working — intermediate output, throwaway drafts, captures that need not persist. It is a registered, optional folder ([12-folders.md](./12-folders.md)) and sits beside `.trash/`, but the two are distinct and **MUST NOT** be conflated:
+
+- **`.trash/`** holds material that *was* knowledge and is being removed; it is the recoverable deletion target, emptied only by a human. Routing a removal here preserves provenance.
+- **`.tmp/`** holds material that was *never* durable knowledge to begin with — scratch that is expected to be discarded. Content in `.tmp/` is transient and **is not committed** as durable knowledge.
+
+`.tmp/` also differs from `data/` and `context/`, the two **durable** tiers: `data/` keeps raw inputs and `context/` keeps the processed result, both retained; `.tmp/` keeps neither — it is working space whose contents may be cleared at any time without loss ([12-folders.md](./12-folders.md)). Because it is local-only working material, `.tmp/` is never pushed. Specialized captures (`proofs/`, `snapshots/`) **MAY** live under `.tmp/` when they are ephemeral rather than durable ([12-folders.md](./12-folders.md)).
+
+---
+
 ## Related
 
 - [11-project-structure.md](./11-project-structure.md) — the `.trash/` folder and the local guarantee that contains it.
+- [12-folders.md](./12-folders.md) — the folder contract registering `.trash/` and `.tmp/`, and the `data/`/`context/` durable tiers.
 - [00-overview.md](./00-overview.md) — workbench spec scope.

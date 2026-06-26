@@ -34,6 +34,18 @@ The result is a connecting layer with no duplication: the standard is stated onc
 
 ---
 
+## The Inheritance Declaration
+
+For the reference model to hold, the tie must be **stated** by the instance, not merely implied. An SOP instance **MUST** declare, as one of its first sentences, that it is an instance of the SOP standard and that it extends it; it then states how it realizes Setup, Health, and Update for its scope, plus its extras. The canonical first-sentence form opens an instance like this:
+
+> "This is the «X»-SOP, an instance of the SOP standard ([overview](./00-overview.md)) that it extends; below is how it realizes Setup, Health, and Update for «scope», plus its extras."
+
+This declaration is what lets a reader navigate an unfamiliar SOP by the standard: having read the common denominator once, the reader knows that the four parts are present and where each is realized, without reading the SOP end to end.
+
+Each instance **SHOULD** also name its **entry points** — the holistic "what this scope is" together with the concrete points where work enters the scope — so a reader knows both the whole and where to start.
+
+---
+
 ## Related
 
 - [00-overview.md](./00-overview.md) — the purpose of the SOP spec.

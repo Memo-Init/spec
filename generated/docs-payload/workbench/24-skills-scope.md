@@ -6,7 +6,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/workbench/0.1.0/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/24-skills-scope.md."
@@ -66,6 +66,16 @@ role: component      # a reusable building block, not in the user-callable catal
 
 A skill marked `role: component` is **taken out of the user-callable catalog**: it is private by default, the same posture as a class method that is private unless deliberately exposed. The default is private; an orchestrator is the deliberate exception that is made public.
 
+The two roles sit beneath the add-on SOPs the workbench-SOP points at ([02-sop-entrypoint.md](/specification/sop-entrypoint/)): each add-on's orchestrators are its public entry points, and components are the reusable building blocks they call.
+
+```mermaid
+flowchart TD
+    WSOP["Workbench-SOP — references the add-on SOPs"] --> MSOP["memo-SOP (weightiest add-on)"]
+    WSOP --> FSOP["&lt;other add-on&gt;-SOP"]
+    MSOP --> ORCH["Orchestrator = public method / entry point<br/>validated (pre-hook + runtime)"]
+    ORCH --> COMP["Component = private, reusable, not user-callable<br/>e.g. research at several points"]
+```
+
 ---
 
 ## The Public-Method Validation Boundary
@@ -81,6 +91,35 @@ The consequences are concrete:
 - **The stricter the public methods, the calmer the interior.** Rigor at the boundary is what lets the inside of the system relax; a lax boundary pushes defensive checks into every internal step.
 
 This is the same boundary the two checkability mechanisms act on: the **entry-point pre-condition** checks it *before* the call ([23-hooks-contract.md](/specification/hooks-contract/)), and the **runtime call-validation** measures it *after* ([20-cli.md](/specification/cli/)). The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
+
+---
+
+## Typed Skill Contracts
+
+Each skill **MUST** declare a **machine-readable typed contract** — typed **inputs** and typed **outputs**, not only the prose `## Skill-Inputs` table or the YAML frontmatter. The prose table documents a skill for a reader; the typed contract states the same surface in a form a machine can check and generate from.
+
+A worked example is a skill like `memo-init`, which consumes a structured transcript. Its input is a `TranscriptPrompt` type — named, typed fields rather than free text:
+
+```yaml
+# TranscriptPrompt — the typed input a skill such as memo-init consumes
+TranscriptPrompt:
+    initiator:   enum[user, llm]   # who started the memo
+    title:       string            # one-line subject of the transcript
+    topics:      string[]          # the extracted topics, one entry each
+    openQuestions: string[]        # questions to resolve before implementation
+    sources:     string[]          # linked files / URLs the transcript references
+```
+
+The typed contract is the **type half** of the [Public-Method Validation Boundary](#the-public-method-validation-boundary) above. That boundary states that "type-checking the input is necessary and not sufficient": the typed contract makes the boundary **machine-checkable** — a call can be checked against the declared shape automatically — while the **content** check ("does this make sense?") still sits on top. Types are the floor, not the ceiling.
+
+The typed contract **lives in the shared SOP-JSON layer** — alongside the dependency table and the registry ([20-cli.md](/specification/cli/), [23-hooks-contract.md](/specification/hooks-contract/)). One machine-readable layer then carries all three of: **discovery** (what skills and add-ons exist), **preconditions** (what must run first), **and skill I/O types** (the typed contract). They are not three separate stores.
+
+The same typed contract has a **dual use**:
+
+- As a **validation test** — does an actual call's input/output match the declared shape? This is the machine-checkable floor of the boundary above.
+- As a **generation template** — the declared shape is a skeleton for building or scaffolding the skill, so the contract that validates a skill is also the contract that seeds it.
+
+This chapter fixes the typed contract **spec-side now**; the implementation is **staggered** and is **not** claimed to be built — consistent with the chapter's **spec before mechanism** posture.
 
 ---
 

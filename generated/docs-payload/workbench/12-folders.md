@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/workbench/0.1.0/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/12-folders.md."
@@ -21,10 +21,11 @@ Every project under `projects/{name}/` **MUST** follow a single, predictable lay
 
 The workbench's core idea is that a project's top-level folders are a **registered vocabulary**: a fixed set of names, identical in every project, each with a declared meaning. Because the names are the same everywhere, a developer moving between projects — and an agent reading a project for the first time — already knows where context, repositories, scripts, and tooling live. The shared layout is a shared *working mentality*, not merely a directory listing; standardizing the first place a thing is put is worth the cost, because the alternative is every project doing it differently.
 
-Three properties make a folder **registered**:
+Four properties make a folder **registered**:
 
 - **A stable name.** The folder is referred to by exactly one name across all projects (`repos/`, `context/`, `.memo/`); the name is a load-bearing identifier, not a project-local choice.
 - **A required-or-optional status.** Each registered folder is either mandatory (every project has it) or optional (a project adds it when it needs it).
+- **A level.** Each registered folder lives at the workbench **root**, at the **project** level, or — like `context/` — at **both**; the level says where the name is expected (see [10-root-and-projects.md](/specification/root-and-projects/)).
 - **A declared meaning.** Each folder has one purpose and, where it is non-trivial, its own chapter or convention that says what belongs in it.
 
 The contract table in the next section **is** this registry: the single, authoritative list of registered folders. Tooling that needs the list — the project-setup helper, the structure audit — **SHOULD derive it from this registry** rather than restate it. A hardcoded copy in a tool is drift, and this registry is the source it must agree with.
@@ -35,26 +36,28 @@ The contract table in the next section **is** this registry: the single, authori
 
 Folder names are load-bearing identifiers and are reproduced verbatim. The workbench audit reports any missing mandatory path as a structural finding and any unexpected top-level entry for review.
 
-| Path | Status | Purpose |
-|------|--------|---------|
-| `.claude/` | Mandatory | Claude Code settings and project-local skills. |
-| `.memo/` | Mandatory | Memos and their shared stores; see [11-project-structure.md](/specification/project-structure/). |
-| `.trash/` | Mandatory | Recoverable trash; the deletion target (see [32-trash.md](/specification/trash/)). |
-| `context/` | Mandatory | **Processed** data — specifications, distilled research, Markdown/PDF documents. |
-| `repos/` | Mandatory | The project's git repositories (one domain per repository). |
-| `scripts/` | Mandatory | Environment and health scripts (see [21-environment-scripts.md](/specification/environment-scripts/)). |
-| `ABOUT.md` | Mandatory | Project documentation for humans. |
-| `CLAUDE.md` | Mandatory | The runbook for the AI. |
-| `data/` | Optional | **Raw** data — feeds and source material, as ingested, before processing. |
-| `.workbench/` | Optional | The manual project configuration (see [22-config.md](/specification/config/)). |
-| `.browser/` | Optional | Browser-automation session, scripts, and output — only when the project does browser automation; legacy alias `.playwright/` (see [31-browser-automation.md](/specification/browser-automation/)). |
-| `.wiki/` | Optional | LLM-generated project wiki, an OKF-conformant knowledge bundle (see [30-wiki.md](/specification/wiki/)). |
-| `proofs/` | Optional | Proofs captured when a view changes (see "Specialized folders" below). |
-| `snapshots/` | Optional | Application snapshots (see "Specialized folders" below). |
-| `design/` | Optional | Design system and visual sources — `DESIGN.md`, variants, and `.pen` files (see [18-design.md](/specification/design/)). |
-| `.tmp/` | Optional | Working scratch space; ephemeral material that may be discarded. |
+| Path | Status | Level | Purpose |
+|------|--------|-------|---------|
+| `.claude/` | Mandatory | Project | Claude Code settings and project-local skills. |
+| `.memo/` | Mandatory | Project | Memos and their shared stores; see [11-project-structure.md](/specification/project-structure/). |
+| `.trash/` | Mandatory | Project | Recoverable trash; the deletion target (see [32-trash.md](/specification/trash/)). |
+| `context/` | Mandatory | Both | **Processed**, derived material — specifications, distilled research, Markdown/PDF documents. Also exists at the root for cross-project standards (see [10-root-and-projects.md](/specification/root-and-projects/)). |
+| `repos/` | Mandatory | Project | The project's git repositories (one domain per repository). |
+| `scripts/` | Mandatory | Project | Environment and health scripts (see [21-environment-scripts.md](/specification/environment-scripts/)). |
+| `ABOUT.md` | Mandatory | Project | Project documentation for humans. |
+| `CLAUDE.md` | Mandatory | Project | The runbook for the AI. |
+| `data/` | Optional | Project | **Raw inputs** — feeds and source material, as ingested, before processing; the input side that `context/` is derived from. |
+| `.workbench/` | Optional | Project | The manual project configuration (see [22-config.md](/specification/config/)). |
+| `.browser/` | Optional | Project | Browser-automation session, scripts, and output — only when the project does browser automation; legacy alias `.playwright/` (see [31-browser-automation.md](/specification/browser-automation/)). |
+| `.wiki/` | Optional | Project | LLM-generated project wiki, an OKF-conformant knowledge bundle (see [30-wiki.md](/specification/wiki/)). |
+| `proofs/` | Optional | Project | Proofs captured when a view changes (see "Specialized folders" below). |
+| `snapshots/` | Optional | Project | Application snapshots (see "Specialized folders" below). |
+| `design/` | Optional | Project | Design system and visual sources — `DESIGN.md`, variants, and `.pen` files (see [18-design.md](/specification/design/)). |
+| `.tmp/` | Optional | Project | Scratch / temporary working area — transient material, not durable knowledge and not committed (see [32-trash.md](/specification/trash/)). |
 
 A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it.
+
+The **Level** column records where each name is expected. The rows above are the **project-level** contract for folders under `projects/{name}/`; `context/` is marked **Both** because the same name is also a registered folder at the workbench root, where it holds cross-project standards. The root-only folders — `cli/`, `projects/`, `templates/`, and the root `context/` — are registered in [10-root-and-projects.md](/specification/root-and-projects/), not restated here.
 
 ---
 
@@ -71,14 +74,16 @@ A new registered folder **MUST** follow this convention: a dot for generated or 
 
 ---
 
-## `data` Is Raw, `context` Is Processed
+## `data/` Is Raw Input, `context/` Is Processed
 
 The distinction between `data/` and `context/` is by **state of processing**, and it is the reason both exist:
 
-- **`data/`** holds **raw** material — feeds, dumps, and source files exactly as they arrive. It is the input side.
-- **`context/`** holds **processed** material — the Markdown, PDFs, and distilled research produced *from* the raw data (and from elsewhere). It is the worked, readable side that memos draw on.
+- **`data/`** holds **raw inputs** — feeds, dumps, and source files exactly as they arrive. It is the input side: material the project ingests but does not author.
+- **`context/`** holds **processed, derived** material — the Markdown, PDFs, and distilled research produced *from* the raw data (and from elsewhere). It is the worked, readable side that memos draw on.
 
-A project that only ever works with processed documents has a `context/` and no `data/`; a project that ingests raw feeds keeps them in `data/` and writes the distilled result into `context/`. Keeping the two apart prevents raw dumps from polluting the readable research store.
+The contract is directional: `data/` is the input, `context/` is what is derived from it. A project that only ever works with processed documents has a `context/` and no `data/`; a project that ingests raw feeds keeps them in `data/` and writes the distilled result into `context/`. Keeping the two apart prevents raw dumps from polluting the readable research store.
+
+Both differ from `.tmp/`, the third, transient tier: `data/` and `context/` are **durable knowledge** (the raw inputs and the processed result are both kept), whereas `.tmp/` is **scratch space** for ephemeral working material that may be discarded at any time and is not committed as knowledge (see [32-trash.md](/specification/trash/)).
 
 ---
 
@@ -89,9 +94,25 @@ Two distinct things attach to folders, and the spec keeps them apart:
 | Term | What it is | Examples |
 |------|-----------|----------|
 | **Convention** | A named **standard or format** that the *content* of a folder follows. | OKF for `context/architecture-okf/` and `.wiki/` ([13-knowledge-format-okf.md](/specification/knowledge-format-okf/)); DESIGN.md for `design/`. |
-| **Add-On** | A **tool** that reserves an area of the project and may use or bring conventions of its own. | The memo system, `flowmcp`, `get-sheet`, `ytAi`. |
+| **Add-On** | A **tool** that reserves an area of the project and may use or bring conventions of its own. | The memo system, and other globally provided tools. |
 
 A Convention answers *what format does this folder's content take?*; an Add-On answers *which tool reserves space here and operates on it?*. The two compose: an add-on may write into a folder whose content follows a convention. The convention model — how a folder declares the standard its content follows — is developed across this Folders category (OKF in [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) is the first instance); the add-on model — how a tool reserves an area and where its data lives — is specified in the add-on chapter ([26-addons.md](/specification/addons/)).
+
+The relationship reads in one direction — from the shared vocabulary outward, with the wiki indexing across the whole:
+
+```mermaid
+flowchart TD
+    REG["Registered folders<br/>(the shared vocabulary — this chapter)"]
+    REG --> CONV["Conventions<br/>(the format a folder's content follows)"]
+    CONV --> C1["OKF — context/architecture-okf, .wiki/"]
+    CONV --> C2["DESIGN.md — design/"]
+    ADDON["Add-ons = tools<br/>(the memo system + other add-ons)"]
+    ADDON -->|"reserve a declared area, may use conventions"| REG
+    WIKI["Wiki — search engine across all folders"]
+    WIKI -->|"indexes"| REG
+```
+
+The registered folders are the shared vocabulary; a convention is the format the *content* of a folder follows; an add-on is a *tool* that reserves a declared area and may use those conventions; and the wiki sits one level above as the search engine that indexes across them all, so a reader finds material without first knowing which folder holds it.
 
 ---
 

@@ -102,10 +102,20 @@ const sidebarGroupFromFilename = ( { filename } ) => {
 // Workbench sidebar mapping (own family, Introduction-first). Number ranges keep the
 // reading order Introduction → Folders → CLI → Tools → Reference:
 //   00-09 introduction · 10-19 folders · 20-29 cli · 30-39 tools · 40+ reference.
+//
+// Special-cases (numbers stay put so published slug links never break — categories are
+// introduced by overriding specific orders, not by renumbering files):
+//   - 22, 23 → 'core' (Memo 045 Ch5): the `.workbench/` config (22, producing side) and
+//     the hooks contract (23, consuming side) are a mutually-defining policy/enforcement
+//     pair plus the two-level model — the workbench Core, distinct from CLI/Scripts.
+//   - 30, 13 → 'wiki' (Memo 045 Ch7): the wiki (30) is its own category, and OKF (13)
+//     moves conceptually under it as one of the wiki's storage formats.
 const workbenchSidebarGroupFromFilename = ( { filename } ) => {
     const match = filename.match( /^(\d{2})-/ )
     if( !match ) return 'introduction'
     const order = parseInt( match[ 1 ], 10 )
+    if( order === 22 || order === 23 ) return 'core'
+    if( order === 30 || order === 13 ) return 'wiki'
     if( order <= 9 ) return 'introduction'
     if( order <= 19 ) return 'folders'
     if( order <= 29 ) return 'cli'
