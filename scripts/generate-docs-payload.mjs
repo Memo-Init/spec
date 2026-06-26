@@ -43,13 +43,16 @@ const readFamilyVersion = ( { family } ) => {
 const SPEC_VERSION = readFamilyVersion( { family: 'spec' } )
 const WORKBENCH_VERSION = readFamilyVersion( { family: 'workbench' } )
 const SOP_VERSION = readFamilyVersion( { family: 'sop' } )
+const SESSION_VERSION = readFamilyVersion( { family: 'session' } )
 
 const SPEC_DIR = join( REPO, `spec/v${ SPEC_VERSION }` )
 const WORKBENCH_DIR = join( REPO, `spec/workbench/${ WORKBENCH_VERSION }` )
 const SOP_DIR = join( REPO, `spec/sop/${ SOP_VERSION }` )
+const SESSION_DIR = join( REPO, `spec/session/${ SESSION_VERSION }` )
 const PAYLOAD_DIR = join( REPO, 'generated/docs-payload' )
 const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
 const SOP_PAYLOAD_DIR = join( PAYLOAD_DIR, 'sop' )
+const SESSION_PAYLOAD_DIR = join( PAYLOAD_DIR, 'session' )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 
@@ -159,7 +162,7 @@ const rewriteSpecLinks = ( { content } ) => {
         ( match, fname, anchor ) => `](/specification/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
     )
     return sameFamily.replace(
-        /\]\((?:\.\.\/)+(?:(v\d+\.\d+\.\d+)|(workbench|sop)(?:\/\d+\.\d+\.\d+)?)\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
+        /\]\((?:\.\.\/)+(?:(v\d+\.\d+\.\d+)|(workbench|sop|session)(?:\/\d+\.\d+\.\d+)?)\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
         ( match, coreVersion, family, fname, anchor ) => {
             const route = coreVersion ? 'specification' : family
             return `](/${ route }/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
@@ -302,6 +305,19 @@ const main = async () => {
         now
     } )
     reportPass( { label: 'sop', results: sopResults, targetDir: SOP_PAYLOAD_DIR } )
+
+    const sessionResults = await generatePass( {
+        label: 'session',
+        sourceDir: SESSION_DIR,
+        targetDir: SESSION_PAYLOAD_DIR,
+        section: 'Session',
+        versionField: 'session_version',
+        versionValue: SESSION_VERSION,
+        sourceRelBase: `spec/session/${ SESSION_VERSION }`,
+        sourceCommit,
+        now
+    } )
+    reportPass( { label: 'session', results: sessionResults, targetDir: SESSION_PAYLOAD_DIR } )
 }
 
 

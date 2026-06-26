@@ -18,6 +18,12 @@
         "specDir": "spec/sop/0.1.0",
         "url": "https://memo-init.github.io/sop/overview/"
     },
+    "session": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "spec/session/0.1.0",
+        "url": "https://memo-init.github.io/session/overview/"
+    },
     "docs": {
         "canonical": "https://memo-init.github.io",
         "entryPoints": {

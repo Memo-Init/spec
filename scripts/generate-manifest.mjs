@@ -27,10 +27,12 @@ const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json
 const SPEC_VERSION = REFS_MANUAL.spec.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
 const SOP_VERSION = REFS_MANUAL.sop.currentVersion
+const SESSION_VERSION = REFS_MANUAL.session.currentVersion
 
 const PAYLOAD_DIR = join( REPO, 'generated/docs-payload' )
 const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
 const SOP_PAYLOAD_DIR = join( PAYLOAD_DIR, 'sop' )
+const SESSION_PAYLOAD_DIR = join( PAYLOAD_DIR, 'session' )
 const MANIFEST_PATH = join( PAYLOAD_DIR, 'manifest.json' )
 const GENERATOR = 'scripts/generate-manifest.mjs'
 
@@ -140,6 +142,10 @@ const workbenchSidebarGroupFromFilename = ( { filename } ) => {
 const sopSidebarGroupFromFilename = () => 'introduction'
 
 
+// Session-Spec is deliberately thin — a single Introduction group (Genesis Root family).
+const sessionSidebarGroupFromFilename = () => 'introduction'
+
+
 const collectEntries = async ( { dir, groupFn, label } ) => {
     let names
     try {
@@ -192,8 +198,9 @@ const main = async () => {
     const coreFiles = await collectEntries( { dir: PAYLOAD_DIR, groupFn: sidebarGroupFromFilename, label: 'core' } )
     const workbench = await buildFamilyBlock( { dir: WORKBENCH_PAYLOAD_DIR, groupFn: workbenchSidebarGroupFromFilename, label: 'workbench', version: WORKBENCH_VERSION } )
     const sop = await buildFamilyBlock( { dir: SOP_PAYLOAD_DIR, groupFn: sopSidebarGroupFromFilename, label: 'sop', version: SOP_VERSION } )
+    const session = await buildFamilyBlock( { dir: SESSION_PAYLOAD_DIR, groupFn: sessionSidebarGroupFromFilename, label: 'session', version: SESSION_VERSION } )
 
-    const allFiles = [ ...coreFiles, ...workbench.files, ...sop.files ]
+    const allFiles = [ ...coreFiles, ...workbench.files, ...sop.files, ...session.files ]
 
     const manifest = {
         spec_version: SPEC_VERSION,
@@ -202,11 +209,13 @@ const main = async () => {
         files: coreFiles,
         workbench,
         sop,
+        session,
         stats: {
             total_files: allFiles.length,
             core_files: coreFiles.length,
             workbench_files: workbench.files.length,
             sop_files: sop.files.length,
+            session_files: session.files.length,
             normative_files: allFiles.filter( ( f ) => f.normative ).length,
             informative_files: allFiles.filter( ( f ) => !f.normative ).length
         }
@@ -214,7 +223,7 @@ const main = async () => {
 
     await writeFile( MANIFEST_PATH, JSON.stringify( manifest, null, 4 ) + '\n', 'utf-8' )
     console.log( `\nManifest written to ${ MANIFEST_PATH }` )
-    console.log( `Total: ${ manifest.stats.total_files } (core ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, sop ${ manifest.stats.sop_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
+    console.log( `Total: ${ manifest.stats.total_files } (core ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, sop ${ manifest.stats.sop_files }, session ${ manifest.stats.session_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
 }
 
 

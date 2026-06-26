@@ -22,11 +22,13 @@ const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json
 const SPEC_VERSION = REFS_MANUAL.spec.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
 const SOP_VERSION = REFS_MANUAL.sop.currentVersion
+const SESSION_VERSION = REFS_MANUAL.session.currentVersion
 const SOURCE_URL = REFS_MANUAL.github.specRepo
 
 const SPEC_DIR = join( REPO, `spec/v${ SPEC_VERSION }` )
 const WORKBENCH_DIR = join( REPO, `spec/workbench/${ WORKBENCH_VERSION }` )
 const SOP_DIR = join( REPO, `spec/sop/${ SOP_VERSION }` )
+const SESSION_DIR = join( REPO, `spec/session/${ SESSION_VERSION }` )
 const LLMS_PATH = join( REPO, 'generated/llms.txt' )
 
 
@@ -69,6 +71,7 @@ const main = async () => {
     const core = await readSection( { sourceDir: SPEC_DIR } )
     const workbench = await readSection( { sourceDir: WORKBENCH_DIR } )
     const sop = await readSection( { sourceDir: SOP_DIR } )
+    const session = await readSection( { sourceDir: SESSION_DIR } )
 
     const body = [
         header,
@@ -84,13 +87,17 @@ const main = async () => {
         `# SOP Spec v${ SOP_VERSION }`,
         '========================================\n',
         sop.text,
+        '\n========================================',
+        `# Session Spec v${ SESSION_VERSION }`,
+        '========================================\n',
+        session.text,
         ''
     ].join( '\n' )
 
     await mkdir( dirname( LLMS_PATH ), { recursive: true } )
     await writeFile( LLMS_PATH, body, 'utf-8' )
 
-    console.log( `[OK] Wrote ${ LLMS_PATH } (core ${ core.count } + workbench ${ workbench.count } + sop ${ sop.count } chapters)` )
+    console.log( `[OK] Wrote ${ LLMS_PATH } (core ${ core.count } + workbench ${ workbench.count } + sop ${ sop.count } + session ${ session.count } chapters)` )
 }
 
 
