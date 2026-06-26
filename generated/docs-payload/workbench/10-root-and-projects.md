@@ -6,7 +6,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T10:09:30.468Z"
+generated_at: "2026-06-26T13:33:49.524Z"
 generated_from: "spec/workbench/0.1.0/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/10-root-and-projects.md."
@@ -52,7 +52,7 @@ Each level is governed by its **own** thin SOP. Both are instances of the common
 - The **Root-SOP** is the procedure for the meta-orchestration layer: it sets up the root-level folders, checks that every project beneath it carries the expected structure and that shared tools are reachable, and brings the root up to date. It does no project work.
 - The **Projects-SOP** is the procedure for working *inside* one project: it sets up and checks a single project's folders, drives the project's own work (memos, repositories, tooling), and keeps the project current.
 
-Both SOPs are **thin**: each **references the SOP standard** for the meaning of Setup, Health, Update, and Extras instead of restating it, and adds only what is specific to its scope. The workbench-SOP entry point ([02-sop-entrypoint.md](/specification/sop-entrypoint/)) routes to whichever of the two applies based on **where the agent is** — the Root-SOP at the workbench root, the Projects-SOP inside a project. An agent therefore reads exactly one of the two for the level it is operating at, and the level it is operating at is decided by its location.
+Both SOPs are **thin**: each **references the SOP standard** for the meaning of Setup, Health, Update, and Extras instead of restating it, and adds only what is specific to its scope. They are registered as the two workbench instances in the SOP spec, which records the routing between them ([the two instances](/sop/root-and-projects-sops/)). The workbench-SOP entry point ([02-sop-entrypoint.md](/specification/sop-entrypoint/)) routes to whichever of the two applies based on **where the agent is** — the Root-SOP at the workbench root, the Projects-SOP inside a project. An agent therefore reads exactly one of the two for the level it is operating at, and the level it is operating at is decided by its location.
 
 ---
 
@@ -75,7 +75,7 @@ Neither the workbench root nor any project root is a git repository. This is the
 
 ---
 
-## Policy Lives in the Spec and the Configuration, Not in `CLAUDE.md`
+## Where Policy Lives
 
 Workbench-level policy — the conventions both levels obey — belongs in **this specification** and in the **`.workbench/` configuration** ([22-config.md](/specification/config/)). A `CLAUDE.md` is a **thin pointer**: it tells an agent which SOP to read ("read the workbench-SOP" at the root, "read the Projects-SOP" inside a project), and states the *why* and *when* of that scope. It is **not** the place where conventions are defined or enforced. The same division of responsibility applies as elsewhere in this spec: the spec and the configuration **declare** policy; the machine tier **enforces** it ([22-config.md](/specification/config/)); and `CLAUDE.md` merely **points** at both.
 

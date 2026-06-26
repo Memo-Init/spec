@@ -36,7 +36,7 @@ The user does not care which form a piece of knowledge is in — the wiki finds 
 
 ---
 
-## The Wiki Indexes the Architecture — It Does Not Copy It
+## Indexes the Architecture, Does Not Copy It
 
 The architecture is one of the things the wiki knows about, but the wiki **points at it, it does not duplicate it**. The wiki's index carries an entry that refers to the architecture bundle (`context/architecture-okf/`); the bundle stays the single source of truth, and the wiki never holds a second, drifting copy of the repo graph. This is the same no-copy rule the tools registry follows ([../../v0.1.0/24-tools-registry.md](../../v0.1.0/24-tools-registry.md)): a reference whose target owns the content, so an update changes one place. A deterministic consumer that needs the architecture follows the pointer to `memo architecture locate`; a human or agent browsing the wiki follows the same pointer by hand.
 
@@ -48,7 +48,7 @@ The wiki answers in the **present tense**: a wiki page states what is understood
 
 ---
 
-## Every Project Gets a Wiki; Only Internal Projects Get Enforced Architecture
+## Wiki for All, Enforced Architecture for Internal
 
 The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required:
 
@@ -70,7 +70,7 @@ Write-time freshness keeps the wiki growing correctly; periodic staleness detect
 
 ---
 
-## The About Convention — Scripts Folders Feed the Wiki
+## The About Convention
 
 The wiki's discovery reach extends to the project's **scripts**. When something is written into a `scripts/` subfolder, that subfolder **SHOULD** carry an **`About`** — a short description of what the folder is for — and that `About` is **ingested into the wiki**. This is the third ingest source, alongside landing-time ingest and periodic staleness detection.
 

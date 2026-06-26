@@ -14,25 +14,25 @@ The workbench's checks are deliberately spread across the chapters they belong t
 
 ## The Validation Families
 
-Each family has a stable name (the wayfinder handle), a short statement of what it checks, **when** it fires relative to the action, and the chapter that specifies it.
+Each family has a stable name (the wayfinder handle), a short statement of what it checks, **when** it fires relative to the action, the **mechanism** that enforces it, and the chapter that specifies it.
 
-| Family | Checks | When | Defined in |
-|--------|--------|------|------------|
-| `WRITE-LINT` | Content matches the target folder's convention before it is written | before (on `Write`/`Edit`) | [23-hooks-contract.md](./23-hooks-contract.md) |
-| `ENTRY-PRE` | An entry point's pre-conditions are met before it runs | before (on `Skill`) | [23-hooks-contract.md](./23-hooks-contract.md) |
-| `RUNTIME-VAL` | Which skills and tools actually ran this session | after (from the transcript) | [20-cli.md](./20-cli.md) |
-| `EGRESS-C1` | Inward routes through the memo ID, outward through Issues | on coordination / push | [22-config.md](./22-config.md), [11-project-structure.md](./11-project-structure.md) |
-| `TRASH` | Deletion routes through `.trash/` rather than a hard delete | on delete | [32-trash.md](./32-trash.md) |
-| `HEALTH` | Project structure and global-tool reachability | on demand / before a memo | [21-environment-scripts.md](./21-environment-scripts.md) |
-| `INSTALL-GATE` | A dependency is safe before it is installed | before install | [00-overview.md](./00-overview.md) |
+| Family | Checks | When | Mechanism | Defined in |
+|--------|--------|------|-----------|------------|
+| `WRITE-LINT` | Content matches the target folder's convention before it is written | before (on `Write`/`Edit`) | PreToolUse hook | [23-hooks-contract.md](./23-hooks-contract.md) |
+| `ENTRY-PRE` | An entry point's pre-conditions are met before it runs | before (on `Skill`) | PreToolUse hook | [23-hooks-contract.md](./23-hooks-contract.md) |
+| `RUNTIME-VAL` | Which skills and tools actually ran this session | after (from the transcript) | transcript scan | [20-cli.md](./20-cli.md) |
+| `EGRESS-C1` | Inward routes through the memo ID, outward through Issues | on coordination / push | push / coordination gate | [22-config.md](./22-config.md), [11-project-structure.md](./11-project-structure.md) |
+| `TRASH` | Deletion routes through `.trash/` rather than a hard delete | on delete | command rewrite | [32-trash.md](./32-trash.md) |
+| `HEALTH` | Project structure and global-tool reachability | on demand / before a memo | CLI / script | [21-environment-scripts.md](./21-environment-scripts.md) |
+| `INSTALL-GATE` | A dependency is safe before it is installed | before install | pre-install gate | [00-overview.md](./00-overview.md) |
 
 A second group of rules is **declared** by the workbench but **enforced at the machine tier**, whose hook scripts are out of scope for this spec ([02-sop-entrypoint.md](./02-sop-entrypoint.md)). They are listed so the wayfinder is complete:
 
-| Family | Checks | When | Declared by |
-|--------|--------|------|-------------|
-| `ENV-GUARD` | A write to a `.env` file is refused | before (on `Write`/`Edit`) | [23-hooks-contract.md](./23-hooks-contract.md) |
-| `NO-DESTRUCT` | A destructive shell command is rewritten or refused | before (on `Bash`) | [23-hooks-contract.md](./23-hooks-contract.md) |
-| `ATTRIB-GUARD` | A commit message carries no unapproved AI-attribution trailer | before a commit | [23-hooks-contract.md](./23-hooks-contract.md) |
+| Family | Checks | When | Mechanism | Declared by |
+|--------|--------|------|-----------|-------------|
+| `ENV-GUARD` | A write to a `.env` file is refused | before (on `Write`/`Edit`) | PreToolUse hook | [23-hooks-contract.md](./23-hooks-contract.md) |
+| `NO-DESTRUCT` | A destructive shell command is rewritten or refused | before (on `Bash`) | PreToolUse hook | [23-hooks-contract.md](./23-hooks-contract.md) |
+| `ATTRIB-GUARD` | A commit message carries no unapproved AI-attribution trailer | before a commit | commit-msg hook | [23-hooks-contract.md](./23-hooks-contract.md) |
 
 ---
 

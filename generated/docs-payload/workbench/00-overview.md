@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-26T10:09:30.468Z"
+generated_at: "2026-06-26T13:33:49.524Z"
 generated_from: "spec/workbench/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/00-overview.md."
@@ -110,9 +110,10 @@ This spec covers the workbench's **specification text and conventions**. Two thi
 
 ## Navigation Categories
 
-The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Folders**, **CLI & Scripts**, **Core**, **Wiki**, **Tools**, and **Reference**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
+The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Folders**, **CLI & Scripts**, **Core**, **Wiki**, and **Tools**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
 
-Two categories carry a meaning worth stating here:
+Three categories carry a meaning worth stating here:
 
-- **Core** is the config (`.workbench/`, the producing side) and the hooks contract (the consuming side) — a mutually-defining policy/enforcement pair, together with the two-level model. They define each other and form the workbench's policy core, distinct from the general CLI/Scripts.
-- **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `DESIGN.md` (the design convention); OKF therefore sits conceptually under the wiki rather than standing alone.
+- **Core** is the config (`.workbench/`, the producing side), the hooks contract (the consuming side), the validation overview that indexes that enforcement, and the **Architecture** chapter (the two-level diagram together with the project repo-graph) — a mutually-defining policy/enforcement/structure core, distinct from the general CLI/Scripts. There is no separate **Reference** category: the architecture chapters that once stood there are merged into one and moved here.
+- **Folders** holds the registered-folder pages and the things that attach to folders: the folder contract, the per-folder pages, the **add-on model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
+- **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `DESIGN.md` (the design convention); both therefore sit conceptually under the wiki rather than standing alone.

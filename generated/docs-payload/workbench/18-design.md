@@ -1,12 +1,12 @@
 ---
-title: "The `design/` Folder & the DESIGN.md Convention"
+title: "design/ & DESIGN.md"
 description: "`design/` is the optional, project-level folder that holds a project's **design system** and its visual sources. Its content follows a named convention — **DESIGN.md** — in the same way the..."
 workbench_version: "0.1.0"
 spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T10:09:30.468Z"
+generated_at: "2026-06-26T13:33:49.524Z"
 generated_from: "spec/workbench/0.1.0/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/18-design.md."
@@ -14,6 +14,8 @@ edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/18-desi
 
 
 `design/` is the optional, project-level folder that holds a project's **design system** and its visual sources. Its content follows a named convention — **DESIGN.md** — in the same way the architecture folder's content follows OKF. This chapter specifies the folder and the convention together: `design/` is the registered home, and DESIGN.md is the standard its primary file is written to.
+
+Like OKF, DESIGN.md is one of the **storage formats the wiki reads through** ([30-wiki.md](/specification/wiki/)): the design system is reached through the wiki — the project's single discovery entry point — exactly as the architecture bundle is, which is why this convention sits under the wiki rather than standing alone.
 
 ---
 
@@ -35,7 +37,7 @@ DESIGN.md is an external, open format (Apache-2.0). The name collides with an un
 
 The folder is a registered, optional entry in the contract ([12-folders.md](/specification/folders/)); a project adds it when it does design work and omits it otherwise.
 
-When a project carries more than one design surface — several views, screens, or design directions — that content **SHOULD** be organized under a **per-topic sub-folder** of `design/` (one sub-folder per view or direction, each with its own `DESIGN.md`, variants, and `.pen` sources) rather than as loose files at the folder root. The rationale matches the rest of the workbench: a **uniform, discoverable structure**, so a reader finds a given surface by its sub-folder and the wiki indexes a coherent design domain. A single design surface may sit at the folder root; once there is more than one, each gets its own sub-folder.
+When a project carries more than one design surface — several views, screens, or design directions — that content **MUST** be organized under a **per-topic sub-folder** of `design/` (one sub-folder per view or direction, each with its own `DESIGN.md`, variants, and `.pen` sources) rather than as loose files at the folder root. The rationale matches the rest of the workbench: a **uniform, discoverable structure**, so a reader finds a given surface by its sub-folder and the wiki indexes a coherent design domain. A single design surface may sit at the folder root; once there is more than one, each gets its own sub-folder.
 
 ---
 

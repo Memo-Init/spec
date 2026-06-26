@@ -1,23 +1,55 @@
 ---
-title: "Project Architecture"
-description: "A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges..."
+title: "Architecture"
+description: "This chapter holds the workbench's architecture at two scales: the **core diagram** that summarizes the system's overall structure — the two-level model and the three sibling spec families — and the..."
 workbench_version: "0.1.0"
 spec_file: "41-project-architecture.md"
 order: 41
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T10:09:30.468Z"
+generated_at: "2026-06-26T13:33:49.524Z"
 generated_from: "spec/workbench/0.1.0/41-project-architecture.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/41-project-architecture.md."
 ---
 
 
-A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges between them, and the provenance that says when each edge was last verified. This chapter is about that content first; the on-disk encoding (a knowledge bundle in OKF, [13-knowledge-format-okf.md](/specification/knowledge-format-okf/)) is a detail named at the end, not the headline. The shift is deliberate: ask *what the architecture is* before asking *what format it is stored in*.
+This chapter holds the workbench's architecture at two scales: the **core diagram** that summarizes the system's overall structure — the two-level model and the three sibling spec families — and the **project architecture** that describes a single project's repository graph. Both are "architecture" in the workbench sense: the first is how the whole spec-and-workbench system is put together, the second is how one project's repositories connect. It sits in the workbench **Core** category, alongside the configuration ([22-config.md](/specification/config/)) and the hooks contract ([23-hooks-contract.md](/specification/hooks-contract/)).
+
+---
+
+## The Core Diagram
+
+The core diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP spec, with the machine tier drawn dashed because it is out of scope for this spec. The lower group shows the **three sibling spec families** that live side by side in `repos/spec`, each with its own version line.
+
+```mermaid
+flowchart TD
+    Start["Fresh start / empty context"] --> WBsop["Workbench-SOP loaded<br/>(smallest entry point)"]
+    WBsop --> SOPspec{"SOP spec (thin connecting layer):<br/>what is in a SOP, where to find it"}
+    SOPspec --> Std["Common denominator:<br/>Setup · Health · Update · Extras"]
+    Std -->|"Workbench level"| WB["Workbench<br/>(no project work)"]
+    Std -->|"Project level"| Proj["Project<br/>(project-specific work)"]
+    WB -.->|"declares policy (.workbench config)"| Mach["Machine tier<br/>(out of scope, future spec):<br/>hooks enforce"]
+    Proj --> Plan["Plan / execute via the memo-SOP"]
+
+    subgraph SPECS["repos/spec — three sibling spec families"]
+        direction TB
+        MI["memo-init spec<br/>spec/v0.1.0/"]
+        WBS["Workbench spec<br/>spec/workbench/0.1.0/<br/>Introduction · Folders · CLI"]
+        SOPF["SOP spec (thin)<br/>spec/sop/0.1.0/<br/>connects the SOPs"]
+        MI -.->|"same level — refs.manual.json sibling keys"| WBS
+        WBS -.-> SOPF
+    end
+```
+
+The upper flow reads top-down: a fresh context loads the workbench-SOP, which uses the SOP spec to read any SOP predictably, which resolves to the common denominator, which routes to one of the two levels. The workbench level *declares* policy; the dashed machine tier (a future spec) *enforces* it. The lower group is structural: three peers in one repository, the memo-init spec and the Workbench spec at the same level via sibling keys in `refs.manual.json`, with the thin SOP spec connecting them.
+
+The per-topic diagrams that once accompanied this one have been **distributed to their topic chapters** rather than held in a single distant catalogue, so each diagram sits next to the prose that explains it: the registered-folders / convention / add-on picture is in [12-folders.md](/specification/folders/), the validation boundary in [25-validation-overview.md](/specification/validation-overview/), the session-validation hand-off in [20-cli.md](/specification/cli/), and the signpost cascade and orchestrator/component split in [24-skills-scope.md](/specification/skills-scope/).
 
 ---
 
 ## Every Project Has an Architecture
+
+A project's **architecture** is the answer to one question: *which repositories exist, and how are they connected?* It is content, not a file format — a graph of repo nodes, the declared edges between them, and the provenance that says when each edge was last verified. Ask *what the architecture is* before asking *what format it is stored in* (the on-disk encoding, an OKF bundle, is named at the end).
 
 Even a single-repo project has an architecture — a trivial one. As soon as a project holds more than one repository, the relationships between them carry real information: which repo is the source another is induced from, which repo consumes another's output, which dependency is externally visible. That graph is the architecture, and it is the **Soll** (the declared target state) against which the real repositories are measured.
 
@@ -27,7 +59,7 @@ Even a single-repo project has an architecture — a trivial one. As soon as a p
 
 ---
 
-## The Entry Point — A Memo Must Find the Architecture, Never Rediscover It
+## The Entry Point — One Door to the Architecture
 
 A memo that needs the architecture **MUST be able to find it through a single entry point**, rather than guessing a path or re-deriving the structure each time. This is the bottleneck principle: there is one door, and everything goes through it.
 
@@ -76,6 +108,9 @@ The architecture is stored as an **OKF knowledge bundle** ([13-knowledge-format-
 
 ## Related
 
+- [10-root-and-projects.md](/specification/root-and-projects/) — the two-level model the core diagram depicts.
+- [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the SOP signpost and the machine-tier exclusion shown dashed in the core diagram.
+- [00-overview.md](/specification/overview/) — the sibling-spec framing the core diagram's lower group shows.
 - [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the storage format the architecture (and the wiki) is encoded in.
 - [30-wiki.md](/specification/wiki/) — the wiki as the entry point that indexes the architecture among everything else.
 - [../../v0.1.0/33-maintenance.md](/specification/maintenance/) — maintenance scores the architecture bundle as a unit and keeps its provenance pins fresh.

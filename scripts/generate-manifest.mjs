@@ -85,7 +85,7 @@ const SIDEBAR_GROUP_BY_ORDER = {
     8: 'execution', 12: 'execution', 13: 'execution', 25: 'execution', 27: 'execution', 32: 'execution', 38: 'execution', 42: 'execution',
     22: 'procedure', 23: 'procedure', 24: 'procedure',
     9: 'behavior', 18: 'behavior', 21: 'behavior', 28: 'behavior', 29: 'behavior', 41: 'behavior',
-    26: 'health', 31: 'health', 33: 'health',
+    26: 'health', 31: 'health', 33: 'health', 45: 'health',
     14: 'agents', 15: 'agents', 36: 'agents',
     16: 'git', 17: 'git', 19: 'git', 39: 'git', 44: 'git',
     43: 'skills'
@@ -105,17 +105,29 @@ const sidebarGroupFromFilename = ( { filename } ) => {
 //
 // Special-cases (numbers stay put so published slug links never break — categories are
 // introduced by overriding specific orders, not by renumbering files):
-//   - 22, 23 → 'core' (Memo 045 Ch5): the `.workbench/` config (22, producing side) and
-//     the hooks contract (23, consuming side) are a mutually-defining policy/enforcement
-//     pair plus the two-level model — the workbench Core, distinct from CLI/Scripts.
-//   - 30, 13 → 'wiki' (Memo 045 Ch7): the wiki (30) is its own category, and OKF (13)
-//     moves conceptually under it as one of the wiki's storage formats.
+//   - 22, 23, 41 → 'core' (Memo 045 Ch5 + Memo 047 Ch5): the `.workbench/` config (22, producing
+//     side), the hooks contract (23, consuming side), and the merged Architecture chapter (41 — the
+//     core two-level diagram + project architecture, formerly 40+41 in 'reference') form the workbench
+//     Core. The 'reference' category is dissolved: 40 was merged into 41 and 41 moves to Core, so no
+//     workbench chapter maps to 'reference' anymore.
+//   - 30, 13, 18 → 'wiki' (Memo 045 Ch7 + Memo 047 Ch4.5): the wiki (30) is its own category,
+//     and its storage formats move conceptually under it — OKF (13) and DESIGN.md (18) both. 18
+//     joins symmetrically with 13: 30-wiki lists both as storage formats, so the design convention
+//     sits under the wiki the same way OKF does (the 045 asymmetry where 18 stayed in 'folders').
 const workbenchSidebarGroupFromFilename = ( { filename } ) => {
     const match = filename.match( /^(\d{2})-/ )
     if( !match ) return 'introduction'
     const order = parseInt( match[ 1 ], 10 )
-    if( order === 22 || order === 23 ) return 'core'
-    if( order === 30 || order === 13 ) return 'wiki'
+    // Memo 047 Ch5 (F7=A) nav-restructure:
+    //   - 25 → 'core': the validation overview is the wayfinder over the hooks-contract enforcement,
+    //     so it sits with the config/hooks Core pair (was 'cli').
+    //   - 26 → 'folders': the add-on MODEL reunites with the add-on TAXONOMY in 12-folders — the
+    //     "Add-on story split across 12+26" finding (was 'cli').
+    //   - 32 → 'folders': trash is a registered folder; its page belongs with the folder contract
+    //     (was 'tools').
+    if( order === 22 || order === 23 || order === 25 || order === 41 ) return 'core'
+    if( order === 30 || order === 13 || order === 18 ) return 'wiki'
+    if( order === 26 || order === 32 ) return 'folders'
     if( order <= 9 ) return 'introduction'
     if( order <= 19 ) return 'folders'
     if( order <= 29 ) return 'cli'

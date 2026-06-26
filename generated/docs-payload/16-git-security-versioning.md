@@ -6,7 +6,7 @@ spec_file: "16-git-security-versioning.md"
 order: 16
 section: "Specification"
 normative: true
-generated_at: "2026-06-26T10:09:30.468Z"
+generated_at: "2026-06-26T13:33:49.524Z"
 generated_from: "spec/v0.1.0/16-git-security-versioning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/16-git-security-versioning.md."
