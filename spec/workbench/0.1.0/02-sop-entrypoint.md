@@ -59,6 +59,8 @@ Workbench-SOP (signpost — knows the levels and the add-ons present)
 
 The machine-readable form of this signpost is the **workbench registry** (`.workbench/registry.json`): the same list of SOPs, skills, and add-ons that the signpost expresses in prose, in a form a tool can read. Its fields and its use by the runtime call-validation are specified in [20-cli.md](./20-cli.md).
 
+How each add-on SOP fans out into its public orchestrators and private components — one level below this signpost cascade — is shown in [24-skills-scope.md](./24-skills-scope.md).
+
 ---
 
 ## SOP-Native, Not Inert Files
@@ -102,4 +104,5 @@ The division of responsibility is the load-bearing idea: **the workbench declare
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract the machine tier consumes to enforce policy.
 - [26-addons.md](./26-addons.md) — the add-on SOPs the signpost points at, the memo system first among them.
 - [20-cli.md](./20-cli.md) — the `.workbench/registry.json`, the machine-readable form of the signpost.
+- [24-skills-scope.md](./24-skills-scope.md) — how each add-on SOP fans out into orchestrators and components, one level below this cascade.
 - [The SOP spec](/sop/overview/) — the common SOP standard of which the workbench-SOP is an instance.

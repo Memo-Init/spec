@@ -123,6 +123,20 @@ The validation is split across the two systems by what each one *knows*. The mem
 
 So **the memo collects IDs and interprets; the workbench holds the registry, searches the signals, and builds the matrix.** The division follows from knowledge: the workbench "knows all tools and SOPs", so it owns the *what-to-search*; the memo system carries the *which-sessions* and the *meaning*. A per-memo-scoped system interprets a project-wide matrix because interpretation is an **intent/requirements** check — only the memo system holds the requirements and the memo context. The workbench returns an already-matched, structured matrix; the memo reads it as a dataset, so the scope boundary is preserved.
 
+#### Session Validation Is a CLI Function the Memo Uses
+
+Session validation is a **workbench CLI function the memo uses**, not work the memo does itself: the workbench CLI holds the registry, searches the transcripts, and builds the matrix, while the memo only supplies the session IDs and interprets the result.
+
+```mermaid
+flowchart TD
+    MEMO1["Memo agent: collects session IDs<br/>knows its spawned sub-agents"] --> IDS["session IDs"]
+    IDS --> WCLI["Workbench CLI: holds registry, searches, builds matrix"]
+    REGISTRY[(".workbench/registry.json<br/>SOPs / skills / add-ons + signals")] --> WCLI
+    WCLI --> SCAN2["scans transcripts for signals"]
+    SCAN2 --> MATRIX["structured matrix back:<br/>session × skill/tool → used + evidence"]
+    MATRIX --> MEMO2["Memo agent: interprets<br/>checks requirements, e.g. init only if the SOP was read"]
+```
+
 ### Requirements on Top
 
 Because the matrix is a structured fact, **post-hoc requirements** can be expressed against it — for example, "the init entry point may run only if the SOP was read this session". This is the after-the-fact counterpart of the entry-point pre-condition ([23-hooks-contract.md](./23-hooks-contract.md)) and is registered like any other validation family ([25-validation-overview.md](./25-validation-overview.md)).

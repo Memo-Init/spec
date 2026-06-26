@@ -53,6 +53,25 @@ This page is the **hub**; each family's chapter is the **detail**. The contract 
 
 ---
 
+## The Validation Boundary — Before and After
+
+The two checkability halves act on the same public entry point at two different moments: a **pre-hook** gates the call *before* it runs ([23-hooks-contract.md](./23-hooks-contract.md)), and **runtime call-validation** measures, *after* the fact, what really ran ([20-cli.md](./20-cli.md)). The diagram traces one call through both.
+
+```mermaid
+flowchart TD
+    CALL["AI calls an entry point<br/>(public method: memo-init / finalize / plan)"]
+    PRE["Pre-hook — matcher Skill — BEFORE<br/>gatekeeper: pre-conditions met? exit 2 / JSON deny"]
+    CALL --> PRE
+    PRE -->|"yes"| RUN["Entry point + sub-agents run<br/>transcript written to disk"]
+    PRE -->|"no"| BLOCK["deny / ask"]
+    RUN --> LOG[("subagents/agent-id.jsonl + uuid.jsonl")]
+    LOG --> SCAN["Runtime call-validation — AFTER"]
+```
+
+*The left-of-the-call check is the "before" half ([23-hooks-contract.md](./23-hooks-contract.md)); the transcript scan after the run is the "after" half ([20-cli.md](./20-cli.md)) — the same before/after split this wayfinder records for `ENTRY-PRE` and `RUNTIME-VAL`.*
+
+---
+
 ## Related
 
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract for every hook-based family, and the hub for the "before" and "after" checkability mechanisms.

@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Depends on | [12-folders.md](./12-folders.md), [20-cli.md](./20-cli.md) |
-| Related | [00-overview.md](./00-overview.md), [The SOP common denominator](/sop/common-denominator/) |
+| Related | [00-overview.md](./00-overview.md), [22-config.md](./22-config.md), [23-hooks-contract.md](./23-hooks-contract.md), [24-skills-scope.md](./24-skills-scope.md), [The SOP common denominator](/sop/common-denominator/) |
 
 A project's `scripts/` folder holds the executable entry points that bring its environment up, tear it down, and check that it is healthy. This chapter specifies the script family, the boot contract that keeps service startup declarative, and the workbench-level health scripts that verify the workbench setup itself.
 
@@ -48,8 +48,36 @@ These checks **categorize** the workbench state rather than building anything. T
 
 ---
 
+## Workbench-Health as a Deterministic SOP Method
+
+Workbench-Health is **the Health method** of the workbench-SOP made concrete: the checks above are not advisory inspections but **deterministic tests** that produce a definite answer — **pass**, **fail**, or **report** — over the workbench scope. Determinism is the point: the same workbench in the same state always yields the same verdict, so "is this scope in order?" is answered the same way by a human, an agent, or a CI step. The check family is the workbench's realization of the common SOP standard's Health part ([the SOP common denominator](/sop/common-denominator/)) and is what [24-skills-scope.md](./24-skills-scope.md) routes the workbench's Health responsibility to.
+
+Two deterministic checks carry the method:
+
+- **Folder placement.** Every **mandatory registered folder** **MUST** be present and at the **right level** — a root-level folder at the root, a per-project folder under its project (the level split is drawn in [10-root-and-projects.md](./10-root-and-projects.md); the per-project layout is the authoritative contract in [12-folders.md](./12-folders.md)). The check is two-directional: a missing mandatory folder is a **fail**, and an **unexpected top-level entry** — something present that the registered layout does not account for — is **flagged** in the report. The structure is verified against the declared layout, not against a guess.
+
+- **Repo-status correctness.** Each repository's **declared status** — the three axes `visibility` / `remote` / `facing` ([22-config.md](./22-config.md)) — **MUST match reality**. A repository declared `outward` **MUST** actually have its named remote; one declared `inward` **MUST** have no remote (or `none`). A declaration that contradicts the repository's real git state is a **fail**. This is the **verification side** of the declared-status work: [22-config.md](./22-config.md) is where the status is *declared*, and the inward-push gate ([23-hooks-contract.md](./23-hooks-contract.md)) *reads* the declaration to decide a push — Workbench-Health (together with **git-security**) is what keeps that declaration **honest**, so the gate consumes a record that has been checked against reality rather than trusted.
+
+Because both checks are deterministic (pass / fail / report), Workbench-Health is the structural verification half of the workbench's two deterministic mechanisms — paired with the hook-based gating of [23-hooks-contract.md](./23-hooks-contract.md). It builds nothing and decides nothing about content quality; it answers, definitively, whether the workbench's structure and its declared repo statuses are in order.
+
+---
+
+## Direction — Self-Healing Workbench (Informative)
+
+> **Informative / forward-looking.** This subsection records a **direction only**. The mechanism is **deferred** to a later revision / rollout and is **not** specified or built here.
+
+The deterministic Health method above *detects* that the workbench is out of order; the longer-term direction is for the workbench to also *act* on what it detects — to **self-heal** and, eventually, **self-evolve**. The motivating case is capability rather than structure: when a need surfaces at the **workbench level** — for instance during *Landing the Plane*, where a recurring gap in the tooling becomes visible — the workbench should be able to **add the missing capability (a skill) on demand**, rather than the operator hand-rolling it every time. The aim is to step out of the manual "rat race" in which the same gap is patched by hand session after session.
+
+This is named as an aspiration so the spec is honest about where it points, **without over-specifying a mechanism**: how a need is detected, how a capability is proposed, and what guardrails (no-auto-write, human acceptance) bound an automatic addition are **left open** for a future revision. The PRD-able, buildable part of this chapter is the deterministic folder-placement and repo-status tests above; self-healing is the direction those tests point toward, not a commitment made here.
+
+---
+
 ## Related
 
 - [20-cli.md](./20-cli.md) — the meaningful-subfolder convention, shared with the CLI.
-- [12-folders.md](./12-folders.md) — the `scripts/` folder and the project layout the health checks verify.
+- [12-folders.md](./12-folders.md) — the `scripts/` folder and the mandatory per-project layout the folder-placement check verifies.
+- [10-root-and-projects.md](./10-root-and-projects.md) — the root-vs-project level split the folder-placement check tests against.
+- [22-config.md](./22-config.md) — where each repository's three-axis status is *declared*; Workbench-Health verifies the declaration matches reality.
+- [23-hooks-contract.md](./23-hooks-contract.md) — the inward-push gate that *reads* the declared status; Workbench-Health and git-security keep that declaration honest.
+- [24-skills-scope.md](./24-skills-scope.md) — the workbench-SOP's Health responsibility that routes to this chapter's deterministic checks.
 - [The SOP common denominator](/sop/common-denominator/) — Setup, Health, Update; the health scripts realize Health.

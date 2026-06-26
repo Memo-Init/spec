@@ -91,6 +91,22 @@ Two distinct things attach to folders, and the spec keeps them apart:
 
 A Convention answers *what format does this folder's content take?*; an Add-On answers *which tool reserves space here and operates on it?*. The two compose: an add-on may write into a folder whose content follows a convention. The convention model — how a folder declares the standard its content follows — is developed across this Folders category (OKF in [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) is the first instance); the add-on model — how a tool reserves an area and where its data lives — is specified in the add-on chapter ([26-addons.md](./26-addons.md)).
 
+The relationship reads in one direction — from the shared vocabulary outward, with the wiki indexing across the whole:
+
+```mermaid
+flowchart TD
+    REG["Registered folders<br/>(the shared vocabulary — this chapter)"]
+    REG --> CONV["Conventions<br/>(the format a folder's content follows)"]
+    CONV --> C1["OKF — context/architecture-okf, .wiki/"]
+    CONV --> C2["DESIGN.md — design/"]
+    ADDON["Add-ons = tools<br/>(the memo system + other add-ons)"]
+    ADDON -->|"reserve a declared area, may use conventions"| REG
+    WIKI["Wiki — search engine across all folders"]
+    WIKI -->|"indexes"| REG
+```
+
+The registered folders are the shared vocabulary; a convention is the format the *content* of a folder follows; an add-on is a *tool* that reserves a declared area and may use those conventions; and the wiki sits one level above as the search engine that indexes across them all, so a reader finds material without first knowing which folder holds it.
+
 ---
 
 ## The Convention Model

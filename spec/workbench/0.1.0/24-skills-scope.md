@@ -59,6 +59,16 @@ role: component      # a reusable building block, not in the user-callable catal
 
 A skill marked `role: component` is **taken out of the user-callable catalog**: it is private by default, the same posture as a class method that is private unless deliberately exposed. The default is private; an orchestrator is the deliberate exception that is made public.
 
+The two roles sit beneath the add-on SOPs the workbench-SOP points at ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): each add-on's orchestrators are its public entry points, and components are the reusable building blocks they call.
+
+```mermaid
+flowchart TD
+    WSOP["Workbench-SOP — references the add-on SOPs"] --> MSOP["memo-SOP (weightiest add-on)"]
+    WSOP --> FSOP["&lt;other add-on&gt;-SOP"]
+    MSOP --> ORCH["Orchestrator = public method / entry point<br/>validated (pre-hook + runtime)"]
+    ORCH --> COMP["Component = private, reusable, not user-callable<br/>e.g. research at several points"]
+```
+
 ---
 
 ## The Public-Method Validation Boundary

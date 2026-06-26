@@ -6,7 +6,7 @@
 | Depends on | [12-folders.md](./12-folders.md), [24-skills-scope.md](./24-skills-scope.md) |
 | Related | [22-config.md](./22-config.md), [20-cli.md](./20-cli.md), [25-validation-overview.md](./25-validation-overview.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 
-An **add-on** is a tool that plugs into the workbench: it is provided globally, it reserves a small declared area inside a project, and it follows a common SOP so that every add-on is operated the same way. This chapter specifies the add-on model — where an add-on may write, the SOP it follows, its standard entry points, and the relationship between its CLI and its skill. The taxonomy that distinguishes an add-on (a tool) from a convention (a content format) is in [12-folders.md](./12-folders.md).
+An **add-on** is a tool that plugs into the workbench: it is provided globally, it reserves a small declared area inside a project, and it follows a common SOP so that every add-on is operated the same way. This chapter specifies the add-on model — where an add-on may write, the SOP it follows, its standard entry points, and the relationship between its CLI and its skill. The taxonomy that distinguishes an add-on (a tool) from a convention (a content format) is in [12-folders.md](./12-folders.md), which also carries the diagram of how registered folders, conventions, add-ons, and the wiki relate.
 
 ---
 
@@ -83,7 +83,7 @@ An add-on is reachable two ways, with a clear division of labor:
 
 ## Related
 
-- [12-folders.md](./12-folders.md) — the Convention-vs-Add-On taxonomy and the core-vs-add-on folder split.
+- [12-folders.md](./12-folders.md) — the Convention-vs-Add-On taxonomy, the core-vs-add-on folder split, and the registered-folders / convention / add-on / wiki diagram.
 - [24-skills-scope.md](./24-skills-scope.md) — the Setup/Health/Update/Extras SOP an add-on's skill realizes.
 - [22-config.md](./22-config.md) — the `.workbench/` descriptor an add-on declares.
 - [20-cli.md](./20-cli.md) — the Branch/Leaf CLI convention an add-on's standard entry follows.
