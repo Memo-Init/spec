@@ -6,7 +6,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/22-config.md."
@@ -60,7 +60,7 @@ The three axes are **declared, not inferred** — consistent with the manual / n
 The facing classification is the configuration's core, but `.workbench/` is the home for the project's **declarations** generally — the same single-source principle applies to anything a tool or hook needs to read deterministically. Two other files are specified today:
 
 - **`folder-lints.json`** — the project-local map that drives the write-time content lint: each entry binds a folder and filename pattern to a linter and a severity, and a single global hook consumes the map ([23-hooks-contract.md](/specification/hooks-contract/)).
-- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/specification/sop-entrypoint/)): the list of skills, add-ons, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](/specification/cli/)). Its `requirements[]` with `when: "pre"` is the **manual dependency table** the precondition chain reads — the declared `entrypoint → requires` edges. This is what makes "no skill X without prerequisite Y, deterministically" expressible: the pre-gate hook resolves these edges before an entry point runs ([23-hooks-contract.md](/specification/hooks-contract/)), while the `when: "post"` edges feed the after-the-fact matrix ([20-cli.md](/specification/cli/)).
+- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/specification/sop-entrypoint/)): the list of skills, custom folders, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](/specification/cli/)). Its `requirements[]` with `when: "pre"` is the **manual dependency table** the precondition chain reads — the declared `entrypoint → requires` edges. This is what makes "no skill X without prerequisite Y, deterministically" expressible: the pre-gate hook resolves these edges before an entry point runs ([23-hooks-contract.md](/specification/hooks-contract/)), while the `when: "post"` edges feed the after-the-fact matrix ([20-cli.md](/specification/cli/)).
 
 Like the facing configuration, both are **manual** — never silently generated or overwritten.
 
@@ -70,7 +70,7 @@ Like the facing configuration, both are **manual** — never silently generated 
 
 The configuration is valuable because other things are **derived** from it rather than re-declared. The primary consumer is the **hooks contract** ([23-hooks-contract.md](/specification/hooks-contract/)): the manual declaration of facing (and of other project policy) is what a hook reads to decide, deterministically, whether an action is allowed — for example, whether a push to a repository declared inward should be blocked.
 
-The **memo system** is the other consumer of `facing`: it is the add-on that reads the inward/outward classification to route coordination — an **inward** repository's work is coordinated through the **memo ID**, an **outward** repository's through **Issues** (rule C1). The configuration declares the facing once; the hooks contract enforces it, and the memo system obeys it when it decides how a repository's commits are referenced.
+The **memo system** is the other consumer of `facing`: it is the custom folder that reads the inward/outward classification to route coordination — an **inward** repository's work is coordinated through the **memo ID**, an **outward** repository's through **Issues** (rule C1). The configuration declares the facing once; the hooks contract enforces it, and the memo system obeys it when it decides how a repository's commits are referenced.
 
 The principle is the division of responsibility introduced in [02-sop-entrypoint.md](/specification/sop-entrypoint/): **the workbench declares policy** here, in the `.workbench/` configuration; **the machine tier enforces it** through hooks. The configuration is therefore the contract surface between the two — the single, manual, readable source that enforcement consumes. What enforcement may read and how it behaves is specified next.
 

@@ -12,12 +12,12 @@ This chapter holds the workbench's architecture at two scales: the **core diagra
 
 ## The Core Diagram
 
-The core diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP spec, with the machine tier drawn dashed because it is out of scope for this spec. The lower group shows the **three sibling spec families** that live side by side in `repos/spec`, each with its own version line.
+The core diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP area, with the machine tier drawn dashed because it is out of scope for this spec. The lower group shows the **three sibling spec families** that live side by side in `repos/spec`, each with its own version line.
 
 ```mermaid
 flowchart TD
     Start["Fresh start / empty context"] --> WBsop["Workbench-SOP loaded<br/>(smallest entry point)"]
-    WBsop --> SOPspec{"SOP spec (thin connecting layer):<br/>what is in a SOP, where to find it"}
+    WBsop --> SOPspec{"SOP area (in the Session spec):<br/>what is in a SOP, where to find it"}
     SOPspec --> Std["Common denominator:<br/>Setup · Health · Update · Extras"]
     Std -->|"Workbench level"| WB["Workbench<br/>(no project work)"]
     Std -->|"Project level"| Proj["Project<br/>(project-specific work)"]
@@ -28,15 +28,15 @@ flowchart TD
         direction TB
         MI["memo-init spec<br/>spec/v0.1.0/"]
         WBS["Workbench spec<br/>spec/workbench/0.1.0/<br/>Introduction · Folders · CLI"]
-        SOPF["SOP spec (thin)<br/>spec/sop/0.1.0/<br/>connects the SOPs"]
+        SOPF["Session spec<br/>spec/session/0.1.0/<br/>carries the SOP area — connects the SOPs"]
         MI -.->|"same level — refs.manual.json sibling keys"| WBS
         WBS -.-> SOPF
     end
 ```
 
-The upper flow reads top-down: a fresh context loads the workbench-SOP, which uses the SOP spec to read any SOP predictably, which resolves to the common denominator, which routes to one of the two levels. The workbench level *declares* policy; the dashed machine tier (a future spec) *enforces* it. The lower group is structural: three peers in one repository, the memo-init spec and the Workbench spec at the same level via sibling keys in `refs.manual.json`, with the thin SOP spec connecting them.
+The upper flow reads top-down: a fresh context loads the workbench-SOP, which uses the SOP area to read any SOP predictably, which resolves to the common denominator, which routes to one of the two levels. The workbench level *declares* policy; the dashed machine tier (a future spec) *enforces* it. The lower group is structural: three peers in one repository, the memo-init spec and the Workbench spec at the same level via sibling keys in `refs.manual.json`, with the Session spec carrying the thin SOP area that connects them.
 
-The per-topic diagrams that once accompanied this one have been **distributed to their topic chapters** rather than held in a single distant catalogue, so each diagram sits next to the prose that explains it: the registered-folders / convention / add-on picture is in [12-folders.md](./12-folders.md), the validation boundary in [25-validation-overview.md](./25-validation-overview.md), the session-validation hand-off in [20-cli.md](./20-cli.md), and the signpost cascade and orchestrator/component split in [24-skills-scope.md](./24-skills-scope.md).
+The per-topic diagrams that once accompanied this one have been **distributed to their topic chapters** rather than held in a single distant catalogue, so each diagram sits next to the prose that explains it: the registered-folders / convention / custom folder picture is in [12-folders.md](./12-folders.md), the validation boundary in [25-validation-overview.md](./25-validation-overview.md), the session-validation hand-off in [20-cli.md](./20-cli.md), and the signpost cascade and orchestrator/component split in [24-skills-scope.md](./24-skills-scope.md).
 
 ---
 

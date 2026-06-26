@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/00-overview.md."
@@ -29,7 +29,7 @@ The Workbench spec is a **standalone sibling** of the core specification, not a 
 |--------|-----------|---------|
 | **Core specification** | `spec/v0.1.0/` | A single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. Reasons about *one memo at a time*. |
 | **Workbench** (this spec) | `spec/workbench/0.1.0/` | The environment in which memos live — project layout, CLIs and scripts, configuration, the wiki, trash. Reasons about *the project and the workbench around the memo*. |
-| **SOP** | `spec/sop/0.1.0/` | The thin connecting layer that makes the various SOPs predictable — what a SOP contains and where to find it. |
+| **Session** | `spec/session/0.1.0/` | The session genesis layer; it also carries the **SOP area** — the thin connecting layer that makes the various SOPs predictable (what a SOP contains and where to find it). The SOP, once framed as its own family, now lives here as that area. |
 
 This mirrors the established multi-family pattern (a single spec repository hosting parallel, independently versioned spec families as sibling directories). Keeping these concerns in separate, peer documents lets each evolve at its own pace.
 
@@ -48,7 +48,7 @@ Within that shared vocabulary, the Workbench spec is otherwise self-contained: i
 This spec is **versioned independently** from the core specification. A change to the workbench's project structure or its CLI conventions does not force a core-spec version bump, and a core-spec version bump does not retroactively re-version the Workbench spec.
 
 - The core specification lives under `spec/v0.1.0/`; the Workbench spec lives under `spec/workbench/0.1.0/` and carries its own version line.
-- The authoritative, machine-readable version numbers for every family are recorded in `data/refs.manual.json` — the core spec under the `spec` key, this spec under the `workbench` key, and the SOP spec under the `sop` key. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data, and the build stamps each chapter with its family's version (`workbench_version`).
+- The authoritative, machine-readable version numbers for every family are recorded in `data/refs.manual.json` — the core spec under the `spec` key, this spec under the `workbench` key, and the Session spec under the `session` key. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data, and the build stamps each chapter with its family's version (`workbench_version`).
 
 ---
 
@@ -68,7 +68,7 @@ The defining mental shift of the workbench is that the unit of organization is t
 
 This distinction is what [11-project-structure.md](/specification/project-structure/) makes concrete, and the separation of the workbench root from the projects beneath it is drawn in [10-root-and-projects.md](/specification/root-and-projects/).
 
-The workbench **core** — its folders, CLIs, and conventions — is independent of the memo system: a project can use the layout without any memo ever being written, even though the memo system is the recommended add-on that normally drives it. The core-vs-add-on split among the registered folders is drawn in [12-folders.md](/specification/folders/).
+The workbench **core** — its folders, CLIs, and conventions — is independent of the memo system: a project can use the layout without any memo ever being written, even though the memo system is the recommended custom folder that normally drives it. The core-vs-custom folder split among the registered folders is drawn in [12-folders.md](/specification/folders/).
 
 ---
 
@@ -115,5 +115,5 @@ The Workbench spec's chapters are grouped into the navigation categories **Intro
 Three categories carry a meaning worth stating here:
 
 - **Core** is the config (`.workbench/`, the producing side), the hooks contract (the consuming side), the validation overview that indexes that enforcement, and the **Architecture** chapter (the two-level diagram together with the project repo-graph) — a mutually-defining policy/enforcement/structure core, distinct from the general CLI/Scripts. There is no separate **Reference** category: the architecture chapters that once stood there are merged into one and moved here.
-- **Folders** holds the registered-folder pages and the things that attach to folders: the folder contract, the per-folder pages, the **add-on model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
-- **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `DESIGN.md` (the design convention); both therefore sit conceptually under the wiki rather than standing alone.
+- **Folders** holds the registered-folder pages and the things that attach to folders: the folder contract, the per-folder pages, the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
+- **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `design.md` (the design format); both therefore sit conceptually under the wiki rather than standing alone.

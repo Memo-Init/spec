@@ -6,10 +6,10 @@
 // sibling spec families:
 //   manifest.files            — core chapters (manifest.spec_version)
 //   manifest.workbench        — { version, files[] } (own version line)
-//   manifest.sop              — { version, files[] } (own version line)
+//   manifest.session          — { version, files[] } (own version line; absorbs the former SOP family, Memo 049)
 //
 // Each family gets its own sidebar_group mapping (Introduction-first), mirroring
-// FlowMCP's buildGradingBlock / buildBestPracticeBlock. The workbench/sop blocks
+// FlowMCP's buildGradingBlock / buildBestPracticeBlock. The workbench/session blocks
 // are additive — manifest.files (core) stays byte-compatible.
 //
 // Output format documented in generated/README.md.
@@ -26,12 +26,10 @@ const REPO = resolve( __dirname, '..' )
 const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
 const SPEC_VERSION = REFS_MANUAL.spec.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
-const SOP_VERSION = REFS_MANUAL.sop.currentVersion
 const SESSION_VERSION = REFS_MANUAL.session.currentVersion
 
 const PAYLOAD_DIR = join( REPO, 'generated/docs-payload' )
 const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
-const SOP_PAYLOAD_DIR = join( PAYLOAD_DIR, 'sop' )
 const SESSION_PAYLOAD_DIR = join( PAYLOAD_DIR, 'session' )
 const MANIFEST_PATH = join( PAYLOAD_DIR, 'manifest.json' )
 const GENERATOR = 'scripts/generate-manifest.mjs'
@@ -116,34 +114,56 @@ const sidebarGroupFromFilename = ( { filename } ) => {
 //     and its storage formats move conceptually under it — OKF (13) and DESIGN.md (18) both. 18
 //     joins symmetrically with 13: 30-wiki lists both as storage formats, so the design convention
 //     sits under the wiki the same way OKF does (the 045 asymmetry where 18 stayed in 'folders').
+// Workbench nav (Memo 049 Kap 9) — Root / Projects / Folders / Custom reorg. Titles + group
+// mapping only; filenames/slugs are NOT renumbered (no-renumber rule). Display order
+// (lockstep with sidebar.mjs WORKBENCH_GROUP_ORDER):
+//   Introduction · Root · Projects · Folders · Custom · CLI · Tools · Core.
+//   - introduction (00,01,02) — the workbench entry trio.
+//   - root (10) — the workbench-root level and its root folders (cli/, projects/, templates/);
+//     10-root-and-projects IS the "Workbench-Root-Folder" content the memo's Root category names.
+//   - projects (11,12) — the project-level structure + folder contract.
+//   - folders (13,15,16,18,19,21,30,32) — the dot-correct folder-named pages (incl. the OKF +
+//     design storage formats and the new 19-tmp page); the former 'wiki' group folds in here.
+//   - custom (17,26) — 26 "Custom" (the add-on-reserved area) + 17 .memo/ (the prototypical
+//     reserved add-on, default-on).
+//   - cli (20,24) · tools (31) · core (22,23,25,41).
+const WORKBENCH_SIDEBAR_GROUP_BY_ORDER = {
+    0: 'introduction', 1: 'introduction', 2: 'introduction',
+    10: 'root',
+    11: 'projects', 12: 'projects',
+    13: 'folders', 15: 'folders', 16: 'folders', 18: 'folders', 19: 'folders', 21: 'folders', 30: 'folders', 32: 'folders',
+    17: 'custom', 26: 'custom',
+    20: 'cli', 24: 'cli',
+    31: 'tools',
+    22: 'core', 23: 'core', 25: 'core', 41: 'core'
+}
 const workbenchSidebarGroupFromFilename = ( { filename } ) => {
     const match = filename.match( /^(\d{2})-/ )
     if( !match ) return 'introduction'
     const order = parseInt( match[ 1 ], 10 )
-    // Memo 047 Ch5 (F7=A) nav-restructure:
-    //   - 25 → 'core': the validation overview is the wayfinder over the hooks-contract enforcement,
-    //     so it sits with the config/hooks Core pair (was 'cli').
-    //   - 26 → 'folders': the add-on MODEL reunites with the add-on TAXONOMY in 12-folders — the
-    //     "Add-on story split across 12+26" finding (was 'cli').
-    //   - 32 → 'folders': trash is a registered folder; its page belongs with the folder contract
-    //     (was 'tools').
-    if( order === 22 || order === 23 || order === 25 || order === 41 ) return 'core'
-    if( order === 30 || order === 13 || order === 18 ) return 'wiki'
-    if( order === 26 || order === 32 ) return 'folders'
-    if( order <= 9 ) return 'introduction'
-    if( order <= 19 ) return 'folders'
-    if( order <= 29 ) return 'cli'
-    if( order <= 39 ) return 'tools'
-    return 'reference'
+    return WORKBENCH_SIDEBAR_GROUP_BY_ORDER[ order ] ?? 'introduction'
 }
 
 
-// SOP-Spec is deliberately thin — a single Introduction group.
-const sopSidebarGroupFromFilename = () => 'introduction'
-
-
-// Session-Spec is deliberately thin — a single Introduction group (Genesis Root family).
-const sessionSidebarGroupFromFilename = () => 'introduction'
+// Session family nav (Memo 049): the dissolved SOP area joins the Genesis Root family.
+// Number ranges do not map cleanly to groups (the SOP area sits at 10-13 between the
+// genesis-root code chapters), so the order→group map is explicit, like the workbench one.
+// Display order (lockstep with sidebar.mjs SESSION_GROUP_ORDER):
+//   Introduction · SOP · Genesis Root · Enforcement · CLI · Recovery.
+const SESSION_SIDEBAR_GROUP_BY_ORDER = {
+    0: 'introduction',
+    1: 'genesis-root', 5: 'genesis-root', 6: 'genesis-root', 9: 'genesis-root',
+    2: 'enforcement', 7: 'enforcement', 8: 'enforcement',
+    4: 'cli',
+    3: 'recovery', 14: 'recovery',
+    10: 'sop', 11: 'sop', 12: 'sop', 13: 'sop'
+}
+const sessionSidebarGroupFromFilename = ( { filename } ) => {
+    const match = filename.match( /^(\d{2})-/ )
+    if( !match ) return 'introduction'
+    const order = parseInt( match[ 1 ], 10 )
+    return SESSION_SIDEBAR_GROUP_BY_ORDER[ order ] ?? 'introduction'
+}
 
 
 const collectEntries = async ( { dir, groupFn, label } ) => {
@@ -197,10 +217,9 @@ const main = async () => {
     console.log( 'Building manifest from docs-payload...' )
     const coreFiles = await collectEntries( { dir: PAYLOAD_DIR, groupFn: sidebarGroupFromFilename, label: 'core' } )
     const workbench = await buildFamilyBlock( { dir: WORKBENCH_PAYLOAD_DIR, groupFn: workbenchSidebarGroupFromFilename, label: 'workbench', version: WORKBENCH_VERSION } )
-    const sop = await buildFamilyBlock( { dir: SOP_PAYLOAD_DIR, groupFn: sopSidebarGroupFromFilename, label: 'sop', version: SOP_VERSION } )
     const session = await buildFamilyBlock( { dir: SESSION_PAYLOAD_DIR, groupFn: sessionSidebarGroupFromFilename, label: 'session', version: SESSION_VERSION } )
 
-    const allFiles = [ ...coreFiles, ...workbench.files, ...sop.files, ...session.files ]
+    const allFiles = [ ...coreFiles, ...workbench.files, ...session.files ]
 
     const manifest = {
         spec_version: SPEC_VERSION,
@@ -208,13 +227,11 @@ const main = async () => {
         generator: GENERATOR,
         files: coreFiles,
         workbench,
-        sop,
         session,
         stats: {
             total_files: allFiles.length,
             core_files: coreFiles.length,
             workbench_files: workbench.files.length,
-            sop_files: sop.files.length,
             session_files: session.files.length,
             normative_files: allFiles.filter( ( f ) => f.normative ).length,
             informative_files: allFiles.filter( ( f ) => !f.normative ).length
@@ -223,7 +240,7 @@ const main = async () => {
 
     await writeFile( MANIFEST_PATH, JSON.stringify( manifest, null, 4 ) + '\n', 'utf-8' )
     console.log( `\nManifest written to ${ MANIFEST_PATH }` )
-    console.log( `Total: ${ manifest.stats.total_files } (core ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, sop ${ manifest.stats.sop_files }, session ${ manifest.stats.session_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
+    console.log( `Total: ${ manifest.stats.total_files } (core ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, session ${ manifest.stats.session_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
 }
 
 

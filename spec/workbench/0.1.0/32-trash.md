@@ -1,4 +1,4 @@
-# 32. Trash
+# 32. .trash/
 
 | Field | Value |
 |-------|-------|

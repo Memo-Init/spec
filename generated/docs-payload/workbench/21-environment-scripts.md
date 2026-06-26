@@ -1,12 +1,12 @@
 ---
-title: "Environment & Health Scripts"
+title: "scripts/"
 description: "A project's `scripts/` folder holds the executable entry points that bring its environment up, tear it down, and check that it is healthy. This chapter specifies the script family, the boot contract..."
 workbench_version: "0.1.0"
 spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/21-environment-scripts.md."
@@ -51,13 +51,13 @@ Beyond a single project's `health-check.sh`, the **workbench level** has its own
 - Does every repository have a configured remote?
 - Does each project carry the mandatory folders (see [12-folders.md](/specification/folders/))?
 
-These checks **categorize** the workbench state rather than building anything. They are the workbench's realization of the **Health** part of the common SOP denominator (see [the SOP common denominator](/sop/common-denominator/)): a definite, observable answer to "is this scope in order?". The workbench-SOP's Health step is exactly this family of checks.
+These checks **categorize** the workbench state rather than building anything. They are the workbench's realization of the **Health** part of the common SOP denominator (see [the SOP common denominator](/session/common-denominator/)): a definite, observable answer to "is this scope in order?". The workbench-SOP's Health step is exactly this family of checks.
 
 ---
 
 ## Workbench-Health as a Deterministic SOP Method
 
-Workbench-Health is **the Health method** of the workbench-SOP made concrete: the checks above are not advisory inspections but **deterministic tests** that produce a definite answer — **pass**, **fail**, or **report** — over the workbench scope. Determinism is the point: the same workbench in the same state always yields the same verdict, so "is this scope in order?" is answered the same way by a human, an agent, or a CI step. The check family is the workbench's realization of the common SOP standard's Health part ([the SOP common denominator](/sop/common-denominator/)) and is what [24-skills-scope.md](/specification/skills-scope/) routes the workbench's Health responsibility to.
+Workbench-Health is **the Health method** of the workbench-SOP made concrete: the checks above are not advisory inspections but **deterministic tests** that produce a definite answer — **pass**, **fail**, or **report** — over the workbench scope. Determinism is the point: the same workbench in the same state always yields the same verdict, so "is this scope in order?" is answered the same way by a human, an agent, or a CI step. The check family is the workbench's realization of the common SOP standard's Health part ([the SOP common denominator](/session/common-denominator/)) and is what [24-skills-scope.md](/specification/skills-scope/) routes the workbench's Health responsibility to.
 
 Two deterministic checks carry the method:
 
@@ -87,4 +87,4 @@ This is named as an aspiration so the spec is honest about where it points, **wi
 - [22-config.md](/specification/config/) — where each repository's three-axis status is *declared*; Workbench-Health verifies the declaration matches reality.
 - [23-hooks-contract.md](/specification/hooks-contract/) — the inward-push gate that *reads* the declared status; Workbench-Health and git-security keep that declaration honest.
 - [24-skills-scope.md](/specification/skills-scope/) — the workbench-SOP's Health responsibility that routes to this chapter's deterministic checks.
-- [The SOP common denominator](/sop/common-denominator/) — Setup, Health, Update; the health scripts realize Health.
+- [The SOP common denominator](/session/common-denominator/) — Setup, Health, Update; the health scripts realize Health.

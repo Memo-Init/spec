@@ -1,10 +1,10 @@
-# 21. Environment & Health Scripts
+# 21. scripts/
 
 | | |
 |---|---|
 | Status | Draft |
 | Depends on | [12-folders.md](./12-folders.md), [20-cli.md](./20-cli.md) |
-| Related | [00-overview.md](./00-overview.md), [22-config.md](./22-config.md), [23-hooks-contract.md](./23-hooks-contract.md), [24-skills-scope.md](./24-skills-scope.md), [The SOP common denominator](/sop/common-denominator/) |
+| Related | [00-overview.md](./00-overview.md), [22-config.md](./22-config.md), [23-hooks-contract.md](./23-hooks-contract.md), [24-skills-scope.md](./24-skills-scope.md), [The SOP common denominator](/session/common-denominator/) |
 
 A project's `scripts/` folder holds the executable entry points that bring its environment up, tear it down, and check that it is healthy. This chapter specifies the script family, the boot contract that keeps service startup declarative, and the workbench-level health scripts that verify the workbench setup itself.
 
@@ -44,13 +44,13 @@ Beyond a single project's `health-check.sh`, the **workbench level** has its own
 - Does every repository have a configured remote?
 - Does each project carry the mandatory folders (see [12-folders.md](./12-folders.md))?
 
-These checks **categorize** the workbench state rather than building anything. They are the workbench's realization of the **Health** part of the common SOP denominator (see [the SOP common denominator](/sop/common-denominator/)): a definite, observable answer to "is this scope in order?". The workbench-SOP's Health step is exactly this family of checks.
+These checks **categorize** the workbench state rather than building anything. They are the workbench's realization of the **Health** part of the common SOP denominator (see [the SOP common denominator](/session/common-denominator/)): a definite, observable answer to "is this scope in order?". The workbench-SOP's Health step is exactly this family of checks.
 
 ---
 
 ## Workbench-Health as a Deterministic SOP Method
 
-Workbench-Health is **the Health method** of the workbench-SOP made concrete: the checks above are not advisory inspections but **deterministic tests** that produce a definite answer — **pass**, **fail**, or **report** — over the workbench scope. Determinism is the point: the same workbench in the same state always yields the same verdict, so "is this scope in order?" is answered the same way by a human, an agent, or a CI step. The check family is the workbench's realization of the common SOP standard's Health part ([the SOP common denominator](/sop/common-denominator/)) and is what [24-skills-scope.md](./24-skills-scope.md) routes the workbench's Health responsibility to.
+Workbench-Health is **the Health method** of the workbench-SOP made concrete: the checks above are not advisory inspections but **deterministic tests** that produce a definite answer — **pass**, **fail**, or **report** — over the workbench scope. Determinism is the point: the same workbench in the same state always yields the same verdict, so "is this scope in order?" is answered the same way by a human, an agent, or a CI step. The check family is the workbench's realization of the common SOP standard's Health part ([the SOP common denominator](/session/common-denominator/)) and is what [24-skills-scope.md](./24-skills-scope.md) routes the workbench's Health responsibility to.
 
 Two deterministic checks carry the method:
 
@@ -80,4 +80,4 @@ This is named as an aspiration so the spec is honest about where it points, **wi
 - [22-config.md](./22-config.md) — where each repository's three-axis status is *declared*; Workbench-Health verifies the declaration matches reality.
 - [23-hooks-contract.md](./23-hooks-contract.md) — the inward-push gate that *reads* the declared status; Workbench-Health and git-security keep that declaration honest.
 - [24-skills-scope.md](./24-skills-scope.md) — the workbench-SOP's Health responsibility that routes to this chapter's deterministic checks.
-- [The SOP common denominator](/sop/common-denominator/) — Setup, Health, Update; the health scripts realize Health.
+- [The SOP common denominator](/session/common-denominator/) — Setup, Health, Update; the health scripts realize Health.

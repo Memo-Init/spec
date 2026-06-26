@@ -1,21 +1,21 @@
 ---
 title: "The Common Denominator — Setup, Health, Update, Extras"
 description: "Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on..."
-sop_version: "0.1.0"
-spec_file: "01-common-denominator.md"
-order: 1
-section: "SOP"
+session_version: "0.1.0"
+spec_file: "11-common-denominator.md"
+order: 11
+section: "Session"
 normative: false
-generated_at: "2026-06-26T18:22:47.793Z"
-generated_from: "spec/sop/0.1.0/01-common-denominator.md"
+generated_at: "2026-06-26T21:14:26.848Z"
+generated_from: "spec/session/0.1.0/11-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
-edit_warning: "This file is auto-generated. Source: spec/sop/0.1.0/01-common-denominator.md."
+edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/11-common-denominator.md."
 ---
 
 
 > **Informative.** This chapter describes the common shape every SOP is expected to take. It names the parts and what each is for; it does not impose conformance levels on the individual SOPs, which govern their own scope.
 
-Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP overview](/specification/overview/) rests.
+Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP entry-point mechanism](/specification/sop/) rests.
 
 ---
 
@@ -54,6 +54,6 @@ Setup, Health, and Update are the connecting core because they are the questions
 
 ## Related
 
-- [00-overview.md](/specification/overview/) — why a thin connecting layer exists.
-- [02-instances.md](/specification/instances/) — the existing SOPs as instances of this shape.
-- [03-conventions.md](/specification/conventions/) — the naming and brevity conventions shared across SOPs.
+- [10-sop.md](/specification/sop/) — why a thin connecting mechanism exists inside the session standard.
+- [12-instances.md](/specification/instances/) — the existing SOPs as instances of this shape.
+- [13-conventions.md](/specification/conventions/) — the naming and brevity conventions shared across SOPs.

@@ -1,25 +1,25 @@
 ---
 title: ".memo/"
-description: "`.memo/` is the on-disk footprint of the **memo system** — the workbench's weightiest add-on, and its recommended default mode of working ([26-addons.md](./26-addons.md)). This is the per-folder page..."
+description: "`.memo/` is the on-disk footprint of the **memo system** — the workbench's weightiest custom folder, and its recommended default mode of working ([26-addons.md](./26-addons.md)). This is the..."
 workbench_version: "0.1.0"
 spec_file: "17-memo-store.md"
 order: 17
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/17-memo-store.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/17-memo-store.md."
 ---
 
 
-`.memo/` is the on-disk footprint of the **memo system** — the workbench's weightiest add-on, and its recommended default mode of working ([26-addons.md](/specification/addons/)). This is the per-folder page for `.memo/`: it specifies the folder's *role* and *top-level layout* in the workbench. The memo *lifecycle* — input, revisions, questions, phases, rollout — is the subject of the core specification ([../../v0.1.0/06-memo-structure.md](/specification/memo-structure/)) and is not restated here.
+`.memo/` is the on-disk footprint of the **memo system** — the workbench's weightiest custom folder, and its recommended default mode of working ([26-addons.md](/specification/addons/)). This is the per-folder page for `.memo/`: it specifies the folder's *role* and *top-level layout* in the workbench. The memo *lifecycle* — input, revisions, questions, phases, rollout — is the subject of the core specification ([../../v0.1.0/06-memo-structure.md](/specification/memo-structure/)) and is not restated here.
 
 ---
 
-## The Footprint of an Add-On
+## The Footprint of a Custom Folder
 
-`.memo/` is the data area the memo-system add-on reserves in a project, in the pattern every add-on follows: the tool is provided globally, and its per-project working data is written under a declared folder ([26-addons.md](/specification/addons/)). Its dot prefix marks it as generated, local machinery — and because the project root is local, `.memo/` is **never a git repository** and its contents never leave the machine ([11-project-structure.md](/specification/project-structure/)). The memo system is the recommended default, which is why a real project almost always carries `.memo/`; the workbench *core*, however, does not depend on it ([12-folders.md](/specification/folders/)).
+`.memo/` is the data area the memo-system custom folder reserves in a project, in the pattern every custom folder follows: the tool is provided globally, and its per-project working data is written under a declared folder ([26-addons.md](/specification/addons/)). Its dot prefix marks it as generated, local machinery — and because the project root is local, `.memo/` is **never a git repository** and its contents never leave the machine ([11-project-structure.md](/specification/project-structure/)). The memo system is the recommended default, which is why a real project almost always carries `.memo/`; the workbench *core*, however, does not depend on it ([12-folders.md](/specification/folders/)). In the folder contract `.memo/` is therefore listed as **reserved (custom folder, default-on)** — present by default, but a reservation of the memo custom folder rather than a bare-workbench requirement ([12-folders.md](/specification/folders/)).
 
 ---
 
@@ -45,8 +45,8 @@ The canonical layout places memos under `.memo/memos/<NNN-slug>/`; a flat legacy
 
 ## Related
 
-- [26-addons.md](/specification/addons/) — the add-on model `.memo/` is the heaviest instance of.
+- [26-addons.md](/specification/addons/) — the custom folder model `.memo/` is the heaviest instance of.
 - [11-project-structure.md](/specification/project-structure/) — why `.memo/` is never a git repository.
-- [12-folders.md](/specification/folders/) — the folder contract and the core-vs-add-on split this page is the registered entry for.
+- [12-folders.md](/specification/folders/) — the folder contract and the core-vs-custom folder split this page is the registered entry for.
 - [../../v0.1.0/06-memo-structure.md](/specification/memo-structure/) — the memo structure and lifecycle the core specification owns.
 - [../../v0.1.0/02-memo-sop-entrypoint.md](/specification/memo-sop-entrypoint/) — the memo SOP entry point.

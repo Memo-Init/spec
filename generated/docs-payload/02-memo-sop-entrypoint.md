@@ -1,19 +1,19 @@
 ---
 title: "Memo-SOP"
-description: "`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. It is one instance of the common SOP standard ([SOP spec](/sop/overview/))..."
+description: "`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. It is one instance of the common SOP standard ([the Session spec's SOP..."
 spec_version: "0.1.0"
 spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/v0.1.0/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/02-memo-sop-entrypoint.md."
 ---
 
 
-`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. It is one instance of the common SOP standard ([SOP spec](/sop/overview/)) that it **extends** — the chapters below are how the memo system realizes that standard's Setup, Health, and Update for the memo scope. This chapter defines what makes it the single source of truth, why it is the re-entry point after any loss of session context, and how it classifies every other skill as a public entry point or a private process step.
+`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. It is one instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) that it **extends** — the chapters below are how the memo system realizes that standard's Setup, Health, and Update for the memo scope. This chapter defines what makes it the single source of truth, why it is the re-entry point after any loss of session context, and how it classifies every other skill as a public entry point or a private process step.
 
 ## The Single Source of Truth
 

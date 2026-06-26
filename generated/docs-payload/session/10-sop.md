@@ -1,0 +1,81 @@
+---
+title: "SOP — The Entry-Point Mechanism"
+description: "There is **no** standalone \"SOP standard\" sitting beside the session standard. There is **one** session standard, and **SOP is an integral entry-point area within it** — the area that defines how..."
+session_version: "0.1.0"
+spec_file: "10-sop.md"
+order: 10
+section: "Session"
+normative: false
+generated_at: "2026-06-26T21:14:26.848Z"
+generated_from: "spec/session/0.1.0/10-sop.md"
+generator: "scripts/generate-docs-payload.mjs"
+edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/10-sop.md."
+---
+
+
+> **Informative.** This chapter introduces the SOP area of the session standard: what an SOP is, why the SOP layer is the mechanism through which tools attach to the session, and how the existing SOPs relate to it. It carries no normative requirements of its own beyond the conventions named in [13-conventions.md](/specification/conventions/); the binding registry mechanics live in [06-namespace-registry.md](/specification/namespace-registry/).
+
+There is **no** standalone "SOP standard" sitting beside the session standard. There is **one** session standard, and **SOP is an integral entry-point area within it** — the area that defines how tools connect to the session, register themselves, and become findable. This chapter is where that mechanism is described; the three chapters after it ([11](/specification/common-denominator/)–[13](/specification/conventions/)) are the connecting layer it rests on.
+
+---
+
+## SOP Is the Mechanism Tools Connect Through
+
+The primary job of the SOP area is **the connection and hand-off of tools**. A tool — a skill, a CLI, an entry point — does not float free in a session; it **registers** under a namespace, declares its signals and its dependencies, and thereby "logs in" to the session and becomes discoverable to an agent. That registration is what the SOP area governs: how a unit announces itself, which predecessor SOP it presupposes, and how a reader who has understood one registered unit knows how to read the next.
+
+This is why the SOP area lives on the session tier rather than one layer up. The session is the genesis root ([01-genesis-root.md](/specification/genesis-root/)); the moment a tool needs to be found, gated, or chained, it is doing so **against the session**, not against a workbench convention. The concrete registry that realizes this — the `sops[]` blocks, the namespace reservation, the `requires[]` / `requirements[]` edges — is specified in [06-namespace-registry.md](/specification/namespace-registry/). This chapter narrates *why* it is the entry-point mechanism; that chapter specifies *how* it is encoded.
+
+---
+
+## A Connecting Mechanism, Not a Container
+
+The SOP area does not contain the SOPs. The memo-init-SOP lives in the core specification, the Workbench-SOP lives in the Workbench spec, and future SOPs live in their own scopes. The SOP area defines the **common denominator** they all share — the shape every SOP is expected to take ([11-common-denominator.md](/specification/common-denominator/)) — and records that the existing SOPs are **instances** of that shape ([12-instances.md](/specification/instances/)).
+
+The value of a connecting mechanism is predictability. Without it, each SOP would be free to organize itself differently, and a reader would have to re-learn the layout every time. With it, the four parts of any SOP are always in the same conceptual place, and an agent can navigate an unfamiliar SOP by knowing the standard rather than by reading it end to end.
+
+---
+
+## Three "Top" Axes Stay Distinct
+
+Folding the SOP area into the session family must not create authority confusion. Three different senses of "the top" stay separate, and the system means a different thing by each:
+
+| Axis | What sits at the top | Why |
+|------|----------------------|-----|
+| **Outermost published nav** | the **session** family | it is the outermost sibling spec a reader meets; the SOP area is published as part of it |
+| **Highest authority** | the **Core** specification | Core owns the RFC 2119 / BCP 14 conformance vocabulary; the SOP area does not redefine it |
+| **Lowest runtime tier** | **session-sop** (the genesis root) | it exists before any convention and is read by every layer above it |
+
+The session family is the *outermost published* layer **and** the *lowest runtime* tier, but it is **not** the *highest authority*: it references the Core vocabulary rather than restating it. Stating this once keeps the merge from being mistaken for a promotion of the session family over the Core spec.
+
+---
+
+## SOP Instances vs Catalog Blocks
+
+Not every tool that registers is an SOP. The session registry holds two kinds of registrant block, and the difference decides whether a unit ever becomes a precondition gate:
+
+| Block kind | Carries | Is a gate? | Example |
+|------------|---------|------------|---------|
+| **SOP-instance block** | `skills[]` **and** `requires[]`, and it feeds `requirements[]` pre-gate edges | yes — it can require a predecessor SOP (`when:pre`) | `memo-init` → `memo-sop` (REQ-061); `workbench` |
+| **Catalog block** | `skills[]` only — empty `requires[]`, **no** `requirements[]` edge | never | **FlowMCP** (reserves `flowmcp`, contributes `flowmcp-usage`) |
+
+memo-init and workbench are **SOP-instance blocks**: they participate in the predecessor chain and can gate an entry point. **FlowMCP is a catalog block**, not an SOP: its model is `search`/`list` → `call`, so it needs to be *findable*, but it never gates another entry point. Both live in the same `sops[]` array, but only an SOP-instance block ever contributes a `when:pre` edge. The structural encoding of both is in [06-namespace-registry.md](/specification/namespace-registry/); the load-bearing point here is that "registered and discoverable" does **not** imply "is a precondition".
+
+---
+
+## The SOP-Area Chapters
+
+| Chapter | Holds |
+|---------|-------|
+| [10-sop.md](/specification/sop/) | this chapter — SOP as the entry-point mechanism, the three axes, instances vs catalog |
+| [11-common-denominator.md](/specification/common-denominator/) | the four parts every SOP shares — Setup, Health, Update, Extras |
+| [12-instances.md](/specification/instances/) | the existing SOP instances and the inheritance declaration |
+| [13-conventions.md](/specification/conventions/) | the naming (`prefix-hyphen-name`) and brevity conventions |
+
+---
+
+## Related
+
+- [00-overview.md](/specification/overview/) — the session family this SOP area is part of.
+- [06-namespace-registry.md](/specification/namespace-registry/) — the registry mechanics (`sops[]`, namespaces, `requires[]` vs `requirements[]`) that realize this mechanism.
+- [12-instances.md](/specification/instances/) — the memo-init, Root, and Projects SOPs as instances of the common denominator.
+- [The memo-init SOP entry point](/specification/memo-sop-entrypoint/) — the memo-lifecycle instance.

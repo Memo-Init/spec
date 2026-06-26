@@ -1,4 +1,4 @@
-# 30. The Wiki — Entry Point
+# 30. .wiki/
 
 | | |
 |---|---|
@@ -6,7 +6,7 @@
 | Depends on | [00-overview.md](./00-overview.md), [41-project-architecture.md](./41-project-architecture.md) |
 | Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [20-cli.md](./20-cli.md), [../../v0.1.0/24-tools-registry.md](../../v0.1.0/24-tools-registry.md), [../../v0.1.0/26-memo-history.md](../../v0.1.0/26-memo-history.md) |
 
-The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; the **storage formats** it reads through — OKF and `DESIGN.md` — are listed below.
+The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; the **storage formats** it reads through — OKF and `design.md` — are listed below.
 
 ---
 
@@ -17,9 +17,9 @@ The wiki is the entry point that reads the project's knowledge **regardless of t
 | Storage format | What it stores | Reference |
 |----------------|----------------|-----------|
 | **OKF** (Open Knowledge Format) | the structured knowledge bundles — the wiki's own pages and the project architecture graph (nodes + untyped links) | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) |
-| **DESIGN.md** | the design convention — a project's design intent and decisions in prose | [18-design.md](./18-design.md) |
+| **design.md** | the design format — a project's design intent and decisions in prose | [18-design.md](./18-design.md) |
 
-These formats sit **under** the wiki: they are the on-disk encodings the wiki reads, not separate discovery systems of their own. A reader reaches them *through* the wiki — ask the wiki, and it returns the current answer whether that answer was distilled from an OKF bundle or a `DESIGN.md`. New storage formats can be added under the same entry point without changing how a memo asks its question.
+These formats sit **under** the wiki: they are the on-disk encodings the wiki reads, not separate discovery systems of their own. A reader reaches them *through* the wiki — ask the wiki, and it returns the current answer whether that answer was distilled from an OKF bundle or a `design.md`. New storage formats can be added under the same entry point without changing how a memo asks its question.
 
 ---
 
@@ -82,6 +82,6 @@ The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](./2
 
 - [41-project-architecture.md](./41-project-architecture.md) — the structured layer the wiki indexes and points at.
 - [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, a storage format under the wiki: the on-disk format of both the wiki's pages and the architecture bundle.
-- [18-design.md](./18-design.md) — `DESIGN.md`, the design convention; a storage format the wiki reads through.
+- [18-design.md](./18-design.md) — `design.md`, the design format; a storage format the wiki reads through.
 - [../../v0.1.0/24-tools-registry.md](../../v0.1.0/24-tools-registry.md) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
 - [../../v0.1.0/26-memo-history.md](../../v0.1.0/26-memo-history.md) — the chronicle, the present-tense wiki's chronological counterpart.

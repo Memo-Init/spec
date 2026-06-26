@@ -10,24 +10,29 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ---
 
-## The Project-Scoped Registry
+## The Session-Tier Config Is the Entry Point
 
-The machine-readable form of the SOP chain is a **registry**. In this version the active registry is **project-scoped** (`.workbench/registry.json`), declaring the skills and the when:pre edges for one project:
+The machine-readable form of the SOP chain is a **registry**, and its entry point is the project-local **`.session/config.json`** — the session-tier home the hook reads ([05-config-cascade.md](./05-config-cascade.md)). The config carries the registrant blocks and the when:pre edges as two top-level structures (`sops[]` + `requirements[]`, [06-namespace-registry.md](./06-namespace-registry.md)). The pre-gate edge that is active in this version is the single project-scoped `memo-init → memo-sop`:
 
 ```json
-{ "skills": [ { "id": "memo-init", "signals": ["attributionSkill:memo-init"] },
-              { "id": "memo-sop",  "signals": ["attributionSkill:memo-sop"]  } ],
+{ "sops": [ { "namespace": "memo", "owner": "memo-init", "tier": 2, "requires": ["workbench"],
+              "skills": [ { "id": "memo-init", "signals": ["attributionSkill:memo-init"] },
+                          { "id": "memo-sop",  "signals": ["attributionSkill:memo-sop"]  } ] } ],
   "requirements": [ { "id": "REQ-061", "entrypoint": "memo-init",
                       "requires": "memo-sop", "when": "pre" } ] }
 ```
 
-A global/genesis-tier registry at `~/.claude/session/registry.json` (note: the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is a follow-up. The registry file is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](./03-recovery.md)).
+The config moves the entry point **one tier down** from the former workbench home (`.workbench/registry.json`) to the session tier; the move is a **one-time migration** carried by `session init`, not a dual-read ([05-config-cascade.md](./05-config-cascade.md), [07-doctor-init.md](./07-doctor-init.md)). A machine-global registry at `~/.claude/session/registry.json` (the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is a follow-up. The config is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](./03-recovery.md)).
+
+**Absence is fail-open and LOUD.** When `.session/config.json` is absent the gate MUST treat it as a configuration problem that **fails open** (ALLOW, exit 0) — never a lockout — while emitting a **loud SessionStart warning** so the missing config is noticed rather than silently tolerated (REQ-SS-CONFIG-LOUD). Enforcement deliberately starts **permissive**: warn first, tighten later. The strict, refusing posture lives in the foreground `session doctor` / `session init` ([07-doctor-init.md](./07-doctor-init.md)), not in the always-on hook.
 
 ---
 
 ## The Signal Is Structured, Never a Substring
 
 The predecessor signal MUST be read **jq-structured** from the harness-authored `attributionSkill` field of the session transcript. It MUST NOT be a raw substring match over transcript text: transcript content includes user- and model-influenced text, so a substring grep over it is a **forgeable gate**. Only the structured `attributionSkill` value — which the harness, not the model, writes — is trusted. The scan MUST be bounded and BSD-safe (`tail -r` + early-exit, never `tac`).
+
+The hook locates `.session/config.json` from the **pinned** project root, not from a live `cwd`: the root is resolved once at SessionStart and read from the pin thereafter, so a `cd` mid-session can never repoint the gate at a sister project's config ([08-identity-pin.md](./08-identity-pin.md), [09-root-detection.md](./09-root-detection.md)).
 
 ---
 
@@ -47,7 +52,8 @@ The decision table the reference hook MUST implement:
 |-----------|--------|------|
 | kill-switch set (`$SESSION_SOP_DISABLE` or the sentinel) | ALLOW | 0 |
 | tool ≠ `Skill` | ALLOW | 0 |
-| `jq` missing · `transcript_path` empty/unreadable · registry malformed | ERROR (fail-open) | 0 |
+| `.session/config.json` absent | ERROR (fail-open) + LOUD SessionStart warning | 0 |
+| `jq` missing · `transcript_path` empty/unreadable · config malformed | ERROR (fail-open) | 0 |
 | `transcript_path` is a subagent transcript (`…/subagents/agent-*.jsonl`) | ALLOW (carve-out) | 0 |
 | the entry point is not gated by a when:pre edge | ALLOW | 0 |
 | the required skill is **not installed** (dangling edge) | ERROR (fail-open) | 0 |
@@ -63,6 +69,7 @@ The governing principle: **the gate never fail-CLOSES on infrastructure trouble*
 | Requirement | Statement |
 |-------------|-----------|
 | **REQ-SS-FAILOPEN** | Any infra/config problem ⇒ ALLOW (exit 0) with a stderr note. Never deny on trouble. |
+| **REQ-SS-CONFIG-LOUD** | An absent `.session/config.json` ⇒ ALLOW (fail-open) **and** a loud SessionStart warning; enforcement starts permissive, strict checks live in `session doctor`. |
 | **REQ-SS-SIGNAL** | The predecessor signal is matched jq-structured on `attributionSkill`, never as a substring. |
 | **REQ-SS-EDGEVALID** | An edge to a non-installed skill fails open; a build-time `registry-validate` MAY refuse it. |
 | **REQ-SS-SUBAGENT** | A subagent transcript is carved out (ALLOW) — it carries no parent attribution chain. |
@@ -83,5 +90,8 @@ The gate is wired into `~/.claude/settings.json` as a PreToolUse hook on the `Sk
 ## Related
 
 - [03-recovery.md](./03-recovery.md) — the kill-switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
+- [05-config-cascade.md](./05-config-cascade.md) — the `.session/config.json` entry point the gate reads, and the migration that puts it there.
+- [07-doctor-init.md](./07-doctor-init.md) — the foreground `session doctor` / `session init` that carry the strict checks the hook deliberately omits.
+- [08-identity-pin.md](./08-identity-pin.md) — the SessionStart-Pin the gate reads instead of a live `cwd`.
 - [workbench/23-hooks-contract.md](/workbench/hooks-contract/) — the workbench-side statement of the same PreToolUse contract.
 - [workbench/20-cli.md](/workbench/cli/) — `memo session resolve` and `memo session registry-validate`.

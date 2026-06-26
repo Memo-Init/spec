@@ -6,7 +6,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: false
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/25-validation-overview.md."

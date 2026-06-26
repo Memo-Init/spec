@@ -5,13 +5,14 @@
 // frontmatter with discovery metadata, rewrites intra-spec links
 // ./NN-name.md → /specification/<slug>/, and writes the result to
 // generated/docs-payload/:
-//   core      spec/v<spec_version>/*.md          → docs-payload/<NN-name>.md
-//   workbench spec/workbench/<wb_version>/*.md    → docs-payload/workbench/<NN-name>.md
-//   sop       spec/sop/<sop_version>/*.md         → docs-payload/sop/<NN-name>.md
+//   core      spec/v<spec_version>/*.md               → docs-payload/<NN-name>.md
+//   workbench spec/workbench/<wb_version>/*.md         → docs-payload/workbench/<NN-name>.md
+//   session   spec/session/<session_version>/*.md      → docs-payload/session/<NN-name>.md
 //
+// (The former SOP family was folded into the session family in Memo 049.)
 // Each family carries its OWN version line (refs.manual.json keys spec /
-// workbench / sop) and stamps a per-family version frontmatter field
-// (spec_version / workbench_version / sop_version) — mirroring FlowMCP's
+// workbench / session) and stamps a per-family version frontmatter field
+// (spec_version / workbench_version / session_version) — mirroring FlowMCP's
 // grading_version / best_practice_version. The payload layout stays flat per
 // family (the version rides in frontmatter, not the payload path), so the
 // site sync paths stay stable.
@@ -29,7 +30,7 @@ const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 
 // Per-family content versions are the curated values in data/refs.manual.json
-// (spec / workbench / sop .currentVersion) — the same single source generate-refs uses.
+// (spec / workbench / session .currentVersion) — the same single source generate-refs uses.
 const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
 
 const readFamilyVersion = ( { family } ) => {
@@ -42,16 +43,13 @@ const readFamilyVersion = ( { family } ) => {
 
 const SPEC_VERSION = readFamilyVersion( { family: 'spec' } )
 const WORKBENCH_VERSION = readFamilyVersion( { family: 'workbench' } )
-const SOP_VERSION = readFamilyVersion( { family: 'sop' } )
 const SESSION_VERSION = readFamilyVersion( { family: 'session' } )
 
 const SPEC_DIR = join( REPO, `spec/v${ SPEC_VERSION }` )
 const WORKBENCH_DIR = join( REPO, `spec/workbench/${ WORKBENCH_VERSION }` )
-const SOP_DIR = join( REPO, `spec/sop/${ SOP_VERSION }` )
 const SESSION_DIR = join( REPO, `spec/session/${ SESSION_VERSION }` )
 const PAYLOAD_DIR = join( REPO, 'generated/docs-payload' )
 const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
-const SOP_PAYLOAD_DIR = join( PAYLOAD_DIR, 'sop' )
 const SESSION_PAYLOAD_DIR = join( PAYLOAD_DIR, 'session' )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
@@ -148,11 +146,11 @@ const detectNormative = ( { content } ) => {
 // Rewrite spec links to published routes; an optional #anchor is preserved.
 //
 // (1) Same-family intra-spec links "./NN-name.md" → "/specification/<slug>/". For
-//     workbench/sop pages, sync-spec re-routes "/specification/<slug>/" to the page's
+//     workbench/session pages, sync-spec re-routes "/specification/<slug>/" to the page's
 //     own family route (family-scoped), so same-family links land correctly.
 // (2) Cross-family links "../[../]<family>[/<version>]/NN-name.md" → the absolute route
 //     of the TARGET family: core "v<x.y.z>" → /specification/, workbench → /workbench/,
-//     sop → /sop/. The final route is emitted directly because sync-spec's re-routing is
+//     session → /session/. The final route is emitted directly because sync-spec's re-routing is
 //     family-scoped and cannot fix a cross-family link (this is why such links previously
 //     survived unrewritten and 404'd on the site). Any depth of "../" and an optional
 //     version subdir are tolerated, so the rewrite is robust to where the source file sits.
@@ -162,7 +160,7 @@ const rewriteSpecLinks = ( { content } ) => {
         ( match, fname, anchor ) => `](/specification/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
     )
     return sameFamily.replace(
-        /\]\((?:\.\.\/)+(?:(v\d+\.\d+\.\d+)|(workbench|sop|session)(?:\/\d+\.\d+\.\d+)?)\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
+        /\]\((?:\.\.\/)+(?:(v\d+\.\d+\.\d+)|(workbench|session)(?:\/\d+\.\d+\.\d+)?)\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
         ( match, coreVersion, family, fname, anchor ) => {
             const route = coreVersion ? 'specification' : family
             return `](/${ route }/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
@@ -229,7 +227,7 @@ const collectChapters = async ( { sourceDir } ) => {
 
 // Remove stale generated chapter files (NN-*.md) before regenerating, so a renamed
 // or removed source chapter never lingers in the payload. Only NN-prefixed .md files
-// are touched — manifest.json and the workbench/ + sop/ subdirs are left intact.
+// are touched — manifest.json and the workbench/ + session/ subdirs are left intact.
 const cleanTargetDir = async ( { targetDir } ) => {
     let names
     try {
@@ -292,19 +290,6 @@ const main = async () => {
         now
     } )
     reportPass( { label: 'workbench', results: workbenchResults, targetDir: WORKBENCH_PAYLOAD_DIR } )
-
-    const sopResults = await generatePass( {
-        label: 'sop',
-        sourceDir: SOP_DIR,
-        targetDir: SOP_PAYLOAD_DIR,
-        section: 'SOP',
-        versionField: 'sop_version',
-        versionValue: SOP_VERSION,
-        sourceRelBase: `spec/sop/${ SOP_VERSION }`,
-        sourceCommit,
-        now
-    } )
-    reportPass( { label: 'sop', results: sopResults, targetDir: SOP_PAYLOAD_DIR } )
 
     const sessionResults = await generatePass( {
         label: 'session',

@@ -1,14 +1,14 @@
-# 01. The Common Denominator — Setup, Health, Update, Extras
+# 11. The Common Denominator — Setup, Health, Update, Extras
 
 | | |
 |---|---|
 | Status | Draft |
-| Depends on | [00-overview.md](./00-overview.md) |
-| Related | [02-instances.md](./02-instances.md) |
+| Depends on | [10-sop.md](./10-sop.md) |
+| Related | [12-instances.md](./12-instances.md) |
 
 > **Informative.** This chapter describes the common shape every SOP is expected to take. It names the parts and what each is for; it does not impose conformance levels on the individual SOPs, which govern their own scope.
 
-Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP overview](./00-overview.md) rests.
+Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP entry-point mechanism](./10-sop.md) rests.
 
 ---
 
@@ -47,6 +47,6 @@ Setup, Health, and Update are the connecting core because they are the questions
 
 ## Related
 
-- [00-overview.md](./00-overview.md) — why a thin connecting layer exists.
-- [02-instances.md](./02-instances.md) — the existing SOPs as instances of this shape.
-- [03-conventions.md](./03-conventions.md) — the naming and brevity conventions shared across SOPs.
+- [10-sop.md](./10-sop.md) — why a thin connecting mechanism exists inside the session standard.
+- [12-instances.md](./12-instances.md) — the existing SOPs as instances of this shape.
+- [13-conventions.md](./13-conventions.md) — the naming and brevity conventions shared across SOPs.

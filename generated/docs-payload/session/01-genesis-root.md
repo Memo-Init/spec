@@ -6,7 +6,7 @@ spec_file: "01-genesis-root.md"
 order: 1
 section: "Session"
 normative: true
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/session/0.1.0/01-genesis-root.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/01-genesis-root.md."
@@ -39,7 +39,7 @@ A session has an ambient identity that any tool MAY resolve deterministically. T
 | `sessionId` | `--session-id` | `CLAUDE_SESSION_ID` | `null` |
 | `memoId` (optional second protocol) | `--memo-id` | `MEMO_ID` | `null` |
 
-The resolution MUST be **no-silent-default**: when neither a flag nor an environment value is present, the field resolves to `null` with an explicit source of `"none"`, never to a guessed value. The reference resolver is the CLI leaf `memo session resolve` ([workbench/20-cli.md](/workbench/cli/)).
+The resolution MUST be **no-silent-default**: when neither a flag nor an environment value is present, the field resolves to `null` with an explicit source of `"none"`, never to a guessed value. The reference resolver is the CLI leaf `memo session resolve` ([workbench/20-cli.md](/workbench/cli/)). The resolved identity (and the resolved root) is **pinned once at SessionStart** and read from the pin thereafter — never recomputed from a `cd`-mutated `cwd` ([08-identity-pin.md](/specification/identity-pin/)).
 
 `memoId` is a strictly **optional** second protocol: a session MAY carry an ambient memo id out of band, but the system MUST function when it is absent. No behaviour depends on `memoId` being set.
 
@@ -71,6 +71,8 @@ The chain is **declared in full** as the normative target. But each edge is **en
 - A `registry-validate` build step ([workbench/20-cli.md](/workbench/cli/)) MAY refuse, at build time, a registry that declares an edge to an absent skill — so dangling edges are caught deterministically before they ship, rather than at runtime.
 
 "Declared now, enforced when present" is what lets the full chain be written down before every link is built. In this version, the only **active** edge is the single project-scoped edge `memo-init → memo-sop`; `workbench-sop` and the global registry that would activate the upper edges are a follow-up.
+
+The chain's machine-readable home is the session config. The registrant blocks that reserve each namespace and the two edge granularities — coarse `requires[]` between SOPs and fine `requirements[]` pre-gate edges — are specified in [06-namespace-registry.md](/specification/namespace-registry/), and the `.session/config.json` cascade that stores them is specified in [05-config-cascade.md](/specification/config-cascade/). This chapter declares the chain; those two chapters encode it.
 
 ---
 
