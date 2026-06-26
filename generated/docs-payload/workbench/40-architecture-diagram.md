@@ -6,7 +6,7 @@ spec_file: "40-architecture-diagram.md"
 order: 40
 section: "Workbench"
 normative: false
-generated_at: "2026-06-26T02:30:56.290Z"
+generated_at: "2026-06-26T10:09:30.468Z"
 generated_from: "spec/workbench/0.1.0/40-architecture-diagram.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/40-architecture-diagram.md."
