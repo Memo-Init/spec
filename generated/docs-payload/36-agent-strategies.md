@@ -6,7 +6,7 @@ spec_file: "36-agent-strategies.md"
 order: 36
 section: "Specification"
 normative: true
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/v0.1.0/36-agent-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/36-agent-strategies.md."

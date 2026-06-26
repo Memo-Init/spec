@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "SOP"
 normative: false
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/sop/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/sop/0.1.0/00-overview.md."
@@ -42,3 +42,4 @@ It is **versioned independently**, under `spec/sop/0.1.0/`, with its version rec
 | `00-overview.md` | Overview | Informative |
 | `01-common-denominator.md` | The Common Denominator — Setup, Health, Update, Extras | Informative |
 | `02-instances.md` | SOP Instances and the Reference Model | Informative |
+| `03-conventions.md` | Conventions — Naming and Brevity | Informative |

@@ -6,7 +6,7 @@ spec_file: "02-instances.md"
 order: 2
 section: "SOP"
 normative: false
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/sop/0.1.0/02-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/sop/0.1.0/02-instances.md."
@@ -38,6 +38,18 @@ The tie between an instance and the standard is deliberately light:
 - This spec **does not import** an SOP's content; it names the instance and links to it.
 
 The result is a connecting layer with no duplication: the standard is stated once here, each SOP states only how it satisfies the standard, and a reader moves between them by following references rather than by reconciling repeated text.
+
+---
+
+## The Inheritance Declaration
+
+For the reference model to hold, the tie must be **stated** by the instance, not merely implied. An SOP instance **MUST** declare, as one of its first sentences, that it is an instance of the SOP standard and that it extends it; it then states how it realizes Setup, Health, and Update for its scope, plus its extras. The canonical first-sentence form opens an instance like this:
+
+> "This is the «X»-SOP, an instance of the SOP standard ([overview](/specification/overview/)) that it extends; below is how it realizes Setup, Health, and Update for «scope», plus its extras."
+
+This declaration is what lets a reader navigate an unfamiliar SOP by the standard: having read the common denominator once, the reader knows that the four parts are present and where each is realized, without reading the SOP end to end.
+
+Each instance **SHOULD** also name its **entry points** — the holistic "what this scope is" together with the concrete points where work enters the scope — so a reader knows both the whole and where to start.
 
 ---
 

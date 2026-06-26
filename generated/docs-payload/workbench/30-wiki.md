@@ -6,14 +6,27 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/workbench/0.1.0/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/30-wiki.md."
 ---
 
 
-The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; its on-disk format is OKF ([13-knowledge-format-okf.md](/specification/knowledge-format-okf/)).
+The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; the **storage formats** it reads through — OKF and `DESIGN.md` — are listed below.
+
+---
+
+## Storage Formats
+
+The wiki is the entry point that reads the project's knowledge **regardless of the form it is stored in**. It supports more than one storage format, and a query is answered the same way no matter which format holds the underlying knowledge:
+
+| Storage format | What it stores | Reference |
+|----------------|----------------|-----------|
+| **OKF** (Open Knowledge Format) | the structured knowledge bundles — the wiki's own pages and the project architecture graph (nodes + untyped links) | [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) |
+| **DESIGN.md** | the design convention — a project's design intent and decisions in prose | [18-design.md](/specification/design/) |
+
+These formats sit **under** the wiki: they are the on-disk encodings the wiki reads, not separate discovery systems of their own. A reader reaches them *through* the wiki — ask the wiki, and it returns the current answer whether that answer was distilled from an OKF bundle or a `DESIGN.md`. New storage formats can be added under the same entry point without changing how a memo asks its question.
 
 ---
 
@@ -75,6 +88,7 @@ The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](/sp
 ## Related
 
 - [41-project-architecture.md](/specification/project-architecture/) — the structured layer the wiki indexes and points at.
-- [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the on-disk format of both the wiki and the architecture bundle.
+- [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, a storage format under the wiki: the on-disk format of both the wiki's pages and the architecture bundle.
+- [18-design.md](/specification/design/) — `DESIGN.md`, the design convention; a storage format the wiki reads through.
 - [../../v0.1.0/24-tools-registry.md](/specification/tools-registry/) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
 - [../../v0.1.0/26-memo-history.md](/specification/memo-history/) — the chronicle, the present-tense wiki's chronological counterpart.

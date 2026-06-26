@@ -6,7 +6,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/workbench/0.1.0/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/31-browser-automation.md."
@@ -16,6 +16,8 @@ edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/31-brow
 The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how that research feeds the revision lifecycle. This document defines the research *method* — the concrete tooling a project uses to gather external information, and the cost discipline that governs which tool is chosen. The two are complementary: the core chapter says *what must be researched and when*, this chapter says *how the gathering is done*.
 
 Browser automation lives at the project level. Each project that uses it carries its own `.browser/` folder (an optional folder — see [12-folders.md](/specification/folders/)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
+
+> **What belongs here, what belongs to the core spec.** The **method** — tool selection, the cost discipline, the `.browser/` structure, the scrape queue, and `auth.json` handling — is the **workbench's** concern and is specified here. The research **duty** — when a memo must verify its assumptions, and the inward trust boundary as a *behavioral guardrail* — belongs to the memo/core spec ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) and is **referenced, not restated**. This chapter is the *how*; the core chapter is the *what* and the *when*. The one place the two meet is the **trust dimension** of tool selection (see "The Trust Axis" below): the core chapter owns the guardrail, this chapter carries its mechanism in the tool-choice itself.
 
 > **Folder name — `.browser/`, alias `.playwright/`.** The folder is named `.browser/`: the dot marks it as local machinery (see [12-folders.md](/specification/folders/)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is an accepted **alias** of the same folder — a project that still uses that name remains conformant, and the physical migration of existing projects to `.browser/` is deliberately **deferred**, to be done at each project's own pace.
 
@@ -31,6 +33,20 @@ The single most important rule of browser automation is that the choice between 
 > **CLI is the default; MCP is the exception. The deciding factor is cost.**
 
 The MCP server's cost is justified only by a genuine need for a live, visible, or interactive browser. Whenever the work can be expressed as a repeatable script that returns a compact result, the CLI **MUST** be preferred.
+
+---
+
+## The Trust Axis
+
+Cost is only one of **two** dimensions that govern tool choice. The first, above, is **cost** — how expensive the fetch is in context. The second is **trust** — whether the *source* can be assessed before its content lands in the working context. Choosing only on cost answers "how cheaply can I fetch this"; it does not answer "is it safe to let this content into the orchestrator's context at all". Both questions **MUST** be answered.
+
+An **untrusted or unevaluable** source is one whose trustworthiness cannot be assessed up front — most commonly an unknown web page reached for the first time. The risk it carries is **context poisoning**: untrusted or voluminous content polluting the working context — a distinct hazard from prompt injection (the inward trust boundary in [../../v0.1.0/10-proactive-research.md](/specification/proactive-research/), which governs whether ingested text may *steer the agent's actions*). Context poisoning is about *context hygiene*: even content that issues no imperative can crowd, skew, or contaminate the orchestrator's reasoning simply by being there.
+
+> **Trust rule (MUST).** An untrusted or unevaluable source — an unknown web page whose trustworthiness cannot be assessed up front — **MUST** be fetched **inside a sub-agent by default**, not in the orchestrator's (or the user's) context. The raw content **MUST NOT** touch the orchestrator's context; only a distilled result returns. A confused sub-agent is **isolatable and disposable**; a poisoned orchestrator endangers the whole mission.
+
+This is the **reader-agent** (quarantined-inference) pattern: a disposable sub-agent reads the untrusted material, reasons over it in its own isolated context, and hands back only a compact distillate. If that sub-agent's context is skewed by what it read, the damage is contained to a throwaway worker and the orchestrator never inherits the raw page.
+
+**The trigger is MUST for unevaluable sources, not SHOULD.** The core research chapter routes work to a sub-agent by **volume** — "research SHOULD be conducted in Sub-Agents … when the volume is large" ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)). The trust axis **extends that trigger to trust**: when a source's trustworthiness *cannot be evaluated*, sub-agent isolation is **MUST**, not SHOULD — regardless of how small the content is. Volume makes isolation advisable; unevaluable trust makes it mandatory. The behavioral guardrail this protects lives in the core chapter (the inward trust boundary); this chapter carries the **mechanism** — the trust dimension built into tool selection.
 
 ---
 
@@ -115,7 +131,7 @@ A scraped documentation file lands in `context/` and is **read back later** by a
 
 ## The Tool-Selection Decision Tree
 
-Not every information need calls for a browser. Before reaching for Playwright at all, the cheapest tool that can answer the question **MUST** be chosen. The order of preference, from cheapest to most expensive, is: **WebSearch → WebFetch → Playwright CLI → Playwright MCP**.
+Not every information need calls for a browser. Before reaching for Playwright at all, the cheapest tool that can answer the question **MUST** be chosen. The order of preference, from cheapest to most expensive, is: **WebSearch → WebFetch → Playwright CLI → Playwright MCP**. The cost decision picks the *fetch tool*; the trust decision (above) then picks *where the fetch runs* — a final gate applied **after** cost, regardless of which fetch tool was selected.
 
 ```mermaid
 flowchart TD
@@ -127,6 +143,10 @@ flowchart TD
     E -->|"Yes (JS-rendered / login)"| G{"User must see it?"}
     G -->|"No"| H["Playwright CLI"]
     G -->|"Yes (2FA / live review)"| I["Playwright MCP"]
+    F --> T{"Source trustworthy / evaluable?"}
+    H --> T
+    T -->|"Yes"| J["Fetch into orchestrator context"]
+    T -->|"No / cannot tell"| K["MUST run in sub-agent; only distillate returns"]
 ```
 
 | Tool | When to reach for it | Relative cost |
@@ -138,6 +158,8 @@ flowchart TD
 
 The rule is to **default to the lowest-cost tool that can do the job** and to escalate only when a concrete capability — JavaScript rendering, an interactive login, a live visual review — forces the next tier. Escalating past the tool the task actually needs spends context for nothing.
 
+> **Companion note — the trust gate runs after the cost decision.** Once the cost decision has named the fetch tool, the trust gate (see "The Trust Axis") applies on top of it: if the source is untrusted or unevaluable, the chosen fetch **MUST** run inside a sub-agent so the raw content never reaches the orchestrator's context — only a distillate returns. This holds independently of which fetch tool was picked; a cheap `WebFetch` of an unknown page is still quarantined. The cost axis decides *what fetches*; the trust axis decides *where it fetches*.
+
 ---
 
 ## Related
@@ -145,5 +167,5 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 - [00-overview.md](/specification/overview/) — the workbench spec framing and the global helpers it exposes.
 - [12-folders.md](/specification/folders/) — the optional `.browser/` folder in the project layout.
 - [11-project-structure.md](/specification/project-structure/) — the local guarantee that keeps `auth.json` and `output/` off the network.
-- [../../v0.1.0/10-proactive-research.md](/specification/proactive-research/) — the research *duty* this chapter's *method* serves, and the normative inward trust boundary on ingested web content.
+- [../../v0.1.0/10-proactive-research.md](/specification/proactive-research/) — the research *duty* this chapter's *method* serves; the normative inward trust boundary (the behavioral guardrail) on ingested web content; and the volume-based sub-agent trigger that this chapter's trust axis strengthens to a MUST for unevaluable sources.
 - [32-trash.md](/specification/trash/) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.

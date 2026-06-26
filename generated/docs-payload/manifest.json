@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-25T18:46:44.668Z",
+    "generated_at": "2026-06-26T02:30:57.461Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -27,7 +27,7 @@
             "filename": "02-memo-sop-entrypoint.md",
             "slug": "memo-sop-entrypoint",
             "title": "Memo-SOP",
-            "description": "`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. This chapter defines what makes it the single source of truth, why it is the...",
+            "description": "`memo-sop` is the canonical entry skill of the memo system: the one document that explains the whole process end to end. It is one instance of the common SOP standard ([SOP spec](/sop/overview/))...",
             "order": 2,
             "section": "Specification",
             "normative": true,
@@ -481,7 +481,7 @@
                 "filename": "02-sop-entrypoint.md",
                 "slug": "sop-entrypoint",
                 "title": "Workbench-SOP and the Two-Level Model",
-                "description": "This chapter defines how an agent enters the workbench and the two levels of operation it distinguishes. The workbench-SOP is the smallest entry point: the thing an agent reads first, on every fresh...",
+                "description": "This is the **Workbench-SOP**: one instance of the common SOP standard ([SOP spec](/sop/overview/)) that it **extends**, and the rest of this chapter is how it realizes that standard's **Setup**,...",
                 "order": 2,
                 "section": "Workbench",
                 "normative": false,
@@ -521,11 +521,11 @@
                 "filename": "13-knowledge-format-okf.md",
                 "slug": "knowledge-format-okf",
                 "title": "Knowledge Format — OKF Conformance",
-                "description": "OKF (the Open Knowledge Format) is the **storage format** the workbench uses for knowledge bundles — a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. Two...",
+                "description": "OKF is **one of the wiki's storage formats** — it sits under the wiki ([30-wiki.md](./30-wiki.md)), the entry point that reads the project's knowledge regardless of the form it is stored in,...",
                 "order": 13,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "folders"
+                "sidebar_group": "wiki"
             },
             {
                 "filename": "15-repos.md",
@@ -591,11 +591,11 @@
                 "filename": "22-config.md",
                 "slug": "config",
                 "title": "The `.workbench/` Configuration",
-                "description": "A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository as inward- or outward-facing, and it is the **single source**...",
+                "description": "A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository's **status** — its visibility, its remote, and its facing —...",
                 "order": 22,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "cli"
+                "sidebar_group": "core"
             },
             {
                 "filename": "23-hooks-contract.md",
@@ -605,7 +605,7 @@
                 "order": 23,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "cli"
+                "sidebar_group": "core"
             },
             {
                 "filename": "24-skills-scope.md",
@@ -645,7 +645,7 @@
                 "order": 30,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "tools"
+                "sidebar_group": "wiki"
             },
             {
                 "filename": "31-browser-automation.md",
@@ -671,7 +671,7 @@
                 "filename": "40-architecture-diagram.md",
                 "slug": "architecture-diagram",
                 "title": "Architecture Diagram",
-                "description": "The diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP spec, with the machine tier drawn dashed because it...",
+                "description": "The core diagram has two parts. The upper flow shows the **two-level model** (Workbench and Project) reached through the workbench-SOP and the thin SOP spec, with the machine tier drawn dashed...",
                 "order": 40,
                 "section": "Workbench",
                 "normative": false,
@@ -721,15 +721,25 @@
                 "section": "SOP",
                 "normative": false,
                 "sidebar_group": "introduction"
+            },
+            {
+                "filename": "03-conventions.md",
+                "slug": "conventions",
+                "title": "Conventions — Naming and Brevity",
+                "description": "The conventions below are not specific to any one SOP. They apply wherever skills, CLIs, and SOP prose appear, which is why they live in the connecting layer rather than in a single instance.",
+                "order": 3,
+                "section": "SOP",
+                "normative": false,
+                "sidebar_group": "introduction"
             }
         ]
     },
     "stats": {
-        "total_files": 71,
+        "total_files": 72,
         "core_files": 45,
         "workbench_files": 23,
-        "sop_files": 3,
+        "sop_files": 4,
         "normative_files": 60,
-        "informative_files": 11
+        "informative_files": 12
     }
 }

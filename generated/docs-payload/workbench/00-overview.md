@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-06-25T18:46:44.485Z"
+generated_at: "2026-06-26T02:30:56.290Z"
 generated_from: "spec/workbench/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/00-overview.md."
@@ -16,6 +16,8 @@ edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/00-over
 > **Informative.** This document introduces the Workbench spec, its scope, and its place among the sibling specifications. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
 
 This is the entry point for the **Workbench specification** — a standalone sibling of the memo-init core specification. The workbench is the meta-orchestration layer that holds all projects, their tools, and their shared conventions. This spec documents the project-level organization — folder structures, the CLI and script conventions, the manual `.workbench/` configuration, the wiki, and the trash policy — that surrounds the per-memo workflow described in the core specification.
+
+The core message: the workbench is **a connecting layer, not a container**. It connects AI-native projects and tools — the memo system, the global helpers (described below by role), and the small CLIs — rather than owning or holding them. Historically that connection was purely deterministic; today it is deterministic **and** non-deterministic. The SOP is the non-deterministic entry point that expects deterministic tools beneath it: an **entry point and a signpost** that routes downward rather than holding everything. This complements the framing above — the spec is specification text and conventions, and what those conventions describe is a thin connecting layer.
 
 ---
 
@@ -85,11 +87,13 @@ These checks are descriptive of the real audit performed at the workbench level;
 
 The workbench exposes a small set of **global** command-line helpers that are available to every project. The following are specific to the workbench level:
 
-| Helper | Role |
-|--------|------|
-| `get-sheet` | Retrieve data from external spreadsheets for use inside a project. |
-| `depwatch` | Supply-chain security watchdog — looks up and scans dependencies before they are installed. |
-| `flowmcp` | Service-tool router — search, list, and call external API tools without per-project installation. |
+| Helper role | What it serves |
+|-------------|----------------|
+| Data ingestion | Retrieve external data (for example spreadsheets) for use inside a project. |
+| Dependency safety | A supply-chain watchdog that looks up and scans dependencies before they are installed. |
+| Service-tool routing | Search, list, and call external API tools without per-project installation. |
+
+The helpers are listed here by **role**, not by name: the concrete tool set is the developer's private inventory, declared per project rather than enumerated in this published spec.
 
 These helpers are global because they serve cross-project concerns (data ingestion, dependency safety) rather than the logic of any single project. A project **MAY** rely on a global helper being reachable; the workbench tool-reachability check exists precisely so that reliance is verified rather than assumed. The CLI convention these helpers follow is described in [20-cli.md](/specification/cli/).
 
@@ -104,32 +108,11 @@ This spec covers the workbench's **specification text and conventions**. Two thi
 
 ---
 
-## Document Index
+## Navigation Categories
 
-The Workbench spec contains the following chapters, grouped into the navigation categories Introduction, Folders, CLI & Scripts, Tools, and Reference. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.)
+The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Folders**, **CLI & Scripts**, **Core**, **Wiki**, **Tools**, and **Reference**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
 
-| Document | Title | Group | Mode |
-|----------|-------|-------|------|
-| `00-overview.md` | Overview | Introduction | Informative |
-| `01-philosophy.md` | Philosophy | Introduction | Informative |
-| `02-sop-entrypoint.md` | Workbench-SOP & the Two-Level Model | Introduction | Normative |
-| `10-root-and-projects.md` | Root and Projects | Folders | Normative |
-| `11-project-structure.md` | Project Structure & Local Guarantee | Folders | Normative |
-| `12-folders.md` | Project Folders — Mandatory and Optional | Folders | Normative |
-| `13-knowledge-format-okf.md` | Knowledge Format — OKF Conformance | Folders | Normative |
-| `15-repos.md` | The `repos/` Folder | Folders | Normative |
-| `16-context.md` | The `context/` Folder | Folders | Normative |
-| `17-memo-store.md` | The `.memo/` Folder | Folders | Normative |
-| `18-design.md` | The `design/` Folder & the DESIGN.md Convention | Folders | Normative |
-| `20-cli.md` | CLI Convention — Branch/Leaf | CLI & Scripts | Normative |
-| `21-environment-scripts.md` | Environment & Health Scripts | CLI & Scripts | Normative |
-| `22-config.md` | The `.workbench/` Configuration | CLI & Scripts | Normative |
-| `23-hooks-contract.md` | Hooks Contract | CLI & Scripts | Normative |
-| `24-skills-scope.md` | Skills in the Workbench Scope | CLI & Scripts | Normative |
-| `25-validation-overview.md` | Validation Overview | CLI & Scripts | Informative |
-| `26-addons.md` | The Add-On Model | CLI & Scripts | Normative |
-| `30-wiki.md` | The Wiki — Entry Point | Tools | Normative |
-| `31-browser-automation.md` | Browser Automation | Tools | Normative |
-| `32-trash.md` | Trash — No Deletion, Only `.trash/` | Tools | Normative |
-| `40-architecture-diagram.md` | Architecture Diagram | Reference | Informative |
-| `41-project-architecture.md` | Project Architecture | Reference | Normative |
+Two categories carry a meaning worth stating here:
+
+- **Core** is the config (`.workbench/`, the producing side) and the hooks contract (the consuming side) — a mutually-defining policy/enforcement pair, together with the two-level model. They define each other and form the workbench's policy core, distinct from the general CLI/Scripts.
+- **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `DESIGN.md` (the design convention); OKF therefore sits conceptually under the wiki rather than standing alone.
