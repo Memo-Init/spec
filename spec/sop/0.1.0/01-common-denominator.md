@@ -49,3 +49,4 @@ Setup, Health, and Update are the connecting core because they are the questions
 
 - [00-overview.md](./00-overview.md) — why a thin connecting layer exists.
 - [02-instances.md](./02-instances.md) — the existing SOPs as instances of this shape.
+- [03-conventions.md](./03-conventions.md) — the naming and brevity conventions shared across SOPs.

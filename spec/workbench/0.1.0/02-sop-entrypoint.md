@@ -6,7 +6,7 @@
 | Depends on | [00-overview.md](./00-overview.md), [01-philosophy.md](./01-philosophy.md) |
 | Related | [10-root-and-projects.md](./10-root-and-projects.md), [22-config.md](./22-config.md), [23-hooks-contract.md](./23-hooks-contract.md), [The SOP Spec](/sop/overview/) |
 
-This chapter defines how an agent enters the workbench and the two levels of operation it distinguishes. The workbench-SOP is the smallest entry point: the thing an agent reads first, on every fresh start, to learn where it is and what it may do. It is one instance of the common SOP standard described in the [SOP spec](/sop/overview/).
+This is the **Workbench-SOP**: one instance of the common SOP standard ([SOP spec](/sop/overview/)) that it **extends**, and the rest of this chapter is how it realizes that standard's **Setup**, **Health**, and **Update** for the workbench scope — plus the workbench's own **extras** (the wiki and project conventions). It is the smallest entry point: the thing an agent reads first, on every fresh start, to learn where it is and what it may do. The standard's definitions live in the [SOP spec](/sop/overview/) and are referenced here, not restated; this chapter adds how an agent enters the workbench and the two levels of operation it distinguishes.
 
 ---
 
@@ -39,6 +39,8 @@ From that entry point an agent performs **self-discovery**:
 - Which SOP applies in a given folder follows from **where the agent is**: the workbench-SOP at the workbench root, a project's own conventions inside a project.
 
 The workbench level **SHOULD** make this determination cheap — a predictable layout and a single entry point — so that an agent re-entering after a context reset can re-orient without re-reading the entire specification.
+
+Beyond explaining the scope, the SOP **names the entry points** that work flows through, so an agent knows the few doors into the system rather than guessing them. The workbench's main entry points are: the **workbench-SOP itself** (read first, every session); each **add-on's SOP** ([26-addons.md](./26-addons.md)), the memo system's SOP first among them; and the **shared tools** the signpost lists (the CLIs and skills present at the workbench root). These entry points are exactly where the PreToolUse preconditions attach — the machine tier gates them so the right SOP is loaded before a tool runs (see [23-hooks-contract.md](./23-hooks-contract.md)).
 
 ---
 
