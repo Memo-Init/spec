@@ -36,4 +36,3 @@ It is **versioned independently**, under `spec/sop/0.1.0/`, with its version rec
 | `01-common-denominator.md` | The Common Denominator — Setup, Health, Update, Extras | Informative |
 | `02-instances.md` | SOP Instances and the Reference Model | Informative |
 | `03-conventions.md` | Conventions — Naming and Brevity | Informative |
-| `04-root-and-projects-sops.md` | The Workbench Instances — Root-SOP and Projects-SOP | Informative |
