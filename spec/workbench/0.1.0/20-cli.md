@@ -29,7 +29,7 @@ Making a CLI globally callable — for example via `npm link` — is **only a re
 
 ## `registry.json` Is the Self-Discovery Source
 
-An agent **MUST** discover the workbench's available CLIs, skills, and add-ons **deterministically by reading `.workbench/registry.json`**. It **MUST NOT** discover them by reading a `CLAUDE.md` or by inferring them from the shape of the filesystem. The registry is the **single discovery source**: one declared file answers "what is part of this workbench?", so discovery does not depend on prose that can drift or on a tree walk that can guess wrong.
+An agent **MUST** discover the workbench's available CLIs, skills, and custom folders **deterministically by reading `.workbench/registry.json`**. It **MUST NOT** discover them by reading a `CLAUDE.md` or by inferring them from the shape of the filesystem. The registry is the **single discovery source**: one declared file answers "what is part of this workbench?", so discovery does not depend on prose that can drift or on a tree walk that can guess wrong.
 
 Discovery and preconditions are **unified in one file**. The same `registry.json` that lists `skills[]` and `addons[]` (discovery) also carries `requirements[]` — the precondition dependency table ([23-hooks-contract.md](./23-hooks-contract.md)). One source therefore answers both questions at once:
 
@@ -40,7 +40,7 @@ This is the same registry whose shape, signals, and pre/post split are specified
 
 `npm link` and the registry play different roles and **MUST NOT** be conflated. Linking is **only the registration mechanism** (see [`npm link` Is Only a Registration Mechanism](#npm-link-is-only-a-registration-mechanism)) — it puts a CLI on the path. The registry is what makes that CLI **discoverable** as a declared part of the workbench. **Registration ≠ discovery:** a linked binary the registry does not list is on the path but is not part of the discoverable workbench surface.
 
-The **naming convention** for the discovery handle (the prefix-plus-hyphen scheme) is defined once in the SOP standard's conventions chapter ([/sop/conventions/](/sop/conventions/)); it is referenced here and **MUST NOT** be restated.
+The **naming convention** for the discovery handle (the prefix-plus-hyphen scheme) is defined once in the SOP standard's conventions chapter ([/session/conventions/](/session/conventions/)); it is referenced here and **MUST NOT** be restated.
 
 ---
 
@@ -77,10 +77,10 @@ Any one signal is evidence the skill ran; their absence across a session is evid
 
 ### The Workbench Registry — the "What to Search"
 
-The CLI does not hardcode what to look for; it reads a project's **`.workbench/registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)). The registry lists the SOPs, skills, and add-ons that *could* be used, each with the signals that prove it was:
+The CLI does not hardcode what to look for; it reads a project's **`.workbench/registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)). The registry lists the SOPs, skills, and custom folders that *could* be used, each with the signals that prove it was:
 
 ```jsonc
-// .workbench/registry.json — the "what to search": every searchable skill / add-on / requirement
+// .workbench/registry.json — the "what to search": every searchable skill / custom folder / requirement
 {
   "skills": [
     { "id": "<skill-id>", "role": "orchestrator | component",
@@ -97,7 +97,7 @@ The CLI does not hardcode what to look for; it reads a project's **`.workbench/r
 
 ### The Matrix — the CLI's Structured Output
 
-Given a set of session IDs and the registry, the CLI scans the transcripts and returns a **structured matrix**: per session, which registered skill or add-on was used, with the evidence that proves it. The output is machine-readable, in the manner of the existing CLI JSON envelopes:
+Given a set of session IDs and the registry, the CLI scans the transcripts and returns a **structured matrix**: per session, which registered skill or custom folder was used, with the evidence that proves it. The output is machine-readable, in the manner of the existing CLI JSON envelopes:
 
 ```jsonc
 {
@@ -131,7 +131,7 @@ Session validation is a **workbench CLI function the memo uses**, not work the m
 flowchart TD
     MEMO1["Memo agent: collects session IDs<br/>knows its spawned sub-agents"] --> IDS["session IDs"]
     IDS --> WCLI["Workbench CLI: holds registry, searches, builds matrix"]
-    REGISTRY[(".workbench/registry.json<br/>SOPs / skills / add-ons + signals")] --> WCLI
+    REGISTRY[(".workbench/registry.json<br/>SOPs / skills / custom folders + signals")] --> WCLI
     WCLI --> SCAN2["scans transcripts for signals"]
     SCAN2 --> MATRIX["structured matrix back:<br/>session × skill/tool → used + evidence"]
     MATRIX --> MEMO2["Memo agent: interprets<br/>checks requirements, e.g. init only if the SOP was read"]
@@ -157,7 +157,7 @@ So it is **one registry, one signal scan, two timings**. The seed first edge is 
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.
-- [/sop/conventions/](/sop/conventions/) — the SOP standard's conventions chapter that defines the naming convention (the discovery handle).
+- [/session/conventions/](/session/conventions/) — the SOP standard's conventions chapter that defines the naming convention (the discovery handle).
 - [23-hooks-contract.md](./23-hooks-contract.md) — the entry-point pre-condition, the "before" half this measurement complements.
 - [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
 - [25-validation-overview.md](./25-validation-overview.md) — the validation wayfinder where runtime call-validation is registered.

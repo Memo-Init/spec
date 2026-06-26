@@ -4,9 +4,9 @@
 |---|---|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md), [01-philosophy.md](./01-philosophy.md) |
-| Related | [10-root-and-projects.md](./10-root-and-projects.md), [22-config.md](./22-config.md), [23-hooks-contract.md](./23-hooks-contract.md), [The SOP Spec](/sop/overview/) |
+| Related | [10-root-and-projects.md](./10-root-and-projects.md), [22-config.md](./22-config.md), [23-hooks-contract.md](./23-hooks-contract.md), [the Session spec's SOP area](/session/sop/) |
 
-This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard ([SOP spec](/sop/overview/)) — the **Root-SOP** and the **Projects-SOP** (named in the SOP [instance register](/sop/instances/)). This entry point does not itself hold either procedure; it names the two levels and **routes** to whichever instance the agent's location selects, and each instance **extends** the standard by realizing its **Setup**, **Health**, and **Update** for its level — plus the workbench's own **extras** (the wiki and project conventions). It is the smallest entry point: the thing an agent reads first, on every fresh start, to learn where it is and what it may do. The standard's definitions live in the [SOP spec](/sop/overview/) and are referenced here, not restated; this chapter adds how an agent enters the workbench and the two levels — and the two SOPs — it distinguishes.
+This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) — the **Root-SOP** and the **Projects-SOP** (named in the SOP [instance register](/session/instances/)). This entry point does not itself hold either procedure; it names the two levels and **routes** to whichever instance the agent's location selects, and each instance **extends** the standard by realizing its **Setup**, **Health**, and **Update** for its level — plus the workbench's own **extras** (the wiki and project conventions). It is the smallest entry point: the thing an agent reads first, on every fresh start, to learn where it is and what it may do. The standard's definitions live in the [Session spec's SOP area](/session/sop/) and are referenced here, not restated; this chapter adds how an agent enters the workbench and the two levels — and the two SOPs — it distinguishes.
 
 ---
 
@@ -19,7 +19,7 @@ The workbench distinguishes exactly **two** levels of operation. Each level has 
 | **Workbench** | the system of projects runs | No project work. Setup, health, and update of the workbenches themselves — does each project exist with the expected structure, are the shared tools reachable. |
 | **Project** | project-specific work runs | Project-related work is carried out — memos, repositories, the project's own tooling. |
 
-An agent **MUST** determine which level it is operating at before it acts, because the permitted actions differ: at the workbench level it organizes and checks; at the project level it does the project's work. Each level is governed by its **own** thin SOP — the **Workbench level by the Root-SOP**, the **Project level by the Projects-SOP** — and this entry point routes to the matching one by the agent's location. The two SOPs and their routing are specified in [10-root-and-projects.md](./10-root-and-projects.md), which also draws the boundary between the workbench root and the projects beneath it, and they are named as the two workbench instances in the SOP [instance register](/sop/instances/).
+An agent **MUST** determine which level it is operating at before it acts, because the permitted actions differ: at the workbench level it organizes and checks; at the project level it does the project's work. Each level is governed by its **own** thin SOP — the **Workbench level by the Root-SOP**, the **Project level by the Projects-SOP** — and this entry point routes to the matching one by the agent's location. The two SOPs and their routing are specified in [10-root-and-projects.md](./10-root-and-projects.md), which also draws the boundary between the workbench root and the projects beneath it, and they are named as the two workbench instances in the SOP [instance register](/session/instances/).
 
 ---
 
@@ -50,12 +50,12 @@ The workbench-SOP is loaded on **every** fresh start. It is deliberately the **s
 
 From that entry point an agent performs **self-discovery**:
 
-- Through the [SOP spec](/sop/overview/) it learns to read any SOP **predictably** — what a SOP contains (Setup, Health, Update, and scope-specific extras) and where to find each part.
+- Through the [Session spec's SOP area](/session/sop/) it learns to read any SOP **predictably** — what a SOP contains (Setup, Health, Update, and scope-specific extras) and where to find each part.
 - Which SOP applies in a given folder follows from **where the agent is**: the workbench-SOP at the workbench root, a project's own conventions inside a project.
 
 The workbench level **SHOULD** make this determination cheap — a predictable layout and a single entry point — so that an agent re-entering after a context reset can re-orient without re-reading the entire specification.
 
-Beyond explaining the scope, the SOP **names the entry points** that work flows through, so an agent knows the few doors into the system rather than guessing them. The workbench's main entry points are: the **workbench-SOP itself** (read first, every session); each **add-on's SOP** ([26-addons.md](./26-addons.md)), the memo system's SOP first among them; and the **shared tools** the signpost lists (the CLIs and skills present at the workbench root). These entry points are exactly where the PreToolUse preconditions attach — the machine tier gates them so the right SOP is loaded before a tool runs (see [23-hooks-contract.md](./23-hooks-contract.md)).
+Beyond explaining the scope, the SOP **names the entry points** that work flows through, so an agent knows the few doors into the system rather than guessing them. The workbench's main entry points are: the **workbench-SOP itself** (read first, every session); each **custom folder's SOP** ([26-addons.md](./26-addons.md)), the memo system's SOP first among them; and the **shared tools** the signpost lists (the CLIs and skills present at the workbench root). These entry points are exactly where the PreToolUse preconditions attach — the machine tier gates them so the right SOP is loaded before a tool runs (see [23-hooks-contract.md](./23-hooks-contract.md)).
 
 ---
 
@@ -63,18 +63,18 @@ Beyond explaining the scope, the SOP **names the entry points** that work flows 
 
 The workbench-SOP does not *contain* the procedures for everything in the workbench; it **points** to them. It is a **signpost** — a connecting layer, not a container — in the spirit of a dynamic `CLAUDE.md` that loads per session, carries the current inventory of tools, and routes downward to the skills and specs that hold the detail. The workbench-SOP names the levels and the tools that are present, and for each one it points at that tool's own SOP.
 
-This is why **SOPs contain SOPs**. The workbench-SOP references each **add-on's** SOP ([26-addons.md](./26-addons.md)) — the memo system's SOP first among them, as the weightiest add-on — and each add-on SOP is itself Setup/Health/Update plus its extras. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
+This is why **SOPs contain SOPs**. The workbench-SOP references each **custom folder's** SOP ([26-addons.md](./26-addons.md)) — the memo system's SOP first among them, as the weightiest custom folder — and each custom folder SOP is itself Setup/Health/Update plus its extras. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
 
 ```
-Workbench-SOP (signpost — knows the levels and the add-ons present)
-├── memo-SOP            (the weightiest add-on's SOP)
-├── <other add-on>-SOP  (a large add-on's SOP)
-└── …                   (each add-on: Setup · Health · Update · Extras)
+Workbench-SOP (signpost — knows the levels and the custom folders present)
+├── memo-SOP            (the weightiest custom folder's SOP)
+├── <other custom folder>-SOP  (a large custom folder's SOP)
+└── …                   (each custom folder: Setup · Health · Update · Extras)
 ```
 
-The machine-readable form of this signpost is the **workbench registry** (`.workbench/registry.json`): the same list of SOPs, skills, and add-ons that the signpost expresses in prose, in a form a tool can read. Its fields and its use by the runtime call-validation are specified in [20-cli.md](./20-cli.md).
+The machine-readable form of this signpost is the **workbench registry** (`.workbench/registry.json`): the same list of SOPs, skills, and custom folders that the signpost expresses in prose, in a form a tool can read. Its fields and its use by the runtime call-validation are specified in [20-cli.md](./20-cli.md).
 
-How each add-on SOP fans out into its public orchestrators and private components — one level below this signpost cascade — is shown in [24-skills-scope.md](./24-skills-scope.md).
+How each custom folder SOP fans out into its public orchestrators and private components — one level below this signpost cascade — is shown in [24-skills-scope.md](./24-skills-scope.md).
 
 ---
 
@@ -117,8 +117,8 @@ The division of responsibility is the load-bearing idea: **the workbench declare
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project boundary.
 - [22-config.md](./22-config.md) — the `.workbench/` configuration, where the workbench declares policy.
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract the machine tier consumes to enforce policy.
-- [26-addons.md](./26-addons.md) — the add-on SOPs the signpost points at, the memo system first among them.
+- [26-addons.md](./26-addons.md) — the custom folder SOPs the signpost points at, the memo system first among them.
 - [20-cli.md](./20-cli.md) — the `.workbench/registry.json`, the machine-readable form of the signpost.
-- [24-skills-scope.md](./24-skills-scope.md) — how each add-on SOP fans out into orchestrators and components, one level below this cascade.
-- [The SOP spec](/sop/overview/) — the common SOP standard of which the workbench-SOP is an instance.
+- [24-skills-scope.md](./24-skills-scope.md) — how each custom folder SOP fans out into orchestrators and components, one level below this cascade.
+- [The Session spec's SOP area](/session/sop/) — the common SOP standard of which the workbench-SOP is an instance.
 - [The Session spec](/session/overview/) — the Session Genesis Root (`session-sop`): session identity, per-session security level, and the deterministic PreToolUse enforcement the workbench-SOP relies on.

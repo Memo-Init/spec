@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Workbench"
 normative: false
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/01-philosophy.md."
@@ -37,7 +37,7 @@ This is what makes the single-source rule pay off over time. The expensive work 
 
 ## Several Parallel, Standalone Specifications
 
-The workbench's own documentation follows the same conviction at the level of the specification itself: it is **several parallel, standalone specs**, not one document with ever more chapters. The memo-init repository hosts the core specification, this Workbench spec, and the thin SOP spec as sibling families, each with its own version line (see [00-overview.md](/specification/overview/)).
+The workbench's own documentation follows the same conviction at the level of the specification itself: it is **several parallel, standalone specs**, not one document with ever more chapters. The memo-init repository hosts the core specification, this Workbench spec, and the Session spec — which carries the thin SOP area, once a family of its own — as sibling families, each with its own version line (see [00-overview.md](/specification/overview/)).
 
 Splitting the specification this way lets each family evolve at its own pace and keeps each one readable on its own terms. A reader who needs the workbench conventions does not have to navigate the memo lifecycle to find them; a change to the workbench does not force a version bump on the core spec. The parallel-spec structure is the documentation expressing the same single-source-plus-updatability principle the workbench applies to its tooling.
 

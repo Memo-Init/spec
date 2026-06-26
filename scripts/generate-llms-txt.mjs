@@ -5,7 +5,7 @@
 // single generated/llms.txt with a top header block (title + summary + source URL):
 //   Core Specification  — spec/v<spec_version>/*.md
 //   Workbench Spec       — spec/workbench/<wb_version>/*.md
-//   SOP Spec             — spec/sop/<sop_version>/*.md
+//   Session Spec         — spec/session/<session_version>/*.md
 //
 // Output format documented in generated/README.md.
 
@@ -21,13 +21,11 @@ const REPO = resolve( __dirname, '..' )
 const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
 const SPEC_VERSION = REFS_MANUAL.spec.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
-const SOP_VERSION = REFS_MANUAL.sop.currentVersion
 const SESSION_VERSION = REFS_MANUAL.session.currentVersion
 const SOURCE_URL = REFS_MANUAL.github.specRepo
 
 const SPEC_DIR = join( REPO, `spec/v${ SPEC_VERSION }` )
 const WORKBENCH_DIR = join( REPO, `spec/workbench/${ WORKBENCH_VERSION }` )
-const SOP_DIR = join( REPO, `spec/sop/${ SOP_VERSION }` )
 const SESSION_DIR = join( REPO, `spec/session/${ SESSION_VERSION }` )
 const LLMS_PATH = join( REPO, 'generated/llms.txt' )
 
@@ -61,7 +59,7 @@ const main = async () => {
         '',
         'A planning-first scaffold that turns long, dictated transcripts into discrete,',
         'executable work orders and governs the human-AI interaction around them. This file',
-        'concatenates the core specification followed by the workbench spec and the SOP spec',
+        'concatenates the core specification followed by the workbench spec and the session spec',
         '(three independently versioned sibling families).',
         '',
         `Source: ${ SOURCE_URL }`,
@@ -70,7 +68,6 @@ const main = async () => {
 
     const core = await readSection( { sourceDir: SPEC_DIR } )
     const workbench = await readSection( { sourceDir: WORKBENCH_DIR } )
-    const sop = await readSection( { sourceDir: SOP_DIR } )
     const session = await readSection( { sourceDir: SESSION_DIR } )
 
     const body = [
@@ -84,10 +81,6 @@ const main = async () => {
         '========================================\n',
         workbench.text,
         '\n========================================',
-        `# SOP Spec v${ SOP_VERSION }`,
-        '========================================\n',
-        sop.text,
-        '\n========================================',
         `# Session Spec v${ SESSION_VERSION }`,
         '========================================\n',
         session.text,
@@ -97,7 +90,7 @@ const main = async () => {
     await mkdir( dirname( LLMS_PATH ), { recursive: true } )
     await writeFile( LLMS_PATH, body, 'utf-8' )
 
-    console.log( `[OK] Wrote ${ LLMS_PATH } (core ${ core.count } + workbench ${ workbench.count } + sop ${ sop.count } + session ${ session.count } chapters)` )
+    console.log( `[OK] Wrote ${ LLMS_PATH } (core ${ core.count } + workbench ${ workbench.count } + session ${ session.count } chapters)` )
 }
 
 

@@ -6,7 +6,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/23-hooks-contract.md."
@@ -64,7 +64,7 @@ The contract above gates a tool by *policy decision* — "may this run?". A seco
 // .workbench/folder-lints.json — project-local policy; one global hook consumes it
 {
   "lints": [
-    { "folder": "design/",  "pattern": "DESIGN.md", "linter": "design-frontmatter", "severity": "error" },
+    { "folder": "design/",  "pattern": "design.md", "linter": "design-frontmatter", "severity": "error" },
     { "folder": "context/", "pattern": "*.md",       "linter": "untrusted-banner",   "severity": "warn" }
   ]
 }
@@ -195,7 +195,7 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 - [25-validation-overview.md](/specification/validation-overview/) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.
 - [22-config.md](/specification/config/) — the `.workbench/` configuration a hook reads, including `folder-lints.json`.
-- [18-design.md](/specification/design/) — a folder whose content (`DESIGN.md`) the write-lint can check.
+- [18-design.md](/specification/design/) — a folder whose content (`design.md`) the write-lint can check.
 - [20-cli.md](/specification/cli/) — the runtime call-validation, the "after" counterpart of the entry-point pre-condition; same registry, same signal scan, pulled forward to the pre-gate.
 - [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the level boundary and the deferred machine-tier spec.
 - [21-environment-scripts.md](/specification/environment-scripts/) — health checks, the other deterministic workbench verification.

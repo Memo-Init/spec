@@ -29,26 +29,26 @@ The contract table in the next section **is** this registry: the single, authori
 
 Folder names are load-bearing identifiers and are reproduced verbatim. The workbench audit reports any missing mandatory path as a structural finding and any unexpected top-level entry for review.
 
-| Path | Status | Level | Purpose |
-|------|--------|-------|---------|
-| `.claude/` | Mandatory | Project | Claude Code settings and project-local skills. |
-| `.memo/` | Mandatory | Project | Memos and their shared stores; see [11-project-structure.md](./11-project-structure.md). |
-| `.trash/` | Mandatory | Project | Recoverable trash; the deletion target (see [32-trash.md](./32-trash.md)). |
-| `context/` | Mandatory | Both | **Processed**, derived material — specifications, distilled research, Markdown/PDF documents. Also exists at the root for cross-project standards (see [10-root-and-projects.md](./10-root-and-projects.md)). |
-| `repos/` | Mandatory | Project | The project's git repositories (one domain per repository). |
-| `scripts/` | Mandatory | Project | Environment and health scripts (see [21-environment-scripts.md](./21-environment-scripts.md)). |
-| `ABOUT.md` | Mandatory | Project | Project documentation for humans. |
-| `CLAUDE.md` | Mandatory | Project | The runbook for the AI. |
-| `data/` | Optional | Project | **Raw inputs** — feeds and source material, as ingested, before processing; the input side that `context/` is derived from. |
-| `.workbench/` | Optional | Project | The manual project configuration (see [22-config.md](./22-config.md)). |
-| `.browser/` | Optional | Project | Browser-automation session, scripts, and output — only when the project does browser automation; legacy alias `.playwright/` (see [31-browser-automation.md](./31-browser-automation.md)). |
-| `.wiki/` | Optional | Project | LLM-generated project wiki, an OKF-conformant knowledge bundle (see [30-wiki.md](./30-wiki.md)). |
-| `proofs/` | Optional | Project | Proofs captured when a view changes (see "Specialized folders" below). |
-| `snapshots/` | Optional | Project | Application snapshots (see "Specialized folders" below). |
-| `design/` | Optional | Project | Design system and visual sources — `DESIGN.md`, variants, and `.pen` files (see [18-design.md](./18-design.md)). |
-| `.tmp/` | Optional | Project | Scratch / temporary working area — transient material, not durable knowledge and not committed (see [32-trash.md](./32-trash.md)). |
+| Path | Status | Level | Entry-point | Format/Convention | Purpose |
+|------|--------|-------|-------------|-------------------|---------|
+| `.claude/` | Mandatory | Project | `settings.json` | — | Claude Code settings and project-local skills. |
+| `.memo/` | reserved (custom folder, default-on) | Project | `config.json` + `memos/` | — | Memos and their shared stores; see [11-project-structure.md](./11-project-structure.md). |
+| `.trash/` | Mandatory | Project | — | — | Recoverable trash; the deletion target (see [32-trash.md](./32-trash.md)). |
+| `context/` | Mandatory | Both | per-topic sub-folders | OKF (for `architecture-okf/`) | **Processed**, derived material — specifications, distilled research, Markdown/PDF documents. Also exists at the root for cross-project standards (see [10-root-and-projects.md](./10-root-and-projects.md)). |
+| `repos/` | Mandatory | Project | — | — | The project's git repositories (one domain per repository). |
+| `scripts/` | Mandatory | Project | meaningful sub-folders | startup-script convention | Environment and health scripts (see [21-environment-scripts.md](./21-environment-scripts.md)). |
+| `ABOUT.md` | Mandatory | Project | — | — | Project documentation for humans. |
+| `CLAUDE.md` | Mandatory | Project | — | — | The runbook for the AI. |
+| `data/` | Optional | Project | — | — | **Raw inputs** — feeds and source material, as ingested, before processing; the input side that `context/` is derived from. |
+| `.workbench/` | Optional | Project | `config.json` · `registry.json` | — | The manual project configuration (see [22-config.md](./22-config.md)). |
+| `.browser/` | Optional | Project | — | — | Browser-automation session, scripts, and output — only when the project does browser automation; legacy alias `.playwright/` (see [31-browser-automation.md](./31-browser-automation.md)). |
+| `.wiki/` | Optional | Project | `index.md` (published as "overview") | OKF | LLM-generated project wiki, an OKF-conformant knowledge bundle (see [30-wiki.md](./30-wiki.md)). |
+| `proofs/` | Optional | Project | — | — | Proofs captured when a view changes (see "Specialized folders" below). |
+| `snapshots/` | Optional | Project | — | — | Application snapshots (see "Specialized folders" below). |
+| `design/` | Optional | Project | `design.md` | design format | Design system and visual sources — `design.md`, variants, and `.pen` files (see [18-design.md](./18-design.md)). |
+| `.tmp/` | Optional | Project | — | — | Scratch / temporary working area — transient material, not durable knowledge and not committed (see [19-tmp.md](./19-tmp.md)). |
 
-A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it.
+A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it. `.memo/` carries a third status — **reserved (custom folder, default-on)**: it is the on-disk footprint of the memo system, the recommended, default-on custom folder, so it is present in every real project but is a *reservation of that custom folder* rather than a requirement of the bare workbench core ([26-addons.md](./26-addons.md)). The `.wiki/` entry point is the OKF-reserved `index.md`, **published under the label "overview"** — a published navigation label, not a file rename (renaming `index.md` would break OKF).
 
 The **Level** column records where each name is expected. The rows above are the **project-level** contract for folders under `projects/{name}/`; `context/` is marked **Both** because the same name is also a registered folder at the workbench root, where it holds cross-project standards. The root-only folders — `cli/`, `projects/`, `templates/`, and the root `context/` — are registered in [10-root-and-projects.md](./10-root-and-projects.md), not restated here.
 
@@ -80,16 +80,16 @@ Both differ from `.tmp/`, the third, transient tier: `data/` and `context/` are 
 
 ---
 
-## Conventions and Add-Ons
+## Conventions and Custom Folders
 
 Two distinct things attach to folders, and the spec keeps them apart:
 
 | Term | What it is | Examples |
 |------|-----------|----------|
-| **Convention** | A named **standard or format** that the *content* of a folder follows. | OKF for `context/architecture-okf/` and `.wiki/` ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)); DESIGN.md for `design/`. |
-| **Add-On** | A **tool** that reserves an area of the project and may use or bring conventions of its own. | The memo system, and other globally provided tools. |
+| **Convention** | A named **standard or format** that the *content* of a folder follows. | OKF for `context/architecture-okf/` and `.wiki/` ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)); design.md for `design/`. |
+| **Custom Folder** | A **tool** that reserves an area of the project and may use or bring conventions of its own. | The memo system, and other globally provided tools. |
 
-A Convention answers *what format does this folder's content take?*; an Add-On answers *which tool reserves space here and operates on it?*. The two compose: an add-on may write into a folder whose content follows a convention. The convention model — how a folder declares the standard its content follows — is developed across this Folders category (OKF in [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) is the first instance); the add-on model — how a tool reserves an area and where its data lives — is specified in the add-on chapter ([26-addons.md](./26-addons.md)).
+A Convention answers *what format does this folder's content take?*; a Custom Folder answers *which tool reserves space here and operates on it?*. The two compose: a custom folder may write into a folder whose content follows a convention. The convention model — how a folder declares the standard its content follows — is developed across this Folders category (OKF in [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) is the first instance); the custom folder model — how a tool reserves an area and where its data lives — is specified in the custom folder chapter ([26-addons.md](./26-addons.md)).
 
 The relationship reads in one direction — from the shared vocabulary outward, with the wiki indexing across the whole:
 
@@ -98,14 +98,14 @@ flowchart TD
     REG["Registered folders<br/>(the shared vocabulary — this chapter)"]
     REG --> CONV["Conventions<br/>(the format a folder's content follows)"]
     CONV --> C1["OKF — context/architecture-okf, .wiki/"]
-    CONV --> C2["DESIGN.md — design/"]
-    ADDON["Add-ons = tools<br/>(the memo system + other add-ons)"]
+    CONV --> C2["design.md — design/"]
+    ADDON["Custom folders = tools<br/>(the memo system + other custom folders)"]
     ADDON -->|"reserve a declared area, may use conventions"| REG
     WIKI["Wiki — search engine across all folders"]
     WIKI -->|"indexes"| REG
 ```
 
-The registered folders are the shared vocabulary; a convention is the format the *content* of a folder follows; an add-on is a *tool* that reserves a declared area and may use those conventions; and the wiki sits one level above as the search engine that indexes across them all, so a reader finds material without first knowing which folder holds it.
+The registered folders are the shared vocabulary; a convention is the format the *content* of a folder follows; a custom folder is a *tool* that reserves a declared area and may use those conventions; and the wiki sits one level above as the search engine that indexes across them all, so a reader finds material without first knowing which folder holds it.
 
 ---
 
@@ -116,10 +116,10 @@ A **convention** is the named standard a folder's *content* follows. The workben
 | Folder | Domain | Convention | Status |
 |--------|--------|-----------|--------|
 | `context/architecture-okf/`, `.wiki/` | Architecture / knowledge | OKF ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)) | established |
-| `design/` | Design system | DESIGN.md ([18-design.md](./18-design.md)) | new |
+| `design/` | Design system | design.md ([18-design.md](./18-design.md)) | new |
 | `scripts/` | Environment startup | startup-script convention ([21-environment-scripts.md](./21-environment-scripts.md)) | proposed |
 
-OKF was the **first** convention and DESIGN.md the **second**; neither is privileged, and a convention is **replaceable** — if a format is superseded, the folder and its role survive and the standard is swapped. The ordering rule is **spec-first**: a convention is defined here before the tooling that enforces or generates it is built.
+OKF was the **first** convention and design.md the **second**; neither is privileged, and a convention is **replaceable** — if a format is superseded, the folder and its role survive and the standard is swapped. The ordering rule is **spec-first**: a convention is defined here before the tooling that enforces or generates it is built.
 
 ---
 
@@ -128,9 +128,9 @@ OKF was the **first** convention and DESIGN.md the **second**; neither is privil
 The registered folders divide into two groups, and the division is deliberate:
 
 - The **workbench core** — `context/`, `repos/`, `scripts/`, `.trash/`, and the authored project files — is **independent of the memo system**. A project can use the workbench layout, the CLIs, the wiki, and the trash policy without any memo ever being written.
-- The **memo system's footprint** — `.memo/` (the memo store) and the memo-specific skills inside `.claude/` — is the on-disk presence of an **add-on**: the memo system. It is the **recommended default** way of working, which is why `.memo/` appears as mandatory in the contract above; but its mandatory status is the footprint of that recommended add-on, not a requirement of the bare workbench.
+- The **memo system's footprint** — `.memo/` (the memo store) and the memo-specific skills inside `.claude/` — is the on-disk presence of a **custom folder**: the memo system. It is the **recommended default** way of working, which is why `.memo/` is listed as **reserved (custom folder, default-on)** in the contract above — present by default in every real project; but that status is the footprint of the recommended custom folder, not a requirement of the bare workbench.
 
-In practice the two are rarely separated: reading and writing a project's work runs **through the memo system** as the normal mode, so a real project almost always carries `.memo/`. "The core is usable without the memo system" is a statement about *dependency*, not about *typical use* — the workbench does not depend on the memo system, even though it is normally driven by it. The memo system is the **weightiest of the workbench's add-ons**; the single, authoritative statement of that — one add-on model for all tools, the memo system merely heavier — lives in the add-on chapter ([26-addons.md](./26-addons.md)).
+In practice the two are rarely separated: reading and writing a project's work runs **through the memo system** as the normal mode, so a real project almost always carries `.memo/`. "The core is usable without the memo system" is a statement about *dependency*, not about *typical use* — the workbench does not depend on the memo system, even though it is normally driven by it. The memo system is the **weightiest of the workbench's custom folders**; the single, authoritative statement of that — one custom folder model for all tools, the memo system merely heavier — lives in the custom folder chapter ([26-addons.md](./26-addons.md)).
 
 ---
 
@@ -166,8 +166,9 @@ Several registered folders carry enough depth to have their own page; this chapt
 | `.wiki/` | [30-wiki.md](./30-wiki.md) |
 | `.browser/` | [31-browser-automation.md](./31-browser-automation.md) |
 | `.trash/` | [32-trash.md](./32-trash.md) |
+| `.tmp/` | [19-tmp.md](./19-tmp.md) |
 
-Folders without a dedicated page (for example `scripts/`, `proofs/`, `snapshots/`, `.tmp/`) are specified by their row in the contract above and, where relevant, by a CLI or tools chapter — `scripts/` by [21-environment-scripts.md](./21-environment-scripts.md). The **wiki sits one level above the folders** as the search engine across all of them: it indexes the separated domains so a reader can find material without first knowing which folder holds it ([30-wiki.md](./30-wiki.md)).
+Folders without a dedicated page (for example `scripts/`, `proofs/`, `snapshots/`) are specified by their row in the contract above and, where relevant, by a CLI or tools chapter — `scripts/` by [21-environment-scripts.md](./21-environment-scripts.md). The **wiki sits one level above the folders** as the search engine across all of them: it indexes the separated domains so a reader can find material without first knowing which folder holds it ([30-wiki.md](./30-wiki.md)).
 
 **The registry is authoritative for tooling.** Where a tool — the project-setup helper, the structure audit — carries its own list of folders, that list **MUST** agree with this registry. A tool that treats an *optional* folder (`.browser/`, `proofs/`, `snapshots/`, `.wiki/`) as mandatory has drifted from the registry and is the copy to reconcile, not the source.
 
@@ -179,5 +180,5 @@ Folders without a dedicated page (for example `scripts/`, `proofs/`, `snapshots/
 - [11-project-structure.md](./11-project-structure.md) — the local guarantee that protects this layout.
 - [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, a convention used by the wiki and architecture folders.
 - [22-config.md](./22-config.md) — the `.workbench/` configuration.
-- [26-addons.md](./26-addons.md) — the add-on model; the memo system as the weightiest recommended add-on.
+- [26-addons.md](./26-addons.md) — the custom folder model; the memo system as the weightiest recommended custom folder.
 - [32-trash.md](./32-trash.md) — why deletion routes through `.trash/`.

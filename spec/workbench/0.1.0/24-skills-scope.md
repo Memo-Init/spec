@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Depends on | [02-sop-entrypoint.md](./02-sop-entrypoint.md), [21-environment-scripts.md](./21-environment-scripts.md) |
-| Related | [31-browser-automation.md](./31-browser-automation.md), [The SOP common denominator](/sop/common-denominator/) |
+| Related | [31-browser-automation.md](./31-browser-automation.md), [The SOP common denominator](/session/common-denominator/) |
 
 The skills that operate at the workbench level are organized around the **common SOP standard**: a workbench skill serves the Setup, Health, and Update of the workbench scope, plus the scope-specific extras. This chapter records that coupling and where the existing skills fall.
 
@@ -12,7 +12,7 @@ The skills that operate at the workbench level are organized around the **common
 
 ## Coupled to the SOP Standard
 
-A workbench skill is an instance of the common SOP denominator ([the SOP common denominator](/sop/common-denominator/)) applied to the workbench scope. Its responsibilities map onto the four parts:
+A workbench skill is an instance of the common SOP denominator ([the SOP common denominator](/session/common-denominator/)) applied to the workbench scope. Its responsibilities map onto the four parts:
 
 | Part | At the workbench scope |
 |------|------------------------|
@@ -23,7 +23,7 @@ A workbench skill is an instance of the common SOP denominator ([the SOP common 
 
 Organizing workbench skills this way means a reader who knows the SOP standard already knows the shape of the workbench skill set: it is Setup/Health/Update plus the workbench's own extras, not an ad-hoc collection.
 
-The same four-part frame generalizes beyond workbench skills to **every add-on**: each add-on's SOP is Setup/Health/Update plus its own tool-specific Extras, scaled to the add-on's weight ([26-addons.md](./26-addons.md)).
+The same four-part frame generalizes beyond workbench skills to **every custom folder**: each custom folder's SOP is Setup/Health/Update plus its own tool-specific Extras, scaled to the custom folder's weight ([26-addons.md](./26-addons.md)).
 
 ---
 
@@ -42,7 +42,7 @@ The memo-toolkit capabilities are loaded **dynamically** (progressive disclosure
 
 ## Orchestrators and Components
 
-Workbench and add-on skills split into two roles, by analogy with a class that has public and private methods:
+Workbench and custom folder skills split into two roles, by analogy with a class that has public and private methods:
 
 | Role | Analogy | Visibility |
 |------|---------|------------|
@@ -59,12 +59,12 @@ role: component      # a reusable building block, not in the user-callable catal
 
 A skill marked `role: component` is **taken out of the user-callable catalog**: it is private by default, the same posture as a class method that is private unless deliberately exposed. The default is private; an orchestrator is the deliberate exception that is made public.
 
-The two roles sit beneath the add-on SOPs the workbench-SOP points at ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): each add-on's orchestrators are its public entry points, and components are the reusable building blocks they call.
+The two roles sit beneath the custom folder SOPs the workbench-SOP points at ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): each custom folder's orchestrators are its public entry points, and components are the reusable building blocks they call.
 
 ```mermaid
 flowchart TD
-    WSOP["Workbench-SOP — references the add-on SOPs"] --> MSOP["memo-SOP (weightiest add-on)"]
-    WSOP --> FSOP["&lt;other add-on&gt;-SOP"]
+    WSOP["Workbench-SOP — references the custom folder SOPs"] --> MSOP["memo-SOP (weightiest custom folder)"]
+    WSOP --> FSOP["&lt;other custom folder&gt;-SOP"]
     MSOP --> ORCH["Orchestrator = public method / entry point<br/>validated (pre-hook + runtime)"]
     ORCH --> COMP["Component = private, reusable, not user-callable<br/>e.g. research at several points"]
 ```
@@ -105,7 +105,7 @@ TranscriptPrompt:
 
 The typed contract is the **type half** of the [Public-Method Validation Boundary](#the-public-method-validation-boundary) above. That boundary states that "type-checking the input is necessary and not sufficient": the typed contract makes the boundary **machine-checkable** — a call can be checked against the declared shape automatically — while the **content** check ("does this make sense?") still sits on top. Types are the floor, not the ceiling.
 
-The typed contract **lives in the shared SOP-JSON layer** — alongside the dependency table and the registry ([20-cli.md](./20-cli.md), [23-hooks-contract.md](./23-hooks-contract.md)). One machine-readable layer then carries all three of: **discovery** (what skills and add-ons exist), **preconditions** (what must run first), **and skill I/O types** (the typed contract). They are not three separate stores.
+The typed contract **lives in the shared SOP-JSON layer** — alongside the dependency table and the registry ([20-cli.md](./20-cli.md), [23-hooks-contract.md](./23-hooks-contract.md)). One machine-readable layer then carries all three of: **discovery** (what skills and custom folders exist), **preconditions** (what must run first), **and skill I/O types** (the typed contract). They are not three separate stores.
 
 The same typed contract has a **dual use**:
 
@@ -118,9 +118,9 @@ This chapter fixes the typed contract **spec-side now**; the implementation is *
 
 ## Related
 
-- [26-addons.md](./26-addons.md) — the add-on model the Setup/Health/Update/Extras frame generalizes to.
+- [26-addons.md](./26-addons.md) — the custom folder model the Setup/Health/Update/Extras frame generalizes to.
 - [23-hooks-contract.md](./23-hooks-contract.md) — the entry-point pre-condition that guards a public method *before* the call.
 - [20-cli.md](./20-cli.md) — the runtime call-validation that measures the boundary *after* the call.
-- [The SOP common denominator](/sop/common-denominator/) — the Setup/Health/Update standard these skills realize.
+- [The SOP common denominator](/session/common-denominator/) — the Setup/Health/Update standard these skills realize.
 - [21-environment-scripts.md](./21-environment-scripts.md) — the health checks the audit skill performs.
 - [31-browser-automation.md](./31-browser-automation.md) — the project-level browser-automation method.

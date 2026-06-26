@@ -6,14 +6,14 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/10-root-and-projects.md."
 ---
 
 
-The workbench has **two structural levels**: the workbench root, and the projects beneath it. They have different layouts and different jobs, and keeping them distinct is a precondition for everything else in this spec. This chapter draws that boundary; the per-project layout itself is specified in [12-folders.md](/specification/folders/), and the local guarantee that protects both levels in [11-project-structure.md](/specification/project-structure/). Each level is governed by its own thin SOP — a **Root-SOP** and a **Projects-SOP**, both instances of the common SOP standard ([SOP spec](/sop/overview/)).
+The workbench has **two structural levels**: the workbench root, and the projects beneath it. They have different layouts and different jobs, and keeping them distinct is a precondition for everything else in this spec. This chapter draws that boundary; the per-project layout itself is specified in [12-folders.md](/specification/folders/), and the local guarantee that protects both levels in [11-project-structure.md](/specification/project-structure/). Each level is governed by its own thin SOP — a **Root-SOP** and a **Projects-SOP**, both instances of the common SOP standard ([the Session spec's SOP area](/session/sop/)).
 
 ---
 
@@ -42,7 +42,7 @@ The two levels must not be confused. The root organizes *projects*; a project or
 
 ## Two Thin SOPs — Root-SOP and Projects-SOP
 
-Each level is governed by its **own** thin SOP. Both are instances of the common SOP standard ([SOP spec](/sop/overview/)): each **declares that it is an instance of that standard and extends it**, and each realizes the standard's **Setup**, **Health**, and **Update** for its own scope rather than restating the standard. Keeping them as two distinct SOPs — instead of one self-similar procedure that blurs both levels — is what makes the Root-vs-Project boundary operational.
+Each level is governed by its **own** thin SOP. Both are instances of the common SOP standard ([the Session spec's SOP area](/session/sop/)): each **declares that it is an instance of that standard and extends it**, and each realizes the standard's **Setup**, **Health**, and **Update** for its own scope rather than restating the standard. Keeping them as two distinct SOPs — instead of one self-similar procedure that blurs both levels — is what makes the Root-vs-Project boundary operational.
 
 | SOP | Governs | Folders in scope | Realizes |
 |-----|---------|------------------|----------|
@@ -52,7 +52,7 @@ Each level is governed by its **own** thin SOP. Both are instances of the common
 - The **Root-SOP** is the procedure for the meta-orchestration layer: it sets up the root-level folders, checks that every project beneath it carries the expected structure and that shared tools are reachable, and brings the root up to date. It does no project work.
 - The **Projects-SOP** is the procedure for working *inside* one project: it sets up and checks a single project's folders, drives the project's own work (memos, repositories, tooling), and keeps the project current.
 
-Both SOPs are **thin**: each **references the SOP standard** for the meaning of Setup, Health, Update, and Extras instead of restating it, and adds only what is specific to its scope. They are named as the two workbench instances in the SOP [instance register](/sop/instances/). The workbench-SOP entry point ([02-sop-entrypoint.md](/specification/sop-entrypoint/)) routes to whichever of the two applies based on **where the agent is** — the Root-SOP at the workbench root, the Projects-SOP inside a project. An agent therefore reads exactly one of the two for the level it is operating at, and the level it is operating at is decided by its location.
+Both SOPs are **thin**: each **references the SOP standard** for the meaning of Setup, Health, Update, and Extras instead of restating it, and adds only what is specific to its scope. They are named as the two workbench instances in the SOP [instance register](/session/instances/). The workbench-SOP entry point ([02-sop-entrypoint.md](/specification/sop-entrypoint/)) routes to whichever of the two applies based on **where the agent is** — the Root-SOP at the workbench root, the Projects-SOP inside a project. An agent therefore reads exactly one of the two for the level it is operating at, and the level it is operating at is decided by its location.
 
 ---
 
@@ -101,4 +101,4 @@ Once a convention lives in its authoritative home, a `CLAUDE.md` adds value only
 - [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the workbench-SOP entry point that routes to the Root-SOP or the Projects-SOP.
 - [22-config.md](/specification/config/) — the `.workbench/` configuration, where policy is declared.
 - [00-overview.md](/specification/overview/) — projects-not-repositories framing.
-- [The SOP spec](/sop/overview/) — the common SOP standard of which the Root-SOP and Projects-SOP are instances.
+- [The Session spec's SOP area](/session/sop/) — the common SOP standard of which the Root-SOP and Projects-SOP are instances.

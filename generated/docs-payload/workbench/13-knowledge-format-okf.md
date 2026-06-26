@@ -6,14 +6,14 @@ spec_file: "13-knowledge-format-okf.md"
 order: 13
 section: "Workbench"
 normative: true
-generated_at: "2026-06-26T18:22:47.793Z"
+generated_at: "2026-06-26T21:14:26.848Z"
 generated_from: "spec/workbench/0.1.0/13-knowledge-format-okf.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/13-knowledge-format-okf.md."
 ---
 
 
-OKF is **one of the wiki's storage formats** — it sits under the wiki ([30-wiki.md](/specification/wiki/)), the entry point that reads the project's knowledge regardless of the form it is stored in, alongside the `DESIGN.md` convention ([18-design.md](/specification/design/)). It is not a standalone discovery concept; this chapter is its format reference.
+OKF is **one of the wiki's storage formats** — it sits under the wiki ([30-wiki.md](/specification/wiki/)), the entry point that reads the project's knowledge regardless of the form it is stored in, alongside the `design.md` convention ([18-design.md](/specification/design/)). It is not a standalone discovery concept; this chapter is its format reference.
 
 OKF (the Open Knowledge Format) is the **storage format** the workbench uses for knowledge bundles — a directory of Markdown pages with YAML frontmatter, cross-linked into a portable graph. Two bundles use it: the project wiki under `.wiki/` (the entry point, [30-wiki.md](/specification/wiki/)) and the project architecture under `context/architecture-okf/` (the repo graph, [41-project-architecture.md](/specification/project-architecture/)). This chapter is the **format reference**: it declares those bundles **conformant to OKF** — an open specification, Apache-2.0 — as a **non-destructive superset** that keeps richer frontmatter and adds nothing the format forbids. It is a format detail, not a headline: a reader understands "the wiki" and "the project architecture" as concepts in their own chapters, and comes here only for the on-disk encoding. Nothing here changes that `context/` is the primary, immutable source (see [11-project-structure.md](/specification/project-structure/)); OKF is a presentation and interchange label on the *generated* bundle, never a replacement for the sources it is distilled from.
 
@@ -98,7 +98,7 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 - [11-project-structure.md](/specification/project-structure/) — `.wiki/` as an optional per-project bundle, and `context/` as the primary immutable source.
 - [41-project-architecture.md](/specification/project-architecture/) — the project-architecture bundle, the other consumer of this format (concept first, OKF as encoding).
 - [30-wiki.md](/specification/wiki/) — the wiki entry point, the **parent category** under which OKF is one storage format; also the format's primary consumer.
-- [18-design.md](/specification/design/) — `DESIGN.md`, the wiki's other storage format alongside OKF.
+- [18-design.md](/specification/design/) — `design.md`, the wiki's other storage format alongside OKF.
 - [24-tools-registry.md](/specification/tools-registry/) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
 - [26-memo-history.md](/specification/memo-history/) — why the wiki answers in the present tense and the history carries the chronology.
 - [32-trash.md](/specification/trash/) — superseded wiki pages are trashed, not deleted.
