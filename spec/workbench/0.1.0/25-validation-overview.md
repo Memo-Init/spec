@@ -24,7 +24,7 @@ Each family has a stable name (the wayfinder handle), a short statement of what 
 | `EGRESS-C1` | Inward routes through the memo ID, outward through Issues | on coordination / push | [22-config.md](./22-config.md), [11-project-structure.md](./11-project-structure.md) |
 | `TRASH` | Deletion routes through `.trash/` rather than a hard delete | on delete | [32-trash.md](./32-trash.md) |
 | `HEALTH` | Project structure and global-tool reachability | on demand / before a memo | [21-environment-scripts.md](./21-environment-scripts.md) |
-| `DEPWATCH` | A dependency is safe before it is installed | before install | [00-overview.md](./00-overview.md) |
+| `INSTALL-GATE` | A dependency is safe before it is installed | before install | [00-overview.md](./00-overview.md) |
 
 A second group of rules is **declared** by the workbench but **enforced at the machine tier**, whose hook scripts are out of scope for this spec ([02-sop-entrypoint.md](./02-sop-entrypoint.md)). They are listed so the wayfinder is complete:
 
@@ -49,7 +49,7 @@ The severity of a configurable rule (notably `WRITE-LINT`) is set per entry in `
 
 ## Hub and Detail
 
-This page is the **hub**; each family's chapter is the **detail**. The contract for the hook-based families — their inputs, their two block paths, the transcript-inspection rule — is specified once in [23-hooks-contract.md](./23-hooks-contract.md), and the families that are not hooks (`TRASH`, `HEALTH`, `EGRESS-C1`, `DEPWATCH`) point at their own chapters. Adding a new validation rule means specifying it in its chapter **and** giving it a row here, so the set never silently grows beyond what this wayfinder lists.
+This page is the **hub**; each family's chapter is the **detail**. The contract for the hook-based families — their inputs, their two block paths, the transcript-inspection rule — is specified once in [23-hooks-contract.md](./23-hooks-contract.md), and the families that are not hooks (`TRASH`, `HEALTH`, `EGRESS-C1`, `INSTALL-GATE`) point at their own chapters. Adding a new validation rule means specifying it in its chapter **and** giving it a row here, so the set never silently grows beyond what this wayfinder lists.
 
 ---
 

@@ -87,7 +87,7 @@ Two distinct things attach to folders, and the spec keeps them apart:
 | Term | What it is | Examples |
 |------|-----------|----------|
 | **Convention** | A named **standard or format** that the *content* of a folder follows. | OKF for `context/architecture-okf/` and `.wiki/` ([13-knowledge-format-okf.md](./13-knowledge-format-okf.md)); DESIGN.md for `design/`. |
-| **Add-On** | A **tool** that reserves an area of the project and may use or bring conventions of its own. | The memo system, `flowmcp`, `get-sheet`, `ytAi`. |
+| **Add-On** | A **tool** that reserves an area of the project and may use or bring conventions of its own. | The memo system, and other globally provided tools. |
 
 A Convention answers *what format does this folder's content take?*; an Add-On answers *which tool reserves space here and operates on it?*. The two compose: an add-on may write into a folder whose content follows a convention. The convention model — how a folder declares the standard its content follows — is developed across this Folders category (OKF in [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) is the first instance); the add-on model — how a tool reserves an area and where its data lives — is specified in the add-on chapter ([26-addons.md](./26-addons.md)).
 

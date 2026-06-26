@@ -17,7 +17,7 @@ The workbench root (for example a `ressources/` directory, or an equivalent work
 | Path | Purpose |
 |------|---------|
 | `projects/` | Contains every individual project, one directory each. |
-| `cli/` | CLIs and tools shared across all projects (for example `memo-view`, `depwatch`). |
+| `cli/` | CLIs and tools shared across all projects (for example `memo-view`). |
 | `context/` | Global documents shared across all projects — mental models, standards, cross-project specifications. |
 | `templates/` | Templates for new projects and for skills. |
 

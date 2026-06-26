@@ -35,10 +35,10 @@ Add-ons span a wide size range, and the model is not forced uniformly onto all o
 | Add-on | Weight | Data | Custom steps |
 |--------|--------|------|--------------|
 | **memo system** | heaviest | `.memo/` + `context/` | the full memo lifecycle |
-| **FlowMCP** | very large | global store (`~/.flowmcp/`, multi-GB) | search/list → call; many provider keys |
-| **get-sheet** | medium | two-tier config | unlock → upload → format |
-| **depwatch** | small/medium | global | gate before an install |
-| **ytAi** | small | none (stdout only) | one command |
+| **a very large add-on** | very large | a multi-GB global store; many provider keys | search/list → call |
+| **a medium add-on** | medium | a two-tier config | unlock → upload → format |
+| **a small add-on** | small/medium | a global store | a gate before an install |
+| **a one-command add-on** | small | none (stdout only) | one command |
 
 A heavy add-on earns a deep SOP with real Setup, Health, Update, and several Extras; a one-command tool needs little more than a single entry point. The point is one frame at all sizes, scaled to weight — not a separate model per tool.
 
@@ -66,7 +66,7 @@ Two entry points are **normalized across all add-ons** so that tooling can drive
 - **Health** — a uniform "is this add-on in order?" check.
 - **Migrate** — a uniform "bring this add-on's project data to the current shape" step (for many add-ons this slot is currently empty; that is acceptable).
 
-Existing tools expose these under divergent names (`memo health`, `flowmcp status`, `getsheet info`, `depwatch session`). Those names are kept as **aliases** of the standard entry points; the normalization is to a common vocabulary, and renaming an existing tool is deliberately **deferred** rather than forced now.
+Existing tools expose these under divergent names (`memo health`, and the various tool-specific status/info/session verbs an add-on already ships). Those names are kept as **aliases** of the standard entry points; the normalization is to a common vocabulary, and renaming an existing tool is deliberately **deferred** rather than forced now.
 
 ---
 

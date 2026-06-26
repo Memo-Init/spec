@@ -6,7 +6,9 @@
 | Depends on | [12-folders.md](./12-folders.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 | Related | [23-hooks-contract.md](./23-hooks-contract.md), [41-project-architecture.md](./41-project-architecture.md) |
 
-A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository as inward- or outward-facing, and it is the **single source** from which deterministic enforcement (notably hooks) is derived. This chapter specifies what the configuration holds and the principle by which other things are derived from it.
+A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository's **status** — its visibility, its remote, and its facing — and it is the **single source** from which deterministic enforcement (notably hooks) is derived. This chapter specifies what the configuration holds and the principle by which other things are derived from it.
+
+This chapter and [23-hooks-contract.md](./23-hooks-contract.md) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](./00-overview.md).
 
 ---
 
@@ -18,16 +20,31 @@ This is the project-level expression of the single-source principle ([01-philoso
 
 ---
 
-## Repositories × Facing
+## Repositories × Status
 
-The core content of the configuration is a per-repository **facing** classification:
+The core content of the configuration is a per-repository **status** — three axes, each **declared** by hand, never inferred:
 
-| Facing | Meaning |
-|--------|---------|
-| **inward** | Local-only; never pushed to a public remote. Coordination and references use the memo ID. |
-| **outward** | Published to a public remote. Coordination and references use GitHub Issues. |
+| Axis | Values | Meaning |
+|------|--------|---------|
+| **visibility** | `private` \| `public` | Whether the repository itself is private or public. |
+| **remote** | `none` \| `<url>` | Whether the repository has no remote at all, or a named remote URL. |
+| **facing** | `inward` \| `outward` | Local-only (coordination via the memo ID) vs published (coordination via GitHub Issues). |
 
-The `facing` attribute is the same field the project-architecture knowledge bundle records for a repository (see [41-project-architecture.md](./41-project-architecture.md)); the configuration is where a project **declares** it. The classification drives a concrete downstream rule — the workbench's egress convention (rule C1): an **outward** repository routes coordination through **Issues**, an **inward** repository through the **memo ID**. Stating `facing` once is what lets that rule be applied consistently and, where desired, enforced.
+The `facing` axis is the original one and carries the egress convention (rule C1): an **outward** repository routes coordination through **Issues**, an **inward** repository through the **memo ID**. It is the same field the project-architecture knowledge bundle records for a repository (see [41-project-architecture.md](./41-project-architecture.md)); the configuration is where a project **declares** it. The two newer axes — `visibility` and `remote` — sharpen what a push gate can decide: a repository may be `public` yet have no remote, or carry a remote yet still be `inward`. Stating all three once is what lets a rule be applied consistently and, where desired, enforced.
+
+A per-repository status record carries all three fields:
+
+```jsonc
+// .workbench/ — per-repository status; declared by hand, read by enforcement
+{
+  "repos": [
+    { "name": "spec",     "visibility": "public",  "remote": "<published-remote-url>", "facing": "outward" },
+    { "name": "internal", "visibility": "private", "remote": "none",                  "facing": "inward"  }
+  ]
+}
+```
+
+The three axes are **declared, not inferred** — consistent with the manual / no-auto-write principle stated above: a process records a repository's status, it does not derive it from the repository's current git state. This record is precisely what deterministic enforcement reads — the push gate and the verification checks in the hooks contract ([23-hooks-contract.md](./23-hooks-contract.md)) consume these fields rather than guessing a repository's exposure.
 
 ---
 
@@ -36,7 +53,7 @@ The `facing` attribute is the same field the project-architecture knowledge bund
 The facing classification is the configuration's core, but `.workbench/` is the home for the project's **declarations** generally — the same single-source principle applies to anything a tool or hook needs to read deterministically. Two other files are specified today:
 
 - **`folder-lints.json`** — the project-local map that drives the write-time content lint: each entry binds a folder and filename pattern to a linter and a severity, and a single global hook consumes the map ([23-hooks-contract.md](./23-hooks-contract.md)).
-- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): the list of skills, add-ons, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](./20-cli.md)).
+- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): the list of skills, add-ons, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](./20-cli.md)). Its `requirements[]` with `when: "pre"` is the **manual dependency table** the precondition chain reads — the declared `entrypoint → requires` edges. This is what makes "no skill X without prerequisite Y, deterministically" expressible: the pre-gate hook resolves these edges before an entry point runs ([23-hooks-contract.md](./23-hooks-contract.md)), while the `when: "post"` edges feed the after-the-fact matrix ([20-cli.md](./20-cli.md)).
 
 Like the facing configuration, both are **manual** — never silently generated or overwritten.
 

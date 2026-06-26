@@ -22,9 +22,11 @@ Every repository under `repos/` is its own git unit, and they are the **only** g
 
 ---
 
-## Each Repository Declares Its Facing
+## Each Repository Declares Its Status
 
-A repository is classified **inward** or **outward** facing, and the classification is declared once in the project configuration ([22-config.md](./22-config.md)). The facing drives the coordination convention (rule C1): an **outward** repository routes coordination through public **Issues**; an **inward** repository routes it through the **memo ID**. The same `facing` attribute is the one the project-architecture bundle records per repository ([41-project-architecture.md](./41-project-architecture.md)), so a repository's role is stated in one vocabulary and read consistently by both the configuration and the architecture graph.
+A repository declares its **status** — three axes, all stated once in the project configuration ([22-config.md](./22-config.md)): **visibility** (`private` or `public`), **remote** (`none` or a named URL), and **facing** (`inward` or `outward`). The facing axis drives the coordination convention (rule C1): an **outward** repository routes coordination through public **Issues**; an **inward** repository routes it through the **memo ID**. Visibility and remote are declared the same way and read by the **same enforcement** — the push gate consumes all three rather than inferring exposure from git state. The `facing` attribute is also the one the project-architecture bundle records per repository ([41-project-architecture.md](./41-project-architecture.md)), so a repository's role is stated in one vocabulary and read consistently by both the configuration and the architecture graph.
+
+The declared status is not taken on trust. The workbench **health-check** and **git-security** verify it — the declared visibility, remote, and facing **MUST** match the repository's actual state — and a push is **gated** by the declared status (a push to a repository declared `inward` is blocked; see [23-hooks-contract.md](./23-hooks-contract.md)).
 
 ---
 
@@ -32,5 +34,5 @@ A repository is classified **inward** or **outward** facing, and the classificat
 
 - [11-project-structure.md](./11-project-structure.md) — the local guarantee: `repos/` as the only sanctioned home for shareable code.
 - [12-folders.md](./12-folders.md) — the folder contract this page is the registered entry for.
-- [22-config.md](./22-config.md) — the `facing` declaration and rule C1.
+- [22-config.md](./22-config.md) — the per-repository status declaration (visibility, remote, facing) and rule C1.
 - [41-project-architecture.md](./41-project-architecture.md) — the repositories as nodes in the project's architecture graph.

@@ -52,9 +52,9 @@ This is why **SOPs contain SOPs**. The workbench-SOP references each **add-on's*
 
 ```
 Workbench-SOP (signpost — knows the levels and the add-ons present)
-├── memo-SOP        (the weightiest add-on's SOP)
-├── flowmcp-SOP     (a large add-on's SOP)
-└── …               (each add-on: Setup · Health · Update · Extras)
+├── memo-SOP            (the weightiest add-on's SOP)
+├── <other add-on>-SOP  (a large add-on's SOP)
+└── …                   (each add-on: Setup · Health · Update · Extras)
 ```
 
 The machine-readable form of this signpost is the **workbench registry** (`.workbench/registry.json`): the same list of SOPs, skills, and add-ons that the signpost expresses in prose, in a form a tool can read. Its fields and its use by the runtime call-validation are specified in [20-cli.md](./20-cli.md).

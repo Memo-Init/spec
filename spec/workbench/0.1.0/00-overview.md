@@ -78,11 +78,13 @@ These checks are descriptive of the real audit performed at the workbench level;
 
 The workbench exposes a small set of **global** command-line helpers that are available to every project. The following are specific to the workbench level:
 
-| Helper | Role |
-|--------|------|
-| `get-sheet` | Retrieve data from external spreadsheets for use inside a project. |
-| `depwatch` | Supply-chain security watchdog — looks up and scans dependencies before they are installed. |
-| `flowmcp` | Service-tool router — search, list, and call external API tools without per-project installation. |
+| Helper role | What it serves |
+|-------------|----------------|
+| Data ingestion | Retrieve external data (for example spreadsheets) for use inside a project. |
+| Dependency safety | A supply-chain watchdog that looks up and scans dependencies before they are installed. |
+| Service-tool routing | Search, list, and call external API tools without per-project installation. |
+
+The helpers are listed here by **role**, not by name: the concrete tool set is the developer's private inventory, declared per project rather than enumerated in this published spec.
 
 These helpers are global because they serve cross-project concerns (data ingestion, dependency safety) rather than the logic of any single project. A project **MAY** rely on a global helper being reachable; the workbench tool-reachability check exists precisely so that reliance is verified rather than assumed. The CLI convention these helpers follow is described in [20-cli.md](./20-cli.md).
 
