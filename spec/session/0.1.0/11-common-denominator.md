@@ -6,7 +6,7 @@
 | Depends on | [10-sop.md](./10-sop.md) |
 | Related | [12-instances.md](./12-instances.md) |
 
-> **Informative.** This chapter describes the common shape every SOP is expected to take. It names the parts and what each is for; it does not impose conformance levels on the individual SOPs, which govern their own scope.
+> **Mostly informative; the Page Contract below is normative.** This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which govern their own scope — but the **SOP Page Contract** is **normative (MUST)** and lint-enforced, because it is the single shape the memo-SOP and Workbench-SOP reference rather than restate.
 
 Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP entry-point mechanism](./10-sop.md) rests.
 
@@ -42,6 +42,31 @@ Extras are the parts that belong to one scope and not to SOPs in general. An SOP
 ## Why These Three Are the Core
 
 Setup, Health, and Update are the connecting core because they are the questions every scope faces regardless of what it is: how do I create it, how do I know it is well, and how do I keep it current. Health is the part the workbench's health-check scripts implement (see the Workbench-SOP). Keeping these three to a single shape across all SOPs is what makes an unfamiliar SOP navigable.
+
+The same three parts have an **executable form** in the CLI doctrine's standard verbs ([04-cli.md](./04-cli.md)): **`init` realizes Setup, `doctor` realizes Health, `update` realizes Update**, and a family's own scope leaves are its Extras. The four parts and the standard verbs are not two systems but one common denominator seen twice — a procedure a reader follows and the commands an agent runs.
+
+---
+
+## The SOP Page Contract (normative)
+
+The four parts are not only a description; they fix the **required shape of a single SOP entry-point page**. Every SOP instance's entry-point page **MUST** realize this shape:
+
+```markdown
+# «X»-SOP
+
+> "This is the «X»-SOP, an instance of the SOP standard that it extends;
+>  below is how it realizes Setup, Health, and Update for «scope», plus its extras."
+
+## Entry points     — MUST name the doors into the scope, not imply them
+## Setup            — MUST: how the scope is created / reaches a known-good baseline
+## Health           — MUST: the check that answers "is this scope in order?"
+## Update           — MUST: how the scope is brought to the current expected state
+## Extras           — OPTIONAL: zero or more scope-specific parts
+```
+
+The contract is three things together: the opening **inheritance declaration** (the canonical first sentence in [12-instances.md](./12-instances.md)), the **entry points named explicitly**, and the three core parts — **Setup**, **Health**, **Update** — each present as a named section. **Extras** are optional and scope-specific (zero or more).
+
+**Lint-Gate.** A lint checks every registered SOP page against this contract: a page missing a core part, the inheritance declaration, or its named entry points **fails** the lint. The lint reads the SOP registrants from the namespace registry ([06-namespace-registry.md](./06-namespace-registry.md)) and verifies each instance's page satisfies the shape above. This page is the **single source** of the contract — the memo-SOP and the Workbench-SOP **reference** it and declare only how they realize each part, never restating the shape.
 
 ---
 

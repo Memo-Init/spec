@@ -12,7 +12,7 @@ This chapter owns the **universal CLI doctrine**: the general way *every* CLI in
 
 ## Why the Doctrine Lives at the Session Tier
 
-The session is the genesis root ([00-overview.md](./00-overview.md)): the one scope that exists before any workbench convention. Because Memo 049 frames the workbench as *itself* a session-SOP application, the lowest tier is the right home for the rules that bind *all* CLIs. A CLI is a tool that any tier may ship, so its doctrine belongs to the tier every other tier inherits from. The session tier already lives by one of these rules — session identity resolves `flag > env > null` ([01-genesis-root.md](./01-genesis-root.md)) — and this chapter lifts that single rule into the general config precedence the whole system shares.
+The session is the genesis root ([00-overview.md](./00-overview.md)): the one scope that exists before any workbench convention. Because the workbench is *itself* a session-SOP application layered on the genesis root, the lowest tier is the right home for the rules that bind *all* CLIs. A CLI is a tool that any tier may ship, so its doctrine belongs to the tier every other tier inherits from. The session tier already lives by one of these rules — session identity resolves `flag > env > null` ([01-genesis-root.md](./01-genesis-root.md)) — and this chapter lifts that single rule into the general config precedence the whole system shares.
 
 ---
 
@@ -82,6 +82,8 @@ Every CLI family **SHOULD** expose a small reserved verb set so an agent can rel
 | `migrate` | Idempotent state/schema migration, safe to re-run. | yes, idempotent |
 
 `doctor` diagnoses (never mutates, never blocks) and `init` scaffolds additively; their full contract for the session-readiness instance is [07-doctor-init.md](./07-doctor-init.md). This chapter only reserves the verb names and their contracts.
+
+These verbs are the **executable form of the SOP common denominator** ([11-common-denominator.md](./11-common-denominator.md)) — not a second concept beside Setup / Health / Update / Extras, but the same four parts made runnable: **`init` is Setup**, **`doctor` is Health**, **`update` is Update**, and a family's own scope leaves are its **Extras** (the optional, scope-specific commands). The canonical Update verb is **`update`**; **`migrate`** is its narrower schema/state special-case — the idempotent migration reserved in the table above — so `update` is the general "bring the scope to the current expected state", and `migrate` is the schema-only instance of it. Read this way, a scope's SOP and its CLI are the same common denominator seen twice: one as a procedure a reader follows, one as commands an agent runs.
 
 ---
 

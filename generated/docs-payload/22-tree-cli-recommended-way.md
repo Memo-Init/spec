@@ -6,7 +6,7 @@ spec_file: "22-tree-cli-recommended-way.md"
 order: 22
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T01:24:20.547Z"
+generated_at: "2026-06-27T01:35:51.713Z"
 generated_from: "spec/v0.1.0/22-tree-cli-recommended-way.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/22-tree-cli-recommended-way.md."
@@ -165,4 +165,5 @@ How to build one, in short: **one folder per domain**, a branch per domain with 
 
 - [13-orchestration.md](/specification/orchestration/) — the orchestration and state layer the tool tree is invoked from.
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the agents that consume the embedded tool help.
+- [/session/cli/](/session/cli/) — the universal CLI doctrine (the eight principles, exit-code mirror, standard verbs, conformance checklist) built on this Branch/Leaf data model; the single source every CLI family references rather than re-explaining.
 - [00-overview.md](/specification/overview/) — conformance language.

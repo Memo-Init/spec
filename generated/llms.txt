@@ -293,7 +293,7 @@ The public entry points validate strictly and set the switches — like the publ
 
 ## The End-to-End Path
 
-The SOP documents the complete path in six stages. The stages are listed here for orientation; each is specified in detail in the chapter named in the last column.
+The SOP documents the complete path in six steps. The steps are listed here for orientation; each is specified in detail in the chapter named in the last column.
 
 ```mermaid
 flowchart TD
@@ -308,8 +308,8 @@ flowchart TD
     S5 -->|all questions answered| S6
 ```
 
-| Stage | Name | What happens | Specified in |
-|-------|------|--------------|--------------|
+| Step | Name | What happens | Specified in |
+|------|------|--------------|--------------|
 | 1 | Dictate transcript | The developer produces a transcript (speech → file or URL). | [03-input-paths.md](./03-input-paths.md) |
 | 2 | The four transcript types | A type header determines the follow-up flow. | [03-input-paths.md](./03-input-paths.md) |
 | 3 | Input processing | The mandatory five-step pipeline runs before any memo work. | [04-input-pipeline.md](./04-input-pipeline.md) |
@@ -317,7 +317,9 @@ flowchart TD
 | 5 | Strict AI→software handover | Open questions are parsed from a machine-readable schema. | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
 | 6 | Finalization → plan → execution | The finalized memo drives a rollout. | [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md) |
 
-A finalized memo can be carried into execution by two valid, parallel models. The **rollout model** works a single finalized memo straight through its phases in one autonomous run. The **planning model** assembles one or more finalized memos into a plan and executes phase by phase across them. Both are contemporary, complementary approaches: the rollout model fits a self-contained memo, while the planning model fits work that spans several memos. The choice of model does not change the six stages above — it changes only how stage 6 is carried out.
+A finalized memo can be carried into execution by two valid, parallel models. The **rollout model** works a single finalized memo straight through its phases in one autonomous run. The **planning model** assembles one or more finalized memos into a plan and executes phase by phase across them. Both are contemporary, complementary approaches: the rollout model fits a self-contained memo, while the planning model fits work that spans several memos. The choice of model does not change the six steps above — it changes only how step 6 is carried out.
+
+> **Three counts, three nouns — do not conflate them.** The memo path's **six steps** here are distinct from the **four stages** of the end-of-process model ([38-stage-model.md](./38-stage-model.md)) and from the **eight principles** of the CLI doctrine. Three separate enumerations, each bound to its own noun — *steps* (the memo path), *stages* (the process end), *principles* (the CLI) — and "stage" is reserved for the four-stage model alone.
 
 ---
 
@@ -1562,7 +1564,7 @@ The rollout turns a finalized memo into implemented code. It begins only **after
 
 The rollout applies the recursive **Generate → Execute → Evaluate** pattern — defined for every level in [13-orchestration.md](./13-orchestration.md) — at the rollout level, with a fourth closing step, **Land**. At the rollout level, **Generate** produces the PRDs and validates them bidirectionally against the memo; **Execute** iterates over the phases, delegating each to a phase agent team; **Evaluate** checks memo conformity (nothing added, nothing forgotten) and applies the applicable requirements for each PRD. A FAIL at any phase stops the rollout and informs the user; on PASS the next phase starts immediately. After Evaluate, **Land** (see [27-landing-the-plane.md](./27-landing-the-plane.md)) leaves the workspace in a startable "next-morning" state: worktrees cleaned, branches merged or documented, commits prepared and presented, open ends named, and a machine-readable `landing-readiness.json` written.
 
-The rollout MUST begin by displaying a **duty-of-care contract** (eight commitments: implement only what the memo says, self-test every agent result, validate per the applicable requirements for each change, never accept "the agent says done" as verification, report "done" only after software validation, surface problems immediately) and a tool check. A missing required tool aborts the rollout. After the user confirms the contract, the rollout runs autonomously.
+The rollout MUST begin by displaying a **duty-of-care contract** (six commitments: implement only what the memo says, self-test every agent result, validate per the applicable requirements for each change, never accept "the agent says done" as verification, report "done" only after software validation, surface problems immediately) and a tool check. A missing required tool aborts the rollout. After the user confirms the contract, the rollout runs autonomously.
 
 ---
 
@@ -2059,7 +2061,7 @@ The engine is deliberately small in code and maximal in validation, with no runt
 
 ## What It Is
 
-A **deterministic prompt compositor**: a template plus typed placeholders go in; a substituted prompt plus metadata come out. There is **no LLM call** — pure composition plus validation. Every finding at any stage is a **hard throw** with an AI-readable `PGEN-XXX` error code; there are no partial results, no empty strings, no torso prompts (a surviving `{{...}}` token fails the run), and no silent defaults.
+A **deterministic prompt compositor**: a template plus typed placeholders go in; a substituted prompt plus metadata come out. There is **no LLM call** — pure composition plus validation. Every finding at any step is a **hard throw** with an AI-readable `PGEN-XXX` error code; there are no partial results, no empty strings, no torso prompts (a surviving `{{...}}` token fails the run), and no silent defaults.
 
 The metadata records, for the template and the composed prompt and each placeholder, the **length** and a **sha256 hash** — the hash is what makes a starting point auditably reproducible.
 
@@ -2081,7 +2083,7 @@ await PromptGenerator.generate( { template, placeholders, limits } ) → { promp
 
 The return value is `{ prompt, metadata }`: `prompt` is the fully composed string, guaranteed free of unresolved `{{...}}` tokens and within the length limits; `metadata` carries a provenance record (`source`, `length`, `hash`, and `filePath` / `functionName` where applicable) for the template, the composed prompt, and every placeholder.
 
-The package entry additionally exports the frozen `ERROR_CODES` registry and the two default-limit constants. Validation runs as a fixed six-stage pipeline (payload validation → template resolution → bidirectional coverage check → per-placeholder source resolution → composition guard → torso check + length limits); any stage finding is a hard throw with a `PGEN-` code.
+The package entry additionally exports the frozen `ERROR_CODES` registry and the two default-limit constants. Validation runs as a fixed six-step pipeline (payload validation → template resolution → bidirectional coverage check → per-placeholder source resolution → composition guard → torso check + length limits); any step finding is a hard throw with a `PGEN-` code.
 
 ---
 
@@ -2972,6 +2974,7 @@ How to build one, in short: **one folder per domain**, a branch per domain with 
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestration and state layer the tool tree is invoked from.
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the agents that consume the embedded tool help.
+- [/session/cli/](/session/cli/) — the universal CLI doctrine (the eight principles, exit-code mirror, standard verbs, conformance checklist) built on this Branch/Leaf data model; the single source every CLI family references rather than re-explaining.
 - [00-overview.md](./00-overview.md) — conformance language.
 
 ---
@@ -5433,7 +5436,7 @@ Splitting the specification this way lets each family evolve at its own pace and
 
 ---
 
-# 02. Workbench-SOP and the Two-Level Model
+# 02. Workbench-SOP
 
 | | |
 |---|---|
@@ -5441,7 +5444,7 @@ Splitting the specification this way lets each family evolve at its own pace and
 | Depends on | [00-overview.md](./00-overview.md), [01-philosophy.md](./01-philosophy.md) |
 | Related | [10-root-and-projects.md](./10-root-and-projects.md), [22-config.md](./22-config.md), [23-hooks-contract.md](./23-hooks-contract.md), [the Session spec's SOP area](/session/sop/) |
 
-This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) — the **Root-SOP** and the **Projects-SOP** (named in the SOP [instance register](/session/instances/)). This entry point does not itself hold either procedure; it names the two levels and **routes** to whichever instance the agent's location selects, and each instance **extends** the standard by realizing its **Setup**, **Health**, and **Update** for its level — plus the workbench's own **extras** (the wiki and project conventions). It is the smallest entry point: the thing an agent reads first, on every fresh start, to learn where it is and what it may do. The standard's definitions live in the [Session spec's SOP area](/session/sop/) and are referenced here, not restated; this chapter adds how an agent enters the workbench and the two levels — and the two SOPs — it distinguishes.
+This is the **Workbench-SOP**, the entry-point signpost for the workbench scope and an instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) that it **extends** — below is how the workbench realizes the standard's **Setup**, **Health**, and **Update** for its scope, plus its own **extras** (the wiki and project conventions). It is structurally parallel to the [memo-SOP mirror](/specification/memo-sop-entrypoint/), with one difference: the workbench has **two** structural levels, so the procedure is carried by **two** thin instances — the **Root-SOP** and the **Projects-SOP** (named in the SOP [instance register](/session/instances/)) — and this entry point does not hold either procedure itself; it **routes** to whichever instance the agent's location selects. Its **entry points are named explicitly**: the **Workbench-SOP itself** (read first, every fresh start), each **custom-folder SOP** (the memo system's first among them), and the **shared tools** present at the workbench root. It is the smallest entry point: the thing an agent reads first to learn where it is and what it may do. The standard's definitions live in the [Session spec's SOP area](/session/sop/) and are referenced here, not restated.
 
 ---
 
@@ -5498,7 +5501,7 @@ Beyond explaining the scope, the SOP **names the entry points** that work flows 
 
 The workbench-SOP does not *contain* the procedures for everything in the workbench; it **points** to them. It is a **signpost** — a connecting layer, not a container — in the spirit of a dynamic `CLAUDE.md` that loads per session, carries the current inventory of tools, and routes downward to the skills and specs that hold the detail. The workbench-SOP names the levels and the tools that are present, and for each one it points at that tool's own SOP.
 
-This is why **SOPs contain SOPs**. The workbench-SOP references each **custom folder's** SOP ([26-addons.md](./26-addons.md)) — the memo system's SOP first among them, as the weightiest custom folder — and each custom folder SOP is itself Setup/Health/Update plus its extras. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
+This is why **SOPs contain SOPs**. The workbench-SOP references each **custom folder's** SOP ([26-addons.md](./26-addons.md)) — the memo system's SOP first among them, as the weightiest custom folder — and each custom folder SOP is itself Setup/Health/Update plus its extras. Seen this way, the memo-SOP is **also just a skill — only a special one**: structurally it is one custom-folder SOP among others, an instance of the same standard rather than a privileged exception, and it is listed first only because it is the weightiest. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
 
 ```
 Workbench-SOP (signpost — knows the levels and the custom folders present)
@@ -6261,6 +6264,8 @@ The distinction from `.trash/` is the point: a deletion routed to `.trash/` is a
 
 The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This convention is settled at the specification and website level — it is a stated rule of the workbench, not an implicit habit of any one tool. This chapter records the convention and the matching rule for the script folders that sit beside it.
 
+The **universal CLI doctrine** — the eight principles every CLI in the system shares (one result envelope, the exit-code mirror, the standard verbs, config precedence, additive evolution) — is stated once at the lowest tier, in the Session spec's [CLI doctrine chapter](/session/cli/), and is **not** restated here. This chapter records only what is specific to the **workbench** scope: the Branch/Leaf convention, the `registry.json` discovery source, the script-subfolder rule, and runtime call-validation. For the eight principles and the conformance checklist, reference down to [/session/cli/](/session/cli/).
+
 ---
 
 ## Self-Describing Command Tree (Branch/Leaf)
@@ -6410,6 +6415,7 @@ So it is **one registry, one signal scan, two timings**. The seed first edge is 
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.
+- [/session/cli/](/session/cli/) — the universal CLI doctrine (the eight principles, exit-code mirror, standard verbs, conformance checklist) that this workbench convention is one scoped instance of.
 - [/session/conventions/](/session/conventions/) — the SOP standard's conventions chapter that defines the naming convention (the discovery handle).
 - [23-hooks-contract.md](./23-hooks-contract.md) — the entry-point pre-condition, the "before" half this measurement complements.
 - [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
@@ -7573,7 +7579,7 @@ Three companion rules keep the push-down honest:
 The vocabulary the whole chain shares is defined once here, at the lowest tier (the push-down principle above). Higher tiers use these terms without redefining them.
 
 - **Tool** — a registered **namespace**: an SOP application that reserves a namespace and registers its skills, so the session can find it. The built-in tools are `memo`, `workbench`, and `flowmcp`. A registered namespace is a *Tool* — not a *Component*, which is reserved for a skill subtype.
-- **Add-on** — a **custom-folder** tool: a local extension that lives in its own folder and is **not** a reserved namespace. The Workbench spec calls these *custom folders*; `.memo/` is the heaviest add-on. "Children" is used only informally for the things a tool carries, deliberately avoiding the formal *Component*.
+- **Add-on** — a **custom-folder** tool: a local extension that lives in its own folder and is **not** a reserved namespace. The Workbench spec calls these *custom folders*; `.memo/`, generated by `memo-init`, is one example. "Children" is used only informally for the things a tool carries, deliberately avoiding the formal *Component*.
 - **namespace** — the reserved prefix a Tool owns (e.g. `memo`), under which its skills and dependency edges are declared. Namespaces are unique; a collision is an error, never a silent merge.
 - **SOP** — Standard Operating Procedure: the connecting layer that makes a procedure predictable, and the entry-point mechanism through which a Tool registers, attaches to the session, and becomes findable ([10-sop.md](./10-sop.md)). Not every Tool is an SOP — a catalog tool carries skills but defines no procedure.
 - **phase** — a unit of a memo rollout that groups several PRDs and is ordered by `depends-on` edges.
@@ -7884,7 +7890,7 @@ This chapter owns the **universal CLI doctrine**: the general way *every* CLI in
 
 ## Why the Doctrine Lives at the Session Tier
 
-The session is the genesis root ([00-overview.md](./00-overview.md)): the one scope that exists before any workbench convention. Because Memo 049 frames the workbench as *itself* a session-SOP application, the lowest tier is the right home for the rules that bind *all* CLIs. A CLI is a tool that any tier may ship, so its doctrine belongs to the tier every other tier inherits from. The session tier already lives by one of these rules — session identity resolves `flag > env > null` ([01-genesis-root.md](./01-genesis-root.md)) — and this chapter lifts that single rule into the general config precedence the whole system shares.
+The session is the genesis root ([00-overview.md](./00-overview.md)): the one scope that exists before any workbench convention. Because the workbench is *itself* a session-SOP application layered on the genesis root, the lowest tier is the right home for the rules that bind *all* CLIs. A CLI is a tool that any tier may ship, so its doctrine belongs to the tier every other tier inherits from. The session tier already lives by one of these rules — session identity resolves `flag > env > null` ([01-genesis-root.md](./01-genesis-root.md)) — and this chapter lifts that single rule into the general config precedence the whole system shares.
 
 ---
 
@@ -7954,6 +7960,8 @@ Every CLI family **SHOULD** expose a small reserved verb set so an agent can rel
 | `migrate` | Idempotent state/schema migration, safe to re-run. | yes, idempotent |
 
 `doctor` diagnoses (never mutates, never blocks) and `init` scaffolds additively; their full contract for the session-readiness instance is [07-doctor-init.md](./07-doctor-init.md). This chapter only reserves the verb names and their contracts.
+
+These verbs are the **executable form of the SOP common denominator** ([11-common-denominator.md](./11-common-denominator.md)) — not a second concept beside Setup / Health / Update / Extras, but the same four parts made runnable: **`init` is Setup**, **`doctor` is Health**, **`update` is Update**, and a family's own scope leaves are its **Extras** (the optional, scope-specific commands). The canonical Update verb is **`update`**; **`migrate`** is its narrower schema/state special-case — the idempotent migration reserved in the table above — so `update` is the general "bring the scope to the current expected state", and `migrate` is the schema-only instance of it. Read this way, a scope's SOP and its CLI are the same common denominator seen twice: one as a procedure a reader follows, one as commands an agent runs.
 
 ---
 
@@ -8527,6 +8535,8 @@ Root detection adds **fields and a marker**, not a tier. The three-tier config c
 
 > **Informative.** This chapter introduces the SOP area of the session standard: what an SOP is, why the SOP layer is the mechanism through which tools attach to the session, and how the existing SOPs relate to it. It carries no normative requirements of its own beyond the conventions named in [13-conventions.md](./13-conventions.md); the binding registry mechanics live in [06-namespace-registry.md](./06-namespace-registry.md).
 
+**What an SOP is.** An SOP — Standard Operating Procedure — is the connecting layer that makes a procedure predictable: the entry-point mechanism through which a tool registers under a namespace, attaches to the session, and becomes findable. The term is defined once in the session [glossary](./00-overview.md) and is used here without redefinition. The distinction to hold from the start, so it is never quietly assumed away: **not every registered tool is an SOP.** A tool that carries a real procedure — a Setup, a Health check, an Update path — is an **SOP instance**, and its entry-point page takes the shape fixed by the [page contract](./11-common-denominator.md). A tool that only needs to be *found* — a catalog tool such as FlowMCP, whose model is `search` / `list` → `call` — registers and becomes discoverable but defines no procedure and gates nothing. The two registrant kinds are detailed in [SOP Instances vs Catalog Blocks](#sop-instances-vs-catalog-blocks) below.
+
 There is **no** standalone "SOP standard" sitting beside the session standard. There is **one** session standard, and **SOP is an integral entry-point area within it** — the area that defines how tools connect to the session, register themselves, and become findable. This chapter is where that mechanism is described; the three chapters after it ([11](./11-common-denominator.md)–[13](./13-conventions.md)) are the connecting layer it rests on.
 
 ---
@@ -8602,7 +8612,7 @@ memo-init and workbench are **SOP-instance blocks**: they participate in the pre
 | Depends on | [10-sop.md](./10-sop.md) |
 | Related | [12-instances.md](./12-instances.md) |
 
-> **Informative.** This chapter describes the common shape every SOP is expected to take. It names the parts and what each is for; it does not impose conformance levels on the individual SOPs, which govern their own scope.
+> **Mostly informative; the Page Contract below is normative.** This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which govern their own scope — but the **SOP Page Contract** is **normative (MUST)** and lint-enforced, because it is the single shape the memo-SOP and Workbench-SOP reference rather than restate.
 
 Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP entry-point mechanism](./10-sop.md) rests.
 
@@ -8638,6 +8648,31 @@ Extras are the parts that belong to one scope and not to SOPs in general. An SOP
 ## Why These Three Are the Core
 
 Setup, Health, and Update are the connecting core because they are the questions every scope faces regardless of what it is: how do I create it, how do I know it is well, and how do I keep it current. Health is the part the workbench's health-check scripts implement (see the Workbench-SOP). Keeping these three to a single shape across all SOPs is what makes an unfamiliar SOP navigable.
+
+The same three parts have an **executable form** in the CLI doctrine's standard verbs ([04-cli.md](./04-cli.md)): **`init` realizes Setup, `doctor` realizes Health, `update` realizes Update**, and a family's own scope leaves are its Extras. The four parts and the standard verbs are not two systems but one common denominator seen twice — a procedure a reader follows and the commands an agent runs.
+
+---
+
+## The SOP Page Contract (normative)
+
+The four parts are not only a description; they fix the **required shape of a single SOP entry-point page**. Every SOP instance's entry-point page **MUST** realize this shape:
+
+```markdown
+# «X»-SOP
+
+> "This is the «X»-SOP, an instance of the SOP standard that it extends;
+>  below is how it realizes Setup, Health, and Update for «scope», plus its extras."
+
+## Entry points     — MUST name the doors into the scope, not imply them
+## Setup            — MUST: how the scope is created / reaches a known-good baseline
+## Health           — MUST: the check that answers "is this scope in order?"
+## Update           — MUST: how the scope is brought to the current expected state
+## Extras           — OPTIONAL: zero or more scope-specific parts
+```
+
+The contract is three things together: the opening **inheritance declaration** (the canonical first sentence in [12-instances.md](./12-instances.md)), the **entry points named explicitly**, and the three core parts — **Setup**, **Health**, **Update** — each present as a named section. **Extras** are optional and scope-specific (zero or more).
+
+**Lint-Gate.** A lint checks every registered SOP page against this contract: a page missing a core part, the inheritance declaration, or its named entry points **fails** the lint. The lint reads the SOP registrants from the namespace registry ([06-namespace-registry.md](./06-namespace-registry.md)) and verifies each instance's page satisfies the shape above. This page is the **single source** of the contract — the memo-SOP and the Workbench-SOP **reference** it and declare only how they realize each part, never restating the shape.
 
 ---
 

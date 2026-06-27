@@ -6,7 +6,7 @@ spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T01:24:20.547Z"
+generated_at: "2026-06-27T01:35:51.713Z"
 generated_from: "spec/v0.1.0/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/15-prompt-generator.md."
@@ -21,7 +21,7 @@ The engine is deliberately small in code and maximal in validation, with no runt
 
 ## What It Is
 
-A **deterministic prompt compositor**: a template plus typed placeholders go in; a substituted prompt plus metadata come out. There is **no LLM call** — pure composition plus validation. Every finding at any stage is a **hard throw** with an AI-readable `PGEN-XXX` error code; there are no partial results, no empty strings, no torso prompts (a surviving `{{...}}` token fails the run), and no silent defaults.
+A **deterministic prompt compositor**: a template plus typed placeholders go in; a substituted prompt plus metadata come out. There is **no LLM call** — pure composition plus validation. Every finding at any step is a **hard throw** with an AI-readable `PGEN-XXX` error code; there are no partial results, no empty strings, no torso prompts (a surviving `{{...}}` token fails the run), and no silent defaults.
 
 The metadata records, for the template and the composed prompt and each placeholder, the **length** and a **sha256 hash** — the hash is what makes a starting point auditably reproducible.
 
@@ -43,7 +43,7 @@ await PromptGenerator.generate( { template, placeholders, limits } ) → { promp
 
 The return value is `{ prompt, metadata }`: `prompt` is the fully composed string, guaranteed free of unresolved `{{...}}` tokens and within the length limits; `metadata` carries a provenance record (`source`, `length`, `hash`, and `filePath` / `functionName` where applicable) for the template, the composed prompt, and every placeholder.
 
-The package entry additionally exports the frozen `ERROR_CODES` registry and the two default-limit constants. Validation runs as a fixed six-stage pipeline (payload validation → template resolution → bidirectional coverage check → per-placeholder source resolution → composition guard → torso check + length limits); any stage finding is a hard throw with a `PGEN-` code.
+The package entry additionally exports the frozen `ERROR_CODES` registry and the two default-limit constants. Validation runs as a fixed six-step pipeline (payload validation → template resolution → bidirectional coverage check → per-placeholder source resolution → composition guard → torso check + length limits); any step finding is a hard throw with a `PGEN-` code.
 
 ---
 

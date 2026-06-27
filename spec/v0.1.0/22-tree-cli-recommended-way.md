@@ -157,4 +157,5 @@ How to build one, in short: **one folder per domain**, a branch per domain with 
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestration and state layer the tool tree is invoked from.
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the agents that consume the embedded tool help.
+- [/session/cli/](/session/cli/) — the universal CLI doctrine (the eight principles, exit-code mirror, standard verbs, conformance checklist) built on this Branch/Leaf data model; the single source every CLI family references rather than re-explaining.
 - [00-overview.md](./00-overview.md) — conformance language.

@@ -6,7 +6,7 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T01:24:20.547Z"
+generated_at: "2026-06-27T01:35:51.713Z"
 generated_from: "spec/v0.1.0/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/02-memo-sop-entrypoint.md."
@@ -52,7 +52,7 @@ The public entry points validate strictly and set the switches — like the publ
 
 ## The End-to-End Path
 
-The SOP documents the complete path in six stages. The stages are listed here for orientation; each is specified in detail in the chapter named in the last column.
+The SOP documents the complete path in six steps. The steps are listed here for orientation; each is specified in detail in the chapter named in the last column.
 
 ```mermaid
 flowchart TD
@@ -67,8 +67,8 @@ flowchart TD
     S5 -->|all questions answered| S6
 ```
 
-| Stage | Name | What happens | Specified in |
-|-------|------|--------------|--------------|
+| Step | Name | What happens | Specified in |
+|------|------|--------------|--------------|
 | 1 | Dictate transcript | The developer produces a transcript (speech → file or URL). | [03-input-paths.md](/specification/input-paths/) |
 | 2 | The four transcript types | A type header determines the follow-up flow. | [03-input-paths.md](/specification/input-paths/) |
 | 3 | Input processing | The mandatory five-step pipeline runs before any memo work. | [04-input-pipeline.md](/specification/input-pipeline/) |
@@ -76,7 +76,9 @@ flowchart TD
 | 5 | Strict AI→software handover | Open questions are parsed from a machine-readable schema. | [07-revisions-and-questions.md](/specification/revisions-and-questions/) |
 | 6 | Finalization → plan → execution | The finalized memo drives a rollout. | [11-quality-and-finalization.md](/specification/quality-and-finalization/), [12-rollout.md](/specification/rollout/) |
 
-A finalized memo can be carried into execution by two valid, parallel models. The **rollout model** works a single finalized memo straight through its phases in one autonomous run. The **planning model** assembles one or more finalized memos into a plan and executes phase by phase across them. Both are contemporary, complementary approaches: the rollout model fits a self-contained memo, while the planning model fits work that spans several memos. The choice of model does not change the six stages above — it changes only how stage 6 is carried out.
+A finalized memo can be carried into execution by two valid, parallel models. The **rollout model** works a single finalized memo straight through its phases in one autonomous run. The **planning model** assembles one or more finalized memos into a plan and executes phase by phase across them. Both are contemporary, complementary approaches: the rollout model fits a self-contained memo, while the planning model fits work that spans several memos. The choice of model does not change the six steps above — it changes only how step 6 is carried out.
+
+> **Three counts, three nouns — do not conflate them.** The memo path's **six steps** here are distinct from the **four stages** of the end-of-process model ([38-stage-model.md](/specification/stage-model/)) and from the **eight principles** of the CLI doctrine. Three separate enumerations, each bound to its own noun — *steps* (the memo path), *stages* (the process end), *principles* (the CLI) — and "stage" is reserved for the four-stage model alone.
 
 ---
 

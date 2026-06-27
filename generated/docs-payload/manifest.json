@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-27T01:24:22.140Z",
+    "generated_at": "2026-06-27T01:35:52.407Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -490,8 +490,8 @@
             {
                 "filename": "02-sop-entrypoint.md",
                 "slug": "sop-entrypoint",
-                "title": "Workbench-SOP and the Two-Level Model",
-                "description": "This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard...",
+                "title": "Workbench-SOP",
+                "description": "This is the **Workbench-SOP**, the entry-point signpost for the workbench scope and an instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) that it **extends** — below...",
                 "order": 2,
                 "section": "Workbench",
                 "normative": false,
@@ -806,7 +806,7 @@
                 "filename": "10-sop.md",
                 "slug": "sop",
                 "title": "SOP — The Entry-Point Mechanism",
-                "description": "There is **no** standalone \"SOP standard\" sitting beside the session standard. There is **one** session standard, and **SOP is an integral entry-point area within it** — the area that defines how...",
+                "description": "**What an SOP is.** An SOP — Standard Operating Procedure — is the connecting layer that makes a procedure predictable: the entry-point mechanism through which a tool registers under a namespace,...",
                 "order": 10,
                 "section": "Session",
                 "normative": false,
@@ -819,7 +819,7 @@
                 "description": "Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on...",
                 "order": 11,
                 "section": "Session",
-                "normative": false,
+                "normative": true,
                 "sidebar_group": "sop"
             },
             {
@@ -859,7 +859,7 @@
         "core_files": 46,
         "workbench_files": 23,
         "session_files": 15,
-        "normative_files": 72,
-        "informative_files": 12
+        "normative_files": 73,
+        "informative_files": 11
     }
 }

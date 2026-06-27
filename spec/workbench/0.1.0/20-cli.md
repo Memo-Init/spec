@@ -8,6 +8,8 @@
 
 The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This convention is settled at the specification and website level — it is a stated rule of the workbench, not an implicit habit of any one tool. This chapter records the convention and the matching rule for the script folders that sit beside it.
 
+The **universal CLI doctrine** — the eight principles every CLI in the system shares (one result envelope, the exit-code mirror, the standard verbs, config precedence, additive evolution) — is stated once at the lowest tier, in the Session spec's [CLI doctrine chapter](/session/cli/), and is **not** restated here. This chapter records only what is specific to the **workbench** scope: the Branch/Leaf convention, the `registry.json` discovery source, the script-subfolder rule, and runtime call-validation. For the eight principles and the conformance checklist, reference down to [/session/cli/](/session/cli/).
+
 ---
 
 ## Self-Describing Command Tree (Branch/Leaf)
@@ -157,6 +159,7 @@ So it is **one registry, one signal scan, two timings**. The seed first edge is 
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.
+- [/session/cli/](/session/cli/) — the universal CLI doctrine (the eight principles, exit-code mirror, standard verbs, conformance checklist) that this workbench convention is one scoped instance of.
 - [/session/conventions/](/session/conventions/) — the SOP standard's conventions chapter that defines the naming convention (the discovery handle).
 - [23-hooks-contract.md](./23-hooks-contract.md) — the entry-point pre-condition, the "before" half this measurement complements.
 - [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.

@@ -1,12 +1,12 @@
 ---
 title: "SOP — The Entry-Point Mechanism"
-description: "There is **no** standalone \"SOP standard\" sitting beside the session standard. There is **one** session standard, and **SOP is an integral entry-point area within it** — the area that defines how..."
+description: "**What an SOP is.** An SOP — Standard Operating Procedure — is the connecting layer that makes a procedure predictable: the entry-point mechanism through which a tool registers under a namespace,..."
 session_version: "0.1.0"
 spec_file: "10-sop.md"
 order: 10
 section: "Session"
 normative: false
-generated_at: "2026-06-27T01:24:20.547Z"
+generated_at: "2026-06-27T01:35:51.713Z"
 generated_from: "spec/session/0.1.0/10-sop.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/10-sop.md."
@@ -14,6 +14,8 @@ edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/10-sop.md
 
 
 > **Informative.** This chapter introduces the SOP area of the session standard: what an SOP is, why the SOP layer is the mechanism through which tools attach to the session, and how the existing SOPs relate to it. It carries no normative requirements of its own beyond the conventions named in [13-conventions.md](/specification/conventions/); the binding registry mechanics live in [06-namespace-registry.md](/specification/namespace-registry/).
+
+**What an SOP is.** An SOP — Standard Operating Procedure — is the connecting layer that makes a procedure predictable: the entry-point mechanism through which a tool registers under a namespace, attaches to the session, and becomes findable. The term is defined once in the session [glossary](/specification/overview/) and is used here without redefinition. The distinction to hold from the start, so it is never quietly assumed away: **not every registered tool is an SOP.** A tool that carries a real procedure — a Setup, a Health check, an Update path — is an **SOP instance**, and its entry-point page takes the shape fixed by the [page contract](/specification/common-denominator/). A tool that only needs to be *found* — a catalog tool such as FlowMCP, whose model is `search` / `list` → `call` — registers and becomes discoverable but defines no procedure and gates nothing. The two registrant kinds are detailed in [SOP Instances vs Catalog Blocks](#sop-instances-vs-catalog-blocks) below.
 
 There is **no** standalone "SOP standard" sitting beside the session standard. There is **one** session standard, and **SOP is an integral entry-point area within it** — the area that defines how tools connect to the session, register themselves, and become findable. This chapter is where that mechanism is described; the three chapters after it ([11](/specification/common-denominator/)–[13](/specification/conventions/)) are the connecting layer it rests on.
 

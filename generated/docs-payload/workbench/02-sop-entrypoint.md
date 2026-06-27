@@ -1,19 +1,19 @@
 ---
-title: "Workbench-SOP and the Two-Level Model"
-description: "This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard..."
+title: "Workbench-SOP"
+description: "This is the **Workbench-SOP**, the entry-point signpost for the workbench scope and an instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) that it **extends** — below..."
 workbench_version: "0.1.0"
 spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: false
-generated_at: "2026-06-27T01:24:20.547Z"
+generated_at: "2026-06-27T01:35:51.713Z"
 generated_from: "spec/workbench/0.1.0/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/02-sop-entrypoint.md."
 ---
 
 
-This is the **Workbench-SOP entry point**: the signpost for the workbench scope. The workbench has two structural levels, and each is governed by its **own** thin instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) — the **Root-SOP** and the **Projects-SOP** (named in the SOP [instance register](/session/instances/)). This entry point does not itself hold either procedure; it names the two levels and **routes** to whichever instance the agent's location selects, and each instance **extends** the standard by realizing its **Setup**, **Health**, and **Update** for its level — plus the workbench's own **extras** (the wiki and project conventions). It is the smallest entry point: the thing an agent reads first, on every fresh start, to learn where it is and what it may do. The standard's definitions live in the [Session spec's SOP area](/session/sop/) and are referenced here, not restated; this chapter adds how an agent enters the workbench and the two levels — and the two SOPs — it distinguishes.
+This is the **Workbench-SOP**, the entry-point signpost for the workbench scope and an instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) that it **extends** — below is how the workbench realizes the standard's **Setup**, **Health**, and **Update** for its scope, plus its own **extras** (the wiki and project conventions). It is structurally parallel to the [memo-SOP mirror](/specification/memo-sop-entrypoint/), with one difference: the workbench has **two** structural levels, so the procedure is carried by **two** thin instances — the **Root-SOP** and the **Projects-SOP** (named in the SOP [instance register](/session/instances/)) — and this entry point does not hold either procedure itself; it **routes** to whichever instance the agent's location selects. Its **entry points are named explicitly**: the **Workbench-SOP itself** (read first, every fresh start), each **custom-folder SOP** (the memo system's first among them), and the **shared tools** present at the workbench root. It is the smallest entry point: the thing an agent reads first to learn where it is and what it may do. The standard's definitions live in the [Session spec's SOP area](/session/sop/) and are referenced here, not restated.
 
 ---
 
@@ -70,7 +70,7 @@ Beyond explaining the scope, the SOP **names the entry points** that work flows 
 
 The workbench-SOP does not *contain* the procedures for everything in the workbench; it **points** to them. It is a **signpost** — a connecting layer, not a container — in the spirit of a dynamic `CLAUDE.md` that loads per session, carries the current inventory of tools, and routes downward to the skills and specs that hold the detail. The workbench-SOP names the levels and the tools that are present, and for each one it points at that tool's own SOP.
 
-This is why **SOPs contain SOPs**. The workbench-SOP references each **custom folder's** SOP ([26-addons.md](/specification/addons/)) — the memo system's SOP first among them, as the weightiest custom folder — and each custom folder SOP is itself Setup/Health/Update plus its extras. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
+This is why **SOPs contain SOPs**. The workbench-SOP references each **custom folder's** SOP ([26-addons.md](/specification/addons/)) — the memo system's SOP first among them, as the weightiest custom folder — and each custom folder SOP is itself Setup/Health/Update plus its extras. Seen this way, the memo-SOP is **also just a skill — only a special one**: structurally it is one custom-folder SOP among others, an instance of the same standard rather than a privileged exception, and it is listed first only because it is the weightiest. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
 
 ```
 Workbench-SOP (signpost — knows the levels and the custom folders present)
