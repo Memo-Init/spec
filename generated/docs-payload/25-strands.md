@@ -6,7 +6,7 @@ spec_file: "25-strands.md"
 order: 25
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T10:15:50.297Z"
+generated_at: "2026-06-27T10:49:50.670Z"
 generated_from: "spec/v0.1.0/25-strands.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/25-strands.md."
