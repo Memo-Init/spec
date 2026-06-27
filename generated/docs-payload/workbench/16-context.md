@@ -6,7 +6,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T19:52:51.135Z"
+generated_at: "2026-06-27T21:21:21.605Z"
 generated_from: "spec/workbench/0.1.0/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/16-context.md."
@@ -45,6 +45,14 @@ edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/16-cont
 `context/` is a project's **primary, immutable source**: the durable ground that memos and generated bundles are distilled *from*, never a derivative that can be regenerated. Because the project root is local ([11-project-structure.md](/specification/project-structure/)), the contents of `context/` stay on the machine by construction — which is exactly why sensitive, half-formed research can live here safely. A generated artifact (a wiki page, an architecture bundle) is a *presentation* of this source and never a replacement for it.
 
 `context/` also exists at two scopes: the **global** `context/` at the workbench root holds cross-project standards, while a project's `context/` holds documents specific to it. A document must sit at the level at which it applies (see [10-root-and-projects.md](/specification/root-and-projects/)).
+
+---
+
+## Memo-Scoped Research vs. a Deliberate Promotion
+
+Raw, in-progress research and "wild" downloaded data do not land in this `context/` by default — they live **memo-scoped**, in the owning memo's own `context/` folder (the memo specification routes proactive research there). Half-finished material accumulates with the memo that produced it, without polluting the project's curated store. This is a **positive convention, not a prohibition**: each kind of material has a home, and a memo's working research stays with that memo.
+
+Promoting a document **up** into the project (or global) `context/` is therefore a **deliberate, curatorial act**, not a default landing spot. A piece of research earns its place here once it is processed and worth drawing on **across** the project — the move from memo-scoped working material to shared, authored knowledge is a decision made on purpose, not the path of least resistance. The split keeps this `context/` the worked, readable side it is meant to be ([Processed, Not Raw](#processed-not-raw)): raw bulk inputs belong in `data/` and throwaway scratch in `.tmp/` ([12-folders.md](/specification/folders/), [19-tmp.md](/specification/tmp/)).
 
 ---
 

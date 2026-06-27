@@ -6,7 +6,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T19:52:51.135Z"
+generated_at: "2026-06-27T21:21:21.605Z"
 generated_from: "spec/v0.1.0/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/35-memo-authoring.md."
@@ -64,6 +64,7 @@ When the set reaches **eight or more entries**, stop hand-typing the table. Inst
 - The data lives as a **JSON dataset** in the memo's `context/` folder — one record per item, with named fields.
 - A small **script** loads the JSON and renders the Markdown table deterministically, writing an output file that carries a header stating it is generated and **must not be hand-edited — the JSON is the source**.
 - The payload is **revision-spanning**: it persists across revisions, so the table is re-rendered, never re-typed, when the data changes.
+- When the dataset is the **evidence a block argues from**, register it on that block as a `tables` entry with a **block-local handle** (`B001.D1`) rather than only as a loose file: the block then carries the data alongside the prose it supports, and the revision's table is snapshotted from the block payload (see the Block primitive in [30-primitives.md](/specification/primitives/)).
 
 Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](/specification/proactive-research/) and [36-agent-strategies.md](/specification/agent-strategies/)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
 

@@ -856,7 +856,7 @@ Context is also driven up **from the outside**, not only by the memo's own growt
 
 A memo's scope is allowed to **grow** while it is being revised. When the user adds a new request mid-revision — a topic, a fix, a whole extra part — that request is **taken into the same memo and worked through there**. It is never unilaterally exported into a follow-up memo, a sub-memo, or a "later" container.
 
-The rule: **you have to accept what the memo demands — including what arrives in a revision.** The well-known "accept the multi-topic input, do not split it" instinct is anchored at the *initial* input ([01-philosophy.md](./01-philosophy.md), [05-memo-strategies.md](./05-memo-strategies.md)); this is its revision-time companion. Mechanically a revision is still append-only (a new `REV-XX.md`, never an in-place edit), and the added scope becomes new chapters and new `### F{N}` questions in that next revision. The only sanctioned way to split off work is an explicit user question (per C7, [29-behavioral-guardrails.md](./29-behavioral-guardrails.md)); absent that recorded decision the work stays in the current memo. Deferring a genuinely out-of-scope finding is likewise a parked research note in `context/`, not a follow-up memo (C8).
+The rule: **you have to accept what the memo demands — including what arrives in a revision.** The well-known "accept the multi-topic input, do not split it" instinct is anchored at the *initial* input ([01-philosophy.md](./01-philosophy.md), [05-memo-strategies.md](./05-memo-strategies.md)); this is its revision-time companion. Mechanically a revision is still append-only (a new `REV-XX.md`, never an in-place edit), and the added scope becomes new chapters and new `### F{N}` questions in that next revision. The only sanctioned way to split off work is an explicit user question (per C7, [29-behavioral-guardrails.md](./29-behavioral-guardrails.md)); absent that recorded decision the work stays in the current memo. Deferring a genuinely out-of-scope finding is likewise a parked research note in the memo's `context/` (memo-scoped), not a follow-up memo (C8).
 
 ---
 
@@ -1264,6 +1264,7 @@ When research produces a substantial body of material — synthesis documents, s
 - **Pointer-not-duplicate rule:** The same research result MUST NOT appear both in `context/` and inlined in a revision body. One authoritative copy lives in `context/`; revisions reference it by relative path.
 - `context/` files are ancillary files of the memo and MUST be listed in the memo's `## Ancillary Files` section with a relative path.
 - `context/` research material is a primary source for the rollout: the rollout entry points (see [13-orchestration.md](./13-orchestration.md)) read it as the verified factual basis when starting from an empty context.
+- **Processed research, not raw or scratch:** the memo's `context/` is for the *worked* research output. Material of a different kind has a different home in the project root — raw, unprocessed bulk inputs (large downloads, scraped corpora before distillation) belong in `data/`, and purely throwaway scratch that nothing depends on belongs in `.tmp/`. Only the distilled, referenced result lands in `context/`; this keeps the research store from filling with raw dumps. (See the workbench folder model for the project-root `data/` and `.tmp/` folders.)
 
 ---
 
@@ -2462,7 +2463,7 @@ This chapter fixes the line between the two directions so that internal calibrat
 
 ## Outward-Facing by Default
 
-Everything outside `.memo/` is **outward-facing** by default. The working assumption is minimalism: the AI's default posture is "can I say more?" — not "can I remove this?" Internal is the declared exception, not the starting point.
+Everything outside `.memo/` is **outward-facing** by default. The working assumption is minimalism: the AI's default posture is "can I say more?" — not "can I remove this?" Internal is the declared exception, not the starting point. This default is about **communication register** — how something is written and what it exposes — not about where the bytes live: content can be outward-facing in register and still fully **local** (the project root stays on the machine unless something is deliberately published from it). Register and locality are separate axes.
 
 - Material inside `.memo/` **MAY** carry internal references, working register, and insider shorthand. It is calibrated for the author and the agent, not for a stranger.
 - Outside `.memo/`, an artifact is outward-facing unless explicitly declared otherwise. The burden is on the author to justify keeping something internal — not to prove an artifact is fit to go out.
@@ -3593,7 +3594,7 @@ This rule is deliberately bounded, and the boundary must be stated explicitly so
 - **YAGNI forbids BLOATING.** Fixing what you find is NOT a mandate to add unrequested scope, speculative features, or "while I'm here" abstractions for needs that have not arrived. "You aren't gonna need it" still governs: build for the requirement in front of you, not for an imagined future one.
 - **The two coexist.** Fix the small adjacent defect; add no speculative scope. One rule closes the gap where real defects get hidden; the other closes the gap where imagined needs get built. Neither overrides the other, and neither overrides the prioritization and deferral rules above (C7) — a *large* adjacent defect is still surfaced to the user, not silently absorbed.
 
-The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in `context/`** — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
+The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in the memo's `context/`** (memo-scoped, not the project-wide store) — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
 
 ---
 
@@ -3684,7 +3685,7 @@ Related: [31-goals.md](./31-goals.md) (lifecycle, scoring mode, friction), [00-o
 
 ## Block
 
-A **block** is a **structure node** inside a memo, carrying its own stable identifier of the form `B\d{3}` (for example `B001`). It is **not** a synonym for a "context block": it is an addressable unit of memo structure. A block has a fence declaring `id`, `repos`, and `tags`, and a body of three sections — a problem statement, a proposed solution, and open questions. A block's `tags` flow **additively into the requirement scope match** (meta → auto-requirements), so the structure a block declares automatically pulls in the requirements that apply to that work. A block carries **no** `strand` field: the strand is emergent and MUST NOT be declared on a block. PRDs are **derived from blocks** and take their order from the phase they belong to.
+A **block** is a **structure node** inside a memo, carrying its own stable identifier of the form `B\d{3}` (for example `B001`). It is **not** a synonym for a "context block": it is an addressable unit of memo structure. A block declares a fence with `id`, `repos`, and `tags`, and references **one or more topics** through a `topicIds` list — a block is not pinned to a single topic but bundles the one-to-many set of topics it structures (the `B\d{3}` block id is the block's own, distinct from the `T\d{3}` topic ids it gathers). Its body has **four sections that keep *what is* separate from *what is judged***: a neutral **factual account** (the situation, stated without evaluation), an **assessment** (the evaluation and recommendation, kept distinct from the facts), a **proposed solution**, and **open questions** — extending the system's "AI recommendation vs. user decision" separation ([07-revisions-and-questions.md](./07-revisions-and-questions.md)) to the block body. A block also carries the **data it argues from**: a `tables` list of datasets, each with a **block-local handle** (`d1`, `d2`, addressed as `B001.D1`) — a handle, **not** a new primitive (the eleven above are unchanged) and **not** a topic id, since a dataset has a different cardinality and lifecycle than a topic. A block's `tags` flow **additively into the requirement scope match** (meta → auto-requirements), so the structure a block declares automatically pulls in the requirements that apply to that work. A block carries **no** `strand` field: the strand is emergent and MUST NOT be declared on a block. PRDs are **derived from blocks** and take their order from the phase they belong to.
 
 Related: [06-memo-structure.md](./06-memo-structure.md) (memo structure), [08-phases-and-prds.md](./08-phases-and-prds.md) (PRDs derived from blocks), [23-requirements.md](./23-requirements.md) (the scope match a block's tags feed); related primitives: [PRD](#prd), [Requirement](#requirement), [Topic](#topic).
 
@@ -3739,7 +3740,7 @@ A memo, seen by the user, runs from dictated input to a closed document.
 ```mermaid
 flowchart TD
     SP["Voice / text input"] --> TO["Topics (memo-scoped)"]
-    TO --> BL["Blocks (id B###): Meta + Topics<br/>Problem / Solution / Open questions"]
+    TO --> BL["Blocks (id B###): topicIds[] + tables[]<br/>Factual account / Assessment / Solution / Open questions"]
     BL --> QQ["Questions of all blocks<br/>collected centrally"]
     QQ --> DONE["Done for the user"]
 ```
@@ -4292,6 +4293,7 @@ When the set reaches **eight or more entries**, stop hand-typing the table. Inst
 - The data lives as a **JSON dataset** in the memo's `context/` folder — one record per item, with named fields.
 - A small **script** loads the JSON and renders the Markdown table deterministically, writing an output file that carries a header stating it is generated and **must not be hand-edited — the JSON is the source**.
 - The payload is **revision-spanning**: it persists across revisions, so the table is re-rendered, never re-typed, when the data changes.
+- When the dataset is the **evidence a block argues from**, register it on that block as a `tables` entry with a **block-local handle** (`B001.D1`) rather than only as a loose file: the block then carries the data alongside the prose it supports, and the revision's table is snapshotted from the block payload (see the Block primitive in [30-primitives.md](./30-primitives.md)).
 
 Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](./10-proactive-research.md) and [36-agent-strategies.md](./36-agent-strategies.md)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
 
@@ -5840,6 +5842,18 @@ A new registered folder **MUST** follow this convention: a dot for generated or 
 
 ---
 
+## Three Orthogonal Axes: Dot-Prefix, Local Guarantee, Outward-Facing
+
+The dot-prefix is easy to conflate with two properties it is **not** the same as. Three independent axes are at work, and a folder has a value on each:
+
+- **Dot-prefix** — *authored vs. machinery*. A leading dot marks generated or local machinery; no dot marks hand-authored, user-facing content (the convention above).
+- **Local guarantee** — *stays on the machine*. The project root is local in its entirety ([11-project-structure.md](./11-project-structure.md)): **every** folder, dotted or not, stays on the machine unless something is **deliberately** published from it (a `repos/` git remote, a generated site). Locality is a property of the whole root, **orthogonal** to the dot.
+- **Outward-facing** — *audience calibration, if published*. Whether content is written for an outside reader is a communication-register default (the memo specification's "outward-facing by default" posture), not a statement about where the bytes live or whether they are pushed.
+
+This dissolves an apparent contradiction: the project's `context/` is non-dot (authored), fully local (it stays on the machine — which is exactly why half-formed research is safe there, [16-context.md](./16-context.md)), **and** outward-facing-calibrated (written so it *could* be shared). All three hold at once because they answer different questions. "Outward-facing" never means "already pushed," and "no dot" never means "not local."
+
+---
+
 ## `data/` vs `context/`
 
 The distinction between `data/` and `context/` is by **state of processing**, and it is the reason both exist:
@@ -6166,6 +6180,14 @@ The declared status is not taken on trust. The workbench **health-check** and **
 `context/` is a project's **primary, immutable source**: the durable ground that memos and generated bundles are distilled *from*, never a derivative that can be regenerated. Because the project root is local ([11-project-structure.md](./11-project-structure.md)), the contents of `context/` stay on the machine by construction — which is exactly why sensitive, half-formed research can live here safely. A generated artifact (a wiki page, an architecture bundle) is a *presentation* of this source and never a replacement for it.
 
 `context/` also exists at two scopes: the **global** `context/` at the workbench root holds cross-project standards, while a project's `context/` holds documents specific to it. A document must sit at the level at which it applies (see [10-root-and-projects.md](./10-root-and-projects.md)).
+
+---
+
+## Memo-Scoped Research vs. a Deliberate Promotion
+
+Raw, in-progress research and "wild" downloaded data do not land in this `context/` by default — they live **memo-scoped**, in the owning memo's own `context/` folder (the memo specification routes proactive research there). Half-finished material accumulates with the memo that produced it, without polluting the project's curated store. This is a **positive convention, not a prohibition**: each kind of material has a home, and a memo's working research stays with that memo.
+
+Promoting a document **up** into the project (or global) `context/` is therefore a **deliberate, curatorial act**, not a default landing spot. A piece of research earns its place here once it is processed and worth drawing on **across** the project — the move from memo-scoped working material to shared, authored knowledge is a decision made on purpose, not the path of least resistance. The split keeps this `context/` the worked, readable side it is meant to be ([Processed, Not Raw](#processed-not-raw)): raw bulk inputs belong in `data/` and throwaway scratch in `.tmp/` ([12-folders.md](./12-folders.md), [19-tmp.md](./19-tmp.md)).
 
 ---
 

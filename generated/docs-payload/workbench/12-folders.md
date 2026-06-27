@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T19:52:51.135Z"
+generated_at: "2026-06-27T21:21:21.605Z"
 generated_from: "spec/workbench/0.1.0/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/12-folders.md."
@@ -97,6 +97,18 @@ Whether a registered folder's name begins with a dot is **not arbitrary** — it
 The dot carries two reinforcing meanings — *hidden from casual view* and, for the local-only stores, *never pushed* — and it gives the machine a cheap, structural signal: a folder-aware tool can tell generated machinery from authored content by the leading character alone. `scripts/` is the deliberate edge case — it holds tooling, but it is authored and run by people, so it follows the no-dot, content rule.
 
 A new registered folder **MUST** follow this convention: a dot for generated or local machinery, no dot for authored content.
+
+---
+
+## Three Orthogonal Axes: Dot-Prefix, Local Guarantee, Outward-Facing
+
+The dot-prefix is easy to conflate with two properties it is **not** the same as. Three independent axes are at work, and a folder has a value on each:
+
+- **Dot-prefix** — *authored vs. machinery*. A leading dot marks generated or local machinery; no dot marks hand-authored, user-facing content (the convention above).
+- **Local guarantee** — *stays on the machine*. The project root is local in its entirety ([11-project-structure.md](/specification/project-structure/)): **every** folder, dotted or not, stays on the machine unless something is **deliberately** published from it (a `repos/` git remote, a generated site). Locality is a property of the whole root, **orthogonal** to the dot.
+- **Outward-facing** — *audience calibration, if published*. Whether content is written for an outside reader is a communication-register default (the memo specification's "outward-facing by default" posture), not a statement about where the bytes live or whether they are pushed.
+
+This dissolves an apparent contradiction: the project's `context/` is non-dot (authored), fully local (it stays on the machine — which is exactly why half-formed research is safe there, [16-context.md](/specification/context/)), **and** outward-facing-calibrated (written so it *could* be shared). All three hold at once because they answer different questions. "Outward-facing" never means "already pushed," and "no dot" never means "not local."
 
 ---
 

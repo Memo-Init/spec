@@ -6,7 +6,7 @@ spec_file: "11-common-denominator.md"
 order: 11
 section: "Session"
 normative: true
-generated_at: "2026-06-27T19:52:51.135Z"
+generated_at: "2026-06-27T21:21:21.605Z"
 generated_from: "spec/session/0.1.0/11-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/11-common-denominator.md."

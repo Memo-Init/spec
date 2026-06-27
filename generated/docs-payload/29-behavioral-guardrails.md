@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T19:52:51.135Z"
+generated_at: "2026-06-27T21:21:21.605Z"
 generated_from: "spec/v0.1.0/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/29-behavioral-guardrails.md."
@@ -81,7 +81,7 @@ This rule is deliberately bounded, and the boundary must be stated explicitly so
 - **YAGNI forbids BLOATING.** Fixing what you find is NOT a mandate to add unrequested scope, speculative features, or "while I'm here" abstractions for needs that have not arrived. "You aren't gonna need it" still governs: build for the requirement in front of you, not for an imagined future one.
 - **The two coexist.** Fix the small adjacent defect; add no speculative scope. One rule closes the gap where real defects get hidden; the other closes the gap where imagined needs get built. Neither overrides the other, and neither overrides the prioritization and deferral rules above (C7) — a *large* adjacent defect is still surfaced to the user, not silently absorbed.
 
-The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in `context/`** — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
+The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in the memo's `context/`** (memo-scoped, not the project-wide store) — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
 
 ---
 
