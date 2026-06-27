@@ -4652,6 +4652,36 @@ The matrix is a starting point, not an exhaustive list. The point is to choose b
 
 ---
 
+## Best Type Per Concept
+
+The intent table above is general; this one is sharper. For the concepts that recur in these specifications, there is usually a single **best** Mermaid type — the one whose built-in shape *is* the idea, so the diagram needs no convention to be read. Reach for it first:
+
+| Concept | Best type | Why it fits |
+|---------|-----------|-------------|
+| **Inheritance / tier model** (a base extended by layers above it) | `classDiagram` | the inheritance arrow (`<|--`) is exactly an extends-chain; no other type states "extends" natively. |
+| **Gate / identity state** (ALLOW · DENY · fail-open; resolve → pinned → fixed) | `stateDiagram-v2` | a gate is a state machine, and a redirecting DENY is a self-loop back to the decision. |
+| **Requirements** (`REQ-*` codes and what satisfies them) | `requirementDiagram` | the only type built for requirement → satisfier/verifier links — the highest-value type that usually sits unused. |
+| **Folder tree / hierarchy** | `mindmap` | an indentation-based tree reads a containment hierarchy at a glance. |
+| **Config cascade / layered structure** (base + overlays merged in order) | `block-beta` | stacked blocks show an overlay/merge order as a literal stack. |
+| **Before / after, ordered exchange** (one call through two checkpoints) | `sequenceDiagram` | participants over a time axis are exactly an ordered exchange. |
+| **Decision trees & linear pipelines** | `flowchart` | branch-and-merge logic and step sequences are what a flowchart is for. |
+
+A **flowchart is justified only for genuine decision-trees and linear pipelines** — a `doctor` step sequence, a push gate's decision table, a branch on a condition. For every other intent above, the flowchart is the *wrong* default: pick the type whose shape already carries the meaning. These specifications now **dogfood the map** — `classDiagram`, `stateDiagram-v2`, `requirementDiagram`, `mindmap`, `block-beta`, and `sequenceDiagram` each appear as a worked example across the Session and Workbench families, so the variety is demonstrated, not only recommended. Generated-image and Excalidraw-style renderings stay **out of scope** for spec content (see "What the Viewer Renders" below); the map is Mermaid-only.
+
+---
+
+## Three Normative Contract Blocks
+
+Diagrams are the *visual* shape-givers in these specifications. Beyond them, the spec carries three **normative contract code-blocks** — fenced templates that are **MUST** and lint-enforced, the textual counterpart to the diagram guidance here. They are named in one place so the "contract block" idea is visible alongside the diagram map; their definitions live on their own pages and are not restated:
+
+- **The SOP-Page-Contract** — the required Setup / Health / Update / Extras + entry-points shape every SOP entry-point page realizes ([session · common-denominator](/session/common-denominator/)).
+- **The Folder-Page-Contract** — the Name · Status · Level · Entry-point · Convention · Purpose fields every per-folder page opens with ([session · conventions](/session/conventions/)).
+- **The Config boilerplate** — the annotated `.session/config.json` (JSONC) the cascade pages anchor on ([session · config-cascade](/session/config-cascade/)).
+
+Unlike this chapter — which is informative diagram *guidance* — those three blocks are binding shapes a lint gate checks. They are referenced here, not duplicated.
+
+---
+
 ## A Diagram Is a Decision Tool
 
 Treat a diagram as a **decision tool**, not as illustration added after the fact. Its job is to make a choice clearer or quicker for whoever reads it — the developer weighing options, a future reader reconstructing why something is shaped the way it is.
@@ -5768,6 +5798,32 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it. `.memo/` carries a third status — **reserved (custom folder, default-on)**: it is the on-disk footprint of the memo system, the recommended, default-on custom folder, so it is present in every real project but is a *reservation of that custom folder* rather than a requirement of the bare workbench core ([26-addons.md](./26-addons.md)). The `.wiki/` entry point is the OKF-reserved `index.md`, **published under the label "overview"** — a published navigation label, not a file rename (renaming `index.md` would break OKF).
 
 The **Level** column records where each name is expected. The rows above are the **project-level** contract for folders under `projects/{name}/`; `context/` is marked **Both** because the same name is also a registered folder at the workbench root, where it holds cross-project standards. The root-only folders — `cli/`, `projects/`, `templates/`, and the root `context/` — are registered in [10-root-and-projects.md](./10-root-and-projects.md), not restated here.
+
+The same registry reads as a **taxonomy by status**. A folder tree is a hierarchy, so a mindmap shows it at a glance — mandatory names first, the default-on `.memo/` reservation, then the optional folders a project adds when it needs them:
+
+```mermaid
+mindmap
+  root((projects/name/))
+    Mandatory
+      .claude/
+      .trash/
+      ABOUT.md
+      CLAUDE.md
+      context/
+      repos/
+      scripts/
+    Reserved default-on
+      .memo/
+    Optional
+      .browser/
+      .tmp/
+      .wiki/
+      .workbench/
+      data/
+      design/
+      proofs/
+      snapshots/
+```
 
 ---
 
@@ -6973,6 +7029,22 @@ The consequences are concrete:
 
 This is the same public-entry boundary the two checkability mechanisms act on — a **before** pre-hook and an **after** runtime measurement. That before/after split is specified once in [25-validation-overview.md](./25-validation-overview.md); this chapter does not restate the rule, it only places the orchestrator at the boundary. The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
 
+One call through the boundary is an ordered exchange, so a sequence diagram traces it best — the pre-hook gates *before* the orchestrator runs, and the runtime check measures *after*, from the transcript the run left behind:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Pre as Pre-hook before
+    participant Orch as Orchestrator
+    participant Log as Transcript
+    participant Post as Runtime check after
+    User->>Pre: call public entry point
+    Pre->>Pre: pre-conditions met?
+    Pre->>Orch: allow, else deny or ask
+    Orch->>Log: run and write transcript
+    Log->>Post: scan what really ran
+```
+
 ---
 
 ## Typed Skill Contracts
@@ -7076,6 +7148,49 @@ The families above are the workbench-tier handles. The **session-tier enforcemen
 | `REQ-SS-CDGUARD` | A `Bash` soft-guard warns (never blocks) when a `cd` would leave the pinned root | [session · identity-pin](/session/identity-pin/) |
 
 The session pages are the deep definition; this row set is their index. A new `REQ-SS-*` code is added on its defining page **and** given a row here — the same "specify it in its chapter, then list it" discipline the family table follows.
+
+A code registry reads naturally as a **requirement diagram** — the one diagram type built to link a requirement to the mechanism that satisfies it. A few of the `REQ-SS-*` codes and their satisfiers:
+
+```mermaid
+requirementDiagram
+
+    requirement failopen {
+        id: "REQ-SS-FAILOPEN"
+        text: "Any infra or config problem fails open to ALLOW."
+        risk: high
+        verifymethod: test
+    }
+
+    requirement canary {
+        id: "REQ-SS-CANARY"
+        text: "A SessionStart canary re-verifies the gate and auto-disables on drift."
+        risk: medium
+        verifymethod: test
+    }
+
+    requirement pin {
+        id: "REQ-SS-PIN"
+        text: "Session identity is resolved once and pinned for the session."
+        risk: high
+        verifymethod: inspection
+    }
+
+    element gate {
+        type: hook
+    }
+
+    element canaryCheck {
+        type: canary
+    }
+
+    element identityPin {
+        type: pin
+    }
+
+    gate - satisfies -> failopen
+    canaryCheck - satisfies -> canary
+    identityPin - satisfies -> pin
+```
 
 ---
 
@@ -7703,6 +7818,30 @@ session-sop  (this family — the Genesis Root + SOP entry-point mechanism)
   ↑ memo-init / flowmcp / …  (domain entry points)
 ```
 
+The same chain reads as an **inheritance** relationship — each tier *extends* the one below it and inherits the identity and security it establishes. An inheritance diagram is the type that states "extends" natively (the diagram map in [the Diagrams chapter](../../v0.1.0/40-diagrams.md) maps a tier model to exactly this type):
+
+```mermaid
+classDiagram
+    class SessionSOP {
+        +.session/config.json
+        +Progressive Disclosure
+        +Identity, Security, SOP-Chain
+    }
+    class WorkbenchSOP {
+        +Folder Convention (Superset)
+        +Root-SOP, Projects-SOP
+    }
+    class MemoSOP {
+        +Initialize, Revise, Finalize, Execute
+    }
+    class MemoInit {
+        +Entry point
+    }
+    SessionSOP <|-- WorkbenchSOP : extends
+    WorkbenchSOP <|-- MemoSOP : extends
+    MemoSOP <|-- MemoInit : entry point
+```
+
 The build direction is **bottom-up**: the genesis root exists first, and each layer above it is a convention that assumes the layer below. The workbench is **just one session-SOP application** layered on the session tier — not a peer standard.
 
 ---
@@ -7929,6 +8068,19 @@ The decision table the reference hook MUST implement:
 | transcript readable AND predecessor genuinely absent | DENY | 2 |
 
 The governing principle: **the gate never fail-CLOSES on infrastructure trouble** (FAILOPEN), and **never produces an unrecoverable lockout** (EDGEVALID). A DENY is a *redirect*, not a dead end — its message tells the agent to read the predecessor SOP first, after which the same entry point passes.
+
+A gate is a state machine, so its three outcomes read as states. The key property the diagram makes visible: `ALLOW` and the fail-open `ERROR` both terminate at exit 0, while `DENY` is a self-redirect — it returns to the decision once the predecessor SOP has been read, never a terminal dead end:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Evaluating
+    Evaluating --> ALLOW: not gated / carved out / predecessor present
+    Evaluating --> ERROR: infra or config problem
+    Evaluating --> DENY: transcript readable AND predecessor absent
+    ALLOW --> [*]: exit 0
+    ERROR --> [*]: fail-open exit 0
+    DENY --> Evaluating: read predecessor SOP, then retry
+```
 
 ---
 
@@ -8274,6 +8426,16 @@ The config is a cascade in the git/kustomize sense: a base set of values that mo
 .workbench/config.json (Workbench tier — repo facing/visibility/remote, folder-lints)
    ↑ extended/merged by
 Project tier           (project specifics — prefix, optional workbenchRoot pointer)
+```
+
+A layered cascade reads as a stack — the more-specific tiers overlay the base, which is exactly what a block stack shows:
+
+```mermaid
+block-beta
+    columns 1
+    project["Project tier: prefix, workbenchRoot pointer"]
+    workbench["Workbench tier: repo policy, folder-lints"]
+    session["Session base: identity, security, SOP chain"]
 ```
 
 The base tier carries identity and the chain; the overlays stay thin. The cascade MUST stay shallow — a project does not introduce a fourth authority, it only contributes its own specifics over the base.

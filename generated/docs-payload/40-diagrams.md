@@ -6,7 +6,7 @@ spec_file: "40-diagrams.md"
 order: 40
 section: "Specification"
 normative: false
-generated_at: "2026-06-27T02:10:52.139Z"
+generated_at: "2026-06-27T02:26:25.132Z"
 generated_from: "spec/v0.1.0/40-diagrams.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/40-diagrams.md."
@@ -47,6 +47,36 @@ Pick the diagram from the **intent**, not from habit. The matrix below maps the 
 | **Comparison** | Items placed against one or two axes, a quantitative measurement | Mermaid `quadrantChart`, Vega-Lite chart |
 
 The matrix is a starting point, not an exhaustive list. The point is to choose by asking "what is the intent here?" and then reaching for the type that fits, rather than rendering everything as the one flowchart that happens to be familiar.
+
+---
+
+## Best Type Per Concept
+
+The intent table above is general; this one is sharper. For the concepts that recur in these specifications, there is usually a single **best** Mermaid type — the one whose built-in shape *is* the idea, so the diagram needs no convention to be read. Reach for it first:
+
+| Concept | Best type | Why it fits |
+|---------|-----------|-------------|
+| **Inheritance / tier model** (a base extended by layers above it) | `classDiagram` | the inheritance arrow (`<|--`) is exactly an extends-chain; no other type states "extends" natively. |
+| **Gate / identity state** (ALLOW · DENY · fail-open; resolve → pinned → fixed) | `stateDiagram-v2` | a gate is a state machine, and a redirecting DENY is a self-loop back to the decision. |
+| **Requirements** (`REQ-*` codes and what satisfies them) | `requirementDiagram` | the only type built for requirement → satisfier/verifier links — the highest-value type that usually sits unused. |
+| **Folder tree / hierarchy** | `mindmap` | an indentation-based tree reads a containment hierarchy at a glance. |
+| **Config cascade / layered structure** (base + overlays merged in order) | `block-beta` | stacked blocks show an overlay/merge order as a literal stack. |
+| **Before / after, ordered exchange** (one call through two checkpoints) | `sequenceDiagram` | participants over a time axis are exactly an ordered exchange. |
+| **Decision trees & linear pipelines** | `flowchart` | branch-and-merge logic and step sequences are what a flowchart is for. |
+
+A **flowchart is justified only for genuine decision-trees and linear pipelines** — a `doctor` step sequence, a push gate's decision table, a branch on a condition. For every other intent above, the flowchart is the *wrong* default: pick the type whose shape already carries the meaning. These specifications now **dogfood the map** — `classDiagram`, `stateDiagram-v2`, `requirementDiagram`, `mindmap`, `block-beta`, and `sequenceDiagram` each appear as a worked example across the Session and Workbench families, so the variety is demonstrated, not only recommended. Generated-image and Excalidraw-style renderings stay **out of scope** for spec content (see "What the Viewer Renders" below); the map is Mermaid-only.
+
+---
+
+## Three Normative Contract Blocks
+
+Diagrams are the *visual* shape-givers in these specifications. Beyond them, the spec carries three **normative contract code-blocks** — fenced templates that are **MUST** and lint-enforced, the textual counterpart to the diagram guidance here. They are named in one place so the "contract block" idea is visible alongside the diagram map; their definitions live on their own pages and are not restated:
+
+- **The SOP-Page-Contract** — the required Setup / Health / Update / Extras + entry-points shape every SOP entry-point page realizes ([session · common-denominator](/session/common-denominator/)).
+- **The Folder-Page-Contract** — the Name · Status · Level · Entry-point · Convention · Purpose fields every per-folder page opens with ([session · conventions](/session/conventions/)).
+- **The Config boilerplate** — the annotated `.session/config.json` (JSONC) the cascade pages anchor on ([session · config-cascade](/session/config-cascade/)).
+
+Unlike this chapter — which is informative diagram *guidance* — those three blocks are binding shapes a lint gate checks. They are referenced here, not duplicated.
 
 ---
 

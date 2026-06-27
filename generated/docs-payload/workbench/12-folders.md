@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T02:10:52.139Z"
+generated_at: "2026-06-27T02:26:25.132Z"
 generated_from: "spec/workbench/0.1.0/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/12-folders.md."
@@ -58,6 +58,32 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it. `.memo/` carries a third status — **reserved (custom folder, default-on)**: it is the on-disk footprint of the memo system, the recommended, default-on custom folder, so it is present in every real project but is a *reservation of that custom folder* rather than a requirement of the bare workbench core ([26-addons.md](/specification/addons/)). The `.wiki/` entry point is the OKF-reserved `index.md`, **published under the label "overview"** — a published navigation label, not a file rename (renaming `index.md` would break OKF).
 
 The **Level** column records where each name is expected. The rows above are the **project-level** contract for folders under `projects/{name}/`; `context/` is marked **Both** because the same name is also a registered folder at the workbench root, where it holds cross-project standards. The root-only folders — `cli/`, `projects/`, `templates/`, and the root `context/` — are registered in [10-root-and-projects.md](/specification/root-and-projects/), not restated here.
+
+The same registry reads as a **taxonomy by status**. A folder tree is a hierarchy, so a mindmap shows it at a glance — mandatory names first, the default-on `.memo/` reservation, then the optional folders a project adds when it needs them:
+
+```mermaid
+mindmap
+  root((projects/name/))
+    Mandatory
+      .claude/
+      .trash/
+      ABOUT.md
+      CLAUDE.md
+      context/
+      repos/
+      scripts/
+    Reserved default-on
+      .memo/
+    Optional
+      .browser/
+      .tmp/
+      .wiki/
+      .workbench/
+      data/
+      design/
+      proofs/
+      snapshots/
+```
 
 ---
 

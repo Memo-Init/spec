@@ -6,7 +6,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: false
-generated_at: "2026-06-27T02:10:52.139Z"
+generated_at: "2026-06-27T02:26:25.132Z"
 generated_from: "spec/workbench/0.1.0/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/25-validation-overview.md."
@@ -65,6 +65,49 @@ The families above are the workbench-tier handles. The **session-tier enforcemen
 | `REQ-SS-CDGUARD` | A `Bash` soft-guard warns (never blocks) when a `cd` would leave the pinned root | [session · identity-pin](/session/identity-pin/) |
 
 The session pages are the deep definition; this row set is their index. A new `REQ-SS-*` code is added on its defining page **and** given a row here — the same "specify it in its chapter, then list it" discipline the family table follows.
+
+A code registry reads naturally as a **requirement diagram** — the one diagram type built to link a requirement to the mechanism that satisfies it. A few of the `REQ-SS-*` codes and their satisfiers:
+
+```mermaid
+requirementDiagram
+
+    requirement failopen {
+        id: "REQ-SS-FAILOPEN"
+        text: "Any infra or config problem fails open to ALLOW."
+        risk: high
+        verifymethod: test
+    }
+
+    requirement canary {
+        id: "REQ-SS-CANARY"
+        text: "A SessionStart canary re-verifies the gate and auto-disables on drift."
+        risk: medium
+        verifymethod: test
+    }
+
+    requirement pin {
+        id: "REQ-SS-PIN"
+        text: "Session identity is resolved once and pinned for the session."
+        risk: high
+        verifymethod: inspection
+    }
+
+    element gate {
+        type: hook
+    }
+
+    element canaryCheck {
+        type: canary
+    }
+
+    element identityPin {
+        type: pin
+    }
+
+    gate - satisfies -> failopen
+    canaryCheck - satisfies -> canary
+    identityPin - satisfies -> pin
+```
 
 ---
 

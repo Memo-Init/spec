@@ -52,6 +52,32 @@ A project **MUST NOT** omit a mandatory folder. A project **MAY** add any option
 
 The **Level** column records where each name is expected. The rows above are the **project-level** contract for folders under `projects/{name}/`; `context/` is marked **Both** because the same name is also a registered folder at the workbench root, where it holds cross-project standards. The root-only folders — `cli/`, `projects/`, `templates/`, and the root `context/` — are registered in [10-root-and-projects.md](./10-root-and-projects.md), not restated here.
 
+The same registry reads as a **taxonomy by status**. A folder tree is a hierarchy, so a mindmap shows it at a glance — mandatory names first, the default-on `.memo/` reservation, then the optional folders a project adds when it needs them:
+
+```mermaid
+mindmap
+  root((projects/name/))
+    Mandatory
+      .claude/
+      .trash/
+      ABOUT.md
+      CLAUDE.md
+      context/
+      repos/
+      scripts/
+    Reserved default-on
+      .memo/
+    Optional
+      .browser/
+      .tmp/
+      .wiki/
+      .workbench/
+      data/
+      design/
+      proofs/
+      snapshots/
+```
+
 ---
 
 ## The Dot-Prefix Convention

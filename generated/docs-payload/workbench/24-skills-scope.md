@@ -6,7 +6,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T02:10:52.139Z"
+generated_at: "2026-06-27T02:26:25.132Z"
 generated_from: "spec/workbench/0.1.0/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/24-skills-scope.md."
@@ -91,6 +91,22 @@ The consequences are concrete:
 - **The stricter the public methods, the calmer the interior.** Rigor at the boundary is what lets the inside of the system relax; a lax boundary pushes defensive checks into every internal step.
 
 This is the same public-entry boundary the two checkability mechanisms act on — a **before** pre-hook and an **after** runtime measurement. That before/after split is specified once in [25-validation-overview.md](/specification/validation-overview/); this chapter does not restate the rule, it only places the orchestrator at the boundary. The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
+
+One call through the boundary is an ordered exchange, so a sequence diagram traces it best — the pre-hook gates *before* the orchestrator runs, and the runtime check measures *after*, from the transcript the run left behind:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Pre as Pre-hook before
+    participant Orch as Orchestrator
+    participant Log as Transcript
+    participant Post as Runtime check after
+    User->>Pre: call public entry point
+    Pre->>Pre: pre-conditions met?
+    Pre->>Orch: allow, else deny or ask
+    Orch->>Log: run and write transcript
+    Log->>Post: scan what really ran
+```
 
 ---
 

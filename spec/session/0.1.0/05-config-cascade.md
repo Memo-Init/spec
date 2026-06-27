@@ -81,6 +81,16 @@ The config is a cascade in the git/kustomize sense: a base set of values that mo
 Project tier           (project specifics — prefix, optional workbenchRoot pointer)
 ```
 
+A layered cascade reads as a stack — the more-specific tiers overlay the base, which is exactly what a block stack shows:
+
+```mermaid
+block-beta
+    columns 1
+    project["Project tier: prefix, workbenchRoot pointer"]
+    workbench["Workbench tier: repo policy, folder-lints"]
+    session["Session base: identity, security, SOP chain"]
+```
+
 The base tier carries identity and the chain; the overlays stay thin. The cascade MUST stay shallow — a project does not introduce a fourth authority, it only contributes its own specifics over the base.
 
 ---

@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-06-27T02:10:52.139Z"
+generated_at: "2026-06-27T02:26:25.132Z"
 generated_from: "spec/session/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/00-overview.md."
@@ -32,6 +32,30 @@ session-sop  (this family — the Genesis Root + SOP entry-point mechanism)
   ↑ workbench-sop   (one session-SOP application above the genesis root)
   ↑ memo-sop        (memo process)
   ↑ memo-init / flowmcp / …  (domain entry points)
+```
+
+The same chain reads as an **inheritance** relationship — each tier *extends* the one below it and inherits the identity and security it establishes. An inheritance diagram is the type that states "extends" natively (the diagram map in [the Diagrams chapter](/specification/diagrams/) maps a tier model to exactly this type):
+
+```mermaid
+classDiagram
+    class SessionSOP {
+        +.session/config.json
+        +Progressive Disclosure
+        +Identity, Security, SOP-Chain
+    }
+    class WorkbenchSOP {
+        +Folder Convention (Superset)
+        +Root-SOP, Projects-SOP
+    }
+    class MemoSOP {
+        +Initialize, Revise, Finalize, Execute
+    }
+    class MemoInit {
+        +Entry point
+    }
+    SessionSOP <|-- WorkbenchSOP : extends
+    WorkbenchSOP <|-- MemoSOP : extends
+    MemoSOP <|-- MemoInit : entry point
 ```
 
 The build direction is **bottom-up**: the genesis root exists first, and each layer above it is a convention that assumes the layer below. The workbench is **just one session-SOP application** layered on the session tier — not a peer standard.

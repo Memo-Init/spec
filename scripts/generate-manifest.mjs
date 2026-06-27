@@ -110,10 +110,11 @@ const sidebarGroupFromFilename = ( { filename } ) => {
 //     core two-level diagram + project architecture, formerly 40+41 in 'reference') form the workbench
 //     Core. The 'reference' category is dissolved: 40 was merged into 41 and 41 moves to Core, so no
 //     workbench chapter maps to 'reference' anymore.
-//   - 30, 13, 18 → 'wiki' (Memo 045 Ch7 + Memo 047 Ch4.5): the wiki (30) is its own category,
-//     and its storage formats move conceptually under it — OKF (13) and DESIGN.md (18) both. 18
-//     joins symmetrically with 13: 30-wiki lists both as storage formats, so the design convention
-//     sits under the wiki the same way OKF does (the 045 asymmetry where 18 stayed in 'folders').
+//   - 30 → 'wiki' and 13, 18 → 'storage' (Memo 050 Ch14, F3=A): the wiki (30) and its Storage
+//     Formats are TWO sibling top categories, not one. The Memo-047 fold (30/13/18 into a single
+//     'wiki', later into 'folders') is undone: Wiki (30, the functionality) and Storage Formats
+//     (13-knowledge-format-okf + 18-design, the schemas) each get their own category. Slugs stay
+//     put (no renumbering) — only the order→group mapping changes.
 // Workbench nav (Memo 049 Kap 9) — Root / Projects / Folders / Custom reorg. Titles + group
 // mapping only; filenames/slugs are NOT renumbered (no-renumber rule). Display order
 // (lockstep with sidebar.mjs WORKBENCH_GROUP_ORDER):
@@ -122,19 +123,20 @@ const sidebarGroupFromFilename = ( { filename } ) => {
 //   - root (10) — the workbench-root level and its root folders (cli/, projects/, templates/);
 //     10-root-and-projects IS the "Workbench-Root-Folder" content the memo's Root category names.
 //   - projects (11,12) — the project-level structure + folder contract.
-//   - folders (13,15,16,18,19,21,30,32) — the dot-correct folder-named pages (incl. the OKF +
-//     design storage formats and the new 19-tmp page); the former 'wiki' group folds in here.
+//   - folders (15,16,19,21,32) — the dot-correct folder-named pages (incl. the new 19-tmp page).
 //   - custom (17,26) — 26 "Custom" (the add-on-reserved area) + 17 .memo/ (the prototypical
 //     reserved add-on, default-on).
-//   - cli (20,24) · tools (31) · core (22,23,25,41).
+//   - cli (20,24) · tools (31) · wiki (30) · storage (13,18) · core (22,23,25,41).
 const WORKBENCH_SIDEBAR_GROUP_BY_ORDER = {
     0: 'introduction', 1: 'introduction', 2: 'introduction',
     10: 'root',
     11: 'projects', 12: 'projects',
-    13: 'folders', 15: 'folders', 16: 'folders', 18: 'folders', 19: 'folders', 21: 'folders', 30: 'folders', 32: 'folders',
+    15: 'folders', 16: 'folders', 19: 'folders', 21: 'folders', 32: 'folders',
     17: 'custom', 26: 'custom',
     20: 'cli', 24: 'cli',
     31: 'tools',
+    30: 'wiki',
+    13: 'storage', 18: 'storage',
     22: 'core', 23: 'core', 25: 'core', 41: 'core'
 }
 const workbenchSidebarGroupFromFilename = ( { filename } ) => {

@@ -6,7 +6,7 @@ spec_file: "12-instances.md"
 order: 12
 section: "Session"
 normative: false
-generated_at: "2026-06-27T02:10:52.139Z"
+generated_at: "2026-06-27T02:26:25.132Z"
 generated_from: "spec/session/0.1.0/12-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/12-instances.md."

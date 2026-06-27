@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-27T02:10:52.774Z",
+    "generated_at": "2026-06-27T02:26:25.648Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -535,7 +535,7 @@
                 "order": 13,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "folders"
+                "sidebar_group": "storage"
             },
             {
                 "filename": "15-repos.md",
@@ -575,7 +575,7 @@
                 "order": 18,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "folders"
+                "sidebar_group": "storage"
             },
             {
                 "filename": "19-tmp.md",
@@ -665,7 +665,7 @@
                 "order": 30,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "folders"
+                "sidebar_group": "wiki"
             },
             {
                 "filename": "31-browser-automation.md",

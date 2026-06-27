@@ -62,6 +62,19 @@ The decision table the reference hook MUST implement:
 
 The governing principle: **the gate never fail-CLOSES on infrastructure trouble** (FAILOPEN), and **never produces an unrecoverable lockout** (EDGEVALID). A DENY is a *redirect*, not a dead end — its message tells the agent to read the predecessor SOP first, after which the same entry point passes.
 
+A gate is a state machine, so its three outcomes read as states. The key property the diagram makes visible: `ALLOW` and the fail-open `ERROR` both terminate at exit 0, while `DENY` is a self-redirect — it returns to the decision once the predecessor SOP has been read, never a terminal dead end:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Evaluating
+    Evaluating --> ALLOW: not gated / carved out / predecessor present
+    Evaluating --> ERROR: infra or config problem
+    Evaluating --> DENY: transcript readable AND predecessor absent
+    ALLOW --> [*]: exit 0
+    ERROR --> [*]: fail-open exit 0
+    DENY --> Evaluating: read predecessor SOP, then retry
+```
+
 ---
 
 ## Required Properties

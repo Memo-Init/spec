@@ -6,7 +6,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-06-27T02:10:52.139Z"
+generated_at: "2026-06-27T02:26:25.132Z"
 generated_from: "spec/session/0.1.0/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/05-config-cascade.md."
@@ -86,6 +86,16 @@ The config is a cascade in the git/kustomize sense: a base set of values that mo
 .workbench/config.json (Workbench tier — repo facing/visibility/remote, folder-lints)
    ↑ extended/merged by
 Project tier           (project specifics — prefix, optional workbenchRoot pointer)
+```
+
+A layered cascade reads as a stack — the more-specific tiers overlay the base, which is exactly what a block stack shows:
+
+```mermaid
+block-beta
+    columns 1
+    project["Project tier: prefix, workbenchRoot pointer"]
+    workbench["Workbench tier: repo policy, folder-lints"]
+    session["Session base: identity, security, SOP chain"]
 ```
 
 The base tier carries identity and the chain; the overlays stay thin. The cascade MUST stay shallow — a project does not introduce a fourth authority, it only contributes its own specifics over the base.

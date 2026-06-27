@@ -59,6 +59,49 @@ The families above are the workbench-tier handles. The **session-tier enforcemen
 
 The session pages are the deep definition; this row set is their index. A new `REQ-SS-*` code is added on its defining page **and** given a row here — the same "specify it in its chapter, then list it" discipline the family table follows.
 
+A code registry reads naturally as a **requirement diagram** — the one diagram type built to link a requirement to the mechanism that satisfies it. A few of the `REQ-SS-*` codes and their satisfiers:
+
+```mermaid
+requirementDiagram
+
+    requirement failopen {
+        id: "REQ-SS-FAILOPEN"
+        text: "Any infra or config problem fails open to ALLOW."
+        risk: high
+        verifymethod: test
+    }
+
+    requirement canary {
+        id: "REQ-SS-CANARY"
+        text: "A SessionStart canary re-verifies the gate and auto-disables on drift."
+        risk: medium
+        verifymethod: test
+    }
+
+    requirement pin {
+        id: "REQ-SS-PIN"
+        text: "Session identity is resolved once and pinned for the session."
+        risk: high
+        verifymethod: inspection
+    }
+
+    element gate {
+        type: hook
+    }
+
+    element canaryCheck {
+        type: canary
+    }
+
+    element identityPin {
+        type: pin
+    }
+
+    gate - satisfies -> failopen
+    canaryCheck - satisfies -> canary
+    identityPin - satisfies -> pin
+```
+
 ---
 
 ## Severity

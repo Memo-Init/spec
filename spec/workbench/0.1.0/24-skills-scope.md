@@ -85,6 +85,22 @@ The consequences are concrete:
 
 This is the same public-entry boundary the two checkability mechanisms act on — a **before** pre-hook and an **after** runtime measurement. That before/after split is specified once in [25-validation-overview.md](./25-validation-overview.md); this chapter does not restate the rule, it only places the orchestrator at the boundary. The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
 
+One call through the boundary is an ordered exchange, so a sequence diagram traces it best — the pre-hook gates *before* the orchestrator runs, and the runtime check measures *after*, from the transcript the run left behind:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Pre as Pre-hook before
+    participant Orch as Orchestrator
+    participant Log as Transcript
+    participant Post as Runtime check after
+    User->>Pre: call public entry point
+    Pre->>Pre: pre-conditions met?
+    Pre->>Orch: allow, else deny or ask
+    Orch->>Log: run and write transcript
+    Log->>Post: scan what really ran
+```
+
 ---
 
 ## Typed Skill Contracts
