@@ -6,7 +6,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-06-27T01:48:22.356Z"
+generated_at: "2026-06-27T01:55:49.834Z"
 generated_from: "spec/session/0.1.0/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/05-config-cascade.md."
@@ -22,6 +22,57 @@ The machine-readable form of the SOP chain (skills, dependency edges, namespace 
 Today the only active registry is project-scoped — `.workbench/registry.json`, carrying the single live edge REQ-061 (`memo-init → memo-sop`, `when:pre`). Because the workbench is itself just **one session-SOP application** above the genesis root ([01-genesis-root.md](/specification/genesis-root/)), the config that anchors the chain belongs at the **session tier**, not the workbench tier.
 
 A new per-location **`.session/config.json`** therefore becomes THE entry point the PreToolUse hook resolves. The chain edges, the registered SOPs, and the namespace reservations move one tier **down** — out of `.workbench/`, into `.session/`. What stays in `.workbench/` is only what is genuinely workbench-specific (repo facing/visibility/remote policy, folder-lints).
+
+---
+
+## What `.session/config.json` Is — The Fields
+
+Before the merge mechanics, this is **what the config holds**, separately from *how* the tiers combine it. `.session/config.json` is the single declarative file the genesis tier resolves: it carries the session's identity, its trust level, the registered SOP blocks, and the precondition edges between them. Its top-level fields are:
+
+| Field | Holds |
+|-------|-------|
+| `sessionId` | **identity** — one id per session, resolved by the genesis tier and never overridable by a higher tier. |
+| `security` | the resolved **trust level**; a project may never self-elevate it (monotonicity, [01-genesis-root.md](/specification/genesis-root/)). |
+| `sops[]` | the **registrant blocks** — one per reserved **namespace**. Each block names its `owner` and `tier`, reserves a namespace, and declares the `cli` it ships, the `folders` it owns, and the `skills[]` it contributes ([06-namespace-registry.md](/specification/namespace-registry/)). |
+| `requirements[]` | the fine, cross-namespace **pre-gate edges** (entry point → skill, with `when: pre`/`post`) the PreToolUse hook evaluates ([02-enforcement.md](/specification/enforcement/)). |
+
+The two newer dimensions a registrant now carries — the **`folders`** a namespace owns and the **`namespaces`** themselves (each reserved exclusively, one owner apiece) — are declared *inside* `sops[]`, not as separate top-level authorities. The reserved-namespace set and the folder-ownership map are therefore **views over `sops[]`**, which keeps the config single-source by ownership rather than by repetition. *How* these fields then merge across tiers is answered in the cascade mechanics that follow.
+
+### Annotated Example — `.session/config.json`
+
+The block below is an **illustrative** `.session/config.json` (placeholders, not real values); the `//` comments annotate each field:
+
+```jsonc
+// .session/config.json — the genesis-tier config the PreToolUse gate resolves (EXAMPLE)
+{
+  // Identity: one id per session — resolved here, never overridden by a higher tier.
+  "sessionId": "<session-uuid>",
+
+  // Security: the resolved trust level. A more-specific tier may never raise it.
+  "security": { "level": "<trust-level>" },
+
+  // sops[]: the registrant blocks — one per reserved namespace (list-union by `namespace`).
+  "sops": [
+    {
+      "namespace": "memo",            // reserved, exclusive discovery handle (one owner)
+      "owner": "memo-init",           // the single unit that maintains this block
+      "tier": 2,                       // 0 = genesis root, ascending
+      "cli": "memo",                   // the binary / CLI namespace this Tool ships
+      "folders": [ ".memo/" ],        // the folders this namespace owns
+      "requires": [ "workbench" ],    // coarse namespace -> namespace dependency
+      "skills": [                      // the declarative "contributes" block
+        { "id": "memo-init", "signals": [ "attributionSkill:memo-init" ] },
+        { "id": "memo-sop",  "signals": [ "attributionSkill:memo-sop"  ] }
+      ]
+    }
+  ],
+
+  // requirements[]: the fine, cross-namespace pre-gate edges the hook evaluates.
+  "requirements": [
+    { "id": "REQ-061", "entrypoint": "memo-init", "requires": "memo-sop", "when": "pre" }
+  ]
+}
+```
 
 ---
 
@@ -67,7 +118,7 @@ Only SOP-instance blocks feed `requirements[]` (the pre-gate edges); a catalog b
 
 ---
 
-## Two Homes — `.session/` vs `~/.claude/session/`
+## Project State vs Machine-Global State — `.session/` vs `~/.claude/session/`
 
 The spec uses **two sharply distinguished** paths whose names are deliberately close but whose scope is not:
 

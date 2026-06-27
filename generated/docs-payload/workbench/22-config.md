@@ -6,7 +6,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T01:48:22.356Z"
+generated_at: "2026-06-27T01:55:49.834Z"
 generated_from: "spec/workbench/0.1.0/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/22-config.md."
@@ -60,7 +60,7 @@ The three axes are **declared, not inferred** — consistent with the manual / n
 The facing classification is the configuration's core, but `.workbench/` is the home for the project's **declarations** generally — the same single-source principle applies to anything a tool or hook needs to read deterministically. Two other files are specified today:
 
 - **`folder-lints.json`** — the project-local map that drives the write-time content lint: each entry binds a folder and filename pattern to a linter and a severity, and a single global hook consumes the map ([23-hooks-contract.md](/specification/hooks-contract/)).
-- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/specification/sop-entrypoint/)): the list of skills, custom folders, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](/specification/cli/)). Its `requirements[]` with `when: "pre"` is the **manual dependency table** the precondition chain reads — the declared `entrypoint → requires` edges. This is what makes "no skill X without prerequisite Y, deterministically" expressible: the pre-gate hook resolves these edges before an entry point runs ([23-hooks-contract.md](/specification/hooks-contract/)), while the `when: "post"` edges feed the after-the-fact matrix ([20-cli.md](/specification/cli/)).
+- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/specification/sop-entrypoint/)): the list of skills, custom folders, and requirements (with the signals that prove each ran) that the runtime call-validation searches against. Its **structure is defined once in [20-cli.md](/specification/cli/)**, the single structural owner; this chapter only records that the file lives under `.workbench/`, is manual, and is one of the project's declared files. Its `requirements[]` with `when: "pre"` is the **manual dependency table** the precondition chain reads — the declared `entrypoint → requires` edges. This is what makes "no skill X without prerequisite Y, deterministically" expressible: the pre-gate hook resolves these edges before an entry point runs ([23-hooks-contract.md](/specification/hooks-contract/)), while the `when: "post"` edges feed the after-the-fact matrix ([20-cli.md](/specification/cli/)).
 
 Like the facing configuration, both are **manual** — never silently generated or overwritten.
 

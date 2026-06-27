@@ -82,17 +82,35 @@ Any one signal is evidence the skill ran; their absence across a session is evid
 The CLI does not hardcode what to look for; it reads a project's **`.workbench/registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)). The registry lists the SOPs, skills, and custom folders that *could* be used, each with the signals that prove it was:
 
 ```jsonc
-// .workbench/registry.json — the "what to search": every searchable skill / custom folder / requirement
+// .workbench/registry.json — the single structural definition of the workbench registry.
+// It is the "what to search": every searchable skill, custom folder (addon), and requirement.
 {
+  // skills[] — what exists: each skill with the signals that prove it ran.
   "skills": [
-    { "id": "<skill-id>", "role": "orchestrator | component",
-      "signals": ["skill:<skill-id>", "path:/skills/<skill-id>", "attributionSkill:<skill-id>"] }
+    {
+      "id": "<skill-id>",
+      "role": "orchestrator | component",
+      "signals": [ "skill:<skill-id>", "path:/skills/<skill-id>", "attributionSkill:<skill-id>" ]
+    }
   ],
+
+  // addons[] — custom-folder tools: each with the CLI it ships and its signals.
   "addons": [
-    { "name": "<addon>", "cli": "<addon-cli>", "signals": ["bash:<addon-cli> ", "skill:<usage-skill>"] }
+    {
+      "name": "<addon>",
+      "cli": "<addon-cli>",
+      "signals": [ "bash:<addon-cli> ", "skill:<usage-skill>" ]
+    }
   ],
+
+  // requirements[] — what must run first: entrypoint -> skill edges, split by `when`.
   "requirements": [
-    { "id": "<requirement-id>", "entrypoint": "<entry-point>", "requires": "<skill-id>", "when": "pre | post" }
+    {
+      "id": "<requirement-id>",
+      "entrypoint": "<entry-point>",
+      "requires": "<skill-id>",
+      "when": "pre | post"
+    }
   ]
 }
 ```

@@ -6,14 +6,14 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-06-27T01:48:22.356Z"
+generated_at: "2026-06-27T01:55:49.834Z"
 generated_from: "spec/session/0.1.0/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/06-namespace-registry.md."
 ---
 
 
-The flat `skills[]` array of [02-enforcement.md](/specification/enforcement/) records *what* skills exist but not *who owns them* or *which family they belong to*. This chapter replaces it with an `sops[]` array of **registrant blocks**: each block reserves a `namespace`, names its `owner`, and declares the `skills[]` it contributes. The model is VS Code's `publisher` + `contributes` — a reserved owner identity on the left, a declarative capability block on the right.
+The flat `skills[]` array of [02-enforcement.md](/specification/enforcement/) records *what* skills exist but not *who owns them* or *which family they belong to*. This chapter replaces it with an `sops[]` array of **registrant blocks** — one per **Tool** (a registered namespace, [00-overview.md](/specification/overview/)): each block reserves a `namespace`, names its `owner`, declares the `cli` it ships and the `folders[]` it owns, and lists the `skills[]` it contributes. The model is VS Code's `publisher` + `contributes` — a reserved owner identity on the left, a declarative capability block on the right.
 
 ---
 
@@ -26,13 +26,16 @@ The `prefix-hyphen-name` convention ([13-conventions.md](/specification/conventi
 | `namespace` | the reserved discovery handle — the `prefix` of `prefix-hyphen-name` made first-class and exclusive (VS Code `publisher`, npm scope) |
 | `owner` | the single unit that reserves and maintains the block (exclusive contribution right) |
 | `tier` | the tier the block sits at (`0` = genesis root, ascending) |
+| `cli` | the binary / CLI namespace the Tool ships (e.g. `memo`) — the command surface the namespace exposes |
+| `folders[]` | the folders the namespace owns (e.g. `.memo/`) — the directories reserved to this Tool |
 | `skills[]` | the declarative `contributes` block — what the namespace provides, each with detection `signals` |
 | `requires[]` | optional, coarse inter-namespace dependency (which namespace this one presupposes) |
 
 The reserved memo block:
 
 ```jsonc
-{ "namespace": "memo", "owner": "memo-init", "tier": 2, "requires": ["workbench"],
+{ "namespace": "memo", "owner": "memo-init", "tier": 2,
+  "cli": "memo", "folders": [".memo/"], "requires": ["workbench"],
   "skills": [ { "id": "memo-init", "signals": ["attributionSkill:memo-init"] },
               { "id": "memo-sop",  "signals": ["attributionSkill:memo-sop"]  } ] }
 ```
@@ -53,7 +56,8 @@ The same `sops[]` array holds two kinds of block, distinguished only by whether 
 A catalog block reserves a namespace and contributes skills like any block, but it is **never a precondition for anything**. FlowMCP reserves `flowmcp` and contributes `flowmcp-usage`; calling a FlowMCP tool is never gated behind a predecessor SOP:
 
 ```jsonc
-{ "namespace": "flowmcp", "owner": "flowmcp", "tier": 2, "requires": [],
+{ "namespace": "flowmcp", "owner": "flowmcp", "tier": 2,
+  "cli": "flowmcp", "folders": [], "requires": [],
   "skills": [ { "id": "flowmcp-usage", "signals": ["attributionSkill:flowmcp-usage"] } ] }
 ```
 

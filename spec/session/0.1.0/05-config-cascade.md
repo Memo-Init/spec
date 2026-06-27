@@ -18,6 +18,57 @@ A new per-location **`.session/config.json`** therefore becomes THE entry point 
 
 ---
 
+## What `.session/config.json` Is — The Fields
+
+Before the merge mechanics, this is **what the config holds**, separately from *how* the tiers combine it. `.session/config.json` is the single declarative file the genesis tier resolves: it carries the session's identity, its trust level, the registered SOP blocks, and the precondition edges between them. Its top-level fields are:
+
+| Field | Holds |
+|-------|-------|
+| `sessionId` | **identity** — one id per session, resolved by the genesis tier and never overridable by a higher tier. |
+| `security` | the resolved **trust level**; a project may never self-elevate it (monotonicity, [01-genesis-root.md](./01-genesis-root.md)). |
+| `sops[]` | the **registrant blocks** — one per reserved **namespace**. Each block names its `owner` and `tier`, reserves a namespace, and declares the `cli` it ships, the `folders` it owns, and the `skills[]` it contributes ([06-namespace-registry.md](./06-namespace-registry.md)). |
+| `requirements[]` | the fine, cross-namespace **pre-gate edges** (entry point → skill, with `when: pre`/`post`) the PreToolUse hook evaluates ([02-enforcement.md](./02-enforcement.md)). |
+
+The two newer dimensions a registrant now carries — the **`folders`** a namespace owns and the **`namespaces`** themselves (each reserved exclusively, one owner apiece) — are declared *inside* `sops[]`, not as separate top-level authorities. The reserved-namespace set and the folder-ownership map are therefore **views over `sops[]`**, which keeps the config single-source by ownership rather than by repetition. *How* these fields then merge across tiers is answered in the cascade mechanics that follow.
+
+### Annotated Example — `.session/config.json`
+
+The block below is an **illustrative** `.session/config.json` (placeholders, not real values); the `//` comments annotate each field:
+
+```jsonc
+// .session/config.json — the genesis-tier config the PreToolUse gate resolves (EXAMPLE)
+{
+  // Identity: one id per session — resolved here, never overridden by a higher tier.
+  "sessionId": "<session-uuid>",
+
+  // Security: the resolved trust level. A more-specific tier may never raise it.
+  "security": { "level": "<trust-level>" },
+
+  // sops[]: the registrant blocks — one per reserved namespace (list-union by `namespace`).
+  "sops": [
+    {
+      "namespace": "memo",            // reserved, exclusive discovery handle (one owner)
+      "owner": "memo-init",           // the single unit that maintains this block
+      "tier": 2,                       // 0 = genesis root, ascending
+      "cli": "memo",                   // the binary / CLI namespace this Tool ships
+      "folders": [ ".memo/" ],        // the folders this namespace owns
+      "requires": [ "workbench" ],    // coarse namespace -> namespace dependency
+      "skills": [                      // the declarative "contributes" block
+        { "id": "memo-init", "signals": [ "attributionSkill:memo-init" ] },
+        { "id": "memo-sop",  "signals": [ "attributionSkill:memo-sop"  ] }
+      ]
+    }
+  ],
+
+  // requirements[]: the fine, cross-namespace pre-gate edges the hook evaluates.
+  "requirements": [
+    { "id": "REQ-061", "entrypoint": "memo-init", "requires": "memo-sop", "when": "pre" }
+  ]
+}
+```
+
+---
+
 ## The Three-Tier Cascade
 
 The config is a cascade in the git/kustomize sense: a base set of values that more-specific tiers extend and merge, read **bottom-up**, an absent tier contributing nothing.
@@ -60,7 +111,7 @@ Only SOP-instance blocks feed `requirements[]` (the pre-gate edges); a catalog b
 
 ---
 
-## Two Homes — `.session/` vs `~/.claude/session/`
+## Project State vs Machine-Global State — `.session/` vs `~/.claude/session/`
 
 The spec uses **two sharply distinguished** paths whose names are deliberately close but whose scope is not:
 

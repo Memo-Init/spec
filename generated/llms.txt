@@ -6338,17 +6338,35 @@ Any one signal is evidence the skill ran; their absence across a session is evid
 The CLI does not hardcode what to look for; it reads a project's **`.workbench/registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)). The registry lists the SOPs, skills, and custom folders that *could* be used, each with the signals that prove it was:
 
 ```jsonc
-// .workbench/registry.json — the "what to search": every searchable skill / custom folder / requirement
+// .workbench/registry.json — the single structural definition of the workbench registry.
+// It is the "what to search": every searchable skill, custom folder (addon), and requirement.
 {
+  // skills[] — what exists: each skill with the signals that prove it ran.
   "skills": [
-    { "id": "<skill-id>", "role": "orchestrator | component",
-      "signals": ["skill:<skill-id>", "path:/skills/<skill-id>", "attributionSkill:<skill-id>"] }
+    {
+      "id": "<skill-id>",
+      "role": "orchestrator | component",
+      "signals": [ "skill:<skill-id>", "path:/skills/<skill-id>", "attributionSkill:<skill-id>" ]
+    }
   ],
+
+  // addons[] — custom-folder tools: each with the CLI it ships and its signals.
   "addons": [
-    { "name": "<addon>", "cli": "<addon-cli>", "signals": ["bash:<addon-cli> ", "skill:<usage-skill>"] }
+    {
+      "name": "<addon>",
+      "cli": "<addon-cli>",
+      "signals": [ "bash:<addon-cli> ", "skill:<usage-skill>" ]
+    }
   ],
+
+  // requirements[] — what must run first: entrypoint -> skill edges, split by `when`.
   "requirements": [
-    { "id": "<requirement-id>", "entrypoint": "<entry-point>", "requires": "<skill-id>", "when": "pre | post" }
+    {
+      "id": "<requirement-id>",
+      "entrypoint": "<entry-point>",
+      "requires": "<skill-id>",
+      "when": "pre | post"
+    }
   ]
 }
 ```
@@ -6566,7 +6584,7 @@ The three axes are **declared, not inferred** — consistent with the manual / n
 The facing classification is the configuration's core, but `.workbench/` is the home for the project's **declarations** generally — the same single-source principle applies to anything a tool or hook needs to read deterministically. Two other files are specified today:
 
 - **`folder-lints.json`** — the project-local map that drives the write-time content lint: each entry binds a folder and filename pattern to a linter and a severity, and a single global hook consumes the map ([23-hooks-contract.md](./23-hooks-contract.md)).
-- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): the list of skills, custom folders, and requirements (with the signals that prove each ran) that the runtime call-validation searches against ([20-cli.md](./20-cli.md)). Its `requirements[]` with `when: "pre"` is the **manual dependency table** the precondition chain reads — the declared `entrypoint → requires` edges. This is what makes "no skill X without prerequisite Y, deterministically" expressible: the pre-gate hook resolves these edges before an entry point runs ([23-hooks-contract.md](./23-hooks-contract.md)), while the `when: "post"` edges feed the after-the-fact matrix ([20-cli.md](./20-cli.md)).
+- **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](./02-sop-entrypoint.md)): the list of skills, custom folders, and requirements (with the signals that prove each ran) that the runtime call-validation searches against. Its **structure is defined once in [20-cli.md](./20-cli.md)**, the single structural owner; this chapter only records that the file lives under `.workbench/`, is manual, and is one of the project's declared files. Its `requirements[]` with `when: "pre"` is the **manual dependency table** the precondition chain reads — the declared `entrypoint → requires` edges. This is what makes "no skill X without prerequisite Y, deterministically" expressible: the pre-gate hook resolves these edges before an entry point runs ([23-hooks-contract.md](./23-hooks-contract.md)), while the `when: "post"` edges feed the after-the-fact matrix ([20-cli.md](./20-cli.md)).
 
 Like the facing configuration, both are **manual** — never silently generated or overwritten.
 
@@ -8086,6 +8104,57 @@ A new per-location **`.session/config.json`** therefore becomes THE entry point 
 
 ---
 
+## What `.session/config.json` Is — The Fields
+
+Before the merge mechanics, this is **what the config holds**, separately from *how* the tiers combine it. `.session/config.json` is the single declarative file the genesis tier resolves: it carries the session's identity, its trust level, the registered SOP blocks, and the precondition edges between them. Its top-level fields are:
+
+| Field | Holds |
+|-------|-------|
+| `sessionId` | **identity** — one id per session, resolved by the genesis tier and never overridable by a higher tier. |
+| `security` | the resolved **trust level**; a project may never self-elevate it (monotonicity, [01-genesis-root.md](./01-genesis-root.md)). |
+| `sops[]` | the **registrant blocks** — one per reserved **namespace**. Each block names its `owner` and `tier`, reserves a namespace, and declares the `cli` it ships, the `folders` it owns, and the `skills[]` it contributes ([06-namespace-registry.md](./06-namespace-registry.md)). |
+| `requirements[]` | the fine, cross-namespace **pre-gate edges** (entry point → skill, with `when: pre`/`post`) the PreToolUse hook evaluates ([02-enforcement.md](./02-enforcement.md)). |
+
+The two newer dimensions a registrant now carries — the **`folders`** a namespace owns and the **`namespaces`** themselves (each reserved exclusively, one owner apiece) — are declared *inside* `sops[]`, not as separate top-level authorities. The reserved-namespace set and the folder-ownership map are therefore **views over `sops[]`**, which keeps the config single-source by ownership rather than by repetition. *How* these fields then merge across tiers is answered in the cascade mechanics that follow.
+
+### Annotated Example — `.session/config.json`
+
+The block below is an **illustrative** `.session/config.json` (placeholders, not real values); the `//` comments annotate each field:
+
+```jsonc
+// .session/config.json — the genesis-tier config the PreToolUse gate resolves (EXAMPLE)
+{
+  // Identity: one id per session — resolved here, never overridden by a higher tier.
+  "sessionId": "<session-uuid>",
+
+  // Security: the resolved trust level. A more-specific tier may never raise it.
+  "security": { "level": "<trust-level>" },
+
+  // sops[]: the registrant blocks — one per reserved namespace (list-union by `namespace`).
+  "sops": [
+    {
+      "namespace": "memo",            // reserved, exclusive discovery handle (one owner)
+      "owner": "memo-init",           // the single unit that maintains this block
+      "tier": 2,                       // 0 = genesis root, ascending
+      "cli": "memo",                   // the binary / CLI namespace this Tool ships
+      "folders": [ ".memo/" ],        // the folders this namespace owns
+      "requires": [ "workbench" ],    // coarse namespace -> namespace dependency
+      "skills": [                      // the declarative "contributes" block
+        { "id": "memo-init", "signals": [ "attributionSkill:memo-init" ] },
+        { "id": "memo-sop",  "signals": [ "attributionSkill:memo-sop"  ] }
+      ]
+    }
+  ],
+
+  // requirements[]: the fine, cross-namespace pre-gate edges the hook evaluates.
+  "requirements": [
+    { "id": "REQ-061", "entrypoint": "memo-init", "requires": "memo-sop", "when": "pre" }
+  ]
+}
+```
+
+---
+
 ## The Three-Tier Cascade
 
 The config is a cascade in the git/kustomize sense: a base set of values that more-specific tiers extend and merge, read **bottom-up**, an absent tier contributing nothing.
@@ -8128,7 +8197,7 @@ Only SOP-instance blocks feed `requirements[]` (the pre-gate edges); a catalog b
 
 ---
 
-## Two Homes — `.session/` vs `~/.claude/session/`
+## Project State vs Machine-Global State — `.session/` vs `~/.claude/session/`
 
 The spec uses **two sharply distinguished** paths whose names are deliberately close but whose scope is not:
 
@@ -8170,7 +8239,7 @@ This chapter is spec-first: it **describes** the migration as the intended one-t
 | Depends on | [05-config-cascade.md](./05-config-cascade.md) |
 | Related | [07-doctor-init.md](./07-doctor-init.md), [02-enforcement.md](./02-enforcement.md), [10-sop.md](./10-sop.md), [workbench/20-cli.md](/workbench/cli/) |
 
-The flat `skills[]` array of [02-enforcement.md](./02-enforcement.md) records *what* skills exist but not *who owns them* or *which family they belong to*. This chapter replaces it with an `sops[]` array of **registrant blocks**: each block reserves a `namespace`, names its `owner`, and declares the `skills[]` it contributes. The model is VS Code's `publisher` + `contributes` — a reserved owner identity on the left, a declarative capability block on the right.
+The flat `skills[]` array of [02-enforcement.md](./02-enforcement.md) records *what* skills exist but not *who owns them* or *which family they belong to*. This chapter replaces it with an `sops[]` array of **registrant blocks** — one per **Tool** (a registered namespace, [00-overview.md](./00-overview.md)): each block reserves a `namespace`, names its `owner`, declares the `cli` it ships and the `folders[]` it owns, and lists the `skills[]` it contributes. The model is VS Code's `publisher` + `contributes` — a reserved owner identity on the left, a declarative capability block on the right.
 
 ---
 
@@ -8183,13 +8252,16 @@ The `prefix-hyphen-name` convention ([13-conventions.md](./13-conventions.md)) a
 | `namespace` | the reserved discovery handle — the `prefix` of `prefix-hyphen-name` made first-class and exclusive (VS Code `publisher`, npm scope) |
 | `owner` | the single unit that reserves and maintains the block (exclusive contribution right) |
 | `tier` | the tier the block sits at (`0` = genesis root, ascending) |
+| `cli` | the binary / CLI namespace the Tool ships (e.g. `memo`) — the command surface the namespace exposes |
+| `folders[]` | the folders the namespace owns (e.g. `.memo/`) — the directories reserved to this Tool |
 | `skills[]` | the declarative `contributes` block — what the namespace provides, each with detection `signals` |
 | `requires[]` | optional, coarse inter-namespace dependency (which namespace this one presupposes) |
 
 The reserved memo block:
 
 ```jsonc
-{ "namespace": "memo", "owner": "memo-init", "tier": 2, "requires": ["workbench"],
+{ "namespace": "memo", "owner": "memo-init", "tier": 2,
+  "cli": "memo", "folders": [".memo/"], "requires": ["workbench"],
   "skills": [ { "id": "memo-init", "signals": ["attributionSkill:memo-init"] },
               { "id": "memo-sop",  "signals": ["attributionSkill:memo-sop"]  } ] }
 ```
@@ -8210,7 +8282,8 @@ The same `sops[]` array holds two kinds of block, distinguished only by whether 
 A catalog block reserves a namespace and contributes skills like any block, but it is **never a precondition for anything**. FlowMCP reserves `flowmcp` and contributes `flowmcp-usage`; calling a FlowMCP tool is never gated behind a predecessor SOP:
 
 ```jsonc
-{ "namespace": "flowmcp", "owner": "flowmcp", "tier": 2, "requires": [],
+{ "namespace": "flowmcp", "owner": "flowmcp", "tier": 2,
+  "cli": "flowmcp", "folders": [], "requires": [],
   "skills": [ { "id": "flowmcp-usage", "signals": ["attributionSkill:flowmcp-usage"] } ] }
 ```
 
