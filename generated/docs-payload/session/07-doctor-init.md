@@ -6,14 +6,42 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-06-27T01:35:51.713Z"
+generated_at: "2026-06-27T01:48:22.356Z"
 generated_from: "spec/session/0.1.0/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/07-doctor-init.md."
 ---
 
 
-The enforcement hook ([02-enforcement.md](/specification/enforcement/)) is **fail-open and permissive by design** — it must never lock the machine out of its own tools. The strict checks therefore live elsewhere: in the **foreground**, in two CLI verbs a developer runs deliberately. `session doctor` answers *"is this environment ready to work?"* without mutating anything; `session init` scaffolds the missing config additively, exactly once. This chapter specifies both. Neither exists yet — they are the spec target, not a shipped feature.
+The enforcement hook ([02-enforcement.md](/specification/enforcement/)) is **fail-open and permissive by design** — it must never lock the machine out of its own tools. The strict checks therefore live elsewhere: in the **foreground**, in two CLI verbs a developer runs deliberately. `session doctor` answers *"is this environment ready to work?"* without mutating anything; `session init` scaffolds the missing config additively, exactly once. This chapter specifies the **contract** for both, and the **session namespace** is its **reference implementation**: `memo session doctor` / `memo session init` are the first concrete doctor/init pair, with the top-level aggregator `memo doctor` / `memo init` rolling every namespace's pair up. The contract is the spec target; the session namespace is where it lands first — not every namespace ships it (a catalog namespace has nothing to initialize).
+
+---
+
+## The Form — A Top-Level Aggregator Over Per-Namespace Leaves
+
+`doctor` and `init` exist at **two levels** that compose rather than compete:
+
+| Level | Command | Role |
+|-------|---------|------|
+| **Aggregator** | `memo doctor` / `memo init` | top-level roll-up — dispatches to every registered namespace's leaf and merges their envelopes into one verdict |
+| **Per-namespace leaf** | `memo <ns> doctor` / `memo <ns> init` | the namespace's own readiness battery and additive scaffold (`memo session doctor`, a future `memo workbench doctor`, …) |
+
+The aggregator owns no checks of its own; it **fans out** to the leaves and rolls their results up (any leaf `not-ready` ⇒ the aggregate is `not-ready`). The leaves carry the actual logic. Because a namespace bounds where a leaf name must be unique ([06-namespace-registry.md](/specification/namespace-registry/), rule N-2), the **same leaf name recurs safely across namespaces** — `memo session doctor` and a future `memo workbench doctor` are distinct commands, not a collision.
+
+### Required for SOP-Instances, Optional for Catalogs
+
+Whether a namespace MUST carry the pair follows the **SOP-instance-vs-catalog** distinction of [06-namespace-registry.md](/specification/namespace-registry/):
+
+| Namespace kind | `doctor` / `init` | Why |
+|----------------|-------------------|-----|
+| **SOP-instance** (e.g. `memo`, `workbench`) | **REQUIRED** | it has a Setup and a readiness state, so it owes both a Health check (`doctor`) and an additive Setup (`init`) |
+| **Catalog** (e.g. `flowmcp`) | **OPTIONAL** | it carries skills but defines no procedure and has nothing to initialize, so the pair is not owed |
+
+### doctor = Health, init = Setup
+
+The pair is not a second concept beside the SOP common denominator — it is its **executable form** ([11-common-denominator.md](/specification/common-denominator/)): **`init` realizes Setup** (bring the scope to a known-good baseline) and **`doctor` realizes Health** (answer "is this scope in order?"). A namespace's doctor/init pair is the runnable face of the same Setup/Health its SOP describes in prose; this chapter specifies that face for the session reference instance.
+
+The **session** namespace's leaf is the user's own workspace check: `memo session doctor` is the **Workspace help/validate** a developer reaches for at the start of work — *"are the CLIs available, and is the workspace healthy?"*. It is the reference implementation the rest of this chapter specifies in full.
 
 ---
 
@@ -50,7 +78,7 @@ The six checks and their severities:
 | 3 | no dangling required `when:pre` edge — both endpoints present (**this is `registry-validate`**) | **FAIL** |
 | 4 | each reserved namespace is unique — no N-1 / N-2 collision | **FAIL** |
 | 5 | each skill carries a structured `attributionSkill:<id>` signal (the only trusted signal — REQ-SS-SIGNAL) | **WARN** |
-| 6 | gate runtime deps present (`jq` on PATH); kill-switch / sentinel state surfaced | **WARN** for `jq`; **INFO** for kill-switch state |
+| 6 | gate runtime deps present (`jq` on PATH); disable-switch / sentinel state surfaced | **WARN** for `jq`; **INFO** for disable-switch state |
 
 Check 3 makes the doctor the **runtime superset** of the build-time `registry-validate`: one validator core, two timings — `registry-validate` is a *subset that fails the build*, `session doctor` is *that plus on-disk presence, namespaces, signals, and jq, that reports*. This mirrors the family's existing "one registry, one scan, two timings" framing.
 

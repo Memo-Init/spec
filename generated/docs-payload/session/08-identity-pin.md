@@ -6,7 +6,7 @@ spec_file: "08-identity-pin.md"
 order: 8
 section: "Session"
 normative: true
-generated_at: "2026-06-27T01:35:51.713Z"
+generated_at: "2026-06-27T01:48:22.356Z"
 generated_from: "spec/session/0.1.0/08-identity-pin.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/08-identity-pin.md."
@@ -19,7 +19,7 @@ The session identity established by the genesis root ([01-genesis-root.md](/spec
 
 ## The Identity Invariant
 
-The session identity — the resolved IDs (`sessionId`, `memoId`) and the resolved session root — MUST NOT change over the session lifetime. Once resolved, it is fixed; nothing the agent does mid-session re-derives it.
+The session identity — the global `sessionId`, the resolved session root, and any per-namespace ids carried under `options` (e.g. `options.memo.memoId`) — MUST NOT change over the session lifetime. Once resolved, it is fixed; nothing the agent does mid-session re-derives it.
 
 The concrete failure this invariant forbids — the one that MUST never happen:
 
@@ -37,10 +37,21 @@ The pinned record:
 
 | Field | Meaning | Resolved at |
 |-------|---------|-------------|
-| `sessionId` | the ambient session identity ([01-genesis-root.md](/specification/genesis-root/), precedence flag > env > null) | SessionStart |
-| `memoId` | the optional second-protocol memo id (MAY be `null`) | SessionStart |
+| `sessionId` | the ambient session identity, **global and namespace-neutral** ([01-genesis-root.md](/specification/genesis-root/), precedence flag > env > null) | SessionStart |
 | `resolvedRoot` | the nearest-ancestor `.session/` root ([09-root-detection.md](/specification/root-detection/)) | SessionStart |
+| `options` | per-namespace pinned ids, one sub-object per namespace — e.g. `options.memo.memoId` is the optional memo id (MAY be absent or `null`). Only namespace-scoped ids live here; `sessionId` stays top-level | SessionStart |
 | `source` | where the pin was read from — the SessionStart record / `transcript_path`-derived cache, **never the live `cwd`** | SessionStart |
+
+How the pinned record looks — `sessionId` stays a top-level global id; each namespace keeps its own id under `options`:
+
+```jsonc
+{ "sessionId":    "0c7f…",               // global, namespace-neutral (flag > env > null)
+  "resolvedRoot": "/…/project",          // nearest-ancestor .session/ root
+  "source":       "sessionstart-cache",  // never the live cwd
+  "options": {
+    "memo": { "memoId": "NNN" }          // a namespace's own id — here the optional memo id (MAY be null/absent)
+  } }
+```
 
 The pin's `source` MUST be the SessionStart resolution (a SessionStart cache, keyed off the harness-authored `transcript_path`), **not** the live `cwd` at the moment a later hook runs. Resolving `resolvedRoot` from a walk-up of the current `cwd` on every call is exactly the drift hazard above; the walk-up in [09-root-detection.md](/specification/root-detection/) runs **once to populate the pin**, then the pinned value stands.
 
@@ -85,4 +96,4 @@ Hardening the soft-guard into a **hard block** (deny a `cd` out of the pinned ro
 - [01-genesis-root.md](/specification/genesis-root/) — the genesis root that establishes the identity this chapter pins.
 - [02-enforcement.md](/specification/enforcement/) — the PreToolUse hook that reads the pinned identity, never the live `cwd`.
 - [09-root-detection.md](/specification/root-detection/) — the nearest-ancestor `.session/` walk-up; its result is resolved once to populate the pin.
-- [03-recovery.md](/specification/recovery/) — the kill-switch, sentinel, and canary that keep the gate (and the pin) recoverable.
+- [03-recovery.md](/specification/recovery/) — the disable switch, sentinel, and canary that keep the gate (and the pin) recoverable.

@@ -6,20 +6,22 @@
 | Depends on | [02-enforcement.md](./02-enforcement.md) |
 | Related | [01-genesis-root.md](./01-genesis-root.md), [workbench/23-hooks-contract.md](/workbench/hooks-contract/) |
 
-A gate that sits at the genesis tier governs *every* gated tool call in *every* session. The cost of it going wrong is therefore high, and recoverability is a first-class requirement, not an afterthought. This chapter specifies the operational guarantees that keep the genesis tier always recoverable.
+A gate that sits at the genesis tier governs *every* gated tool call in *every* session. The cost of it going wrong is therefore high, and recoverability is a first-class requirement, not an afterthought. The deterministic gate and its **fail-open** contract are specified in [02-enforcement.md](./02-enforcement.md); this chapter does not restate that mechanism. It specifies the **recovery primitives** layered on top of it — the operator escape hatches and the self-check that keep the genesis tier recoverable even when the gate's own logic can no longer be trusted.
+
+The substance here is deliberately lean: three primitives (a disable switch, a self-verifying canary, a write-guard on the config) plus the runbook that ties them together.
 
 ---
 
-## The Kill-Switch (REQ-SS-KILLSWITCH)
+## The Disable Switch (REQ-SS-DISABLE)
 
-Recovery MUST always be possible, even when the gate itself is misbehaving. Two equivalent kill-switches disable the gate, checked as the **first action** of the hook, before any parsing can fail:
+Recovery MUST always be possible **by hand**, independent of whether the gate's own logic is sound. Two equivalent **disable switches** turn the gate off; the hook checks them as its **first action**, before any parsing can fail:
 
-| Kill-switch | Use |
-|-------------|-----|
-| `SESSION_SOP_DISABLE=1` (environment variable) | per-shell / per-session disable |
-| `~/.claude/session/DISABLED` (sentinel file) | persistent disable until removed |
+| Disable switch | Scope | Use |
+|----------------|-------|-----|
+| `SESSION_SOP_DISABLE=1` (environment variable) | the current shell / session | a quick per-shell off-switch that leaves no trace once the shell exits |
+| `~/.claude/session/DISABLED` (sentinel file) | machine-global, until removed | a persistent off-switch that survives new shells until the file is deleted |
 
-Either present ⇒ the gate exits 0 (ALLOW) immediately. Removing both re-arms the gate.
+Either present ⇒ the gate exits 0 (ALLOW) immediately, gating nothing. Removing **both** re-arms the gate. Because the check is the hook's very first statement, a disable switch works even when the config is malformed or `jq` is absent — it is the one escape hatch that never depends on the gate being healthy.
 
 ---
 
@@ -30,19 +32,34 @@ The most dangerous failure mode is a **silent fail-open after a harness or contr
 - a transcript **with** the predecessor signal ⇒ must ALLOW (exit 0);
 - a transcript **without** it ⇒ must DENY (exit 2).
 
-On **any** drift from those expected outcomes the canary MUST (a) shout to stderr and (b) **auto-engage the kill-switch** by writing the sentinel — so a gate that can no longer be trusted **disables itself** rather than continuing to mis-gate. The canary itself never blocks the session (always exit 0).
+On **any** drift from those expected outcomes the canary MUST (a) shout to stderr and (b) **auto-engage the disable switch** by writing the sentinel — so a gate that can no longer be trusted **disables itself** rather than continuing to mis-gate. The canary itself never blocks the session (always exit 0): it diagnoses and, on failure, hands recovery to the disable switch above.
 
 ---
 
-## Registry Protection (REQ-SS-EDGEVALID / R9)
+## Config Protection (REQ-SS-EDGEVALID)
 
-The registry is a privilege file: a silent rewrite could disable the gate or forge an edge. Tool-driven Write/Edit of a `.workbench/registry.json` (or the global `~/.claude/session/registry.json`) MUST be refused by a guard hook; edits go through a reviewed diff, after which `memo session registry-validate` confirms no edge dangles.
+The session config is a **privilege file**: a silent rewrite could disable the gate or forge a precondition edge. Two safeguards keep it honest:
+
+- A tool-driven Write/Edit of the session config (`.session/config.json`, or the machine-global `~/.claude/session/registry.json`) MUST be refused by a guard hook. Edits go through a **reviewed diff**, never a silent overwrite — the same no-auto-write discipline the enforcement chapter applies to `~/.claude/settings.json` (REQ-SS-NOWRITE, [02-enforcement.md](./02-enforcement.md)).
+- After any edit, `memo session registry-validate` confirms no edge **dangles** (every `when:pre` edge has both endpoints installed). A dangling edge does not lock the machine out: at runtime it degrades the gate to **fail-open ALLOW** ([02-enforcement.md](./02-enforcement.md)); the validator is the deliberate, foreground place it is caught and refused.
 
 ---
 
 ## Egress Quarantine Is Opt-In and Fail-Open
 
-The riskiest gate is the **fetch/egress** gate, because its collateral is broad and it inverts the default-trust posture. It is therefore **opt-in and default-off**: it does nothing unless a project explicitly enables it via a `.workbench/fetch-gate.json` marker (`{ "enabled": true, "allowlist": [...] }`). When enabled it is a **bounded, logged quarantine** — an allowlist, not an allow-all — and it remains **fail-open** (missing marker, empty `transcript_path`, or missing `jq` ⇒ ALLOW). Substring detection of `curl`/`wget` can never be complete; real egress control belongs to a future host-wide machine spec. The opt-in gate is a mitigation, not that control.
+The riskiest gate is the **fetch/egress** gate, because its collateral is broad and it inverts the default-trust posture. It is therefore **opt-in and default-off**: it does nothing unless a project explicitly enables it via a `.workbench/fetch-gate.json` marker (`{ "enabled": true, "allowlist": [...] }`). When enabled it is a **bounded, logged quarantine** — an allowlist, not an allow-all — and it inherits the gate's **fail-open** contract (REQ-SS-FAILOPEN, [02-enforcement.md](./02-enforcement.md)): a missing marker, an empty `transcript_path`, or a missing `jq` ⇒ ALLOW. Substring detection of `curl`/`wget` can never be complete; real egress control belongs to a future host-wide machine spec. The opt-in gate is a mitigation, not that control.
+
+---
+
+## Recovery Requirements
+
+The recovery primitives above are fixed as named requirements so the recovery contract is checkable, not just narrated:
+
+| Requirement | Statement |
+|-------------|-----------|
+| **REQ-SS-DISABLE** | Two equivalent disable switches — the `SESSION_SOP_DISABLE` environment variable and the `~/.claude/session/DISABLED` sentinel file — short-circuit the gate to ALLOW as the hook's first action, before any parse. Removing both re-arms the gate. |
+| **REQ-SS-CANARY** | A SessionStart canary re-verifies the live gate against a known-ALLOW and a known-DENY fixture; on any drift it shouts to stderr and auto-engages the disable switch by writing the sentinel. It never blocks the session (always exit 0). |
+| **REQ-SS-EDGEVALID** | The session config is guarded against silent rewrite (reviewed diff, never auto-write), and `registry-validate` refuses a dangling edge. A dangling edge degrades the runtime gate to fail-open ALLOW, never a lockout. |
 
 ---
 
@@ -58,5 +75,5 @@ The operational steps — how to disable, diagnose, and re-arm the gate — live
 
 ## Related
 
-- [02-enforcement.md](./02-enforcement.md) — the three-state contract these guarantees protect.
+- [02-enforcement.md](./02-enforcement.md) — the three-state contract and the fail-open mechanism these recovery primitives protect and reference.
 - [01-genesis-root.md](./01-genesis-root.md) — the tier model and the "declared, enforced once present" chain rule.

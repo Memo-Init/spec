@@ -6312,7 +6312,7 @@ The **folder name is the unit of meaning**. This connects to the About conventio
 
 ## Runtime Call-Validation — the "After" Measurement
 
-Beyond defining the command convention, the workbench CLI provides one capability that is itself a leaf of the command tree: **runtime call-validation**. It is the **"after" half** of checkability — the counterpart to the entry-point pre-condition, which is the "before" half ([23-hooks-contract.md](./23-hooks-contract.md)). Once a session has run, the CLI inspects what was recorded and measures **which skills and tools were actually invoked**, answering questions a pre-hook cannot answer in advance — most importantly, **"was the SOP actually read this session?"**. A pre-hook gates the call; this measures, after the fact, what really happened.
+Beyond defining the command convention, the workbench CLI provides one capability that is itself a leaf of the command tree: **runtime call-validation**. It is the **"after" half** of checkability — the runtime counterpart to the "before" pre-hook. The before/after split itself is specified once in [25-validation-overview.md](./25-validation-overview.md); this chapter owns only the "after" **mechanism**. Once a session has run, the CLI inspects what was recorded and measures **which skills and tools were actually invoked**, answering questions a pre-hook cannot answer in advance — most importantly, **"was the SOP actually read this session?"**.
 
 ### Where Sessions Live
 
@@ -6419,7 +6419,7 @@ So it is **one registry, one signal scan, two timings**. The seed first edge is 
 - [/session/conventions/](/session/conventions/) — the SOP standard's conventions chapter that defines the naming convention (the discovery handle).
 - [23-hooks-contract.md](./23-hooks-contract.md) — the entry-point pre-condition, the "before" half this measurement complements.
 - [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
-- [25-validation-overview.md](./25-validation-overview.md) — the validation wayfinder where runtime call-validation is registered.
+- [25-validation-overview.md](./25-validation-overview.md) — the validation wayfinder and code index, and the single source of the before/after split where runtime call-validation is registered.
 - [21-environment-scripts.md](./21-environment-scripts.md) — the script families that follow the subfolder rule.
 - [30-wiki.md](./30-wiki.md) — the About convention that records what a scripts subfolder is for.
 
@@ -6872,7 +6872,7 @@ The consequences are concrete:
 - The check is on **content, not only types** — not just "is this the right shape?" but "**does this make sense?**". Type-checking the input is necessary and not sufficient.
 - **The stricter the public methods, the calmer the interior.** Rigor at the boundary is what lets the inside of the system relax; a lax boundary pushes defensive checks into every internal step.
 
-This is the same boundary the two checkability mechanisms act on: the **entry-point pre-condition** checks it *before* the call ([23-hooks-contract.md](./23-hooks-contract.md)), and the **runtime call-validation** measures it *after* ([20-cli.md](./20-cli.md)). The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
+This is the same public-entry boundary the two checkability mechanisms act on — a **before** pre-hook and an **after** runtime measurement. That before/after split is specified once in [25-validation-overview.md](./25-validation-overview.md); this chapter does not restate the rule, it only places the orchestrator at the boundary. The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
 
 ---
 
@@ -6910,6 +6910,7 @@ This chapter fixes the typed contract **spec-side now**; the implementation is *
 - [26-addons.md](./26-addons.md) — the custom folder model the Setup/Health/Update/Extras frame generalizes to.
 - [23-hooks-contract.md](./23-hooks-contract.md) — the entry-point pre-condition that guards a public method *before* the call.
 - [20-cli.md](./20-cli.md) — the runtime call-validation that measures the boundary *after* the call.
+- [25-validation-overview.md](./25-validation-overview.md) — the single source of the before/after validation split, and the validation-code index.
 - [The SOP common denominator](/session/common-denominator/) — the Setup/Health/Update standard these skills realize.
 - [21-environment-scripts.md](./21-environment-scripts.md) — the health checks the audit skill performs.
 - [31-browser-automation.md](./31-browser-automation.md) — the project-level browser-automation method.
@@ -6924,7 +6925,7 @@ This chapter fixes the typed contract **spec-side now**; the implementation is *
 | Depends on | [23-hooks-contract.md](./23-hooks-contract.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 | Related | [22-config.md](./22-config.md), [20-cli.md](./20-cli.md), [21-environment-scripts.md](./21-environment-scripts.md), [32-trash.md](./32-trash.md) |
 
-> **Informative.** This chapter is a **wayfinder**: it gathers the workbench's validation rules in one place and points at the chapter where each is specified. It introduces no new rule of its own — every entry below is normative *there*, not here.
+> **Informative.** This chapter is a **wayfinder and code index**: it gathers the workbench's validation families *and* the session-tier `REQ-SS-*` codes in one place and points at the chapter where each is specified. It introduces no new rule of its own — every entry below is normative *there*, not here.
 
 The workbench's checks are deliberately spread across the chapters they belong to — the hook contract, the configuration, the trash policy, the scripts. That keeps each rule next to the thing it governs, but it makes the *set* of rules hard to see. This page is the index that makes the set visible: a reader who asks "what does the workbench actually validate, and where is it defined?" starts here and follows the link. The pattern mirrors a published rule-registry — a stable family name on the left, the defining chapter on the right.
 
@@ -6954,6 +6955,31 @@ A second group of rules is **declared** by the workbench but **enforced at the m
 
 ---
 
+## The Validation Codes
+
+The families above are the workbench-tier handles. The **session-tier enforcement** raises a set of **`PREFIX-NUMBER` codes** — the `REQ-SS-*` series — in the manner of a published error-code registry. They are spread across the session enforcement, recovery, namespace-registry, and identity chapters; this index lists them in one place so the *set* is visible. Each code's full statement lives on its defining page — this table is the pointer, not the definition.
+
+| Code | Meaning | Defined in |
+|------|---------|------------|
+| `REQ-SS-FAILOPEN` | Any infra/config problem ⇒ ALLOW (exit 0); the gate never denies on trouble | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-CONFIG-LOUD` | An absent `.session/config.json` ⇒ fail-open ALLOW **plus** a loud SessionStart warning | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-SIGNAL` | The predecessor signal is matched jq-structured on `attributionSkill`, never as a substring | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-SUBAGENT` | A subagent transcript is carved out to ALLOW — it carries no parent attribution chain | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-BSD` | The transcript scan is bounded and BSD-safe (`tail -r`, early-exit), never `tac` | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-NOWRITE` | Live `~/.claude/` config is changed only additively via a reviewed diff, never auto-written | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-WORKFLOW` | The gate must not block the memo workflow; a DENY only redirects through the predecessor SOP | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-DISABLE` | Two equivalent disable switches short-circuit the gate to ALLOW as the hook's first action | [session · recovery](/session/recovery/) |
+| `REQ-SS-CANARY` | A SessionStart canary re-verifies the gate and auto-engages the disable switch on drift | [session · recovery](/session/recovery/) |
+| `REQ-SS-EDGEVALID` | The config is guarded against silent rewrite; a dangling edge fails open, never locks out | [session · enforcement](/session/enforcement/) · [recovery](/session/recovery/) |
+| `REQ-SS-NAMESPACE` | A namespace is reserved by one owner (N-1); a skill id sits under its namespace (N-2) | [session · namespace-registry](/session/namespace-registry/) |
+| `REQ-SS-PIN` | Session identity is resolved once at SessionStart and pinned; it must not change over the session | [session · identity-pin](/session/identity-pin/) |
+| `REQ-SS-PINREAD` | Every PreToolUse hook reads the pinned identity, never a `cd`-mutated `cwd` | [session · identity-pin](/session/identity-pin/) |
+| `REQ-SS-CDGUARD` | A `Bash` soft-guard warns (never blocks) when a `cd` would leave the pinned root | [session · identity-pin](/session/identity-pin/) |
+
+The session pages are the deep definition; this row set is their index. A new `REQ-SS-*` code is added on its defining page **and** given a row here — the same "specify it in its chapter, then list it" discipline the family table follows.
+
+---
+
 ## Severity
 
 A validation family blocks or warns; the two outcomes are kept distinct so a warning is never silently treated as a hard stop:
@@ -6973,7 +6999,7 @@ This page is the **hub**; each family's chapter is the **detail**. The contract 
 
 ## The Validation Boundary — Before and After
 
-The two checkability halves act on the same public entry point at two different moments: a **pre-hook** gates the call *before* it runs ([23-hooks-contract.md](./23-hooks-contract.md)), and **runtime call-validation** measures, *after* the fact, what really ran ([20-cli.md](./20-cli.md)). The diagram traces one call through both.
+The two checkability halves act on the same public entry point at two different moments: a **pre-hook** gates the call *before* it runs ([23-hooks-contract.md](./23-hooks-contract.md)), and **runtime call-validation** measures, *after* the fact, what really ran ([20-cli.md](./20-cli.md)). The diagram traces one call through both. This page is the **single source** of the before/after split: [24-skills-scope.md](./24-skills-scope.md) and [20-cli.md](./20-cli.md) reference it here rather than restating the rule.
 
 ```mermaid
 flowchart TD
@@ -6997,6 +7023,8 @@ flowchart TD
 - [22-config.md](./22-config.md) — `.workbench/` policy, including `folder-lints.json` severities.
 - [32-trash.md](./32-trash.md) — the trash-routing rule.
 - [21-environment-scripts.md](./21-environment-scripts.md) — the health checks.
+- [session · enforcement](/session/enforcement/) — the deep definition of the gate's `REQ-SS-*` codes this index points at.
+- [session · recovery](/session/recovery/) — the recovery codes (`REQ-SS-DISABLE`, `REQ-SS-CANARY`, `REQ-SS-EDGEVALID`).
 
 ---
 
@@ -7608,7 +7636,7 @@ The family is read in six nav groups; the sidebar lists the individual chapters,
 - **SOP** — the entry-point mechanism: SOP as the layer tools register through, the four-part common denominator every SOP shares, the existing instances, and the naming conventions.
 - **Enforcement** — the deterministic PreToolUse gate: the three-state fail-safe contract, `session doctor` / `session init`, and the SessionStart identity pin.
 - **CLI** — the command-line doctrine: the standard verbs and flags and the exit-code mirror.
-- **Recovery** — the fail-safe guarantees (kill-switch, sentinel, SessionStart canary) and the publication-fold migration.
+- **Recovery** — the fail-safe guarantees (disable switch, sentinel, SessionStart canary) and the publication-fold migration.
 
 ---
 
@@ -7763,7 +7791,7 @@ The decision table the reference hook MUST implement:
 
 | Condition | Result | Exit |
 |-----------|--------|------|
-| kill-switch set (`$SESSION_SOP_DISABLE` or the sentinel) | ALLOW | 0 |
+| disable switch set (`$SESSION_SOP_DISABLE` or the sentinel) | ALLOW | 0 |
 | tool ≠ `Skill` | ALLOW | 0 |
 | `.session/config.json` absent | ERROR (fail-open) + LOUD SessionStart warning | 0 |
 | `jq` missing · `transcript_path` empty/unreadable · config malformed | ERROR (fail-open) | 0 |
@@ -7787,7 +7815,7 @@ The governing principle: **the gate never fail-CLOSES on infrastructure trouble*
 | **REQ-SS-EDGEVALID** | An edge to a non-installed skill fails open; a build-time `registry-validate` MAY refuse it. |
 | **REQ-SS-SUBAGENT** | A subagent transcript is carved out (ALLOW) — it carries no parent attribution chain. |
 | **REQ-SS-BSD** | The transcript scan is bounded + BSD-safe (`tail -r`, early-exit), never `tac`. |
-| **REQ-SS-KILLSWITCH** | A kill-switch (env var + sentinel file) short-circuits to ALLOW as the first action. |
+| **REQ-SS-DISABLE** | A disable switch (env var + sentinel file) short-circuits to ALLOW as the first action. |
 | **REQ-SS-CANARY** | A SessionStart canary re-verifies the gate against known fixtures and auto-disables on drift. |
 | **REQ-SS-NOWRITE** | Live `~/.claude/` config (settings.json, CLAUDE.md) is changed only additively via a reviewed diff, never auto-written. |
 | **REQ-SS-WORKFLOW** | The gate MUST NOT block the memo workflow: `memo-init` / `memo-plan` / `memo-revision-*` run under the active gate (a DENY only redirects through the predecessor SOP). |
@@ -7802,7 +7830,7 @@ The gate is wired into `~/.claude/settings.json` as a PreToolUse hook on the `Sk
 
 ## Related
 
-- [03-recovery.md](./03-recovery.md) — the kill-switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
+- [03-recovery.md](./03-recovery.md) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
 - [05-config-cascade.md](./05-config-cascade.md) — the `.session/config.json` entry point the gate reads, and the migration that puts it there.
 - [07-doctor-init.md](./07-doctor-init.md) — the foreground `session doctor` / `session init` that carry the strict checks the hook deliberately omits.
 - [08-identity-pin.md](./08-identity-pin.md) — the SessionStart-Pin the gate reads instead of a live `cwd`.
@@ -7819,20 +7847,22 @@ The gate is wired into `~/.claude/settings.json` as a PreToolUse hook on the `Sk
 | Depends on | [02-enforcement.md](./02-enforcement.md) |
 | Related | [01-genesis-root.md](./01-genesis-root.md), [workbench/23-hooks-contract.md](/workbench/hooks-contract/) |
 
-A gate that sits at the genesis tier governs *every* gated tool call in *every* session. The cost of it going wrong is therefore high, and recoverability is a first-class requirement, not an afterthought. This chapter specifies the operational guarantees that keep the genesis tier always recoverable.
+A gate that sits at the genesis tier governs *every* gated tool call in *every* session. The cost of it going wrong is therefore high, and recoverability is a first-class requirement, not an afterthought. The deterministic gate and its **fail-open** contract are specified in [02-enforcement.md](./02-enforcement.md); this chapter does not restate that mechanism. It specifies the **recovery primitives** layered on top of it — the operator escape hatches and the self-check that keep the genesis tier recoverable even when the gate's own logic can no longer be trusted.
+
+The substance here is deliberately lean: three primitives (a disable switch, a self-verifying canary, a write-guard on the config) plus the runbook that ties them together.
 
 ---
 
-## The Kill-Switch (REQ-SS-KILLSWITCH)
+## The Disable Switch (REQ-SS-DISABLE)
 
-Recovery MUST always be possible, even when the gate itself is misbehaving. Two equivalent kill-switches disable the gate, checked as the **first action** of the hook, before any parsing can fail:
+Recovery MUST always be possible **by hand**, independent of whether the gate's own logic is sound. Two equivalent **disable switches** turn the gate off; the hook checks them as its **first action**, before any parsing can fail:
 
-| Kill-switch | Use |
-|-------------|-----|
-| `SESSION_SOP_DISABLE=1` (environment variable) | per-shell / per-session disable |
-| `~/.claude/session/DISABLED` (sentinel file) | persistent disable until removed |
+| Disable switch | Scope | Use |
+|----------------|-------|-----|
+| `SESSION_SOP_DISABLE=1` (environment variable) | the current shell / session | a quick per-shell off-switch that leaves no trace once the shell exits |
+| `~/.claude/session/DISABLED` (sentinel file) | machine-global, until removed | a persistent off-switch that survives new shells until the file is deleted |
 
-Either present ⇒ the gate exits 0 (ALLOW) immediately. Removing both re-arms the gate.
+Either present ⇒ the gate exits 0 (ALLOW) immediately, gating nothing. Removing **both** re-arms the gate. Because the check is the hook's very first statement, a disable switch works even when the config is malformed or `jq` is absent — it is the one escape hatch that never depends on the gate being healthy.
 
 ---
 
@@ -7843,19 +7873,34 @@ The most dangerous failure mode is a **silent fail-open after a harness or contr
 - a transcript **with** the predecessor signal ⇒ must ALLOW (exit 0);
 - a transcript **without** it ⇒ must DENY (exit 2).
 
-On **any** drift from those expected outcomes the canary MUST (a) shout to stderr and (b) **auto-engage the kill-switch** by writing the sentinel — so a gate that can no longer be trusted **disables itself** rather than continuing to mis-gate. The canary itself never blocks the session (always exit 0).
+On **any** drift from those expected outcomes the canary MUST (a) shout to stderr and (b) **auto-engage the disable switch** by writing the sentinel — so a gate that can no longer be trusted **disables itself** rather than continuing to mis-gate. The canary itself never blocks the session (always exit 0): it diagnoses and, on failure, hands recovery to the disable switch above.
 
 ---
 
-## Registry Protection (REQ-SS-EDGEVALID / R9)
+## Config Protection (REQ-SS-EDGEVALID)
 
-The registry is a privilege file: a silent rewrite could disable the gate or forge an edge. Tool-driven Write/Edit of a `.workbench/registry.json` (or the global `~/.claude/session/registry.json`) MUST be refused by a guard hook; edits go through a reviewed diff, after which `memo session registry-validate` confirms no edge dangles.
+The session config is a **privilege file**: a silent rewrite could disable the gate or forge a precondition edge. Two safeguards keep it honest:
+
+- A tool-driven Write/Edit of the session config (`.session/config.json`, or the machine-global `~/.claude/session/registry.json`) MUST be refused by a guard hook. Edits go through a **reviewed diff**, never a silent overwrite — the same no-auto-write discipline the enforcement chapter applies to `~/.claude/settings.json` (REQ-SS-NOWRITE, [02-enforcement.md](./02-enforcement.md)).
+- After any edit, `memo session registry-validate` confirms no edge **dangles** (every `when:pre` edge has both endpoints installed). A dangling edge does not lock the machine out: at runtime it degrades the gate to **fail-open ALLOW** ([02-enforcement.md](./02-enforcement.md)); the validator is the deliberate, foreground place it is caught and refused.
 
 ---
 
 ## Egress Quarantine Is Opt-In and Fail-Open
 
-The riskiest gate is the **fetch/egress** gate, because its collateral is broad and it inverts the default-trust posture. It is therefore **opt-in and default-off**: it does nothing unless a project explicitly enables it via a `.workbench/fetch-gate.json` marker (`{ "enabled": true, "allowlist": [...] }`). When enabled it is a **bounded, logged quarantine** — an allowlist, not an allow-all — and it remains **fail-open** (missing marker, empty `transcript_path`, or missing `jq` ⇒ ALLOW). Substring detection of `curl`/`wget` can never be complete; real egress control belongs to a future host-wide machine spec. The opt-in gate is a mitigation, not that control.
+The riskiest gate is the **fetch/egress** gate, because its collateral is broad and it inverts the default-trust posture. It is therefore **opt-in and default-off**: it does nothing unless a project explicitly enables it via a `.workbench/fetch-gate.json` marker (`{ "enabled": true, "allowlist": [...] }`). When enabled it is a **bounded, logged quarantine** — an allowlist, not an allow-all — and it inherits the gate's **fail-open** contract (REQ-SS-FAILOPEN, [02-enforcement.md](./02-enforcement.md)): a missing marker, an empty `transcript_path`, or a missing `jq` ⇒ ALLOW. Substring detection of `curl`/`wget` can never be complete; real egress control belongs to a future host-wide machine spec. The opt-in gate is a mitigation, not that control.
+
+---
+
+## Recovery Requirements
+
+The recovery primitives above are fixed as named requirements so the recovery contract is checkable, not just narrated:
+
+| Requirement | Statement |
+|-------------|-----------|
+| **REQ-SS-DISABLE** | Two equivalent disable switches — the `SESSION_SOP_DISABLE` environment variable and the `~/.claude/session/DISABLED` sentinel file — short-circuit the gate to ALLOW as the hook's first action, before any parse. Removing both re-arms the gate. |
+| **REQ-SS-CANARY** | A SessionStart canary re-verifies the live gate against a known-ALLOW and a known-DENY fixture; on any drift it shouts to stderr and auto-engages the disable switch by writing the sentinel. It never blocks the session (always exit 0). |
+| **REQ-SS-EDGEVALID** | The session config is guarded against silent rewrite (reviewed diff, never auto-write), and `registry-validate` refuses a dangling edge. A dangling edge degrades the runtime gate to fail-open ALLOW, never a lockout. |
 
 ---
 
@@ -7871,7 +7916,7 @@ The operational steps — how to disable, diagnose, and re-arm the gate — live
 
 ## Related
 
-- [02-enforcement.md](./02-enforcement.md) — the three-state contract these guarantees protect.
+- [02-enforcement.md](./02-enforcement.md) — the three-state contract and the fail-open mechanism these recovery primitives protect and reference.
 - [01-genesis-root.md](./01-genesis-root.md) — the tier model and the "declared, enforced once present" chain rule.
 
 ---
@@ -7965,6 +8010,14 @@ These verbs are the **executable form of the SOP common denominator** ([11-commo
 
 ---
 
+## Enforcement, Doctor, and Init Sit Under the CLI
+
+Three of the family's mechanisms are not separate systems beside the CLI — they are **shapes of it**, and they sit conceptually **under this doctrine**. The PreToolUse **enforcement** gate ([02-enforcement.md](./02-enforcement.md)) is a CLI-shaped script that obeys the result envelope and the exit-code mirror above; **`doctor`** and **`init`** are two of the reserved standard verbs ([07-doctor-init.md](./07-doctor-init.md)). Reading them as CLI is what lets one envelope and one exit-code map serve the gate, the readiness preflight, and the scaffold alike.
+
+The **Hook-Contract** these mechanisms share has a **single source in this session family** — [02-enforcement.md](./02-enforcement.md) — and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) **references up** to it rather than redefining the contract. Session owns the contract; the workbench states only its scoped view of the same PreToolUse shape.
+
+---
+
 ## Discovery and Registration
 
 A CLI is **discovered from a declared inventory, not from a filesystem walk or from prose**. The registry (`registry.json`) is the workbench-tier discovery source ([workbench/20-cli.md](/workbench/cli/)) — the direct analogue of a static command manifest. At the session tier the same pattern generalizes one level up: the `.session/config.json` ([05-config-cascade.md](./05-config-cascade.md)) is the session-level manifest of registered SOPs, their CLIs, and their reserved namespaces. So "how to build a CLI" at session level includes one act of registration — **a CLI registers its skills and its namespace into the session config**, exactly as Branch/Leaf CLIs register into `registry.json`. The reserved namespace is the family's branch prefix lifted to the session tier — the `prefix-hyphen-name` discovery handle one level up. `npm link` is treated as registration only; it grants no discovery. The shared `cli/` root folder is a legitimate home for cross-project tools ([workbench/12-folders.md](/workbench/folders/)).
@@ -8055,12 +8108,12 @@ The config holds **two separate top-level structures with different merge semant
 
 | Concern | Owning tier | Override / merge |
 |---------|-------------|------------------|
-| `sessionId` / `memoId` | session | resolved, not overridable (global-per-session) |
+| `sessionId` (global) · per-namespace ids under `options` (e.g. `options.memo.memoId`) | session | resolved, not overridable (global-per-session) |
 | Security / trust level | session | resolved, NOT cascaded — a project may never self-elevate (monotonicity, see [01-genesis-root.md](./01-genesis-root.md)) |
 | `sops[]` (registrant blocks: namespace+owner+tier+skills[]+optional requires[]) | session base + drop-in merge | **list-union by `namespace`** (one block per namespace) |
 | `requirements[]` (fine entrypoint→skill pre-gate edges, e.g. REQ-061) | session base + merge | **list-union**; fed ONLY by SOP-instance blocks ([06-namespace-registry.md](./06-namespace-registry.md)) |
 | reserved namespaces | session | unique-key override; collision = error |
-| kill-switch / sentinel / canary | `~/.claude/session/` | — (recovery reachable above any project) |
+| disable switch / sentinel / canary | `~/.claude/session/` | — (recovery reachable above any project) |
 | repo facing/visibility/remote | workbench (`.workbench/`) | override per repo |
 
 The collection concerns (`sops[]`, `requirements[]`) **merge** as list-unions so each tier and each registrant contributes its own entries. The scalar concerns (identity, security/trust level) are **resolved, not cascaded**: they live only in the session tier and the cascade deliberately does not apply to them, so a more-specific tier can never raise its own trust level. This is the one place the cascade differs from git/XDG, and it preserves the monotonicity property of [01-genesis-root.md](./01-genesis-root.md).
@@ -8082,7 +8135,7 @@ The spec uses **two sharply distinguished** paths whose names are deliberately c
 | Path | Scope | Holds |
 |------|-------|-------|
 | `.session/` | **per-place** (sibling of `.workbench/`, one per tree) | this location's `config.json`: chain edges, namespaces, registrant blocks |
-| `~/.claude/session/` | **machine-global** (one per machine) | recovery state above any project: kill-switch sentinel, canary fixtures, logs |
+| `~/.claude/session/` | **machine-global** (one per machine) | recovery state above any project: disable-switch sentinel, canary fixtures, logs |
 
 Recovery primitives live in the machine-global home precisely so they remain reachable when no project config is present. The per-place name `.session/` was chosen over `.context/`, which was **rejected** because it would collide with the authored-content folder `context/`.
 
@@ -8222,7 +8275,35 @@ This is how three independent registrants coexist sustainably: `memo`, `workbenc
 | Depends on | [06-namespace-registry.md](./06-namespace-registry.md) |
 | Related | [05-config-cascade.md](./05-config-cascade.md), [04-cli.md](./04-cli.md), [02-enforcement.md](./02-enforcement.md) |
 
-The enforcement hook ([02-enforcement.md](./02-enforcement.md)) is **fail-open and permissive by design** — it must never lock the machine out of its own tools. The strict checks therefore live elsewhere: in the **foreground**, in two CLI verbs a developer runs deliberately. `session doctor` answers *"is this environment ready to work?"* without mutating anything; `session init` scaffolds the missing config additively, exactly once. This chapter specifies both. Neither exists yet — they are the spec target, not a shipped feature.
+The enforcement hook ([02-enforcement.md](./02-enforcement.md)) is **fail-open and permissive by design** — it must never lock the machine out of its own tools. The strict checks therefore live elsewhere: in the **foreground**, in two CLI verbs a developer runs deliberately. `session doctor` answers *"is this environment ready to work?"* without mutating anything; `session init` scaffolds the missing config additively, exactly once. This chapter specifies the **contract** for both, and the **session namespace** is its **reference implementation**: `memo session doctor` / `memo session init` are the first concrete doctor/init pair, with the top-level aggregator `memo doctor` / `memo init` rolling every namespace's pair up. The contract is the spec target; the session namespace is where it lands first — not every namespace ships it (a catalog namespace has nothing to initialize).
+
+---
+
+## The Form — A Top-Level Aggregator Over Per-Namespace Leaves
+
+`doctor` and `init` exist at **two levels** that compose rather than compete:
+
+| Level | Command | Role |
+|-------|---------|------|
+| **Aggregator** | `memo doctor` / `memo init` | top-level roll-up — dispatches to every registered namespace's leaf and merges their envelopes into one verdict |
+| **Per-namespace leaf** | `memo <ns> doctor` / `memo <ns> init` | the namespace's own readiness battery and additive scaffold (`memo session doctor`, a future `memo workbench doctor`, …) |
+
+The aggregator owns no checks of its own; it **fans out** to the leaves and rolls their results up (any leaf `not-ready` ⇒ the aggregate is `not-ready`). The leaves carry the actual logic. Because a namespace bounds where a leaf name must be unique ([06-namespace-registry.md](./06-namespace-registry.md), rule N-2), the **same leaf name recurs safely across namespaces** — `memo session doctor` and a future `memo workbench doctor` are distinct commands, not a collision.
+
+### Required for SOP-Instances, Optional for Catalogs
+
+Whether a namespace MUST carry the pair follows the **SOP-instance-vs-catalog** distinction of [06-namespace-registry.md](./06-namespace-registry.md):
+
+| Namespace kind | `doctor` / `init` | Why |
+|----------------|-------------------|-----|
+| **SOP-instance** (e.g. `memo`, `workbench`) | **REQUIRED** | it has a Setup and a readiness state, so it owes both a Health check (`doctor`) and an additive Setup (`init`) |
+| **Catalog** (e.g. `flowmcp`) | **OPTIONAL** | it carries skills but defines no procedure and has nothing to initialize, so the pair is not owed |
+
+### doctor = Health, init = Setup
+
+The pair is not a second concept beside the SOP common denominator — it is its **executable form** ([11-common-denominator.md](./11-common-denominator.md)): **`init` realizes Setup** (bring the scope to a known-good baseline) and **`doctor` realizes Health** (answer "is this scope in order?"). A namespace's doctor/init pair is the runnable face of the same Setup/Health its SOP describes in prose; this chapter specifies that face for the session reference instance.
+
+The **session** namespace's leaf is the user's own workspace check: `memo session doctor` is the **Workspace help/validate** a developer reaches for at the start of work — *"are the CLIs available, and is the workspace healthy?"*. It is the reference implementation the rest of this chapter specifies in full.
 
 ---
 
@@ -8259,7 +8340,7 @@ The six checks and their severities:
 | 3 | no dangling required `when:pre` edge — both endpoints present (**this is `registry-validate`**) | **FAIL** |
 | 4 | each reserved namespace is unique — no N-1 / N-2 collision | **FAIL** |
 | 5 | each skill carries a structured `attributionSkill:<id>` signal (the only trusted signal — REQ-SS-SIGNAL) | **WARN** |
-| 6 | gate runtime deps present (`jq` on PATH); kill-switch / sentinel state surfaced | **WARN** for `jq`; **INFO** for kill-switch state |
+| 6 | gate runtime deps present (`jq` on PATH); disable-switch / sentinel state surfaced | **WARN** for `jq`; **INFO** for disable-switch state |
 
 Check 3 makes the doctor the **runtime superset** of the build-time `registry-validate`: one validator core, two timings — `registry-validate` is a *subset that fails the build*, `session doctor` is *that plus on-disk presence, namespaces, signals, and jq, that reports*. This mirrors the family's existing "one registry, one scan, two timings" framing.
 
@@ -8352,7 +8433,7 @@ The session identity established by the genesis root ([01-genesis-root.md](./01-
 
 ## The Identity Invariant
 
-The session identity — the resolved IDs (`sessionId`, `memoId`) and the resolved session root — MUST NOT change over the session lifetime. Once resolved, it is fixed; nothing the agent does mid-session re-derives it.
+The session identity — the global `sessionId`, the resolved session root, and any per-namespace ids carried under `options` (e.g. `options.memo.memoId`) — MUST NOT change over the session lifetime. Once resolved, it is fixed; nothing the agent does mid-session re-derives it.
 
 The concrete failure this invariant forbids — the one that MUST never happen:
 
@@ -8370,10 +8451,21 @@ The pinned record:
 
 | Field | Meaning | Resolved at |
 |-------|---------|-------------|
-| `sessionId` | the ambient session identity ([01-genesis-root.md](./01-genesis-root.md), precedence flag > env > null) | SessionStart |
-| `memoId` | the optional second-protocol memo id (MAY be `null`) | SessionStart |
+| `sessionId` | the ambient session identity, **global and namespace-neutral** ([01-genesis-root.md](./01-genesis-root.md), precedence flag > env > null) | SessionStart |
 | `resolvedRoot` | the nearest-ancestor `.session/` root ([09-root-detection.md](./09-root-detection.md)) | SessionStart |
+| `options` | per-namespace pinned ids, one sub-object per namespace — e.g. `options.memo.memoId` is the optional memo id (MAY be absent or `null`). Only namespace-scoped ids live here; `sessionId` stays top-level | SessionStart |
 | `source` | where the pin was read from — the SessionStart record / `transcript_path`-derived cache, **never the live `cwd`** | SessionStart |
+
+How the pinned record looks — `sessionId` stays a top-level global id; each namespace keeps its own id under `options`:
+
+```jsonc
+{ "sessionId":    "0c7f…",               // global, namespace-neutral (flag > env > null)
+  "resolvedRoot": "/…/project",          // nearest-ancestor .session/ root
+  "source":       "sessionstart-cache",  // never the live cwd
+  "options": {
+    "memo": { "memoId": "NNN" }          // a namespace's own id — here the optional memo id (MAY be null/absent)
+  } }
+```
 
 The pin's `source` MUST be the SessionStart resolution (a SessionStart cache, keyed off the harness-authored `transcript_path`), **not** the live `cwd` at the moment a later hook runs. Resolving `resolvedRoot` from a walk-up of the current `cwd` on every call is exactly the drift hazard above; the walk-up in [09-root-detection.md](./09-root-detection.md) runs **once to populate the pin**, then the pinned value stands.
 
@@ -8418,7 +8510,7 @@ Hardening the soft-guard into a **hard block** (deny a `cd` out of the pinned ro
 - [01-genesis-root.md](./01-genesis-root.md) — the genesis root that establishes the identity this chapter pins.
 - [02-enforcement.md](./02-enforcement.md) — the PreToolUse hook that reads the pinned identity, never the live `cwd`.
 - [09-root-detection.md](./09-root-detection.md) — the nearest-ancestor `.session/` walk-up; its result is resolved once to populate the pin.
-- [03-recovery.md](./03-recovery.md) — the kill-switch, sentinel, and canary that keep the gate (and the pin) recoverable.
+- [03-recovery.md](./03-recovery.md) — the disable switch, sentinel, and canary that keep the gate (and the pin) recoverable.
 
 ---
 

@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-06-27T01:35:51.713Z"
+generated_at: "2026-06-27T01:48:22.356Z"
 generated_from: "spec/session/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/00-overview.md."
@@ -94,7 +94,7 @@ The family is read in six nav groups; the sidebar lists the individual chapters,
 - **SOP** — the entry-point mechanism: SOP as the layer tools register through, the four-part common denominator every SOP shares, the existing instances, and the naming conventions.
 - **Enforcement** — the deterministic PreToolUse gate: the three-state fail-safe contract, `session doctor` / `session init`, and the SessionStart identity pin.
 - **CLI** — the command-line doctrine: the standard verbs and flags and the exit-code mirror.
-- **Recovery** — the fail-safe guarantees (kill-switch, sentinel, SessionStart canary) and the publication-fold migration.
+- **Recovery** — the fail-safe guarantees (disable switch, sentinel, SessionStart canary) and the publication-fold migration.
 
 ---
 

@@ -87,6 +87,14 @@ These verbs are the **executable form of the SOP common denominator** ([11-commo
 
 ---
 
+## Enforcement, Doctor, and Init Sit Under the CLI
+
+Three of the family's mechanisms are not separate systems beside the CLI — they are **shapes of it**, and they sit conceptually **under this doctrine**. The PreToolUse **enforcement** gate ([02-enforcement.md](./02-enforcement.md)) is a CLI-shaped script that obeys the result envelope and the exit-code mirror above; **`doctor`** and **`init`** are two of the reserved standard verbs ([07-doctor-init.md](./07-doctor-init.md)). Reading them as CLI is what lets one envelope and one exit-code map serve the gate, the readiness preflight, and the scaffold alike.
+
+The **Hook-Contract** these mechanisms share has a **single source in this session family** — [02-enforcement.md](./02-enforcement.md) — and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) **references up** to it rather than redefining the contract. Session owns the contract; the workbench states only its scoped view of the same PreToolUse shape.
+
+---
+
 ## Discovery and Registration
 
 A CLI is **discovered from a declared inventory, not from a filesystem walk or from prose**. The registry (`registry.json`) is the workbench-tier discovery source ([workbench/20-cli.md](/workbench/cli/)) — the direct analogue of a static command manifest. At the session tier the same pattern generalizes one level up: the `.session/config.json` ([05-config-cascade.md](./05-config-cascade.md)) is the session-level manifest of registered SOPs, their CLIs, and their reserved namespaces. So "how to build a CLI" at session level includes one act of registration — **a CLI registers its skills and its namespace into the session config**, exactly as Branch/Leaf CLIs register into `registry.json`. The reserved namespace is the family's branch prefix lifted to the session tier — the `prefix-hyphen-name` discovery handle one level up. `npm link` is treated as registration only; it grants no discovery. The shared `cli/` root folder is a legitimate home for cross-project tools ([workbench/12-folders.md](/workbench/folders/)).

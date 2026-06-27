@@ -6,7 +6,7 @@ spec_file: "04-cli.md"
 order: 4
 section: "Session"
 normative: true
-generated_at: "2026-06-27T01:35:51.713Z"
+generated_at: "2026-06-27T01:48:22.356Z"
 generated_from: "spec/session/0.1.0/04-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/04-cli.md."
@@ -91,6 +91,14 @@ Every CLI family **SHOULD** expose a small reserved verb set so an agent can rel
 `doctor` diagnoses (never mutates, never blocks) and `init` scaffolds additively; their full contract for the session-readiness instance is [07-doctor-init.md](/specification/doctor-init/). This chapter only reserves the verb names and their contracts.
 
 These verbs are the **executable form of the SOP common denominator** ([11-common-denominator.md](/specification/common-denominator/)) — not a second concept beside Setup / Health / Update / Extras, but the same four parts made runnable: **`init` is Setup**, **`doctor` is Health**, **`update` is Update**, and a family's own scope leaves are its **Extras** (the optional, scope-specific commands). The canonical Update verb is **`update`**; **`migrate`** is its narrower schema/state special-case — the idempotent migration reserved in the table above — so `update` is the general "bring the scope to the current expected state", and `migrate` is the schema-only instance of it. Read this way, a scope's SOP and its CLI are the same common denominator seen twice: one as a procedure a reader follows, one as commands an agent runs.
+
+---
+
+## Enforcement, Doctor, and Init Sit Under the CLI
+
+Three of the family's mechanisms are not separate systems beside the CLI — they are **shapes of it**, and they sit conceptually **under this doctrine**. The PreToolUse **enforcement** gate ([02-enforcement.md](/specification/enforcement/)) is a CLI-shaped script that obeys the result envelope and the exit-code mirror above; **`doctor`** and **`init`** are two of the reserved standard verbs ([07-doctor-init.md](/specification/doctor-init/)). Reading them as CLI is what lets one envelope and one exit-code map serve the gate, the readiness preflight, and the scaffold alike.
+
+The **Hook-Contract** these mechanisms share has a **single source in this session family** — [02-enforcement.md](/specification/enforcement/) — and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) **references up** to it rather than redefining the contract. Session owns the contract; the workbench states only its scoped view of the same PreToolUse shape.
 
 ---
 

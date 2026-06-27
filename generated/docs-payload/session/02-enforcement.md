@@ -6,7 +6,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-06-27T01:35:51.713Z"
+generated_at: "2026-06-27T01:48:22.356Z"
 generated_from: "spec/session/0.1.0/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/02-enforcement.md."
@@ -57,7 +57,7 @@ The decision table the reference hook MUST implement:
 
 | Condition | Result | Exit |
 |-----------|--------|------|
-| kill-switch set (`$SESSION_SOP_DISABLE` or the sentinel) | ALLOW | 0 |
+| disable switch set (`$SESSION_SOP_DISABLE` or the sentinel) | ALLOW | 0 |
 | tool ≠ `Skill` | ALLOW | 0 |
 | `.session/config.json` absent | ERROR (fail-open) + LOUD SessionStart warning | 0 |
 | `jq` missing · `transcript_path` empty/unreadable · config malformed | ERROR (fail-open) | 0 |
@@ -81,7 +81,7 @@ The governing principle: **the gate never fail-CLOSES on infrastructure trouble*
 | **REQ-SS-EDGEVALID** | An edge to a non-installed skill fails open; a build-time `registry-validate` MAY refuse it. |
 | **REQ-SS-SUBAGENT** | A subagent transcript is carved out (ALLOW) — it carries no parent attribution chain. |
 | **REQ-SS-BSD** | The transcript scan is bounded + BSD-safe (`tail -r`, early-exit), never `tac`. |
-| **REQ-SS-KILLSWITCH** | A kill-switch (env var + sentinel file) short-circuits to ALLOW as the first action. |
+| **REQ-SS-DISABLE** | A disable switch (env var + sentinel file) short-circuits to ALLOW as the first action. |
 | **REQ-SS-CANARY** | A SessionStart canary re-verifies the gate against known fixtures and auto-disables on drift. |
 | **REQ-SS-NOWRITE** | Live `~/.claude/` config (settings.json, CLAUDE.md) is changed only additively via a reviewed diff, never auto-written. |
 | **REQ-SS-WORKFLOW** | The gate MUST NOT block the memo workflow: `memo-init` / `memo-plan` / `memo-revision-*` run under the active gate (a DENY only redirects through the predecessor SOP). |
@@ -96,7 +96,7 @@ The gate is wired into `~/.claude/settings.json` as a PreToolUse hook on the `Sk
 
 ## Related
 
-- [03-recovery.md](/specification/recovery/) — the kill-switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
+- [03-recovery.md](/specification/recovery/) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
 - [05-config-cascade.md](/specification/config-cascade/) — the `.session/config.json` entry point the gate reads, and the migration that puts it there.
 - [07-doctor-init.md](/specification/doctor-init/) — the foreground `session doctor` / `session init` that carry the strict checks the hook deliberately omits.
 - [08-identity-pin.md](/specification/identity-pin/) — the SessionStart-Pin the gate reads instead of a live `cwd`.

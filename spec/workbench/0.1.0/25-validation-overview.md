@@ -6,7 +6,7 @@
 | Depends on | [23-hooks-contract.md](./23-hooks-contract.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 | Related | [22-config.md](./22-config.md), [20-cli.md](./20-cli.md), [21-environment-scripts.md](./21-environment-scripts.md), [32-trash.md](./32-trash.md) |
 
-> **Informative.** This chapter is a **wayfinder**: it gathers the workbench's validation rules in one place and points at the chapter where each is specified. It introduces no new rule of its own — every entry below is normative *there*, not here.
+> **Informative.** This chapter is a **wayfinder and code index**: it gathers the workbench's validation families *and* the session-tier `REQ-SS-*` codes in one place and points at the chapter where each is specified. It introduces no new rule of its own — every entry below is normative *there*, not here.
 
 The workbench's checks are deliberately spread across the chapters they belong to — the hook contract, the configuration, the trash policy, the scripts. That keeps each rule next to the thing it governs, but it makes the *set* of rules hard to see. This page is the index that makes the set visible: a reader who asks "what does the workbench actually validate, and where is it defined?" starts here and follows the link. The pattern mirrors a published rule-registry — a stable family name on the left, the defining chapter on the right.
 
@@ -36,6 +36,31 @@ A second group of rules is **declared** by the workbench but **enforced at the m
 
 ---
 
+## The Validation Codes
+
+The families above are the workbench-tier handles. The **session-tier enforcement** raises a set of **`PREFIX-NUMBER` codes** — the `REQ-SS-*` series — in the manner of a published error-code registry. They are spread across the session enforcement, recovery, namespace-registry, and identity chapters; this index lists them in one place so the *set* is visible. Each code's full statement lives on its defining page — this table is the pointer, not the definition.
+
+| Code | Meaning | Defined in |
+|------|---------|------------|
+| `REQ-SS-FAILOPEN` | Any infra/config problem ⇒ ALLOW (exit 0); the gate never denies on trouble | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-CONFIG-LOUD` | An absent `.session/config.json` ⇒ fail-open ALLOW **plus** a loud SessionStart warning | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-SIGNAL` | The predecessor signal is matched jq-structured on `attributionSkill`, never as a substring | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-SUBAGENT` | A subagent transcript is carved out to ALLOW — it carries no parent attribution chain | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-BSD` | The transcript scan is bounded and BSD-safe (`tail -r`, early-exit), never `tac` | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-NOWRITE` | Live `~/.claude/` config is changed only additively via a reviewed diff, never auto-written | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-WORKFLOW` | The gate must not block the memo workflow; a DENY only redirects through the predecessor SOP | [session · enforcement](/session/enforcement/) |
+| `REQ-SS-DISABLE` | Two equivalent disable switches short-circuit the gate to ALLOW as the hook's first action | [session · recovery](/session/recovery/) |
+| `REQ-SS-CANARY` | A SessionStart canary re-verifies the gate and auto-engages the disable switch on drift | [session · recovery](/session/recovery/) |
+| `REQ-SS-EDGEVALID` | The config is guarded against silent rewrite; a dangling edge fails open, never locks out | [session · enforcement](/session/enforcement/) · [recovery](/session/recovery/) |
+| `REQ-SS-NAMESPACE` | A namespace is reserved by one owner (N-1); a skill id sits under its namespace (N-2) | [session · namespace-registry](/session/namespace-registry/) |
+| `REQ-SS-PIN` | Session identity is resolved once at SessionStart and pinned; it must not change over the session | [session · identity-pin](/session/identity-pin/) |
+| `REQ-SS-PINREAD` | Every PreToolUse hook reads the pinned identity, never a `cd`-mutated `cwd` | [session · identity-pin](/session/identity-pin/) |
+| `REQ-SS-CDGUARD` | A `Bash` soft-guard warns (never blocks) when a `cd` would leave the pinned root | [session · identity-pin](/session/identity-pin/) |
+
+The session pages are the deep definition; this row set is their index. A new `REQ-SS-*` code is added on its defining page **and** given a row here — the same "specify it in its chapter, then list it" discipline the family table follows.
+
+---
+
 ## Severity
 
 A validation family blocks or warns; the two outcomes are kept distinct so a warning is never silently treated as a hard stop:
@@ -55,7 +80,7 @@ This page is the **hub**; each family's chapter is the **detail**. The contract 
 
 ## The Validation Boundary — Before and After
 
-The two checkability halves act on the same public entry point at two different moments: a **pre-hook** gates the call *before* it runs ([23-hooks-contract.md](./23-hooks-contract.md)), and **runtime call-validation** measures, *after* the fact, what really ran ([20-cli.md](./20-cli.md)). The diagram traces one call through both.
+The two checkability halves act on the same public entry point at two different moments: a **pre-hook** gates the call *before* it runs ([23-hooks-contract.md](./23-hooks-contract.md)), and **runtime call-validation** measures, *after* the fact, what really ran ([20-cli.md](./20-cli.md)). The diagram traces one call through both. This page is the **single source** of the before/after split: [24-skills-scope.md](./24-skills-scope.md) and [20-cli.md](./20-cli.md) reference it here rather than restating the rule.
 
 ```mermaid
 flowchart TD
@@ -79,3 +104,5 @@ flowchart TD
 - [22-config.md](./22-config.md) — `.workbench/` policy, including `folder-lints.json` severities.
 - [32-trash.md](./32-trash.md) — the trash-routing rule.
 - [21-environment-scripts.md](./21-environment-scripts.md) — the health checks.
+- [session · enforcement](/session/enforcement/) — the deep definition of the gate's `REQ-SS-*` codes this index points at.
+- [session · recovery](/session/recovery/) — the recovery codes (`REQ-SS-DISABLE`, `REQ-SS-CANARY`, `REQ-SS-EDGEVALID`).

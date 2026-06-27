@@ -6,7 +6,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T01:35:51.713Z"
+generated_at: "2026-06-27T01:48:22.356Z"
 generated_from: "spec/workbench/0.1.0/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/20-cli.md."
@@ -63,7 +63,7 @@ The **folder name is the unit of meaning**. This connects to the About conventio
 
 ## Runtime Call-Validation — the "After" Measurement
 
-Beyond defining the command convention, the workbench CLI provides one capability that is itself a leaf of the command tree: **runtime call-validation**. It is the **"after" half** of checkability — the counterpart to the entry-point pre-condition, which is the "before" half ([23-hooks-contract.md](/specification/hooks-contract/)). Once a session has run, the CLI inspects what was recorded and measures **which skills and tools were actually invoked**, answering questions a pre-hook cannot answer in advance — most importantly, **"was the SOP actually read this session?"**. A pre-hook gates the call; this measures, after the fact, what really happened.
+Beyond defining the command convention, the workbench CLI provides one capability that is itself a leaf of the command tree: **runtime call-validation**. It is the **"after" half** of checkability — the runtime counterpart to the "before" pre-hook. The before/after split itself is specified once in [25-validation-overview.md](/specification/validation-overview/); this chapter owns only the "after" **mechanism**. Once a session has run, the CLI inspects what was recorded and measures **which skills and tools were actually invoked**, answering questions a pre-hook cannot answer in advance — most importantly, **"was the SOP actually read this session?"**.
 
 ### Where Sessions Live
 
@@ -170,6 +170,6 @@ So it is **one registry, one signal scan, two timings**. The seed first edge is 
 - [/session/conventions/](/session/conventions/) — the SOP standard's conventions chapter that defines the naming convention (the discovery handle).
 - [23-hooks-contract.md](/specification/hooks-contract/) — the entry-point pre-condition, the "before" half this measurement complements.
 - [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
-- [25-validation-overview.md](/specification/validation-overview/) — the validation wayfinder where runtime call-validation is registered.
+- [25-validation-overview.md](/specification/validation-overview/) — the validation wayfinder and code index, and the single source of the before/after split where runtime call-validation is registered.
 - [21-environment-scripts.md](/specification/environment-scripts/) — the script families that follow the subfolder rule.
 - [30-wiki.md](/specification/wiki/) — the About convention that records what a scripts subfolder is for.

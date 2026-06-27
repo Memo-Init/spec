@@ -6,7 +6,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-06-27T01:35:51.713Z"
+generated_at: "2026-06-27T01:48:22.356Z"
 generated_from: "spec/session/0.1.0/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/05-config-cascade.md."
@@ -47,12 +47,12 @@ The config holds **two separate top-level structures with different merge semant
 
 | Concern | Owning tier | Override / merge |
 |---------|-------------|------------------|
-| `sessionId` / `memoId` | session | resolved, not overridable (global-per-session) |
+| `sessionId` (global) · per-namespace ids under `options` (e.g. `options.memo.memoId`) | session | resolved, not overridable (global-per-session) |
 | Security / trust level | session | resolved, NOT cascaded — a project may never self-elevate (monotonicity, see [01-genesis-root.md](/specification/genesis-root/)) |
 | `sops[]` (registrant blocks: namespace+owner+tier+skills[]+optional requires[]) | session base + drop-in merge | **list-union by `namespace`** (one block per namespace) |
 | `requirements[]` (fine entrypoint→skill pre-gate edges, e.g. REQ-061) | session base + merge | **list-union**; fed ONLY by SOP-instance blocks ([06-namespace-registry.md](/specification/namespace-registry/)) |
 | reserved namespaces | session | unique-key override; collision = error |
-| kill-switch / sentinel / canary | `~/.claude/session/` | — (recovery reachable above any project) |
+| disable switch / sentinel / canary | `~/.claude/session/` | — (recovery reachable above any project) |
 | repo facing/visibility/remote | workbench (`.workbench/`) | override per repo |
 
 The collection concerns (`sops[]`, `requirements[]`) **merge** as list-unions so each tier and each registrant contributes its own entries. The scalar concerns (identity, security/trust level) are **resolved, not cascaded**: they live only in the session tier and the cascade deliberately does not apply to them, so a more-specific tier can never raise its own trust level. This is the one place the cascade differs from git/XDG, and it preserves the monotonicity property of [01-genesis-root.md](/specification/genesis-root/).
@@ -74,7 +74,7 @@ The spec uses **two sharply distinguished** paths whose names are deliberately c
 | Path | Scope | Holds |
 |------|-------|-------|
 | `.session/` | **per-place** (sibling of `.workbench/`, one per tree) | this location's `config.json`: chain edges, namespaces, registrant blocks |
-| `~/.claude/session/` | **machine-global** (one per machine) | recovery state above any project: kill-switch sentinel, canary fixtures, logs |
+| `~/.claude/session/` | **machine-global** (one per machine) | recovery state above any project: disable-switch sentinel, canary fixtures, logs |
 
 Recovery primitives live in the machine-global home precisely so they remain reachable when no project config is present. The per-place name `.session/` was chosen over `.context/`, which was **rejected** because it would collide with the authored-content folder `context/`.
 

@@ -6,7 +6,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T01:35:51.713Z"
+generated_at: "2026-06-27T01:48:22.356Z"
 generated_from: "spec/workbench/0.1.0/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/24-skills-scope.md."
@@ -90,7 +90,7 @@ The consequences are concrete:
 - The check is on **content, not only types** — not just "is this the right shape?" but "**does this make sense?**". Type-checking the input is necessary and not sufficient.
 - **The stricter the public methods, the calmer the interior.** Rigor at the boundary is what lets the inside of the system relax; a lax boundary pushes defensive checks into every internal step.
 
-This is the same boundary the two checkability mechanisms act on: the **entry-point pre-condition** checks it *before* the call ([23-hooks-contract.md](/specification/hooks-contract/)), and the **runtime call-validation** measures it *after* ([20-cli.md](/specification/cli/)). The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
+This is the same public-entry boundary the two checkability mechanisms act on — a **before** pre-hook and an **after** runtime measurement. That before/after split is specified once in [25-validation-overview.md](/specification/validation-overview/); this chapter does not restate the rule, it only places the orchestrator at the boundary. The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
 
 ---
 
@@ -128,6 +128,7 @@ This chapter fixes the typed contract **spec-side now**; the implementation is *
 - [26-addons.md](/specification/addons/) — the custom folder model the Setup/Health/Update/Extras frame generalizes to.
 - [23-hooks-contract.md](/specification/hooks-contract/) — the entry-point pre-condition that guards a public method *before* the call.
 - [20-cli.md](/specification/cli/) — the runtime call-validation that measures the boundary *after* the call.
+- [25-validation-overview.md](/specification/validation-overview/) — the single source of the before/after validation split, and the validation-code index.
 - [The SOP common denominator](/session/common-denominator/) — the Setup/Health/Update standard these skills realize.
 - [21-environment-scripts.md](/specification/environment-scripts/) — the health checks the audit skill performs.
 - [31-browser-automation.md](/specification/browser-automation/) — the project-level browser-automation method.
