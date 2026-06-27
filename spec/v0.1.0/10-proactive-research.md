@@ -63,6 +63,7 @@ When research produces a substantial body of material — synthesis documents, s
 - **Pointer-not-duplicate rule:** The same research result MUST NOT appear both in `context/` and inlined in a revision body. One authoritative copy lives in `context/`; revisions reference it by relative path.
 - `context/` files are ancillary files of the memo and MUST be listed in the memo's `## Ancillary Files` section with a relative path.
 - `context/` research material is a primary source for the rollout: the rollout entry points (see [13-orchestration.md](./13-orchestration.md)) read it as the verified factual basis when starting from an empty context.
+- **Processed research, not raw or scratch:** the memo's `context/` is for the *worked* research output. Material of a different kind has a different home in the project root — raw, unprocessed bulk inputs (large downloads, scraped corpora before distillation) belong in `data/`, and purely throwaway scratch that nothing depends on belongs in `.tmp/`. Only the distilled, referenced result lands in `context/`; this keeps the research store from filling with raw dumps. (See the workbench folder model for the project-root `data/` and `.tmp/` folders.)
 
 ---
 
