@@ -1,0 +1,64 @@
+{
+    "namespace": "session",
+    "version": "0.1.0",
+    "groups": [
+        {
+            "id": "introduction",
+            "label": "Introduction",
+            "order": 1,
+            "pages": [
+                "00-overview"
+            ]
+        },
+        {
+            "id": "sop",
+            "label": "SOP",
+            "order": 2,
+            "pages": [
+                "10-sop",
+                "11-common-denominator",
+                "12-instances",
+                "13-conventions"
+            ]
+        },
+        {
+            "id": "genesis-root",
+            "label": "Genesis Root",
+            "order": 3,
+            "pages": [
+                "01-genesis-root",
+                "05-config-cascade",
+                "06-namespace-registry",
+                "09-root-detection"
+            ]
+        },
+        {
+            "id": "enforcement",
+            "label": "Enforcement",
+            "order": 4,
+            "pages": [
+                "02-enforcement",
+                "07-doctor-init",
+                "08-identity-pin"
+            ]
+        },
+        {
+            "id": "cli",
+            "label": "CLI",
+            "order": 5,
+            "pages": [
+                "04-cli"
+            ]
+        },
+        {
+            "id": "recovery",
+            "label": "Recovery",
+            "order": 6,
+            "pages": [
+                "03-recovery",
+                "14-migration"
+            ]
+        }
+    ],
+    "fallback": "append-by-NN"
+}

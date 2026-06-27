@@ -1,0 +1,130 @@
+{
+    "namespace": "core",
+    "version": "0.1.0",
+    "groups": [
+        {
+            "id": "introduction",
+            "label": "Introduction",
+            "order": 1,
+            "pages": [
+                "00-overview",
+                "01-philosophy",
+                "02-memo-sop-entrypoint",
+                "30-primitives"
+            ]
+        },
+        {
+            "id": "input",
+            "label": "Input",
+            "order": 2,
+            "pages": [
+                "03-input-paths",
+                "04-input-pipeline",
+                "37-transcript-reliability"
+            ]
+        },
+        {
+            "id": "initialisierung",
+            "label": "Initialisierung",
+            "order": 3,
+            "pages": [
+                "05-memo-strategies",
+                "06-memo-structure",
+                "10-proactive-research",
+                "35-memo-authoring"
+            ]
+        },
+        {
+            "id": "revision",
+            "label": "Revision",
+            "order": 4,
+            "pages": [
+                "07-revisions-and-questions",
+                "11-quality-and-finalization",
+                "20-flow-full-vs-update-revisions",
+                "34-question-interface",
+                "40-diagrams"
+            ]
+        },
+        {
+            "id": "execution",
+            "label": "Execution",
+            "order": 5,
+            "pages": [
+                "08-phases-and-prds",
+                "12-rollout",
+                "13-orchestration",
+                "25-strands",
+                "27-landing-the-plane",
+                "32-prompt-governance",
+                "38-stage-model",
+                "42-plans"
+            ]
+        },
+        {
+            "id": "procedure",
+            "label": "Procedure",
+            "order": 6,
+            "pages": [
+                "22-tree-cli-recommended-way",
+                "23-requirements",
+                "24-tools-registry"
+            ]
+        },
+        {
+            "id": "behavior",
+            "label": "Behavior",
+            "order": 7,
+            "pages": [
+                "09-contamination-context-handover",
+                "18-multidimensionality",
+                "21-human-computer-interaction",
+                "28-drift",
+                "29-behavioral-guardrails",
+                "41-mental-model"
+            ]
+        },
+        {
+            "id": "health",
+            "label": "Health",
+            "order": 8,
+            "pages": [
+                "26-memo-history",
+                "31-goals",
+                "33-maintenance",
+                "45-implementation-fidelity-audit"
+            ]
+        },
+        {
+            "id": "agents",
+            "label": "Agents",
+            "order": 9,
+            "pages": [
+                "14-agents-skills-tasks",
+                "15-prompt-generator",
+                "36-agent-strategies"
+            ]
+        },
+        {
+            "id": "git",
+            "label": "Git & Repo",
+            "order": 10,
+            "pages": [
+                "16-git-security-versioning",
+                "17-git-workflow-and-ids",
+                "19-internal-vs-external-communication",
+                "39-release-and-pinning",
+                "44-repository-and-outward-docs"
+            ]
+        },
+        {
+            "id": "skills",
+            "label": "Skills",
+            "order": 11,
+            "pages": [
+                "43-skill-authoring-and-quality"
+            ]
+        }
+    ],
+    "fallback": "append-by-NN"
+}

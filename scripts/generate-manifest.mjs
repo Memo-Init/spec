@@ -14,10 +14,12 @@
 //
 // Output format documented in generated/README.md.
 
-import { readdir, readFile, writeFile } from 'node:fs/promises'
-import { readFileSync } from 'node:fs'
+import { readdir, readFile, writeFile, copyFile } from 'node:fs/promises'
+import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+import { readSpecManifest, groupForFile } from './lib/spec-manifest.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
@@ -67,105 +69,34 @@ const slugFromFilename = ( { filename } ) => {
 }
 
 
-// Core sidebar mapping: 00-01 are the introduction (overview + philosophy); the
-// remaining chapters are grouped into one-word topic categories (Memo 041 Teil A —
-// the order->group payload .memo/memos/041-.../context/category-remapping.json is the
-// single source of truth for this table). The 12-group set: introduction, input,
-// initialisierung, revision, execution, procedure, behavior, health, agents, git,
-// skills. Any chapter not listed here falls through to DEFAULT_GROUP — set to
-// `introduction` so an accidentally-unmapped chapter surfaces at the very top of the
-// sidebar where it is immediately noticed and fixed (fail-loud). Every current
-// chapter 02-44 is mapped explicitly, so the default never triggers today.
-const DEFAULT_GROUP = 'introduction'
-const SIDEBAR_GROUP_BY_ORDER = {
-    2: 'introduction', 30: 'introduction',
-    3: 'input', 4: 'input', 37: 'input',
-    5: 'initialisierung', 6: 'initialisierung', 10: 'initialisierung', 35: 'initialisierung',
-    7: 'revision', 11: 'revision', 20: 'revision', 34: 'revision', 40: 'revision',
-    8: 'execution', 12: 'execution', 13: 'execution', 25: 'execution', 27: 'execution', 32: 'execution', 38: 'execution', 42: 'execution',
-    22: 'procedure', 23: 'procedure', 24: 'procedure',
-    9: 'behavior', 18: 'behavior', 21: 'behavior', 28: 'behavior', 29: 'behavior', 41: 'behavior',
-    26: 'health', 31: 'health', 33: 'health', 45: 'health',
-    14: 'agents', 15: 'agents', 36: 'agents',
-    16: 'git', 17: 'git', 19: 'git', 39: 'git', 44: 'git',
-    43: 'skills'
-}
-const sidebarGroupFromFilename = ( { filename } ) => {
-    const match = filename.match( /^(\d{2})-/ )
-    if( !match ) return DEFAULT_GROUP
-    const order = parseInt( match[ 1 ], 10 )
-    if( order <= 1 ) return 'introduction'
-    return SIDEBAR_GROUP_BY_ORDER[ order ] ?? DEFAULT_GROUP
+// Memo 052 Kap 8: the sub-category grouping is no longer hardcoded here. The three former
+// per-family order→group maps (SIDEBAR_GROUP_BY_ORDER + WORKBENCH_/SESSION_ variants) plus
+// the lockstep duplicate in sidebar.mjs are DISSOLVED. The single source is now the
+// per-version spec-manifest.json on the spec level (<specDir>/spec-manifest.json), read by
+// this build AND the public site AND the Spec Viewer. A chapter's sidebar_group is the id of
+// the manifest group whose pages[] lists it; an unlisted chapter falls back to the manifest's
+// first group (fail-soft, warned) instead of a hardcoded DEFAULT_GROUP.
+const loadFamilyManifest = ( { specDir, label } ) => {
+    const result = readSpecManifest( { specDir: join( REPO, specDir ) } )
+    if( !result.found ) {
+        console.warn( `  ! ${ label }: spec-manifest not found (${ result.messages.join( '; ' ) }) — grouping degrades to first group` )
+    }
+    return result
 }
 
+const SPEC_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.spec.specDir, label: 'core' } )
+const WORKBENCH_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.workbench.specDir, label: 'workbench' } )
+const SESSION_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.session.specDir, label: 'session' } )
 
-// Workbench sidebar mapping (own family, Introduction-first). Number ranges keep the
-// reading order Introduction → Folders → CLI → Tools → Reference:
-//   00-09 introduction · 10-19 folders · 20-29 cli · 30-39 tools · 40+ reference.
-//
-// Special-cases (numbers stay put so published slug links never break — categories are
-// introduced by overriding specific orders, not by renumbering files):
-//   - 22, 23, 41 → 'core' (Memo 045 Ch5 + Memo 047 Ch5): the `.workbench/` config (22, producing
-//     side), the hooks contract (23, consuming side), and the merged Architecture chapter (41 — the
-//     core two-level diagram + project architecture, formerly 40+41 in 'reference') form the workbench
-//     Core. The 'reference' category is dissolved: 40 was merged into 41 and 41 moves to Core, so no
-//     workbench chapter maps to 'reference' anymore.
-//   - 30 → 'wiki' and 13, 18 → 'storage' (Memo 050 Ch14, F3=A): the wiki (30) and its Storage
-//     Formats are TWO sibling top categories, not one. The Memo-047 fold (30/13/18 into a single
-//     'wiki', later into 'folders') is undone: Wiki (30, the functionality) and Storage Formats
-//     (13-knowledge-format-okf + 18-design, the schemas) each get their own category. Slugs stay
-//     put (no renumbering) — only the order→group mapping changes.
-// Workbench nav (Memo 049 Kap 9) — Root / Projects / Folders / Custom reorg. Titles + group
-// mapping only; filenames/slugs are NOT renumbered (no-renumber rule). Display order
-// (lockstep with sidebar.mjs WORKBENCH_GROUP_ORDER):
-//   Introduction · Root · Projects · Folders · Custom · CLI · Tools · Core.
-//   - introduction (00,01,02) — the workbench entry trio.
-//   - root (10) — the workbench-root level and its root folders (cli/, projects/, templates/);
-//     10-root-and-projects IS the "Workbench-Root-Folder" content the memo's Root category names.
-//   - projects (11,12) — the project-level structure + folder contract.
-//   - folders (15,16,19,21,32) — the dot-correct folder-named pages (incl. the new 19-tmp page).
-//   - custom (17,26) — 26 "Custom" (the add-on-reserved area) + 17 .memo/ (the prototypical
-//     reserved add-on, default-on).
-//   - cli (20,24) · tools (31) · wiki (30) · storage (13,18) · core (22,23,25,41).
-const WORKBENCH_SIDEBAR_GROUP_BY_ORDER = {
-    0: 'introduction', 1: 'introduction', 2: 'introduction',
-    10: 'root',
-    11: 'projects', 12: 'projects',
-    15: 'folders', 16: 'folders', 19: 'folders', 21: 'folders', 32: 'folders',
-    17: 'custom', 26: 'custom',
-    20: 'cli', 24: 'cli',
-    31: 'tools',
-    30: 'wiki',
-    13: 'storage', 18: 'storage',
-    22: 'core', 23: 'core', 25: 'core', 41: 'core'
-}
-const workbenchSidebarGroupFromFilename = ( { filename } ) => {
-    const match = filename.match( /^(\d{2})-/ )
-    if( !match ) return 'introduction'
-    const order = parseInt( match[ 1 ], 10 )
-    return WORKBENCH_SIDEBAR_GROUP_BY_ORDER[ order ] ?? 'introduction'
+// Per-family grouping closure: spec-manifest lookup, fallback to the first group id.
+const makeGroupFn = ( { manifest } ) => {
+    const fallback = manifest.groups.length > 0 ? manifest.groups[ 0 ].id : 'introduction'
+    return ( { filename } ) => groupForFile( { groups: manifest.groups, filename } ) ?? fallback
 }
 
-
-// Session family nav (Memo 049): the dissolved SOP area joins the Genesis Root family.
-// Number ranges do not map cleanly to groups (the SOP area sits at 10-13 between the
-// genesis-root code chapters), so the order→group map is explicit, like the workbench one.
-// Display order (lockstep with sidebar.mjs SESSION_GROUP_ORDER):
-//   Introduction · SOP · Genesis Root · Enforcement · CLI · Recovery.
-const SESSION_SIDEBAR_GROUP_BY_ORDER = {
-    0: 'introduction',
-    1: 'genesis-root', 5: 'genesis-root', 6: 'genesis-root', 9: 'genesis-root',
-    2: 'enforcement', 7: 'enforcement', 8: 'enforcement',
-    4: 'cli',
-    3: 'recovery', 14: 'recovery',
-    10: 'sop', 11: 'sop', 12: 'sop', 13: 'sop'
-}
-const sessionSidebarGroupFromFilename = ( { filename } ) => {
-    const match = filename.match( /^(\d{2})-/ )
-    if( !match ) return 'introduction'
-    const order = parseInt( match[ 1 ], 10 )
-    return SESSION_SIDEBAR_GROUP_BY_ORDER[ order ] ?? 'introduction'
-}
+const sidebarGroupFromFilename = makeGroupFn( { manifest: SPEC_MANIFEST } )
+const workbenchSidebarGroupFromFilename = makeGroupFn( { manifest: WORKBENCH_MANIFEST } )
+const sessionSidebarGroupFromFilename = makeGroupFn( { manifest: SESSION_MANIFEST } )
 
 
 const collectEntries = async ( { dir, groupFn, label } ) => {
@@ -243,6 +174,31 @@ const main = async () => {
     await writeFile( MANIFEST_PATH, JSON.stringify( manifest, null, 4 ) + '\n', 'utf-8' )
     console.log( `\nManifest written to ${ MANIFEST_PATH }` )
     console.log( `Total: ${ manifest.stats.total_files } (core ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, session ${ manifest.stats.session_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
+
+    // Memo 052 Kap 8: copy each per-version spec-manifest into the docs-payload so it travels
+    // the same path as the payload to the public site (sync-spec.mjs → src/data). The site's
+    // sidebar.mjs reads its group labels/order from these instead of a hardcoded lockstep map.
+    await copySpecManifestsToPayload()
+}
+
+
+const copySpecManifestsToPayload = async () => {
+    const families = [
+        { specDir: REFS_MANUAL.spec.specDir, label: 'core' },
+        { specDir: REFS_MANUAL.workbench.specDir, label: 'workbench' },
+        { specDir: REFS_MANUAL.session.specDir, label: 'session' }
+    ]
+
+    await Promise.all( families.map( async ( family ) => {
+        const src = join( REPO, family.specDir, 'spec-manifest.json' )
+        if( !existsSync( src ) ) {
+            console.warn( `  ! ${ family.label }: no spec-manifest.json at ${ src } — site sidebar will fall back` )
+            return
+        }
+        const dst = join( PAYLOAD_DIR, `spec-manifest.${ family.label }.json` )
+        await copyFile( src, dst )
+        console.log( `  ✓ spec-manifest → ${ dst.replace( REPO + '/', '' ) }` )
+    } ) )
 }
 
 

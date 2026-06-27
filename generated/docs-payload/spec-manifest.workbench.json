@@ -1,0 +1,100 @@
+{
+    "namespace": "workbench",
+    "version": "0.1.0",
+    "groups": [
+        {
+            "id": "introduction",
+            "label": "Introduction",
+            "order": 1,
+            "pages": [
+                "00-overview",
+                "01-philosophy",
+                "02-sop-entrypoint"
+            ]
+        },
+        {
+            "id": "root",
+            "label": "Root",
+            "order": 2,
+            "pages": [
+                "10-root-and-projects"
+            ]
+        },
+        {
+            "id": "projects",
+            "label": "Projects",
+            "order": 3,
+            "pages": [
+                "11-project-structure",
+                "12-folders"
+            ]
+        },
+        {
+            "id": "folders",
+            "label": "Folders",
+            "order": 4,
+            "pages": [
+                "15-repos",
+                "16-context",
+                "19-tmp",
+                "21-environment-scripts",
+                "32-trash"
+            ]
+        },
+        {
+            "id": "custom",
+            "label": "Custom",
+            "order": 5,
+            "pages": [
+                "17-memo-store",
+                "26-addons"
+            ]
+        },
+        {
+            "id": "cli",
+            "label": "CLI & Scripts",
+            "order": 6,
+            "pages": [
+                "20-cli",
+                "24-skills-scope"
+            ]
+        },
+        {
+            "id": "tools",
+            "label": "Tools",
+            "order": 7,
+            "pages": [
+                "31-browser-automation"
+            ]
+        },
+        {
+            "id": "wiki",
+            "label": "Wiki",
+            "order": 8,
+            "pages": [
+                "30-wiki"
+            ]
+        },
+        {
+            "id": "storage",
+            "label": "Storage Formats",
+            "order": 9,
+            "pages": [
+                "13-knowledge-format-okf",
+                "18-design"
+            ]
+        },
+        {
+            "id": "core",
+            "label": "Core",
+            "order": 10,
+            "pages": [
+                "22-config",
+                "23-hooks-contract",
+                "25-validation-overview",
+                "41-project-architecture"
+            ]
+        }
+    ],
+    "fallback": "append-by-NN"
+}
