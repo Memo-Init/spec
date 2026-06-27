@@ -6,7 +6,7 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-06-27T09:35:23.180Z"
+generated_at: "2026-06-27T10:15:50.297Z"
 generated_from: "spec/session/0.1.0/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/06-namespace-registry.md."
@@ -44,16 +44,17 @@ The host **reads** the union of every block; a tool never imperatively mutates t
 
 ---
 
-## Two Block Kinds: SOP-Instance and Catalog
+## Three Block Kinds: SOP-Instance, Catalog, and Policy
 
-The same `sops[]` array holds two kinds of block, distinguished only by whether the namespace is a **gate**:
+The same `sops[]` array holds three kinds of block, distinguished by **how — and whether — the namespace gates**:
 
-| Kind | `requires[]` | Feeds `requirements[]` edge? | Role | Example |
-|------|--------------|------------------------------|------|---------|
-| **SOP-instance block** | carries dependencies | yes — its entry point sits behind a `when:pre` edge | a process that gates work behind a predecessor SOP | `memo`, `workbench` |
-| **Catalog block** | empty | **no** — never a `requirements[]` edge, never a gate | a plain capability catalog: tools that are *available*, not *gated* | `flowmcp` |
+| Kind | `requires[]` | Gates via | Role | Example |
+|------|--------------|-----------|------|---------|
+| **SOP-instance block** | carries dependencies | `requirements[]` — its entry point sits behind a `when:pre` edge | a process that gates work behind a predecessor SOP | `memo`, `workbench` |
+| **Catalog block** | empty | **nothing** — never a gate | a plain capability catalog: tools that are *available*, not *gated* | `flowmcp` |
+| **Policy block** | empty (never a chain predecessor) | `assertions[]` — only as a checkpoint `redirect`, never a `when:pre` edge | a body of standards that is *always findable*, of which a sub-set must be *read by a checkpoint* | `node` |
 
-A catalog block reserves a namespace and contributes skills like any block, but it is **never a precondition for anything**. FlowMCP reserves `flowmcp` and contributes `flowmcp-usage`; calling a FlowMCP tool is never gated behind a predecessor SOP:
+A **catalog** block reserves a namespace and contributes skills like any block, but it is **never a precondition for anything**. FlowMCP reserves `flowmcp` and contributes `flowmcp-usage`; calling a FlowMCP tool is never gated behind a predecessor SOP:
 
 ```jsonc
 { "namespace": "flowmcp", "owner": "flowmcp", "tier": 2,
@@ -61,7 +62,112 @@ A catalog block reserves a namespace and contributes skills like any block, but 
   "skills": [ { "id": "flowmcp-usage", "signals": ["attributionSkill:flowmcp-usage"] } ] }
 ```
 
-The two kinds coexisting in one array is deliberate: the registry is the single union of everything registered, and a reader distinguishes a gate from a catalog by inspecting `requires[]` and the top-level `requirements[]`, not by reading two separate files. The SOP-instance-vs-catalog framing is elaborated in [10-sop.md](/specification/sop/).
+A **policy** block also reserves a namespace and contributes skills, and like a catalog it is **never a chain predecessor** — its `requires[]` is always empty and it feeds **no** `requirements[]` edge. What sets it apart is a third, separate gate axis: a policy block MAY feed the top-level `assertions[]` collection ([05-config-cascade.md](/specification/config-cascade/)), through which a *sub-set* of its skills must be read by the time a named **checkpoint** skill fires — enforced only as a `redirect`, never as a hard block. The development standards are one such policy block, reserved under the `node` namespace (see [The `node` Policy Block](#the-node-policy-block) below).
+
+The three kinds coexisting in one array is deliberate: the registry is the single union of everything registered, and a reader distinguishes them by inspecting `requires[]`, the top-level `requirements[]`, and the top-level `assertions[]` — not by reading three separate files. The SOP-instance-vs-catalog framing is elaborated in [10-sop.md](/specification/sop/).
+
+The three kinds are a classification over one base registrant — same reservation fields, three distinct gate behaviours:
+
+```mermaid
+classDiagram
+    class Registrant {
+        +namespace
+        +owner
+        +tier
+        +skills[]
+    }
+    class SOPInstance {
+        +requires[] non-empty
+        +feeds requirements[]
+        +gates via predecessor chain
+    }
+    class Catalog {
+        +requires[] empty
+        +feeds nothing
+        +gates never, findable only
+    }
+    class Policy {
+        +requires[] empty
+        +mode always or contextual or checkpoint
+        +groups[]
+        +feeds assertions[]
+        +gates only as redirect at checkpoint
+    }
+    Registrant <|-- SOPInstance
+    Registrant <|-- Catalog
+    Registrant <|-- Policy
+```
+
+### REGISTERED ≠ GATE Is a Trinary
+
+With three kinds, the rule that *being registered does not make a block a gate* MUST be read as an explicit trinary, so no reader applies an old binary "gates or doesn't" to a policy block and mis-reads it as inert:
+
+| Requirement | Statement |
+|-------------|-----------|
+| **REQ-SS-POLICY** | A **Catalog** block never gates. An **SOP-instance** block gates only via `requirements[]` / `when:pre`. A **Policy** block gates only via `assertions[]`, only as `onMissing:"redirect"`, and is never a chain predecessor (`requires[]` always empty). |
+
+---
+
+## The `node` Policy Block
+
+The development standards register as **one** policy block under the `node` namespace. The seven `node-*` skills are already named under that prefix, so the namespace is reserved with **no renames** — N-2 already holds. The block reserves `namespace` + `owner` + `tier` and contributes its `skills[]`; `requires[]` is empty (a policy block is never a chain predecessor); it feeds **no** `requirements[]` edge (the gate axis is left untouched, byte for byte); it MAY feed `assertions[]` (the separate policy gate axis, [05-config-cascade.md](/specification/config-cascade/)). Its canonical declaration:
+
+```jsonc
+{ "namespace": "node", "owner": "node-formatting", "tier": 2,
+  "cli": null, "folders": [], "requires": [],
+  "skills": [
+    { "id": "node-formatting",          "signals": ["attributionSkill:node-formatting"],          "mode": "always" },
+    { "id": "node-class-architecture",  "signals": ["attributionSkill:node-class-architecture"],  "mode": "always" },
+    { "id": "node-error-codes",         "signals": ["attributionSkill:node-error-codes"],         "mode": "contextual" },
+    { "id": "node-validation",          "signals": ["attributionSkill:node-validation"],          "mode": "contextual", "groups": ["security"] },
+    { "id": "node-environment-manager", "signals": ["attributionSkill:node-environment-manager"], "mode": "contextual", "groups": ["security"] },
+    { "id": "node-server-design",       "signals": ["attributionSkill:node-server-design"],       "mode": "contextual", "groups": ["security"] },
+    { "id": "node-testing",             "signals": ["attributionSkill:node-testing"],             "mode": "checkpoint", "groups": ["verification"] }
+  ] }
+```
+
+`owner` is a single unit (`node-formatting`); a policy block needs no team. The canonical description of *what* each standard is lives in the public user-preferences specification; the block links to it through each skill's `metadata.memo.specs` rather than restating the rule — single-source by ownership, no re-inventory (see [Linking the Standards, Not Re-Describing Them](#linking-the-standards-not-re-describing-them)).
+
+### Per-Member Facets: `signals`, `mode`, `groups`
+
+Beyond its `id`, each policy-block member carries up to three facets:
+
+| Facet | Holds | Required? |
+|-------|-------|-----------|
+| `signals` | the read-receipt — `attributionSkill:<id>`, the harness-authored, structured signal that proves the skill was read ([02-enforcement.md](/specification/enforcement/), REQ-SS-SIGNAL) | yes |
+| `mode` | the activation mode: `always` \| `contextual` \| `checkpoint` | **yes — mandatory, no silent default** |
+| `groups` | the checkpoint groups the member belongs to (e.g. `security`, `verification`); resolved cross-namespace ([Cross-Namespace Groups](#cross-namespace-groups)) | only for `checkpoint` members |
+
+The `mode` enum models the "some standards apply always, some only in context, some must be confirmed at a checkpoint" spectrum with **one** per-member field:
+
+| `mode` | Meaning | Spec footprint |
+|--------|---------|----------------|
+| `always` | present by construction — pinned ambient through the genesis configuration, **no edge** | none (ambient) |
+| `contextual` | surfaced by the model's own skill-description triggering when the work calls for it | none |
+| `checkpoint` | additionally carries a `group` and is pulled into an `assertions[]` row — its read-receipt is required when a checkpoint skill fires | one `assertions[]` row per group |
+
+For the seven `node-*` skills this resolves to: `node-formatting` and `node-class-architecture` are `always` (ambient editor + no-silent-defaults / static-class discipline, in force on every file); `node-error-codes`, `node-validation`, `node-environment-manager`, `node-server-design` are `contextual` (loaded on demand by description triggering); `node-testing` is `checkpoint` (the test-verification standard, whose read-receipt is required at landing). A member MAY be **both** `contextual` and `checkpoint` — `node-validation` is loaded contextually yet still owes a `security` read-receipt at the landing checkpoint.
+
+`mode` being **mandatory** is load-bearing: an unresolved `mode` is generated as `null` with source `"none"`, never silently as `contextual`, so a missing activation decision is surfaced by the foreground doctor rather than guessed (no-silent-default).
+
+### Read-Tracking Reuses the Harness Signal
+
+"Has the agent read skill X" is answered from the **same** structured `attributionSkill` signal the enforcement gate already trusts: the receipt is present iff `attributionSkill:node-X` appears, read jq-structured from the harness-authored transcript field, never as a substring (REQ-SS-SIGNAL, [02-enforcement.md](/specification/enforcement/)). No new sensor is introduced — read-tracking is a *view* over a signal the harness already writes. The read-only board that renders this view per-skill and per-group is `session prefs-status` ([07-doctor-init.md](/specification/doctor-init/)).
+
+### Cross-Namespace Groups
+
+A `group` resolves over the **union of all blocks**, not within a single namespace — so a checkpoint group can span owners. Two groups are defined:
+
+| Group | Members | Spans |
+|-------|---------|-------|
+| `security` | `node-validation`, `node-environment-manager`, `node-server-design` (node) **+ `git-security`** (git) **+ `npm-security`** (the supply-chain standard) | cross-namespace |
+| `verification` | `node-testing` (node) | single namespace |
+
+`git-security` and `npm-security` join `security` from their own namespaces, each declaring `groups:["security"]` in **its own** fragment — declare-don't-register, the marketplace firewall holds (no block reaches into another's). A group **resolves** only when every member is installed and ships its signal. A standard that is documented but **not yet registered as a core skill** is a **pending member**: the foreground doctor reports that the `requiresGroup` does not fully resolve, and the runtime gate degrades that to fail-open ALLOW (best-effort), never a redirect (see [07-doctor-init.md](/specification/doctor-init/)) — this is the safety net for any group whose membership outruns its registration. The checkpoint rows that consume these groups live in `assertions[]` ([05-config-cascade.md](/specification/config-cascade/)); the gate that evaluates them is in [02-enforcement.md](/specification/enforcement/).
+
+### Linking the Standards, Not Re-Describing Them
+
+The policy block registers *how* the standards are activated and tracked; it does not restate *what* each standard says. Each `node-*` skill's canonical description lives in the public user-preferences specification, and the skill points at it through `metadata.memo.specs`. Where this spec names a standard it links the owning chapter rather than duplicating its rule — the registry is single-source by ownership, the standards' text is single-source in their own specification, and the two never drift into two copies.
 
 ---
 

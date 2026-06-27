@@ -6,7 +6,7 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-06-27T09:35:23.180Z"
+generated_at: "2026-06-27T10:15:50.297Z"
 generated_from: "spec/session/0.1.0/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/07-doctor-init.md."
@@ -67,9 +67,10 @@ The **session** namespace's leaf is the user's own workspace check: `memo sessio
 3. **`registry-validate`** — the same dangling-edge validator the build runs, now applied at runtime.
 4. **Presence** — confirm each registered skill resolves on disk (`~/.claude/skills/<id>` target exists).
 5. **Strict namespace collision** — the N-1 / N-2 checks (run HERE; see below).
-6. **Print the doctor table** and emit the envelope.
+6. **Group resolution** — every `assertions[]` `requiresGroup` resolves cross-namespace: each member installed and carrying its signal, the checkpoint skill present, no `assertions[]` id collision. This is the policy-axis analogue of `registry-validate`, and it is where a **pending, not-yet-registered group member** (a standard documented but not yet a core skill) is caught out-of-band.
+7. **Print the doctor table** and emit the envelope.
 
-The six checks and their severities:
+The seven checks and their severities:
 
 | # | Check | Severity |
 |---|-------|----------|
@@ -79,6 +80,9 @@ The six checks and their severities:
 | 4 | each reserved namespace is unique — no N-1 / N-2 collision | **FAIL** |
 | 5 | each skill carries a structured `attributionSkill:<id>` signal (the only trusted signal — REQ-SS-SIGNAL) | **WARN** |
 | 6 | gate runtime deps present (`jq` on PATH); disable-switch / sentinel state surfaced | **WARN** for `jq`; **INFO** for disable-switch state |
+| 7 | every `assertions[]` `requiresGroup` resolves — each member installed and signalling, the checkpoint skill present; no `assertions[]` id collision (rejected here as N-1 is) | **FAIL** if a declared group member is unresolved or an id collides; the runtime gate degrades the same condition to fail-open ALLOW |
+
+Check 7 is **mandatory `mode`**'s safety net too: a policy-block member generated without a resolved `mode` (`null`, source `"none"`) surfaces here rather than being silently treated as `contextual`. And it verifies the reserved policy namespaces are genuinely unclaimed (e.g. `node` is not already taken) instead of assuming N-2 holds.
 
 Check 3 makes the doctor the **runtime superset** of the build-time `registry-validate`: one validator core, two timings — `registry-validate` is a *subset that fails the build*, `session doctor` is *that plus on-disk presence, namespaces, signals, and jq, that reports*. This mirrors the family's existing "one registry, one scan, two timings" framing.
 
@@ -112,6 +116,31 @@ session doctor — not-ready (1 fail · 1 warn · 2 pass)
 
   exit 1
 ```
+
+---
+
+## `session prefs-status` — The Read-Only Standards Board
+
+Where `doctor` answers *"is the environment ready?"*, **`session prefs-status`** answers *"which policy standards has this session actually read?"*. It is a read-only board over the policy blocks ([06-namespace-registry.md](/specification/namespace-registry/)): for each `checkpoint`/`contextual` member it reports whether its `attributionSkill` receipt is present in the session transcript (read jq-structured, REQ-SS-SIGNAL — never a substring), and it rolls the members of each checkpoint `group` up to a per-group yes/no.
+
+Like `doctor` it **reports, never blocks** — it has no exit-code authority over the session; it is the human-facing view of the same receipt the landing gate ([02-enforcement.md](/specification/enforcement/)) evaluates. `always` members are shown as present-by-construction (ambient, no receipt owed).
+
+```
+session prefs-status — security: incomplete · verification: ok
+
+  Skill                     Mode        Group         Read
+  node-formatting           always      —             (ambient)
+  node-validation           contextual  security      yes
+  node-environment-manager  contextual  security      yes
+  node-server-design        contextual  security      no
+  git-security              contextual  security      yes
+  node-testing              checkpoint  verification  yes
+
+  security      incomplete  (node-server-design unread)
+  verification  ok
+```
+
+A `group` is `ok` only when every resolved member's receipt is present (the same AND the gate takes). An unresolved member (a pending, not-yet-registered standard) is surfaced here exactly as `doctor` check 7 surfaces it, so the board never silently reports a group `ok` while a member is missing.
 
 ---
 

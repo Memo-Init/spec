@@ -8066,6 +8066,11 @@ The decision table the reference hook MUST implement:
 | the required skill is **not installed** (dangling edge) | ERROR (fail-open) | 0 |
 | transcript readable AND predecessor `attributionSkill` found (jq) | ALLOW | 0 |
 | transcript readable AND predecessor genuinely absent | DENY | 2 |
+| firing skill is a checkpoint in `assertions[]` AND every `requiresGroup` member receipt present | ALLOW | 0 |
+| firing skill is a checkpoint in `assertions[]` AND a member receipt absent | DENY-as-redirect (names the unread skills) | 2 |
+| a `requiresGroup` member does not resolve (e.g. a pending, not-yet-registered skill) | ERROR (fail-open) + doctor WARN | 0 |
+
+The last three rows are the **policy checkpoint** branch (see [Policy Checkpoints — The Landing Gate](#policy-checkpoints--the-landing-gate) below); the rows above them are the unchanged `when:pre` predecessor branch. The two branches are evaluated independently on the same `Skill` call, and either may DENY-as-redirect.
 
 The governing principle: **the gate never fail-CLOSES on infrastructure trouble** (FAILOPEN), and **never produces an unrecoverable lockout** (EDGEVALID). A DENY is a *redirect*, not a dead end — its message tells the agent to read the predecessor SOP first, after which the same entry point passes.
 
@@ -8084,6 +8089,42 @@ stateDiagram-v2
 
 ---
 
+## Policy Checkpoints — The Landing Gate
+
+The `when:pre` branch gates an entry point behind a predecessor SOP. A **policy block** ([06-namespace-registry.md](./06-namespace-registry.md)) needs a different shape of gate: *"by the time work lands, a sub-set of standards must have been read."* That is expressed by the top-level **`assertions[]`** collection ([05-config-cascade.md](./05-config-cascade.md)) and evaluated by the **same** PreToolUse hook — there is no second hook.
+
+An `assertions[]` row names a **checkpoint** skill, a **`requiresGroup`**, and an `onMissing` policy:
+
+```jsonc
+{ "id": "REQ-NODE-SEC-FINALIZE",    "checkpoint": "memo-finalize", "requiresGroup": "security",     "mode": "all", "when": "landing", "onMissing": "redirect" }
+{ "id": "REQ-NODE-SEC-PUSH",        "checkpoint": "git-push",      "requiresGroup": "security",     "mode": "all", "when": "landing", "onMissing": "redirect" }
+{ "id": "REQ-NODE-VERIFY-FINALIZE", "checkpoint": "memo-finalize", "requiresGroup": "verification", "mode": "all", "when": "landing", "onMissing": "redirect" }
+```
+
+When the firing skill matches a row's `checkpoint`, the hook resolves the row's `requiresGroup` over the union of all blocks and takes the **AND** over its members' `attributionSkill` receipts (`mode:"all"`). All present ⇒ ALLOW. One absent ⇒ **DENY-as-redirect**: a redirect, not a dead end, whose message names exactly the unread skills, after which the same checkpoint passes. The landing gate fires at the next *real* skill the standards must be settled by — `memo-finalize` (primary) with `git-push` as the irreversible-outward backstop; there is no dedicated landing skill to key on.
+
+Three invariants bound the checkpoint branch, all inherited from the three-state contract:
+
+- **Never a hard lock.** `onMissing` is `redirect` only; a checkpoint group may never produce a terminal block.
+- **Never blocks the workflow** (REQ-SS-WORKFLOW). Checkpoints sit on `memo-finalize` / `git-push`; `memo-init` / `memo-plan` / `memo-revision-*` are never checkpoints and run unimpeded.
+- **A non-resolving member fails open.** If a `requiresGroup` member is not installed (e.g. a standard documented but not yet registered as a skill), the gate cannot honestly assert "all read", so it degrades to fail-open ALLOW (best-effort, **no** hard guarantee) and the foreground doctor reports the unresolved member ([07-doctor-init.md](./07-doctor-init.md)). An `assertions[]` id collision is likewise a fail-open ALLOW at the hook, never a redirect; it is rejected strictly only in the foreground doctor.
+
+The landing gate as a top-down flow:
+
+```mermaid
+flowchart TD
+    A["memo-finalize / git-push fires (Skill)"] --> B{"assertions[] row for this checkpoint?"}
+    B -->|no| Z["ALLOW (not gated)"]
+    B -->|yes| C["AND over attributionSkill receipts of the requiresGroup members"]
+    C -->|all present| Z
+    C -->|one absent| D["DENY-as-redirect: names the unread skills"]
+    D --> E["agent reads the missing skills"]
+    E --> A
+    C -.->|a member does not resolve| Z2["fail-open ALLOW (best-effort) + doctor WARN"]
+```
+
+---
+
 ## Required Properties
 
 | Requirement | Statement |
@@ -8098,6 +8139,7 @@ stateDiagram-v2
 | **REQ-SS-CANARY** | A SessionStart canary re-verifies the gate against known fixtures and auto-disables on drift. |
 | **REQ-SS-NOWRITE** | Live `~/.claude/` config (settings.json, CLAUDE.md) is changed only additively via a reviewed diff, never auto-written. |
 | **REQ-SS-WORKFLOW** | The gate MUST NOT block the memo workflow: `memo-init` / `memo-plan` / `memo-revision-*` run under the active gate (a DENY only redirects through the predecessor SOP). |
+| **REQ-SS-POLICY** | A policy block gates only via `assertions[]` checkpoint rows, only as `onMissing:"redirect"`, never as a `when:pre` predecessor. A non-resolving `requiresGroup` member fails open (best-effort); an `assertions[]` id collision fails open at the hook and is rejected only in the foreground doctor. Defined in [06-namespace-registry.md](./06-namespace-registry.md). |
 
 ---
 
@@ -8375,6 +8417,7 @@ Before the merge mechanics, this is **what the config holds**, separately from *
 | `security` | the resolved **trust level**; a project may never self-elevate it (monotonicity, [01-genesis-root.md](./01-genesis-root.md)). |
 | `sops[]` | the **registrant blocks** — one per reserved **namespace**. Each block names its `owner` and `tier`, reserves a namespace, and declares the `cli` it ships, the `folders` it owns, and the `skills[]` it contributes ([06-namespace-registry.md](./06-namespace-registry.md)). |
 | `requirements[]` | the fine, cross-namespace **pre-gate edges** (entry point → skill, with `when: pre`/`post`) the PreToolUse hook evaluates ([02-enforcement.md](./02-enforcement.md)). |
+| `assertions[]` | the **policy checkpoint rows** — read-receipt requirements (a `requiresGroup` that must be read by the time a named `checkpoint` skill fires, `onMissing:"redirect"`), fed ONLY by policy blocks; the policy-axis counterpart to `requirements[]`, never mixed with it ([06-namespace-registry.md](./06-namespace-registry.md)). |
 
 The two newer dimensions a registrant now carries — the **`folders`** a namespace owns and the **`namespaces`** themselves (each reserved exclusively, one owner apiece) — are declared *inside* `sops[]`, not as separate top-level authorities. The reserved-namespace set and the folder-ownership map are therefore **views over `sops[]`**, which keeps the config single-source by ownership rather than by repetition. *How* these fields then merge across tiers is answered in the cascade mechanics that follow.
 
@@ -8410,6 +8453,13 @@ The block below is an **illustrative** `.session/config.json` (placeholders, not
   // requirements[]: the fine, cross-namespace pre-gate edges the hook evaluates.
   "requirements": [
     { "id": "REQ-061", "entrypoint": "memo-init", "requires": "memo-sop", "when": "pre" }
+  ],
+
+  // assertions[]: policy checkpoint rows — read-receipts owed at a named checkpoint
+  // (list-union by id, fed ONLY by policy blocks, never mixed with requirements[]).
+  "assertions": [
+    { "id": "REQ-NODE-SEC-FINALIZE", "checkpoint": "memo-finalize", "requiresGroup": "security",
+      "mode": "all", "when": "landing", "onMissing": "redirect" }
   ]
 }
 ```
@@ -8452,6 +8502,7 @@ The config holds **two separate top-level structures with different merge semant
 | Security / trust level | session | resolved, NOT cascaded — a project may never self-elevate (monotonicity, see [01-genesis-root.md](./01-genesis-root.md)) |
 | `sops[]` (registrant blocks: namespace+owner+tier+skills[]+optional requires[]) | session base + drop-in merge | **list-union by `namespace`** (one block per namespace) |
 | `requirements[]` (fine entrypoint→skill pre-gate edges, e.g. REQ-061) | session base + merge | **list-union**; fed ONLY by SOP-instance blocks ([06-namespace-registry.md](./06-namespace-registry.md)) |
+| `assertions[]` (policy checkpoint read-receipt rows) | session base + merge | **list-union by id**; fed ONLY by policy blocks; never mixed with `requirements[]` ([06-namespace-registry.md](./06-namespace-registry.md)) |
 | reserved namespaces | session | unique-key override; collision = error |
 | disable switch / sentinel / canary | `~/.claude/session/` | — (recovery reachable above any project) |
 | repo facing/visibility/remote | workbench (`.workbench/`) | override per repo |
@@ -8464,7 +8515,7 @@ The collection concerns (`sops[]`, `requirements[]`) **merge** as list-unions so
 
 The old **flat `skills[]` list no longer exists**. Skills are now declared **inside** their owning `sops[]` block (`namespace` + `owner` + `tier` + `skills[]` + optional `requires[]`), as specified in [06-namespace-registry.md](./06-namespace-registry.md). The cascade merge is therefore a **namespace-block union** (one block per namespace), not a flat skill union: two tiers each contributing skills do so by contributing their respective namespace blocks, and a namespace collision is an error rather than a silent concatenation.
 
-Only SOP-instance blocks feed `requirements[]` (the pre-gate edges); a catalog block (e.g. FlowMCP) carries skills but contributes no edge and is therefore never a gate — see [06-namespace-registry.md](./06-namespace-registry.md).
+Only SOP-instance blocks feed `requirements[]` (the pre-gate edges); a catalog block (e.g. FlowMCP) carries skills but contributes no edge and is therefore never a gate; a **policy block** (e.g. `node`) feeds the separate `assertions[]` collection — checkpoint read-receipts enforced only as a redirect — and is likewise never a `when:pre` predecessor — see [06-namespace-registry.md](./06-namespace-registry.md).
 
 ---
 
@@ -8541,16 +8592,17 @@ The host **reads** the union of every block; a tool never imperatively mutates t
 
 ---
 
-## Two Block Kinds: SOP-Instance and Catalog
+## Three Block Kinds: SOP-Instance, Catalog, and Policy
 
-The same `sops[]` array holds two kinds of block, distinguished only by whether the namespace is a **gate**:
+The same `sops[]` array holds three kinds of block, distinguished by **how — and whether — the namespace gates**:
 
-| Kind | `requires[]` | Feeds `requirements[]` edge? | Role | Example |
-|------|--------------|------------------------------|------|---------|
-| **SOP-instance block** | carries dependencies | yes — its entry point sits behind a `when:pre` edge | a process that gates work behind a predecessor SOP | `memo`, `workbench` |
-| **Catalog block** | empty | **no** — never a `requirements[]` edge, never a gate | a plain capability catalog: tools that are *available*, not *gated* | `flowmcp` |
+| Kind | `requires[]` | Gates via | Role | Example |
+|------|--------------|-----------|------|---------|
+| **SOP-instance block** | carries dependencies | `requirements[]` — its entry point sits behind a `when:pre` edge | a process that gates work behind a predecessor SOP | `memo`, `workbench` |
+| **Catalog block** | empty | **nothing** — never a gate | a plain capability catalog: tools that are *available*, not *gated* | `flowmcp` |
+| **Policy block** | empty (never a chain predecessor) | `assertions[]` — only as a checkpoint `redirect`, never a `when:pre` edge | a body of standards that is *always findable*, of which a sub-set must be *read by a checkpoint* | `node` |
 
-A catalog block reserves a namespace and contributes skills like any block, but it is **never a precondition for anything**. FlowMCP reserves `flowmcp` and contributes `flowmcp-usage`; calling a FlowMCP tool is never gated behind a predecessor SOP:
+A **catalog** block reserves a namespace and contributes skills like any block, but it is **never a precondition for anything**. FlowMCP reserves `flowmcp` and contributes `flowmcp-usage`; calling a FlowMCP tool is never gated behind a predecessor SOP:
 
 ```jsonc
 { "namespace": "flowmcp", "owner": "flowmcp", "tier": 2,
@@ -8558,7 +8610,112 @@ A catalog block reserves a namespace and contributes skills like any block, but 
   "skills": [ { "id": "flowmcp-usage", "signals": ["attributionSkill:flowmcp-usage"] } ] }
 ```
 
-The two kinds coexisting in one array is deliberate: the registry is the single union of everything registered, and a reader distinguishes a gate from a catalog by inspecting `requires[]` and the top-level `requirements[]`, not by reading two separate files. The SOP-instance-vs-catalog framing is elaborated in [10-sop.md](./10-sop.md).
+A **policy** block also reserves a namespace and contributes skills, and like a catalog it is **never a chain predecessor** — its `requires[]` is always empty and it feeds **no** `requirements[]` edge. What sets it apart is a third, separate gate axis: a policy block MAY feed the top-level `assertions[]` collection ([05-config-cascade.md](./05-config-cascade.md)), through which a *sub-set* of its skills must be read by the time a named **checkpoint** skill fires — enforced only as a `redirect`, never as a hard block. The development standards are one such policy block, reserved under the `node` namespace (see [The `node` Policy Block](#the-node-policy-block) below).
+
+The three kinds coexisting in one array is deliberate: the registry is the single union of everything registered, and a reader distinguishes them by inspecting `requires[]`, the top-level `requirements[]`, and the top-level `assertions[]` — not by reading three separate files. The SOP-instance-vs-catalog framing is elaborated in [10-sop.md](./10-sop.md).
+
+The three kinds are a classification over one base registrant — same reservation fields, three distinct gate behaviours:
+
+```mermaid
+classDiagram
+    class Registrant {
+        +namespace
+        +owner
+        +tier
+        +skills[]
+    }
+    class SOPInstance {
+        +requires[] non-empty
+        +feeds requirements[]
+        +gates via predecessor chain
+    }
+    class Catalog {
+        +requires[] empty
+        +feeds nothing
+        +gates never, findable only
+    }
+    class Policy {
+        +requires[] empty
+        +mode always or contextual or checkpoint
+        +groups[]
+        +feeds assertions[]
+        +gates only as redirect at checkpoint
+    }
+    Registrant <|-- SOPInstance
+    Registrant <|-- Catalog
+    Registrant <|-- Policy
+```
+
+### REGISTERED ≠ GATE Is a Trinary
+
+With three kinds, the rule that *being registered does not make a block a gate* MUST be read as an explicit trinary, so no reader applies an old binary "gates or doesn't" to a policy block and mis-reads it as inert:
+
+| Requirement | Statement |
+|-------------|-----------|
+| **REQ-SS-POLICY** | A **Catalog** block never gates. An **SOP-instance** block gates only via `requirements[]` / `when:pre`. A **Policy** block gates only via `assertions[]`, only as `onMissing:"redirect"`, and is never a chain predecessor (`requires[]` always empty). |
+
+---
+
+## The `node` Policy Block
+
+The development standards register as **one** policy block under the `node` namespace. The seven `node-*` skills are already named under that prefix, so the namespace is reserved with **no renames** — N-2 already holds. The block reserves `namespace` + `owner` + `tier` and contributes its `skills[]`; `requires[]` is empty (a policy block is never a chain predecessor); it feeds **no** `requirements[]` edge (the gate axis is left untouched, byte for byte); it MAY feed `assertions[]` (the separate policy gate axis, [05-config-cascade.md](./05-config-cascade.md)). Its canonical declaration:
+
+```jsonc
+{ "namespace": "node", "owner": "node-formatting", "tier": 2,
+  "cli": null, "folders": [], "requires": [],
+  "skills": [
+    { "id": "node-formatting",          "signals": ["attributionSkill:node-formatting"],          "mode": "always" },
+    { "id": "node-class-architecture",  "signals": ["attributionSkill:node-class-architecture"],  "mode": "always" },
+    { "id": "node-error-codes",         "signals": ["attributionSkill:node-error-codes"],         "mode": "contextual" },
+    { "id": "node-validation",          "signals": ["attributionSkill:node-validation"],          "mode": "contextual", "groups": ["security"] },
+    { "id": "node-environment-manager", "signals": ["attributionSkill:node-environment-manager"], "mode": "contextual", "groups": ["security"] },
+    { "id": "node-server-design",       "signals": ["attributionSkill:node-server-design"],       "mode": "contextual", "groups": ["security"] },
+    { "id": "node-testing",             "signals": ["attributionSkill:node-testing"],             "mode": "checkpoint", "groups": ["verification"] }
+  ] }
+```
+
+`owner` is a single unit (`node-formatting`); a policy block needs no team. The canonical description of *what* each standard is lives in the public user-preferences specification; the block links to it through each skill's `metadata.memo.specs` rather than restating the rule — single-source by ownership, no re-inventory (see [Linking the Standards, Not Re-Describing Them](#linking-the-standards-not-re-describing-them)).
+
+### Per-Member Facets: `signals`, `mode`, `groups`
+
+Beyond its `id`, each policy-block member carries up to three facets:
+
+| Facet | Holds | Required? |
+|-------|-------|-----------|
+| `signals` | the read-receipt — `attributionSkill:<id>`, the harness-authored, structured signal that proves the skill was read ([02-enforcement.md](./02-enforcement.md), REQ-SS-SIGNAL) | yes |
+| `mode` | the activation mode: `always` \| `contextual` \| `checkpoint` | **yes — mandatory, no silent default** |
+| `groups` | the checkpoint groups the member belongs to (e.g. `security`, `verification`); resolved cross-namespace ([Cross-Namespace Groups](#cross-namespace-groups)) | only for `checkpoint` members |
+
+The `mode` enum models the "some standards apply always, some only in context, some must be confirmed at a checkpoint" spectrum with **one** per-member field:
+
+| `mode` | Meaning | Spec footprint |
+|--------|---------|----------------|
+| `always` | present by construction — pinned ambient through the genesis configuration, **no edge** | none (ambient) |
+| `contextual` | surfaced by the model's own skill-description triggering when the work calls for it | none |
+| `checkpoint` | additionally carries a `group` and is pulled into an `assertions[]` row — its read-receipt is required when a checkpoint skill fires | one `assertions[]` row per group |
+
+For the seven `node-*` skills this resolves to: `node-formatting` and `node-class-architecture` are `always` (ambient editor + no-silent-defaults / static-class discipline, in force on every file); `node-error-codes`, `node-validation`, `node-environment-manager`, `node-server-design` are `contextual` (loaded on demand by description triggering); `node-testing` is `checkpoint` (the test-verification standard, whose read-receipt is required at landing). A member MAY be **both** `contextual` and `checkpoint` — `node-validation` is loaded contextually yet still owes a `security` read-receipt at the landing checkpoint.
+
+`mode` being **mandatory** is load-bearing: an unresolved `mode` is generated as `null` with source `"none"`, never silently as `contextual`, so a missing activation decision is surfaced by the foreground doctor rather than guessed (no-silent-default).
+
+### Read-Tracking Reuses the Harness Signal
+
+"Has the agent read skill X" is answered from the **same** structured `attributionSkill` signal the enforcement gate already trusts: the receipt is present iff `attributionSkill:node-X` appears, read jq-structured from the harness-authored transcript field, never as a substring (REQ-SS-SIGNAL, [02-enforcement.md](./02-enforcement.md)). No new sensor is introduced — read-tracking is a *view* over a signal the harness already writes. The read-only board that renders this view per-skill and per-group is `session prefs-status` ([07-doctor-init.md](./07-doctor-init.md)).
+
+### Cross-Namespace Groups
+
+A `group` resolves over the **union of all blocks**, not within a single namespace — so a checkpoint group can span owners. Two groups are defined:
+
+| Group | Members | Spans |
+|-------|---------|-------|
+| `security` | `node-validation`, `node-environment-manager`, `node-server-design` (node) **+ `git-security`** (git) **+ `npm-security`** (the supply-chain standard) | cross-namespace |
+| `verification` | `node-testing` (node) | single namespace |
+
+`git-security` and `npm-security` join `security` from their own namespaces, each declaring `groups:["security"]` in **its own** fragment — declare-don't-register, the marketplace firewall holds (no block reaches into another's). A group **resolves** only when every member is installed and ships its signal. A standard that is documented but **not yet registered as a core skill** is a **pending member**: the foreground doctor reports that the `requiresGroup` does not fully resolve, and the runtime gate degrades that to fail-open ALLOW (best-effort), never a redirect (see [07-doctor-init.md](./07-doctor-init.md)) — this is the safety net for any group whose membership outruns its registration. The checkpoint rows that consume these groups live in `assertions[]` ([05-config-cascade.md](./05-config-cascade.md)); the gate that evaluates them is in [02-enforcement.md](./02-enforcement.md).
+
+### Linking the Standards, Not Re-Describing Them
+
+The policy block registers *how* the standards are activated and tracked; it does not restate *what* each standard says. Each `node-*` skill's canonical description lives in the public user-preferences specification, and the skill points at it through `metadata.memo.specs`. Where this spec names a standard it links the owning chapter rather than duplicating its rule — the registry is single-source by ownership, the standards' text is single-source in their own specification, and the two never drift into two copies.
 
 ---
 
@@ -8673,9 +8830,10 @@ The **session** namespace's leaf is the user's own workspace check: `memo sessio
 3. **`registry-validate`** — the same dangling-edge validator the build runs, now applied at runtime.
 4. **Presence** — confirm each registered skill resolves on disk (`~/.claude/skills/<id>` target exists).
 5. **Strict namespace collision** — the N-1 / N-2 checks (run HERE; see below).
-6. **Print the doctor table** and emit the envelope.
+6. **Group resolution** — every `assertions[]` `requiresGroup` resolves cross-namespace: each member installed and carrying its signal, the checkpoint skill present, no `assertions[]` id collision. This is the policy-axis analogue of `registry-validate`, and it is where a **pending, not-yet-registered group member** (a standard documented but not yet a core skill) is caught out-of-band.
+7. **Print the doctor table** and emit the envelope.
 
-The six checks and their severities:
+The seven checks and their severities:
 
 | # | Check | Severity |
 |---|-------|----------|
@@ -8685,6 +8843,9 @@ The six checks and their severities:
 | 4 | each reserved namespace is unique — no N-1 / N-2 collision | **FAIL** |
 | 5 | each skill carries a structured `attributionSkill:<id>` signal (the only trusted signal — REQ-SS-SIGNAL) | **WARN** |
 | 6 | gate runtime deps present (`jq` on PATH); disable-switch / sentinel state surfaced | **WARN** for `jq`; **INFO** for disable-switch state |
+| 7 | every `assertions[]` `requiresGroup` resolves — each member installed and signalling, the checkpoint skill present; no `assertions[]` id collision (rejected here as N-1 is) | **FAIL** if a declared group member is unresolved or an id collides; the runtime gate degrades the same condition to fail-open ALLOW |
+
+Check 7 is **mandatory `mode`**'s safety net too: a policy-block member generated without a resolved `mode` (`null`, source `"none"`) surfaces here rather than being silently treated as `contextual`. And it verifies the reserved policy namespaces are genuinely unclaimed (e.g. `node` is not already taken) instead of assuming N-2 holds.
 
 Check 3 makes the doctor the **runtime superset** of the build-time `registry-validate`: one validator core, two timings — `registry-validate` is a *subset that fails the build*, `session doctor` is *that plus on-disk presence, namespaces, signals, and jq, that reports*. This mirrors the family's existing "one registry, one scan, two timings" framing.
 
@@ -8718,6 +8879,31 @@ session doctor — not-ready (1 fail · 1 warn · 2 pass)
 
   exit 1
 ```
+
+---
+
+## `session prefs-status` — The Read-Only Standards Board
+
+Where `doctor` answers *"is the environment ready?"*, **`session prefs-status`** answers *"which policy standards has this session actually read?"*. It is a read-only board over the policy blocks ([06-namespace-registry.md](./06-namespace-registry.md)): for each `checkpoint`/`contextual` member it reports whether its `attributionSkill` receipt is present in the session transcript (read jq-structured, REQ-SS-SIGNAL — never a substring), and it rolls the members of each checkpoint `group` up to a per-group yes/no.
+
+Like `doctor` it **reports, never blocks** — it has no exit-code authority over the session; it is the human-facing view of the same receipt the landing gate ([02-enforcement.md](./02-enforcement.md)) evaluates. `always` members are shown as present-by-construction (ambient, no receipt owed).
+
+```
+session prefs-status — security: incomplete · verification: ok
+
+  Skill                     Mode        Group         Read
+  node-formatting           always      —             (ambient)
+  node-validation           contextual  security      yes
+  node-environment-manager  contextual  security      yes
+  node-server-design        contextual  security      no
+  git-security              contextual  security      yes
+  node-testing              checkpoint  verification  yes
+
+  security      incomplete  (node-server-design unread)
+  verification  ok
+```
+
+A `group` is `ok` only when every resolved member's receipt is present (the same AND the gate takes). An unresolved member (a pending, not-yet-registered standard) is surfaced here exactly as `doctor` check 7 surfaces it, so the board never silently reports a group `ok` while a member is missing.
 
 ---
 
@@ -8971,7 +9157,7 @@ Root detection adds **fields and a marker**, not a tier. The three-tier config c
 
 > **Informative.** This chapter introduces the SOP area of the session standard: what an SOP is, why the SOP layer is the mechanism through which tools attach to the session, and how the existing SOPs relate to it. It carries no normative requirements of its own beyond the conventions named in [13-conventions.md](./13-conventions.md); the binding registry mechanics live in [06-namespace-registry.md](./06-namespace-registry.md).
 
-**What an SOP is.** An SOP — Standard Operating Procedure — is the connecting layer that makes a procedure predictable: the entry-point mechanism through which a tool registers under a namespace, attaches to the session, and becomes findable. The term is defined once in the session [glossary](./00-overview.md) and is used here without redefinition. The distinction to hold from the start, so it is never quietly assumed away: **not every registered tool is an SOP.** A tool that carries a real procedure — a Setup, a Health check, an Update path — is an **SOP instance**, and its entry-point page takes the shape fixed by the [page contract](./11-common-denominator.md). A tool that only needs to be *found* — a catalog tool such as FlowMCP, whose model is `search` / `list` → `call` — registers and becomes discoverable but defines no procedure and gates nothing. The two registrant kinds are detailed in [SOP Instances vs Catalog Blocks](#sop-instances-vs-catalog-blocks) below.
+**What an SOP is.** An SOP — Standard Operating Procedure — is the connecting layer that makes a procedure predictable: the entry-point mechanism through which a tool registers under a namespace, attaches to the session, and becomes findable. The term is defined once in the session [glossary](./00-overview.md) and is used here without redefinition. The distinction to hold from the start, so it is never quietly assumed away: **not every registered tool is an SOP.** A tool that carries a real procedure — a Setup, a Health check, an Update path — is an **SOP instance**, and its entry-point page takes the shape fixed by the [page contract](./11-common-denominator.md). A tool that only needs to be *found* — a catalog tool such as FlowMCP, whose model is `search` / `list` → `call` — registers and becomes discoverable but defines no procedure and gates nothing. A third kind, a **policy block**, registers a body of standards that is always findable but whose security/verification sub-set must be *read by a landing checkpoint* — it gates only as a redirect, never as a predecessor. The registrant kinds are detailed in [SOP Instances vs Catalog Blocks](#sop-instances-vs-catalog-blocks) below.
 
 There is **no** standalone "SOP standard" sitting beside the session standard. There is **one** session standard, and **SOP is an integral entry-point area within it** — the area that defines how tools connect to the session, register themselves, and become findable. This chapter is where that mechanism is described; the three chapters after it ([11](./11-common-denominator.md)–[13](./13-conventions.md)) are the connecting layer it rests on.
 
@@ -9009,14 +9195,15 @@ The session family is the *outermost published* layer **and** the *lowest runtim
 
 ## SOP Instances vs Catalog Blocks
 
-Not every tool that registers is an SOP. The session registry holds two kinds of registrant block, and the difference decides whether a unit ever becomes a precondition gate:
+Not every tool that registers is an SOP. The session registry holds three kinds of registrant block, and the difference decides whether — and how — a unit ever becomes a gate:
 
 | Block kind | Carries | Is a gate? | Example |
 |------------|---------|------------|---------|
 | **SOP-instance block** | `skills[]` **and** `requires[]`, and it feeds `requirements[]` pre-gate edges | yes — it can require a predecessor SOP (`when:pre`) | `memo-init` → `memo-sop` (REQ-061); `workbench` |
 | **Catalog block** | `skills[]` only — empty `requires[]`, **no** `requirements[]` edge | never | **FlowMCP** (reserves `flowmcp`, contributes `flowmcp-usage`) |
+| **Policy block** | `skills[]` with per-member `mode`/`groups` — empty `requires[]`, feeds `assertions[]` checkpoint rows | only as a checkpoint `redirect`, never a `when:pre` predecessor | the development standards (reserves `node`) |
 
-memo-init and workbench are **SOP-instance blocks**: they participate in the predecessor chain and can gate an entry point. **FlowMCP is a catalog block**, not an SOP: its model is `search`/`list` → `call`, so it needs to be *findable*, but it never gates another entry point. Both live in the same `sops[]` array, but only an SOP-instance block ever contributes a `when:pre` edge. The structural encoding of both is in [06-namespace-registry.md](./06-namespace-registry.md); the load-bearing point here is that "registered and discoverable" does **not** imply "is a precondition".
+memo-init and workbench are **SOP-instance blocks**: they participate in the predecessor chain and can gate an entry point. **FlowMCP is a catalog block**, not an SOP: its model is `search`/`list` → `call`, so it needs to be *findable*, but it never gates another entry point. The development standards are a **policy block**: always findable, never a predecessor, but a sub-set (security, verification) must be read by a landing checkpoint, enforced only as a redirect. All three live in the same `sops[]` array; an SOP-instance block contributes a `when:pre` edge, a policy block contributes an `assertions[]` checkpoint row, a catalog block contributes neither. The structural encoding of all three is in [06-namespace-registry.md](./06-namespace-registry.md); the load-bearing point here is that "registered and discoverable" does **not** imply "is a precondition".
 
 ---
 

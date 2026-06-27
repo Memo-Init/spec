@@ -6,7 +6,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-06-27T09:35:23.180Z"
+generated_at: "2026-06-27T10:15:50.297Z"
 generated_from: "spec/session/0.1.0/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/02-enforcement.md."
@@ -66,6 +66,11 @@ The decision table the reference hook MUST implement:
 | the required skill is **not installed** (dangling edge) | ERROR (fail-open) | 0 |
 | transcript readable AND predecessor `attributionSkill` found (jq) | ALLOW | 0 |
 | transcript readable AND predecessor genuinely absent | DENY | 2 |
+| firing skill is a checkpoint in `assertions[]` AND every `requiresGroup` member receipt present | ALLOW | 0 |
+| firing skill is a checkpoint in `assertions[]` AND a member receipt absent | DENY-as-redirect (names the unread skills) | 2 |
+| a `requiresGroup` member does not resolve (e.g. a pending, not-yet-registered skill) | ERROR (fail-open) + doctor WARN | 0 |
+
+The last three rows are the **policy checkpoint** branch (see [Policy Checkpoints — The Landing Gate](#policy-checkpoints--the-landing-gate) below); the rows above them are the unchanged `when:pre` predecessor branch. The two branches are evaluated independently on the same `Skill` call, and either may DENY-as-redirect.
 
 The governing principle: **the gate never fail-CLOSES on infrastructure trouble** (FAILOPEN), and **never produces an unrecoverable lockout** (EDGEVALID). A DENY is a *redirect*, not a dead end — its message tells the agent to read the predecessor SOP first, after which the same entry point passes.
 
@@ -84,6 +89,42 @@ stateDiagram-v2
 
 ---
 
+## Policy Checkpoints — The Landing Gate
+
+The `when:pre` branch gates an entry point behind a predecessor SOP. A **policy block** ([06-namespace-registry.md](/specification/namespace-registry/)) needs a different shape of gate: *"by the time work lands, a sub-set of standards must have been read."* That is expressed by the top-level **`assertions[]`** collection ([05-config-cascade.md](/specification/config-cascade/)) and evaluated by the **same** PreToolUse hook — there is no second hook.
+
+An `assertions[]` row names a **checkpoint** skill, a **`requiresGroup`**, and an `onMissing` policy:
+
+```jsonc
+{ "id": "REQ-NODE-SEC-FINALIZE",    "checkpoint": "memo-finalize", "requiresGroup": "security",     "mode": "all", "when": "landing", "onMissing": "redirect" }
+{ "id": "REQ-NODE-SEC-PUSH",        "checkpoint": "git-push",      "requiresGroup": "security",     "mode": "all", "when": "landing", "onMissing": "redirect" }
+{ "id": "REQ-NODE-VERIFY-FINALIZE", "checkpoint": "memo-finalize", "requiresGroup": "verification", "mode": "all", "when": "landing", "onMissing": "redirect" }
+```
+
+When the firing skill matches a row's `checkpoint`, the hook resolves the row's `requiresGroup` over the union of all blocks and takes the **AND** over its members' `attributionSkill` receipts (`mode:"all"`). All present ⇒ ALLOW. One absent ⇒ **DENY-as-redirect**: a redirect, not a dead end, whose message names exactly the unread skills, after which the same checkpoint passes. The landing gate fires at the next *real* skill the standards must be settled by — `memo-finalize` (primary) with `git-push` as the irreversible-outward backstop; there is no dedicated landing skill to key on.
+
+Three invariants bound the checkpoint branch, all inherited from the three-state contract:
+
+- **Never a hard lock.** `onMissing` is `redirect` only; a checkpoint group may never produce a terminal block.
+- **Never blocks the workflow** (REQ-SS-WORKFLOW). Checkpoints sit on `memo-finalize` / `git-push`; `memo-init` / `memo-plan` / `memo-revision-*` are never checkpoints and run unimpeded.
+- **A non-resolving member fails open.** If a `requiresGroup` member is not installed (e.g. a standard documented but not yet registered as a skill), the gate cannot honestly assert "all read", so it degrades to fail-open ALLOW (best-effort, **no** hard guarantee) and the foreground doctor reports the unresolved member ([07-doctor-init.md](/specification/doctor-init/)). An `assertions[]` id collision is likewise a fail-open ALLOW at the hook, never a redirect; it is rejected strictly only in the foreground doctor.
+
+The landing gate as a top-down flow:
+
+```mermaid
+flowchart TD
+    A["memo-finalize / git-push fires (Skill)"] --> B{"assertions[] row for this checkpoint?"}
+    B -->|no| Z["ALLOW (not gated)"]
+    B -->|yes| C["AND over attributionSkill receipts of the requiresGroup members"]
+    C -->|all present| Z
+    C -->|one absent| D["DENY-as-redirect: names the unread skills"]
+    D --> E["agent reads the missing skills"]
+    E --> A
+    C -.->|a member does not resolve| Z2["fail-open ALLOW (best-effort) + doctor WARN"]
+```
+
+---
+
 ## Required Properties
 
 | Requirement | Statement |
@@ -98,6 +139,7 @@ stateDiagram-v2
 | **REQ-SS-CANARY** | A SessionStart canary re-verifies the gate against known fixtures and auto-disables on drift. |
 | **REQ-SS-NOWRITE** | Live `~/.claude/` config (settings.json, CLAUDE.md) is changed only additively via a reviewed diff, never auto-written. |
 | **REQ-SS-WORKFLOW** | The gate MUST NOT block the memo workflow: `memo-init` / `memo-plan` / `memo-revision-*` run under the active gate (a DENY only redirects through the predecessor SOP). |
+| **REQ-SS-POLICY** | A policy block gates only via `assertions[]` checkpoint rows, only as `onMissing:"redirect"`, never as a `when:pre` predecessor. A non-resolving `requiresGroup` member fails open (best-effort); an `assertions[]` id collision fails open at the hook and is rejected only in the foreground doctor. Defined in [06-namespace-registry.md](/specification/namespace-registry/). |
 
 ---
 

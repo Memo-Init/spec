@@ -6,7 +6,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-06-27T09:35:23.180Z"
+generated_at: "2026-06-27T10:15:50.297Z"
 generated_from: "spec/session/0.1.0/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/05-config-cascade.md."
@@ -35,6 +35,7 @@ Before the merge mechanics, this is **what the config holds**, separately from *
 | `security` | the resolved **trust level**; a project may never self-elevate it (monotonicity, [01-genesis-root.md](/specification/genesis-root/)). |
 | `sops[]` | the **registrant blocks** — one per reserved **namespace**. Each block names its `owner` and `tier`, reserves a namespace, and declares the `cli` it ships, the `folders` it owns, and the `skills[]` it contributes ([06-namespace-registry.md](/specification/namespace-registry/)). |
 | `requirements[]` | the fine, cross-namespace **pre-gate edges** (entry point → skill, with `when: pre`/`post`) the PreToolUse hook evaluates ([02-enforcement.md](/specification/enforcement/)). |
+| `assertions[]` | the **policy checkpoint rows** — read-receipt requirements (a `requiresGroup` that must be read by the time a named `checkpoint` skill fires, `onMissing:"redirect"`), fed ONLY by policy blocks; the policy-axis counterpart to `requirements[]`, never mixed with it ([06-namespace-registry.md](/specification/namespace-registry/)). |
 
 The two newer dimensions a registrant now carries — the **`folders`** a namespace owns and the **`namespaces`** themselves (each reserved exclusively, one owner apiece) — are declared *inside* `sops[]`, not as separate top-level authorities. The reserved-namespace set and the folder-ownership map are therefore **views over `sops[]`**, which keeps the config single-source by ownership rather than by repetition. *How* these fields then merge across tiers is answered in the cascade mechanics that follow.
 
@@ -70,6 +71,13 @@ The block below is an **illustrative** `.session/config.json` (placeholders, not
   // requirements[]: the fine, cross-namespace pre-gate edges the hook evaluates.
   "requirements": [
     { "id": "REQ-061", "entrypoint": "memo-init", "requires": "memo-sop", "when": "pre" }
+  ],
+
+  // assertions[]: policy checkpoint rows — read-receipts owed at a named checkpoint
+  // (list-union by id, fed ONLY by policy blocks, never mixed with requirements[]).
+  "assertions": [
+    { "id": "REQ-NODE-SEC-FINALIZE", "checkpoint": "memo-finalize", "requiresGroup": "security",
+      "mode": "all", "when": "landing", "onMissing": "redirect" }
   ]
 }
 ```
@@ -112,6 +120,7 @@ The config holds **two separate top-level structures with different merge semant
 | Security / trust level | session | resolved, NOT cascaded — a project may never self-elevate (monotonicity, see [01-genesis-root.md](/specification/genesis-root/)) |
 | `sops[]` (registrant blocks: namespace+owner+tier+skills[]+optional requires[]) | session base + drop-in merge | **list-union by `namespace`** (one block per namespace) |
 | `requirements[]` (fine entrypoint→skill pre-gate edges, e.g. REQ-061) | session base + merge | **list-union**; fed ONLY by SOP-instance blocks ([06-namespace-registry.md](/specification/namespace-registry/)) |
+| `assertions[]` (policy checkpoint read-receipt rows) | session base + merge | **list-union by id**; fed ONLY by policy blocks; never mixed with `requirements[]` ([06-namespace-registry.md](/specification/namespace-registry/)) |
 | reserved namespaces | session | unique-key override; collision = error |
 | disable switch / sentinel / canary | `~/.claude/session/` | — (recovery reachable above any project) |
 | repo facing/visibility/remote | workbench (`.workbench/`) | override per repo |
@@ -124,7 +133,7 @@ The collection concerns (`sops[]`, `requirements[]`) **merge** as list-unions so
 
 The old **flat `skills[]` list no longer exists**. Skills are now declared **inside** their owning `sops[]` block (`namespace` + `owner` + `tier` + `skills[]` + optional `requires[]`), as specified in [06-namespace-registry.md](/specification/namespace-registry/). The cascade merge is therefore a **namespace-block union** (one block per namespace), not a flat skill union: two tiers each contributing skills do so by contributing their respective namespace blocks, and a namespace collision is an error rather than a silent concatenation.
 
-Only SOP-instance blocks feed `requirements[]` (the pre-gate edges); a catalog block (e.g. FlowMCP) carries skills but contributes no edge and is therefore never a gate — see [06-namespace-registry.md](/specification/namespace-registry/).
+Only SOP-instance blocks feed `requirements[]` (the pre-gate edges); a catalog block (e.g. FlowMCP) carries skills but contributes no edge and is therefore never a gate; a **policy block** (e.g. `node`) feeds the separate `assertions[]` collection — checkpoint read-receipts enforced only as a redirect — and is likewise never a `when:pre` predecessor — see [06-namespace-registry.md](/specification/namespace-registry/).
 
 ---
 
