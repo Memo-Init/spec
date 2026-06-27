@@ -1,13 +1,21 @@
 name: Notify docs site
 
-# Fan-out: when the spec or its generated artifacts change, tell the website
+# Fan-out: when the spec's generated artifacts change, tell the website
 # (Memo-Init/memo-init.github.io) to rebuild via a repository_dispatch event.
+#
+# Memo 053 (Kap 1, Fix A.2 — race eliminieren): this fires ONLY on `generated/**`,
+# never on `spec/**` directly. A source push first triggers generate.yml, which
+# regenerates `generated/` and commits it (with the PAT, so this workflow re-triggers);
+# only that bot commit fires the notify -> exactly ONE site deploy, from the POST-regen
+# state. Firing on `spec/**` too caused a second, earlier deploy that built from the
+# PRE-regen tree (the stale "first deploy" race). The site build reads chapters directly
+# from the spec HEAD, and every chapter edit changes generated/llms-full.txt, so a
+# `generated/**`-only trigger still covers all content changes.
 
 on:
   push:
     branches: [main]
     paths:
-      - 'spec/**'
       - 'generated/**'
   workflow_dispatch:
 
