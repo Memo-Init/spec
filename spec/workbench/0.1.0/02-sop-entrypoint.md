@@ -90,7 +90,7 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ---
 
-## The Machine Tier (Genesis Root Now Specified; Broader Host Still Future)
+## The Machine Tier
 
 > **Informative.** This section records the scope boundary as it now stands and the rationale for it. The genesis/enforcement slice of the machine tier is specified (the [Session spec](/session/overview/)); the broader host-wide machine spec is still forward-looking guidance.
 

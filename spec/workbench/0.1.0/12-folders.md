@@ -93,7 +93,7 @@ A new registered folder **MUST** follow this convention: a dot for generated or 
 
 ---
 
-## Three Orthogonal Axes: Dot-Prefix, Local Guarantee, Outward-Facing
+## Three Orthogonal Axes
 
 The dot-prefix is easy to conflate with two properties it is **not** the same as. Three independent axes are at work, and a folder has a value on each:
 
