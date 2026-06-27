@@ -6,7 +6,7 @@ spec_file: "01-genesis-root.md"
 order: 1
 section: "Session"
 normative: true
-generated_at: "2026-06-27T21:21:21.605Z"
+generated_at: "2026-06-27T22:03:57.339Z"
 generated_from: "spec/session/0.1.0/01-genesis-root.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/01-genesis-root.md."
@@ -63,9 +63,23 @@ A session MAY declare metadata about itself — its tier and a requested trust l
 
 ---
 
+## Session Types
+
+A session is one of three **named types**, and the type — not a self-granted label — is what anchors the per-session security level below. The type is fixed at session start and is part of the identity the upper layers read.
+
+| Type | What it is | Default security profile |
+|------|------------|--------------------------|
+| **User session** | The top-level, interactive session a developer drives directly. | The project's baseline trust level; the reference against which the other two are bounded. |
+| **Orchestrator session** | A session acting **on the user's behalf** — the main loop that coordinates a rollout and its workers. | Inherits the User session's level and **MUST NOT** exceed it. It is the user session continued into autonomous execution, not a new authority. |
+| **Subagent-spawn session** | A spawned worker with an empty context, started by an orchestrator for one scoped task. | Its own, **separately bounded** profile — the subagent carve-out ([02-enforcement.md](/specification/enforcement/)). A spawn **MUST NOT** hold more privilege than the orchestrator that started it. |
+
+Each type maps to **exactly one** security profile — privilege is not negotiated per call within a type. The three types obey the same **monotonicity** rule as the self-label above: a session may move to a *more* restricted profile, but it can never label or spawn itself into *more* privilege than it was started with.
+
+---
+
 ## The Per-Session Security Level
 
-The genesis root owns a **per-session security/trust level** that upper layers read rather than redefine. The level is a property of the session as a whole; it is the anchor the Trust Axis of research ([workbench/31-browser-automation.md](/workbench/browser-automation/)) and the egress gate ([03-recovery.md](/specification/recovery/), [02-enforcement.md](/specification/enforcement/)) refer to when deciding whether untrusted content may enter a context. The level is established at session start and is **not** elevated by a self-label (see above).
+The genesis root owns a **per-session security/trust level** that upper layers read rather than redefine. Its value is **anchored by the session type** (above): each of the three types maps to exactly one profile, established at session start. The level is a property of the session as a whole; it is the anchor the Trust Axis of research ([workbench/31-browser-automation.md](/workbench/browser-automation/)) and the egress gate ([03-recovery.md](/specification/recovery/), [02-enforcement.md](/specification/enforcement/)) refer to when deciding whether untrusted content may enter a context. The level is established at session start and is **not** elevated by a self-label (see above).
 
 ---
 
@@ -85,6 +99,12 @@ The chain is **declared in full** as the normative target. But each edge is **en
 "Declared now, enforced when present" is what lets the full chain be written down before every link is built. In this version, the only **active** edge is the single project-scoped edge `memo-init → memo-sop`; `workbench-sop` and the global registry that would activate the upper edges are a follow-up.
 
 The chain's machine-readable home is the session config. The registrant blocks that reserve each namespace and the two edge granularities — coarse `requires[]` between SOPs and fine `requirements[]` pre-gate edges — are specified in [06-namespace-registry.md](/specification/namespace-registry/), and the `.session/config.json` cascade that stores them is specified in [05-config-cascade.md](/specification/config-cascade/). This chapter declares the chain; those two chapters encode it.
+
+---
+
+## The Statusline Read-Surface
+
+The statusline is the canonical **read** surface for the resolved session state. It **MUST** display the **full resolved SOP chain** — every edge from the active entry point down to `session-sop`, each marked active or declared-only — rather than a fixed pair of hardcoded links, and it **MUST** display the resolved **session type** (above) and the identity source. It is fed from the **same resolver** the enforcement gate uses (`memo session resolve`), so the chain a human reads and the chain the gate enforces cannot drift apart. The statusline **displays**; it never **grants** — it is the display side of the self-label's display-only rule.
 
 ---
 

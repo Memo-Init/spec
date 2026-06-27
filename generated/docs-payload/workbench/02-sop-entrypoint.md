@@ -6,7 +6,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: false
-generated_at: "2026-06-27T21:21:21.605Z"
+generated_at: "2026-06-27T22:03:57.339Z"
 generated_from: "spec/workbench/0.1.0/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/02-sop-entrypoint.md."
@@ -97,7 +97,7 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ---
 
-## The Machine Tier (Genesis Root Now Specified; Broader Host Still Future)
+## The Machine Tier
 
 > **Informative.** This section records the scope boundary as it now stands and the rationale for it. The genesis/enforcement slice of the machine tier is specified (the [Session spec](/session/overview/)); the broader host-wide machine spec is still forward-looking guidance.
 

@@ -2319,6 +2319,17 @@ A fixed mapping ties the ID to git artifacts:
 | 1 PR | 1 affected repo | One pull request per affected repository, not one per memo |
 | Branch | per memo | `<PREFIX>-{NNN}-{slug}` (the canonical branch-naming schema below) |
 
+### Issue Reference by Repo Type (Rule C1)
+
+Whether a phase maps to a GitHub **issue** at all depends on the repository's facing (the `facing` axis of the repo status, see [16-git-security-versioning.md](./16-git-security-versioning.md)). An issue is itself an outward-facing artifact (see [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md)), so a repository that is never published cannot carry one without contradicting its own inward direction.
+
+| Repo type | Orientation reference | Rule |
+|-----------|-----------------------|------|
+| **Outward** (published GitHub repo) | Issue (`#{N}`) | The `1 Phase → 1 Issue` mapping above applies in full; every commit ties back to its phase issue. |
+| **Local-only** (never pushed) | Memo-ID (`M{NNN}-{PP}-{RR}`) | No issue is created — it would be an outward-facing artifact in a repo that is never published. The memo-ID is the orientation reference in its place. |
+
+**Rule C1:** a unit of work carries an **issue reference or a memo-ID reference according to its repo type — never both, and never neither.** The `1 Phase → 1 Issue` row is the outward case; for a local-only repo, read "issue" as "memo-ID". This resolves the otherwise-contradictory expectation that every commit must both reference an issue and avoid creating outward-facing artifacts in a repository that is never published.
+
 ### Commit message
 
 A commit message follows the canonical bracket-prefix form:
@@ -2544,9 +2555,26 @@ Beyond private data (paths, secrets, personal identifiers — see [16-git-securi
 - **Pseudo-secrets** — fabricated credential-shaped strings that read as real secrets even when they are not.
 - **Internal answer codes** — a question-answer notation such as a bare `F<n>=<choice>` (the *schema* is documented in [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md), but a concrete inward answer code is a leak in published text).
 - **Process metadata** — inward self-assessments and status phrases (for example a "verified, not aspirational" style annotation) that describe the internal working state rather than the artifact's subject.
-- **Mixed-language labels** — a label in the inward working language placed on a page written in the outward publication language. One language per artifact (see [00-overview.md](./00-overview.md)); a stray inward-language label reads as insider noise.
+- **Mixed-language labels** — a label in the inward working language placed on a page written in the outward publication language. One language per artifact (see *Language per Artifact* below); a stray inward-language label reads as insider noise.
 
 The test is the same as everywhere in this chapter: direction, not secrecy. Each of these is removed because it is calibrated for the inward audience, not because it is confidential.
+
+---
+
+## Language per Artifact
+
+A single artifact is written in **one language** and does not mix two inside it ("no Denglish"). This is the register counterpart of the inward/outward axis above: the language an artifact uses follows its direction.
+
+| Artifact | Language |
+|----------|----------|
+| Code and code comments | the project's publication language, one consistent choice |
+| Commits, issues, pull requests, READMEs, published docs, website | the publication language |
+| Inward memo material (`.memo/`) | the project's **working** language — **MAY** differ from the publication language |
+| Conversation with the user | the user's language |
+
+- An **outward-facing** artifact **MUST** be written in the publication language; an inward-language label on an outward page is a leak (see *Leak Prohibition* above).
+- An **inward-facing** artifact **MAY** use a working language different from the publication language — the inward register is calibrated for the author, not for a stranger.
+- The **specific** languages are a **project choice**, recorded in the project's own configuration / house rules, not fixed by this specification. A project that writes its memos in one natural language and publishes in another conforms as long as each artifact stays single-language. The consistency check that enforces single-language-per-artifact at finalization is specified in [11-quality-and-finalization.md](./11-quality-and-finalization.md).
 
 ---
 
@@ -5560,7 +5588,7 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ---
 
-## The Machine Tier (Genesis Root Now Specified; Broader Host Still Future)
+## The Machine Tier
 
 > **Informative.** This section records the scope boundary as it now stands and the rationale for it. The genesis/enforcement slice of the machine tier is specified (the [Session spec](/session/overview/)); the broader host-wide machine spec is still forward-looking guidance.
 
@@ -5842,7 +5870,7 @@ A new registered folder **MUST** follow this convention: a dot for generated or 
 
 ---
 
-## Three Orthogonal Axes: Dot-Prefix, Local Guarantee, Outward-Facing
+## Three Orthogonal Axes
 
 The dot-prefix is easy to conflate with two properties it is **not** the same as. Three independent axes are at work, and a folder has a value on each:
 
@@ -7994,9 +8022,23 @@ A session MAY declare metadata about itself — its tier and a requested trust l
 
 ---
 
+## Session Types
+
+A session is one of three **named types**, and the type — not a self-granted label — is what anchors the per-session security level below. The type is fixed at session start and is part of the identity the upper layers read.
+
+| Type | What it is | Default security profile |
+|------|------------|--------------------------|
+| **User session** | The top-level, interactive session a developer drives directly. | The project's baseline trust level; the reference against which the other two are bounded. |
+| **Orchestrator session** | A session acting **on the user's behalf** — the main loop that coordinates a rollout and its workers. | Inherits the User session's level and **MUST NOT** exceed it. It is the user session continued into autonomous execution, not a new authority. |
+| **Subagent-spawn session** | A spawned worker with an empty context, started by an orchestrator for one scoped task. | Its own, **separately bounded** profile — the subagent carve-out ([02-enforcement.md](./02-enforcement.md)). A spawn **MUST NOT** hold more privilege than the orchestrator that started it. |
+
+Each type maps to **exactly one** security profile — privilege is not negotiated per call within a type. The three types obey the same **monotonicity** rule as the self-label above: a session may move to a *more* restricted profile, but it can never label or spawn itself into *more* privilege than it was started with.
+
+---
+
 ## The Per-Session Security Level
 
-The genesis root owns a **per-session security/trust level** that upper layers read rather than redefine. The level is a property of the session as a whole; it is the anchor the Trust Axis of research ([workbench/31-browser-automation.md](/workbench/browser-automation/)) and the egress gate ([03-recovery.md](./03-recovery.md), [02-enforcement.md](./02-enforcement.md)) refer to when deciding whether untrusted content may enter a context. The level is established at session start and is **not** elevated by a self-label (see above).
+The genesis root owns a **per-session security/trust level** that upper layers read rather than redefine. Its value is **anchored by the session type** (above): each of the three types maps to exactly one profile, established at session start. The level is a property of the session as a whole; it is the anchor the Trust Axis of research ([workbench/31-browser-automation.md](/workbench/browser-automation/)) and the egress gate ([03-recovery.md](./03-recovery.md), [02-enforcement.md](./02-enforcement.md)) refer to when deciding whether untrusted content may enter a context. The level is established at session start and is **not** elevated by a self-label (see above).
 
 ---
 
@@ -8016,6 +8058,12 @@ The chain is **declared in full** as the normative target. But each edge is **en
 "Declared now, enforced when present" is what lets the full chain be written down before every link is built. In this version, the only **active** edge is the single project-scoped edge `memo-init → memo-sop`; `workbench-sop` and the global registry that would activate the upper edges are a follow-up.
 
 The chain's machine-readable home is the session config. The registrant blocks that reserve each namespace and the two edge granularities — coarse `requires[]` between SOPs and fine `requirements[]` pre-gate edges — are specified in [06-namespace-registry.md](./06-namespace-registry.md), and the `.session/config.json` cascade that stores them is specified in [05-config-cascade.md](./05-config-cascade.md). This chapter declares the chain; those two chapters encode it.
+
+---
+
+## The Statusline Read-Surface
+
+The statusline is the canonical **read** surface for the resolved session state. It **MUST** display the **full resolved SOP chain** — every edge from the active entry point down to `session-sop`, each marked active or declared-only — rather than a fixed pair of hardcoded links, and it **MUST** display the resolved **session type** (above) and the identity source. It is fed from the **same resolver** the enforcement gate uses (`memo session resolve`), so the chain a human reads and the chain the gate enforces cannot drift apart. The statusline **displays**; it never **grants** — it is the display side of the self-label's display-only rule.
 
 ---
 

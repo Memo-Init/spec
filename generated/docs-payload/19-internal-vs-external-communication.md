@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T21:21:21.605Z"
+generated_at: "2026-06-27T22:03:57.339Z"
 generated_from: "spec/v0.1.0/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/19-internal-vs-external-communication.md."
@@ -102,9 +102,26 @@ Beyond private data (paths, secrets, personal identifiers — see [16-git-securi
 - **Pseudo-secrets** — fabricated credential-shaped strings that read as real secrets even when they are not.
 - **Internal answer codes** — a question-answer notation such as a bare `F<n>=<choice>` (the *schema* is documented in [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/), but a concrete inward answer code is a leak in published text).
 - **Process metadata** — inward self-assessments and status phrases (for example a "verified, not aspirational" style annotation) that describe the internal working state rather than the artifact's subject.
-- **Mixed-language labels** — a label in the inward working language placed on a page written in the outward publication language. One language per artifact (see [00-overview.md](/specification/overview/)); a stray inward-language label reads as insider noise.
+- **Mixed-language labels** — a label in the inward working language placed on a page written in the outward publication language. One language per artifact (see *Language per Artifact* below); a stray inward-language label reads as insider noise.
 
 The test is the same as everywhere in this chapter: direction, not secrecy. Each of these is removed because it is calibrated for the inward audience, not because it is confidential.
+
+---
+
+## Language per Artifact
+
+A single artifact is written in **one language** and does not mix two inside it ("no Denglish"). This is the register counterpart of the inward/outward axis above: the language an artifact uses follows its direction.
+
+| Artifact | Language |
+|----------|----------|
+| Code and code comments | the project's publication language, one consistent choice |
+| Commits, issues, pull requests, READMEs, published docs, website | the publication language |
+| Inward memo material (`.memo/`) | the project's **working** language — **MAY** differ from the publication language |
+| Conversation with the user | the user's language |
+
+- An **outward-facing** artifact **MUST** be written in the publication language; an inward-language label on an outward page is a leak (see *Leak Prohibition* above).
+- An **inward-facing** artifact **MAY** use a working language different from the publication language — the inward register is calibrated for the author, not for a stranger.
+- The **specific** languages are a **project choice**, recorded in the project's own configuration / house rules, not fixed by this specification. A project that writes its memos in one natural language and publishes in another conforms as long as each artifact stays single-language. The consistency check that enforces single-language-per-artifact at finalization is specified in [11-quality-and-finalization.md](/specification/quality-and-finalization/).
 
 ---
 

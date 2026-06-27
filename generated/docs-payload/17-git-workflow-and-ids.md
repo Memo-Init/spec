@@ -6,7 +6,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T21:21:21.605Z"
+generated_at: "2026-06-27T22:03:57.339Z"
 generated_from: "spec/v0.1.0/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/17-git-workflow-and-ids.md."
@@ -69,6 +69,17 @@ A fixed mapping ties the ID to git artifacts:
 | 1 Commit | 1 PRD | A commit corresponds to one PRD |
 | 1 PR | 1 affected repo | One pull request per affected repository, not one per memo |
 | Branch | per memo | `<PREFIX>-{NNN}-{slug}` (the canonical branch-naming schema below) |
+
+### Issue Reference by Repo Type (Rule C1)
+
+Whether a phase maps to a GitHub **issue** at all depends on the repository's facing (the `facing` axis of the repo status, see [16-git-security-versioning.md](/specification/git-security-versioning/)). An issue is itself an outward-facing artifact (see [19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/)), so a repository that is never published cannot carry one without contradicting its own inward direction.
+
+| Repo type | Orientation reference | Rule |
+|-----------|-----------------------|------|
+| **Outward** (published GitHub repo) | Issue (`#{N}`) | The `1 Phase → 1 Issue` mapping above applies in full; every commit ties back to its phase issue. |
+| **Local-only** (never pushed) | Memo-ID (`M{NNN}-{PP}-{RR}`) | No issue is created — it would be an outward-facing artifact in a repo that is never published. The memo-ID is the orientation reference in its place. |
+
+**Rule C1:** a unit of work carries an **issue reference or a memo-ID reference according to its repo type — never both, and never neither.** The `1 Phase → 1 Issue` row is the outward case; for a local-only repo, read "issue" as "memo-ID". This resolves the otherwise-contradictory expectation that every commit must both reference an issue and avoid creating outward-facing artifacts in a repository that is never published.
 
 ### Commit message
 
