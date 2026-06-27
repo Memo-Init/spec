@@ -77,7 +77,7 @@ Related: [31-goals.md](./31-goals.md) (lifecycle, scoring mode, friction), [00-o
 
 ## Block
 
-A **block** is a **structure node** inside a memo, carrying its own stable identifier of the form `B\d{3}` (for example `B001`). It is **not** a synonym for a "context block": it is an addressable unit of memo structure. A block has a fence declaring `id`, `repos`, and `tags`, and a body of three sections — a problem statement, a proposed solution, and open questions. A block's `tags` flow **additively into the requirement scope match** (meta → auto-requirements), so the structure a block declares automatically pulls in the requirements that apply to that work. A block carries **no** `strand` field: the strand is emergent and MUST NOT be declared on a block. PRDs are **derived from blocks** and take their order from the phase they belong to.
+A **block** is a **structure node** inside a memo, carrying its own stable identifier of the form `B\d{3}` (for example `B001`). It is **not** a synonym for a "context block": it is an addressable unit of memo structure. A block declares a fence with `id`, `repos`, and `tags`, and references **one or more topics** through a `topicIds` list — a block is not pinned to a single topic but bundles the one-to-many set of topics it structures (the `B\d{3}` block id is the block's own, distinct from the `T\d{3}` topic ids it gathers). Its body has **four sections that keep *what is* separate from *what is judged***: a neutral **factual account** (the situation, stated without evaluation), an **assessment** (the evaluation and recommendation, kept distinct from the facts), a **proposed solution**, and **open questions** — extending the system's "AI recommendation vs. user decision" separation ([07-revisions-and-questions.md](./07-revisions-and-questions.md)) to the block body. A block also carries the **data it argues from**: a `tables` list of datasets, each with a **block-local handle** (`d1`, `d2`, addressed as `B001.D1`) — a handle, **not** a new primitive (the eleven above are unchanged) and **not** a topic id, since a dataset has a different cardinality and lifecycle than a topic. A block's `tags` flow **additively into the requirement scope match** (meta → auto-requirements), so the structure a block declares automatically pulls in the requirements that apply to that work. A block carries **no** `strand` field: the strand is emergent and MUST NOT be declared on a block. PRDs are **derived from blocks** and take their order from the phase they belong to.
 
 Related: [06-memo-structure.md](./06-memo-structure.md) (memo structure), [08-phases-and-prds.md](./08-phases-and-prds.md) (PRDs derived from blocks), [23-requirements.md](./23-requirements.md) (the scope match a block's tags feed); related primitives: [PRD](#prd), [Requirement](#requirement), [Topic](#topic).
 
@@ -132,7 +132,7 @@ A memo, seen by the user, runs from dictated input to a closed document.
 ```mermaid
 flowchart TD
     SP["Voice / text input"] --> TO["Topics (memo-scoped)"]
-    TO --> BL["Blocks (id B###): Meta + Topics<br/>Problem / Solution / Open questions"]
+    TO --> BL["Blocks (id B###): topicIds[] + tables[]<br/>Factual account / Assessment / Solution / Open questions"]
     BL --> QQ["Questions of all blocks<br/>collected centrally"]
     QQ --> DONE["Done for the user"]
 ```
