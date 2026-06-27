@@ -63,7 +63,7 @@ The two roles sit beneath the custom folder SOPs the workbench-SOP points at ([0
 
 ```mermaid
 flowchart TD
-    WSOP["Workbench-SOP — references the custom folder SOPs"] --> MSOP["memo-SOP (weightiest custom folder)"]
+    WSOP["Workbench-SOP — references the custom folder SOPs"] --> MSOP["memo-SOP (recommended-default Add-on)"]
     WSOP --> FSOP["&lt;other custom folder&gt;-SOP"]
     MSOP --> ORCH["Orchestrator = public method / entry point<br/>validated (pre-hook + runtime)"]
     ORCH --> COMP["Component = private, reusable, not user-callable<br/>e.g. research at several points"]

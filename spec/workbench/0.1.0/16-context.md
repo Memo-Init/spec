@@ -10,6 +10,23 @@
 
 ---
 
+## Folder Contract
+
+| Field | Value |
+|-------|-------|
+| Name | `context/` |
+| Status | Mandatory |
+| Level | Both |
+| Entry-point | per-topic sub-folders |
+| Convention | plain Markdown; OKF opt-in for `architecture-okf/` |
+| Purpose | Processed, authored knowledge — specifications, distilled research, Markdown/PDF documents a memo draws on. |
+| Goes in | Processed, derived documents, organized under a per-topic sub-folder. |
+| Does not | Raw, unprocessed feeds (those go to `data/`); a generated artifact treated as the source it presents. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+
+---
+
 ## Processed, Not Raw
 
 `context/` holds **processed** material; raw feeds and dumps live in the optional `data/` folder. The split is by state of processing — `data/` is the input side, `context/` is the worked result produced from it (and from elsewhere). Keeping them apart stops raw dumps from polluting the readable research store; the full distinction is in [12-folders.md](./12-folders.md).
@@ -28,6 +45,8 @@
 
 Different folders carry different **domain languages**, and `context/` is where several of them live as sub-folders rather than being merged into one format. The project architecture is stored under `context/architecture-okf/` in OKF ([41-project-architecture.md](./41-project-architecture.md), [13-knowledge-format-okf.md](./13-knowledge-format-okf.md)); other distilled research sits alongside it as plain Markdown. The workbench does not force one universal schema onto everything — it **separates by folder** and lets each sub-domain keep the convention that fits it. The layer that unifies these separated domains for retrieval is the wiki, which indexes across them as the project's search entry point ([30-wiki.md](./30-wiki.md)).
 
+**OKF is opt-in per sub-folder; the default for a folder is plain Markdown.** OKF is **not** a `context/`-wide mandate — only `context/architecture-okf/` (and `.wiki/`) adopt it, and any other `context/` sub-folder is plain Markdown by default. The opt-in is made concrete in configuration: the per-folder OKF convention is bound through `.workbench/folder-lints.json` ([22-config.md](./22-config.md)), **scoped to `architecture-okf/` and `.wiki/` only**. The convention is binding exactly where that binding is present and nowhere else — its absence everywhere else is what keeps OKF from spreading across `context/`.
+
 ---
 
 ## Organize Under Per-Topic Sub-Folders
@@ -42,4 +61,5 @@ Content **MUST** be organized under a **per-topic sub-folder** of `context/` rat
 - [11-project-structure.md](./11-project-structure.md) — `context/` as the primary immutable source kept local.
 - [10-root-and-projects.md](./10-root-and-projects.md) — the global vs. project `context/` distinction.
 - [30-wiki.md](./30-wiki.md) — the wiki as the search layer that indexes across `context/`.
-- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the convention used by the architecture bundle under `context/`.
+- [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, the opt-in convention used by the architecture bundle under `context/`.
+- [22-config.md](./22-config.md) — `.workbench/folder-lints.json`, where the per-folder OKF convention is bound, scoped to `architecture-okf/` and `.wiki/`.

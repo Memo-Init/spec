@@ -6,7 +6,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T01:55:49.834Z"
+generated_at: "2026-06-27T02:10:52.139Z"
 generated_from: "spec/workbench/0.1.0/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/16-context.md."
@@ -14,6 +14,23 @@ edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/16-cont
 
 
 `context/` is the project's store of **processed, authored knowledge** — the specifications, distilled research, and Markdown or PDF documents a memo draws on. It is the worked, readable side of a project's information, kept apart from raw input and from generated machinery. This is the per-folder page for `context/`; the distinctions it gathers are specified in the chapters it links to.
+
+---
+
+## Folder Contract
+
+| Field | Value |
+|-------|-------|
+| Name | `context/` |
+| Status | Mandatory |
+| Level | Both |
+| Entry-point | per-topic sub-folders |
+| Convention | plain Markdown; OKF opt-in for `architecture-okf/` |
+| Purpose | Processed, authored knowledge — specifications, distilled research, Markdown/PDF documents a memo draws on. |
+| Goes in | Processed, derived documents, organized under a per-topic sub-folder. |
+| Does not | Raw, unprocessed feeds (those go to `data/`); a generated artifact treated as the source it presents. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/specification/folders/)).
 
 ---
 
@@ -35,6 +52,8 @@ edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/16-cont
 
 Different folders carry different **domain languages**, and `context/` is where several of them live as sub-folders rather than being merged into one format. The project architecture is stored under `context/architecture-okf/` in OKF ([41-project-architecture.md](/specification/project-architecture/), [13-knowledge-format-okf.md](/specification/knowledge-format-okf/)); other distilled research sits alongside it as plain Markdown. The workbench does not force one universal schema onto everything — it **separates by folder** and lets each sub-domain keep the convention that fits it. The layer that unifies these separated domains for retrieval is the wiki, which indexes across them as the project's search entry point ([30-wiki.md](/specification/wiki/)).
 
+**OKF is opt-in per sub-folder; the default for a folder is plain Markdown.** OKF is **not** a `context/`-wide mandate — only `context/architecture-okf/` (and `.wiki/`) adopt it, and any other `context/` sub-folder is plain Markdown by default. The opt-in is made concrete in configuration: the per-folder OKF convention is bound through `.workbench/folder-lints.json` ([22-config.md](/specification/config/)), **scoped to `architecture-okf/` and `.wiki/` only**. The convention is binding exactly where that binding is present and nowhere else — its absence everywhere else is what keeps OKF from spreading across `context/`.
+
 ---
 
 ## Organize Under Per-Topic Sub-Folders
@@ -49,4 +68,5 @@ Content **MUST** be organized under a **per-topic sub-folder** of `context/` rat
 - [11-project-structure.md](/specification/project-structure/) — `context/` as the primary immutable source kept local.
 - [10-root-and-projects.md](/specification/root-and-projects/) — the global vs. project `context/` distinction.
 - [30-wiki.md](/specification/wiki/) — the wiki as the search layer that indexes across `context/`.
-- [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the convention used by the architecture bundle under `context/`.
+- [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the opt-in convention used by the architecture bundle under `context/`.
+- [22-config.md](/specification/config/) — `.workbench/folder-lints.json`, where the per-folder OKF convention is bound, scoped to `architecture-okf/` and `.wiki/`.

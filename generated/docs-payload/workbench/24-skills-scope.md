@@ -6,7 +6,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T01:55:49.834Z"
+generated_at: "2026-06-27T02:10:52.139Z"
 generated_from: "spec/workbench/0.1.0/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/24-skills-scope.md."
@@ -70,7 +70,7 @@ The two roles sit beneath the custom folder SOPs the workbench-SOP points at ([0
 
 ```mermaid
 flowchart TD
-    WSOP["Workbench-SOP — references the custom folder SOPs"] --> MSOP["memo-SOP (weightiest custom folder)"]
+    WSOP["Workbench-SOP — references the custom folder SOPs"] --> MSOP["memo-SOP (recommended-default Add-on)"]
     WSOP --> FSOP["&lt;other custom folder&gt;-SOP"]
     MSOP --> ORCH["Orchestrator = public method / entry point<br/>validated (pre-hook + runtime)"]
     ORCH --> COMP["Component = private, reusable, not user-callable<br/>e.g. research at several points"]

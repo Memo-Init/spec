@@ -6,7 +6,7 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T01:55:49.834Z"
+generated_at: "2026-06-27T02:10:52.139Z"
 generated_from: "spec/v0.1.0/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/02-memo-sop-entrypoint.md."

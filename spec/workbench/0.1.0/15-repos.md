@@ -10,6 +10,23 @@
 
 ---
 
+## Folder Contract
+
+| Field | Value |
+|-------|-------|
+| Name | `repos/` |
+| Status | Mandatory |
+| Level | Project |
+| Entry-point | — |
+| Convention | — |
+| Purpose | The project's git repositories — one domain per repository; the only git units in the project. |
+| Goes in | Git repositories under `repos/<name>/`, one per domain. |
+| Does not | Non-repository material; any second git root (the project root and `.memo/` are never repositories). |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+
+---
+
 ## One Domain Per Repository
 
 A repository under `repos/<name>/` is a **single-domain code unit**. A project is a coherent context that may hold several such repositories — one per domain — rather than a single repository carrying unrelated concerns. The project, not the repository, is the unit of organization (see [00-overview.md](./00-overview.md)); `repos/` is where that project's code is partitioned into domains, each its own git unit.

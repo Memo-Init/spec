@@ -16,6 +16,25 @@ Browser automation lives at the project level. Each project that uses it carries
 
 ---
 
+## Folder Contract
+
+`.browser/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `.browser/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `scripts/` (legacy alias `.playwright/`) |
+| Convention | — |
+| Purpose | Browser-automation session, scripts, and output — present only when the project performs browser automation. |
+| Goes in | The captured session `auth.json`, reusable automation under `scripts/`, and produced `output/`. |
+| Does not | Committed material — `auth.json` and `output/` are local-only and never pushed; hardcoded credentials in scripts. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+
+---
+
 ## The Cost-Driven Tool Choice
 
 The single most important rule of browser automation is that the choice between the **Playwright CLI** and the **Playwright MCP server** is driven by **cost**, not by convenience.
@@ -45,16 +64,7 @@ This is the **reader-agent** (quarantined-inference) pattern: a disposable sub-a
 
 ## When CLI, When MCP
 
-The CLI is the correct tool whenever the browser work is non-interactive and its result can be written to a file or returned as a small summary.
-
-| Use the CLI for | Use the MCP server for |
-|-----------------|------------------------|
-| Login and session capture | First-time login with 2FA or CAPTCHA |
-| Batch screenshots across routes | UI/UX review the user watches live |
-| Single-page content extraction | Collaborative, iterative debugging |
-| Health checks | Accessibility audits over a rich tree |
-
-The pattern that bridges the two is **session transfer**: when a first login genuinely requires the user (2FA, CAPTCHA), the MCP server is used once to perform that login interactively and capture the session; every subsequent run reuses the captured session through the CLI at no further interactive cost.
+The discriminator follows directly from the cost axis above: use the **CLI** for any non-interactive work whose result can be written to a file or returned as a small summary (logins, batch screenshots, content extraction, health checks), and reserve the **MCP server** for the few cases that genuinely need a live, visible browser (a first-time 2FA/CAPTCHA login, a UI review the user watches). The bridge between them is **session transfer**: the MCP server performs the interactive first login once and captures the session, and every subsequent run reuses it through the CLI at no further interactive cost.
 
 ---
 
@@ -152,6 +162,10 @@ flowchart TD
 The rule is to **default to the lowest-cost tool that can do the job** and to escalate only when a concrete capability — JavaScript rendering, an interactive login, a live visual review — forces the next tier. Escalating past the tool the task actually needs spends context for nothing.
 
 > **Companion note — the trust gate runs after the cost decision.** Once the cost decision has named the fetch tool, the trust gate (see "The Trust Axis") applies on top of it: if the source is untrusted or unevaluable, the chosen fetch **MUST** run inside a sub-agent so the raw content never reaches the orchestrator's context — only a distillate returns. This holds independently of which fetch tool was picked; a cheap `WebFetch` of an unknown page is still quarantined. The cost axis decides *what fetches*; the trust axis decides *where it fetches*.
+
+---
+
+> **Research note (parked).** A project-level **user-preferences** area — a place to record a user's standing tool-choice preferences, so the cost and trust defaults above could be tuned per user — is **possible future work**, noted here only so the idea is not lost. It is **not** introduced by this chapter: no preferences mechanism, folder, or configuration field is defined, and the defaults above stand on their own.
 
 ---
 

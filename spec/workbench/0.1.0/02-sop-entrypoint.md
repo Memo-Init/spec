@@ -63,11 +63,11 @@ Beyond explaining the scope, the SOP **names the entry points** that work flows 
 
 The workbench-SOP does not *contain* the procedures for everything in the workbench; it **points** to them. It is a **signpost** — a connecting layer, not a container — in the spirit of a dynamic `CLAUDE.md` that loads per session, carries the current inventory of tools, and routes downward to the skills and specs that hold the detail. The workbench-SOP names the levels and the tools that are present, and for each one it points at that tool's own SOP.
 
-This is why **SOPs contain SOPs**. The workbench-SOP references each **custom folder's** SOP ([26-addons.md](./26-addons.md)) — the memo system's SOP first among them, as the weightiest custom folder — and each custom folder SOP is itself Setup/Health/Update plus its extras. Seen this way, the memo-SOP is **also just a skill — only a special one**: structurally it is one custom-folder SOP among others, an instance of the same standard rather than a privileged exception, and it is listed first only because it is the weightiest. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
+This is why **SOPs contain SOPs**. The workbench-SOP references each **custom folder's** SOP ([26-addons.md](./26-addons.md)) — the memo system's SOP first among them, as the recommended default Add-on — and each custom folder SOP is itself Setup/Health/Update plus its extras. Seen this way, the memo-SOP is **also just a skill — only a special one**: structurally it is one custom-folder SOP among others, an instance of the same standard rather than a privileged exception, and it is listed first only because it is the recommended default mode of working. Following the signpost reaches the right procedure without the top-level SOP swelling into a monolith:
 
 ```
 Workbench-SOP (signpost — knows the levels and the custom folders present)
-├── memo-SOP            (the weightiest custom folder's SOP)
+├── memo-SOP            (the recommended-default Add-on's SOP)
 ├── <other custom folder>-SOP  (a large custom folder's SOP)
 └── …                   (each custom folder: Setup · Health · Update · Extras)
 ```

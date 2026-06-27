@@ -6,7 +6,7 @@ spec_file: "15-repos.md"
 order: 15
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T01:55:49.834Z"
+generated_at: "2026-06-27T02:10:52.139Z"
 generated_from: "spec/workbench/0.1.0/15-repos.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/15-repos.md."
@@ -14,6 +14,23 @@ edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/15-repo
 
 
 `repos/` is the one place in a project where git lives. It holds the project's repositories — and **only** the repositories — so that everything shareable is isolated behind an explicit boundary while the rest of the project stays local. This is the per-folder page for `repos/`; the rules it gathers are specified normatively in the chapters it links to.
+
+---
+
+## Folder Contract
+
+| Field | Value |
+|-------|-------|
+| Name | `repos/` |
+| Status | Mandatory |
+| Level | Project |
+| Entry-point | — |
+| Convention | — |
+| Purpose | The project's git repositories — one domain per repository; the only git units in the project. |
+| Goes in | Git repositories under `repos/<name>/`, one per domain. |
+| Does not | Non-repository material; any second git root (the project root and `.memo/` are never repositories). |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/specification/folders/)).
 
 ---
 

@@ -12,6 +12,12 @@ OKF (the Open Knowledge Format) is the **storage format** the workbench uses for
 
 ---
 
+## Scope — Opt-In, Not a Mandate
+
+**OKF is opt-in per sub-folder; the default for a folder is plain Markdown.** OKF is **not** a `context/`-wide mandate: exactly two bundles adopt it — `.wiki/` and `context/architecture-okf/` — and every other `context/` sub-folder stays plain Markdown ([16-context.md](./16-context.md)). The opt-in is concrete rather than only prose: the per-folder OKF convention is bound through `.workbench/folder-lints.json` ([22-config.md](./22-config.md)), **scoped to those two folders only**. Opt-in is the *presence* of that binding; the absence of any such binding elsewhere is what keeps OKF from spreading across the rest of `context/`.
+
+---
+
 ## Why OKF, and Why It Costs Nothing
 
 OKF requires exactly one frontmatter field — `type` — and ordinary Markdown links between pages. The wiki already satisfies both: every generated page carries `type`, and cross-references are standard Markdown links (no Obsidian `[[wikilink]]` syntax). The wiki's frontmatter is in fact *richer* than OKF asks for: it adds `title`, `created`/`updated`, `sources[]` (provenance), `status`, and `tags`. OKF is explicit that a consumer **MUST** preserve unknown keys and **SHOULD NOT** reject documents carrying them. The richer fields are therefore valid **OKF extension keys** — they survive a round-trip through any conformant tool untouched.
@@ -92,6 +98,8 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 - [41-project-architecture.md](./41-project-architecture.md) — the project-architecture bundle, the other consumer of this format (concept first, OKF as encoding).
 - [30-wiki.md](./30-wiki.md) — the wiki entry point, the **parent category** under which OKF is one storage format; also the format's primary consumer.
 - [18-design.md](./18-design.md) — `design.md`, the wiki's other storage format alongside OKF.
+- [16-context.md](./16-context.md) — `context/`, where OKF is opt-in for the `architecture-okf/` sub-folder and plain Markdown is the default elsewhere.
+- [22-config.md](./22-config.md) — `.workbench/folder-lints.json`, the binding that scopes the OKF convention to `.wiki/` and `architecture-okf/` only.
 - [24-tools-registry.md](../../v0.1.0/24-tools-registry.md) — the wiki as a present-tense query tool, the concern distinct from its on-disk format.
 - [26-memo-history.md](../../v0.1.0/26-memo-history.md) — why the wiki answers in the present tense and the history carries the chronology.
 - [32-trash.md](./32-trash.md) — superseded wiki pages are trashed, not deleted.

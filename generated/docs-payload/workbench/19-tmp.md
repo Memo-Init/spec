@@ -6,14 +6,31 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-06-27T01:55:49.834Z"
+generated_at: "2026-06-27T02:10:52.139Z"
 generated_from: "spec/workbench/0.1.0/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/19-tmp.md."
 ---
 
 
-`.tmp/` is the project's **ephemeral scratch** folder: a dot-prefixed, machine-local area for throwaway working files that no part of the project depends on. It is the scratch counterpart to `.trash/` — where `.trash/` holds *recoverable* deletions, `.tmp/` holds files that were never meant to last at all.
+`.tmp/` is the project's **ephemeral scratch** folder: a dot-prefixed, machine-local area for throwaway working files that no part of the project depends on. It is the scratch counterpart to `.trash/` — where `.trash/` holds *recoverable* deletions, `.tmp/` holds files that were never meant to last at all. This page **owns** the `.tmp/` specification; [12-folders.md](/specification/folders/) owns the durable/scratch tier model, and [32-trash.md](/specification/trash/) points here rather than re-specifying scratch.
+
+---
+
+## Folder Contract
+
+| Field | Value |
+|-------|-------|
+| Name | `.tmp/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | — |
+| Convention | — |
+| Purpose | Ephemeral scratch — throwaway working files no part of the project depends on. |
+| Goes in | Transient, discardable working material: intermediate output, scratch copies, staging for a multi-step operation. |
+| Does not | The sole copy of anything that matters; durable knowledge; committed content (it is gitignored). |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/specification/folders/)).
 
 ---
 
