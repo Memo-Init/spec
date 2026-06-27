@@ -93,6 +93,18 @@ A new registered folder **MUST** follow this convention: a dot for generated or 
 
 ---
 
+## Three Orthogonal Axes: Dot-Prefix, Local Guarantee, Outward-Facing
+
+The dot-prefix is easy to conflate with two properties it is **not** the same as. Three independent axes are at work, and a folder has a value on each:
+
+- **Dot-prefix** — *authored vs. machinery*. A leading dot marks generated or local machinery; no dot marks hand-authored, user-facing content (the convention above).
+- **Local guarantee** — *stays on the machine*. The project root is local in its entirety ([11-project-structure.md](./11-project-structure.md)): **every** folder, dotted or not, stays on the machine unless something is **deliberately** published from it (a `repos/` git remote, a generated site). Locality is a property of the whole root, **orthogonal** to the dot.
+- **Outward-facing** — *audience calibration, if published*. Whether content is written for an outside reader is a communication-register default (the memo specification's "outward-facing by default" posture), not a statement about where the bytes live or whether they are pushed.
+
+This dissolves an apparent contradiction: the project's `context/` is non-dot (authored), fully local (it stays on the machine — which is exactly why half-formed research is safe there, [16-context.md](./16-context.md)), **and** outward-facing-calibrated (written so it *could* be shared). All three hold at once because they answer different questions. "Outward-facing" never means "already pushed," and "no dot" never means "not local."
+
+---
+
 ## `data/` vs `context/`
 
 The distinction between `data/` and `context/` is by **state of processing**, and it is the reason both exist:

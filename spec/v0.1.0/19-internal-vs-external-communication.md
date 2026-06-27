@@ -14,7 +14,7 @@ This chapter fixes the line between the two directions so that internal calibrat
 
 ## Outward-Facing by Default
 
-Everything outside `.memo/` is **outward-facing** by default. The working assumption is minimalism: the AI's default posture is "can I say more?" — not "can I remove this?" Internal is the declared exception, not the starting point.
+Everything outside `.memo/` is **outward-facing** by default. The working assumption is minimalism: the AI's default posture is "can I say more?" — not "can I remove this?" Internal is the declared exception, not the starting point. This default is about **communication register** — how something is written and what it exposes — not about where the bytes live: content can be outward-facing in register and still fully **local** (the project root stays on the machine unless something is deliberately published from it). Register and locality are separate axes.
 
 - Material inside `.memo/` **MAY** carry internal references, working register, and insider shorthand. It is calibrated for the author and the agent, not for a stranger.
 - Outside `.memo/`, an artifact is outward-facing unless explicitly declared otherwise. The burden is on the author to justify keeping something internal — not to prove an artifact is fit to go out.
