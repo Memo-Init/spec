@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-06-26T21:26:44.321Z"
+generated_at: "2026-06-27T01:24:20.547Z"
 generated_from: "spec/v0.1.0/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/19-internal-vs-external-communication.md."

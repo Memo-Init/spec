@@ -14,7 +14,7 @@ The Session Genesis Root (`session-sop`) is the lowest tier of the system. It ow
 
 | Tier | Owns | Artifact |
 |------|------|----------|
-| **session-sop** (Genesis Root, global per session) | session identity, self-classification, per-session security level, PreToolUse enforcement | `~/.claude/` + this family |
+| **session-sop** (Genesis Root, global per session) | session identity, self-classification, per-session security level, PreToolUse enforcement | `.session/config.json` + this family |
 | ↑ workbench-sop | workbench convention | the Workbench spec |
 | ↑ memo-sop | memo process | the SOP/core specs + skill |
 | ↑ memo-init / flowmcp | domain entry points | skills |
@@ -29,12 +29,24 @@ A session has an ambient identity that any tool MAY resolve deterministically. T
 
 | Field | Flag | Environment tier | Default |
 |-------|------|------------------|---------|
-| `sessionId` | `--session-id` | `CLAUDE_SESSION_ID` | `null` |
+| `sessionId` | `--session-id` | `SOP_SESSION_ID` | `null` |
 | `memoId` (optional second protocol) | `--memo-id` | `MEMO_ID` | `null` |
+
+The environment tier is **harness-neutral**: the canonical variable is `SOP_SESSION_ID`, which names the session identity without binding it to any particular tool. A specific harness that exposes its own identity variable — Claude Code's `CLAUDE_SESSION_ID`, for example — is recognized **only as an input alias** read by the harness adapter (below); it is mapped onto `SOP_SESSION_ID` and is never the canonical name the spec depends on. This keeps the genesis root's identity decoupled from whatever tool happens to host the session.
 
 The resolution MUST be **no-silent-default**: when neither a flag nor an environment value is present, the field resolves to `null` with an explicit source of `"none"`, never to a guessed value. The reference resolver is the CLI leaf `memo session resolve` ([workbench/20-cli.md](/workbench/cli/)). The resolved identity (and the resolved root) is **pinned once at SessionStart** and read from the pin thereafter — never recomputed from a `cd`-mutated `cwd` ([08-identity-pin.md](./08-identity-pin.md)).
 
 `memoId` is a strictly **optional** second protocol: a session MAY carry an ambient memo id out of band, but the system MUST function when it is absent. No behaviour depends on `memoId` being set.
+
+---
+
+## The Harness Adapter
+
+The genesis-root **artifact** is the project-local marker: `.session/` and its `config.json`. That marker is OS- and harness-agnostic — it is the same on any machine and under any tool that drives the session, and it owns the identity, the security level, and the SOP chain.
+
+The coupling to a specific harness lives in a **separate, replaceable adapter layer**, not in the genesis root itself. Claude Code's `~/.claude/settings.json` PreToolUse hook and the `CLAUDE.md` block that loads `session-sop` first are **one such adapter**: a single consumer that reads `.session/config.json` and the harness-neutral identity, translating the host's conventions (its `CLAUDE_SESSION_ID` alias, its hook format) into the terms this spec defines. Swapping the harness means swapping the adapter, not the artifact — the genesis root does not change.
+
+This separation is exactly why "session" is disambiguated in the glossary (see the *Three meanings of "session"* entry in [00-overview.md](./00-overview.md#glossary)): the OS/runtime session and the harness's own conversation session are distinct from our `.session/` marker, and the adapter is precisely the seam where a harness's session meets ours.
 
 ---
 

@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-06-26T21:26:44.321Z"
+generated_at: "2026-06-27T01:24:20.547Z"
 generated_from: "spec/session/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/00-overview.md."
@@ -38,26 +38,63 @@ The build direction is **bottom-up**: the genesis root exists first, and each la
 
 ---
 
+## Progressive Disclosure — The One Big Idea
+
+The session is **not** a static block of `CLAUDE.md` text that is always fully present. It is a **fan of capabilities** that loads at the right place, only when its intent shows up — the pattern Anthropic calls **Progressive Disclosure**. It is the same mechanism that governs Agent Skills (a skill exposes only its `name` and `description` until its body is needed, and its bundled resources only when actually read) and on-demand tool definitions (the deferred-tools / tool-search mechanism this harness itself uses). Capability lies in a pool and is drawn just-in-time, rather than every door being held open at once.
+
+This is why the session is the right tier to be **minimal**. The always-present surface is small — `.session/` plus its `config.json` — and everything above it is a **superset** that the lower tier never has to carry. **Session = minimal, Workbench = superset**: the genesis root stays lean, and breadth is disclosed by intent rather than pre-loaded.
+
+Progressive Disclosure (when a capability becomes *visible*) must not be conflated with the **Precondition-Gate** (whether a capability is *allowed to run*). The driver's-licence rule — `memo-init` may run only once `memo-sop` has been read — is a Precondition-Gate: the deterministic SessionStart / PreToolUse chain (`REQ-SS-*`) specified in [02-enforcement.md](/specification/enforcement/). The two are complementary: disclosure decides *when* a door appears; the gate decides *whether* you may walk through it. Someone who never intends to drive needs no licence — pure disclosure; the licence itself is the gate laid over the disclosure.
+
+---
+
+## The Push-Down Principle
+
+The family's organizing leitmotif is **push-down**: a concept shared across tiers is explained **once**, at the lowest tier that owns it — the session — and the tiers above (`workbench-sop`, `memo-sop`, and the Workbench folder pages) **reference down** into it rather than restating it. A reader meets the canonical definition here and finds pointers, not copies, higher up. The PreToolUse **Hook-Contract** is the worked example: its single source is this family's enforcement page ([02-enforcement.md](/specification/enforcement/)), and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) references up to it rather than redefining the contract.
+
+Three companion rules keep the push-down honest:
+
+- **No nav-mirror tables.** A page does not rebuild the sidebar as a table; the navigation already lists the chapters.
+- **Fewer pages, more content.** Breadth is consolidated into a smaller number of fuller pages rather than scattered across many thin ones.
+- **No wild cross-linking.** A concept is linked where it is defined, not at every place it is mentioned; links point to the one owning page, not a web of incidental references.
+
+---
+
+## Glossary
+
+The vocabulary the whole chain shares is defined once here, at the lowest tier (the push-down principle above). Higher tiers use these terms without redefining them.
+
+- **Tool** — a registered **namespace**: an SOP application that reserves a namespace and registers its skills, so the session can find it. The built-in tools are `memo`, `workbench`, and `flowmcp`. A registered namespace is a *Tool* — not a *Component*, which is reserved for a skill subtype.
+- **Add-on** — a **custom-folder** tool: a local extension that lives in its own folder and is **not** a reserved namespace. The Workbench spec calls these *custom folders*; `.memo/` is the heaviest add-on. "Children" is used only informally for the things a tool carries, deliberately avoiding the formal *Component*.
+- **namespace** — the reserved prefix a Tool owns (e.g. `memo`), under which its skills and dependency edges are declared. Namespaces are unique; a collision is an error, never a silent merge.
+- **SOP** — Standard Operating Procedure: the connecting layer that makes a procedure predictable, and the entry-point mechanism through which a Tool registers, attaches to the session, and becomes findable ([10-sop.md](/specification/sop/)). Not every Tool is an SOP — a catalog tool carries skills but defines no procedure.
+- **phase** — a unit of a memo rollout that groups several PRDs and is ordered by `depends-on` edges.
+- **strand** — the dependency closure over phases: the chain that *emerges* when the `depends-on` edges are followed, computed rather than authored.
+- **plan** — a multi-phase execution record that references a memo and tracks which phase runs next.
+- **requirements** — the typed, persisted assertions and tool-checks a memo declares, drawn from a registry and carried into a rollout through its PRDs.
+- **finalisation** — the readiness gate a memo passes before its PRDs are generated: the point at which it is judged complete enough to roll out.
+- **user-fuel** — the user-supplied input that drives an otherwise autonomous process: the voice memos, the answered questions, and the explicit approvals. The process runs on its own once started, but it is the user-fuel that sets and steers it.
+
+### Three meanings of "session"
+
+The word *session* is overloaded; this family means exactly one of three things, and the other two never touch a project's `.session/`:
+
+- **OS / runtime session** — the operating system's login or terminal session (`XDG_SESSION_ID`, `tmux`, launchd). It lives in environment variables and `/run`, never in a project folder.
+- **Claude Code conversation session** — the harness-owned conversation with its `sessionId` and transcript. It is owned by the harness under `~/.claude/` and is one replaceable consumer of our marker.
+- **our `.session/`** — the on-disk genesis-root marker directory this family specifies (it holds `config.json`). It is OS- and harness-agnostic and collides with neither of the above.
+
+---
+
 ## The Chapters
 
-The family is read in five nav groups: **Introduction**, **SOP** (the entry-point mechanism), **Genesis Root**, **Enforcement**, **CLI**, and **Recovery**.
+The family is read in six nav groups; the sidebar lists the individual chapters, so they are not re-tabulated here (the push-down rule on nav-mirror tables, above). Each group is summarised by what it owns:
 
-| Chapter | Group | Holds |
-|---------|-------|-------|
-| [01-genesis-root.md](/specification/genesis-root/) | Genesis Root | The tier model, session identity (`flag > env > null`), the per-session security level, and the full declared SOP chain. |
-| [05-config-cascade.md](/specification/config-cascade/) | Genesis Root | The `.session/config.json` entry point, the three-tier config cascade, and the one-time migration. |
-| [06-namespace-registry.md](/specification/namespace-registry/) | Genesis Root | The `sops[]` registrant blocks, namespace reservation, N-1/N-2 rules, and `requires[]` vs `requirements[]`. |
-| [09-root-detection.md](/specification/root-detection/) | Genesis Root | The `.session/` root marker, the `root:true` stop-flag, and the opt-in `workbenchRoot` pointer. |
-| [10-sop.md](/specification/sop/) | SOP | SOP as the entry-point mechanism, the three "top" axes, and SOP-instance vs catalog blocks. |
-| [11-common-denominator.md](/specification/common-denominator/) | SOP | The four parts every SOP shares — Setup, Health, Update, Extras. |
-| [12-instances.md](/specification/instances/) | SOP | The existing SOP instances and the inheritance declaration. |
-| [13-conventions.md](/specification/conventions/) | SOP | The naming (`prefix-hyphen-name`) and brevity conventions. |
-| [02-enforcement.md](/specification/enforcement/) | Enforcement | The deterministic PreToolUse gate: the three-state fail-safe contract, the project-scoped registry, jq-structured signals. |
-| [07-doctor-init.md](/specification/doctor-init/) | Enforcement | The foreground `session doctor` (readiness) and `session init` (additive scaffold + migration). |
-| [08-identity-pin.md](/specification/identity-pin/) | Enforcement | The SessionStart-Pin invariant and the warn-not-block cd-guard. |
-| [04-cli.md](/specification/cli/) | CLI | The CLI doctrine — eight principles, standard verbs and flags, the exit-code mirror. |
-| [03-recovery.md](/specification/recovery/) | Recovery | The fail-safe guarantees: kill-switch, sentinel, SessionStart canary, recovery runbook. |
-| [14-migration.md](/specification/migration/) | Recovery | The sop→session publication fold and the requirement-record path rewrite. |
+- **Introduction** — this overview: scope, the genesis-root rationale, Progressive Disclosure, the push-down principle, and the shared glossary.
+- **Genesis Root** — what the session tier owns: the tier model and identity, the `.session/config.json` cascade, the namespace registry, and root detection.
+- **SOP** — the entry-point mechanism: SOP as the layer tools register through, the four-part common denominator every SOP shares, the existing instances, and the naming conventions.
+- **Enforcement** — the deterministic PreToolUse gate: the three-state fail-safe contract, `session doctor` / `session init`, and the SessionStart identity pin.
+- **CLI** — the command-line doctrine: the standard verbs and flags and the exit-code mirror.
+- **Recovery** — the fail-safe guarantees (kill-switch, sentinel, SessionStart canary) and the publication-fold migration.
 
 ---
 
