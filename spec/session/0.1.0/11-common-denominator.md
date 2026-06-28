@@ -1,4 +1,4 @@
-# 11. The Common Denominator — Setup, Health, Update, Extras
+# 11. Standard Commands
 
 | | |
 |---|---|

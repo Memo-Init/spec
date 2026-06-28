@@ -1,4 +1,4 @@
-# 10. SOP — The Entry-Point Mechanism
+# 10. The SOP Entry Point
 
 | | |
 |---|---|
@@ -66,6 +66,7 @@ memo-init and workbench are **SOP-instance blocks**: they participate in the pre
 | [11-common-denominator.md](./11-common-denominator.md) | the four parts every SOP shares — Setup, Health, Update, Extras |
 | [12-instances.md](./12-instances.md) | the existing SOP instances and the inheritance declaration |
 | [13-conventions.md](./13-conventions.md) | the naming (`prefix-hyphen-name`) and brevity conventions |
+| [15-addons.md](./15-addons.md) | the Add-on model — how custom-folder tools follow the SOP standard |
 
 ---
 

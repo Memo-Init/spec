@@ -1,12 +1,12 @@
 ---
-title: "Conventions — Naming and Brevity"
+title: "Conventions"
 description: "The conventions below are not specific to any one SOP. They apply wherever skills, CLIs, and SOP prose appear, which is why they live in the connecting mechanism rather than in a single instance."
 session_version: "0.1.0"
 spec_file: "13-conventions.md"
 order: 13
 section: "Session"
 normative: false
-generated_at: "2026-06-27T22:03:57.339Z"
+generated_at: "2026-06-28T01:27:41.498Z"
 generated_from: "spec/session/0.1.0/13-conventions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/13-conventions.md."

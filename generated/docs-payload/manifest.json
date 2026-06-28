@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-27T22:03:57.537Z",
+    "generated_at": "2026-06-28T01:27:41.973Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -535,7 +535,7 @@
                 "order": 13,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "storage"
+                "sidebar_group": "wiki"
             },
             {
                 "filename": "15-repos.md",
@@ -565,7 +565,7 @@
                 "order": 17,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "custom"
+                "sidebar_group": "folders"
             },
             {
                 "filename": "18-design.md",
@@ -575,7 +575,7 @@
                 "order": 18,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "storage"
+                "sidebar_group": "wiki"
             },
             {
                 "filename": "19-tmp.md",
@@ -650,12 +650,12 @@
             {
                 "filename": "26-addons.md",
                 "slug": "addons",
-                "title": "Custom",
-                "description": "An **Add-on** is a tool that plugs into the workbench: it is provided globally, it reserves a small declared area inside a project, and it follows a common SOP so that every Add-on is operated the...",
+                "title": "Add-ons",
+                "description": "An **Add-on** is a custom-folder tool: a global extension that reserves a small declared area inside a project and follows a common SOP so that every Add-on is operated the same way. *Add-on* is the...",
                 "order": 26,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "custom"
+                "sidebar_group": "folders"
             },
             {
                 "filename": "30-wiki.md",
@@ -780,12 +780,12 @@
                 "order": 7,
                 "section": "Session",
                 "normative": true,
-                "sidebar_group": "enforcement"
+                "sidebar_group": "cli"
             },
             {
                 "filename": "08-identity-pin.md",
                 "slug": "identity-pin",
-                "title": "Session Identity Pin and the cd-Guard",
+                "title": "Session Identity Pin",
                 "description": "The session identity established by the genesis root ([01-genesis-root.md](./01-genesis-root.md)) is global **per session**, which only holds if it is also **stable for the whole session**. This...",
                 "order": 8,
                 "section": "Session",
@@ -805,7 +805,7 @@
             {
                 "filename": "10-sop.md",
                 "slug": "sop",
-                "title": "SOP — The Entry-Point Mechanism",
+                "title": "The SOP Entry Point",
                 "description": "**What an SOP is.** An SOP — Standard Operating Procedure — is the connecting layer that makes a procedure predictable: the entry-point mechanism through which a tool registers under a namespace,...",
                 "order": 10,
                 "section": "Session",
@@ -815,7 +815,7 @@
             {
                 "filename": "11-common-denominator.md",
                 "slug": "common-denominator",
-                "title": "The Common Denominator — Setup, Health, Update, Extras",
+                "title": "Standard Commands",
                 "description": "Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on...",
                 "order": 11,
                 "section": "Session",
@@ -825,7 +825,7 @@
             {
                 "filename": "12-instances.md",
                 "slug": "instances",
-                "title": "SOP Instances and the Reference Model",
+                "title": "SOP Instances",
                 "description": "The SOP area defines a shape; the concrete SOPs **are** that shape, filled in for their scope. This chapter records the existing instances and the lightweight reference model that ties them back to...",
                 "order": 12,
                 "section": "Session",
@@ -835,7 +835,7 @@
             {
                 "filename": "13-conventions.md",
                 "slug": "conventions",
-                "title": "Conventions — Naming and Brevity",
+                "title": "Conventions",
                 "description": "The conventions below are not specific to any one SOP. They apply wherever skills, CLIs, and SOP prose appear, which is why they live in the connecting mechanism rather than in a single instance.",
                 "order": 13,
                 "section": "Session",
@@ -851,15 +851,25 @@
                 "section": "Session",
                 "normative": true,
                 "sidebar_group": "recovery"
+            },
+            {
+                "filename": "15-addons.md",
+                "slug": "addons",
+                "title": "Add-on Model",
+                "description": "**Add-on** is the session glossary's term ([00-overview.md](./00-overview.md)) for a custom-folder tool: a global extension that lives in its own folder and is **not** a reserved namespace. The...",
+                "order": 15,
+                "section": "Session",
+                "normative": true,
+                "sidebar_group": "sop"
             }
         ]
     },
     "stats": {
-        "total_files": 84,
+        "total_files": 85,
         "core_files": 46,
         "workbench_files": 23,
-        "session_files": 15,
-        "normative_files": 73,
+        "session_files": 16,
+        "normative_files": 74,
         "informative_files": 11
     }
 }

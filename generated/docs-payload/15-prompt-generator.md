@@ -6,7 +6,7 @@ spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T22:03:57.339Z"
+generated_at: "2026-06-28T01:27:41.498Z"
 generated_from: "spec/v0.1.0/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/15-prompt-generator.md."

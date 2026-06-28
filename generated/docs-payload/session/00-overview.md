@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-06-27T22:03:57.339Z"
+generated_at: "2026-06-28T01:27:41.498Z"
 generated_from: "spec/session/0.1.0/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/00-overview.md."
@@ -115,7 +115,7 @@ The family is read in six nav groups; the sidebar lists the individual chapters,
 
 - **Introduction** — this overview: scope, the genesis-root rationale, Progressive Disclosure, the push-down principle, and the shared glossary.
 - **Genesis Root** — what the session tier owns: the tier model and identity, the `.session/config.json` cascade, the namespace registry, and root detection.
-- **SOP** — the entry-point mechanism: SOP as the layer tools register through, the four-part common denominator every SOP shares, the existing instances, and the naming conventions.
+- **SOP** — the entry-point mechanism: SOP as the layer tools register through, the four-part common denominator every SOP shares, the existing instances, the naming conventions, and the Add-on model.
 - **Enforcement** — the deterministic PreToolUse gate: the three-state fail-safe contract, `session doctor` / `session init`, and the SessionStart identity pin.
 - **CLI** — the command-line doctrine: the standard verbs and flags and the exit-code mirror.
 - **Recovery** — the fail-safe guarantees (disable switch, sentinel, SessionStart canary) and the publication-fold migration.

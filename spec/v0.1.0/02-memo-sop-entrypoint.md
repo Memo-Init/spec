@@ -12,7 +12,7 @@
 
 `memo-sop` is the **canonical entry skill** of the memo system. It is the one document that explains the entire process end to end: the path from a dictated transcript to an executed rollout, the state transitions along the way, the hierarchy of every other skill, and the terminal-output standards. Every other memo skill references it and follows its process.
 
-An agent that needs to understand the memo workflow MUST load `memo-sop` first. It is the document that explains everything; the other skills are children of it.
+An agent that needs to understand the memo workflow MUST load `memo-sop` first. It is the document that explains everything; the other skills are children of it. This is the same precondition the deterministic skill chain enforces elsewhere (`memo-init` requires `memo-sop`); the intake tooling SHOULD make it **visible at the entry point** — the memo-view init-transcript template and its API response surface a "precondition: `memo-sop` loaded" hint, so the requirement is stated where a memo actually begins, not only buried in a skill chain.
 
 On the published website, `memo-sop` SHOULD be the first documentation entry after the landing page, because it is the door through which a reader enters the system.
 

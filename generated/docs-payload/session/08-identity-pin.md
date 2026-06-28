@@ -1,12 +1,12 @@
 ---
-title: "Session Identity Pin and the cd-Guard"
+title: "Session Identity Pin"
 description: "The session identity established by the genesis root ([01-genesis-root.md](./01-genesis-root.md)) is global **per session**, which only holds if it is also **stable for the whole session**. This..."
 session_version: "0.1.0"
 spec_file: "08-identity-pin.md"
 order: 8
 section: "Session"
 normative: true
-generated_at: "2026-06-27T22:03:57.339Z"
+generated_at: "2026-06-28T01:27:41.498Z"
 generated_from: "spec/session/0.1.0/08-identity-pin.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/08-identity-pin.md."

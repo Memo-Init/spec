@@ -1,4 +1,4 @@
-# 08. Session Identity Pin and the cd-Guard
+# 08. Session Identity Pin
 
 | | |
 |---|---|

@@ -18,7 +18,8 @@
                 "10-sop",
                 "11-common-denominator",
                 "12-instances",
-                "13-conventions"
+                "13-conventions",
+                "15-addons"
             ]
         },
         {
@@ -38,7 +39,6 @@
             "order": 4,
             "pages": [
                 "02-enforcement",
-                "07-doctor-init",
                 "08-identity-pin"
             ]
         },
@@ -47,7 +47,8 @@
             "label": "CLI",
             "order": 5,
             "pages": [
-                "04-cli"
+                "04-cli",
+                "07-doctor-init"
             ]
         },
         {

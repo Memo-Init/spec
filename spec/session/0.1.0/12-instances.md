@@ -1,4 +1,4 @@
-# 12. SOP Instances and the Reference Model
+# 12. SOP Instances
 
 | | |
 |---|---|

@@ -1,4 +1,4 @@
-# 13. Conventions — Naming and Brevity
+# 13. Conventions
 
 | | |
 |---|---|

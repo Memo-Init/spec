@@ -6,7 +6,7 @@ spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-06-27T22:03:57.339Z"
+generated_at: "2026-06-28T01:27:41.498Z"
 generated_from: "spec/v0.1.0/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/04-input-pipeline.md."
@@ -81,6 +81,8 @@ Every memo MUST contain a dedicated **context area** (`## Context` or equivalent
 - MUST capture the developer's stated reasons, not just the decision outcome.
 - MAY contain references to linked files, prior decisions, or external sources.
 - MUST NOT be merged into the requirements or implementation sections.
+
+**Binding the initial transcript.** The initial transcript is the single richest context source a memo has — often a 20–60 minute dictated review carrying dozens of detailed instructions. `memo-init` MUST bind it to the memo immediately, by copying it into the memo folder under the canonical name `transcripts/memo-init-transcript.md` (NO-OVERWRITE — an existing bound transcript is never clobbered). A memo whose initial transcript is left only in the raw intake store is **orphaned**: every later evaluation (`memo-finalize`, the rollout's evaluate, every fidelity audit) then measures against the thinner revisions alone and silently loses whole blocks of intent. Because the binding is a deterministic file operation, an implementation SHOULD also surface it as an automatic step in the intake tooling (e.g. the memo-view init-transcript route auto-binds on a `memo-init`-typed transcript), not only as a manual skill step.
 
 ---
 

@@ -1,12 +1,12 @@
 ---
-title: "The Common Denominator — Setup, Health, Update, Extras"
+title: "Standard Commands"
 description: "Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on..."
 session_version: "0.1.0"
 spec_file: "11-common-denominator.md"
 order: 11
 section: "Session"
 normative: true
-generated_at: "2026-06-27T22:03:57.339Z"
+generated_at: "2026-06-28T01:27:41.498Z"
 generated_from: "spec/session/0.1.0/11-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/11-common-denominator.md."

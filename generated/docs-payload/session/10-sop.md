@@ -1,12 +1,12 @@
 ---
-title: "SOP — The Entry-Point Mechanism"
+title: "The SOP Entry Point"
 description: "**What an SOP is.** An SOP — Standard Operating Procedure — is the connecting layer that makes a procedure predictable: the entry-point mechanism through which a tool registers under a namespace,..."
 session_version: "0.1.0"
 spec_file: "10-sop.md"
 order: 10
 section: "Session"
 normative: false
-generated_at: "2026-06-27T22:03:57.339Z"
+generated_at: "2026-06-28T01:27:41.498Z"
 generated_from: "spec/session/0.1.0/10-sop.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/10-sop.md."
@@ -73,6 +73,7 @@ memo-init and workbench are **SOP-instance blocks**: they participate in the pre
 | [11-common-denominator.md](/specification/common-denominator/) | the four parts every SOP shares — Setup, Health, Update, Extras |
 | [12-instances.md](/specification/instances/) | the existing SOP instances and the inheritance declaration |
 | [13-conventions.md](/specification/conventions/) | the naming (`prefix-hyphen-name`) and brevity conventions |
+| [15-addons.md](/specification/addons/) | the Add-on model — how custom-folder tools follow the SOP standard |
 
 ---
 

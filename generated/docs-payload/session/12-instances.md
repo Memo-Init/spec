@@ -1,12 +1,12 @@
 ---
-title: "SOP Instances and the Reference Model"
+title: "SOP Instances"
 description: "The SOP area defines a shape; the concrete SOPs **are** that shape, filled in for their scope. This chapter records the existing instances and the lightweight reference model that ties them back to..."
 session_version: "0.1.0"
 spec_file: "12-instances.md"
 order: 12
 section: "Session"
 normative: false
-generated_at: "2026-06-27T22:03:57.339Z"
+generated_at: "2026-06-28T01:27:41.498Z"
 generated_from: "spec/session/0.1.0/12-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/12-instances.md."
