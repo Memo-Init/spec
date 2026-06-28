@@ -6,7 +6,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-06-28T01:27:41.498Z"
+generated_at: "2026-06-28T10:00:06.763Z"
 generated_from: "spec/v0.1.0/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/08-phases-and-prds.md."
