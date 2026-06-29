@@ -60,6 +60,8 @@ A skill is proven against three independent dimensions. All three are necessary:
 
 **Test isolation is a hard rule.** A skill evaluation **MUST NOT** write into a user-home location or any shared real directory; it runs entirely against **repo-local fixtures**. A test that writes outside the repository corrupts the very state the live system depends on, and an evaluation that can damage production is not a test but a hazard. Reads may range wider, but every write stays inside the fixture tree.
 
+The three dimensions are scored with the same **shared scoring head** specified in [23-requirements.md](./23-requirements.md) (The Grading Model): ternary outcomes, a fresh-context grader that is not the doer, and a strict result object. This chapter adds only its domain axes — the three quality dimensions above — and reuses the head rather than restating it.
+
 ---
 
 ## Where Skill Evals Live

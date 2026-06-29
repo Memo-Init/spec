@@ -186,6 +186,38 @@ A requirement set thereby doubles as an **eval set**: it is the explicit definit
 
 ---
 
+## The Grading Model
+
+When a requirement carries an object `grade` (the grade axis above), its dimension feeds a shared **grading model** — one reusable scoring head that every family follows, rather than each domain re-inventing its own. The model is deliberately the same discipline already proven in a sibling content-grading specification; it is summarised here as the common head and imported by reference, not copied.
+
+**Weighted, continuous scale.** A grade is a weighted sum of named **dimensions** on a continuous **1.0–5.0** scale. The applicable dimension weights **MUST** sum to 100%. A dimension that does not apply to a given work type is **dropped and its weight redistributed** across the rest — never scored as a failure, so an inapplicable axis cannot silently sink a score.
+
+**Bands and the production gate.** The aggregate maps to honest bands:
+
+| Band | Range |
+|------|-------|
+| Exemplary | 5.0 |
+| Strong | 4.0–4.9 |
+| Production-ready | 3.5–3.9 |
+| Needs work | 2.5–3.4 |
+| Failing | 1.0–2.4 |
+
+The **production gate is 3.5**: work below it is not ready. A family **MAY** set a stricter gate but **MUST NOT** lower it below 3.5.
+
+**Veto through the scale, not beside it.** There is no separate fail flag. A `CRITICAL`-severity miss **floors its dimension to 1.0**; because one floored weighted dimension drags the aggregate under the gate on its own, the single weighted sum is the only source of the verdict.
+
+**Two check tiers.** Each grading point declares a `checkMode`: **`deterministic`** (decided by code or CI — cheap, reproducible) or **`judged`** (decided by an evaluator against a rubric in a **fresh context**; a judged result **MUST** be stamped with the grader identity and model). The doer is not the grader, exactly as for the ternary checks above.
+
+**Calibration honesty.** Weights and band cut-offs are assumptions until calibrated against a labelled corpus. An uncalibrated weight **MUST** be marked `provisional`; freezing a weight set as final **REQUIRES** a stated calibration basis. A grade audits the *direction* a rule points, not an unverified absolute threshold.
+
+**Codes and namespace qualification.** A grading point carries a stable code of the form `GR-<SUBCAT>-<NNN>` — the `GR-` facet marks it as grading, so it never collides with a `REQ-` id even on the same entry. Across families a code is qualified by the family's globally-unique `namespaceToken` (for example `MC:GR-<SUBCAT>-<NNN>`), which is how a thin family imports the shared head and references core's points without collision.
+
+**Importing the head.** A family turns grading on through its manifest `gradingRef` (see *The Family Manifest Head*). A **thin** family sets `gradingRef` to the chapter that hosts this model, imports the whole head — scale, bands, gate, veto, tiers, calibration — and declares only the dimensions it adds. A **rich** family keeps its own domain dimensions but still follows this model. The domain scoring chapters reuse this head rather than restating it: goal scoring ([31-goals.md](./31-goals.md)), maintenance scoring ([33-maintenance.md](./33-maintenance.md)), and the implementation-fidelity audit ([45-implementation-fidelity-audit.md](./45-implementation-fidelity-audit.md)) each keep only their domain axis and point here for the shared contract.
+
+**A rich external special case is referenced, not absorbed.** A separate, directory-versioned grading system exists for the external tool-schema domain, with its own executable harness and status model. It is **referenced** as a special case, not generalised into this head and not its blueprint: this model **MAY** additionally grade that domain as a requirement, but that system's internal grading is not pulled in, and its executability is not assumed transferable here.
+
+---
+
 ## Related
 
 - [24-tools-registry.md](./24-tools-registry.md) — the parallel data folder; `check.kind: tool` requirements point into the tools registry for the tool and tactic that verify them.

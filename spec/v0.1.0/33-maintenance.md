@@ -59,6 +59,8 @@ Like a goal, a maintenance card is **measured against real state**, never agains
 - **Distrust PASS.** A green report is not evidence. The fresh-context reader inspects the actual commits since each edge's provenance pin, the real dependency graph, and the source heads — not a claim.
 - **A single score is a strict object.** One card's score is `{ pct, status, findings, signals, confidence, evidence }`: a freshness percentage, the `maintStatus`, the concrete drift findings, the machine signals behind them, the provenance of the judgement, and evidence pointers. `pct` is the fresh-context freshness reading; the blast-radius (below) is computed deterministically and auto-filled by the CLI.
 
+This fresh-context, distrust-PASS, strict-object posture is the **shared scoring head** specified once in [23-requirements.md](./23-requirements.md) (The Grading Model); maintenance scoring follows that head and adds only its domain axes (freshness `pct` + blast-radius), rather than restating the contract.
+
 ## Blast-Radius — the Second Axis
 
 A card is scored on **two independent axes**, mirroring the goal split of a subjective and a deterministic axis ([31](./31-goals.md)).
