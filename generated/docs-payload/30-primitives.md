@@ -6,7 +6,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-06-28T10:00:06.763Z"
+generated_at: "2026-06-29T17:03:59.600Z"
 generated_from: "spec/v0.1.0/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/30-primitives.md."
@@ -15,7 +15,7 @@ edit_warning: "This file is auto-generated. Source: spec/v0.1.0/30-primitives.md
 
 This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail chapter that specifies it in full: the top level stays brief and points down, the depth lives in the owning chapter. Where this chapter and a detail chapter both speak about a primitive, the detail chapter is authoritative on its own subject and this chapter MUST stay consistent with it. The chapter also carries the system's only entity/relationship diagram and the two complementary concept views — the user view and the factory view — joined at finalization.
 
-There are exactly **eleven** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strand, Requirement, Tool, Plan**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere.
+There are exactly **eleven** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strand, Requirement, Tool, Plan**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere. **Grading is not a twelfth primitive** — it is an optional scoring head on the **Requirement** primitive (the grading model in [23-requirements.md](/specification/requirements/)), a roof over existing chapters rather than a new structural node.
 
 ---
 

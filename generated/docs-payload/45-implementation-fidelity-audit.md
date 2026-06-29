@@ -6,7 +6,7 @@ spec_file: "45-implementation-fidelity-audit.md"
 order: 45
 section: "Specification"
 normative: true
-generated_at: "2026-06-28T10:00:06.763Z"
+generated_at: "2026-06-29T17:03:59.600Z"
 generated_from: "spec/v0.1.0/45-implementation-fidelity-audit.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/45-implementation-fidelity-audit.md."
@@ -60,6 +60,8 @@ The audit returns exactly one object. The fields are fixed so the persisted resu
 | `evidence` | array | Concrete pointers (file:line, commit, command output) backing `pct` and the findings. |
 
 The companion human-readable artifact is a **loss table** — one row per finding — with the columns `Item | last seen | lost at hop | class | severity | evidence`. The score object drives comparison and persistence; the loss table is what a person reads.
+
+The audit's posture — fresh context, distrust every conformity report, a strict score object — is the **shared scoring head** specified once in [23-requirements.md](/specification/requirements/) (The Grading Model). The fidelity audit follows that head and adds only its domain axes (`pct` + the loss/mis-implemented findings across the four hops); it does not restate the contract.
 
 ---
 
