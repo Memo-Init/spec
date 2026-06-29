@@ -69,7 +69,7 @@ flowchart TD
 | 5 | Strict AI→software handover | Open questions are parsed from a machine-readable schema. | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
 | 6 | Finalization → plan → execution | The finalized memo drives a rollout. | [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md) |
 
-A finalized memo can be carried into execution by two valid, parallel models. The **rollout model** works a single finalized memo straight through its phases in one autonomous run. The **planning model** assembles one or more finalized memos into a plan and executes phase by phase across them. Both are contemporary, complementary approaches: the rollout model fits a self-contained memo, while the planning model fits work that spans several memos. The choice of model does not change the six steps above — it changes only how step 6 is carried out.
+A finalized memo is carried into execution through the **rollout** — a single finalized memo worked straight through its phases in one autonomous run. This is the lived execution path, and `memo-plan` is the public entry point that delegates to it. Above the rollout sits a broader **planning layer** — assembling several finalized memos into one plan and executing phase by phase across them. That layer is as-yet **unfinished**, not a co-equal alternative: the single-memo rollout is what actually runs today, and the multi-memo plan is the aspiration built on the same rollout machinery. The distinction does not change the six steps above — it changes only how step 6 is carried out.
 
 > **Three counts, three nouns — do not conflate them.** The memo path's **six steps** here are distinct from the **four stages** of the end-of-process model ([38-stage-model.md](./38-stage-model.md)) and from the **eight principles** of the CLI doctrine. Three separate enumerations, each bound to its own noun — *steps* (the memo path), *stages* (the process end), *principles* (the CLI) — and "stage" is reserved for the four-stage model alone.
 
@@ -81,8 +81,8 @@ The SOP classifies every skill as either a public entry point or a private proce
 
 | Class | Role | Examples |
 |-------|------|----------|
-| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-plan` (Plan), `memo-rollout` (Rollout) |
-| **Private** | Internal process steps, invoked by the public entry points. | the revision-loop skills, the quality skills, the rollout machinery |
+| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-plan` (Plan) |
+| **Private** | Internal process steps, invoked by the public entry points. | the revision-loop skills, the quality skills, `memo-rollout` and the rollout machinery |
 
 This classification drives **progressive disclosure**: public memos and skills are the visible UI entry points, shown so a reader can find the doors into the system; internal memos and skills are linked from the public ones but not displayed up front. A reader sees the few entry points first and reaches the private process steps only by following a link.
 

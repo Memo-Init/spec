@@ -99,6 +99,20 @@ Beyond private data (paths, secrets, personal identifiers — see [16-git-securi
 
 The test is the same as everywhere in this chapter: direction, not secrecy. Each of these is removed because it is calibrated for the inward audience, not because it is confidential.
 
+This prohibition is authored as a declarative requirement — its `statement` shapes generation, its `check` is the deterministic spec scanner, and its `grade` is `binary` because a leak is a hard yes/no condition, not a quality spectrum:
+
+```requirement
+{
+  "id": "REQ-056",
+  "title": "No internal references in outward-facing spec text",
+  "statement": "Outward-facing spec text (the numbered chapters and the chapter-index README) MUST NOT carry concrete internal references: memo-numbered gate or answer codes, concrete goal-store ids, or memo references in prose. The ID and goal schema itself is documented public vocabulary and is exempt — a line carrying only a schema-token placeholder is not a leak. The check is the deterministic spec-quality scanner over the corpus.",
+  "scope": { "repos": ["spec"], "categories": [], "tags": [] },
+  "severity": "blocker",
+  "check": { "kind": "tool", "tool": "audit-spec-quality", "tactic": "no-internal-ref-scan" },
+  "grade": "binary"
+}
+```
+
 ---
 
 ## Language per Artifact

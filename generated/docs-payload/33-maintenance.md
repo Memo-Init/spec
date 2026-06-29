@@ -6,7 +6,7 @@ spec_file: "33-maintenance.md"
 order: 33
 section: "Specification"
 normative: true
-generated_at: "2026-06-28T10:00:06.763Z"
+generated_at: "2026-06-29T17:03:59.600Z"
 generated_from: "spec/v0.1.0/33-maintenance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/33-maintenance.md."
@@ -65,6 +65,8 @@ Like a goal, a maintenance card is **measured against real state**, never agains
 - **Never in the working session.** A card is **never** scored in the same session that did the work — a session that built the change will report it healthy and hide the drift. Scoring runs in a **fresh context**, one agent per repo, an unbiased reader of the real diff.
 - **Distrust PASS.** A green report is not evidence. The fresh-context reader inspects the actual commits since each edge's provenance pin, the real dependency graph, and the source heads — not a claim.
 - **A single score is a strict object.** One card's score is `{ pct, status, findings, signals, confidence, evidence }`: a freshness percentage, the `maintStatus`, the concrete drift findings, the machine signals behind them, the provenance of the judgement, and evidence pointers. `pct` is the fresh-context freshness reading; the blast-radius (below) is computed deterministically and auto-filled by the CLI.
+
+This fresh-context, distrust-PASS, strict-object posture is the **shared scoring head** specified once in [23-requirements.md](/specification/requirements/) (The Grading Model); maintenance scoring follows that head and adds only its domain axes (freshness `pct` + blast-radius), rather than restating the contract.
 
 ## Blast-Radius — the Second Axis
 

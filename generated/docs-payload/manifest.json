@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-28T10:00:06.951Z",
+    "generated_at": "2026-06-29T17:04:00.420Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -462,6 +462,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "health"
+        },
+        {
+            "filename": "46-bridge.md",
+            "slug": "bridge",
+            "title": "Bridge",
+            "description": "This page is the Bridge for the core specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that nothing...",
+            "order": 46,
+            "section": "Specification",
+            "normative": false,
+            "sidebar_group": "bridge"
         }
     ],
     "workbench": {
@@ -696,6 +706,16 @@
                 "section": "Workbench",
                 "normative": true,
                 "sidebar_group": "core"
+            },
+            {
+                "filename": "42-bridge.md",
+                "slug": "bridge",
+                "title": "Bridge",
+                "description": "This page is the Bridge for the workbench specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that...",
+                "order": 42,
+                "section": "Workbench",
+                "normative": false,
+                "sidebar_group": "bridge"
             }
         ]
     },
@@ -861,15 +881,25 @@
                 "section": "Session",
                 "normative": true,
                 "sidebar_group": "sop"
+            },
+            {
+                "filename": "16-bridge.md",
+                "slug": "bridge",
+                "title": "Bridge",
+                "description": "This page is the Bridge for the session specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that...",
+                "order": 16,
+                "section": "Session",
+                "normative": false,
+                "sidebar_group": "bridge"
             }
         ]
     },
     "stats": {
-        "total_files": 85,
-        "core_files": 46,
-        "workbench_files": 23,
-        "session_files": 16,
+        "total_files": 88,
+        "core_files": 47,
+        "workbench_files": 24,
+        "session_files": 17,
         "normative_files": 74,
-        "informative_files": 11
+        "informative_files": 14
     }
 }

@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-06-28T10:00:06.763Z"
+generated_at: "2026-06-29T17:03:59.600Z"
 generated_from: "spec/v0.1.0/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/19-internal-vs-external-communication.md."
@@ -105,6 +105,20 @@ Beyond private data (paths, secrets, personal identifiers — see [16-git-securi
 - **Mixed-language labels** — a label in the inward working language placed on a page written in the outward publication language. One language per artifact (see *Language per Artifact* below); a stray inward-language label reads as insider noise.
 
 The test is the same as everywhere in this chapter: direction, not secrecy. Each of these is removed because it is calibrated for the inward audience, not because it is confidential.
+
+This prohibition is authored as a declarative requirement — its `statement` shapes generation, its `check` is the deterministic spec scanner, and its `grade` is `binary` because a leak is a hard yes/no condition, not a quality spectrum:
+
+```requirement
+{
+  "id": "REQ-056",
+  "title": "No internal references in outward-facing spec text",
+  "statement": "Outward-facing spec text (the numbered chapters and the chapter-index README) MUST NOT carry concrete internal references: memo-numbered gate or answer codes, concrete goal-store ids, or memo references in prose. The ID and goal schema itself is documented public vocabulary and is exempt — a line carrying only a schema-token placeholder is not a leak. The check is the deterministic spec-quality scanner over the corpus.",
+  "scope": { "repos": ["spec"], "categories": [], "tags": [] },
+  "severity": "blocker",
+  "check": { "kind": "tool", "tool": "audit-spec-quality", "tactic": "no-internal-ref-scan" },
+  "grade": "binary"
+}
+```
 
 ---
 

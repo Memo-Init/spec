@@ -317,7 +317,7 @@ flowchart TD
 | 5 | Strict AI→software handover | Open questions are parsed from a machine-readable schema. | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
 | 6 | Finalization → plan → execution | The finalized memo drives a rollout. | [11-quality-and-finalization.md](./11-quality-and-finalization.md), [12-rollout.md](./12-rollout.md) |
 
-A finalized memo can be carried into execution by two valid, parallel models. The **rollout model** works a single finalized memo straight through its phases in one autonomous run. The **planning model** assembles one or more finalized memos into a plan and executes phase by phase across them. Both are contemporary, complementary approaches: the rollout model fits a self-contained memo, while the planning model fits work that spans several memos. The choice of model does not change the six steps above — it changes only how step 6 is carried out.
+A finalized memo is carried into execution through the **rollout** — a single finalized memo worked straight through its phases in one autonomous run. This is the lived execution path, and `memo-plan` is the public entry point that delegates to it. Above the rollout sits a broader **planning layer** — assembling several finalized memos into one plan and executing phase by phase across them. That layer is as-yet **unfinished**, not a co-equal alternative: the single-memo rollout is what actually runs today, and the multi-memo plan is the aspiration built on the same rollout machinery. The distinction does not change the six steps above — it changes only how step 6 is carried out.
 
 > **Three counts, three nouns — do not conflate them.** The memo path's **six steps** here are distinct from the **four stages** of the end-of-process model ([38-stage-model.md](./38-stage-model.md)) and from the **eight principles** of the CLI doctrine. Three separate enumerations, each bound to its own noun — *steps* (the memo path), *stages* (the process end), *principles* (the CLI) — and "stage" is reserved for the four-stage model alone.
 
@@ -329,8 +329,8 @@ The SOP classifies every skill as either a public entry point or a private proce
 
 | Class | Role | Examples |
 |-------|------|----------|
-| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-plan` (Plan), `memo-rollout` (Rollout) |
-| **Private** | Internal process steps, invoked by the public entry points. | the revision-loop skills, the quality skills, the rollout machinery |
+| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-plan` (Plan) |
+| **Private** | Internal process steps, invoked by the public entry points. | the revision-loop skills, the quality skills, `memo-rollout` and the rollout machinery |
 
 This classification drives **progressive disclosure**: public memos and skills are the visible UI entry points, shown so a reader can find the doors into the system; internal memos and skills are linked from the public ones but not displayed up front. A reader sees the few entry points first and reaches the private process steps only by following a link.
 
@@ -2561,6 +2561,20 @@ Beyond private data (paths, secrets, personal identifiers — see [16-git-securi
 
 The test is the same as everywhere in this chapter: direction, not secrecy. Each of these is removed because it is calibrated for the inward audience, not because it is confidential.
 
+This prohibition is authored as a declarative requirement — its `statement` shapes generation, its `check` is the deterministic spec scanner, and its `grade` is `binary` because a leak is a hard yes/no condition, not a quality spectrum:
+
+```requirement
+{
+  "id": "REQ-056",
+  "title": "No internal references in outward-facing spec text",
+  "statement": "Outward-facing spec text (the numbered chapters and the chapter-index README) MUST NOT carry concrete internal references: memo-numbered gate or answer codes, concrete goal-store ids, or memo references in prose. The ID and goal schema itself is documented public vocabulary and is exempt — a line carrying only a schema-token placeholder is not a leak. The check is the deterministic spec-quality scanner over the corpus.",
+  "scope": { "repos": ["spec"], "categories": [], "tags": [] },
+  "severity": "blocker",
+  "check": { "kind": "tool", "tool": "audit-spec-quality", "tactic": "no-internal-ref-scan" },
+  "grade": "binary"
+}
+```
+
 ---
 
 ## Language per Artifact
@@ -3046,9 +3060,27 @@ flowchart LR
 
 ---
 
+## The Grade Axis (optional)
+
+Beside `statement` and `check`, a requirement **MAY** carry an optional third axis: a `grade`. Where the `check` answers a binary question — is the requirement met or not — the `grade` answers a *how well* question, contributing a weighted dimension to a continuous quality score. Validation is the `check` in action; it is not a separate object. Grading is an optional layer on top: the rule of thumb is that a hard yes/no rule needs only a `check`, while a quality spectrum earns a `grade`.
+
+The slot is **always available and carries one of three honest states**, so an author must *decide* on it rather than silently leave it out:
+
+| `grade` state | Meaning |
+|---------------|---------|
+| `{ dimension, weight }` | Real grading — the requirement contributes a named quality dimension, with a weight, to an aggregate score. |
+| `binary` | Deliberately **no** score — a hard yes/no rule whose `check` is the whole story. |
+| `todo` | A grade **belongs** here but is not yet written — a visible, harvestable work item, never a silent gap. |
+
+The `todo` state is the point of the slot: a missing grade is made **visible** rather than swallowed, the same "empty means an honest not-yet" principle the registry applies elsewhere. `grade` is one more optional key on the open entry schema — additive, never a breaking change. When the object form is used, the dimensions and weights feed the aggregate quality model — its scale, bands, production gate, and veto floor — specified in the grading model later in this chapter.
+
+---
+
 ## Storage and Scale
 
-Requirements are stored **one file per entry** under `.memo/_requirements/`, a sibling of the memos under `.memo/` rather than a child of any single memo. This keeps the set shared across all memos of a project instead of trapped inside one. Each entry is a small, self-describing file, so requirements can be added, reviewed, and diffed individually, and the registry scales to hundreds of fine-grained entries without any single file becoming unmanageable.
+The **spec is the source; the store is generated.** The authoritative requirement is the declaration authored prose-first into a spec chapter — its `statement`, its `check`, and its optional `grade`. A **harvest** step reads those inline declarations and generates the per-entry store under `.memo/_requirements/`, one file per entry, which the runtime then reads. The arrow runs **spec → harvest → store → trigger**, not store → spec: the store is a derived index, never the source of truth.
+
+The store is a sibling of the memos under `.memo/` rather than a child of any single memo, so the generated set is shared across all memos of a project instead of trapped inside one. Because the store is generated rather than hand-maintained, it scales to hundreds of fine-grained entries without any single file becoming unmanageable: the curated rules live in the spec, and the store **MAY** additionally carry runtime entries that did not originate from a spec chapter.
 
 Scope is **carried by the entry itself**, not by where the file sits. A `scope` object with three axes — `repos`, `categories`, and `tags` — plus a `when` trigger object decides which work an entry applies to. A scoped folder tree is a useful conceptual model for reasoning about the registry — global rules, per-repo rules, per-category rules, per-state rules — but the scope axes in the entry are authoritative. The folder layout is a lens onto the data; the data is the source of truth.
 
@@ -3062,6 +3094,22 @@ _requirements/
   states/<state>/         # applies to one workflow state
   <id>.req.json           # one file per entry; scope axes inside decide matching
 ```
+
+### The Family Manifest Head
+
+Each spec family declares a machine-readable head so tooling can read every family uniformly. Both container forms are allowed — a `spec.json` or a `spec-manifest.json` — but one common field set is mandatory:
+
+| Field | Meaning |
+|-------|---------|
+| `namespaceToken` | A short, globally-unique uppercase token for the family, so cross-family references never collide. |
+| `hasRequirements` | Whether the family authors its own requirements inline (the harvest source). |
+| `hasGrading` | Whether the family carries a grading head (the grade axis above). |
+| `requirementsRef` | The chapter that hosts the family's requirement standard, or `null`. |
+| `gradingRef` | The chapter that hosts the family's grading model, or `null` — a thin family points this at the shared model it imports. |
+
+A family that hosts the standard sets the flags `true` and points the refs at the hosting chapter; a thin family that only consumes sets them `false`/`null` and, when it grades, imports the model via `gradingRef`. External families adopt the same field set when they are ready; the field set is the contract, not the container filename.
+
+A thin family resolves its requirements one of two ways, never both: it either carries **its own requirement series** in its own chapters (and points `requirementsRef` at them), or it **declares inheritance** — naming the host-family requirements it must satisfy — instead of duplicating a parallel series. The second is preferred where a family has no domain-specific rules of its own, because a cross-family coverage board can then read one set of obligations per family without double-counting. A family's own series uses its own id vocabulary; the shared `REQ-NNN` store holds the curated, harvested rules.
 
 ---
 
@@ -3080,6 +3128,7 @@ A requirement entry is an English-language JSON file. The fields are:
 | `source` | yes | Where the requirement comes from, for example a skill reference such as `skill:node-formatting`. |
 | `severity` | yes | One of `blocker`, `warning`, `info`. Governs how hard the gate enforces it. |
 | `origin` | yes | One of `predefined`, `ai-added`, `evaluator-session` — how the entry entered the registry. |
+| `grade` | no | Optional grade axis: the string `binary`, the string `todo`, or `{ dimension, weight }`. See **The Grade Axis** above. |
 
 The `check` object **MUST** declare a `kind`, one of:
 
@@ -3162,6 +3211,38 @@ A skill **MAY** declare and register requirements. When a skill encodes a rule t
 Because checks are ternary and evidence-backed, a set of requirements yields a **score** rather than a single pass/fail bit. For a piece of work, the gate reports how many applicable blockers passed, how many warnings were raised, and how many checks were `INCONCLUSIVE`. An `INCONCLUSIVE` result lowers **confidence** without falsely raising or lowering the pass rate — it signals that a requirement could not be proven, which is treated as a gap to close, not a silent success.
 
 A requirement set thereby doubles as an **eval set**: it is the explicit definition of what the work is being optimized against. The score tells the author both whether the work is acceptable and how much of that judgment rests on solid machine evidence versus checks that did not conclusively run.
+
+---
+
+## The Grading Model
+
+When a requirement carries an object `grade` (the grade axis above), its dimension feeds a shared **grading model** — one reusable scoring head that every family follows, rather than each domain re-inventing its own. The model is deliberately the same discipline already proven in a sibling content-grading specification; it is summarised here as the common head and imported by reference, not copied.
+
+**Weighted, continuous scale.** A grade is a weighted sum of named **dimensions** on a continuous **1.0–5.0** scale. The applicable dimension weights **MUST** sum to 100%. A dimension that does not apply to a given work type is **dropped and its weight redistributed** across the rest — never scored as a failure, so an inapplicable axis cannot silently sink a score.
+
+**Bands and the production gate.** The aggregate maps to honest bands:
+
+| Band | Range |
+|------|-------|
+| Exemplary | 5.0 |
+| Strong | 4.0–4.9 |
+| Production-ready | 3.5–3.9 |
+| Needs work | 2.5–3.4 |
+| Failing | 1.0–2.4 |
+
+The **production gate is 3.5**: work below it is not ready. A family **MAY** set a stricter gate but **MUST NOT** lower it below 3.5.
+
+**Veto through the scale, not beside it.** There is no separate fail flag. A `CRITICAL`-severity miss **floors its dimension to 1.0**; because one floored weighted dimension drags the aggregate under the gate on its own, the single weighted sum is the only source of the verdict.
+
+**Two check tiers.** Each grading point declares a `checkMode`: **`deterministic`** (decided by code or CI — cheap, reproducible) or **`judged`** (decided by an evaluator against a rubric in a **fresh context**; a judged result **MUST** be stamped with the grader identity and model). The doer is not the grader, exactly as for the ternary checks above.
+
+**Calibration honesty.** Weights and band cut-offs are assumptions until calibrated against a labelled corpus. An uncalibrated weight **MUST** be marked `provisional`; freezing a weight set as final **REQUIRES** a stated calibration basis. A grade audits the *direction* a rule points, not an unverified absolute threshold.
+
+**Codes and namespace qualification.** A grading point carries a stable code of the form `GR-<SUBCAT>-<NNN>` — the `GR-` facet marks it as grading, so it never collides with a `REQ-` id even on the same entry. Across families a code is qualified by the family's globally-unique `namespaceToken` (for example `MC:GR-<SUBCAT>-<NNN>`), which is how a thin family imports the shared head and references core's points without collision.
+
+**Importing the head.** A family turns grading on through its manifest `gradingRef` (see *The Family Manifest Head*). A **thin** family sets `gradingRef` to the chapter that hosts this model, imports the whole head — scale, bands, gate, veto, tiers, calibration — and declares only the dimensions it adds. A **rich** family keeps its own domain dimensions but still follows this model. The domain scoring chapters reuse this head rather than restating it: goal scoring ([31-goals.md](./31-goals.md)), maintenance scoring ([33-maintenance.md](./33-maintenance.md)), and the implementation-fidelity audit ([45-implementation-fidelity-audit.md](./45-implementation-fidelity-audit.md)) each keep only their domain axis and point here for the shared contract.
+
+**A rich external special case is referenced, not absorbed.** A separate, directory-versioned grading system exists for the external tool-schema domain, with its own executable harness and status model. It is **referenced** as a special case, not generalised into this head and not its blueprint: this model **MAY** additionally grade that domain as a requirement, but that system's internal grading is not pulled in, and its executability is not assumed transferable here.
 
 ---
 
@@ -3646,7 +3727,7 @@ The same logic governs scope that genuinely must be deferred. Deferred scope is 
 
 This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail chapter that specifies it in full: the top level stays brief and points down, the depth lives in the owning chapter. Where this chapter and a detail chapter both speak about a primitive, the detail chapter is authoritative on its own subject and this chapter MUST stay consistent with it. The chapter also carries the system's only entity/relationship diagram and the two complementary concept views — the user view and the factory view — joined at finalization.
 
-There are exactly **eleven** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strand, Requirement, Tool, Plan**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere.
+There are exactly **eleven** primitives: **Memo, Revision, Topic, Goal, Block, PRD, Phase, Strand, Requirement, Tool, Plan**. No other term is a primitive of this specification; new primitives MUST be introduced here, not implied elsewhere. **Grading is not a twelfth primitive** — it is an optional scoring head on the **Requirement** primitive (the grading model in [23-requirements.md](./23-requirements.md)), a roof over existing chapters rather than a new structural node.
 
 ---
 
@@ -3883,6 +3964,8 @@ The value of a goal is that it is **measured against real state**, not against a
 - **Never in the working session.** A goal is **never** scored in the same session that worked on it. A session that did the work will report "all done" and hide the gap (the lesson of an earlier episode where a working session declared a large requirement set complete and lost the real state). Scoring therefore runs in a **fresh context** — a separate, unbiased reader of the actual artifacts.
 - **Distrust PASS.** A green conformity report is not evidence. The fresh-context reader inspects the real artifacts — files, wiring, tests actually run, real usage — and measures how far the **intent** is met, not whether a report is green.
 - **A single score is a strict object.** One goal's score is `{ pct, readiness, done, missing, status, confidence, evidence }`: a percentage, the deterministic readiness axis (below), what is genuinely there, what real work is still open, the lifecycle status, the provenance of the judgement, and concrete evidence pointers. Only `pct` is the fresh-context LLM judgement; `readiness` is computed deterministically.
+
+The scoring posture above — fresh context, doer-not-grader, distrust-PASS, a strict score object, and a subjective measure paired with a deterministic second axis — is the **shared scoring head** specified once in [23-requirements.md](./23-requirements.md) (The Grading Model). Goal scoring follows that head and adds only its domain axes (`pct` + `readiness`); it does not restate the contract.
 - **Milestone vs evergreen — `pct` reads by `kind`.** Every goal carries a native `kind`: `milestone` (a completable goal — `pct` is **progress toward a reachable done-state**) or `evergreen` (an ongoing Dauerstrang that never closes — `pct` is **backlog-coverage of the strand right now**). The kind makes the reading of `pct` machine-distinguishable rather than inferred from the intent prose; an evergreen goal stays `offen` by nature. A goal seeded before the field existed derives a default from its intent cadence (a Dauerstrang/cadence intent → evergreen, otherwise milestone), but the persisted field is authoritative.
 - **The board is the standard output.** Scoring all goals produces a board — a table of `Goal | Kind | % | Readiness | Status | what is really missing`, sorted worst-first, followed by a summary line of the form `N open · M closed · Ø X %`, and a written report. This board, not a single number, is the deliverable.
 
@@ -4090,6 +4173,8 @@ Like a goal, a maintenance card is **measured against real state**, never agains
 - **Never in the working session.** A card is **never** scored in the same session that did the work — a session that built the change will report it healthy and hide the drift. Scoring runs in a **fresh context**, one agent per repo, an unbiased reader of the real diff.
 - **Distrust PASS.** A green report is not evidence. The fresh-context reader inspects the actual commits since each edge's provenance pin, the real dependency graph, and the source heads — not a claim.
 - **A single score is a strict object.** One card's score is `{ pct, status, findings, signals, confidence, evidence }`: a freshness percentage, the `maintStatus`, the concrete drift findings, the machine signals behind them, the provenance of the judgement, and evidence pointers. `pct` is the fresh-context freshness reading; the blast-radius (below) is computed deterministically and auto-filled by the CLI.
+
+This fresh-context, distrust-PASS, strict-object posture is the **shared scoring head** specified once in [23-requirements.md](./23-requirements.md) (The Grading Model); maintenance scoring follows that head and adds only its domain axes (freshness `pct` + blast-radius), rather than restating the contract.
 
 ## Blast-Radius — the Second Axis
 
@@ -4350,6 +4435,8 @@ The same discipline applies to **authoring a new specification chapter**: each o
 - a bottom **`## Related`** section linking the neighbouring chapters.
 
 The intro-prose and `## Related` requirements are **machine-enforced** by the spec-quality gate (the idempotent lint that audits every numbered chapter), so a chapter that omits either one fails the gate rather than merely reading as inconsistent.
+
+The same determinism applies to **authoring requirements inline**. Where a chapter states a rule that work must satisfy, it writes that rule **prose-first** and attaches the structured declaration — the rule's `statement`, its `check`, and its optional `grade` — beside the prose, rather than maintaining the rule in a separate hand-edited store. The prose carries the reasoning a human needs; the inline declaration is the machine-readable source from which the requirement store is **harvested** ([23-requirements.md](./23-requirements.md)). This is the **prose-first guard**: the human-readable rule and its machine form live together in the chapter, and the store is generated from them — never authored independently, so it cannot drift from the spec it is supposed to encode.
 
 ## Related
 
@@ -5037,6 +5124,8 @@ A skill is proven against three independent dimensions. All three are necessary:
 
 **Test isolation is a hard rule.** A skill evaluation **MUST NOT** write into a user-home location or any shared real directory; it runs entirely against **repo-local fixtures**. A test that writes outside the repository corrupts the very state the live system depends on, and an evaluation that can damage production is not a test but a hazard. Reads may range wider, but every write stays inside the fixture tree.
 
+The three dimensions are scored with the same **shared scoring head** specified in [23-requirements.md](./23-requirements.md) (The Grading Model): ternary outcomes, a fresh-context grader that is not the doer, and a strict result object. This chapter adds only its domain axes — the three quality dimensions above — and reuses the head rather than restating it.
+
 ---
 
 ## Where Skill Evals Live
@@ -5055,6 +5144,14 @@ The `specs` block is only as valuable as the discipline that keeps it true, so t
 - **Orphans (report only).** Chapters referenced by **no** skill are listed as a warning, never a failure. A newly written chapter is expected to be unreferenced until a skill points at it, so an orphan is a prompt to wire it up, not a defect.
 
 This gate is the direct mirror of two patterns the specification already relies on. It is the two-sided requirements model ([23-requirements.md](./23-requirements.md)) applied to skills: the `specs` block is the declaration, the lint is the check, and the same data both records the dependency and proves it. And it is the maintenance board ([33-maintenance.md](./33-maintenance.md)) applied to coverage: the link between skill and chapter is given a deterministic reading rather than left to trust, so drift between the two surfaces as a measured signal instead of an unpleasant surprise.
+
+---
+
+## The Bridge — A Per-Family Coverage Index
+
+The coverage gate proves the link is *sound*; the **Bridge** makes it *legible*. Each specification family carries a generated Bridge page that turns the same skill-to-spec map around and reads it per chapter: for every page in the family it enumerates, by name, the skills that implement that page — a skill implements a page when the page's id appears in the skill's `all` list. A chapter that no skill implements yet prints an explicit "— none yet —", so the empty case is an honest signal that nothing has been built against that chapter rather than a silent omission.
+
+The Bridge is never hand-written. It is generated from the skill-to-spec map, marked as generated, and regenerated on every build, so it cannot drift from the data it summarizes. The resolving coverage lint (check-skill-specs) is the gate that keeps that data true: it fails when a referenced chapter does not resolve, which is the same guarantee that lets the Bridge enumerate by name with confidence. Read together, the gate keeps the references real and the Bridge shows, at a glance, where the skills cluster and where the specification is still waiting for its first implementer.
 
 ---
 
@@ -5305,6 +5402,8 @@ The audit returns exactly one object. The fields are fixed so the persisted resu
 
 The companion human-readable artifact is a **loss table** — one row per finding — with the columns `Item | last seen | lost at hop | class | severity | evidence`. The score object drives comparison and persistence; the loss table is what a person reads.
 
+The audit's posture — fresh context, distrust every conformity report, a strict score object — is the **shared scoring head** specified once in [23-requirements.md](./23-requirements.md) (The Grading Model). The fidelity audit follows that head and adds only its domain axes (`pct` + the loss/mis-implemented findings across the four hops); it does not restate the contract.
+
 ---
 
 ## Persistence
@@ -5332,6 +5431,510 @@ This audit is **not** the workbench's validation overview. The workbench `valida
 - [07-revisions-and-questions.md](./07-revisions-and-questions.md) — describes the contaminated-revision rescue as a manual procedure; this audit is its automation on the loss-detection side (it finds the loss; the rescue repairs it).
 - [28-drift.md](./28-drift.md) — drift is a divergence between an artifact and its source **after** a memo is done; the fidelity audit is about loss **within** a memo's own implementation. A degraded fidelity score is not drift, and the two are reported separately.
 - [38-stage-model.md](./38-stage-model.md) — the optional landing-check hook lives in Stage 2.
+
+---
+
+# 46. Bridge
+
+| Field | Value |
+|---|---|
+| Status | Draft |
+| Related | [./43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md), [./00-overview.md](./00-overview.md) |
+
+> **Informative.**
+
+This page is the Bridge for the core specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that nothing has been built against that chapter yet. The mapping is derived from the skill-to-spec map and kept truthful by the resolving coverage lint.
+
+<!-- generated -->
+<!-- Auto-generated by scripts/generate-bridge.mjs from the skill-to-spec map. Do not edit by hand; re-run the spec build to regenerate. -->
+
+## Coverage
+
+### [00-overview](./00-overview.md)
+
+- memo-sop
+
+### [01-philosophy](./01-philosophy.md)
+
+- memo-coherence
+- memo-mental-model-derive
+- memo-revision-generate
+- memo-sop
+- workbench-modes
+
+### [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md)
+
+- memo-finalize
+- memo-init
+- memo-plan-add
+- memo-plan-execute
+- memo-plan-finalize
+- memo-plan-init
+- memo-plan-status
+- memo-plan-stop
+- memo-plan-update-checkbox
+- memo-reset-recommend
+- memo-sop
+- memo-sub-init
+- skill-testing
+- workbench-modes
+
+### [03-input-paths](./03-input-paths.md)
+
+- memo-goal-optimize
+- memo-input-processing
+
+### [04-input-pipeline](./04-input-pipeline.md)
+
+- memo-goal-optimize
+- memo-input-processing
+
+### [05-memo-strategies](./05-memo-strategies.md)
+
+- memo-init
+- memo-sub-init
+
+### [06-memo-structure](./06-memo-structure.md)
+
+- memo-init
+- memo-plan-init
+- memo-plan-status
+- memo-revision-execute
+- memo-sub-init
+- workbench-project-setup
+
+### [07-revisions-and-questions](./07-revisions-and-questions.md)
+
+- memo-balance
+- memo-coherence
+- memo-evidence
+- memo-fidelity-audit
+- memo-init
+- memo-mental-model-derive
+- memo-references
+- memo-revision-consolidate
+- memo-revision-evaluate
+- memo-revision-execute
+- memo-revision-generate
+
+### [08-phases-and-prds](./08-phases-and-prds.md)
+
+- memo-finalize
+- memo-init
+- memo-phase-evaluate
+- memo-phase-execute
+- memo-phase-generate
+- memo-plan-add
+- memo-plan-evaluate
+- memo-plan-init
+- memo-prd-evaluate
+- memo-prd-generate
+- memo-prds-validate
+- memo-references
+- memo-reset-recommend
+- memo-revision-execute
+- memo-rollout-evaluate
+- memo-rollout-execute
+- memo-rollout-generate
+- workbench-modes
+
+### [09-contamination-context-handover](./09-contamination-context-handover.md)
+
+- memo-chronic-add
+- memo-chronic-build
+- memo-finalize
+- memo-goal-optimize
+- memo-goal-score
+- memo-goal-score-all
+- memo-handover
+- memo-init
+- memo-maintenance-score
+- memo-maintenance-verify
+- memo-mental-model-derive
+- memo-phase-evaluate
+- memo-phase-execute
+- memo-phase-generate
+- memo-plan-evaluate
+- memo-plan-execute
+- memo-plan-stop
+- memo-prd-evaluate
+- memo-prds-validate
+- memo-reset-recommend
+- memo-revision-evaluate
+- memo-rollout-evaluate
+- memo-rollout-execute
+- memo-sub-init
+- workbench-persona-audit
+
+### [10-proactive-research](./10-proactive-research.md)
+
+- memo-evidence
+- memo-init
+- memo-input-processing
+- memo-research-agent
+- memo-revision-generate
+- research-best-practice-playwright
+- research-scrape-docs
+- research-workflow
+- wiki-ingest
+
+### [11-quality-and-finalization](./11-quality-and-finalization.md)
+
+- git-commit
+- git-push
+- git-security
+- memo-balance
+- memo-coherence
+- memo-evidence
+- memo-fidelity-audit
+- memo-finalize
+- memo-prds-validate
+- memo-references
+- memo-research-agent
+- memo-revision-consolidate
+- memo-rollout
+- memo-rollout-generate
+- repo-quality
+- workbench-persona-audit
+
+### [12-rollout](./12-rollout.md)
+
+- image-pencil-playwright-diff
+- memo-fidelity-audit
+- memo-finalize
+- memo-phase-execute
+- memo-rollout
+- memo-rollout-evaluate
+- memo-rollout-execute
+- memo-sop
+
+### [13-orchestration](./13-orchestration.md)
+
+- git-merge-strategy
+- memo-chronic-build
+- memo-handover
+- memo-phase-evaluate
+- memo-phase-execute
+- memo-phase-generate
+- memo-plan-execute
+- memo-prd-evaluate
+- memo-prds-validate
+- memo-references
+- memo-research-agent
+- memo-revision-evaluate
+- memo-revision-generate
+- memo-rollout
+- memo-rollout-execute
+- memo-rollout-generate
+- memo-sop
+- research-workflow
+
+### [14-agents-skills-tasks](./14-agents-skills-tasks.md)
+
+- memo-plan-evaluate
+- memo-prd-evaluate
+- repo-docs-writing
+- repo-readme
+- skill-testing
+- workbench-persona-audit
+
+### [15-prompt-generator](./15-prompt-generator.md)
+
+- memo-phase-execute
+- memo-phase-generate
+- memo-prd-generate
+- memo-req-template
+- memo-rollout-generate
+
+### [16-git-security-versioning](./16-git-security-versioning.md)
+
+- git-commit
+- git-merge-strategy
+- git-push
+- git-security
+- image-pencil-playwright-diff
+- memo-finalize
+- memo-handover
+- memo-maintenance-verify
+- memo-phase-execute
+- memo-phase-generate
+- memo-plan-execute
+- memo-req-runner
+- memo-rollout
+- memo-rollout-execute
+- release
+- repo-init
+- repo-issue
+- repo-quality
+- workbench-audit
+- workbench-modes
+
+### [17-git-workflow-and-ids](./17-git-workflow-and-ids.md)
+
+- git-commit
+- git-merge-strategy
+- git-push
+- memo-phase-execute
+- memo-plan-execute
+- memo-plan-stop
+- memo-plan-update-checkbox
+- memo-prd-generate
+- memo-rollout-execute
+- repo-issue
+- workbench-modes
+
+### [18-multidimensionality](./18-multidimensionality.md)
+
+- git-merge-strategy
+- git-push
+- memo-plan-add
+
+### [19-internal-vs-external-communication](./19-internal-vs-external-communication.md)
+
+- git-commit
+- git-push
+- git-security
+- image-art-architecture
+- memo-req-runner
+- repo-docs-writing
+- repo-github-org
+- repo-issue
+- repo-quality
+- repo-readme
+- workbench-audit
+- workbench-persona-audit
+
+### [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md)
+
+- memo-finalize
+- memo-revision-consolidate
+- memo-revision-execute
+- memo-revision-generate
+
+### [21-human-computer-interaction](./21-human-computer-interaction.md)
+
+- memo-finalize
+- memo-goal-score-all
+- memo-maintenance-score-all
+- memo-mental-model-derive
+- memo-plan-execute
+- memo-reset-recommend
+- memo-sop
+
+### [22-tree-cli-recommended-way](./22-tree-cli-recommended-way.md)
+
+- memo-goal-score
+- memo-maintenance-score
+- memo-plan-status
+- memo-plan-update-checkbox
+
+### [23-requirements](./23-requirements.md)
+
+- git-push
+- git-security
+- image-pencil-playwright-diff
+- memo-finalize
+- memo-phase-evaluate
+- memo-phase-execute
+- memo-phase-generate
+- memo-prd-evaluate
+- memo-prd-generate
+- memo-prds-validate
+- memo-req-registry
+- memo-req-runner
+- memo-req-store
+- memo-req-template
+- memo-rollout-evaluate
+- memo-rollout-generate
+- repo-github-org
+- repo-quality
+- specs-to-skills
+- wiki-lint
+
+### [24-tools-registry](./24-tools-registry.md)
+
+- memo-req-registry
+- memo-req-store
+- memo-req-template
+- wiki-query
+- workbench-audit
+
+### [25-strands](./25-strands.md)
+
+- memo-finalize
+- memo-rollout-generate
+
+### [26-memo-history](./26-memo-history.md)
+
+- memo-chronic-add
+- memo-chronic-build
+- memo-rollout-execute
+- wiki-ingest
+
+### [27-landing-the-plane](./27-landing-the-plane.md)
+
+- git-merge-strategy
+- memo-handover
+- memo-rollout-execute
+- memo-sop
+- workbench-modes
+
+### [28-drift](./28-drift.md)
+
+- memo-maintenance-score
+- memo-maintenance-score-all
+- memo-references
+
+### [29-behavioral-guardrails](./29-behavioral-guardrails.md)
+
+- image-pencil-playwright-diff
+- memo-coherence
+- memo-init
+- memo-phase-execute
+- release
+- workbench-modes
+
+### [30-primitives](./30-primitives.md)
+
+- memo-req-registry
+- memo-req-runner
+- memo-req-store
+- memo-sop
+
+### [31-goals](./31-goals.md)
+
+- memo-chronic-add
+- memo-fidelity-audit
+- memo-goal-optimize
+- memo-goal-score
+- memo-goal-score-all
+- memo-rollout-evaluate
+
+### [32-prompt-governance](./32-prompt-governance.md)
+
+- memo-phase-generate
+- memo-prd-generate
+- memo-req-template
+- memo-rollout-generate
+
+### [33-maintenance](./33-maintenance.md)
+
+- memo-goal-score-all
+- memo-maintenance-score
+- memo-maintenance-score-all
+- memo-maintenance-verify
+- memo-rollout
+- release
+
+### [34-question-interface](./34-question-interface.md)
+
+- memo-goal-optimize
+- memo-init
+- memo-revision-evaluate
+- memo-revision-execute
+- memo-revision-generate
+
+### [35-memo-authoring](./35-memo-authoring.md)
+
+- image-diagram-excalidraw
+- memo-balance
+- memo-coherence
+- memo-init
+- memo-revision-execute
+
+### [36-agent-strategies](./36-agent-strategies.md)
+
+- memo-chronic-build
+- memo-goal-score
+- memo-goal-score-all
+- memo-input-processing
+- memo-maintenance-score
+- memo-maintenance-score-all
+- memo-mental-model-derive
+- memo-phase-evaluate
+- memo-research-agent
+- memo-rollout-evaluate
+- research-workflow
+- workbench-persona-audit
+
+### [37-transcript-reliability](./37-transcript-reliability.md)
+
+- memo-input-processing
+
+### [38-stage-model](./38-stage-model.md)
+
+- git-merge-strategy
+- git-push
+- memo-fidelity-audit
+- memo-plan-add
+- memo-plan-evaluate
+- memo-plan-execute
+- memo-plan-finalize
+- memo-plan-init
+- memo-plan-status
+- memo-plan-stop
+- memo-plan-update-checkbox
+- memo-rollout
+- memo-rollout-evaluate
+- memo-rollout-execute
+- memo-sop
+- release
+
+### [39-release-and-pinning](./39-release-and-pinning.md)
+
+- git-push
+- memo-maintenance-score-all
+- memo-maintenance-verify
+- release
+
+### [40-diagrams](./40-diagrams.md)
+
+- image-art-architecture
+- image-diagram-excalidraw
+- memo-init
+
+### [41-mental-model](./41-mental-model.md)
+
+- memo-init
+- memo-mental-model-derive
+- memo-revision-generate
+
+### [42-plans](./42-plans.md)
+
+- memo-budget-paste
+- memo-handover
+- memo-plan-add
+- memo-plan-evaluate
+- memo-plan-execute
+- memo-plan-finalize
+- memo-plan-init
+- memo-plan-status
+- memo-plan-stop
+- memo-plan-update-checkbox
+
+### [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md)
+
+- image-art-architecture
+- skill-testing
+- specs-to-skills
+
+### [44-repository-and-outward-docs](./44-repository-and-outward-docs.md)
+
+- repo-docs-writing
+- repo-github-org
+- repo-init
+- repo-issue
+- repo-quality
+- repo-readme
+
+### [45-implementation-fidelity-audit](./45-implementation-fidelity-audit.md)
+
+- memo-fidelity-audit
+
+## Related
+
+- [./43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md)
+- [./00-overview.md](./00-overview.md)
 
 ========================================
 # Workbench Spec v0.1.0
@@ -7778,6 +8381,142 @@ The architecture is stored as an **OKF knowledge bundle** ([13-knowledge-format-
 - [../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md) — the requirements layer the advisory presence requirement is expressed in.
 - [11-project-structure.md](./11-project-structure.md) — `context/` as the primary immutable source, where the bundle lives.
 
+---
+
+# 42. Bridge
+
+| Field | Value |
+|---|---|
+| Status | Draft |
+| Related | [./00-overview.md](./00-overview.md) |
+
+> **Informative.**
+
+This page is the Bridge for the workbench specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that nothing has been built against that chapter yet. The mapping is derived from the skill-to-spec map and kept truthful by the resolving coverage lint.
+
+<!-- generated -->
+<!-- Auto-generated by scripts/generate-bridge.mjs from the skill-to-spec map. Do not edit by hand; re-run the spec build to regenerate. -->
+
+## Coverage
+
+### [00-overview](./00-overview.md)
+
+- workbench-audit
+- workbench-project-setup
+
+### [01-philosophy](./01-philosophy.md)
+
+— none yet —
+
+### [02-sop-entrypoint](./02-sop-entrypoint.md)
+
+— none yet —
+
+### [10-root-and-projects](./10-root-and-projects.md)
+
+— none yet —
+
+### [11-project-structure](./11-project-structure.md)
+
+- repo-init
+- wiki-init
+- workbench-audit
+- workbench-project-setup
+
+### [12-folders](./12-folders.md)
+
+— none yet —
+
+### [13-knowledge-format-okf](./13-knowledge-format-okf.md)
+
+- wiki-ingest
+- wiki-init
+- wiki-lint
+- wiki-query
+- wiki-update
+
+### [15-repos](./15-repos.md)
+
+— none yet —
+
+### [16-context](./16-context.md)
+
+— none yet —
+
+### [17-memo-store](./17-memo-store.md)
+
+— none yet —
+
+### [18-design](./18-design.md)
+
+— none yet —
+
+### [19-tmp](./19-tmp.md)
+
+— none yet —
+
+### [20-cli](./20-cli.md)
+
+— none yet —
+
+### [21-environment-scripts](./21-environment-scripts.md)
+
+— none yet —
+
+### [22-config](./22-config.md)
+
+— none yet —
+
+### [23-hooks-contract](./23-hooks-contract.md)
+
+— none yet —
+
+### [24-skills-scope](./24-skills-scope.md)
+
+— none yet —
+
+### [25-validation-overview](./25-validation-overview.md)
+
+— none yet —
+
+### [26-addons](./26-addons.md)
+
+— none yet —
+
+### [30-wiki](./30-wiki.md)
+
+- wiki-ingest
+- wiki-init
+- wiki-lint
+- wiki-query
+- wiki-update
+- workbench-project-setup
+
+### [31-browser-automation](./31-browser-automation.md)
+
+- memo-research-agent
+- research-best-practice-playwright
+- research-scrape-docs
+- research-workflow
+
+### [32-trash](./32-trash.md)
+
+- wiki-init
+- wiki-update
+- workbench-project-setup
+
+### [41-project-architecture](./41-project-architecture.md)
+
+- memo-maintenance-score
+- memo-maintenance-score-all
+- memo-maintenance-verify
+- wiki-lint
+- workbench-audit
+
+## Related
+
+- [./00-overview.md](./00-overview.md)
+
 ========================================
 # Session Spec v0.1.0
 ========================================
@@ -9611,3 +10350,89 @@ An Add-on is reachable two ways, with a clear division of labor:
 - [workbench/22-config.md](/workbench/config/) — the `.workbench/` descriptor a custom folder declares.
 - [workbench/20-cli.md](/workbench/cli/) — the Branch/Leaf CLI convention a custom folder's standard entry follows.
 - [workbench/25-validation-overview.md](/workbench/validation-overview/) — the validation layer that can verify CLI entry points from the transcript.
+
+---
+
+# 16. Bridge
+
+| Field | Value |
+|---|---|
+| Status | Draft |
+| Related | [./00-overview.md](./00-overview.md) |
+
+> **Informative.**
+
+This page is the Bridge for the session specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that nothing has been built against that chapter yet. The mapping is derived from the skill-to-spec map and kept truthful by the resolving coverage lint.
+
+<!-- generated -->
+<!-- Auto-generated by scripts/generate-bridge.mjs from the skill-to-spec map. Do not edit by hand; re-run the spec build to regenerate. -->
+
+## Coverage
+
+### [00-overview](./00-overview.md)
+
+— none yet —
+
+### [01-genesis-root](./01-genesis-root.md)
+
+— none yet —
+
+### [02-enforcement](./02-enforcement.md)
+
+— none yet —
+
+### [03-recovery](./03-recovery.md)
+
+— none yet —
+
+### [04-cli](./04-cli.md)
+
+— none yet —
+
+### [05-config-cascade](./05-config-cascade.md)
+
+— none yet —
+
+### [06-namespace-registry](./06-namespace-registry.md)
+
+— none yet —
+
+### [07-doctor-init](./07-doctor-init.md)
+
+— none yet —
+
+### [08-identity-pin](./08-identity-pin.md)
+
+— none yet —
+
+### [09-root-detection](./09-root-detection.md)
+
+— none yet —
+
+### [10-sop](./10-sop.md)
+
+— none yet —
+
+### [11-common-denominator](./11-common-denominator.md)
+
+— none yet —
+
+### [12-instances](./12-instances.md)
+
+— none yet —
+
+### [13-conventions](./13-conventions.md)
+
+— none yet —
+
+### [14-migration](./14-migration.md)
+
+— none yet —
+
+### [15-addons](./15-addons.md)
+
+— none yet —
+
+## Related
+
+- [./00-overview.md](./00-overview.md)

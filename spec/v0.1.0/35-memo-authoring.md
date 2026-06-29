@@ -85,6 +85,8 @@ The same discipline applies to **authoring a new specification chapter**: each o
 
 The intro-prose and `## Related` requirements are **machine-enforced** by the spec-quality gate (the idempotent lint that audits every numbered chapter), so a chapter that omits either one fails the gate rather than merely reading as inconsistent.
 
+The same determinism applies to **authoring requirements inline**. Where a chapter states a rule that work must satisfy, it writes that rule **prose-first** and attaches the structured declaration — the rule's `statement`, its `check`, and its optional `grade` — beside the prose, rather than maintaining the rule in a separate hand-edited store. The prose carries the reasoning a human needs; the inline declaration is the machine-readable source from which the requirement store is **harvested** ([23-requirements.md](./23-requirements.md)). This is the **prose-first guard**: the human-readable rule and its machine form live together in the chapter, and the store is generated from them — never authored independently, so it cannot drift from the spec it is supposed to encode.
+
 ## Related
 
 - [06-memo-structure.md](./06-memo-structure.md) — the on-disk shape of a memo that this chapter authors into.

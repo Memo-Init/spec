@@ -6,7 +6,7 @@ spec_file: "10-sop.md"
 order: 10
 section: "Session"
 normative: false
-generated_at: "2026-06-28T10:00:06.763Z"
+generated_at: "2026-06-29T17:03:59.600Z"
 generated_from: "spec/session/0.1.0/10-sop.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/10-sop.md."

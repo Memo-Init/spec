@@ -1,6 +1,11 @@
 {
     "namespace": "session",
     "version": "0.1.0",
+    "namespaceToken": "SE",
+    "hasRequirements": false,
+    "hasGrading": false,
+    "requirementsRef": null,
+    "gradingRef": null,
     "groups": [
         {
             "id": "introduction",
@@ -58,6 +63,14 @@
             "pages": [
                 "03-recovery",
                 "14-migration"
+            ]
+        },
+        {
+            "id": "bridge",
+            "label": "Bridge",
+            "order": 7,
+            "pages": [
+                "16-bridge"
             ]
         }
     ],

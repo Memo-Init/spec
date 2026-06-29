@@ -1,6 +1,11 @@
 {
     "namespace": "core",
     "version": "0.1.0",
+    "namespaceToken": "MC",
+    "hasRequirements": true,
+    "hasGrading": true,
+    "requirementsRef": "23-requirements",
+    "gradingRef": "23-requirements",
     "groups": [
         {
             "id": "introduction",
@@ -123,6 +128,14 @@
             "order": 11,
             "pages": [
                 "43-skill-authoring-and-quality"
+            ]
+        },
+        {
+            "id": "bridge",
+            "label": "Bridge",
+            "order": 12,
+            "pages": [
+                "46-bridge"
             ]
         }
     ],
