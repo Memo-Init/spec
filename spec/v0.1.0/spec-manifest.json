@@ -1,6 +1,11 @@
 {
     "namespace": "core",
     "version": "0.1.0",
+    "namespaceToken": "MC",
+    "hasRequirements": true,
+    "hasGrading": true,
+    "requirementsRef": "23-requirements",
+    "gradingRef": "23-requirements",
     "groups": [
         {
             "id": "introduction",

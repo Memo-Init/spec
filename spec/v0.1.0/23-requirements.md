@@ -69,6 +69,20 @@ _requirements/
   <id>.req.json           # one file per entry; scope axes inside decide matching
 ```
 
+### The Family Manifest Head
+
+Each spec family declares a machine-readable head so tooling can read every family uniformly. Both container forms are allowed — a `spec.json` or a `spec-manifest.json` — but one common field set is mandatory:
+
+| Field | Meaning |
+|-------|---------|
+| `namespaceToken` | A short, globally-unique uppercase token for the family, so cross-family references never collide. |
+| `hasRequirements` | Whether the family authors its own requirements inline (the harvest source). |
+| `hasGrading` | Whether the family carries a grading head (the grade axis above). |
+| `requirementsRef` | The chapter that hosts the family's requirement standard, or `null`. |
+| `gradingRef` | The chapter that hosts the family's grading model, or `null` — a thin family points this at the shared model it imports. |
+
+A family that hosts the standard sets the flags `true` and points the refs at the hosting chapter; a thin family that only consumes sets them `false`/`null` and, when it grades, imports the model via `gradingRef`. External families adopt the same field set when they are ready; the field set is the contract, not the container filename.
+
 ---
 
 ## Entry Schema

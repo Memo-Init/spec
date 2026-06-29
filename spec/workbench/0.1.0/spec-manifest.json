@@ -1,6 +1,11 @@
 {
     "namespace": "workbench",
     "version": "0.1.0",
+    "namespaceToken": "WB",
+    "hasRequirements": false,
+    "hasGrading": false,
+    "requirementsRef": null,
+    "gradingRef": null,
     "groups": [
         {
             "id": "introduction",

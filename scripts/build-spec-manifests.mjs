@@ -8,7 +8,7 @@
 // the spec-manifest is the SINGLE source of the sub-categories — generate-manifest.mjs and
 // sidebar.mjs both read it (the build hardcode is dissolved). Idempotent.
 
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -75,13 +75,22 @@ const buildGroups = ( { files, meta } ) => {
 
 
 const writeManifest = ( { specDir, namespace, version, files, meta } ) => {
+    const path = join( REPO, specDir, 'spec-manifest.json' )
+    // Preserve the uniform machine-head fields (Memo 055) if the existing manifest carries them.
+    // This script owns only namespace/version/groups/fallback; the head fields are authored
+    // separately and MUST survive a re-run (otherwise a regenerate silently drops them).
+    const existing = existsSync( path ) ? JSON.parse( readFileSync( path, 'utf-8' ) ) : {}
+    const headKeys = [ 'namespaceToken', 'hasRequirements', 'hasGrading', 'requirementsRef', 'gradingRef' ]
+    const preserved = headKeys
+        .filter( ( key ) => existing[ key ] !== undefined )
+        .reduce( ( acc, key ) => ( { ...acc, [ key ]: existing[ key ] } ), {} )
     const manifest = {
         namespace,
         version,
+        ...preserved,
         groups: buildGroups( { files, meta } ),
         fallback: 'append-by-NN'
     }
-    const path = join( REPO, specDir, 'spec-manifest.json' )
     writeFileSync( path, JSON.stringify( manifest, null, 4 ) + '\n', 'utf-8' )
     const pageCount = manifest.groups.reduce( ( sum, group ) => sum + group.pages.length, 0 )
     console.log( `  ✓ ${ namespace }: ${ manifest.groups.length } groups, ${ pageCount } pages → ${ specDir }/spec-manifest.json` )

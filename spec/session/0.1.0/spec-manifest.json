@@ -1,6 +1,11 @@
 {
     "namespace": "session",
     "version": "0.1.0",
+    "namespaceToken": "SE",
+    "hasRequirements": false,
+    "hasGrading": false,
+    "requirementsRef": null,
+    "gradingRef": null,
     "groups": [
         {
             "id": "introduction",
