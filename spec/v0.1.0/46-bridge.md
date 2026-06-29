@@ -312,6 +312,7 @@ This page is the Bridge for the core specification family: a generated coverage 
 - memo-rollout-generate
 - repo-github-org
 - repo-quality
+- specs-to-skills
 - wiki-lint
 
 ### [24-tools-registry](./24-tools-registry.md)
@@ -479,6 +480,7 @@ This page is the Bridge for the core specification family: a generated coverage 
 
 - image-art-architecture
 - skill-testing
+- specs-to-skills
 
 ### [44-repository-and-outward-docs](./44-repository-and-outward-docs.md)
 
