@@ -129,6 +129,14 @@
             "pages": [
                 "43-skill-authoring-and-quality"
             ]
+        },
+        {
+            "id": "bridge",
+            "label": "Bridge",
+            "order": 12,
+            "pages": [
+                "46-bridge"
+            ]
         }
     ],
     "fallback": "append-by-NN"

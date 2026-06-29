@@ -11,10 +11,11 @@
         "generate-refs": "node scripts/generate-refs.mjs",
         "generate-docs-payload": "node scripts/generate-docs-payload.mjs",
         "generate-manifest": "node scripts/generate-manifest.mjs",
+        "generate-bridge": "node scripts/generate-bridge.mjs",
         "generate-llms-txt": "node scripts/generate-llms-txt.mjs",
         "audit-spec-quality": "node scripts/audit-spec-quality.mjs",
         "test": "node scripts/audit-spec-quality.mjs",
-        "build": "npm run generate-refs && npm run generate-docs-payload && npm run generate-manifest && npm run generate-llms-txt"
+        "build": "npm run generate-refs && npm run generate-docs-payload && npm run generate-manifest && npm run generate-bridge && npm run generate-llms-txt"
     },
     "devDependencies": {
         "ajv": "^8.20.0"

@@ -81,6 +81,14 @@ This gate is the direct mirror of two patterns the specification already relies 
 
 ---
 
+## The Bridge — A Per-Family Coverage Index
+
+The coverage gate proves the link is *sound*; the **Bridge** makes it *legible*. Each specification family carries a generated Bridge page that turns the same skill-to-spec map around and reads it per chapter: for every page in the family it enumerates, by name, the skills that implement that page — a skill implements a page when the page's id appears in the skill's `all` list. A chapter that no skill implements yet prints an explicit "— none yet —", so the empty case is an honest signal that nothing has been built against that chapter rather than a silent omission.
+
+The Bridge is never hand-written. It is generated from the skill-to-spec map, marked as generated, and regenerated on every build, so it cannot drift from the data it summarizes. The resolving coverage lint (check-skill-specs) is the gate that keeps that data true: it fails when a referenced chapter does not resolve, which is the same guarantee that lets the Bridge enumerate by name with confidence. Read together, the gate keeps the references real and the Bridge shows, at a glance, where the skills cluster and where the specification is still waiting for its first implementer.
+
+---
+
 ## When the Skill Leads the Spec
 
 The `gaps` field exists because the alternative — pretending the written specification is always ahead of the skill — is a lie the system would have to keep telling. In practice the skill carries the live procedure and the chapter catches up afterward. Making that explicit turns an embarrassment into a tool:

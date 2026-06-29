@@ -85,6 +85,14 @@
                 "25-validation-overview",
                 "41-project-architecture"
             ]
+        },
+        {
+            "id": "bridge",
+            "label": "Bridge",
+            "order": 9,
+            "pages": [
+                "42-bridge"
+            ]
         }
     ],
     "fallback": "append-by-NN"

@@ -64,6 +64,14 @@
                 "03-recovery",
                 "14-migration"
             ]
+        },
+        {
+            "id": "bridge",
+            "label": "Bridge",
+            "order": 7,
+            "pages": [
+                "16-bridge"
+            ]
         }
     ],
     "fallback": "append-by-NN"
