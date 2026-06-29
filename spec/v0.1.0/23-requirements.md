@@ -83,6 +83,8 @@ Each spec family declares a machine-readable head so tooling can read every fami
 
 A family that hosts the standard sets the flags `true` and points the refs at the hosting chapter; a thin family that only consumes sets them `false`/`null` and, when it grades, imports the model via `gradingRef`. External families adopt the same field set when they are ready; the field set is the contract, not the container filename.
 
+A thin family resolves its requirements one of two ways, never both: it either carries **its own requirement series** in its own chapters (and points `requirementsRef` at them), or it **declares inheritance** — naming the host-family requirements it must satisfy — instead of duplicating a parallel series. The second is preferred where a family has no domain-specific rules of its own, because a cross-family coverage board can then read one set of obligations per family without double-counting. A family's own series uses its own id vocabulary; the shared `REQ-NNN` store holds the curated, harvested rules.
+
 ---
 
 ## Entry Schema
