@@ -34,9 +34,27 @@ flowchart LR
 
 ---
 
+## The Grade Axis (optional)
+
+Beside `statement` and `check`, a requirement **MAY** carry an optional third axis: a `grade`. Where the `check` answers a binary question — is the requirement met or not — the `grade` answers a *how well* question, contributing a weighted dimension to a continuous quality score. Validation is the `check` in action; it is not a separate object. Grading is an optional layer on top: the rule of thumb is that a hard yes/no rule needs only a `check`, while a quality spectrum earns a `grade`.
+
+The slot is **always available and carries one of three honest states**, so an author must *decide* on it rather than silently leave it out:
+
+| `grade` state | Meaning |
+|---------------|---------|
+| `{ dimension, weight }` | Real grading — the requirement contributes a named quality dimension, with a weight, to an aggregate score. |
+| `binary` | Deliberately **no** score — a hard yes/no rule whose `check` is the whole story. |
+| `todo` | A grade **belongs** here but is not yet written — a visible, harvestable work item, never a silent gap. |
+
+The `todo` state is the point of the slot: a missing grade is made **visible** rather than swallowed, the same "empty means an honest not-yet" principle the registry applies elsewhere. `grade` is one more optional key on the open entry schema — additive, never a breaking change. When the object form is used, the dimensions and weights feed the aggregate quality model — its scale, bands, production gate, and veto floor — specified in the grading model later in this chapter.
+
+---
+
 ## Storage and Scale
 
-Requirements are stored **one file per entry** under `.memo/_requirements/`, a sibling of the memos under `.memo/` rather than a child of any single memo. This keeps the set shared across all memos of a project instead of trapped inside one. Each entry is a small, self-describing file, so requirements can be added, reviewed, and diffed individually, and the registry scales to hundreds of fine-grained entries without any single file becoming unmanageable.
+The **spec is the source; the store is generated.** The authoritative requirement is the declaration authored prose-first into a spec chapter — its `statement`, its `check`, and its optional `grade`. A **harvest** step reads those inline declarations and generates the per-entry store under `.memo/_requirements/`, one file per entry, which the runtime then reads. The arrow runs **spec → harvest → store → trigger**, not store → spec: the store is a derived index, never the source of truth.
+
+The store is a sibling of the memos under `.memo/` rather than a child of any single memo, so the generated set is shared across all memos of a project instead of trapped inside one. Because the store is generated rather than hand-maintained, it scales to hundreds of fine-grained entries without any single file becoming unmanageable: the curated rules live in the spec, and the store **MAY** additionally carry runtime entries that did not originate from a spec chapter.
 
 Scope is **carried by the entry itself**, not by where the file sits. A `scope` object with three axes — `repos`, `categories`, and `tags` — plus a `when` trigger object decides which work an entry applies to. A scoped folder tree is a useful conceptual model for reasoning about the registry — global rules, per-repo rules, per-category rules, per-state rules — but the scope axes in the entry are authoritative. The folder layout is a lens onto the data; the data is the source of truth.
 
@@ -68,6 +86,7 @@ A requirement entry is an English-language JSON file. The fields are:
 | `source` | yes | Where the requirement comes from, for example a skill reference such as `skill:node-formatting`. |
 | `severity` | yes | One of `blocker`, `warning`, `info`. Governs how hard the gate enforces it. |
 | `origin` | yes | One of `predefined`, `ai-added`, `evaluator-session` — how the entry entered the registry. |
+| `grade` | no | Optional grade axis: the string `binary`, the string `todo`, or `{ dimension, weight }`. See **The Grade Axis** above. |
 
 The `check` object **MUST** declare a `kind`, one of:
 
