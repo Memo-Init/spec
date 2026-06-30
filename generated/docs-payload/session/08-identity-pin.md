@@ -6,7 +6,7 @@ spec_file: "08-identity-pin.md"
 order: 8
 section: "Session"
 normative: true
-generated_at: "2026-06-30T15:56:25.896Z"
+generated_at: "2026-06-30T17:30:00.500Z"
 generated_from: "spec/session/0.1.0/08-identity-pin.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/08-identity-pin.md."
