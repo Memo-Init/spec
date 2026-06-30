@@ -30,7 +30,7 @@
         },
         {
             "id": "initialisierung",
-            "label": "Initialisierung",
+            "label": "Initialization",
             "order": 3,
             "pages": [
                 "05-memo-strategies",

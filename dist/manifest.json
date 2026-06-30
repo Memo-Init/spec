@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-30T23:09:40.649Z",
+    "generated_at": "2026-06-30T23:17:20.159Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -306,7 +306,7 @@
         {
             "filename": "30-primitives.md",
             "slug": "primitives",
-            "title": "Glossar",
+            "title": "Glossary",
             "description": "This chapter is the single source of truth for the system's core concepts and the relationships between them. Each primitive is defined here in a short, normative paragraph and linked to the detail...",
             "order": 30,
             "section": "Specification",

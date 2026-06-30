@@ -1,4 +1,4 @@
-# 30. Glossar
+# 30. Glossary
 
 | Field | Value |
 |-------|-------|

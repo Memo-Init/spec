@@ -61,6 +61,14 @@ A follow-up split that is not backed by such a recorded user question is a viola
 
 **Inclusion is the default — curation is also the user's decision.** C7 forbids unilaterally *exporting* work; its mirror image forbids unilaterally *excluding* it. When several findings surface, the default is to **take them all in**; the agent does not quietly pick which ones "make it" into the memo. A finding is left out ONLY when the user explicitly rejects it — the same recorded-decision bar that governs a split. Silently curating which findings are included is the same unsanctioned-deferral failure as silently exporting work, just inverted.
 
+## C9 — A Follow-Up Memo Never Shrinks Scope
+
+When a user explicitly authorizes a follow-up memo (per C7), the follow-up MUST inherit at least the scope of its predecessor — it may grow, it may never shrink. A split that silently drops portions of the predecessor's authorized scope is a violation equivalent to unsanctioned deferral: the work still does not happen, only the container changes.
+
+The rule: a follow-up memo's scope ≥ predecessor's scope. Adding is permitted; subtracting is not.
+
+> **Reconciliation with C7/C8.** C7 governs *whether* a split happens at all — deferral is always the user's decision, not the agent's. C8 governs how the agent handles small adjacent defects it encounters mid-task. C9 governs the *size* of any follow-up that does get created: once the user has chosen to split, the follow-up must be at least as large as what was promised. The three rules are complementary: C7 prevents unsanctioned splits, C8 prevents silent pass-bys, and C9 prevents scope erosion inside a sanctioned split.
+
 ## C8 — Fix What You Find, Within YAGNI
 
 A healthy engineering culture leaves the workspace better than it was found. When an agent passes a small, adjacent defect — a broken link, a stale table, a typo in a sibling section, a one-line inconsistency next to the file it is already editing — the cultural failure is to walk past it: to offload it, hide it, or push it into the future. Documenting a problem is not solving it. A note that says "this is broken" leaves the thing broken.

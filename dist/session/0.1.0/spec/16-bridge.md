@@ -6,7 +6,7 @@ spec_file: "16-bridge.md"
 order: 16
 section: "Session"
 normative: false
-generated_at: "2026-06-30T23:09:40.202Z"
+generated_at: "2026-06-30T23:17:19.700Z"
 generated_from: "draft/session/0.1.0/spec/16-bridge.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/16-bridge.md."

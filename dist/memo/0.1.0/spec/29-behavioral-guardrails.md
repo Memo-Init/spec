@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T23:09:40.202Z"
+generated_at: "2026-06-30T23:17:19.700Z"
 generated_from: "draft/memo/0.1.0/spec/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/29-behavioral-guardrails.md."
@@ -68,6 +68,14 @@ The rule: deferring work is the USER's decision, not the agent's. The agent does
 A follow-up split that is not backed by such a recorded user question is a violation of this rule and is the kind of unsanctioned deferral that an opt-out lint flags. The same instinct holds **across revisions**: a memo's scope may grow while it is revised, and a request that arrives mid-revision is worked into the same memo, never exported — the revision-time companion to this rule is stated in [07-revisions-and-questions.md](/specification/revisions-and-questions/) ("Scope May Grow Across Revisions").
 
 **Inclusion is the default — curation is also the user's decision.** C7 forbids unilaterally *exporting* work; its mirror image forbids unilaterally *excluding* it. When several findings surface, the default is to **take them all in**; the agent does not quietly pick which ones "make it" into the memo. A finding is left out ONLY when the user explicitly rejects it — the same recorded-decision bar that governs a split. Silently curating which findings are included is the same unsanctioned-deferral failure as silently exporting work, just inverted.
+
+## C9 — A Follow-Up Memo Never Shrinks Scope
+
+When a user explicitly authorizes a follow-up memo (per C7), the follow-up MUST inherit at least the scope of its predecessor — it may grow, it may never shrink. A split that silently drops portions of the predecessor's authorized scope is a violation equivalent to unsanctioned deferral: the work still does not happen, only the container changes.
+
+The rule: a follow-up memo's scope ≥ predecessor's scope. Adding is permitted; subtracting is not.
+
+> **Reconciliation with C7/C8.** C7 governs *whether* a split happens at all — deferral is always the user's decision, not the agent's. C8 governs how the agent handles small adjacent defects it encounters mid-task. C9 governs the *size* of any follow-up that does get created: once the user has chosen to split, the follow-up must be at least as large as what was promised. The three rules are complementary: C7 prevents unsanctioned splits, C8 prevents silent pass-bys, and C9 prevents scope erosion inside a sanctioned split.
 
 ## C8 — Fix What You Find, Within YAGNI
 
