@@ -38,7 +38,7 @@ flowchart LR
 
 Beside `statement` and `check`, a requirement **MAY** carry an optional third axis: a `grade`. Where the `check` answers a binary question — is the requirement met or not — the `grade` answers a *how well* question, contributing a weighted dimension to a continuous quality score. Validation is the `check` in action; it is not a separate object. Grading is an optional layer on top: the rule of thumb is that a hard yes/no rule needs only a `check`, while a quality spectrum earns a `grade`.
 
-The slot is **always available and carries one of three honest states**, so an author must *decide* on it rather than silently leave it out:
+The slot is **optional** — a requirement need not carry a `grade` at all (the schema leaves it out by default, and most entries do). When an author does engage it, it carries one of three honest states rather than an ambiguous blank:
 
 | `grade` state | Meaning |
 |---------------|---------|
@@ -46,13 +46,15 @@ The slot is **always available and carries one of three honest states**, so an a
 | `binary` | Deliberately **no** score — a hard yes/no rule whose `check` is the whole story. |
 | `todo` | A grade **belongs** here but is not yet written — a visible, harvestable work item, never a silent gap. |
 
-The `todo` state is the point of the slot: a missing grade is made **visible** rather than swallowed, the same "empty means an honest not-yet" principle the registry applies elsewhere. `grade` is one more optional key on the open entry schema — additive, never a breaking change. When the object form is used, the dimensions and weights feed the aggregate quality model — its scale, bands, production gate, and veto floor — specified in the grading model later in this chapter.
+The `todo` state is what the slot is *for* once it is engaged: a grade that is owed but not yet written is made **visible** rather than swallowed, the same "empty means an honest not-yet" principle the registry applies elsewhere. `grade` is one more optional key on the open entry schema — additive, never a breaking change. When the object form is used, the dimensions and weights feed the aggregate quality model — its scale, bands, production gate, and veto floor — specified in the grading model later in this chapter.
 
 ---
 
 ## Storage and Scale
 
-The **spec is the source; the store is generated.** The authoritative requirement is the declaration authored prose-first into a spec chapter — its `statement`, its `check`, and its optional `grade`. A **harvest** step reads those inline declarations and generates the per-entry store under `.memo/_requirements/`, one file per entry, which the runtime then reads. The arrow runs **spec → harvest → store → trigger**, not store → spec: the store is a derived index, never the source of truth.
+The **target model is spec-as-source: the store is generated, not hand-maintained.** The authoritative requirement is the declaration authored prose-first into a spec chapter — its `statement`, its `check`, and its optional `grade`. A **harvest** step reads those inline declarations and generates the per-entry store under `.memo/_requirements/`, one file per entry, which the runtime then reads. In that end-state the arrow runs **spec → harvest → store → trigger**, not store → spec: the store is then a derived index rather than an independently maintained source.
+
+> **Migration status — target model, not yet realized.** The spec → harvest → store direction above is the **normative target**, not a description of the present. Today the store is still largely authored directly — by skills and by hand — and **harvest is opt-in**: only the rules already lifted into inline spec declarations flow through it, while the rest of the store predates the harvest path and is in practice a co-authored source. The system is **migrating toward** the generated store one curated rule at a time; the prose-first guard removes drift for each rule as it is lifted, not retroactively for the whole store. Read the end-state as the direction of travel, not as a claim about the current store.
 
 The store is a sibling of the memos under `.memo/` rather than a child of any single memo, so the generated set is shared across all memos of a project instead of trapped inside one. Because the store is generated rather than hand-maintained, it scales to hundreds of fine-grained entries without any single file becoming unmanageable: the curated rules live in the spec, and the store **MAY** additionally carry runtime entries that did not originate from a spec chapter.
 
@@ -190,6 +192,8 @@ A requirement set thereby doubles as an **eval set**: it is the explicit definit
 
 ## The Grading Model
 
+> **Build status — referenced, not yet built.** The scoring head described in this section — the continuous **1.0–5.0** scale, the bands, the **production gate 3.5**, the veto floor, the `GR-` codes, and the `checkMode` tiers — is **specified by reference, not yet implemented**. The requirement schema today carries only the optional `grade` axis (`binary` / `todo` / `{ dimension, weight }`); no code computes bands, enforces a numeric gate, assigns `GR-` codes, or runs `checkMode` tiers. Treat this section as the **target** grading contract the system imports by reference and builds against — not as a gate that runs today.
+
 When a requirement carries an object `grade` (the grade axis above), its dimension feeds a shared **grading model** — one reusable scoring head that every family follows, rather than each domain re-inventing its own. The model is deliberately the same discipline already proven in a sibling content-grading specification; it is summarised here as the common head and imported by reference, not copied.
 
 **Weighted, continuous scale.** A grade is a weighted sum of named **dimensions** on a continuous **1.0–5.0** scale. The applicable dimension weights **MUST** sum to 100%. A dimension that does not apply to a given work type is **dropped and its weight redistributed** across the rest — never scored as a failure, so an inapplicable axis cannot silently sink a score.
@@ -204,7 +208,7 @@ When a requirement carries an object `grade` (the grade axis above), its dimensi
 | Needs work | 2.5–3.4 |
 | Failing | 1.0–2.4 |
 
-The **production gate is 3.5**: work below it is not ready. A family **MAY** set a stricter gate but **MUST NOT** lower it below 3.5.
+In the target model the **production gate is 3.5**: work scoring below it is not production-ready, and a family **MAY** set a stricter gate but **MUST NOT** lower it below 3.5. This numeric gate is **not yet wired into finalization** — finalization today runs the binary quality gate of [11-quality-and-finalization.md](./11-quality-and-finalization.md), not a 1.0–5.0 score (see the build-status note above).
 
 **Veto through the scale, not beside it.** There is no separate fail flag. A `CRITICAL`-severity miss **floors its dimension to 1.0**; because one floored weighted dimension drags the aggregate under the gate on its own, the single weighted sum is the only source of the verdict.
 
