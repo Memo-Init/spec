@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [11-project-structure](./11-project-structure.md) |
-| Provenance | `601fc9a1eee8` |
+| Provenance | `55d1b847daba` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 ## 2. Public entry points
 
-`repo-init` · docs entry `/workbench/overview/`
+`workbench-audit`, `workbench-project-setup` _(inferred from primary owners)_ · docs entry `/workbench/overview/`
 
 ## 3. Required detail pages
 
@@ -26,7 +26,6 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `repo-init` | contributing | Repository initialization pattern for new projects |
 | `wiki-init` | contributing | Initialize a project wiki (.wiki/) with index, log, page directories and local git |
 | `workbench-audit` | primary | Full 9-phase project audit for One-Pizza workbench projects |
 | `workbench-project-setup` | primary | Project setup and installation pattern for the One-Pizza workbench |
@@ -43,10 +42,10 @@ No grader assigned yet.
 - memo-079-eleven-ecken
 - required-claude-md-sections-and-scripts
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `repo-init` — repository cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `601fc9a1eee8` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `55d1b847daba` over the skill-to-spec map. Regenerated on every build.

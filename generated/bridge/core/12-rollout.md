@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [12-rollout](./12-rollout.md) |
-| Provenance | `db252932a918` |
+| Provenance | `a6dcedc77368` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `image-pencil-playwright-diff` | contributing | Verify a built UI against its Pencil (.pen) design using a Soll-Ist diff — Pencil as the "before/target", a running app measure… |
 | `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
 | `memo-finalize` | contributing | Final readiness gate check before PRD creation |
 | `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
@@ -49,10 +48,10 @@ Grading handled by `memo-fidelity-audit`.
 - user-triggered landing as the only valid stop point
 - utilization gate (built-but-unwired)
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `image-pencil-playwright-diff` — visual cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `db252932a918` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `a6dcedc77368` over the skill-to-spec map. Regenerated on every build.

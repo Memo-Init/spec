@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [23-requirements](./23-requirements.md) |
-| Provenance | `8e7f13dfddda` |
+| Provenance | `ecde12ee330b` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`image-pencil-playwright-diff`, `memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-req-template` _(inferred from primary owners)_ · docs entry `/specification/overview/`
+`memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-req-template` _(inferred from primary owners)_ · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -28,7 +28,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 |---|---|---|
 | `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
 | `git-security` | contributing | Standalone security check for Git repositories |
-| `image-pencil-playwright-diff` | primary | Verify a built UI against its Pencil (.pen) design using a Soll-Ist diff — Pencil as the "before/target", a running app measure… |
 | `memo-finalize` | contributing | Final readiness gate check before PRD creation |
 | `memo-phase-evaluate` | contributing | Prueft das Zusammenspiel aller PRDs innerhalb einer Phase |
 | `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
@@ -42,8 +41,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 | `memo-req-template` | primary | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements (eval-styl… |
 | `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
 | `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
-| `repo-github-org` | contributing | Update GitHub Organisation or User profile README using BadgeTable (open-source tool by a6b8) |
-| `repo-quality` | contributing | Repository quality checklist for pre-push verification |
 | `specs-to-skills` | contributing | Scaffold skill skeletons from the spec-to-skill map and grade skill quality against the three authoring dimensions |
 | `wiki-lint` | contributing | Health-check the wiki |
 
@@ -53,17 +50,17 @@ Grading handled by `memo-req-registry` _(inferred)_.
 
 ## 6. Gaps roll-up
 
-- Pencil-Playwright Soll-Ist diff technique itself
-- Playwright CLI-vs-MCP cost policy linkage
 - report storage path + producer/consumer evidence round-trip
 - tool/requirement entry FORMAT (YAML/object schema) and intake flow
 - topic-as-MatchContext / topic-attach wrapper
 - validation tactics catalog + signal->tactic selection map
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-- `image-pencil-playwright-diff` — visual cluster, no numbered chapter by design
+- `image-pencil-playwright-diff` — visual cluster, internal tooling (excluded from public coverage)
+- `repo-github-org` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `8e7f13dfddda` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `ecde12ee330b` over the skill-to-spec map. Regenerated on every build.

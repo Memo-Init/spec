@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [29-behavioral-guardrails](./29-behavioral-guardrails.md) |
-| Provenance | `701d43667d96` |
+| Provenance | `55ec29e4f599` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `image-pencil-playwright-diff` | contributing | Verify a built UI against its Pencil (.pen) design using a Soll-Ist diff — Pencil as the "before/target", a running app measure… |
 | `memo-coherence` | contributing | Provide honest, critical feedback on a memo — find gaps, contradictions, redundancies, and logical issues |
 | `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
 | `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
@@ -41,10 +40,10 @@ No grader assigned yet.
 
 — none —
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `image-pencil-playwright-diff` — visual cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `701d43667d96` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `55ec29e4f599` over the skill-to-spec map. Regenerated on every build.

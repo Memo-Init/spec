@@ -23,39 +23,39 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 | [08-phases-and-prds.md](./08-phases-and-prds.md) | Phases, PRDs & the Dependency Tree | Normative | memo, prd, workbench |
 | [09-contamination-context-handover.md](./09-contamination-context-handover.md) | Contamination, Empty Context & Handover | Normative | memo, prd, workbench |
 | [10-proactive-research.md](./10-proactive-research.md) | Proactive Research | Normative | memo, research, wiki |
-| [11-quality-and-finalization.md](./11-quality-and-finalization.md) | Quality Gates & Finalization | Normative | git, memo, repository, research, workbench |
-| [12-rollout.md](./12-rollout.md) | Rollout — Generate / Execute / Evaluate | Normative | memo, visual |
+| [11-quality-and-finalization.md](./11-quality-and-finalization.md) | Quality Gates & Finalization | Normative | git, memo, research, workbench |
+| [12-rollout.md](./12-rollout.md) | Rollout — Generate / Execute / Evaluate | Normative | memo |
 | [13-orchestration.md](./13-orchestration.md) | Orchestration, State & Recovery | Normative | git, memo, prd, research |
-| [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) | Agents, Skills & Tasks | Normative | memo, prd, repository, skill, workbench |
+| [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) | Agents, Skills & Tasks | Normative | memo, prd, skill, workbench |
 | [15-prompt-generator.md](./15-prompt-generator.md) | Prompt Generator | Normative | memo, prd |
-| [16-git-security-versioning.md](./16-git-security-versioning.md) | Security, Git Flow & Versioning | Normative | evals, git, memo, repository, visual, workbench |
-| [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) | Git Workflow & Memo IDs | Normative | git, memo, prd, repository, workbench |
+| [16-git-security-versioning.md](./16-git-security-versioning.md) | Security, Git Flow & Versioning | Normative | evals, git, memo, workbench |
+| [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) | Git Workflow & Memo IDs | Normative | git, memo, prd, workbench |
 | [18-multidimensionality.md](./18-multidimensionality.md) | Multidimensionality — One Memo, Many Repos | Normative | git, memo |
-| [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) | Internal vs. External Communication | Normative | evals, git, repository, visual, workbench |
+| [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) | Internal vs. External Communication | Normative | evals, git, workbench |
 | [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md) | Flow — Full vs. Update Revisions | Normative | memo |
 | [21-human-computer-interaction.md](./21-human-computer-interaction.md) | Human-Computer Interaction | Normative | memo |
 | [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md) | Recommended Way — Self-Describing Command Tree | Normative | memo |
-| [23-requirements.md](./23-requirements.md) | Requirements | Normative | evals, git, memo, prd, repository, skill, visual, wiki |
+| [23-requirements.md](./23-requirements.md) | Requirements | Normative | evals, git, memo, prd, skill, wiki |
 | [24-tools-registry.md](./24-tools-registry.md) | Tools Registry | Normative | evals, prd, wiki, workbench |
 | [25-strands.md](./25-strands.md) | Strands | Normative | memo |
 | [26-memo-history.md](./26-memo-history.md) | Memo History | Normative | memo, wiki |
 | [27-landing-the-plane.md](./27-landing-the-plane.md) | Landing the Plane | Normative | git, memo, workbench |
 | [28-drift.md](./28-drift.md) | Drift | Normative | memo |
-| [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) | Behavioral Guardrails | Normative | git, memo, visual, workbench |
+| [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) | Behavioral Guardrails | Normative | git, memo, workbench |
 | [30-primitives.md](./30-primitives.md) | Primitives | Normative | evals, memo |
 | [31-goals.md](./31-goals.md) | Goals | Normative | memo |
 | [32-prompt-governance.md](./32-prompt-governance.md) | Prompt Governance | Normative | memo, prd |
 | [33-maintenance.md](./33-maintenance.md) | Maintenance | Normative | git, memo |
 | [34-question-interface.md](./34-question-interface.md) | Question Interface | Normative | memo |
-| [35-memo-authoring.md](./35-memo-authoring.md) | Memo Authoring | Normative | memo, visual |
+| [35-memo-authoring.md](./35-memo-authoring.md) | Memo Authoring | Normative | memo |
 | [36-agent-strategies.md](./36-agent-strategies.md) | Agent Strategies | Normative | memo, research, workbench |
 | [37-transcript-reliability.md](./37-transcript-reliability.md) | Transcript Reliability | Normative | memo |
 | [38-stage-model.md](./38-stage-model.md) | Stage Model | Normative | git, memo |
 | [39-release-and-pinning.md](./39-release-and-pinning.md) | Release and Pinning | Normative | git, memo |
-| [40-diagrams.md](./40-diagrams.md) | Diagrams | Informative | memo, visual |
+| [40-diagrams.md](./40-diagrams.md) | Diagrams | Informative | memo |
 | [42-plans.md](./42-plans.md) | Plans | Normative | code-patterns, memo |
-| [43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md) | Skill Authoring & Quality | Normative | skill, visual |
-| [44-repository-and-outward-docs.md](./44-repository-and-outward-docs.md) | Repository Scaffolding & Outward Documentation | Normative | repository |
+| [43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md) | Skill Authoring & Quality | Normative | skill |
+| [44-repository-and-outward-docs.md](./44-repository-and-outward-docs.md) | Repository Scaffolding & Outward Documentation | Normative | — |
 
 > Chapters 09–40 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer. Chapter 30 is the cross-cutting substrate page: it defines the ten primitives, the central glossary, and the concept map; new readers MAY read it first as a vocabulary, and authors return to it as the single source of truth for terms. Chapter 33 is the cross-cutting maintenance roof: it measures freshness and blast-radius across the primitives without adding an eleventh.
 

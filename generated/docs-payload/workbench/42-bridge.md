@@ -6,7 +6,7 @@ spec_file: "42-bridge.md"
 order: 42
 section: "Workbench"
 normative: false
-generated_at: "2026-06-30T15:14:56.520Z"
+generated_at: "2026-06-30T15:19:28.422Z"
 generated_from: "spec/workbench/0.1.0/42-bridge.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/42-bridge.md."
@@ -47,7 +47,6 @@ This page is the Bridge hub for the workbench specification family: the in-navig
 
 ### [11-project-structure](/specification/project-structure/)
 
-- `repo-init` — contributing
 - `wiki-init` — contributing
 - `workbench-audit` — primary
 - `workbench-project-setup` — primary

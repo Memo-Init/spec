@@ -56,10 +56,6 @@ const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
 // carries a full block (error in all directions).
 const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->'
 
-// Out-of-process skill clusters: their capabilities have no numbered spec chapter by design
-// (spec 06 / 40 say so explicitly). Used for field (7) and the README cluster note.
-const OUT_OF_SCOPE_CATEGORIES = [ 'visual', 'domain', 'flowmcp', 'grade' ]
-
 // The three local families. `prefix` is the family-qualifier prepended to a page stem to
 // form the id a skill's `all[]` carries; `sopAnchor` is the family's SOP entry chapter;
 // `docEntry` is the canonical public documentation entry; `relatedRefs` seed the hub footer.
@@ -213,10 +209,13 @@ const gapsRollup = ( { implementers } ) => {
     return [ ...new Set( gaps ) ].sort( ( a, b ) => a.localeCompare( b ) )
 }
 
-const outOfScopeFor = ( { implementers } ) => {
-    return primaryOwners( { implementers } )
-        .filter( ( skill ) => OUT_OF_SCOPE_CATEGORIES.includes( skill.category ) === true )
+// (7) acknowledged out-of-scope / internal tooling: the skills that touch this chapter but
+// carry visibility:"internal" (F4, Memo 057). They are excluded from the public projection
+// (backlink, coverage, enumeration, inverted-map) and listed here honestly, never hidden.
+const internalToolingFor = ( { internal } ) => {
+    return internal
         .map( ( skill ) => ( { skill: skill.skill, category: skill.category } ) )
+        .sort( ( a, b ) => a.skill.localeCompare( b.skill ) )
 }
 
 
@@ -228,7 +227,12 @@ const clustersFor = ( { implementers } ) => {
 
 // The derived, projection-complete record for one page (the inverted-map row + bridge source).
 const buildRecord = ( { family, stem, id, content, skills, purposes } ) => {
-    const implementers = implementersFor( { skills, id } )
+    // F4 (Memo 057): only PUBLIC skills enter the projection (public entries, enumeration,
+    // grader, gaps, clusters, coverage, inverted-map, backlink); internal-tooling skills
+    // (visibility:"internal") are split off and acknowledged separately under field 7.
+    const allImplementers = implementersFor( { skills, id } )
+    const implementers = allImplementers.filter( ( skill ) => skill.visibility !== 'internal' )
+    const internal = allImplementers.filter( ( skill ) => skill.visibility === 'internal' )
     const enumeration = implementers.map( ( skill ) => ( {
         skill: skill.skill,
         role: skill.role,
@@ -245,7 +249,7 @@ const buildRecord = ( { family, stem, id, content, skills, purposes } ) => {
         implementers: enumeration,
         grader: graderFor( { implementers } ),
         gaps: gapsRollup( { implementers } ),
-        outOfScope: outOfScopeFor( { implementers } ),
+        outOfScope: internalToolingFor( { internal } ),
         clusters: clustersFor( { implementers } )
     }
     const provenance = createHash( 'sha256' ).update( JSON.stringify( record ) ).digest( 'hex' ).slice( 0, 12 )
@@ -285,7 +289,7 @@ const renderBridgePage = ( { record } ) => {
 
     const outOfScopeBlock = outOfScope.length === 0
         ? '— none —'
-        : outOfScope.map( ( o ) => `- \`${ o.skill }\` — ${ o.category } cluster, no numbered chapter by design` ).join( '\n' )
+        : outOfScope.map( ( o ) => `- \`${ o.skill }\` — ${ o.category } cluster, internal tooling (excluded from public coverage)` ).join( '\n' )
 
     return [
         `# Bridge — ${ stem }`,
@@ -326,7 +330,7 @@ const renderBridgePage = ( { record } ) => {
         '',
         gapsBlock,
         '',
-        '## 7. Acknowledged out-of-scope',
+        '## 7. Acknowledged internal tooling (out-of-scope)',
         '',
         outOfScopeBlock,
         '',

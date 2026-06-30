@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [35-memo-authoring](./35-memo-authoring.md) |
-| Provenance | `f863126023d7` |
+| Provenance | `8cb68a7f29ab` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `image-diagram-excalidraw` | contributing | Generate Excalidraw-style hand-drawn diagrams from Mermaid code using Nano Banana (Google ImageFX) |
 | `memo-balance` | contributing | Check memo chapters for over-engineering and under-engineering |
 | `memo-coherence` | contributing | Provide honest, critical feedback on a memo — find gaps, contradictions, redundancies, and logical issues |
 | `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
@@ -40,10 +39,10 @@ No grader assigned yet.
 
 — none —
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `image-diagram-excalidraw` — visual cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `f863126023d7` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `8cb68a7f29ab` over the skill-to-spec map. Regenerated on every build.

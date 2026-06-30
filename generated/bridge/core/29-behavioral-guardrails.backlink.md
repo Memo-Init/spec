@@ -3,7 +3,6 @@
 
 The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
 
-- `image-pencil-playwright-diff` — contributing
 - `memo-coherence` — contributing
 - `memo-init` — contributing
 - `memo-phase-execute` — contributing

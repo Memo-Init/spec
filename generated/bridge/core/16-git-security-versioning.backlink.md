@@ -8,7 +8,6 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `git-merge-strategy` — contributing
 - `git-push` — contributing
 - `git-security` — primary
-- `image-pencil-playwright-diff` — contributing
 - `memo-finalize` — contributing
 - `memo-handover` — contributing
 - `memo-maintenance-verify` — contributing
@@ -19,9 +18,6 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `memo-rollout` — contributing
 - `memo-rollout-execute` — contributing
 - `release` — contributing
-- `repo-init` — contributing
-- `repo-issue` — contributing
-- `repo-quality` — primary
 - `workbench-audit` — contributing
 - `workbench-modes` — contributing
 

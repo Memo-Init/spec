@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [40-diagrams](./40-diagrams.md) |
-| Provenance | `b6b2ba3af0b2` |
+| Provenance | `91473477bef7` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `image-art-architecture` | primary | Generate artistic architecture visualization prompts from technical diagrams |
-| `image-diagram-excalidraw` | primary | Generate Excalidraw-style hand-drawn diagrams from Mermaid code using Nano Banana (Google ImageFX) |
 | `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
 
 ## 5. Grading assignment
@@ -36,16 +34,13 @@ No grader assigned yet.
 
 ## 6. Gaps roll-up
 
-- Artistic image generation (9 art styles, branch-color palettes, image-generator prompts)
-- Generated-image tooling (Nano Banana / Google ImageFX prompt pipeline)
-- Image asset storage location
-- Skill metadata absence
+— none —
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-- `image-art-architecture` — visual cluster, no numbered chapter by design
-- `image-diagram-excalidraw` — visual cluster, no numbered chapter by design
+- `image-art-architecture` — visual cluster, internal tooling (excluded from public coverage)
+- `image-diagram-excalidraw` — visual cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `b6b2ba3af0b2` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `91473477bef7` over the skill-to-spec map. Regenerated on every build.

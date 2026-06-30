@@ -47,10 +47,13 @@ const numberFromName = ( { name } ) => {
 }
 
 
-// Implementer skill names for a page id, sorted — the expectation every projection is checked against.
+// Public implementer skill names for a page id, sorted — the expectation every projection is
+// checked against. F4 (Memo 057): visibility:"internal" skills are excluded here exactly as the
+// generator excludes them from the public projection, so backlink/inverted-map agree with the map.
 const expectedImplementers = ( { skills, id } ) => {
     return skills
         .filter( ( skill ) => Array.isArray( skill.all ) === true && skill.all.includes( id ) === true )
+        .filter( ( skill ) => skill.visibility !== 'internal' )
         .map( ( skill ) => skill.skill )
         .sort( ( a, b ) => a.localeCompare( b ) )
 }

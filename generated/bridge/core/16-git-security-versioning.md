@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [16-git-security-versioning](./16-git-security-versioning.md) |
-| Provenance | `209726613567` |
+| Provenance | `01025bda8181` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-rollout`, `repo-init`, `workbench-modes` · docs entry `/specification/overview/`
+`memo-rollout`, `workbench-modes` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -31,7 +31,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 | `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
 | `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
 | `git-security` | primary | Standalone security check for Git repositories |
-| `image-pencil-playwright-diff` | contributing | Verify a built UI against its Pencil (.pen) design using a Soll-Ist diff — Pencil as the "before/target", a running app measure… |
 | `memo-finalize` | contributing | Final readiness gate check before PRD creation |
 | `memo-handover` | contributing | Zwei-Stufen-Handover-Skill fuer kontaminierte Session-Uebergaben |
 | `memo-maintenance-verify` | contributing | The gated re-bless of the maintenance system — the handelnde pendant to memo-goal-optimize |
@@ -42,9 +41,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 | `memo-rollout` | contributing | Orchestrator fuer den kompletten Rollout |
 | `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
 | `release` | contributing | Two-stage release and pinning policy |
-| `repo-init` | contributing | Repository initialization pattern for new projects |
-| `repo-issue` | contributing | GitHub issue creation and management pattern |
-| `repo-quality` | primary | Repository quality checklist for pre-push verification |
 | `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
 | `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
 
@@ -54,12 +50,15 @@ Grading handled by `memo-req-runner` _(inferred)_.
 
 ## 6. Gaps roll-up
 
-- Repo structure + test-coverage + open-source compliance checklist
-
-## 7. Acknowledged out-of-scope
-
 — none —
+
+## 7. Acknowledged internal tooling (out-of-scope)
+
+- `image-pencil-playwright-diff` — visual cluster, internal tooling (excluded from public coverage)
+- `repo-init` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `209726613567` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `01025bda8181` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md) |
-| Provenance | `984abffc57c7` |
+| Provenance | `d495e2ead6e4` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `image-art-architecture` | contributing | Generate artistic architecture visualization prompts from technical diagrams |
 | `skill-testing` | primary | Systematic testing strategy for Claude Code skills |
 | `specs-to-skills` | primary | Scaffold skill skeletons from the spec-to-skill map and grade skill quality against the three authoring dimensions |
 
@@ -39,10 +38,10 @@ No grader assigned yet.
 - skill quality / testing has no spec (Memo-039 core)
 - skill-authoring counterpart absent
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `image-art-architecture` — visual cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `984abffc57c7` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `d495e2ead6e4` over the skill-to-spec map. Regenerated on every build.

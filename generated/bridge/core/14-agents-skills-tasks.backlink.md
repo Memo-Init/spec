@@ -5,8 +5,6 @@ The skills below implement this chapter (primary owner first). The full per-page
 
 - `memo-plan-evaluate` — contributing
 - `memo-prd-evaluate` — contributing
-- `repo-docs-writing` — contributing
-- `repo-readme` — contributing
 - `skill-testing` — contributing
 - `workbench-persona-audit` — primary
 

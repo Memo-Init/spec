@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [17-git-workflow-and-ids](./17-git-workflow-and-ids.md) |
-| Provenance | `507d1568d93a` |
+| Provenance | `7e915b44543b` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -35,7 +35,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 | `memo-plan-update-checkbox` | contributing | Setzt einzelne Phasen-Task-Checkboxen in plan.md programmatisch |
 | `memo-prd-generate` | contributing | Create PRDs (Product Requirement Documents) from a finalized memo |
 | `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
-| `repo-issue` | contributing | GitHub issue creation and management pattern |
 | `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
 
 ## 5. Grading assignment
@@ -47,10 +46,10 @@ No grader assigned yet.
 - Decision hierarchy on commit content
 - Mandatory-issue-per-commit doctrine
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `507d1568d93a` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `7e915b44543b` over the skill-to-spec map. Regenerated on every build.

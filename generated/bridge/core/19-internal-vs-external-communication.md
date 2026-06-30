@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [19-internal-vs-external-communication](./19-internal-vs-external-communication.md) |
-| Provenance | `c1d3857bd8a7` |
+| Provenance | `292539c5a211` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -29,13 +29,7 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 | `git-commit` | contributing | Structured commit workflow — security check, MANDATORY issue creation, staging, commit message with issue reference |
 | `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
 | `git-security` | contributing | Standalone security check for Git repositories |
-| `image-art-architecture` | contributing | Generate artistic architecture visualization prompts from technical diagrams |
 | `memo-req-runner` | contributing | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
-| `repo-docs-writing` | contributing | Readable writing style for documentation, applications, emails, and descriptions |
-| `repo-github-org` | contributing | Update GitHub Organisation or User profile README using BadgeTable (open-source tool by a6b8) |
-| `repo-issue` | contributing | GitHub issue creation and management pattern |
-| `repo-quality` | contributing | Repository quality checklist for pre-push verification |
-| `repo-readme` | contributing | README.md generation pattern for Node.js module repositories |
 | `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
 | `workbench-persona-audit` | contributing | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
 
@@ -47,10 +41,15 @@ Grading handled by `memo-req-runner` _(inferred)_.
 
 — none —
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `image-art-architecture` — visual cluster, internal tooling (excluded from public coverage)
+- `repo-docs-writing` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-github-org` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-readme` — repository cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `c1d3857bd8a7` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `292539c5a211` over the skill-to-spec map. Regenerated on every build.

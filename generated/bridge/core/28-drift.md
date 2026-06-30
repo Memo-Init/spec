@@ -40,7 +40,7 @@ Grading handled by `memo-maintenance-score`.
 - Enumeration of artifact-surface roots that the D1 grep must cover
 - Per-unit-class authoring of the idempotent gate (literal vs pattern)
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

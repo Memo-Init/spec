@@ -64,7 +64,7 @@ No grader assigned yet.
 - retry budget for PRD generation/evaluation
 - validation report path/template + integration-PRD requirement
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

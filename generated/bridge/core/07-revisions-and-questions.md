@@ -55,7 +55,7 @@ Grading handled by `memo-fidelity-audit`.
 - User Mental Model consult mechanism
 - Vorwort section (placement + single-channel)
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

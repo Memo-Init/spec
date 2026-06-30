@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [14-agents-skills-tasks](./14-agents-skills-tasks.md) |
-| Provenance | `717c4a2d6ae4` |
+| Provenance | `dcb61a8554c6` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -28,8 +28,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 |---|---|---|
 | `memo-plan-evaluate` | contributing | Bidirektionale Konformitaetspruefung Plan vs Memos |
 | `memo-prd-evaluate` | contributing | Validate PRDs against the source memo |
-| `repo-docs-writing` | contributing | Readable writing style for documentation, applications, emails, and descriptions |
-| `repo-readme` | contributing | README.md generation pattern for Node.js module repositories |
 | `skill-testing` | contributing | Systematic testing strategy for Claude Code skills |
 | `workbench-persona-audit` | primary | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
 
@@ -42,10 +40,11 @@ No grader assigned yet.
 - no-overwrite-and-output-location
 - persona-audit-schemas
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `repo-docs-writing` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-readme` — repository cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `717c4a2d6ae4` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `dcb61a8554c6` over the skill-to-spec map. Regenerated on every build.

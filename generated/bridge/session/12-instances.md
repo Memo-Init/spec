@@ -36,7 +36,7 @@ No grader assigned yet.
 
 — none —
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

@@ -12,7 +12,6 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `memo-plan-update-checkbox` — contributing
 - `memo-prd-generate` — contributing
 - `memo-rollout-execute` — contributing
-- `repo-issue` — contributing
 - `workbench-modes` — contributing
 
 <!-- BRIDGE:IMPLEMENTED-BY END -->

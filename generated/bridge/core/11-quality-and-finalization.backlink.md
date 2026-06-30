@@ -18,7 +18,6 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `memo-revision-consolidate` — contributing
 - `memo-rollout` — contributing
 - `memo-rollout-generate` — contributing
-- `repo-quality` — contributing
 - `workbench-persona-audit` — contributing
 
 <!-- BRIDGE:IMPLEMENTED-BY END -->

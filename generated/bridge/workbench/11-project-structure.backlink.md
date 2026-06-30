@@ -3,7 +3,6 @@
 
 The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
 
-- `repo-init` — contributing
 - `wiki-init` — contributing
 - `workbench-audit` — primary
 - `workbench-project-setup` — primary

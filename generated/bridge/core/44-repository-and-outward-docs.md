@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [44-repository-and-outward-docs](./44-repository-and-outward-docs.md) |
-| Provenance | `f2cfbfcfa8e5` |
+| Provenance | `0d1f6eb8cd90` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`repo-init` · docs entry `/specification/overview/`
+Canonical docs entry: `/specification/overview/`. No entry-point skill flagged yet.
 
 ## 3. Required detail pages
 
@@ -26,12 +26,7 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `repo-docs-writing` | primary | Readable writing style for documentation, applications, emails, and descriptions |
-| `repo-github-org` | primary | Update GitHub Organisation or User profile README using BadgeTable (open-source tool by a6b8) |
-| `repo-init` | primary | Repository initialization pattern for new projects |
-| `repo-issue` | primary | GitHub issue creation and management pattern |
-| `repo-quality` | contributing | Repository quality checklist for pre-push verification |
-| `repo-readme` | primary | README.md generation pattern for Node.js module repositories |
+| — | — | nothing built against this chapter yet |
 
 ## 5. Grading assignment
 
@@ -39,20 +34,17 @@ No grader assigned yet.
 
 ## 6. Gaps roll-up
 
-- BadgeTable org-profile mechanism
-- First-commits sequence + CI workflow
-- Issue classification taxonomy
-- License selection as a conscious decision
-- Mermaid diagram usage in READMEs
-- Proof policy for UI issues
-- Prose writing-style rules
-- README block structure and method-doc format
-- Repo scaffolding / folder structure
-
-## 7. Acknowledged out-of-scope
-
 — none —
+
+## 7. Acknowledged internal tooling (out-of-scope)
+
+- `repo-docs-writing` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-github-org` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-init` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
+- `repo-readme` — repository cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `f2cfbfcfa8e5` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `0d1f6eb8cd90` over the skill-to-spec map. Regenerated on every build.

@@ -52,7 +52,7 @@ Grading handled by `memo-fidelity-audit`.
 - Mandatory issue-close cycle after push
 - Post-push CodeCov / coverage / overview-page conventions
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

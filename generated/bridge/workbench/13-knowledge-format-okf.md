@@ -41,7 +41,7 @@ No grader assigned yet.
 - Auto-run-before-memo-init coupling
 - Non-OKF lint checks (orphans, contradictions, stubs, missing cross-refs)
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

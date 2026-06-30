@@ -39,7 +39,6 @@ This page is the Bridge hub for the workbench specification family: the in-navig
 
 ### [11-project-structure](./11-project-structure.md)
 
-- `repo-init` — contributing
 - `wiki-init` — contributing
 - `workbench-audit` — primary
 - `workbench-project-setup` — primary

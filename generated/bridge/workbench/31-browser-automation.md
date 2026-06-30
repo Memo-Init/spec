@@ -43,7 +43,7 @@ No grader assigned yet.
 - temp-cleanup-vs-trash
 - untrusted-web-content-banner
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

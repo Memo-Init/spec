@@ -54,7 +54,7 @@ No grader assigned yet.
 - Third-party token-tracking veto
 - three-mode-taxonomy
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

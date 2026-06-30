@@ -1,7 +1,7 @@
 {
     "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.",
     "generator": "scripts/generate-bridge.mjs",
-    "mapHash": "e6bee48bceeb",
+    "mapHash": "955b73b36104",
     "pages": [
         {
             "family": "core",
@@ -815,10 +815,6 @@
                     "role": "contributing"
                 },
                 {
-                    "skill": "repo-quality",
-                    "role": "contributing"
-                },
-                {
                     "skill": "workbench-persona-audit",
                     "role": "contributing"
                 }
@@ -842,15 +838,16 @@
                 "Third-party token-tracking veto",
                 "YAGNI / minimal-code overlap not referenced"
             ],
-            "outOfScope": [],
+            "outOfScope": [
+                "repo-quality"
+            ],
             "clusters": [
                 "git",
                 "memo",
-                "repository",
                 "research",
                 "workbench"
             ],
-            "provenance": "f1e7f5cd3b1f"
+            "provenance": "0c578c50fbda"
         },
         {
             "family": "core",
@@ -870,10 +867,6 @@
                 "16-git-security-versioning"
             ],
             "implementers": [
-                {
-                    "skill": "image-pencil-playwright-diff",
-                    "role": "contributing"
-                },
                 {
                     "skill": "memo-fidelity-audit",
                     "role": "contributing"
@@ -916,12 +909,13 @@
                 "user-triggered landing as the only valid stop point",
                 "utilization gate (built-but-unwired)"
             ],
-            "outOfScope": [],
-            "clusters": [
-                "memo",
-                "visual"
+            "outOfScope": [
+                "image-pencil-playwright-diff"
             ],
-            "provenance": "db252932a918"
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "a6dcedc77368"
         },
         {
             "family": "core",
@@ -1063,14 +1057,6 @@
                     "role": "contributing"
                 },
                 {
-                    "skill": "repo-docs-writing",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-readme",
-                    "role": "contributing"
-                },
-                {
                     "skill": "skill-testing",
                     "role": "contributing"
                 },
@@ -1084,15 +1070,17 @@
                 "no-overwrite-and-output-location",
                 "persona-audit-schemas"
             ],
-            "outOfScope": [],
+            "outOfScope": [
+                "repo-docs-writing",
+                "repo-readme"
+            ],
             "clusters": [
                 "memo",
                 "prd",
-                "repository",
                 "skill",
                 "workbench"
             ],
-            "provenance": "717c4a2d6ae4"
+            "provenance": "dcb61a8554c6"
         },
         {
             "family": "core",
@@ -1146,7 +1134,6 @@
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
                 "memo-rollout",
-                "repo-init",
                 "workbench-modes"
             ],
             "publicEntriesInferred": false,
@@ -1177,10 +1164,6 @@
                 {
                     "skill": "git-security",
                     "role": "primary"
-                },
-                {
-                    "skill": "image-pencil-playwright-diff",
-                    "role": "contributing"
                 },
                 {
                     "skill": "memo-finalize",
@@ -1223,18 +1206,6 @@
                     "role": "contributing"
                 },
                 {
-                    "skill": "repo-init",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-issue",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-quality",
-                    "role": "primary"
-                },
-                {
                     "skill": "workbench-audit",
                     "role": "contributing"
                 },
@@ -1247,19 +1218,20 @@
                 "skill": "memo-req-runner",
                 "inferred": true
             },
-            "gaps": [
-                "Repo structure + test-coverage + open-source compliance checklist"
+            "gaps": [],
+            "outOfScope": [
+                "image-pencil-playwright-diff",
+                "repo-init",
+                "repo-issue",
+                "repo-quality"
             ],
-            "outOfScope": [],
             "clusters": [
                 "evals",
                 "git",
                 "memo",
-                "repository",
-                "visual",
                 "workbench"
             ],
-            "provenance": "209726613567"
+            "provenance": "01025bda8181"
         },
         {
             "family": "core",
@@ -1315,10 +1287,6 @@
                     "role": "contributing"
                 },
                 {
-                    "skill": "repo-issue",
-                    "role": "contributing"
-                },
-                {
                     "skill": "workbench-modes",
                     "role": "contributing"
                 }
@@ -1328,15 +1296,16 @@
                 "Decision hierarchy on commit content",
                 "Mandatory-issue-per-commit doctrine"
             ],
-            "outOfScope": [],
+            "outOfScope": [
+                "repo-issue"
+            ],
             "clusters": [
                 "git",
                 "memo",
                 "prd",
-                "repository",
                 "workbench"
             ],
-            "provenance": "507d1568d93a"
+            "provenance": "7e915b44543b"
         },
         {
             "family": "core",
@@ -1401,31 +1370,7 @@
                     "role": "contributing"
                 },
                 {
-                    "skill": "image-art-architecture",
-                    "role": "contributing"
-                },
-                {
                     "skill": "memo-req-runner",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-docs-writing",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-github-org",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-issue",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-quality",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-readme",
                     "role": "contributing"
                 },
                 {
@@ -1442,15 +1387,20 @@
                 "inferred": true
             },
             "gaps": [],
-            "outOfScope": [],
+            "outOfScope": [
+                "image-art-architecture",
+                "repo-docs-writing",
+                "repo-github-org",
+                "repo-issue",
+                "repo-quality",
+                "repo-readme"
+            ],
             "clusters": [
                 "evals",
                 "git",
-                "repository",
-                "visual",
                 "workbench"
             ],
-            "provenance": "c1d3857bd8a7"
+            "provenance": "292539c5a211"
         },
         {
             "family": "core",
@@ -1597,7 +1547,6 @@
             "stem": "23-requirements",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
-                "image-pencil-playwright-diff",
                 "memo-req-registry",
                 "memo-req-runner",
                 "memo-req-store",
@@ -1617,10 +1566,6 @@
                 {
                     "skill": "git-security",
                     "role": "contributing"
-                },
-                {
-                    "skill": "image-pencil-playwright-diff",
-                    "role": "primary"
                 },
                 {
                     "skill": "memo-finalize",
@@ -1675,14 +1620,6 @@
                     "role": "contributing"
                 },
                 {
-                    "skill": "repo-github-org",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-quality",
-                    "role": "contributing"
-                },
-                {
                     "skill": "specs-to-skills",
                     "role": "contributing"
                 },
@@ -1696,27 +1633,25 @@
                 "inferred": true
             },
             "gaps": [
-                "Pencil-Playwright Soll-Ist diff technique itself",
-                "Playwright CLI-vs-MCP cost policy linkage",
                 "report storage path + producer/consumer evidence round-trip",
                 "tool/requirement entry FORMAT (YAML/object schema) and intake flow",
                 "topic-as-MatchContext / topic-attach wrapper",
                 "validation tactics catalog + signal->tactic selection map"
             ],
             "outOfScope": [
-                "image-pencil-playwright-diff"
+                "image-pencil-playwright-diff",
+                "repo-github-org",
+                "repo-quality"
             ],
             "clusters": [
                 "evals",
                 "git",
                 "memo",
                 "prd",
-                "repository",
                 "skill",
-                "visual",
                 "wiki"
             ],
-            "provenance": "8e7f13dfddda"
+            "provenance": "ecde12ee330b"
         },
         {
             "family": "core",
@@ -1954,10 +1889,6 @@
             ],
             "implementers": [
                 {
-                    "skill": "image-pencil-playwright-diff",
-                    "role": "contributing"
-                },
-                {
                     "skill": "memo-coherence",
                     "role": "contributing"
                 },
@@ -1980,14 +1911,15 @@
             ],
             "grader": null,
             "gaps": [],
-            "outOfScope": [],
+            "outOfScope": [
+                "image-pencil-playwright-diff"
+            ],
             "clusters": [
                 "git",
                 "memo",
-                "visual",
                 "workbench"
             ],
-            "provenance": "701d43667d96"
+            "provenance": "55ec29e4f599"
         },
         {
             "family": "core",
@@ -2261,10 +2193,6 @@
             ],
             "implementers": [
                 {
-                    "skill": "image-diagram-excalidraw",
-                    "role": "contributing"
-                },
-                {
                     "skill": "memo-balance",
                     "role": "contributing"
                 },
@@ -2283,12 +2211,13 @@
             ],
             "grader": null,
             "gaps": [],
-            "outOfScope": [],
-            "clusters": [
-                "memo",
-                "visual"
+            "outOfScope": [
+                "image-diagram-excalidraw"
             ],
-            "provenance": "f863126023d7"
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "8cb68a7f29ab"
         },
         {
             "family": "core",
@@ -2556,34 +2485,20 @@
             ],
             "implementers": [
                 {
-                    "skill": "image-art-architecture",
-                    "role": "primary"
-                },
-                {
-                    "skill": "image-diagram-excalidraw",
-                    "role": "primary"
-                },
-                {
                     "skill": "memo-init",
                     "role": "contributing"
                 }
             ],
             "grader": null,
-            "gaps": [
-                "Artistic image generation (9 art styles, branch-color palettes, image-generator prompts)",
-                "Generated-image tooling (Nano Banana / Google ImageFX prompt pipeline)",
-                "Image asset storage location",
-                "Skill metadata absence"
-            ],
+            "gaps": [],
             "outOfScope": [
                 "image-art-architecture",
                 "image-diagram-excalidraw"
             ],
             "clusters": [
-                "memo",
-                "visual"
+                "memo"
             ],
-            "provenance": "b6b2ba3af0b2"
+            "provenance": "91473477bef7"
         },
         {
             "family": "core",
@@ -2754,10 +2669,6 @@
             ],
             "implementers": [
                 {
-                    "skill": "image-art-architecture",
-                    "role": "contributing"
-                },
-                {
                     "skill": "skill-testing",
                     "role": "primary"
                 },
@@ -2771,22 +2682,21 @@
                 "skill quality / testing has no spec (Memo-039 core)",
                 "skill-authoring counterpart absent"
             ],
-            "outOfScope": [],
-            "clusters": [
-                "skill",
-                "visual"
+            "outOfScope": [
+                "image-art-architecture"
             ],
-            "provenance": "984abffc57c7"
+            "clusters": [
+                "skill"
+            ],
+            "provenance": "d495e2ead6e4"
         },
         {
             "family": "core",
             "id": "44-repository-and-outward-docs",
             "stem": "44-repository-and-outward-docs",
             "sopAnchor": "02-memo-sop-entrypoint",
-            "publicEntries": [
-                "repo-init"
-            ],
-            "publicEntriesInferred": false,
+            "publicEntries": [],
+            "publicEntriesInferred": true,
             "detailPages": [
                 "00-overview",
                 "16-git-security-versioning",
@@ -2795,49 +2705,19 @@
                 "24-tools-registry",
                 "35-memo-authoring"
             ],
-            "implementers": [
-                {
-                    "skill": "repo-docs-writing",
-                    "role": "primary"
-                },
-                {
-                    "skill": "repo-github-org",
-                    "role": "primary"
-                },
-                {
-                    "skill": "repo-init",
-                    "role": "primary"
-                },
-                {
-                    "skill": "repo-issue",
-                    "role": "primary"
-                },
-                {
-                    "skill": "repo-quality",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "repo-readme",
-                    "role": "primary"
-                }
-            ],
+            "implementers": [],
             "grader": null,
-            "gaps": [
-                "BadgeTable org-profile mechanism",
-                "First-commits sequence + CI workflow",
-                "Issue classification taxonomy",
-                "License selection as a conscious decision",
-                "Mermaid diagram usage in READMEs",
-                "Proof policy for UI issues",
-                "Prose writing-style rules",
-                "README block structure and method-doc format",
-                "Repo scaffolding / folder structure"
+            "gaps": [],
+            "outOfScope": [
+                "repo-docs-writing",
+                "repo-github-org",
+                "repo-init",
+                "repo-issue",
+                "repo-quality",
+                "repo-readme"
             ],
-            "outOfScope": [],
-            "clusters": [
-                "repository"
-            ],
-            "provenance": "f2cfbfcfa8e5"
+            "clusters": [],
+            "provenance": "0d1f6eb8cd90"
         },
         {
             "family": "core",
@@ -3017,9 +2897,10 @@
             "stem": "11-project-structure",
             "sopAnchor": "02-sop-entrypoint",
             "publicEntries": [
-                "repo-init"
+                "workbench-audit",
+                "workbench-project-setup"
             ],
-            "publicEntriesInferred": false,
+            "publicEntriesInferred": true,
             "detailPages": [
                 "00-overview",
                 "10-root-and-projects",
@@ -3027,10 +2908,6 @@
                 "32-trash"
             ],
             "implementers": [
-                {
-                    "skill": "repo-init",
-                    "role": "contributing"
-                },
                 {
                     "skill": "wiki-init",
                     "role": "contributing"
@@ -3052,13 +2929,14 @@
                 "memo-079-eleven-ecken",
                 "required-claude-md-sections-and-scripts"
             ],
-            "outOfScope": [],
+            "outOfScope": [
+                "repo-init"
+            ],
             "clusters": [
-                "repository",
                 "wiki",
                 "workbench"
             ],
-            "provenance": "601fc9a1eee8"
+            "provenance": "55d1b847daba"
         },
         {
             "family": "workbench",

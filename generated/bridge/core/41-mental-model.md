@@ -39,7 +39,7 @@ No grader assigned yet.
 - answered-question pair format
 - User Mental Model store as a primitive
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

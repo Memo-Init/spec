@@ -45,7 +45,7 @@ No grader assigned yet.
 - research-output-format
 - untrusted-web-content-as-data
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

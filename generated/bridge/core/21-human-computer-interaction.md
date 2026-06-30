@@ -42,7 +42,7 @@ Grading handled by `memo-goal-score-all`.
 
 — none —
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

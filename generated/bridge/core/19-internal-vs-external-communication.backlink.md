@@ -6,13 +6,7 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `git-commit` — contributing
 - `git-push` — contributing
 - `git-security` — contributing
-- `image-art-architecture` — contributing
 - `memo-req-runner` — contributing
-- `repo-docs-writing` — contributing
-- `repo-github-org` — contributing
-- `repo-issue` — contributing
-- `repo-quality` — contributing
-- `repo-readme` — contributing
 - `workbench-audit` — contributing
 - `workbench-persona-audit` — contributing
 

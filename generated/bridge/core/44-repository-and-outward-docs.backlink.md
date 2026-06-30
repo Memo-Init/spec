@@ -3,11 +3,6 @@
 
 The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
 
-- `repo-docs-writing` — primary
-- `repo-github-org` — primary
-- `repo-init` — primary
-- `repo-issue` — primary
-- `repo-quality` — contributing
-- `repo-readme` — primary
+- — none yet (nothing built against this chapter) —
 
 <!-- BRIDGE:IMPLEMENTED-BY END -->

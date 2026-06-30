@@ -5,7 +5,6 @@ The skills below implement this chapter (primary owner first). The full per-page
 
 - `git-push` — contributing
 - `git-security` — contributing
-- `image-pencil-playwright-diff` — primary
 - `memo-finalize` — contributing
 - `memo-phase-evaluate` — contributing
 - `memo-phase-execute` — contributing
@@ -19,8 +18,6 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `memo-req-template` — primary
 - `memo-rollout-evaluate` — contributing
 - `memo-rollout-generate` — contributing
-- `repo-github-org` — contributing
-- `repo-quality` — contributing
 - `specs-to-skills` — contributing
 - `wiki-lint` — contributing
 

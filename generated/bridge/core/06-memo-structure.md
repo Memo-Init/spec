@@ -47,7 +47,7 @@ No grader assigned yet.
 - Sub-memo lifecycle HARD-STOP
 - Triage table -> sub-memo fan-out + parent index
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
 — none —
 

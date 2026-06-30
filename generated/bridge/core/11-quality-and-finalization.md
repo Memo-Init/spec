@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [11-quality-and-finalization](./11-quality-and-finalization.md) |
-| Provenance | `f1e7f5cd3b1f` |
+| Provenance | `0c578c50fbda` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -41,7 +41,6 @@ This chapter is entered through the core SOP: [02-memo-sop-entrypoint](./02-memo
 | `memo-revision-consolidate` | contributing | Merges the last Full revision plus all subsequent Update revisions into a new Full revision |
 | `memo-rollout` | contributing | Orchestrator fuer den kompletten Rollout |
 | `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
-| `repo-quality` | contributing | Repository quality checklist for pre-push verification |
 | `workbench-persona-audit` | contributing | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
 
 ## 5. Grading assignment
@@ -64,10 +63,10 @@ Grading handled by `memo-fidelity-audit`.
 - Third-party token-tracking veto
 - YAGNI / minimal-code overlap not referenced
 
-## 7. Acknowledged out-of-scope
+## 7. Acknowledged internal tooling (out-of-scope)
 
-— none —
+- `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
 
 ## 8. Provenance
 
-Derived-record hash `f1e7f5cd3b1f` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `0c578c50fbda` over the skill-to-spec map. Regenerated on every build.
