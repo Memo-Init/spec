@@ -77,6 +77,18 @@ Because the generator is both a lever and a single point of failure, it MUST be 
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-phase-generate` — contributing
+- `memo-prd-generate` — contributing
+- `memo-req-template` — contributing
+- `memo-rollout-generate` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [15-prompt-generator.md](./15-prompt-generator.md) — the engine this chapter governs: the deterministic, hash-stable producer whose code stays untouched.

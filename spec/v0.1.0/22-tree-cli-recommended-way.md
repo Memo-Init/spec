@@ -153,6 +153,111 @@ How to build one, in short: **one folder per domain**, a branch per domain with 
 
 ---
 
+## Conformity Requirements
+
+The normative rules above are not only prose. The chapter's binding `MUST`s for a project-internal CLI — the reference being the `memo` command — are authored here **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](./35-memo-authoring.md)): each rule's `statement` faces generation (it shapes the prompt that builds a CLI leaf) and its `check` faces the finalization/push gate (it verifies a built leaf, ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`). The structured blocks below are the machine-readable source the requirement store is **harvested** from ([23-requirements.md](./23-requirements.md)); they make the memo-init CLI's own conformity the worked example of the requirement model.
+
+The result envelope is a hard yes/no conformity rule — its `check` is the whole story, so its `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-701",
+  "title": "memo CLI leaf returns the shared result envelope",
+  "statement": "Every leaf of the memo-init command tree MUST return the shared result envelope: a boolean `status`; on `status: false` an `error` stating what went wrong AND a separate machine-readable `fix` field carrying the concrete repair step (never prose mixed into `error`); on `status: true` the payload spread alongside `status`, with `error`/`fix` omitted.",
+  "scope": { "repos": ["core"], "categories": ["cli"], "tags": ["memo-cli", "cli-conformance"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Invoking any memo CLI leaf returns an object carrying a boolean `status`",
+      "On `status: false` the result carries both a non-empty `error` and a separate `fix` field",
+      "On `status: true` the result carries no `error` or `fix` key"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The `--describe` contract is verified by running the tool and parsing its output — a `tool`-kind check, again a hard yes/no rule (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-702",
+  "title": "memo CLI exposes a machine-readable --describe tree",
+  "statement": "The memo-init command tree MUST expose a stable `--describe` flag that emits machine-readable structured output (an object, not only prose); each leaf entry MUST carry `description`, the rendered `input` shape (field -> doc), the rendered `output` shape (field -> doc), and a call `example`.",
+  "scope": { "repos": ["core"], "categories": ["cli"], "tags": ["memo-cli", "cli-conformance"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "describe-structured-output",
+    "verify": [
+      "Run `memo <branch> --describe` and parse the result as a JSON object",
+      "Assert every leaf node carries description, input, output, and example"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Help-as-spec is a quality spectrum, not a binary — whether a leaf is re-implementable from its help alone is judged by a fresh-context evaluator, so this rule earns an object `grade`:
+
+```requirement
+{
+  "id": "REQ-703",
+  "title": "memo CLI help is robust enough to re-implement the leaf",
+  "statement": "Every memo-init leaf MUST define both an `input` and an `output` schema whose field descriptions encode the behaviour rules (what to do, what to avoid), not only the type, so the rendered help is robust enough to re-implement the leaf from the help alone.",
+  "scope": { "repos": ["core"], "categories": ["cli"], "tags": ["memo-cli", "cli-conformance"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer reads ONLY the leaf's `--describe` help (description + input/output field docs + example), with no access to source, and judges whether the leaf could be re-implemented from the help alone. PASS when the behaviour rules are present on both the input and output fields; BLOCKED when the help omits the behaviour rules; INCONCLUSIVE when the help could not be rendered.",
+    "verify": [
+      "Render the leaf help via --describe",
+      "Judge re-implementability from the help text only"
+    ]
+  },
+  "grade": { "dimension": "help-as-spec completeness", "weight": 100 }
+}
+```
+
+Capability discoverability is delegated to the spec-to-skill conformity check — a `skill`-kind check. A grade belongs here (discoverability completeness is scorable) but is not yet written, so the slot is the honest `todo`:
+
+```requirement
+{
+  "id": "REQ-704",
+  "title": "memo CLI capability inventory is discovered from the tool",
+  "statement": "The memo-init CLI's capability inventory MUST be discoverable from the tool itself via `--describe` (the single source of truth), never maintained as a second hand-written list elsewhere; adding a capability is adding a leaf, and the `--describe` rendering MUST pick it up without a separate registration list.",
+  "scope": { "repos": ["core"], "categories": ["cli"], "tags": ["memo-cli", "cli-conformance"] },
+  "severity": "warning",
+  "check": {
+    "kind": "skill",
+    "skill": "specs-to-skills",
+    "artifact": "specs-to-skills-verify-report",
+    "presence": "optional",
+    "verify": [
+      "Run specs-to-skills VERIFY for the CLI conformity area",
+      "Confirm the spec rule and the live CLI describe-tree agree on the capability inventory"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-goal-score` — contributing
+- `memo-maintenance-score` — contributing
+- `memo-plan-status` — contributing
+- `memo-plan-update-checkbox` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestration and state layer the tool tree is invoked from.

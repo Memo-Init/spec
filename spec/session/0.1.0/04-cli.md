@@ -133,6 +133,64 @@ A CLI conforms when:
 
 ---
 
+## Conformity Requirements
+
+The CLI doctrine's binding `MUST`s for the session family are authored here **prose-first**: each block's `statement` faces generation (it shapes how a session CLI leaf is built) and its `check` faces the finalization gate with a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. Both rules below are enforced by shipped session leaves, so they are **checkable now** and carry a hard `binary` grade. The exit-code mirror is referenced (not re-authored here) by the core CLI standard at [/specification/tree-cli-recommended-way/](/specification/tree-cli-recommended-way/).
+
+The result envelope is a hard yes/no conformity rule shared by every leaf, so its `check` is the whole story (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-988",
+  "title": "Every memo session leaf returns the shared result envelope",
+  "statement": "Every `memo session` leaf MUST return the shared result envelope: a boolean `status`; on `status:false` a non-empty `error` AND a separate machine-readable `fix` carrying the concrete repair step (never prose mixed into `error`); on `status:true` the payload spread alongside `status`, with `error`/`fix` omitted.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "cli-conformance"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Invoking any `memo session` leaf returns an object carrying a boolean status",
+      "On status:false the result carries both a non-empty error and a separate fix field",
+      "On status:true the result carries no error or fix key"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The `--describe` contract is verified by running the tool and parsing its output — a `tool`-kind check, again a hard yes/no rule (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-989",
+  "title": "--describe exposes the session branch as a structured tree",
+  "statement": "The `memo` command tree MUST expose the `session` branch through the machine-readable `--describe` output: each session leaf entry MUST carry a `description`, the rendered `input` shape (field -> doc), the rendered `output` shape (field -> doc), and a call `example`, so the session CLI is discovered from the tool itself, never from a hand-kept second list.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "cli-conformance"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "describe-structured-output",
+    "verify": [
+      "Run `memo session --describe` and parse the result as a structured object",
+      "Assert every session leaf entry carries description, input, output, and example"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-cli` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [workbench/20-cli.md](/workbench/cli/) — the workbench CLI convention and the registry as the single discovery source.

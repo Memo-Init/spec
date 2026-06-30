@@ -52,6 +52,16 @@ Naming this strategy makes the interleaving explicit and reviewable, rather than
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-init` — contributing
+- `memo-sub-init` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [03-input-paths.md](./03-input-paths.md) — the transcript type that opens a memo and where the strategy is first set.

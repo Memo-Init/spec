@@ -174,6 +174,69 @@ So it is **one registry, one signal scan, two timings**. The seed first edge is 
 
 ---
 
+## Conformity Requirements
+
+This chapter records the workbench-scoped CLI rules; the eight universal principles stay in the session doctrine and are not restated. The blocks below encode the workbench-specific `MUST`s prose-first — each `statement` faces how a CLI and its discovery source are built, each `check` faces the built tool. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+
+That the registry is the single, declared discovery source is a structural fact about the file:
+
+```requirement
+{
+  "id": "REQ-964",
+  "title": "registry.json is the single deterministic discovery source",
+  "statement": "An agent MUST discover the workbench's available CLIs, skills, and custom folders deterministically by reading `.workbench/registry.json`, and MUST NOT discover them by reading a `CLAUDE.md` or inferring them from the filesystem shape. The registry MUST carry the discovery arrays (`skills[]`, `addons[]`) and the precondition table (`requirements[]`) in one file, so one source answers both what exists and what must run first.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["cli", "registry", "discovery"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "`.workbench/registry.json` exists and parses",
+      "It carries `skills[]`, `addons[]`, and `requirements[]`",
+      "Discovery does not depend on `CLAUDE.md` prose or a filesystem walk"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether a CLI's command tree is genuinely self-describing is a quality spectrum a reviewer judges, so this rule earns an object `grade`:
+
+```requirement
+{
+  "id": "REQ-965",
+  "title": "A workbench CLI is a self-describing Branch/Leaf tree",
+  "statement": "A workbench CLI SHOULD be structured as a Branch/Leaf command tree: branches are grouping nodes that carry no behaviour, and each leaf is an executable command with typed `input` and `output` whose field descriptions encode the leaf's behaviour, so the tree is discoverable and re-implementable from its types alone. Making a CLI globally callable (for example via `npm link`) is only a registration mechanism and MUST NOT be conflated with this design contract or with registry discoverability.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["cli", "branch-leaf", "self-describing"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer walks a workbench CLI's command tree. PASS when branches group and every leaf carries typed input/output whose field docs encode behaviour; BLOCKED when leaves lack typed in/out or rely on out-of-band prose to explain themselves; INCONCLUSIVE when the tree cannot be inspected.",
+    "verify": [
+      "Inspect the command tree's branches and leaves",
+      "Judge whether each leaf is re-implementable from its typed in/out alone"
+    ]
+  },
+  "grade": { "dimension": "self-describing completeness", "weight": 100 }
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-addons` — contributing
+- `workbench-cli` — primary
+- `workbench-config` — contributing
+- `workbench-environment-scripts` — contributing
+- `workbench-hooks-contract` — contributing
+- `workbench-skills-scope` — contributing
+- `workbench-validation` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.

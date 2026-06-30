@@ -22,6 +22,43 @@ The authoritative statement is in [session/15-addons.md](/session/addons/): the 
 
 ---
 
+## Conformity Requirements
+
+The Add-on *model* is owned by the session glossary; this page records its project-scoped application, so its one conformity rule is about the folder reservation. The block below encodes that rule prose-first — its `statement` faces how an Add-on integrates into a project, its `check` faces the integrated result. It is the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+
+Whether a custom folder reserves only its small declared area, with bulk data project-bound, is judged against the integration:
+
+```requirement
+{
+  "id": "REQ-973",
+  "title": "A custom folder reserves only its small declared area",
+  "statement": "A custom-folder (Add-on) is a project-local consequence of a globally-installed tool, not a standalone project folder. It MUST reserve only a small declared area inside the `.workbench/` descriptor and place its bulk data in its own project-bound root (for example the memo store), rather than spreading into the project's registered folders. The memo system is an Add-on like the others — a recommended, default-on custom folder, not a conceptual special case.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["addons", "custom-folder"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer inspects how an Add-on integrates into a project. PASS when it declares a small area in `.workbench/` and keeps its bulk data in its own project-bound root; BLOCKED when it spreads into registered folders or reserves area it does not declare; INCONCLUSIVE when the project carries no Add-on.",
+    "verify": [
+      "Locate the Add-on's `.workbench/` declaration and its data root",
+      "Confirm it reserves only the declared area and binds its data to its own root"
+    ]
+  },
+  "grade": { "dimension": "reservation discipline", "weight": 100 }
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-addons` — primary
+- `workbench-skills-scope` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [session/15-addons.md](/session/addons/) — the Add-on model: definition, data boundaries, the per-Add-on SOP, the weight landscape, standard entry points, and the CLI/skill split.

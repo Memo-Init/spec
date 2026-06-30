@@ -6,7 +6,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/17-git-workflow-and-ids.md."
@@ -145,6 +145,161 @@ A **commit is not a push.** A commit is backup and an orientation marker for a f
 
 ---
 
+## Conformity Requirements
+
+The workflow and ID rules above are not only prose. The chapter's binding `MUST`s are authored here **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](/specification/memo-authoring/)): each rule's `statement` faces generation and its `check` faces the commit/merge gate, ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. These checks are deterministic — they verify a subject-line shape, an ID-segment match, or a derivation outcome — and the structured blocks below are the machine-readable source the requirement store is **harvested** from ([23-requirements.md](/specification/requirements/)).
+
+The canonical commit subject is a fixed bracket-prefix shape, and its 50-character budget covers the whole first line — a hard yes/no rule, so `binary`:
+
+```requirement
+{
+  "id": "REQ-888",
+  "title": "Commit subject follows the canonical bracket-prefix form within 50 characters",
+  "statement": "A commit subject (first line) MUST follow the canonical bracket-prefix form `[PREFIX] M{NNN}-{PP}-{RR} {Text} #{Issue}` and MUST be ≤ 50 characters across the entire line (prefix, ID, text, and issue reference all counted, none exempt); detail that does not fit goes in the body after a blank line, which has no length limit.",
+  "scope": { "repos": [], "categories": ["git"], "tags": ["git-workflow", "commit-message"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The subject line matches the bracket-prefix + memo-ID pattern `[PREFIX] M{NNN}-{PP}-{RR} ... `",
+      "The subject line length is ≤ 50 characters including the prefix and any issue reference",
+      "Overflow detail, if any, lives in the body separated from the subject by a blank line"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether a commit ties to an issue or to a memo-ID depends on the repo's facing — and it is always exactly one of the two (Rule C1):
+
+```requirement
+{
+  "id": "REQ-889",
+  "title": "Orientation reference follows repo facing (Rule C1)",
+  "statement": "Whether a commit ties to a GitHub issue depends on the repository's facing (Rule C1): a published (outward) repo MUST create the phase issue and reference it (`#{N}`) on every commit, while a local-only (never-pushed) repo MUST NOT create an outward-facing issue and instead uses the memo-ID as its orientation reference — a unit of work carries an issue reference or a memo-ID-only reference according to its repo type, never an issue in a never-published repo and never a published repo whose commits skip the issue.",
+  "scope": { "repos": [], "categories": ["git"], "tags": ["git-workflow", "issue-reference"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "An outward repo's commit references its phase issue (`#{N}`)",
+      "A local-only repo created no GitHub issue and its commits orient by memo-ID",
+      "No never-published repo carries an outward-facing issue"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A question reference is searchable only if it follows the fixed ID shape and stays out of published text — never free prose:
+
+```requirement
+{
+  "id": "REQ-890",
+  "title": "Question references use the canonical ID and stay inward-facing",
+  "statement": "A question reference MUST use one of the two canonical forms — `M{NNN}-F{N}` or the PRD-scoped `M{NNN}-P{PP}-PRD{RR}-F{N}` (both matched by `M\\d{3}(-P\\d+)?(-PRD\\d+)?-F\\d+`) — never free prose such as 'question 4 = C', and being inward-facing it MUST NOT appear in any outward artifact (issue, README, commit message, published text).",
+  "scope": { "repos": [], "categories": ["git"], "tags": ["git-workflow", "question-id"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every question reference matches the canonical regex `M\\d{3}(-P\\d+)?(-PRD\\d+)?-F\\d+`",
+      "No question reference is written in free prose",
+      "No question ID appears in an outward-facing artifact"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A branch whose number disagrees with the memo it claims to implement must never be merged; the gate compares against the single source-of-truth leaf:
+
+```requirement
+{
+  "id": "REQ-891",
+  "title": "Pre-merge gate blocks a wrong-numbered branch",
+  "statement": "A pre-merge gate MUST compare the working branch against the value produced by the `memo git branch-name` leaf for the memo being landed and MUST block the merge when the branch's memo-number segment does not equal the memo-ID's number; a wrong-numbered branch MUST NOT be merged.",
+  "scope": { "repos": [], "categories": ["git"], "tags": ["git-workflow", "branch-number-gate"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "branch-name-compare",
+    "verify": [
+      "Run `memo git branch-name` for the memo being landed",
+      "Assert the working branch's number segment equals the produced name's number",
+      "Block the merge on a number mismatch"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The branch name is derived, never retyped, and the derivation fails loudly rather than inventing a number:
+
+```requirement
+{
+  "id": "REQ-892",
+  "title": "Branch-name derivation is single-source and fail-loud",
+  "statement": "The canonical branch name MUST be derived by the single `memo git branch-name` leaf (reading the prefix from project config and the `{NNN}-{slug}` id from the memo directory), and the derivation MUST fail loudly — a clear error plus a repair hint — when the prefix is missing/empty or the memo cannot be resolved to an id; it MUST NOT emit a branch name built from a guessed or defaulted prefix or number.",
+  "scope": { "repos": [], "categories": ["git"], "tags": ["git-workflow", "branch-naming"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "branch-name",
+    "verify": [
+      "Invoke the leaf with a missing/empty prefix and assert it errors rather than emitting a name",
+      "Invoke with an unresolvable memo and assert a fail-loud error carrying a repair hint",
+      "Assert no guessed or defaulted number is ever emitted"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The unit of a pull request is the affected repo, not the memo, and no single repo's PR is merged ahead of the others without a recorded reason:
+
+```requirement
+{
+  "id": "REQ-893",
+  "title": "One pull request per affected repo, no isolated early merge",
+  "statement": "A memo that touches multiple repositories MUST open one pull request per affected repository (not one per memo), each on its own canonical `<PREFIX>-{NNN}-{slug}` branch and carrying the memo-ID prefix in its title; the orchestrator MUST NOT merge one repo's PR in isolation before the other affected repos are ready unless the early merge is recorded in the rollout log.",
+  "scope": { "repos": [], "categories": ["git"], "tags": ["git-workflow", "pull-request"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The number of pull requests equals the number of affected repositories",
+      "Each PR sits on the canonical branch for its repo and carries the memo-ID prefix in its title",
+      "No affected repo's PR is merged in isolation without a recorded deviation in the rollout log"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `git-commit` — primary
+- `git-merge-strategy` — contributing
+- `git-push` — contributing
+- `memo-phase-execute` — contributing
+- `memo-plan-execute` — contributing
+- `memo-plan-stop` — contributing
+- `memo-plan-update-checkbox` — contributing
+- `memo-prd-generate` — contributing
+- `memo-rollout-execute` — contributing
+- `repo-issue` — contributing
+- `workbench-modes` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the deterministic git flow, worktree cleanup, `git-security` gate, and issue rules.

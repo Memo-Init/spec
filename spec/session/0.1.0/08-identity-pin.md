@@ -84,6 +84,63 @@ Hardening the soft-guard into a **hard block** (deny a `cd` out of the pinned ro
 
 ---
 
+## Conformity Requirements
+
+The pin invariant and the cd-soft-guard are authored here **prose-first**: each block's `statement` faces generation (it shapes how the SessionStart-Pin and the Bash soft-guard are built) and its `check` faces the finalization gate with a ternary verdict. Both targets — the SessionStart-Pin hook and the `Bash` soft-guard — are **spec'd-but-not-yet-armed-live**, so both rules carry the honest `grade: todo`.
+
+Whether identity is pinned once and read from the pin (not a `cd`-mutated `cwd`) is a process judgment best made by a fresh-context evaluator (REQ-SS-PIN / REQ-SS-PINREAD):
+
+```requirement
+{
+  "id": "REQ-994",
+  "title": "Session identity is pinned at SessionStart and read from the pin",
+  "statement": "The session identity (the global `sessionId`, the resolved root, and any per-namespace ids under `options`) MUST be resolved once at SessionStart and pinned to a session-stable source, and every PreToolUse hook MUST read that pinned identity, never a `cd`-mutated `cwd`. The identity MUST NOT drift over the session lifetime, so an agent that wanders into a sister directory still gates against the original session.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "identity-pin", "no-drift"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer confirms identity is resolved once at SessionStart and that every hook reads the pinned value rather than re-deriving from the live cwd. PASS when the pin is the single anchor and no hook re-resolves from cwd; BLOCKED when a hook re-derives identity/root from a cd-mutated cwd; INCONCLUSIVE when the pin source could not be established.",
+    "verify": [
+      "Inspect where each hook reads identity/root from",
+      "Confirm the source is the SessionStart pin, not the live cwd"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+The cd-soft-guard WARNs but never blocks and never re-pins (REQ-SS-CDGUARD); the guard is not yet armed live, so the grade is `todo`:
+
+```requirement
+{
+  "id": "REQ-995",
+  "title": "The cd-soft-guard warns, never blocks, and never re-pins",
+  "statement": "A `Bash` PreToolUse soft-guard MUST WARN — never block — when a `cd` would leave the pinned root, emitting one stderr note and continuing (exit 0), and it MUST NEVER re-pin identity on a `cd`. Leaving root is a noisy, self-announcing event, not a hard stop and not a source of drift.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "identity-pin", "cd-guard"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A cd that leaves the pinned root produces a WARN + continue (exit 0 with a stderr note), never a block",
+      "A cd inside the pinned root is a silent ALLOW",
+      "The guard never changes the pinned identity on a cd"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-identity-pin` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [01-genesis-root.md](./01-genesis-root.md) — the genesis root that establishes the identity this chapter pins.

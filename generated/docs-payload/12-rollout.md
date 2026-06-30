@@ -6,7 +6,7 @@ spec_file: "12-rollout.md"
 order: 12
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/12-rollout.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/12-rollout.md."
@@ -104,6 +104,22 @@ The two files are deliberately separate and **MUST NOT** be conflated:
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `image-pencil-playwright-diff` — contributing
+- `memo-fidelity-audit` — contributing
+- `memo-finalize` — contributing
+- `memo-phase-execute` — contributing
+- `memo-rollout` — primary
+- `memo-rollout-evaluate` — primary
+- `memo-rollout-execute` — primary
+- `memo-sop` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [13-orchestration.md](/specification/orchestration/) — the orchestrator, agent team, state files, crash recovery, and Tasks that execute the rollout.

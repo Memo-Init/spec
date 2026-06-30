@@ -6,7 +6,7 @@ spec_file: "41-project-architecture.md"
 order: 41
 section: "Workbench"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/workbench/0.1.0/41-project-architecture.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/41-project-architecture.md."
@@ -106,6 +106,67 @@ The architecture is stored as an **OKF knowledge bundle** ([13-knowledge-format-
 
 ---
 
+## Conformity Requirements
+
+The architecture is measured, not assumed, so its presence and its edge provenance are checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how an architecture bundle is authored, each `check` faces the bundle and the wiki health check. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+
+Presence is an advisory expectation — absence is an accepted state for a repo-light project — so this rule is `info`:
+
+```requirement
+{
+  "id": "REQ-980",
+  "title": "A project's architecture is present and findable (advisory)",
+  "statement": "A project SHOULD store its architecture as a bundle under `context/architecture-okf/`, findable through a single entry point — the wiki for a human or agent, the architecture resolver for deterministic code. This is advisory, not a blocker: a project with no repositories has a trivial or empty architecture, and a research-heavy foreign project with no bundle is an accepted state. The wiki health check flags complete absence as a non-blocking warning when a memo starts.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["architecture", "presence", "wiki-lint"] },
+  "severity": "info",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "An architecture bundle exists under `context/architecture-okf/`, or its absence is reported as a non-blocking warning",
+      "The bundle is reachable through the single architecture entry point"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+That each edge carries a provenance commit so drift is a count is a structural fact about the bundle:
+
+```requirement
+{
+  "id": "REQ-981",
+  "title": "Architecture edges carry a declared kind and a provenance commit",
+  "statement": "Each edge in the architecture bundle MUST declare its kind — `set` (a real, justified edge), `justified-omit` (deliberately no edge, with a reason), or `blocked` — and MUST carry a provenance commit, so drift from the declared edge is a count (`git log <pin>..HEAD`), not a guess. Each node MUST pin its sources to `repos/<name> @ <commit>`. The bundle carries the structure; the score is taken against it separately.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["architecture", "provenance", "maintenance"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each edge declares one of `set`, `justified-omit`, or `blocked`",
+      "Each edge carries a provenance commit",
+      "Each node pins its sources to a `repos/<name> @ <commit>`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-maintenance-score` — contributing
+- `memo-maintenance-score-all` — contributing
+- `memo-maintenance-verify` — contributing
+- `wiki-lint` — contributing
+- `workbench-audit` — contributing
+- `workbench-config` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [10-root-and-projects.md](/specification/root-and-projects/) — the two-level model the core diagram depicts.

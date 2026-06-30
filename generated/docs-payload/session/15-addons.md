@@ -6,7 +6,7 @@ spec_file: "15-addons.md"
 order: 15
 section: "Session"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/session/0.1.0/15-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/15-addons.md."
@@ -88,6 +88,15 @@ An Add-on is reachable two ways, with a clear division of labor:
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-addons` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [00-overview.md](/specification/overview/) — the session glossary that owns the term **Add-on**.

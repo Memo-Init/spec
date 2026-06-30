@@ -155,6 +155,63 @@ This chapter is spec-first: it **describes** the migration as the intended one-t
 
 ---
 
+## Conformity Requirements
+
+The cascade's binding `MUST`s are authored here **prose-first**: each block's `statement` faces generation (it shapes how the config and its loader are built) and its `check` faces the finalization gate with a ternary verdict. Today only the `flag > env > null` identity resolution ships (`memo session resolve`); the `.session/config.json` file tier and the `config.d/*` merge loader are the spec'd **target**, so both rules below carry the honest `grade: todo`.
+
+The resolution precedence and the single entry point are the cascade's load-bearing contract; the file tier and loader are not yet shipped, so the grade is `todo`:
+
+```requirement
+{
+  "id": "REQ-990",
+  "title": "The config cascade resolves deterministically, flag > env > file",
+  "statement": "Session resolution MUST be deterministic with precedence `flag > env > file`, and `.session/config.json` MUST be the single entry point the genesis tier resolves. An absent value resolves to `null` with an explicit source (no silent default), and a more-specific tier MUST NOT raise the resolved trust level (monotonicity).",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "config-cascade", "precedence"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Re-resolving the same inputs yields the same result (deterministic)",
+      "A flag value overrides an env value, which overrides the file value; an absent value resolves to null with source 'none'",
+      "A more-specific tier cannot raise the resolved session trust level"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+The two-structures-two-merge-rules contract guards the classic cascade bug (conflating override-scalars with merge-collections); the merge loader is not yet shipped, so the grade is `todo`:
+
+```requirement
+{
+  "id": "REQ-991",
+  "title": "config.d fragments merge by per-concern semantics",
+  "statement": "The cascade MUST merge `config.d/*.json` fragments by their declared semantics: collection concerns are list-unions (`sops[]` by `namespace`, `requirements[]` and `assertions[]` by `id`), while scalar concerns (identity, trust level) are resolved-not-cascaded. Conflating an override-scalar with a merge-collection is forbidden, and a namespace collision is an error, never a silent concatenation.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "config-cascade", "merge"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "sops[] merges as a list-union keyed by namespace; requirements[] and assertions[] merge as list-unions keyed by id",
+      "Identity and trust level are resolved once and not overlaid by a more-specific tier",
+      "A duplicate namespace across fragments is reported as a collision, not silently concatenated"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-config-cascade` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [01-genesis-root.md](./01-genesis-root.md) — the tier model, identity, and the security level this cascade keeps resolved-not-overridable.

@@ -6,7 +6,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/07-revisions-and-questions.md."
@@ -192,6 +192,125 @@ The gate is **auto-iterating within a bound**: if it finds feedback points that 
 
 ---
 
+## Conformity Requirements
+
+The revision and question-format rules above are authored **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](/specification/memo-authoring/) and [23-requirements.md](/specification/requirements/)): each rule's `statement` faces generation and its `check` faces the finalization/push gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The blocks below are the machine-readable source the requirement store is **harvested** from. The lifts here are the parse-and-structure rules — a section being present, a question parsing, a file never overwritten — each a hard rule with a `binary` grade.
+
+```requirement
+{
+  "id": "REQ-820",
+  "title": "Mandatory revision areas are present",
+  "statement": "A revision file (`REV-XX.md`) MUST contain all three structural areas — the `## Preamble`, the tagged chapter body, and the machine-readable `## Open Questions` / `## Answered Questions` areas — and the first revision MUST carry every mandatory section even when empty. The question areas are the strict AI-to-software handover and are parsed, so their presence is structural, not optional.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["revisions", "memo-structure"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "REV-XX.md contains a Preamble area, a tagged chapter body, and Open/Answered Questions areas",
+      "REV-01 carries every mandatory section even when the section is empty"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-821",
+  "title": "Open questions are authored in the parsable F-format",
+  "statement": "Each open question MUST be authored in the parsable question format: an `### F{N} — Title` H3 block with `Background`, `Question`, and `AI Recommendation` field lines, and options written as bare discrete lines (`A)`, `B)`, …). A bold option marker (`**A)**`) does NOT parse and MUST NOT be used, and free-floating bare letter tokens in question prose MUST be avoided, since either produces a question that reaches the render gate with zero options.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["revisions", "question-format"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo-view",
+    "tactic": "question-format-parse",
+    "verify": [
+      "Parse the revision's question area with the viewer's question parser",
+      "Assert every authored question yields a non-empty option set"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-822",
+  "title": "questions-json is the single authored source for open questions",
+  "statement": "When a `questions-json` block is present it is the single authored source for the open questions: the human-readable markdown is generated from it deterministically and is not hand-written, so the two cannot drift. An open question therefore carries no `### F{N}` mirror — it lives in the json block only — and each option's `kind` MUST be one of the shared render-contract values; an invalid `kind` is rejected fail-loud when the revision is registered, never silently dropped on the reader's screen.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["revisions", "question-format", "questions-json"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo-view",
+    "tactic": "questions-json-authority",
+    "verify": [
+      "When a questions-json block exists, confirm the markdown question area is generated from it and not independently authored",
+      "Assert an option with an invalid kind is rejected at revision registration rather than silently dropped"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-823",
+  "title": "Revisions are append-only",
+  "statement": "A revision MUST NOT be edited in place: every change produces a new file — `REV-XX.md` (Full) or `REV-XX-update.md` (Update), zero-padded two digits — and the first revision MUST be a Full `REV-01.md` with no suffix. An existing revision file is never overwritten; the full on-disk history of states is what makes a contaminated revision recoverable by a clean fresh-context rewrite.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["revisions", "append-only"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No existing revision file is modified in place; each change adds a new REV-XX.md or REV-XX-update.md",
+      "The first revision is a Full REV-01.md with no suffix"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-824",
+  "title": "A revision-prepare artefact precedes every revision",
+  "statement": "Before each revision is written, a preparation file `REV-{NN}-prepare.md` MUST be produced as a first-class on-disk artefact documenting the agent's interpretation of the feedback, the planned per-chapter changes, and any revision blockers. The prepare file exists before the `REV-XX.md` it plans, so the revision is a deliberate execution of a documented intention rather than an improvised generation.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["revisions", "revision-prepare"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "For each revision REV-XX.md a corresponding REV-XX-prepare.md exists on disk",
+      "The prepare file records the feedback interpretation, the planned per-chapter changes, and any blockers"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-balance` — contributing
+- `memo-coherence` — contributing
+- `memo-evidence` — contributing
+- `memo-fidelity-audit` — contributing
+- `memo-init` — contributing
+- `memo-mental-model-derive` — contributing
+- `memo-references` — contributing
+- `memo-revision-consolidate` — contributing
+- `memo-revision-evaluate` — primary
+- `memo-revision-execute` — primary
+- `memo-revision-generate` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [04-input-pipeline.md](/specification/input-pipeline/) — input processing that runs before each revision is generated.

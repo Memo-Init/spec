@@ -6,7 +6,7 @@ spec_file: "44-repository-and-outward-docs.md"
 order: 44
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/44-repository-and-outward-docs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/44-repository-and-outward-docs.md."
@@ -152,6 +152,488 @@ The secrets-scan rule's distinctive point is that scanners match on **format and
 
 ---
 
+## Conformity Requirements
+
+The conventions above are normative, and the binding `MUST`s of each section are authored here **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](/specification/memo-authoring/)): each rule's `statement` faces generation — it shapes the prompt that scaffolds a repository, fills a README block, or writes an issue — and its `check` faces the pre-push gate, where it verifies a real artifact with a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The structured blocks below are the machine-readable source the requirement store is **harvested** from ([23-requirements.md](/specification/requirements/)); the prose stays the document, and the blocks are its funnel tip. Most are hard structural yes/no rules whose `check` is the whole story (`grade: binary`); the few that judge a quality spectrum — method-doc completeness, diagram restraint, issue minimalism, prose readability — carry an object `grade`, and one carries the honest `todo` where a grade belongs but is not yet calibrated.
+
+### Scaffolding
+
+A scaffolded repository is born with the standard folder layout and the baseline root files, which a script can assert by presence — a hard structural rule, so `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-710",
+  "title": "Repository carries the standard layout and baseline files",
+  "statement": "A scaffolded repository MUST carry the standard folder layout — source under `src/`, tests under `tests/` split into unit, integration, and helper areas, and a CI workflow under `.github/workflows/` — together with the baseline root files `package.json`, `.gitignore`, `LICENSE`, and `README.md`.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["scaffolding"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The directories `src/`, `tests/`, and `.github/workflows/` all exist",
+      "The root files `package.json`, `.gitignore`, `LICENSE`, and `README.md` all exist",
+      "The `tests/` root is split into unit, integration, and helper areas"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The module manifest declares ES-module mode and the test scripts the CI workflow invokes; both are read directly from `package.json`, a hard yes/no:
+
+```requirement
+{
+  "id": "REQ-711",
+  "title": "package.json declares ES modules and the CI test scripts",
+  "statement": "The repository's `package.json` MUST declare `\"type\": \"module\"` for Node ES modules and define the test scripts the CI workflow invokes (a `test` script plus the coverage script the test-on-push workflow runs), so the workflow references them by name rather than guessing.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["scaffolding"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "`package.json` carries `type` set to `module`",
+      "`package.json` `scripts` defines a `test` script and the coverage script the CI workflow invokes"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The license is a recorded decision, present from the first commit and naming a real license rather than defaulting by omission — a structural rule the `LICENSE` file proves:
+
+```requirement
+{
+  "id": "REQ-712",
+  "title": "A conscious LICENSE is present from the first commit",
+  "statement": "A `LICENSE` file MUST be present from the first commit and name a deliberately chosen license (a permissive license, a patent-granting one, a simplified variant, or a proprietary declaration); choosing a license by omission is forbidden.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["scaffolding"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A `LICENSE` file exists at the repository root",
+      "The `LICENSE` file names a recognized license rather than an empty placeholder"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The ignore file keeps dependencies and real environment files out of history — a security-relevant baseline whose absence is a hard block:
+
+```requirement
+{
+  "id": "REQ-713",
+  "title": ".gitignore excludes dependencies and real environment files",
+  "statement": "The repository's `.gitignore` MUST exclude installed dependencies, coverage output, OS and IDE cruft, and every environment file except a dummy example, so that a real environment file is never committed.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["scaffolding"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "`.gitignore` excludes the dependency directory and coverage output",
+      "`.gitignore` excludes every `.env` file except the dummy example",
+      "No real (non-example) environment file is tracked in the repository"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The history starts in the fixed three-step bootstrap sequence so it reads legibly rather than as one opaque import; this is a presentation nicety on the commit graph, so it gates as a `warning`:
+
+```requirement
+{
+  "id": "REQ-714",
+  "title": "Repository history opens with the three-step bootstrap sequence",
+  "statement": "A repository's first three commits MUST follow the bootstrap sequence — initialize the repository (`.gitignore`, `LICENSE`, `package.json`), then add the project structure (`src/`, `tests/`, the CI workflow), then add the first feature with a basic test — rather than a single opaque initial import.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["scaffolding"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The repository's first three commits correspond to initialize, add-structure, and add-first-feature in that order"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The CI workflow carries the stable, predictable name other tooling references, and it runs the suite with coverage on a current Node runtime — read from the workflow file, a hard yes/no:
+
+```requirement
+{
+  "id": "REQ-715",
+  "title": "A test-on-push CI workflow exists under the stable name",
+  "statement": "The repository MUST carry a test-on-push CI workflow under `.github/workflows/` with the stable, predictable filename that the org-profile generator references, and the workflow MUST run the test suite with coverage on the supported Node major version.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["scaffolding", "ci"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A workflow file with the stable test-on-push filename exists under `.github/workflows/`",
+      "The workflow pins the supported Node major version and runs the suite with coverage"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+### README Structure
+
+A README is authored to the fixed block order so a reader meets the same sequence everywhere; the presence of the required blocks is a structural rule, gating as a `warning` because a thin README is a presentation defect, not a functional one:
+
+```requirement
+{
+  "id": "REQ-716",
+  "title": "README follows the fixed block order",
+  "statement": "Every code-module README MUST carry the fixed block order — badges, headline, description, an optional architecture diagram, quickstart, features, table of contents, methods, contribution, and license — so a reader meets the same sequence in every repository and a generator can fill the blocks predictably.",
+  "scope": { "repos": [], "categories": ["readme"], "tags": ["readme"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The README contains a headline, a description, a quickstart, a features block, a table of contents, a methods section, a contribution block, and a license block",
+      "The blocks appear in the fixed top-to-bottom order"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The badge row reflects live status and points the CI badge at the test-on-push workflow rather than any release workflow, which is checkable by reading the README markup:
+
+```requirement
+{
+  "id": "REQ-717",
+  "title": "README badges reflect status and reference the test-on-push workflow",
+  "statement": "The README badges block MUST carry an at-a-glance status row — CI result, coverage, and contribution stance — and its CI badge MUST reference the test-on-push workflow, never a release-only workflow.",
+  "scope": { "repos": [], "categories": ["readme"], "tags": ["readme"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The README opens with a badges block carrying CI, coverage, and contribution badges",
+      "The CI badge URL references the test-on-push workflow filename, not a release workflow"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether every public method is documented to the fixed input/output shape is a completeness spectrum a fresh-context reviewer judges, so this rule earns an object `grade`:
+
+```requirement
+{
+  "id": "REQ-718",
+  "title": "README documents each public method in the input/output shape",
+  "statement": "The README methods section MUST document each public method in the fixed input/output shape — a heading naming the method, its purpose, the call signature, an input table of parameters with the canonical four columns (key, type, description, required), a minimal example, and a returns block that becomes an output table when the result is a structured object.",
+  "scope": { "repos": [], "categories": ["readme"], "tags": ["readme", "methods"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer compares the public methods of the module against the README methods section. PASS when every public method has an entry carrying purpose, signature, a four-column input table, an example, and a returns block; BLOCKED when a public method is undocumented or an entry omits the input or returns shape; INCONCLUSIVE when the method surface could not be enumerated.",
+    "verify": [
+      "Enumerate the module's public methods",
+      "Confirm each has a README entry in the input/output shape with the four-column input table"
+    ]
+  },
+  "grade": { "dimension": "method-doc completeness", "weight": 100 }
+}
+```
+
+A diagram is reserved for a real relationship and stays small and fully labeled; whether a given diagram earns its place is a judgment, so this rule carries an object `grade`:
+
+```requirement
+{
+  "id": "REQ-719",
+  "title": "README architecture diagrams are restrained and fully labeled",
+  "statement": "A README diagram MUST be reserved for a genuine architecture, data-flow, process, or module relationship — never forced onto a trivial two-component link or onto terminal output — and it MUST stay small enough to read at a glance, in a fenced block, with every node and edge labeled and a one-sentence lead-in stating what it shows.",
+  "scope": { "repos": [], "categories": ["diagram"], "tags": ["readme", "diagram"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer reads each README diagram. PASS when the diagram depicts a non-trivial relationship, is fenced, fits at a glance with every node and edge labeled, and is introduced by a one-sentence lead-in; BLOCKED when it diagrams a trivial link or terminal output, leaves nodes or edges unlabeled, or grows past a glance; INCONCLUSIVE when no diagram is present.",
+    "verify": [
+      "Locate each diagram in the README",
+      "Judge whether it depicts a real relationship and is small, fenced, labeled, and introduced"
+    ]
+  },
+  "grade": { "dimension": "diagram restraint", "weight": 100 }
+}
+```
+
+### Org and User Profile
+
+The org-profile README is the generator's output and is regenerated on push, so a hand-edit is overwritten — the invariant is that it is never edited directly, a hard structural rule:
+
+```requirement
+{
+  "id": "REQ-720",
+  "title": "The profile README is generated output, never hand-edited",
+  "statement": "An organization or user profile README MUST be the generator's output, regenerated on push — it MUST NOT be edited by hand, because a manual edit is overwritten on the next run; only the configuration and the template are authored directly.",
+  "scope": { "repos": [], "categories": ["org-profile"], "tags": ["profile"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The generated profile README is produced by the generator from the configuration and template",
+      "A CI action re-runs the generator on push so a hand-edit cannot survive"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The generation mechanism is a tracked configuration plus a fixed template plus a generator plus the CI action that re-runs it — all four must be present for the page to stay current:
+
+```requirement
+{
+  "id": "REQ-721",
+  "title": "The profile generation inputs are all present",
+  "statement": "A profile repository MUST carry the full generation mechanism — a tracked configuration file declaring the grouped status tables, a fixed template with named placeholders, the generator that reads both and writes the profile README, and the CI action that re-runs the generator on push — so the published page stays current without manual editing.",
+  "scope": { "repos": [], "categories": ["org-profile"], "tags": ["profile"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A tracked configuration file declares the grouped status tables",
+      "A template with named placeholders and a generator that consumes both are present",
+      "A CI action re-runs the generator on push"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Each status table draws its badges from the repository it references, so every configured workflow path must match a real workflow filename — a cross-file structural assertion:
+
+```requirement
+{
+  "id": "REQ-722",
+  "title": "Profile workflow references match a real workflow filename",
+  "statement": "Each profile status-table entry's referenced workflow path MUST exactly match the filename of an existing workflow under that repository's `.github/workflows/`, so the rendered badge resolves rather than pointing at a missing workflow.",
+  "scope": { "repos": [], "categories": ["org-profile"], "tags": ["profile"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every workflow path declared in the profile configuration matches an existing workflow filename in the referenced repository"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+### Issue Management
+
+An opened issue carries the fixed content shape — its classification plus problem, reproduction, expected-versus-actual, and context — which a reader of the issue body can confirm:
+
+```requirement
+{
+  "id": "REQ-723",
+  "title": "An issue carries its classification and the fixed content shape",
+  "statement": "Every issue MUST carry its classification level (blocker, presentation, or polish) and the fixed content shape — the problem, the reproduction steps, the expected-versus-actual pair, and the context a reader needs to act (affected area, repository, branch, and a proof image for a visual defect).",
+  "scope": { "repos": [], "categories": ["issue"], "tags": ["issue"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The issue states a classification level",
+      "The issue body carries problem, reproduction, expected-versus-actual, and context"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether an issue stays outward-minimal — stating the defect without narrating the internal working steps that led to it — is a register judgment a reviewer makes, so this rule earns an object `grade`:
+
+```requirement
+{
+  "id": "REQ-724",
+  "title": "An issue is outward-minimal and does not narrate internal process",
+  "statement": "An issue MUST stay outward-minimal: it states the defect and the context a stranger needs, and it MUST NOT narrate the internal working steps that produced it, since an issue is an outward-facing artifact a stranger reads.",
+  "scope": { "repos": [], "categories": ["issue"], "tags": ["issue"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer reads the issue as an outsider. PASS when the issue holds only the defect, reproduction, expected-versus-actual, and acting context; BLOCKED when it narrates internal working steps or insider process; INCONCLUSIVE when the issue body could not be read.",
+    "verify": [
+      "Read the issue body and comments as an outsider",
+      "Judge whether any internal process narration is present"
+    ]
+  },
+  "grade": { "dimension": "issue minimalism", "weight": 100 }
+}
+```
+
+A commit references its issue so the published trail threads together, and the granularity is coarse by default; the presence of the reference is checkable on the commit, while the exact identifier mapping stays with the git area:
+
+```requirement
+{
+  "id": "REQ-725",
+  "title": "A commit references its issue",
+  "statement": "A commit MUST carry a reference to the issue it belongs to, so that from a commit a reader reaches the issue and a closing keyword can let the merge close it; the default granularity is one issue per phase, keeping the outward surface small.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["issue", "commit"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each commit message carries a reference to its issue",
+      "The issue granularity is coarse (about one issue per phase, not one per change)"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+### Outward Prose Style
+
+An outward document is written in a single publication language with no second working language mixed in; whether a stray inward-language label reads as insider noise is a register call, and a calibrated grade belongs here but is not yet written, so the slot is the honest `todo`:
+
+```requirement
+{
+  "id": "REQ-726",
+  "title": "An outward document holds to one publication language",
+  "statement": "An outward document — a README, a project introduction, an application, or landing-page copy — MUST be written in a single publication language and MUST NOT mix a second working language into it; a stray inward-language label reads as insider noise to the outside reader.",
+  "scope": { "repos": [], "categories": ["blog"], "tags": ["outward-prose"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer reads the document for language purity. PASS when the whole document is in one publication language; BLOCKED when a second working language is mixed in; INCONCLUSIVE when the document could not be read.",
+    "verify": [
+      "Read the outward document end to end",
+      "Flag any stray second-language label or phrase"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+The narrative outward prose follows the readable middle-ground style — concrete openings, short declarative key statements, numbers over adjectives, lists that serve the paragraph, active voice, and a forward-momentum close; how well it does is a quality spectrum, so this rule carries an object `grade`:
+
+```requirement
+{
+  "id": "REQ-727",
+  "title": "Outward prose follows the readable middle-ground style",
+  "statement": "Narrative outward prose MUST follow the readable middle-ground style — lead each paragraph with a concrete fact, number, or example; keep key statements short and declarative; replace vague adjectives with concrete numbers; frame every list with an introductory sentence and fold a sub-three-item series into the sentence; use active voice with named subjects; and close on a consequence rather than a self-summary.",
+  "scope": { "repos": [], "categories": ["blog"], "tags": ["outward-prose"] },
+  "severity": "info",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer scores the prose against the middle-ground style rules. PASS when paragraphs open concretely, key statements are short, numbers replace vague adjectives, lists are framed, voice is active, and sections end with forward momentum; BLOCKED when the text drifts into naked bullet lists, passive impersonal phrasing, warm-up filler, or summary endings; INCONCLUSIVE when no narrative prose is present.",
+    "verify": [
+      "Read the narrative outward prose",
+      "Score it against the readable middle-ground style rules"
+    ]
+  },
+  "grade": { "dimension": "prose readability", "weight": 100 }
+}
+```
+
+### Pre-Push Quality
+
+The secrets scan is a tool gate over every file, mocks and fixtures included, and it matches on format and entropy rather than truth, so a realistic-looking fake fails as hard as a real secret — a hard yes/no run by the security tool:
+
+```requirement
+{
+  "id": "REQ-728",
+  "title": "No secret or realistic fake survives the pre-push scan",
+  "statement": "Before a push, no credential, key, token, client identifier, or personal datum MUST appear in any file — explicitly including mock files and test fixtures — and a mock value MUST look obviously fake, because a realistic-looking fabricated secret trips the same push-protection and harvesting scans as a real one.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["pre-push", "security"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "git-security",
+    "tactic": "secrets-format-entropy-scan",
+    "verify": [
+      "Scan every staged file, including mocks and fixtures, for credential-shaped strings by format and entropy",
+      "BLOCK when any real or realistic-looking secret is found"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A published file carries only relative paths, never an absolute path or one bearing a username or system location — a structural scan over the file content:
+
+```requirement
+{
+  "id": "REQ-729",
+  "title": "Only relative paths reach a published file",
+  "statement": "No absolute path, and no path carrying a username or a system location, MUST reach a published file; outward code and configuration use relative paths only.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["pre-push", "paths"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No tracked file carries an absolute filesystem path",
+      "No tracked file carries a path containing a username or a system location"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The repository commits no dependencies, build artifacts, or coverage output, and its lockfile is current with no superfluous dependencies — a structural state check over the tree:
+
+```requirement
+{
+  "id": "REQ-730",
+  "title": "Dependency hygiene holds before a push",
+  "statement": "Before a push, the repository MUST NOT commit installed dependencies, build artifacts, or coverage output, and its lockfile MUST be current with no superfluous dependencies.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["pre-push", "dependencies"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No dependency directory, build artifact, or coverage output is tracked",
+      "The lockfile is current and the dependency set carries no superfluous entries"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The public methods are tested and the suite passes in full before a push — a hard outcome verified by running the suite with coverage:
+
+```requirement
+{
+  "id": "REQ-731",
+  "title": "The test suite passes with public methods covered",
+  "statement": "Before a push, the repository's test suite MUST pass in full with no failures, and the public methods MUST be exercised by the coverage run — full success before a push, no exceptions.",
+  "scope": { "repos": [], "categories": ["repository"], "tags": ["pre-push", "tests"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "npm",
+    "tactic": "test-suite-coverage-run",
+    "verify": [
+      "Run the repository test suite with coverage",
+      "Assert zero failures and that every public method is exercised"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `repo-docs-writing` — primary
+- `repo-github-org` — primary
+- `repo-init` — primary
+- `repo-issue` — primary
+- `repo-quality` — contributing
+- `repo-readme` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the deterministic git flow and the security gate the pre-push checklist complements.

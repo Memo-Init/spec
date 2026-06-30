@@ -6,7 +6,7 @@ spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/workbench/0.1.0/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/18-design.md."
@@ -72,6 +72,62 @@ The **spec comes first**: the folder and convention are defined here before any 
 
 ---
 
+## Conformity Requirements
+
+`design/` is governed, not inert, so the design.md convention and the folder's organization are checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how a design surface is authored and laid out, each `check` faces the write-time lint and the structure audit. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+
+Whether a design.md satisfies its convention is a content check delegated to the write-time lint:
+
+```requirement
+{
+  "id": "REQ-971",
+  "title": "A design.md conforms to its convention",
+  "statement": "A `design/`'s primary file MUST be the lowercase `design.md` and MUST carry the design.md convention's required frontmatter and canonical prose sections (the design tokens plus the do's/don'ts) so that it is a valid design system rather than an arbitrary document. A write-time lint validates the file against the convention at the moment it is written.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["design", "convention", "write-lint"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The folder's primary file is the lowercase `design.md`",
+      "It carries the convention's required frontmatter",
+      "It carries the convention's canonical prose sections"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Multiple design surfaces under per-topic sub-folders is a structural fact, parallel to the `context/` rule:
+
+```requirement
+{
+  "id": "REQ-972",
+  "title": "Multiple design surfaces are organized under per-topic sub-folders",
+  "statement": "When a project carries more than one design surface — several views, screens, or directions — that content MUST be organized under a per-topic sub-folder of `design/` (one sub-folder per view or direction, each with its own `design.md`, variants, and `.pen` sources) rather than as loose files at the folder root. A single design surface MAY sit at the folder root; once there is more than one, each gets its own sub-folder.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["design", "structure"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "With more than one design surface, each lives under its own sub-folder of `design/`",
+      "Each surface sub-folder carries its own `design.md`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-design` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [12-folders.md](/specification/folders/) — the folder contract and the convention model `design/` is a registered, optional instance of.

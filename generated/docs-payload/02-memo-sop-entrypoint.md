@@ -6,7 +6,7 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/02-memo-sop-entrypoint.md."
@@ -97,6 +97,74 @@ Named in full, the memo system exposes exactly **three public skill entry points
 
 ---
 
+## Conformity Requirements
+
+The entry-point rules above are authored **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](/specification/memo-authoring/) and [23-requirements.md](/specification/requirements/)): each rule's `statement` faces generation and its `check` faces the finalization/push gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The blocks below are the machine-readable source the requirement store is **harvested** from.
+
+The pre-flight precondition is a hard yes/no condition — its `check` is the whole story, so its `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-800",
+  "title": "memo-sop is read before any work at every public entry point",
+  "statement": "Each public memo entry point — Initialize (`memo-init`), Revise (`memo-revision-generate`), and Execute (`memo-rollout`) — MUST verify as its very first step that `memo-sop` has been read in the current session; if it has not, `memo-sop` is read first and only then does work proceed (a fail-loud pre-flight gate). The gate MUST read a structured session signal, never a substring match over influenceable text.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["memo-sop"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "memo-init, memo-revision-generate, and memo-rollout each carry a pre-flight step that requires memo-sop before any further work",
+      "The precondition is decided from a structured session signal, not from a substring scan over influenceable text"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The few-public-doors discipline is a structural property of the skill set — checkable against the declared trigger words, again a hard rule (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-801",
+  "title": "Public entry-point trigger words are mutually exclusive",
+  "statement": "The memo system MUST expose a small, fixed set of public skill entry points — Initialize, Finalize, and Execute/Plan — whose trigger words are mutually exclusive: no single trigger word activates two entry points at once. Every other memo skill is a private process step reached only through a public entry point, never triggered directly.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["memo-sop", "entry-points"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Exactly the three public entry points declare developer-facing trigger words; all other memo skills are marked private",
+      "The trigger-word sets of the public entry points are pairwise disjoint"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-finalize` — contributing
+- `memo-init` — contributing
+- `memo-plan-add` — contributing
+- `memo-plan-execute` — contributing
+- `memo-plan-finalize` — contributing
+- `memo-plan-init` — contributing
+- `memo-plan-status` — contributing
+- `memo-plan-stop` — contributing
+- `memo-plan-update-checkbox` — contributing
+- `memo-reset-recommend` — contributing
+- `memo-sop` — primary
+- `memo-sub-init` — contributing
+- `skill-testing` — contributing
+- `workbench-modes` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [01-philosophy.md](/specification/philosophy/) — why the SOP defines the guardrails.

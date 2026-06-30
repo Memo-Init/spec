@@ -6,7 +6,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: false
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/workbench/0.1.0/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/25-validation-overview.md."
@@ -147,6 +147,86 @@ flowchart TD
 
 ---
 
+## Conformity Requirements
+
+This page is the wayfinder, and it introduces no new *domain* rule — those stay normative in their home chapters. The blocks below encode only the wayfinder's **own upkeep discipline**, already stated above: that the set of validation families and codes never grows silently past what this index lists, and that severity stays distinct. As the workbench family's requirements anchor, this section is the entry point into the per-chapter blocks the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+
+Every listed validation family must point at a chapter that actually specifies it — a hard yes/no over the index:
+
+```requirement
+{
+  "id": "REQ-968",
+  "title": "Every validation family has a defining chapter",
+  "statement": "Every family in the validation table MUST name the chapter that specifies it, and that chapter MUST actually define the rule. Adding a new validation rule means specifying it in its chapter AND giving it a row here, so the set never silently grows beyond what this wayfinder lists. A family with no defining chapter, or a chapter that does not define the family, is an index defect.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["validation", "index-integrity"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each family row names a defining chapter that exists",
+      "The named chapter contains the family's normative rule",
+      "No specified validation family is absent from this table"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The `REQ-SS-*` code index follows the same specify-then-list discipline:
+
+```requirement
+{
+  "id": "REQ-969",
+  "title": "Every REQ-SS code is both defined on its page and listed here",
+  "statement": "Each `REQ-SS-*` session-tier code MUST appear both on its defining session page AND as a row in this index, with the row pointing at that page. A code present here but undefined on its page, or defined on a page but missing here, is an index defect — the same `specify it in its chapter, then list it` rule the family table follows.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["validation", "req-ss", "index-integrity"] },
+  "severity": "info",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each `REQ-SS-*` row points at a session page that defines the code",
+      "Each `REQ-SS-*` code defined on a session page has a row here"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Keeping block and warn distinct is a property of how an outcome is treated, judged by a reviewer:
+
+```requirement
+{
+  "id": "REQ-970",
+  "title": "A validation family's block and warn outcomes stay distinct",
+  "statement": "A validation family's two outcomes MUST be kept distinct: a `block` refuses the action (`exit 2` / `permissionDecision: \"deny\"`), and a `warn` lets it proceed while surfacing a finding. A warning MUST NOT be silently treated as a hard stop, and a structural high-risk rule MUST NOT be downgraded to advisory. The severity of a configurable rule is set per entry in `folder-lints.json`; the structural rules are block by nature.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["validation", "severity"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer checks each family's outcome handling. PASS when block refuses and warn proceeds-with-finding, with no conflation; BLOCKED when a warn is treated as a hard stop or a structural rule is downgraded to advisory; INCONCLUSIVE when a family's severity is unspecified.",
+    "verify": [
+      "Classify each family's outcome as block or warn",
+      "Confirm neither outcome is silently treated as the other"
+    ]
+  },
+  "grade": { "dimension": "severity fidelity", "weight": 100 }
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-cli` — contributing
+- `workbench-hooks-contract` — contributing
+- `workbench-skills-scope` — contributing
+- `workbench-validation` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [23-hooks-contract.md](/specification/hooks-contract/) — the contract for every hook-based family, and the hub for the "before" and "after" checkability mechanisms.

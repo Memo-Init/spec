@@ -106,6 +106,197 @@ The payoff is that the costly part happens once and the parallel part is cheap a
 
 ---
 
+## Conformity Requirements
+
+The research discipline above is enforced by a handful of binding rules, authored prose-first ([35-memo-authoring.md](./35-memo-authoring.md)) so the same `statement` that shapes a research delegation also gates its output. Each block's `check` verifies the produced research artifact with a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`.
+
+A research document is auditable only when its reasoning sections are present, so the mandatory-sections rule is a lint delegated to the research skill (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-851",
+  "title": "Research output carries the mandatory sections",
+  "statement": "A research output document MUST contain the mandatory sections that make its reasoning auditable: the research question, the scope and sources, the method (tool choice per source), the findings, the synthesis, the open questions, and the sub-agent provenance tree.",
+  "scope": { "repos": [], "categories": ["research"], "tags": ["proactive-research"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "skill",
+    "skill": "memo-research-agent",
+    "artifact": "research-output",
+    "presence": "optional",
+    "verify": [
+      "Lint the research document for the mandatory section headings",
+      "Report BLOCKED naming any missing section"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+An unsourced or unqualified claim cannot be weighed, so source-plus-evidence per claim is a hard gate (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-852",
+  "title": "Every research claim is sourced and evidence-tagged",
+  "statement": "Every research claim MUST carry at least one source (a URL or a `file:line` reference) and an explicit evidence level, so no assertion stands unsourced or unqualified and downstream readers can weigh it.",
+  "scope": { "repos": [], "categories": ["research"], "tags": ["proactive-research", "evidence"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each claim in the research output is accompanied by at least one source reference (a URL or a `file:line`)",
+      "Each claim carries an explicit evidence level, per the levels defined in [11-quality-and-finalization.md](./11-quality-and-finalization.md)"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The evidence chain must survive across revisions, so deterministic naming with NO-OVERWRITE is a blocker (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-853",
+  "title": "Research output is deterministically named and never overwritten",
+  "statement": "Research output MUST follow a deterministic file path and MUST NOT overwrite an existing file: a new version is written under a new, suffixed name rather than replacing the prior file, preserving the evidence chain across revisions.",
+  "scope": { "repos": [], "categories": ["research"], "tags": ["proactive-research", "no-overwrite"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The research output path follows the chapter's deterministic naming convention",
+      "Writing a new version produces a new suffixed file; no prior `context/` research file is overwritten"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A scattered set of partials defeats the single-pointer principle, so the one-consolidated-document rule is a blocker (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-854",
+  "title": "A multi-level research run produces one consolidated document",
+  "statement": "A multi-level research run MUST produce ONE consolidated top document: sub-agent partials are integrated into the single top-level output rather than left scattered as separate files, so the memo references one authoritative result.",
+  "scope": { "repos": [], "categories": ["research"], "tags": ["proactive-research"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A multi-level run yields exactly one top-level consolidated document",
+      "Sub-agent partial outputs are integrated into it, not left as scattered siblings"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Unbounded recursion would let a research tree fan out without limit, so the depth cap is a hard rule (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-855",
+  "title": "Research sub-agent spawning respects a depth cap",
+  "statement": "Research sub-agent spawning MUST respect a hard depth cap of five levels: a sub-agent at depth five MUST NOT spawn deeper, bounding the fan-out so a research tree cannot recurse without limit.",
+  "scope": { "repos": [], "categories": ["research"], "tags": ["proactive-research", "sub-agent"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No research sub-agent is spawned beyond depth five",
+      "The spawn logic refuses a deeper spawn at the cap"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Choosing the cheapest sufficient tool is a quality judgment whose efficiency dimension is scorable but not yet written, so this rule is judged and its grade is the honest `todo`:
+
+```requirement
+{
+  "id": "REQ-856",
+  "title": "Research tool choice defaults to the lowest-cost option",
+  "statement": "Research tool choice MUST default to the lowest-cost option that does the job, climbing the ladder WebSearch < WebFetch < Playwright CLI < Playwright MCP only when the cheaper tool cannot — Playwright MCP is reserved for cases that genuinely need a live, interactive browser (user interaction, 2FA, or visual confirmation). The cost policy itself lives in the research-method chapter.",
+  "scope": { "repos": [], "categories": ["research"], "tags": ["proactive-research", "tool-cost"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer reads the research record's documented tool choice per source and judges whether the cheapest sufficient tool was used. PASS when each source used the lowest-cost adequate tool and any Playwright MCP use is justified by interaction, 2FA, or a visual need; BLOCKED when a costlier tool was used without justification; INCONCLUSIVE when the tool choice was not recorded.",
+    "verify": [
+      "Read the per-source method record",
+      "Judge each choice against the cost ladder"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+Documentation scraping has three structural obligations that the scrape skill verifies on its output, so they are one blocker (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-857",
+  "title": "Documentation scraping queues, caps, and consolidates",
+  "statement": "Documentation scraping MUST maintain a `TODO.md` work queue tracking pending/done status per URL, MUST respect a `maxPages` safety cap (default 100, configurable), and MUST combine all scraped pages into a single output file rather than scattering one file per page.",
+  "scope": { "repos": [], "categories": ["research"], "tags": ["proactive-research", "doc-scraping"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "skill",
+    "skill": "research-scrape-docs",
+    "artifact": "scrape-output",
+    "presence": "optional",
+    "verify": [
+      "Confirm a `TODO.md` queue with per-URL pending/done status exists",
+      "Confirm scraping stops at the `maxPages` cap",
+      "Confirm the run produced a single combined output file"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A reusable browser session must never leak a credential into the repo, so the `auth.json` hygiene rule is a hard gate (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-858",
+  "title": "Browser-automation credentials stay out of the repository",
+  "statement": "Browser-automation session credentials MUST live in an `auth.json` that is never hardcoded into scripts and is excluded from git via `.gitignore`, so a reusable session never leaks a secret into the repository.",
+  "scope": { "repos": [], "categories": ["research"], "tags": ["proactive-research", "secrets"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Session credentials are read from `auth.json`, not hardcoded in script source",
+      "`auth.json` is listed in `.gitignore`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-evidence` — contributing
+- `memo-init` — contributing
+- `memo-input-processing` — contributing
+- `memo-research-agent` — primary
+- `memo-revision-generate` — contributing
+- `research-best-practice-playwright` — contributing
+- `research-scrape-docs` — contributing
+- `research-workflow` — contributing
+- `wiki-ingest` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline whose final step derives the research topics this chapter consumes.

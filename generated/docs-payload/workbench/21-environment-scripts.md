@@ -6,7 +6,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/workbench/0.1.0/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/21-environment-scripts.md."
@@ -79,6 +79,65 @@ This is named as an aspiration so the spec is honest about where it points, **wi
 
 ---
 
+## Conformity Requirements
+
+The script-folder rules are checkable, and the boot contract is judged against the declared-and-scripted path. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how scripts are laid out and how a project is booted, each `check` faces the structure audit and the boot path. The Workbench-Health folder-placement and repo-status tests are not restated here — they are owned as conformity rules on their home pages ([12-folders.md](/specification/folders/), [15-repos.md](/specification/repos/)). These blocks are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+
+That scripts live in meaningful subfolders is a structural fact:
+
+```requirement
+{
+  "id": "REQ-966",
+  "title": "Scripts live in meaningful subfolders, not a flat pile",
+  "statement": "A project's scripts MUST live in meaningful subfolders of `scripts/`, not as a flat collection at the top level — the subfolder name carries the meaning a bare `dev.sh` cannot (for example `scripts/rails/dev.sh`). The meaning lives in the folder name, the same self-describing principle the CLI convention applies to commands.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["scripts", "structure"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No executable script sits directly at the `scripts/` root",
+      "Each script lives under a named, meaningful subfolder of `scripts/`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether a project boots through its declared script rather than an inline sequence is a behavioural rule a reviewer judges, so this block earns an object `grade`:
+
+```requirement
+{
+  "id": "REQ-967",
+  "title": "Service startup is declarative, never inlined",
+  "statement": "A project MUST declare its services and ports in a place the startup script reads, and the agent MUST boot the project by invoking that script. Inlining the boot sequence — starting services by hand, with literal ports, outside the declared contract — is an anti-pattern: it hides what the project runs, drifts from the declaration, and cannot be checked. The declared-and-scripted path is the only conformant one.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["scripts", "boot-contract"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer inspects how the project is brought up. PASS when services and ports are declared and boot runs through the startup script; BLOCKED when a boot sequence is composed inline with literal ports outside the declared contract; INCONCLUSIVE when the project declares no services to boot.",
+    "verify": [
+      "Locate the declared services/ports and the startup script that reads them",
+      "Confirm boot invokes the script rather than an inline sequence"
+    ]
+  },
+  "grade": { "dimension": "boot-contract adherence", "weight": 100 }
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-cli` — contributing
+- `workbench-environment-scripts` — primary
+- `workbench-skills-scope` — contributing
+- `workbench-validation` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [20-cli.md](/specification/cli/) — the meaningful-subfolder convention, shared with the CLI.

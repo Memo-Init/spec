@@ -6,7 +6,7 @@ spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/27-landing-the-plane.md."
@@ -61,6 +61,19 @@ Two distinctions sharpen this. A commit is not a push: the system writes the com
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `git-merge-strategy` — contributing
+- `memo-handover` — contributing
+- `memo-rollout-execute` — contributing
+- `memo-sop` — contributing
+- `workbench-modes` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [12-rollout.md](/specification/rollout/) — the rollout (Stage 1) that runs Generate, Execute, and Evaluate before this landing stage.

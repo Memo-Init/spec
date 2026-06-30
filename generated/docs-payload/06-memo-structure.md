@@ -6,7 +6,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
@@ -104,6 +104,98 @@ When a memo builds on an earlier memo — continuing its work, depending on a de
 
 ---
 
+## Conformity Requirements
+
+The memo-structure rules above are authored **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](/specification/memo-authoring/) and [23-requirements.md](/specification/requirements/)): each rule's `statement` faces generation and its `check` faces the finalization/push gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The blocks below are the machine-readable source the requirement store is **harvested** from. Each lift checks a concrete on-disk structure — a directory path, the absence of a git repository, a registered topic, a parent index — so every one earns a `binary` grade.
+
+```requirement
+{
+  "id": "REQ-810",
+  "title": "Canonical memo directory layout and numbering",
+  "statement": "Each memo MUST live in a directory `.memo/memos/{NNN}-{slug}/` whose zero-padded numeric identifier stays stable for the life of the memo. The flat layout `.memo/{NNN}-{slug}/` is deprecated and read only as a legacy fallback; new memos MUST be created under `.memo/memos/`.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["memo-structure", "numbering"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each memo directory matches `.memo/memos/{NNN}-{slug}/` with a zero-padded numeric prefix",
+      "A newly created memo is placed under `.memo/memos/`, never under the deprecated flat `.memo/{NNN}-{slug}/` path"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-811",
+  "title": "The .memo tree is not a git repository",
+  "statement": "The `.memo/` tree MUST NOT be a git repository and MUST NOT be tracked by a parent repository, so memo content cannot be pushed by any mechanism. 'Never uploaded' is a structural guarantee, not a behavioral rule an agent must remember; the only legitimate exit point to a remote is a separate, deliberate act (a published chapter or an issue), which the git-security gate scans.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["memo-structure", "local-guarantee"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No git repository exists at or inside the `.memo/` tree",
+      "The parent repository does not track `.memo/` content"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-812",
+  "title": "Topic store write-side populated during input processing",
+  "statement": "Each topic extracted from the dictated transcripts and linked material MUST be registered into the memo's `_topics/` store at the moment it is identified — during input processing, before the memo body is authored. The topic store is the head of the executable chain: a topic never registered on the write side cannot be picked up by any downstream research, chapter, or rollout step.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["memo-structure", "topic-store"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The memo's `_topics/` store carries an entry for every extracted topic",
+      "Topic registration occurs during input processing, not as a later bookkeeping step after the body is written"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-813",
+  "title": "Sub-memos are indexed by their parent",
+  "statement": "A parent memo MUST carry an index that references every sub-memo it spawned, so the parent's children can be enumerated from the parent alone. A sub-memo uses the same internal layout as any memo and is placed under its parent on disk; a child without a corresponding parent-index entry is an orphan and is treated as a structural defect.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["memo-structure", "sub-memo"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each spawned sub-memo has a matching entry in its parent's child index",
+      "Every sub-memo on disk resolves to a parent-index entry (no orphans)"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-init` — primary
+- `memo-plan-init` — contributing
+- `memo-plan-status` — contributing
+- `memo-revision-execute` — contributing
+- `memo-sub-init` — primary
+- `workbench-project-setup` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [04-input-pipeline.md](/specification/input-pipeline/) — input processing, where topics are registered into the topic store's write side.

@@ -6,7 +6,7 @@ spec_file: "25-strands.md"
 order: 25
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/25-strands.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/25-strands.md."
@@ -56,6 +56,16 @@ A strand is a **tag or label**, not a component of the numeric memo identifier, 
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-finalize` — contributing
+- `memo-rollout-generate` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [23-requirements.md](/specification/requirements/) — a strand's PRDs draw their requirements from this registry.

@@ -6,7 +6,7 @@ spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/04-input-pipeline.md."
@@ -114,6 +114,62 @@ The skill that performs this reads **only** — it never issues writes to the se
 
 ---
 
+## Conformity Requirements
+
+The input-pipeline rules above are authored **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](/specification/memo-authoring/) and [23-requirements.md](/specification/requirements/)): each rule's `statement` faces generation and its `check` faces the finalization/push gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The blocks below are the machine-readable source the requirement store is **harvested** from. The selective lift here is the rules that check a real artifact — a bound file, a persisted knowledge base — not the behavioral steps that leave no inspectable trace.
+
+Binding the initial transcript is a hard yes/no condition over a concrete file, so its `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-805",
+  "title": "Initial transcript bound to the memo at the canonical path",
+  "statement": "`memo-init` MUST bind the initial dictated transcript to the memo by copying it into the memo folder under the canonical name `transcripts/memo-init-transcript.md`, NO-OVERWRITE — an existing bound transcript is never clobbered. A memo whose initial transcript is left only in the raw intake store is orphaned: every later evaluation then measures against the thinner revisions alone and silently loses whole blocks of intent.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["input-pipeline", "transcript-binding"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The memo folder contains transcripts/memo-init-transcript.md after a memo-init transcript is processed",
+      "Binding does not overwrite an existing bound transcript"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Research-result persistence is checked against the stored knowledge base; the rule is hard, so its `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-806",
+  "title": "Research results stored as a persistent, cumulative knowledge base",
+  "statement": "Proactive-research results MUST be stored inside the memo folder as a persistent knowledge base (for example a `context/` subfolder or dedicated research files) and MUST be cumulative across revisions: a finding recorded in one revision remains available to later revisions and to downstream PRD generation, and an implementation MUST NOT re-derive findings that are already stored.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["input-pipeline", "research"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Research findings are persisted as files inside the memo folder, not left only in working context",
+      "Findings recorded in an earlier revision remain readable to a later revision rather than being re-derived"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-goal-optimize` — contributing
+- `memo-input-processing` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [03-input-paths.md](/specification/input-paths/) — the four transcript types and their follow-up flows.

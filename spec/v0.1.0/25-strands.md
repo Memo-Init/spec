@@ -49,6 +49,16 @@ A strand is a **tag or label**, not a component of the numeric memo identifier, 
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-finalize` — contributing
+- `memo-rollout-generate` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [23-requirements.md](./23-requirements.md) — a strand's PRDs draw their requirements from this registry.

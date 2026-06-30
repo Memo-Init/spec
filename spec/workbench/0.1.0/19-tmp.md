@@ -46,6 +46,15 @@ The distinction from `.trash/` is the point: a deletion routed to `.trash/` is a
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-tmp` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [32-trash.md](./32-trash.md) — the recoverable-deletion folder `.tmp/` is the throwaway counterpart to.

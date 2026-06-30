@@ -6,7 +6,7 @@ spec_file: "15-repos.md"
 order: 15
 section: "Workbench"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/workbench/0.1.0/15-repos.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/15-repos.md."
@@ -54,6 +54,63 @@ The declared status is not taken on trust. The workbench **health-check** and **
 
 ---
 
+## Conformity Requirements
+
+The `repos/` rules are structural and verified rather than trusted. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a project's code is partitioned, and each `check` faces the workbench health-check and git-security. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+
+That `repos/` holds only single-domain repositories and is the only git location is a structural fact:
+
+```requirement
+{
+  "id": "REQ-955",
+  "title": "repos/ holds only single-domain repositories and is the only git location",
+  "statement": "Every entry under `repos/<name>/` MUST be a single-domain git repository, and these MUST be the only git units in the project — neither the project root nor the memo store is a repository. `repos/` MUST NOT hold non-repository material, and a domain carrying unrelated concerns MUST be split into separate repositories rather than combined into one.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["repos", "git-structure"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each immediate child of `repos/` is a git repository",
+      "No git repository exists outside `repos/` in the project",
+      "No non-repository material sits directly under `repos/`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A declared status that contradicts the repository's real git state is a hard failure, so the verification rule's `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-956",
+  "title": "A repository's declared status matches its real git state",
+  "statement": "Each repository's declared three-axis status — visibility, remote, facing — MUST match reality: a repository declared `outward` MUST actually have its named remote, and one declared `inward` MUST have no remote (or `none`). The status is declared once in the project configuration and verified, not trusted; a declaration that contradicts the repository's real git state is a failure that the health-check and git-security surface.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["repos", "git-status", "facing"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each repository declared `outward` has its named remote configured",
+      "Each repository declared `inward` has no remote, or `none`",
+      "Every repository under `repos/` carries a declared status record"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-repos` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [11-project-structure.md](/specification/project-structure/) — the local guarantee: `repos/` as the only sanctioned home for shareable code.

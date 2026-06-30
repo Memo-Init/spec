@@ -107,7 +107,7 @@ Related: [25-strands.md](./25-strands.md) (emergence, tag-not-ID, strand spec), 
 
 ## Requirement
 
-A **requirement** is a single, addressable, **two-sided** statement of something that must, should, or may hold for a piece of work. Its `statement` faces **generation** (it flows into the prompt generator and shapes the work before it is done); its `check` faces the **finalization gate** (it verifies the work after it is done). Requirements are stored **one file per entry** under `.memo/requirements/`, shared across all memos, and are selected for a piece of work by a deterministic scope cascade over three axes (`repos`, `categories`, `tags`). A requirement is **cross-cutting**: it reaches the work through the PRDs in scope, not as a link in the Topic→Phase→PRD chain. Every check resolves to a **ternary** status — `PASS`, `BLOCKED`, or `INCONCLUSIVE` — and a check that did not run MUST NOT silently report `PASS`. A `blocker` short-circuits the gate; the doer MUST NOT be the grader.
+A **requirement** is a single, addressable statement of something that must, should, or may hold for a piece of work. It is **two-sided**, with an **optional third axis**: its `statement` faces **generation** (it flows into the prompt generator and shapes the work before it is done); its `check` faces the **finalization gate** (it verifies the work after it is done); and an optional `grade` adds a *how-well* scoring axis on top of the binary `check` (the optional scoring head, [23-requirements.md](./23-requirements.md)). The authored source is the **inline declaration in a spec chapter**; the store is generated from it by a **harvest** step (`spec → harvest → store`), the direction the system is migrating toward (see [23-requirements.md](./23-requirements.md), *Storage and Scale*). Requirements are stored **one file per entry** under `.memo/_requirements/`, shared across all memos, and are selected for a piece of work by a deterministic scope cascade over three axes (`repos`, `categories`, `tags`). A requirement is **cross-cutting**: it reaches the work through the PRDs in scope, not as a link in the Topic→Phase→PRD chain. Every check resolves to a **ternary** status — `PASS`, `BLOCKED`, or `INCONCLUSIVE` — and a check that did not run MUST NOT silently report `PASS`. A `blocker` short-circuits the gate; the doer MUST NOT be the grader.
 
 Related: [23-requirements.md](./23-requirements.md) (two-sided model, schema, scope cascade, anti-cheat), [11-quality-and-finalization.md](./11-quality-and-finalization.md) (the gate), [24-tools-registry.md](./24-tools-registry.md) (`check.kind: tool`); related primitives: [PRD](#prd), [Block](#block), [Tool](#tool).
 
@@ -191,6 +191,18 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-req-registry` — contributing
+- `memo-req-runner` — contributing
+- `memo-req-store` — contributing
+- `memo-sop` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.

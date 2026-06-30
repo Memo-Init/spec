@@ -68,6 +68,15 @@ The Folder Contract is **normative, not advisory** (the MUST above), and it is e
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-conventions` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [10-sop.md](./10-sop.md) — why a thin connecting mechanism exists inside the session standard.

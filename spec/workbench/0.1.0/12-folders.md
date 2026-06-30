@@ -214,6 +214,85 @@ Folders without a dedicated page (for example `scripts/`, `proofs/`, `snapshots/
 
 ---
 
+## Conformity Requirements
+
+The folder contract is a registry, and a registry is checkable. The blocks below encode this chapter's binding rules prose-first: each `statement` faces generation (it shapes how a project is constituted and how a structure tool reads the contract) and each `check` faces the structure audit. They are the machine-readable source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+
+Presence of the mandatory folders is a hard yes/no fact, so this rule's `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-952",
+  "title": "Every mandatory registered folder is present and at the right level",
+  "statement": "A project MUST contain every mandatory registered folder — `.claude/`, `.trash/`, `ABOUT.md`, `CLAUDE.md`, `context/`, `repos/`, `scripts/` — each at its declared level. A missing mandatory path is a structural failure; an unexpected top-level entry that the registered layout does not account for MUST be flagged for review. A project MUST NOT omit a mandatory folder, and MAY add any optional folder when it needs it.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["folders", "structure"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each mandatory registered path exists at the project level",
+      "No mandatory registered path is absent",
+      "Each top-level entry is accounted for by the registry, or is flagged for review"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The dot-prefix is a structural signal a tool can read from the leading character alone, so a new folder's adherence is a hard yes/no rule:
+
+```requirement
+{
+  "id": "REQ-953",
+  "title": "A registered folder follows the dot-prefix convention",
+  "statement": "A registered folder's name MUST follow the dot-prefix convention: a leading dot for generated or local machinery (`.claude/`, `.memo/`, `.trash/`, `.workbench/`, `.wiki/`, `.browser/`, `.tmp/`), and no dot for authored, user-facing content (`context/`, `repos/`, `scripts/`, `proofs/`, `snapshots/`, `data/`, `design/`). `scripts/` is the sanctioned edge case — it holds tooling but is authored and run by people, so it carries no dot.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["folders", "naming"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every machinery folder name begins with a dot",
+      "Every authored-content folder name carries no leading dot"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether a tool's folder list has drifted from the registry is judged against the contract table, a scorable agreement rather than a single yes/no, so this rule earns an object `grade`:
+
+```requirement
+{
+  "id": "REQ-954",
+  "title": "A tool's folder list agrees with the registry",
+  "statement": "Where a tool — the project-setup helper, the structure audit — carries its own list of folders, that list MUST agree with this chapter's contract registry and SHOULD be derived from it rather than restated. A tool that treats an optional folder (`.browser/`, `proofs/`, `snapshots/`, `.wiki/`) as mandatory has drifted from the registry and is the copy to reconcile, not the source.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["folders", "registry", "drift"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer compares a tool's embedded folder list against the contract registry. PASS when every status (mandatory / reserved-default-on / optional) and level matches the registry; BLOCKED when the tool treats an optional folder as mandatory or omits a mandatory one; INCONCLUSIVE when the tool exposes no inspectable list.",
+    "verify": [
+      "Extract the tool's folder list and its per-folder status",
+      "Diff it against the contract registry's status and level columns"
+    ]
+  },
+  "grade": { "dimension": "registry agreement", "weight": 100 }
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-environment-scripts` — contributing
+- `workbench-folders` — primary
+- `workbench-tmp` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project split.
