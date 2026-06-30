@@ -6,7 +6,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/09-contamination-context-handover.md."
@@ -111,6 +111,39 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-chronic-add` — contributing
+- `memo-chronic-build` — contributing
+- `memo-finalize` — contributing
+- `memo-goal-optimize` — contributing
+- `memo-goal-score` — contributing
+- `memo-goal-score-all` — contributing
+- `memo-handover` — primary
+- `memo-init` — contributing
+- `memo-maintenance-score` — contributing
+- `memo-maintenance-verify` — contributing
+- `memo-mental-model-derive` — contributing
+- `memo-phase-evaluate` — contributing
+- `memo-phase-execute` — contributing
+- `memo-phase-generate` — contributing
+- `memo-plan-evaluate` — contributing
+- `memo-plan-execute` — contributing
+- `memo-plan-stop` — contributing
+- `memo-prd-evaluate` — contributing
+- `memo-prds-validate` — contributing
+- `memo-reset-recommend` — contributing
+- `memo-revision-evaluate` — contributing
+- `memo-rollout-evaluate` — contributing
+- `memo-rollout-execute` — contributing
+- `memo-sub-init` — contributing
+- `workbench-persona-audit` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [07-revisions-and-questions.md](/specification/revisions-and-questions/) — the append-only revision structure that is the rescue infrastructure for a contaminated memo.

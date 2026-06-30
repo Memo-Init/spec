@@ -2,9 +2,9 @@
     "namespace": "session",
     "version": "0.1.0",
     "namespaceToken": "SE",
-    "hasRequirements": false,
+    "hasRequirements": true,
     "hasGrading": false,
-    "requirementsRef": null,
+    "requirementsRef": "02-enforcement",
     "gradingRef": null,
     "groups": [
         {

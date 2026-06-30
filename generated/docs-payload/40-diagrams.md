@@ -6,7 +6,7 @@ spec_file: "40-diagrams.md"
 order: 40
 section: "Specification"
 normative: false
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/40-diagrams.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/40-diagrams.md."
@@ -106,6 +106,105 @@ The structure-before-color habit that already governs diagrams is the same disci
 
 ---
 
+## Conformity Requirements
+
+This chapter is **informative** — its recommendations introduce no new blocker. What the few blocks below do is **lift already-declared diagram rules** into machine-readable, harvestable form ([23-requirements.md](/specification/requirements/)): the diagram-category entries the requirements chapter already lists ("diagram labels are in the artifact's language; the diagram type fits the data flow") and the decision-tool intent of this chapter. They are authored at **advisory strength** (`warning` / `info`), consistent with the informative framing, and they add no force beyond the binding portrait-orientation rule that the memo-authoring chapter owns — that rule is referenced, not restated here. Generated-image and artistic renderings remain out of scope, so these blocks are Mermaid-and-Vega only.
+
+The core discipline is choosing the type from the **intent**, not from habit; whether a type fits is a quality spectrum a fresh-context reviewer judges, so this rule earns an object `grade`:
+
+```requirement
+{
+  "id": "REQ-894",
+  "title": "Diagram type fits the intent",
+  "statement": "A diagram SHOULD be chosen so its built-in shape carries the intent — structure, behavior, data, time, or comparison — reaching for the best-fit Mermaid type for the concept rather than defaulting every picture to a flowchart; a flowchart is justified only for genuine decision-trees and linear pipelines.",
+  "scope": { "repos": [], "categories": ["diagram"], "tags": ["diagram", "type-fit"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer reads the diagram and its surrounding intent and judges whether the chosen type fits, per the intent→type and best-type-per-concept maps. PASS when the type's shape matches the intent; BLOCKED when a flowchart (or another mismatched type) is used where a fitter type exists; INCONCLUSIVE when the intent cannot be determined from context.",
+    "verify": [
+      "Identify the diagram's intent from the surrounding text",
+      "Judge whether the chosen Mermaid type is the best fit for that intent"
+    ]
+  },
+  "grade": { "dimension": "diagram-type fit", "weight": 100 }
+}
+```
+
+A diagram is an artifact like any other, so its labels follow one language and do not mix — the diagram-scope instance of one-language-per-artifact, a hard yes/no judged read, hence `binary`:
+
+```requirement
+{
+  "id": "REQ-895",
+  "title": "One language per diagram, labels in the artifact's language",
+  "statement": "Within a single diagram, node labels and annotations MUST use one consistent language (the diagram artifact's language), never mixed; this is the diagram-scope instance of the one-language-per-artifact rule.",
+  "scope": { "repos": [], "categories": ["diagram"], "tags": ["diagram", "label-language"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer reads every label and annotation in the diagram and judges whether they are all in one language. PASS when consistent; BLOCKED when languages are mixed within the same diagram; INCONCLUSIVE when a label's language is indeterminate.",
+    "verify": [
+      "Enumerate every node label and annotation in the diagram",
+      "Assert a single consistent language across them"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A diagram earns its place only by making a decision faster or sharper; that decision value is a spectrum a reviewer judges, so this rule carries an object `grade`:
+
+```requirement
+{
+  "id": "REQ-896",
+  "title": "A diagram is included only when it aids a decision",
+  "statement": "A diagram SHOULD be included only when it helps the reader make a faster or more informed decision; a decorative diagram that carries no decision SHOULD be left out, and an inability to find any fitting diagram type for a topic SHOULD be read as a signal the topic is not yet thought through.",
+  "scope": { "repos": [], "categories": ["diagram"], "tags": ["diagram", "decision-tool"] },
+  "severity": "info",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer judges whether the diagram aids a reader's decision or is decorative. PASS when it carries a decision; surfaced as a note (not blocked) when it is decorative; INCONCLUSIVE when its decision value cannot be assessed.",
+    "verify": [
+      "Assess whether the diagram sharpens or speeds a reader's decision"
+    ]
+  },
+  "grade": { "dimension": "diagram decision-value", "weight": 100 }
+}
+```
+
+Spec and memo diagrams are working decision tools, so they are text the reader can diff and verify, not opaque renderings — a deterministic form check, so `binary`:
+
+```requirement
+{
+  "id": "REQ-897",
+  "title": "Spec and memo diagrams are text-based, not generated images",
+  "statement": "A diagram in spec or memo content MUST be a text-based, diffable form — a fenced `mermaid` block (or a Vega-Lite spec for a quantitative chart) — and MUST NOT be an opaque generated-image or hand-drawn/artistic rendering; those renderings belong to docs, blog, and marketing, kept decoupled from the spec and memo layer.",
+  "scope": { "repos": [], "categories": ["diagram"], "tags": ["diagram", "text-based"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every diagram in spec/memo content is a fenced `mermaid` block or a Vega-Lite spec",
+      "No generated-image or artistic rendering is embedded as a spec/memo diagram"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `image-art-architecture` — primary
+- `image-diagram-excalidraw` — primary
+- `memo-init` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [35-memo-authoring.md](/specification/memo-authoring/) — diagrams as first-class memo content and the portrait-orientation rule these recommendations build on.

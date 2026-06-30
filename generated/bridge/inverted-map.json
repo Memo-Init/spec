@@ -1,0 +1,4316 @@
+{
+    "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.",
+    "generator": "scripts/generate-bridge.mjs",
+    "mapHash": "5837897a1a1b",
+    "pages": [
+        {
+            "family": "core",
+            "id": "00-overview",
+            "stem": "00-overview",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-sop"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "01-philosophy",
+                "02-memo-sop-entrypoint",
+                "08-phases-and-prds",
+                "18-multidimensionality"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-sop",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "3be615abd426"
+        },
+        {
+            "family": "core",
+            "id": "01-philosophy",
+            "stem": "01-philosophy",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-sop",
+                "workbench-modes"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "02-memo-sop-entrypoint",
+                "04-input-pipeline",
+                "12-rollout"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-coherence",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-mental-model-derive",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sop",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-modes",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "workbench"
+            ],
+            "provenance": "7ffe1a4bb4ac"
+        },
+        {
+            "family": "core",
+            "id": "02-memo-sop-entrypoint",
+            "stem": "02-memo-sop-entrypoint",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init",
+                "memo-sop",
+                "workbench-modes"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "01-philosophy",
+                "03-input-paths",
+                "11-quality-and-finalization",
+                "12-rollout",
+                "13-orchestration"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-add",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-status",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-stop",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-update-checkbox",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-reset-recommend",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sop",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-sub-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "skill-testing",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-modes",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "issue-severity-classification-thresholds",
+                "Notification / acoustic-signal hook",
+                "Reset / context-clear jumps",
+                "Success definition / Mass und Ziel anti-pattern",
+                "Third-party token-tracking veto",
+                "three-mode-taxonomy"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "skill",
+                "workbench"
+            ],
+            "provenance": "9119d3a8a80c"
+        },
+        {
+            "family": "core",
+            "id": "03-input-paths",
+            "stem": "03-input-paths",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-memo-sop-entrypoint",
+                "04-input-pipeline",
+                "05-memo-strategies",
+                "07-revisions-and-questions"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-goal-optimize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-input-processing",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "37f9d58ba06f"
+        },
+        {
+            "family": "core",
+            "id": "04-input-pipeline",
+            "stem": "04-input-pipeline",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-input-processing"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-memo-sop-entrypoint",
+                "03-input-paths",
+                "05-memo-strategies",
+                "10-proactive-research"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-goal-optimize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-input-processing",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "Information-content (FAKT:ANNAHME) score gate",
+                "Interview-Modus (bundled question catalog)",
+                "Prompt-injection data/instruction boundary for URL mode",
+                "Topic-store write-side (register) mechanics",
+                "URL-mode error codes + schema-version legacy handling"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "18abcc36acb0"
+        },
+        {
+            "family": "core",
+            "id": "05-memo-strategies",
+            "stem": "05-memo-strategies",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "03-input-paths",
+                "06-memo-structure",
+                "08-phases-and-prds",
+                "11-quality-and-finalization"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sub-init",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "02c792c13c4e"
+        },
+        {
+            "family": "core",
+            "id": "06-memo-structure",
+            "stem": "06-memo-structure",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "05-memo-strategies",
+                "07-revisions-and-questions",
+                "12-rollout",
+                "16-git-security-versioning"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-init",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-status",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sub-init",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-project-setup",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "Cross-memo status check / 'marked finalized but never built' trap",
+                "Fact-briefing for autonomous memos",
+                "Lessons-Learned / Ancillary Files mandatory sections",
+                "Mandatory finalization checklist + auto F1 question",
+                "Memo-vs-Phase default decision + new-memo cost",
+                "Sub-memo lifecycle HARD-STOP",
+                "Triage table -> sub-memo fan-out + parent index"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "workbench"
+            ],
+            "provenance": "9a4575eb12bd"
+        },
+        {
+            "family": "core",
+            "id": "07-revisions-and-questions",
+            "stem": "07-revisions-and-questions",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "04-input-pipeline",
+                "06-memo-structure",
+                "11-quality-and-finalization",
+                "14-agents-skills-tasks"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-balance",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-coherence",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-evidence",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-fidelity-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-mental-model-derive",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-references",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-consolidate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-evaluate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-revision-execute",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-revision-generate",
+                    "role": "primary"
+                }
+            ],
+            "grader": {
+                "skill": "memo-fidelity-audit",
+                "inferred": false
+            },
+            "gaps": [
+                "[Research offen] tag / Forschungsbedarf carry-over",
+                "Auto-iteration loop (max 2x then ask)",
+                "Feedback-coverage as a gate",
+                "Meta-block memo identity fields (ICL)",
+                "Post-revision lint gate (!memo lint)",
+                "Prepare file as a primary artifact",
+                "REV-02 detector trigger + risk-threshold lowering",
+                "Sub-Memo HARD-STOP check",
+                "User Mental Model consult mechanism",
+                "Vorwort section (placement + single-channel)"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "cb9c5412efa5"
+        },
+        {
+            "family": "core",
+            "id": "08-phases-and-prds",
+            "stem": "08-phases-and-prds",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init",
+                "workbench-modes"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "05-memo-strategies",
+                "07-revisions-and-questions",
+                "12-rollout",
+                "13-orchestration",
+                "15-prompt-generator",
+                "18-multidimensionality"
+            ],
+            "implementers": [
+                {
+                    "skill": "drift-resolution",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-generate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-add",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-evaluate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-prd-generate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-prds-validate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-references",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-reset-recommend",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-revision-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-generate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-modes",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "AI cannot self-execute /clear",
+                "assertion-layer / closed-set rule",
+                "category tag taxonomy",
+                "coverage classification taxonomy",
+                "eval-set file as a generate output",
+                "max-PRDs-per-phase hard number",
+                "plan-status.json.reset-check state schema",
+                "PRD on-disk layout, header sections, and Ralph-Loop config",
+                "Reset-recommendation algorithm and thresholds",
+                "retry budget for PRD generation/evaluation",
+                "validation report path/template + integration-PRD requirement"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "prd",
+                "workbench"
+            ],
+            "provenance": "b39b0ee6d86b"
+        },
+        {
+            "family": "core",
+            "id": "09-contamination-context-handover",
+            "stem": "09-contamination-context-handover",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "08-phases-and-prds",
+                "10-proactive-research",
+                "11-quality-and-finalization",
+                "13-orchestration"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-chronic-add",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-chronic-build",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-goal-optimize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-goal-score",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-goal-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-handover",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-verify",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-mental-model-derive",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-stop",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prds-validate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-reset-recommend",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sub-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-persona-audit",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-goal-score",
+                "inferred": false
+            },
+            "gaps": [
+                "plan-stop / plan-handover facade and plan re-entry",
+                "state-recovery state-file taxonomy"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "prd",
+                "workbench"
+            ],
+            "provenance": "681cbfcf3aaa"
+        },
+        {
+            "family": "core",
+            "id": "10-proactive-research",
+            "stem": "10-proactive-research",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "04-input-pipeline",
+                "07-revisions-and-questions",
+                "09-contamination-context-handover",
+                "11-quality-and-finalization"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-evidence",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-input-processing",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-research-agent",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-revision-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "research-best-practice-playwright",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "research-scrape-docs",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "research-workflow",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-ingest",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "research-output-format",
+                "untrusted-web-content-as-data"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "research",
+                "wiki"
+            ],
+            "provenance": "e523459a840c"
+        },
+        {
+            "family": "core",
+            "id": "11-quality-and-finalization",
+            "stem": "11-quality-and-finalization",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-rollout"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "09-contamination-context-handover",
+                "10-proactive-research",
+                "12-rollout",
+                "16-git-security-versioning",
+                "23-requirements"
+            ],
+            "implementers": [
+                {
+                    "skill": "drift-resolution",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-commit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-push",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-security",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-balance",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-coherence",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-evidence",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-fidelity-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-finalize",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-prds-validate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-references",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-research-agent",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-consolidate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-quality",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-persona-audit",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-fidelity-audit",
+                "inferred": false
+            },
+            "gaps": [
+                "Budget snapshot as the single legitimate paste point",
+                "Calibration rating scale and indicator catalog",
+                "Dependency smoke-check at finalization",
+                "Inline tag insertion format",
+                "Large-codebase sub-agent threshold",
+                "Maturity rating taxonomy",
+                "Ralph-Loop suitability gate",
+                "Reference status taxonomy and auto-fix policy",
+                "Rollout-Entry-Points section + filesystem check",
+                "SKILL header drift vs the description's three-level shorthand",
+                "Sub-memo HARD-STOP at finalization",
+                "Third-party token-tracking veto",
+                "YAGNI / minimal-code overlap not referenced"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo",
+                "repository",
+                "research",
+                "workbench"
+            ],
+            "provenance": "f1e7f5cd3b1f"
+        },
+        {
+            "family": "core",
+            "id": "12-rollout",
+            "stem": "12-rollout",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-rollout",
+                "memo-sop"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "11-quality-and-finalization",
+                "13-orchestration",
+                "14-agents-skills-tasks",
+                "16-git-security-versioning"
+            ],
+            "implementers": [
+                {
+                    "skill": "image-pencil-playwright-diff",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-fidelity-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-rollout-evaluate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-sop",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-fidelity-audit",
+                "inferred": false
+            },
+            "gaps": [
+                "between-phase integration follow-up policy",
+                "duty-of-care contract exact 9 points",
+                "plan-context operating modes",
+                "plan-context write-back delegation",
+                "UI before/after diff + proofs evidence layout",
+                "user-triggered landing as the only valid stop point",
+                "utilization gate (built-but-unwired)"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "visual"
+            ],
+            "provenance": "db252932a918"
+        },
+        {
+            "family": "core",
+            "id": "13-orchestration",
+            "stem": "13-orchestration",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-rollout",
+                "memo-sop"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "09-contamination-context-handover",
+                "12-rollout",
+                "14-agents-skills-tasks",
+                "16-git-security-versioning"
+            ],
+            "implementers": [
+                {
+                    "skill": "drift-resolution",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-merge-strategy",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-chronic-build",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-handover",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-evaluate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-phase-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prds-validate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-references",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-research-agent",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sop",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "research-workflow",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "file-based contract negotiation protocol",
+                "follow-up-PRD escalation on stuck PRD",
+                "max iteration / phase-eval iteration limits",
+                "shared findings store",
+                "tool-selection-decision-tree",
+                "trivial-independent-PRDs verdict",
+                "UI baseline capture at phase-start"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo",
+                "prd",
+                "research"
+            ],
+            "provenance": "0897f66f8e54"
+        },
+        {
+            "family": "core",
+            "id": "14-agents-skills-tasks",
+            "stem": "14-agents-skills-tasks",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "workbench-persona-audit"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "09-contamination-context-handover",
+                "12-rollout",
+                "13-orchestration",
+                "15-prompt-generator"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-plan-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-docs-writing",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-readme",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "skill-testing",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-persona-audit",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "no-overwrite-and-output-location",
+                "persona-audit-schemas"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "prd",
+                "repository",
+                "skill",
+                "workbench"
+            ],
+            "provenance": "717c4a2d6ae4"
+        },
+        {
+            "family": "core",
+            "id": "15-prompt-generator",
+            "stem": "15-prompt-generator",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "12-rollout",
+                "13-orchestration",
+                "14-agents-skills-tasks",
+                "16-git-security-versioning"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-template",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-generate",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "prd"
+            ],
+            "provenance": "505532e7d4df"
+        },
+        {
+            "family": "core",
+            "id": "16-git-security-versioning",
+            "stem": "16-git-security-versioning",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-rollout",
+                "repo-init",
+                "workbench-modes"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "11-quality-and-finalization",
+                "13-orchestration",
+                "15-prompt-generator",
+                "17-git-workflow-and-ids"
+            ],
+            "implementers": [
+                {
+                    "skill": "drift-resolution",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-commit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-merge-strategy",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-push",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-security",
+                    "role": "primary"
+                },
+                {
+                    "skill": "image-pencil-playwright-diff",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-handover",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-verify",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-runner",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "release",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-issue",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-quality",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-modes",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-req-runner",
+                "inferred": true
+            },
+            "gaps": [
+                "Repo structure + test-coverage + open-source compliance checklist"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "evals",
+                "git",
+                "memo",
+                "repository",
+                "visual",
+                "workbench"
+            ],
+            "provenance": "209726613567"
+        },
+        {
+            "family": "core",
+            "id": "17-git-workflow-and-ids",
+            "stem": "17-git-workflow-and-ids",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "workbench-modes"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "08-phases-and-prds",
+                "13-orchestration",
+                "16-git-security-versioning",
+                "18-multidimensionality"
+            ],
+            "implementers": [
+                {
+                    "skill": "git-commit",
+                    "role": "primary"
+                },
+                {
+                    "skill": "git-merge-strategy",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-push",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-stop",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-update-checkbox",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-issue",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-modes",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "Decision hierarchy on commit content",
+                "Mandatory-issue-per-commit doctrine"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo",
+                "prd",
+                "repository",
+                "workbench"
+            ],
+            "provenance": "507d1568d93a"
+        },
+        {
+            "family": "core",
+            "id": "18-multidimensionality",
+            "stem": "18-multidimensionality",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "08-phases-and-prds",
+                "13-orchestration",
+                "16-git-security-versioning",
+                "17-git-workflow-and-ids"
+            ],
+            "implementers": [
+                {
+                    "skill": "git-merge-strategy",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-push",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-add",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo"
+            ],
+            "provenance": "5b993bd20380"
+        },
+        {
+            "family": "core",
+            "id": "19-internal-vs-external-communication",
+            "stem": "19-internal-vs-external-communication",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "16-git-security-versioning",
+                "17-git-workflow-and-ids"
+            ],
+            "implementers": [
+                {
+                    "skill": "git-commit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-push",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-security",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "image-art-architecture",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-runner",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-docs-writing",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-github-org",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-issue",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-quality",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-readme",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-persona-audit",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-req-runner",
+                "inferred": true
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "evals",
+                "git",
+                "repository",
+                "visual",
+                "workbench"
+            ],
+            "provenance": "c1d3857bd8a7"
+        },
+        {
+            "family": "core",
+            "id": "20-flow-full-vs-update-revisions",
+            "stem": "20-flow-full-vs-update-revisions",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-revision-consolidate"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "07-revisions-and-questions",
+                "11-quality-and-finalization",
+                "12-rollout"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-consolidate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-revision-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-generate",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "Merge conflict resolution rule"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "49287fb15348"
+        },
+        {
+            "family": "core",
+            "id": "21-human-computer-interaction",
+            "stem": "21-human-computer-interaction",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-sop"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "11-quality-and-finalization",
+                "20-flow-full-vs-update-revisions"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-goal-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-mental-model-derive",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-reset-recommend",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sop",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-goal-score-all",
+                "inferred": false
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "b2ae0fb98d0b"
+        },
+        {
+            "family": "core",
+            "id": "22-tree-cli-recommended-way",
+            "stem": "22-tree-cli-recommended-way",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "13-orchestration",
+                "14-agents-skills-tasks"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-goal-score",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-status",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-update-checkbox",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-goal-score",
+                "inferred": false
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "5fda123d7113"
+        },
+        {
+            "family": "core",
+            "id": "23-requirements",
+            "stem": "23-requirements",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "image-pencil-playwright-diff",
+                "memo-req-registry",
+                "memo-req-runner",
+                "memo-req-store",
+                "memo-req-template"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "11-quality-and-finalization",
+                "24-tools-registry"
+            ],
+            "implementers": [
+                {
+                    "skill": "git-push",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "git-security",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "image-pencil-playwright-diff",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prds-validate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-registry",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-req-runner",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-req-store",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-req-template",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-rollout-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-github-org",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-quality",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "specs-to-skills",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-lint",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-req-registry",
+                "inferred": true
+            },
+            "gaps": [
+                "Pencil-Playwright Soll-Ist diff technique itself",
+                "Playwright CLI-vs-MCP cost policy linkage",
+                "report storage path + producer/consumer evidence round-trip",
+                "tool/requirement entry FORMAT (YAML/object schema) and intake flow",
+                "topic-as-MatchContext / topic-attach wrapper",
+                "validation tactics catalog + signal->tactic selection map"
+            ],
+            "outOfScope": [
+                "image-pencil-playwright-diff"
+            ],
+            "clusters": [
+                "evals",
+                "git",
+                "memo",
+                "prd",
+                "repository",
+                "skill",
+                "visual",
+                "wiki"
+            ],
+            "provenance": "8e7f13dfddda"
+        },
+        {
+            "family": "core",
+            "id": "24-tools-registry",
+            "stem": "24-tools-registry",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "08-phases-and-prds",
+                "23-requirements"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-req-registry",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-store",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-template",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-query",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-audit",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-req-registry",
+                "inferred": true
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "evals",
+                "prd",
+                "wiki",
+                "workbench"
+            ],
+            "provenance": "a59ee187d1ac"
+        },
+        {
+            "family": "core",
+            "id": "25-strands",
+            "stem": "25-strands",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "06-memo-structure",
+                "08-phases-and-prds",
+                "23-requirements",
+                "24-tools-registry"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-generate",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "9e0e9e1a46e0"
+        },
+        {
+            "family": "core",
+            "id": "26-memo-history",
+            "stem": "26-memo-history",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-chronic-add",
+                "memo-chronic-build"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "18-multidimensionality",
+                "24-tools-registry",
+                "31-goals",
+                "33-maintenance"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-chronic-add",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-chronic-build",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-ingest",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "wiki"
+            ],
+            "provenance": "3f6acec5aba3"
+        },
+        {
+            "family": "core",
+            "id": "27-landing-the-plane",
+            "stem": "27-landing-the-plane",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-sop",
+                "workbench-modes"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "12-rollout",
+                "13-orchestration",
+                "16-git-security-versioning",
+                "38-stage-model"
+            ],
+            "implementers": [
+                {
+                    "skill": "git-merge-strategy",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-handover",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sop",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-modes",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo",
+                "workbench"
+            ],
+            "provenance": "55e715ca0403"
+        },
+        {
+            "family": "core",
+            "id": "28-drift",
+            "stem": "28-drift",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "drift-resolution"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "08-phases-and-prds",
+                "13-orchestration"
+            ],
+            "implementers": [
+                {
+                    "skill": "drift-resolution",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-maintenance-score",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-references",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-maintenance-score",
+                "inferred": false
+            },
+            "gaps": [
+                "Enumeration of artifact-surface roots that the D1 grep must cover",
+                "Per-unit-class authoring of the idempotent gate (literal vs pattern)"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "2b5231e21728"
+        },
+        {
+            "family": "core",
+            "id": "29-behavioral-guardrails",
+            "stem": "29-behavioral-guardrails",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init",
+                "workbench-modes"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "13-orchestration",
+                "21-human-computer-interaction"
+            ],
+            "implementers": [
+                {
+                    "skill": "image-pencil-playwright-diff",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-coherence",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "release",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-modes",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo",
+                "visual",
+                "workbench"
+            ],
+            "provenance": "701d43667d96"
+        },
+        {
+            "family": "core",
+            "id": "30-primitives",
+            "stem": "30-primitives",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-sop"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "04-input-pipeline",
+                "06-memo-structure",
+                "07-revisions-and-questions",
+                "08-phases-and-prds",
+                "23-requirements",
+                "24-tools-registry",
+                "25-strands"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-req-registry",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-runner",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-store",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sop",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-req-registry",
+                "inferred": true
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "evals",
+                "memo"
+            ],
+            "provenance": "15095de7e183"
+        },
+        {
+            "family": "core",
+            "id": "31-goals",
+            "stem": "31-goals",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-goal-optimize",
+                "memo-goal-score",
+                "memo-goal-score-all"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "06-memo-structure",
+                "13-orchestration",
+                "26-memo-history",
+                "30-primitives",
+                "33-maintenance"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-chronic-add",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-fidelity-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-goal-optimize",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-goal-score",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-goal-score-all",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-rollout-evaluate",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-fidelity-audit",
+                "inferred": false
+            },
+            "gaps": [
+                "terminal output channel (R1)"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "385c1075df91"
+        },
+        {
+            "family": "core",
+            "id": "32-prompt-governance",
+            "stem": "32-prompt-governance",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "08-phases-and-prds",
+                "14-agents-skills-tasks",
+                "15-prompt-generator",
+                "23-requirements",
+                "30-primitives",
+                "31-goals"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-phase-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-prd-generate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-req-template",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-generate",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "prd"
+            ],
+            "provenance": "df2c2d872a41"
+        },
+        {
+            "family": "core",
+            "id": "33-maintenance",
+            "stem": "33-maintenance",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-rollout"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "19-internal-vs-external-communication",
+                "26-memo-history",
+                "27-landing-the-plane",
+                "28-drift",
+                "30-primitives",
+                "31-goals",
+                "32-prompt-governance"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-goal-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-maintenance-score-all",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-maintenance-verify",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-rollout",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "release",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-goal-score-all",
+                "inferred": false
+            },
+            "gaps": [
+                "terminal output channel (R1)"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo"
+            ],
+            "provenance": "c88e95a2e330"
+        },
+        {
+            "family": "core",
+            "id": "34-question-interface",
+            "stem": "34-question-interface",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "05-memo-strategies",
+                "07-revisions-and-questions",
+                "21-human-computer-interaction",
+                "29-behavioral-guardrails",
+                "31-goals"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-goal-optimize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-generate",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "0bb8e7c797e0"
+        },
+        {
+            "family": "core",
+            "id": "35-memo-authoring",
+            "stem": "35-memo-authoring",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "01-philosophy",
+                "05-memo-strategies",
+                "06-memo-structure",
+                "10-proactive-research",
+                "30-primitives",
+                "34-question-interface"
+            ],
+            "implementers": [
+                {
+                    "skill": "image-diagram-excalidraw",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-balance",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-coherence",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-revision-execute",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "visual"
+            ],
+            "provenance": "f863126023d7"
+        },
+        {
+            "family": "core",
+            "id": "36-agent-strategies",
+            "stem": "36-agent-strategies",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "09-contamination-context-handover",
+                "10-proactive-research",
+                "13-orchestration",
+                "14-agents-skills-tasks",
+                "31-goals",
+                "35-memo-authoring"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-chronic-build",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-goal-score",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-goal-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-input-processing",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-mental-model-derive",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-phase-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-research-agent",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "research-workflow",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-persona-audit",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-goal-score",
+                "inferred": false
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "research",
+                "workbench"
+            ],
+            "provenance": "d2ad9bcf0405"
+        },
+        {
+            "family": "core",
+            "id": "37-transcript-reliability",
+            "stem": "37-transcript-reliability",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "03-input-paths",
+                "04-input-pipeline",
+                "09-contamination-context-handover",
+                "10-proactive-research",
+                "30-primitives"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-input-processing",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "becda1339304"
+        },
+        {
+            "family": "core",
+            "id": "38-stage-model",
+            "stem": "38-stage-model",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-rollout",
+                "memo-sop"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "12-rollout",
+                "13-orchestration",
+                "17-git-workflow-and-ids",
+                "27-landing-the-plane"
+            ],
+            "implementers": [
+                {
+                    "skill": "git-merge-strategy",
+                    "role": "primary"
+                },
+                {
+                    "skill": "git-push",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-fidelity-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-add",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-finalize",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-status",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-stop",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-update-checkbox",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-evaluate",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-rollout-execute",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-sop",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "release",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-fidelity-audit",
+                "inferred": false
+            },
+            "gaps": [
+                "Mandatory issue-close cycle after push",
+                "Post-push CodeCov / coverage / overview-page conventions"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo"
+            ],
+            "provenance": "2b8d07c41c29"
+        },
+        {
+            "family": "core",
+            "id": "39-release-and-pinning",
+            "stem": "39-release-and-pinning",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "release"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "16-git-security-versioning",
+                "17-git-workflow-and-ids",
+                "19-internal-vs-external-communication",
+                "33-maintenance"
+            ],
+            "implementers": [
+                {
+                    "skill": "git-push",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-verify",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "release",
+                    "role": "primary"
+                }
+            ],
+            "grader": {
+                "skill": "memo-maintenance-score-all",
+                "inferred": false
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "git",
+                "memo"
+            ],
+            "provenance": "1be30ed3e3d8"
+        },
+        {
+            "family": "core",
+            "id": "40-diagrams",
+            "stem": "40-diagrams",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "06-memo-structure",
+                "21-human-computer-interaction",
+                "35-memo-authoring"
+            ],
+            "implementers": [
+                {
+                    "skill": "image-art-architecture",
+                    "role": "primary"
+                },
+                {
+                    "skill": "image-diagram-excalidraw",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "Artistic image generation (9 art styles, branch-color palettes, image-generator prompts)",
+                "Generated-image tooling (Nano Banana / Google ImageFX prompt pipeline)",
+                "Image asset storage location",
+                "Skill metadata absence"
+            ],
+            "outOfScope": [
+                "image-art-architecture",
+                "image-diagram-excalidraw"
+            ],
+            "clusters": [
+                "memo",
+                "visual"
+            ],
+            "provenance": "b6b2ba3af0b2"
+        },
+        {
+            "family": "core",
+            "id": "41-mental-model",
+            "stem": "41-mental-model",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "12-rollout",
+                "21-human-computer-interaction",
+                "31-goals",
+                "33-maintenance",
+                "34-question-interface"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-mental-model-derive",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-revision-generate",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "answered-question pair format",
+                "User Mental Model store as a primitive"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "7129d21410ef"
+        },
+        {
+            "family": "core",
+            "id": "42-plans",
+            "stem": "42-plans",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-budget-paste",
+                "memo-plan-add",
+                "memo-plan-evaluate",
+                "memo-plan-execute",
+                "memo-plan-finalize",
+                "memo-plan-init",
+                "memo-plan-status",
+                "memo-plan-stop",
+                "memo-plan-update-checkbox"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "06-memo-structure",
+                "08-phases-and-prds",
+                "12-rollout",
+                "13-orchestration",
+                "30-primitives",
+                "38-stage-model"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-budget-paste",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-handover",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-plan-add",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-evaluate",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-execute",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-finalize",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-init",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-status",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-stop",
+                    "role": "primary"
+                },
+                {
+                    "skill": "memo-plan-update-checkbox",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "[PHASE-DONE] output + reset auto-call",
+                "add gate on finalization",
+                "budget / ScheduleWakeup",
+                "checkbox-as-state mechanic",
+                "coexistence gate (direct vs plan)",
+                "conformance report location",
+                "cross-memo phaseRef translation",
+                "executionOrder mandate",
+                "ICL cold-start / bitter lesson",
+                "ICL cold-start gate",
+                "mandatory 7 phase fields",
+                "memo-hoheit over phase order",
+                "next-phase algorithm",
+                "phase-boundary stop discipline",
+                "plan archival lifecycle",
+                "plan conformance model",
+                "plan folder structure",
+                "plan integrity re-check",
+                "plan status terminal format",
+                "plan-done vs memo-done",
+                "plan-status.json budget block",
+                "plan-status.json schema",
+                "plan-stop atomic three steps",
+                "plan.md skeleton",
+                "skill code conventions",
+                "token-budget awareness",
+                "unplanned-memos subroutine",
+                "write-ahead / crash recovery",
+                "write-ahead finalization",
+                "write-ahead marker referenced-not-spec'd"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "code-patterns",
+                "memo"
+            ],
+            "provenance": "699a9ef9c026"
+        },
+        {
+            "family": "core",
+            "id": "43-skill-authoring-and-quality",
+            "stem": "43-skill-authoring-and-quality",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "skill-testing",
+                "specs-to-skills"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-memo-sop-entrypoint",
+                "11-quality-and-finalization",
+                "14-agents-skills-tasks",
+                "23-requirements",
+                "30-primitives",
+                "33-maintenance"
+            ],
+            "implementers": [
+                {
+                    "skill": "image-art-architecture",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "skill-testing",
+                    "role": "primary"
+                },
+                {
+                    "skill": "specs-to-skills",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "skill quality / testing has no spec (Memo-039 core)",
+                "skill-authoring counterpart absent"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "skill",
+                "visual"
+            ],
+            "provenance": "984abffc57c7"
+        },
+        {
+            "family": "core",
+            "id": "44-repository-and-outward-docs",
+            "stem": "44-repository-and-outward-docs",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "repo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "16-git-security-versioning",
+                "17-git-workflow-and-ids",
+                "19-internal-vs-external-communication",
+                "24-tools-registry",
+                "35-memo-authoring"
+            ],
+            "implementers": [
+                {
+                    "skill": "repo-docs-writing",
+                    "role": "primary"
+                },
+                {
+                    "skill": "repo-github-org",
+                    "role": "primary"
+                },
+                {
+                    "skill": "repo-init",
+                    "role": "primary"
+                },
+                {
+                    "skill": "repo-issue",
+                    "role": "primary"
+                },
+                {
+                    "skill": "repo-quality",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "repo-readme",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "BadgeTable org-profile mechanism",
+                "First-commits sequence + CI workflow",
+                "Issue classification taxonomy",
+                "License selection as a conscious decision",
+                "Mermaid diagram usage in READMEs",
+                "Proof policy for UI issues",
+                "Prose writing-style rules",
+                "README block structure and method-doc format",
+                "Repo scaffolding / folder structure"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "repository"
+            ],
+            "provenance": "f2cfbfcfa8e5"
+        },
+        {
+            "family": "core",
+            "id": "45-implementation-fidelity-audit",
+            "stem": "45-implementation-fidelity-audit",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "memo-fidelity-audit"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "07-revisions-and-questions",
+                "11-quality-and-finalization",
+                "12-rollout",
+                "28-drift",
+                "31-goals",
+                "33-maintenance",
+                "38-stage-model"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-fidelity-audit",
+                    "role": "primary"
+                }
+            ],
+            "grader": {
+                "skill": "memo-fidelity-audit",
+                "inferred": false
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo"
+            ],
+            "provenance": "917a89dd08cc"
+        },
+        {
+            "family": "core",
+            "id": "47-node-standards",
+            "stem": "47-node-standards",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [
+                "node-formatting"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "22-tree-cli-recommended-way",
+                "23-requirements",
+                "43-skill-authoring-and-quality",
+                "44-repository-and-outward-docs"
+            ],
+            "implementers": [
+                {
+                    "skill": "node-class-architecture",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "node-environment-manager",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "node-error-codes",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "node-formatting",
+                    "role": "primary"
+                },
+                {
+                    "skill": "node-server-design",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "node-testing",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "node-validation",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "code-patterns"
+            ],
+            "provenance": "cb639c124118"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/00-overview",
+            "stem": "00-overview",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-philosophy",
+                "02-sop-entrypoint",
+                "11-project-structure",
+                "13-knowledge-format-okf",
+                "32-trash"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-project-setup",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "9b81d9215c60"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/01-philosophy",
+            "stem": "01-philosophy",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-philosophy"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-sop-entrypoint",
+                "20-cli",
+                "22-config"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-philosophy",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "806dc37e3607"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/02-sop-entrypoint",
+            "stem": "02-sop-entrypoint",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-sop-entry"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "01-philosophy",
+                "10-root-and-projects",
+                "22-config",
+                "23-hooks-contract"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-addons",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-cli",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-config",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-hooks-contract",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-sop-entry",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "435e0ec645f0"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/10-root-and-projects",
+            "stem": "10-root-and-projects",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-root-projects"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-sop-entrypoint",
+                "11-project-structure",
+                "12-folders",
+                "22-config"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-root-projects",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "b936ceda26f1"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/11-project-structure",
+            "stem": "11-project-structure",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "repo-init"
+            ],
+            "publicEntriesInferred": false,
+            "detailPages": [
+                "00-overview",
+                "10-root-and-projects",
+                "12-folders",
+                "32-trash"
+            ],
+            "implementers": [
+                {
+                    "skill": "repo-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-audit",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-project-setup",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "audit-report-format",
+                "claude-md-runbook-required-sections",
+                "five-step-installation-process",
+                "memo-079-eleven-ecken",
+                "required-claude-md-sections-and-scripts"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "repository",
+                "wiki",
+                "workbench"
+            ],
+            "provenance": "601fc9a1eee8"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/12-folders",
+            "stem": "12-folders",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-folders"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "10-root-and-projects",
+                "11-project-structure",
+                "22-config",
+                "30-wiki",
+                "31-browser-automation",
+                "32-trash"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-environment-scripts",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-folders",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-tmp",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "93521d4d3e8b"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/13-knowledge-format-okf",
+            "stem": "13-knowledge-format-okf",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "wiki-lint"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "11-project-structure",
+                "18-design",
+                "30-wiki",
+                "32-trash"
+            ],
+            "implementers": [
+                {
+                    "skill": "wiki-ingest",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-lint",
+                    "role": "primary"
+                },
+                {
+                    "skill": "wiki-query",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-update",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "Auto-run-before-memo-init coupling",
+                "Non-OKF lint checks (orphans, contradictions, stubs, missing cross-refs)"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "wiki"
+            ],
+            "provenance": "8153958db448"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/15-repos",
+            "stem": "15-repos",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-repos"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "11-project-structure",
+                "12-folders",
+                "22-config",
+                "41-project-architecture"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-repos",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "85d6be52f532"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/16-context",
+            "stem": "16-context",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-context"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "10-root-and-projects",
+                "11-project-structure",
+                "12-folders",
+                "13-knowledge-format-okf",
+                "30-wiki",
+                "41-project-architecture"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-context",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-tmp",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "0e968644d57a"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/17-memo-store",
+            "stem": "17-memo-store",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-memo-store"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "11-project-structure",
+                "12-folders",
+                "26-addons"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-memo-store",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "46add5efebc3"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/18-design",
+            "stem": "18-design",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-design"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "12-folders",
+                "13-knowledge-format-okf",
+                "23-hooks-contract",
+                "30-wiki"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-design",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "52c3266c8317"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/19-tmp",
+            "stem": "19-tmp",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-tmp"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "12-folders",
+                "16-context",
+                "32-trash"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-tmp",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "d347d3a9820c"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/20-cli",
+            "stem": "20-cli",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-cli"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "21-environment-scripts",
+                "30-wiki"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-addons",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-cli",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-config",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-environment-scripts",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-hooks-contract",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-skills-scope",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-validation",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "a64b0f1fa345"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/21-environment-scripts",
+            "stem": "21-environment-scripts",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-environment-scripts"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "12-folders",
+                "20-cli",
+                "22-config",
+                "23-hooks-contract",
+                "24-skills-scope"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-cli",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-environment-scripts",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-skills-scope",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-validation",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "3c59dd90e65c"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/22-config",
+            "stem": "22-config",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-config"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-sop-entrypoint",
+                "12-folders",
+                "23-hooks-contract",
+                "41-project-architecture"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-addons",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-config",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-environment-scripts",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-hooks-contract",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-validation",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "33b53ad87372"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/23-hooks-contract",
+            "stem": "23-hooks-contract",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-hooks-contract"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-sop-entrypoint",
+                "21-environment-scripts",
+                "22-config"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-cli",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-config",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-environment-scripts",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-hooks-contract",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-skills-scope",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-validation",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "6e79f428491f"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/24-skills-scope",
+            "stem": "24-skills-scope",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-skills-scope"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-sop-entrypoint",
+                "21-environment-scripts",
+                "31-browser-automation"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-addons",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-hooks-contract",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-skills-scope",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "5275499d5a65"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/25-validation-overview",
+            "stem": "25-validation-overview",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-validation"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-sop-entrypoint",
+                "20-cli",
+                "21-environment-scripts",
+                "22-config",
+                "23-hooks-contract",
+                "32-trash"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-cli",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-hooks-contract",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-skills-scope",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-validation",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "7b31077cc272"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/26-addons",
+            "stem": "26-addons",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "workbench-addons"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-sop-entrypoint",
+                "12-folders",
+                "20-cli",
+                "22-config",
+                "24-skills-scope"
+            ],
+            "implementers": [
+                {
+                    "skill": "workbench-addons",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-skills-scope",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "workbench"
+            ],
+            "provenance": "35c476755f39"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/30-wiki",
+            "stem": "30-wiki",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "wiki-ingest",
+                "wiki-init",
+                "wiki-query",
+                "wiki-update"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "13-knowledge-format-okf",
+                "20-cli",
+                "41-project-architecture"
+            ],
+            "implementers": [
+                {
+                    "skill": "wiki-ingest",
+                    "role": "primary"
+                },
+                {
+                    "skill": "wiki-init",
+                    "role": "primary"
+                },
+                {
+                    "skill": "wiki-lint",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-query",
+                    "role": "primary"
+                },
+                {
+                    "skill": "wiki-update",
+                    "role": "primary"
+                },
+                {
+                    "skill": "workbench-project-setup",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "CLAUDE.md auto-extension contract",
+                "Ingest extraction rules (summary caps, chunking, dedup)",
+                "Parallel sub-agent ingest threshold + central index rebuild",
+                "Query answer discipline (max-5-pages, mandatory citations, contradiction handling)",
+                "Stale detection definition (mtime vs updated)",
+                "Wiki internal directory taxonomy",
+                "Wiki local-git + log.md store"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "wiki",
+                "workbench"
+            ],
+            "provenance": "b804937eeba1"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/31-browser-automation",
+            "stem": "31-browser-automation",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [
+                "research-best-practice-playwright",
+                "research-scrape-docs"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "11-project-structure",
+                "12-folders",
+                "32-trash"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-research-agent",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "research-best-practice-playwright",
+                    "role": "primary"
+                },
+                {
+                    "skill": "research-scrape-docs",
+                    "role": "primary"
+                },
+                {
+                    "skill": "research-workflow",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [
+                "browser-automation-method",
+                "documentation-scraping-method",
+                "playwright-operational-rules",
+                "temp-cleanup-vs-trash",
+                "untrusted-web-content-banner"
+            ],
+            "outOfScope": [],
+            "clusters": [
+                "research"
+            ],
+            "provenance": "b271075831a6"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/32-trash",
+            "stem": "32-trash",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "11-project-structure"
+            ],
+            "implementers": [
+                {
+                    "skill": "wiki-init",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-update",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-project-setup",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-tmp",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-validation",
+                    "role": "contributing"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "wiki",
+                "workbench"
+            ],
+            "provenance": "79f1679388cf"
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/41-project-architecture",
+            "stem": "41-project-architecture",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-sop-entrypoint",
+                "10-root-and-projects",
+                "11-project-structure",
+                "13-knowledge-format-okf",
+                "30-wiki"
+            ],
+            "implementers": [
+                {
+                    "skill": "memo-maintenance-score",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-score-all",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "memo-maintenance-verify",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "wiki-lint",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-audit",
+                    "role": "contributing"
+                },
+                {
+                    "skill": "workbench-config",
+                    "role": "contributing"
+                }
+            ],
+            "grader": {
+                "skill": "memo-maintenance-score",
+                "inferred": false
+            },
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "memo",
+                "wiki",
+                "workbench"
+            ],
+            "provenance": "c157f9c13e7a"
+        },
+        {
+            "family": "session",
+            "id": "session/00-overview",
+            "stem": "00-overview",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-overview"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-genesis-root",
+                "02-enforcement",
+                "03-recovery",
+                "10-sop"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-overview",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "f0c4abf91fa5"
+        },
+        {
+            "family": "session",
+            "id": "session/01-genesis-root",
+            "stem": "01-genesis-root",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-genesis-root"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-enforcement",
+                "03-recovery",
+                "10-sop"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-genesis-root",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "2c9cc24f8fd3"
+        },
+        {
+            "family": "session",
+            "id": "session/02-enforcement",
+            "stem": "02-enforcement",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-enforcement"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-genesis-root",
+                "03-recovery"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-enforcement",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "cde5478ba3e0"
+        },
+        {
+            "family": "session",
+            "id": "session/03-recovery",
+            "stem": "03-recovery",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-recovery"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-genesis-root",
+                "02-enforcement"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-recovery",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "ee6a0794e99b"
+        },
+        {
+            "family": "session",
+            "id": "session/04-cli",
+            "stem": "04-cli",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-cli"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "05-config-cascade",
+                "07-doctor-init"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-cli",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "45b012c1010f"
+        },
+        {
+            "family": "session",
+            "id": "session/05-config-cascade",
+            "stem": "05-config-cascade",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-config-cascade"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-genesis-root",
+                "02-enforcement",
+                "06-namespace-registry",
+                "07-doctor-init"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-config-cascade",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "dc1526d15c91"
+        },
+        {
+            "family": "session",
+            "id": "session/06-namespace-registry",
+            "stem": "06-namespace-registry",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-namespace-registry"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-enforcement",
+                "05-config-cascade",
+                "07-doctor-init",
+                "10-sop"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-namespace-registry",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "c92c914d2610"
+        },
+        {
+            "family": "session",
+            "id": "session/07-doctor-init",
+            "stem": "07-doctor-init",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-doctor-init"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-enforcement",
+                "04-cli",
+                "05-config-cascade",
+                "06-namespace-registry"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-doctor-init",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "53e19c33083b"
+        },
+        {
+            "family": "session",
+            "id": "session/08-identity-pin",
+            "stem": "08-identity-pin",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-identity-pin"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-genesis-root",
+                "02-enforcement",
+                "03-recovery",
+                "09-root-detection"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-identity-pin",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "89e0745ec1ae"
+        },
+        {
+            "family": "session",
+            "id": "session/09-root-detection",
+            "stem": "09-root-detection",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-root-detection"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-genesis-root",
+                "04-cli",
+                "05-config-cascade",
+                "08-identity-pin"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-root-detection",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "2fa1131784bd"
+        },
+        {
+            "family": "session",
+            "id": "session/10-sop",
+            "stem": "10-sop",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-sop"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "01-genesis-root",
+                "06-namespace-registry",
+                "11-common-denominator",
+                "12-instances",
+                "13-conventions"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-sop",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "6bbdd9297e20"
+        },
+        {
+            "family": "session",
+            "id": "session/11-common-denominator",
+            "stem": "11-common-denominator",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-common-denominator"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "10-sop",
+                "12-instances"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-common-denominator",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "b63a24cb3653"
+        },
+        {
+            "family": "session",
+            "id": "session/12-instances",
+            "stem": "12-instances",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-instances"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "10-sop",
+                "11-common-denominator"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-instances",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "08dc4e817887"
+        },
+        {
+            "family": "session",
+            "id": "session/13-conventions",
+            "stem": "13-conventions",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-conventions"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "10-sop",
+                "11-common-denominator",
+                "12-instances"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-conventions",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "38972f1ae7bc"
+        },
+        {
+            "family": "session",
+            "id": "session/14-migration",
+            "stem": "14-migration",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-migration"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "03-recovery",
+                "05-config-cascade",
+                "10-sop"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-migration",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "378f81ef34e1"
+        },
+        {
+            "family": "session",
+            "id": "session/15-addons",
+            "stem": "15-addons",
+            "sopAnchor": "10-sop",
+            "publicEntries": [
+                "session-addons"
+            ],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "10-sop",
+                "11-common-denominator"
+            ],
+            "implementers": [
+                {
+                    "skill": "session-addons",
+                    "role": "primary"
+                }
+            ],
+            "grader": null,
+            "gaps": [],
+            "outOfScope": [],
+            "clusters": [
+                "session"
+            ],
+            "provenance": "02f90cbf4bba"
+        }
+    ]
+}

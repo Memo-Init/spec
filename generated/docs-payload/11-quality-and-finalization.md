@@ -6,7 +6,7 @@ spec_file: "11-quality-and-finalization.md"
 order: 11
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/11-quality-and-finalization.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/11-quality-and-finalization.md."
@@ -224,6 +224,132 @@ The recommendation fires when, at a phase boundary, either the high-load-with-sc
 
 ---
 
+## Conformity Requirements
+
+The finalization-gate rules above are authored **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](/specification/memo-authoring/) and [23-requirements.md](/specification/requirements/)): each rule's `statement` faces generation and its `check` faces the finalization gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The blocks below are the machine-readable source the requirement store is **harvested** from — the gate's own conformity as the worked example of the requirement model. These are the same checks the gate set above runs; this section is their data-backed form, not a second standard.
+
+The open-questions gate is a hard yes/no scan, so its `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-830",
+  "title": "Open-questions-empty finalization gate",
+  "statement": "Finalization MUST FAIL while the `## Open Questions` area holds any unresolved `### F{N}` entry, unless a remaining entry is explicitly marked deliberately open. The gate scans the open-questions area and lists the failing question numbers and titles rather than passing silently.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["finalization-gates", "open-questions"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The Open Questions area contains no unresolved F-entry, or each remaining entry is explicitly marked deliberately open",
+      "On failure the gate names the failing question numbers and titles instead of passing silently"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-831",
+  "title": "Rollout entry points present and filesystem-checked",
+  "statement": "A finalized memo MUST carry a `## Rollout Entry Points` section listing at least one concrete, numbered path (no template placeholders) with a brief reason for the reading order; the gate FAILs if the section is missing, empty, or placeholder-only. Each listed path is then checked for filesystem existence, which is a WARN rather than a FAIL because some entry points are created by the rollout itself.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["finalization-gates", "rollout-entry-points"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The Rollout Entry Points section exists with at least one concrete numbered path and no placeholders",
+      "Each listed path's filesystem existence is reported, with a miss raising WARN rather than FAIL"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The completeness gate is judged by a fresh-context reviewer against the union of prior revisions; a quality dimension (how completely intent is preserved) genuinely belongs here but is not yet written, so the slot is the honest `todo`:
+
+```requirement
+{
+  "id": "REQ-832",
+  "title": "Completeness across revisions at finalization",
+  "statement": "At finalization, every information item and topic present in any preceding revision MUST be preserved in the finalized revision: a topic counts as preserved when it is still present, or explicitly resolved, merged, or marked deliberately dropped with a reason. A topic that is simply absent — present in an earlier revision but missing from the finalized one with no recorded decision — makes the gate FAIL.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["finalization-gates", "completeness"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer takes the union of information items and topics across all preceding revisions as the required set and judges whether the finalized revision preserves each. PASS when every item is present or carries an explicit resolve/merge/drop-with-reason decision; BLOCKED when any item is silently absent; INCONCLUSIVE when the prior revisions could not be read.",
+    "verify": [
+      "Collect the union of information items and topics across every preceding revision",
+      "Confirm each is present in the finalized revision or carries an explicit resolve/merge/drop decision"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+```requirement
+{
+  "id": "REQ-833",
+  "title": "Rollout-handover document written at finalization",
+  "statement": "On a rollout-ready verdict, finalization MUST write a rollout-handover document at the memo's fixed handover path, carrying the per-phase clarified decisions, the frozen execution order, the accepted risks, and the rollout entry points. It is written at finalization and read at rollout start so the empty rollout context never re-decides; writing is NO-OVERWRITE — an existing handover document is versioned or confirmed, never silently replaced.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["finalization-gates", "rollout-handover"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A rollout-ready verdict produces a handover document at the memo's fixed handover path carrying per-phase decisions, the execution order, accepted risks, and entry points",
+      "An existing handover document is versioned or confirmed, never silently overwritten"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "REQ-834",
+  "title": "Sub-memo HARD-STOP at finalization",
+  "statement": "A memo created autonomously as a sub-memo that has not yet received any user editing MUST NOT finalize. When the finalize step detects that the latest revision was produced autonomously and no user revision exists on top of it, it stops with a HARD-STOP and runs no gates; the resolution is for the user to give feedback first (creating a user revision), after which finalization proceeds normally.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["finalization-gates", "sub-memo"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A sub-memo whose latest revision was produced autonomously with no user revision on top does not finalize",
+      "The finalize step returns a HARD-STOP without running the gate set in that condition"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `drift-resolution` — contributing
+- `git-commit` — contributing
+- `git-push` — contributing
+- `git-security` — contributing
+- `memo-balance` — primary
+- `memo-coherence` — primary
+- `memo-evidence` — primary
+- `memo-fidelity-audit` — contributing
+- `memo-finalize` — primary
+- `memo-prds-validate` — contributing
+- `memo-references` — primary
+- `memo-research-agent` — contributing
+- `memo-revision-consolidate` — contributing
+- `memo-rollout` — contributing
+- `memo-rollout-generate` — contributing
+- `repo-quality` — contributing
+- `workbench-persona-audit` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [10-proactive-research.md](/specification/proactive-research/) — the research that closes `[ASSUMPTION]` / `[CONJECTURE]` items before gate 1 and gate 2 are checked.

@@ -6,7 +6,7 @@ spec_file: "42-plans.md"
 order: 42
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/42-plans.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/42-plans.md."
@@ -129,6 +129,24 @@ A rollout runs in one of two modes, and both coexist. In the **direct path**, a 
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-budget-paste` — primary
+- `memo-handover` — contributing
+- `memo-plan-add` — primary
+- `memo-plan-evaluate` — primary
+- `memo-plan-execute` — primary
+- `memo-plan-finalize` — primary
+- `memo-plan-init` — primary
+- `memo-plan-status` — primary
+- `memo-plan-stop` — primary
+- `memo-plan-update-checkbox` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [./30-primitives.md](/specification/primitives/) — the eleven primitives, of which the plan is the one that spans many memos.

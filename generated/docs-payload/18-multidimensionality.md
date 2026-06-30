@@ -6,7 +6,7 @@ spec_file: "18-multidimensionality.md"
 order: 18
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/18-multidimensionality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/18-multidimensionality.md."
@@ -50,6 +50,17 @@ The coordination happens at the **memo** level (the planning unit), not at the r
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `git-merge-strategy` — contributing
+- `git-push` — contributing
+- `memo-plan-add` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) — the per-repo pull request and the memo-ID trail that ties the repositories together.

@@ -6,7 +6,7 @@ spec_file: "11-project-structure.md"
 order: 11
 section: "Workbench"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/workbench/0.1.0/11-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/11-project-structure.md."
@@ -49,6 +49,68 @@ A project **MUST** preserve all three. The guarantee is the precondition for wor
 
 ---
 
+## Conformity Requirements
+
+The local guarantee above is structural, so its rules are checkable. The blocks below are the prose-first, machine-readable form of this chapter's binding `MUST`s — each `statement` faces generation (it shapes how a project is laid out) and each `check` faces the structure audit and the push gate. They are the source the workbench requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+
+The root-is-local guarantee is a hard yes/no fact — there is either an enclosing repository or there is not — so its `check` is the whole story and its `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-950",
+  "title": "Project root and memo store are never git repositories",
+  "statement": "A project under `projects/<name>/` MUST NOT contain a git repository at the project root, and MUST NOT contain one under the memo store. The only git units in a project are the repositories under `repos/`; everything outside `repos/` stays local by construction, so material that has no enclosing repository cannot be pushed.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["structure", "local-guarantee"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No `.git` directory exists at the project root",
+      "No `.git` directory exists under the project's memo store",
+      "Every git working tree in the project resolves to a path under `repos/`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The egress rule is a content judgement on what may leave the local context, so it is delegated to the standalone security check rather than a structural assertion:
+
+```requirement
+{
+  "id": "REQ-951",
+  "title": "The only egress channel carries no private data",
+  "statement": "A project's only sanctioned channel out of the local environment, besides the code in `repos/`, is GitHub Issues, written in neutral, public-safe language and referenced by memo ID. Issue text MUST NOT carry private data, absolute machine paths, secrets, or personal information; the same security check that gates staged code gates issue text.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["egress", "security", "issues"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "skill",
+    "skill": "git-security",
+    "artifact": "git-security-report",
+    "presence": "required",
+    "verify": [
+      "Run the security check over the issue text exactly as over staged code",
+      "Confirm no secret, absolute path, or personal datum is present"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `repo-init` — contributing
+- `wiki-init` — contributing
+- `workbench-audit` — primary
+- `workbench-project-setup` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [10-root-and-projects.md](/specification/root-and-projects/) — the workbench-root vs. project split that this guarantee spans.

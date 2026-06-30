@@ -6,7 +6,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/session/0.1.0/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/02-enforcement.md."
@@ -149,6 +149,147 @@ The gate is wired into `~/.claude/settings.json` as a PreToolUse hook on the `Sk
 
 ---
 
+## Conformity Requirements
+
+This chapter is the session family's **`requirementsRef`** — the anchor the family manifest points at for its requirement standard ([23-requirements.md](/specification/requirements/)) — so it carries the family's **richest** inline set. The binding `MUST`s above are authored here **prose-first**: each block's `statement` faces generation (it shapes how a gate, a config, or a CLI leaf is built) and its `check` faces the finalization gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The structured blocks below are the machine-readable source the per-entry requirement store is **harvested** from. Several rules below describe the always-on PreToolUse hook, which is **spec'd-but-not-yet-armed-live**: those carry an honest `grade: todo` (the score belongs there but the target is not yet shipped), while the rules already enforced by a shipped CLI leaf carry a hard `binary` grade.
+
+The gate's central safety property is a hard-block when the predecessor SOP is genuinely absent. The hook is not yet armed live, so the grade is the honest `todo`:
+
+```requirement
+{
+  "id": "REQ-982",
+  "title": "PreToolUse gate hard-blocks a missing predecessor SOP",
+  "statement": "The PreToolUse precondition gate MUST hard-block a gated entry point — DENY with exit 2 — when the required predecessor SOP is genuinely absent (the transcript is readable AND no predecessor `attributionSkill` receipt is present). The DENY MUST be a self-redirect that names the predecessor to read first, after which the same entry point passes; it MUST NOT be a terminal dead end.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "enforcement", "pre-hook"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "With a readable transcript carrying no predecessor attributionSkill receipt, the gate returns DENY with process exit 2",
+      "The DENY message names the predecessor SOP the agent must read before retrying",
+      "Once the predecessor receipt appears in the transcript, the same entry point resolves to ALLOW (exit 0)"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+Whether the predecessor signal is read structurally rather than as forgeable prose is a hard yes/no contract (REQ-SS-SIGNAL), so its `check` is the whole story and its grade is `binary`:
+
+```requirement
+{
+  "id": "REQ-983",
+  "title": "The predecessor signal is jq-structured, never a substring",
+  "statement": "The predecessor signal MUST be read jq-structured from the harness-authored `attributionSkill` field of the session transcript, never as a raw substring match over transcript text — transcript content is user- and model-influenced, so a substring grep is a forgeable gate. Only the structured `attributionSkill` value the harness writes is trusted, and the scan MUST be bounded and BSD-safe (`tail -r` + early exit, never `tac`).",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "enforcement", "anti-cheat"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The gate derives the predecessor receipt by parsing the structured attributionSkill field, not by grepping transcript prose",
+      "A transcript whose prose mentions the predecessor name but carries no attributionSkill receipt does NOT satisfy the gate",
+      "The transcript scan is bounded and BSD-safe (tail -r with early exit, never tac)"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The governing safety contract — never a lockout on trouble — is also a hard yes/no rule (REQ-SS-FAILOPEN / REQ-SS-CONFIG-LOUD), so it is `binary`:
+
+```requirement
+{
+  "id": "REQ-984",
+  "title": "Infra and config faults fail open and LOUD, never a lockout",
+  "statement": "Any infrastructure or configuration problem — an absent or malformed `.session/config.json`, a missing `jq`, an empty or unreadable transcript path, or an edge to a not-installed skill — MUST fail OPEN (ALLOW, exit 0 with a stderr note) and MUST NEVER produce a lockout. An absent `.session/config.json` additionally emits a LOUD SessionStart warning so the missing entry point is noticed rather than silently tolerated.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "enforcement", "fail-open"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each infra/config fault (absent or malformed config, missing jq, unreadable transcript, dangling edge) resolves to ALLOW with exit 0 and a stderr note",
+      "An absent .session/config.json additionally surfaces a loud SessionStart warning",
+      "No infra/config fault path can reach a DENY"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Refusing a dangling `when:pre` edge before it can ever gate a live session (REQ-SS-EDGEVALID) is enforced by a shipped CLI leaf — a `tool` check, a hard yes/no rule (`grade: binary`), and one of the few that is **checkable now**:
+
+```requirement
+{
+  "id": "REQ-985",
+  "title": "registry-validate refuses a dangling when:pre edge",
+  "statement": "A build/runtime `registry-validate` MUST refuse a dangling `when:pre` edge: every edge whose `entrypoint` or `requires` skill is not installed under the skills root MUST be reported with `status:false` and a non-empty `problems[]`, so a lockout edge is caught before it can ever gate a live session.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "enforcement", "registry-validate"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "session-registry-validate-dangling-edge",
+    "verify": [
+      "Run `memo session registry-validate` against a registry whose when:pre edge points at an absent skill",
+      "Assert the envelope reports status:false with a non-empty problems[] naming the dangling edge"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The disable kill-switch must short-circuit the gate before any other evaluation (REQ-SS-DISABLE); the switch lives in the not-yet-armed hook, so the grade is the honest `todo`:
+
+```requirement
+{
+  "id": "REQ-986",
+  "title": "The disable kill-switch short-circuits to ALLOW first",
+  "statement": "A disable kill-switch — an environment variable AND a sentinel file — MUST short-circuit the gate to ALLOW as its very first action, before any other evaluation, so an operator can always recover the session from a misbehaving gate without editing the hook.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "enforcement", "kill-switch"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "When the disable env var or the sentinel file is set, the gate returns ALLOW (exit 0) before evaluating any edge",
+      "The kill-switch is honored regardless of config or transcript state"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+Whether the policy-checkpoint branch only ever redirects (never hard-locks, never gates the workflow entry skills — REQ-SS-POLICY / REQ-SS-WORKFLOW) is a process judgment best made by a fresh-context evaluator; the branch is part of the not-yet-armed hook, so the grade is `todo`:
+
+```requirement
+{
+  "id": "REQ-987",
+  "title": "Policy checkpoints redirect only, and never gate the workflow",
+  "statement": "A policy checkpoint (`assertions[]` row) MUST gate only as `onMissing:\"redirect\"` — a DENY-as-redirect that names exactly the unread standards and lets the same checkpoint pass once they are read — and MUST NEVER be a hard lock. Checkpoints sit only on landing skills (`memo-finalize` / `git-push`); `memo-init` / `memo-plan` / `memo-revision-*` are never checkpoints and run unimpeded. A non-resolving `requiresGroup` member fails open (best-effort).",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "enforcement", "policy-checkpoint"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer confirms every assertions[] checkpoint resolves only to ALLOW or DENY-as-redirect (never a terminal block), that memo-init / memo-plan / memo-revision-* are absent from the checkpoint set, and that an unresolved group member degrades to fail-open ALLOW. PASS when all hold; BLOCKED when a checkpoint can hard-lock or a workflow-entry skill is gated; INCONCLUSIVE when the policy blocks could not be resolved.",
+    "verify": [
+      "Resolve every assertions[] checkpoint row and its requiresGroup",
+      "Confirm each is redirect-only and that no workflow-entry skill is a checkpoint"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-enforcement` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [03-recovery.md](/specification/recovery/) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.

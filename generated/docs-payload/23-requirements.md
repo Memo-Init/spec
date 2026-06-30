@@ -6,7 +6,7 @@ spec_file: "23-requirements.md"
 order: 23
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/23-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/23-requirements.md."
@@ -46,7 +46,7 @@ flowchart LR
 
 Beside `statement` and `check`, a requirement **MAY** carry an optional third axis: a `grade`. Where the `check` answers a binary question — is the requirement met or not — the `grade` answers a *how well* question, contributing a weighted dimension to a continuous quality score. Validation is the `check` in action; it is not a separate object. Grading is an optional layer on top: the rule of thumb is that a hard yes/no rule needs only a `check`, while a quality spectrum earns a `grade`.
 
-The slot is **always available and carries one of three honest states**, so an author must *decide* on it rather than silently leave it out:
+The slot is **optional** — a requirement need not carry a `grade` at all (the schema leaves it out by default, and most entries do). When an author does engage it, it carries one of three honest states rather than an ambiguous blank:
 
 | `grade` state | Meaning |
 |---------------|---------|
@@ -54,13 +54,15 @@ The slot is **always available and carries one of three honest states**, so an a
 | `binary` | Deliberately **no** score — a hard yes/no rule whose `check` is the whole story. |
 | `todo` | A grade **belongs** here but is not yet written — a visible, harvestable work item, never a silent gap. |
 
-The `todo` state is the point of the slot: a missing grade is made **visible** rather than swallowed, the same "empty means an honest not-yet" principle the registry applies elsewhere. `grade` is one more optional key on the open entry schema — additive, never a breaking change. When the object form is used, the dimensions and weights feed the aggregate quality model — its scale, bands, production gate, and veto floor — specified in the grading model later in this chapter.
+The `todo` state is what the slot is *for* once it is engaged: a grade that is owed but not yet written is made **visible** rather than swallowed, the same "empty means an honest not-yet" principle the registry applies elsewhere. `grade` is one more optional key on the open entry schema — additive, never a breaking change. When the object form is used, the dimensions and weights feed the aggregate quality model — its scale, bands, production gate, and veto floor — specified in the grading model later in this chapter.
 
 ---
 
 ## Storage and Scale
 
-The **spec is the source; the store is generated.** The authoritative requirement is the declaration authored prose-first into a spec chapter — its `statement`, its `check`, and its optional `grade`. A **harvest** step reads those inline declarations and generates the per-entry store under `.memo/_requirements/`, one file per entry, which the runtime then reads. The arrow runs **spec → harvest → store → trigger**, not store → spec: the store is a derived index, never the source of truth.
+The **target model is spec-as-source: the store is generated, not hand-maintained.** The authoritative requirement is the declaration authored prose-first into a spec chapter — its `statement`, its `check`, and its optional `grade`. A **harvest** step reads those inline declarations and generates the per-entry store under `.memo/_requirements/`, one file per entry, which the runtime then reads. In that end-state the arrow runs **spec → harvest → store → trigger**, not store → spec: the store is then a derived index rather than an independently maintained source.
+
+> **Migration status — target model, not yet realized.** The spec → harvest → store direction above is the **normative target**, not a description of the present. Today the store is still largely authored directly — by skills and by hand — and **harvest is opt-in**: only the rules already lifted into inline spec declarations flow through it, while the rest of the store predates the harvest path and is in practice a co-authored source. The system is **migrating toward** the generated store one curated rule at a time; the prose-first guard removes drift for each rule as it is lifted, not retroactively for the whole store. Read the end-state as the direction of travel, not as a claim about the current store.
 
 The store is a sibling of the memos under `.memo/` rather than a child of any single memo, so the generated set is shared across all memos of a project instead of trapped inside one. Because the store is generated rather than hand-maintained, it scales to hundreds of fine-grained entries without any single file becoming unmanageable: the curated rules live in the spec, and the store **MAY** additionally carry runtime entries that did not originate from a spec chapter.
 
@@ -198,6 +200,8 @@ A requirement set thereby doubles as an **eval set**: it is the explicit definit
 
 ## The Grading Model
 
+> **Build status — referenced, not yet built.** The scoring head described in this section — the continuous **1.0–5.0** scale, the bands, the **production gate 3.5**, the veto floor, the `GR-` codes, and the `checkMode` tiers — is **specified by reference, not yet implemented**. The requirement schema today carries only the optional `grade` axis (`binary` / `todo` / `{ dimension, weight }`); no code computes bands, enforces a numeric gate, assigns `GR-` codes, or runs `checkMode` tiers. Treat this section as the **target** grading contract the system imports by reference and builds against — not as a gate that runs today.
+
 When a requirement carries an object `grade` (the grade axis above), its dimension feeds a shared **grading model** — one reusable scoring head that every family follows, rather than each domain re-inventing its own. The model is deliberately the same discipline already proven in a sibling content-grading specification; it is summarised here as the common head and imported by reference, not copied.
 
 **Weighted, continuous scale.** A grade is a weighted sum of named **dimensions** on a continuous **1.0–5.0** scale. The applicable dimension weights **MUST** sum to 100%. A dimension that does not apply to a given work type is **dropped and its weight redistributed** across the rest — never scored as a failure, so an inapplicable axis cannot silently sink a score.
@@ -212,7 +216,7 @@ When a requirement carries an object `grade` (the grade axis above), its dimensi
 | Needs work | 2.5–3.4 |
 | Failing | 1.0–2.4 |
 
-The **production gate is 3.5**: work below it is not ready. A family **MAY** set a stricter gate but **MUST NOT** lower it below 3.5.
+In the target model the **production gate is 3.5**: work scoring below it is not production-ready, and a family **MAY** set a stricter gate but **MUST NOT** lower it below 3.5. This numeric gate is **not yet wired into finalization** — finalization today runs the binary quality gate of [11-quality-and-finalization.md](/specification/quality-and-finalization/), not a 1.0–5.0 score (see the build-status note above).
 
 **Veto through the scale, not beside it.** There is no separate fail flag. A `CRITICAL`-severity miss **floors its dimension to 1.0**; because one floored weighted dimension drags the aggregate under the gate on its own, the single weighted sum is the only source of the verdict.
 
@@ -228,6 +232,165 @@ The **production gate is 3.5**: work below it is not ready. A family **MAY** set
 
 ---
 
+## Conformity Requirements
+
+The requirement model described above is itself governed by binding rules, and those rules are authored here the same prose-first way every family authors its conformance ([35-memo-authoring.md](/specification/memo-authoring/)): each block's `statement` faces generation — it shapes how a requirement entry, a matcher, or a runner is built — and its `check` faces the finalization gate, verifying a built artifact with a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The structured blocks below are the machine-readable source the per-entry store is **harvested** from; they make the requirement model satisfy its own contract.
+
+An entry is well-formed only against the schema — required fields, the `id` pattern, and the three scope axes — so the first rule is a hard structural gate (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-840",
+  "title": "Requirement entry conforms to the entry schema",
+  "statement": "A requirement entry MUST conform to the entry schema: it MUST carry the required fields (`id`, `title`, `statement`, `scope`, `check`, `source`, `severity`, `origin`); its `id` MUST match the pattern `REQ-NNN` (three or more digits); and its `scope` MUST declare the three array axes `repos`, `categories`, and `tags`, where an empty array is the wildcard 'all'.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "schema"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Validating an entry against the requirement schema reports no missing-field error",
+      "The `id` matches the pattern `REQ-` followed by three or more digits",
+      "`scope` carries `repos`, `categories`, and `tags`, each an array, where an empty array means wildcard"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A `check` is meaningful only when its `kind` brings its required subfields, so the kind-and-subfields pairing is its own gate (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-841",
+  "title": "check declares a valid kind with its required subfields",
+  "statement": "Every entry's `check` MUST declare a `kind` of `assertion`, `tool`, `evaluator`, or `skill`, and MUST carry the subfields that kind requires: `assertion` requires a non-empty `assertions`; `tool` requires `tool` and `tactic`; `evaluator` requires `rubric`; `skill` requires `skill`, `artifact`, and `verify`.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "schema"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "`check.kind` is one of assertion, tool, evaluator, skill",
+      "An assertion check carries a non-empty `assertions`; a tool check carries `tool` and `tactic`; an evaluator check carries `rubric`; a skill check carries `skill`, `artifact`, and `verify`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Selection must be reproducible, so the three-axis matcher is constrained to be deterministic — a hard yes/no rule (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-842",
+  "title": "Requirement selection is a deterministic three-axis match",
+  "statement": "Requirement selection MUST be a deterministic three-axis match: within a single axis an empty `scope` array is a wildcard and a non-empty array matches by exact-value intersection (never substring); across the three axes the result is an AND, so an entry applies only when every populated axis shares at least one value with the work context. A fully empty scope MUST match every context.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "matching"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Re-running the matcher on the same entry and the same work context yields the same membership decision",
+      "An entry with an empty axis matches any value on that axis; a populated axis matches only by exact intersection",
+      "An entry whose scope is empty on all three axes matches every context"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Every result must be honest about whether it actually ran, so the ternary-status and machine-evidence rule is a blocker (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-843",
+  "title": "Every check resolves to a ternary, evidence-backed status",
+  "statement": "Every check MUST resolve to a ternary status — `PASS`, `BLOCKED`, or `INCONCLUSIVE` — and MUST report `INCONCLUSIVE`, never `PASS`, when the check could not actually run. Each check SHOULD emit a machine artifact (a file list, an exit code, or a state hash) as reproducible evidence, and the runner MUST separate claim from evidence: only the machine sets the status, never a worker-supplied summary.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "runner"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A check result status is one of PASS, BLOCKED, INCONCLUSIVE",
+      "A check that did not execute reports INCONCLUSIVE, not a default PASS",
+      "The runner derives status from machine evidence read from real repo state, not from a worker-supplied claim"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether the verifier was independent of the doer is a process judgment, so the anti-cheat separation is checked by a fresh-context evaluator (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-844",
+  "title": "The doer is not the grader",
+  "statement": "Verification MUST run independently of the work it checks: the agent that performed the work MUST NOT be the agent that verifies it. Applicable checks are run adversarially in a fresh context by a separate verifier, so the proof of a requirement does not rest on the work that claimed to satisfy it.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "anti-cheat"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer confirms the verifier that produced a requirement's result was a separate agent from the one that produced the work, running with no inherited context. PASS when verification provenance shows an independent fresh-context verifier; BLOCKED when the doer graded its own work; INCONCLUSIVE when provenance could not be established.",
+    "verify": [
+      "Inspect the run provenance for the requirement's result",
+      "Confirm the verifier context is distinct from the doer context"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The store must survive a gate run untouched and rebuild reproducibly, so append-safety and idempotent harvest are one blocker (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-845",
+  "title": "The per-entry store is append-safe and idempotently harvested",
+  "statement": "The per-entry store under `.memo/_requirements/` MUST be append-safe: the gate and the runner MUST NOT overwrite or delete a `.req.json` (NO-OVERWRITE / NO-DELETE), writing only their own report artifacts. The harvest and index generation that build the store MUST be idempotent and deterministic — running them twice over an unchanged source produces a byte-identical result with a stable sort by `id`.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "store"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "After a gate or runner pass, the set of `.req.json` files is byte-identical before and after",
+      "Running harvest and index generation twice over unchanged input yields a byte-identical store",
+      "Store entries are sorted deterministically by `id`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `git-push` — contributing
+- `git-security` — contributing
+- `image-pencil-playwright-diff` — primary
+- `memo-finalize` — contributing
+- `memo-phase-evaluate` — contributing
+- `memo-phase-execute` — contributing
+- `memo-phase-generate` — contributing
+- `memo-prd-evaluate` — contributing
+- `memo-prd-generate` — contributing
+- `memo-prds-validate` — contributing
+- `memo-req-registry` — primary
+- `memo-req-runner` — primary
+- `memo-req-store` — primary
+- `memo-req-template` — primary
+- `memo-rollout-evaluate` — contributing
+- `memo-rollout-generate` — contributing
+- `repo-github-org` — contributing
+- `repo-quality` — contributing
+- `specs-to-skills` — contributing
+- `wiki-lint` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [24-tools-registry.md](/specification/tools-registry/) — the parallel data folder; `check.kind: tool` requirements point into the tools registry for the tool and tactic that verify them.

@@ -6,7 +6,7 @@ spec_file: "36-agent-strategies.md"
 order: 36
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/36-agent-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/36-agent-strategies.md."
@@ -23,6 +23,26 @@ When work decomposes into independent units — one repo, one file, one chapter,
 
 Measurement and grading are **never** done by the session that did the work — a working session reports "all done" and hides the gap. The strategy is to evaluate in a **fresh context**: a separate, unbiased reader that inspects the real artifacts rather than trusting a PASS-report. This is the operating principle behind goal scoring and maintenance scoring ([31-goals.md](/specification/goals/)); as a general agent strategy it applies wherever a result must be judged honestly — spawn a clean reader, hand it the artifacts and the intent, and let it measure against reality. The contamination boundary that makes a context "fresh" is defined in [09-contamination-context-handover.md](/specification/contamination-context-handover/).
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-chronic-build` — contributing
+- `memo-goal-score` — contributing
+- `memo-goal-score-all` — contributing
+- `memo-input-processing` — contributing
+- `memo-maintenance-score` — contributing
+- `memo-maintenance-score-all` — contributing
+- `memo-mental-model-derive` — contributing
+- `memo-phase-evaluate` — contributing
+- `memo-research-agent` — contributing
+- `memo-rollout-evaluate` — contributing
+- `research-workflow` — contributing
+- `workbench-persona-audit` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [13-orchestration.md](/specification/orchestration/) — the orchestration machinery these strategies run on (the boundary: machinery there, patterns here).

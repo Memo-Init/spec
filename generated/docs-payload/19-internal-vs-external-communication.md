@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/19-internal-vs-external-communication.md."
@@ -166,6 +166,26 @@ The clean-terminal *mechanisms* that make this enforceable rather than merely as
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `git-commit` — contributing
+- `git-push` — contributing
+- `git-security` — contributing
+- `image-art-architecture` — contributing
+- `memo-req-runner` — contributing
+- `repo-docs-writing` — contributing
+- `repo-github-org` — contributing
+- `repo-issue` — contributing
+- `repo-quality` — contributing
+- `repo-readme` — contributing
+- `workbench-audit` — contributing
+- `workbench-persona-audit` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [00-overview.md](/specification/overview/) — conformance language and the self-explanatory-to-a-stranger requirement.

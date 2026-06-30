@@ -6,7 +6,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/30-primitives.md."
@@ -114,7 +114,7 @@ Related: [25-strands.md](/specification/strands/) (emergence, tag-not-ID, strand
 
 ## Requirement
 
-A **requirement** is a single, addressable, **two-sided** statement of something that must, should, or may hold for a piece of work. Its `statement` faces **generation** (it flows into the prompt generator and shapes the work before it is done); its `check` faces the **finalization gate** (it verifies the work after it is done). Requirements are stored **one file per entry** under `.memo/requirements/`, shared across all memos, and are selected for a piece of work by a deterministic scope cascade over three axes (`repos`, `categories`, `tags`). A requirement is **cross-cutting**: it reaches the work through the PRDs in scope, not as a link in the Topic→Phase→PRD chain. Every check resolves to a **ternary** status — `PASS`, `BLOCKED`, or `INCONCLUSIVE` — and a check that did not run MUST NOT silently report `PASS`. A `blocker` short-circuits the gate; the doer MUST NOT be the grader.
+A **requirement** is a single, addressable statement of something that must, should, or may hold for a piece of work. It is **two-sided**, with an **optional third axis**: its `statement` faces **generation** (it flows into the prompt generator and shapes the work before it is done); its `check` faces the **finalization gate** (it verifies the work after it is done); and an optional `grade` adds a *how-well* scoring axis on top of the binary `check` (the optional scoring head, [23-requirements.md](/specification/requirements/)). The authored source is the **inline declaration in a spec chapter**; the store is generated from it by a **harvest** step (`spec → harvest → store`), the direction the system is migrating toward (see [23-requirements.md](/specification/requirements/), *Storage and Scale*). Requirements are stored **one file per entry** under `.memo/_requirements/`, shared across all memos, and are selected for a piece of work by a deterministic scope cascade over three axes (`repos`, `categories`, `tags`). A requirement is **cross-cutting**: it reaches the work through the PRDs in scope, not as a link in the Topic→Phase→PRD chain. Every check resolves to a **ternary** status — `PASS`, `BLOCKED`, or `INCONCLUSIVE` — and a check that did not run MUST NOT silently report `PASS`. A `blocker` short-circuits the gate; the doer MUST NOT be the grader.
 
 Related: [23-requirements.md](/specification/requirements/) (two-sided model, schema, scope cascade, anti-cheat), [11-quality-and-finalization.md](/specification/quality-and-finalization/) (the gate), [24-tools-registry.md](/specification/tools-registry/) (`check.kind: tool`); related primitives: [PRD](#prd), [Block](#block), [Tool](#tool).
 
@@ -198,6 +198,18 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-req-registry` — contributing
+- `memo-req-runner` — contributing
+- `memo-req-store` — contributing
+- `memo-sop` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [08-phases-and-prds.md](/specification/phases-and-prds/) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.

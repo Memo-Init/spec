@@ -6,7 +6,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/v0.1.0/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/14-agents-skills-tasks.md."
@@ -102,6 +102,20 @@ The `null` primary plus the `scope` marker is the honest signal: *acknowledged o
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-plan-evaluate` — contributing
+- `memo-prd-evaluate` — contributing
+- `repo-docs-writing` — contributing
+- `repo-readme` — contributing
+- `skill-testing` — contributing
+- `workbench-persona-audit` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [15-prompt-generator.md](/specification/prompt-generator/) — the deterministic compositor that produces an agent's per-invocation start-prompt.

@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-29T17:04:00.420Z",
+    "generated_at": "2026-06-30T02:52:29.197Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -467,11 +467,21 @@
             "filename": "46-bridge.md",
             "slug": "bridge",
             "title": "Bridge",
-            "description": "This page is the Bridge for the core specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that nothing...",
+            "description": "This page is the Bridge hub for the core specification family: the in-navigation coverage index that names, for every chapter, the skills that implement it and marks the primary owner. It is the...",
             "order": 46,
             "section": "Specification",
             "normative": false,
             "sidebar_group": "bridge"
+        },
+        {
+            "filename": "47-node-standards.md",
+            "slug": "node-standards",
+            "title": "Node.js Standards",
+            "description": "Every piece of Node.js code in this organisation is written to one house style. The style is not a matter of taste applied per file; it is a single, deterministic contract so that any module reads...",
+            "order": 47,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "skills"
         }
     ],
     "workbench": {
@@ -711,7 +721,7 @@
                 "filename": "42-bridge.md",
                 "slug": "bridge",
                 "title": "Bridge",
-                "description": "This page is the Bridge for the workbench specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that...",
+                "description": "This page is the Bridge hub for the workbench specification family: the in-navigation coverage index that names, for every chapter, the skills that implement it and marks the primary owner. It is the...",
                 "order": 42,
                 "section": "Workbench",
                 "normative": false,
@@ -886,7 +896,7 @@
                 "filename": "16-bridge.md",
                 "slug": "bridge",
                 "title": "Bridge",
-                "description": "This page is the Bridge for the session specification family: a generated coverage index that names, for every chapter below, the skills that implement it. An empty list is an honest signal that...",
+                "description": "This page is the Bridge hub for the session specification family: the in-navigation coverage index that names, for every chapter, the skills that implement it and marks the primary owner. It is the...",
                 "order": 16,
                 "section": "Session",
                 "normative": false,
@@ -895,11 +905,11 @@
         ]
     },
     "stats": {
-        "total_files": 88,
-        "core_files": 47,
+        "total_files": 89,
+        "core_files": 48,
         "workbench_files": 24,
         "session_files": 17,
-        "normative_files": 74,
+        "normative_files": 75,
         "informative_files": 14
     }
 }

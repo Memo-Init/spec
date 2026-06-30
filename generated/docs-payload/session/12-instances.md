@@ -6,7 +6,7 @@ spec_file: "12-instances.md"
 order: 12
 section: "Session"
 normative: false
-generated_at: "2026-06-29T17:03:59.600Z"
+generated_at: "2026-06-30T02:52:28.721Z"
 generated_from: "spec/session/0.1.0/12-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/12-instances.md."
@@ -56,6 +56,15 @@ Each instance **SHOULD** also name its **entry points** — the holistic "what t
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-instances` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [10-sop.md](/specification/sop/) — the purpose of the SOP entry-point mechanism.
