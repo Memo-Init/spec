@@ -6,7 +6,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T23:17:19.700Z"
+generated_at: "2026-06-30T23:32:54.347Z"
 generated_from: "draft/memo/0.1.0/spec/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/17-git-workflow-and-ids.md."

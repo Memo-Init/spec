@@ -492,6 +492,243 @@ const renderHubPage = ( { nn, family, records, relatedRefs } ) => {
 }
 
 
+// Sanitize text to a valid Mermaid node id: alphanumeric + underscore only, no leading digit.
+const toMermaidId = ( { text } ) => {
+    const clean = text.replace( /[^a-zA-Z0-9]/g, '_' )
+
+    return /^\d/.test( clean ) === true ? `n_${ clean }` : clean
+}
+
+
+// PRD-009 + PRD-008: By-chapter section for the dist hub. A quantification head-table with
+// click-to-scroll intra-page anchor links (PRD-009) is followed by one named ## section per
+// chapter (PRD-008). The chapter stem doubles as the intra-page anchor — no double heading.
+const renderByChapterSection = ( { records } ) => {
+    const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
+    const totalReqs = records.reduce( ( sum, r ) => sum + r.requirementCount, 0 )
+    const totalGaps = records.reduce( ( sum, r ) => sum + r.gaps.length, 0 )
+    const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
+
+    // PRD-009: one table row per chapter, each chapter name links to its ## anchor
+    const headRows = records.map( ( r ) => {
+        const coveredCell = r.implementers.length > 0 ? '✓' : '—'
+        const reqCell = r.requirementCount === 0 ? '—' : String( r.requirementCount )
+        const gapCell = r.gaps.length === 0 ? '—' : String( r.gaps.length )
+
+        return `| [${ r.stem }](#${ r.stem }) | ${ coveredCell } | ${ r.implementers.length } | ${ r.outOfScope.length } | ${ reqCell } | ${ gapCell } |`
+    } ).join( '\n' )
+
+    const summaryRow = `| **Summary** | **${ covered } / ${ records.length } (${ pct }%)** | — | — | ${ totalReqs > 0 ? String( totalReqs ) : '—' } | ${ totalGaps > 0 ? String( totalGaps ) : '—' } |`
+
+    // PRD-008: one named ## section per chapter; stem used as anchor target
+    const chapterBlocks = records.map( ( r ) => {
+        const publicCell = r.implementers.length === 0
+            ? '— none yet —'
+            : r.implementers.map( ( s ) => `\`${ s.skill }\`` ).join( ', ' )
+        const internalCell = r.outOfScope.length === 0
+            ? '—'
+            : r.outOfScope.map( ( o ) => `\`${ o.skill }\`` ).join( ', ' )
+        const reqCell = r.requirementCount === 0 ? '—' : String( r.requirementCount )
+        const gapCell = r.gaps.length === 0 ? '—' : r.gaps.join( ', ' )
+        const depsCell = r.detailPages.length === 0
+            ? '—'
+            : r.detailPages.map( ( s ) => relLink( { stem: s } ) ).join( ', ' )
+
+        return [
+            `## ${ r.stem }`,
+            '',
+            '| Field | Value |',
+            '|---|---|',
+            `| Covered | ${ r.implementers.length > 0 ? '✓ yes' : '— not yet' } |`,
+            `| Public skills | ${ publicCell } |`,
+            `| Internal tooling | ${ internalCell } |`,
+            `| Requirements | ${ reqCell } |`,
+            `| Gaps | ${ gapCell } |`,
+            `| Depends on | ${ depsCell } |`,
+            ''
+        ].join( '\n' )
+    } ).join( '\n' )
+
+    return [
+        '## Coverage summary',
+        '',
+        '| Chapter | Covered | Public | Internal | Reqs | Gaps |',
+        '|---|---|---|---|---|---|',
+        headRows,
+        summaryRow,
+        '',
+        chapterBlocks
+    ].join( '\n' )
+}
+
+
+// PRD-011: By-skill section grouped by namespace (category). Each category becomes a named ###
+// sub-section with a per-group count header + a skill-to-chapters dependency table. A total
+// summary line closes the section so the namespace count is always visible.
+const renderBySkillSection = ( { records } ) => {
+    const skillData = new Map()
+    records.forEach( ( r ) => {
+        r.implementers.forEach( ( s ) => {
+            const entry = skillData.get( s.skill ) ?? { category: s.category, chapters: [] }
+            skillData.set( s.skill, {
+                category: entry.category,
+                chapters: [ ...entry.chapters, { stem: r.stem, role: s.role } ]
+            } )
+        } )
+    } )
+
+    const byCategory = new Map()
+    skillData.forEach( ( data, skill ) => {
+        const cat = data.category ?? 'uncategorized'
+        const group = byCategory.get( cat ) ?? []
+        byCategory.set( cat, [ ...group, { skill, chapters: data.chapters } ] )
+    } )
+
+    const sortedCats = [ ...byCategory.keys() ].sort()
+    const totalSkills = skillData.size
+
+    if( totalSkills === 0 ) {
+        return [
+            '## Skills by namespace',
+            '',
+            '— no public implementer skills yet —'
+        ].join( '\n' )
+    }
+
+    const catBlocks = sortedCats.map( ( cat ) => {
+        const skillsInCat = ( byCategory.get( cat ) ?? [] ).sort( ( a, b ) => a.skill.localeCompare( b.skill ) )
+        const skillRows = skillsInCat.map( ( entry ) => {
+            const primaries = entry.chapters
+                .filter( ( c ) => c.role === 'primary' )
+                .map( ( c ) => `${ relLink( { stem: c.stem } ) } (primary)` )
+            const contribs = entry.chapters
+                .filter( ( c ) => c.role !== 'primary' )
+                .map( ( c ) => relLink( { stem: c.stem } ) )
+            const chapterCell = [ ...primaries, ...contribs ].join( ', ' )
+
+            return `| \`${ entry.skill }\` | ${ chapterCell } |`
+        } ).join( '\n' )
+
+        return [
+            `### ${ cat } (${ skillsInCat.length } skill${ skillsInCat.length === 1 ? '' : 's' })`,
+            '',
+            '| Skill | Chapters |',
+            '|---|---|',
+            skillRows,
+            ''
+        ].join( '\n' )
+    } ).join( '\n' )
+
+    return [
+        '## Skills by namespace',
+        '',
+        catBlocks,
+        `**Summary: ${ sortedCats.length } namespace${ sortedCats.length === 1 ? '' : 's' } · ${ totalSkills } skill${ totalSkills === 1 ? '' : 's' } total**`
+    ].join( '\n' )
+}
+
+
+// PRD-010: Mermaid graph views for the dist hub. Two flowchart TD blocks:
+//   (1) skill→primary-chapter — one directed edge per skill that is a primary owner of a
+//       chapter in this family (fallback: no explicit skill→skill edges in the map yet).
+//   (2) SOP-flow — SOP anchor → explicitly-marked public-entry skills → the chapters they
+//       cover; falls back to the SOP anchor's own primary owners when no explicit entries exist.
+// Node ids: sk_ prefix for skill nodes, ch_ prefix for chapter nodes (avoids collisions).
+const renderMermaidSection = ( { records, familyName } ) => {
+    // (1) skill→primary-chapter: all primary-owner relationships in this family
+    const primaryEdges = records.flatMap( ( r ) =>
+        r.implementers
+            .filter( ( s ) => s.role === 'primary' )
+            .map( ( s ) => ( { skill: s.skill, chapter: r.stem } ) )
+    )
+    const primarySkillSet = [ ...new Set( primaryEdges.map( ( e ) => e.skill ) ) ].sort()
+    const primaryChapterSet = [ ...new Set( primaryEdges.map( ( e ) => e.chapter ) ) ].sort()
+
+    const primaryBlock = primaryEdges.length === 0
+        ? [ '_(no primary skill→chapter edges in this family)_' ]
+        : [
+            '```mermaid',
+            'flowchart TD',
+            ...primarySkillSet.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
+            ...primaryChapterSet.map( ( c ) => `    ch_${ toMermaidId( { text: c } ) }["${ c }"]` ),
+            ...primaryEdges.map( ( e ) => `    sk_${ toMermaidId( { text: e.skill } ) } --> ch_${ toMermaidId( { text: e.chapter } ) }` ),
+            '```'
+        ]
+
+    // (2) SOP-flow: prefer explicitly-marked public-entry skills; fall back to the SOP chapter's own primary owners
+    const sopAnchor = records.length > 0 ? records[ 0 ].sopAnchor : null
+    const explicitEntryEdges = records
+        .filter( ( r ) => r.publicEntries.inferred === false )
+        .flatMap( ( r ) => r.publicEntries.skills.map( ( s ) => ( { skill: s, chapter: r.stem } ) ) )
+    const fallbackEdges = sopAnchor === null ? [] : records
+        .filter( ( r ) => r.stem === sopAnchor )
+        .flatMap( ( r ) => r.implementers
+            .filter( ( s ) => s.role === 'primary' )
+            .map( ( s ) => ( { skill: s.skill, chapter: r.stem } ) )
+        )
+    const entryEdges = explicitEntryEdges.length > 0 ? explicitEntryEdges : fallbackEdges
+    const entrySkillSet = [ ...new Set( entryEdges.map( ( e ) => e.skill ) ) ].sort()
+    const entryChapterSet = [ ...new Set( entryEdges.map( ( e ) => e.chapter ) ) ].sort()
+
+    const sopBlock = entryEdges.length === 0
+        ? [ '_(no public entry points defined)_' ]
+        : [
+            '```mermaid',
+            'flowchart TD',
+            ...( sopAnchor !== null ? [ `    sop["${ sopAnchor } (SOP anchor)"]` ] : [] ),
+            ...entrySkillSet.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
+            ...entryChapterSet.map( ( c ) => `    ch_${ toMermaidId( { text: c } ) }["${ c }"]` ),
+            ...( sopAnchor !== null
+                ? entrySkillSet.map( ( s ) => `    sop --> sk_${ toMermaidId( { text: s } ) }` )
+                : [] ),
+            ...entryEdges.map( ( e ) => `    sk_${ toMermaidId( { text: e.skill } ) } --> ch_${ toMermaidId( { text: e.chapter } ) }` ),
+            '```'
+        ]
+
+    return [
+        '## Graph views',
+        '',
+        `### Skill → primary chapter (${ familyName })`,
+        '',
+        ...primaryBlock,
+        '',
+        '### SOP flow',
+        '',
+        ...sopBlock,
+    ].join( '\n' )
+}
+
+
+// Dist-hub page combining PRD-008 (named ## sections) + PRD-009 (count head-table with
+// click-to-scroll) + PRD-010 (Mermaid graph views) + PRD-011 (by-skill by namespace).
+// Written to dist/<family>/<version>/bridge/<nn>-bridge.md. The H1 title is distinct from
+// any ## section heading, so there is no double heading (H1 / identical H2) risk.
+const renderDistHub = ( { nn, family, records } ) => {
+    const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
+    const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
+    const byChapter = renderByChapterSection( { records } )
+    const bySkill = renderBySkillSection( { records } )
+    const graphViews = renderMermaidSection( { records, familyName: family } )
+
+    return [
+        `# ${ nn }. Bridge — ${ family }`,
+        '',
+        '> **Informative · generated.** Dist-mirror of the bridge hub with expanded per-chapter sections (PRD-008), a quantification head-table with click-to-scroll (PRD-009), Mermaid graph views (PRD-010), and by-skill namespace grouping (PRD-011). Do not edit by hand; re-run the spec build to regenerate.',
+        '',
+        `<!-- Auto-generated by ${ GENERATOR } from the skill-to-spec map. -->`,
+        '',
+        `**Coverage:** ${ covered } of ${ records.length } chapters have at least one public implementer (${ pct }%).`,
+        '',
+        byChapter,
+        '',
+        bySkill,
+        '',
+        graphViews,
+        ''
+    ].join( '\n' )
+}
+
+
 // Maintain the "Cluster" column on the core chapter-index README (idempotent). The Document /
 // Title / Mode cells are preserved; the cluster cell is always recomputed from the map.
 const updateReadmeCluster = async ( { specDirAbs, records } ) => {
@@ -561,6 +798,14 @@ const main = async () => {
 
         const recordList = records.map( ( r ) => r.record )
 
+        // PRD-008/009/010/011: write the dist hub (enhanced bridge view with named ## sections,
+        // count head-table, Mermaid graph views, and by-skill namespace grouping)
+        const bridgeOutDir = bridgeDirFor( { name: family.name, version: family.version } )
+        const distHubContent = renderDistHub( { nn, family: family.name, records: recordList } )
+        const distHubPath = join( bridgeOutDir, `${ nn }-bridge.md` )
+        const prevDistHub = await readFile( distHubPath, 'utf-8' ).catch( () => null )
+        if( prevDistHub !== distHubContent ) await writeFile( distHubPath, distHubContent, 'utf-8' )
+
         // reshape the NN-bridge.md hub
         const hubPath = join( specDirAbs, `${ nn }-bridge.md` )
         const hubContent = renderHubPage( { nn, family: family.name, records: recordList, relatedRefs: family.relatedRefs } )
@@ -579,6 +824,7 @@ const main = async () => {
             records: recordList,
             backlinkChanges: records.filter( ( r ) => r.backlinkChanged === true ).length,
             hubChanged: prevHub !== hubContent,
+            distHubChanged: prevDistHub !== distHubContent,
             readmeChanged: readme.changed
         }
     } ) )
@@ -602,6 +848,8 @@ const main = async () => {
             gaps: r.gaps,
             outOfScope: r.outOfScope.map( ( o ) => o.skill ),
             clusters: r.clusters,
+            requirementCount: r.requirementCount,
+            internalCount: r.internalCount,
             provenance: r.provenance
         } ) )
     }
@@ -611,7 +859,7 @@ const main = async () => {
     const totalPages = families.reduce( ( sum, f ) => sum + f.records.length, 0 )
     families.forEach( ( f ) => {
         const covered = f.records.filter( ( r ) => r.implementers.length > 0 ).length
-        console.log( `  ✓ ${ f.key }: ${ f.records.length } per-page bridge(s) → dist/${ f.key }/${ f.version }/bridge/ (${ covered } covered), hub ${ f.specDir }/${ f.nn }-bridge.md, ${ f.backlinkChanges } backlink change(s)${ f.readmeChanged === true ? ', README cluster updated' : '' }` )
+        console.log( `  ✓ ${ f.key }: ${ f.records.length } per-page bridge(s) → dist/${ f.key }/${ f.version }/bridge/ (${ covered } covered), hub ${ f.specDir }/${ f.nn }-bridge.md, dist-hub dist/${ f.key }/${ f.version }/bridge/${ f.nn }-bridge.md, ${ f.backlinkChanges } backlink change(s)${ f.readmeChanged === true ? ', README cluster updated' : '' }` )
     } )
     console.log( `generate-bridge: ${ totalPages } per-page bridges across ${ families.length } families; inverted-map.json published to dist/ (mapHash ${ mapHash }).` )
 }

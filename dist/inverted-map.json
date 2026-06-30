@@ -30,6 +30,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "9926b0addef8"
         },
         {
@@ -77,6 +79,8 @@
                 "memo",
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "2e60c686ad77"
         },
         {
@@ -171,6 +175,8 @@
                 "skill",
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "16386cad65cf"
         },
         {
@@ -202,6 +208,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "ed9e01071e1f"
         },
         {
@@ -241,6 +249,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "c2499ff9cb66"
         },
         {
@@ -274,6 +284,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "788a9a4c8243"
         },
         {
@@ -332,6 +344,8 @@
                 "memo",
                 "workbench"
             ],
+            "requirementCount": 4,
+            "internalCount": 0,
             "provenance": "fe7405a4dd77"
         },
         {
@@ -415,6 +429,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 5,
+            "internalCount": 0,
             "provenance": "9cd38a020e92"
         },
         {
@@ -533,6 +549,8 @@
                 "prd",
                 "workbench"
             ],
+            "requirementCount": 6,
+            "internalCount": 0,
             "provenance": "d536850374d8"
         },
         {
@@ -667,6 +685,8 @@
                 "prd",
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "39d6eb7ff252"
         },
         {
@@ -734,6 +754,8 @@
                 "research",
                 "wiki"
             ],
+            "requirementCount": 8,
+            "internalCount": 0,
             "provenance": "7ab086371100"
         },
         {
@@ -847,6 +869,8 @@
                 "research",
                 "workbench"
             ],
+            "requirementCount": 5,
+            "internalCount": 1,
             "provenance": "a1bc3ff32774"
         },
         {
@@ -915,6 +939,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 1,
             "provenance": "61cf325b4cfc"
         },
         {
@@ -1029,6 +1055,8 @@
                 "prd",
                 "research"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "578a8273d7cb"
         },
         {
@@ -1080,6 +1108,8 @@
                 "skill",
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 2,
             "provenance": "01369df8f7c3"
         },
         {
@@ -1125,6 +1155,8 @@
                 "memo",
                 "prd"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "61935ca4ad9d"
         },
         {
@@ -1231,6 +1263,8 @@
                 "memo",
                 "workbench"
             ],
+            "requirementCount": 8,
+            "internalCount": 4,
             "provenance": "2fe71f61526f"
         },
         {
@@ -1305,6 +1339,8 @@
                 "prd",
                 "workbench"
             ],
+            "requirementCount": 6,
+            "internalCount": 1,
             "provenance": "2c44468db184"
         },
         {
@@ -1342,6 +1378,8 @@
                 "git",
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "5e8d4bcdbf03"
         },
         {
@@ -1400,6 +1438,8 @@
                 "git",
                 "workbench"
             ],
+            "requirementCount": 1,
+            "internalCount": 6,
             "provenance": "5d5970e0cc0d"
         },
         {
@@ -1443,6 +1483,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "5faafac7beb8"
         },
         {
@@ -1498,6 +1540,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "01ff37d6252d"
         },
         {
@@ -1539,6 +1583,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 4,
+            "internalCount": 0,
             "provenance": "17349a0780e9"
         },
         {
@@ -1651,6 +1697,8 @@
                 "skill",
                 "wiki"
             ],
+            "requirementCount": 6,
+            "internalCount": 3,
             "provenance": "e9c8accc6597"
         },
         {
@@ -1699,6 +1747,8 @@
                 "wiki",
                 "workbench"
             ],
+            "requirementCount": 5,
+            "internalCount": 0,
             "provenance": "e6cf1eff520e"
         },
         {
@@ -1731,6 +1781,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "e4871a9db0a4"
         },
         {
@@ -1775,6 +1827,8 @@
                 "memo",
                 "wiki"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "d27fc6971adc"
         },
         {
@@ -1824,6 +1878,8 @@
                 "memo",
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "687cd266a110"
         },
         {
@@ -1870,6 +1926,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "2732835582d9"
         },
         {
@@ -1919,6 +1977,8 @@
                 "memo",
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 1,
             "provenance": "e4c8bc8314f3"
         },
         {
@@ -1968,6 +2028,8 @@
                 "evals",
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "0671bc0ff8d0"
         },
         {
@@ -2026,6 +2088,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "7e88389ba989"
         },
         {
@@ -2068,6 +2132,8 @@
                 "memo",
                 "prd"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "ae52bd635f6a"
         },
         {
@@ -2126,6 +2192,8 @@
                 "git",
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "c32717268f65"
         },
         {
@@ -2172,6 +2240,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "46dba8f1b1db"
         },
         {
@@ -2217,6 +2287,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 7,
+            "internalCount": 1,
             "provenance": "e5be090ef249"
         },
         {
@@ -2295,6 +2367,8 @@
                 "research",
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "a08d0129bdb2"
         },
         {
@@ -2323,6 +2397,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "b324675da112"
         },
         {
@@ -2421,6 +2497,8 @@
                 "git",
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "dc37cf7fc4e4"
         },
         {
@@ -2466,6 +2544,8 @@
                 "git",
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "b8c6dfcc907d"
         },
         {
@@ -2498,6 +2578,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 4,
+            "internalCount": 2,
             "provenance": "12bca5e1fc7d"
         },
         {
@@ -2540,6 +2622,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "97837607999d"
         },
         {
@@ -2647,6 +2731,8 @@
                 "code-patterns",
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "2805555081f7"
         },
         {
@@ -2688,6 +2774,8 @@
             "clusters": [
                 "skill"
             ],
+            "requirementCount": 8,
+            "internalCount": 1,
             "provenance": "359603036d1b"
         },
         {
@@ -2717,6 +2805,8 @@
                 "repo-readme"
             ],
             "clusters": [],
+            "requirementCount": 22,
+            "internalCount": 6,
             "provenance": "49d6e773b9ab"
         },
         {
@@ -2752,6 +2842,8 @@
             "clusters": [
                 "memo"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "0698573b167c"
         },
         {
@@ -2784,6 +2876,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "86c8747fe383"
         },
         {
@@ -2813,6 +2907,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "78fca8a81445"
         },
         {
@@ -2859,6 +2955,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "b515dbfc1909"
         },
         {
@@ -2889,6 +2987,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "306c97877507"
         },
         {
@@ -2936,6 +3036,8 @@
                 "wiki",
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 1,
             "provenance": "15c6374912f6"
         },
         {
@@ -2975,6 +3077,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 3,
+            "internalCount": 0,
             "provenance": "4ad8b654d5a1"
         },
         {
@@ -3024,6 +3128,8 @@
             "clusters": [
                 "wiki"
             ],
+            "requirementCount": 4,
+            "internalCount": 0,
             "provenance": "bf9e5795ad5f"
         },
         {
@@ -3053,6 +3159,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "a922b453c927"
         },
         {
@@ -3088,6 +3196,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "0e16c1d308ba"
         },
         {
@@ -3116,6 +3226,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "cf7d67de479e"
         },
         {
@@ -3145,6 +3257,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "bfb774e39da3"
         },
         {
@@ -3173,6 +3287,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "e62e9c2a2017"
         },
         {
@@ -3225,6 +3341,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "a957f69fb887"
         },
         {
@@ -3268,6 +3386,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "6d78e7be925d"
         },
         {
@@ -3313,6 +3433,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "7c280ffa528e"
         },
         {
@@ -3361,6 +3483,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 3,
+            "internalCount": 0,
             "provenance": "be9a435b9836"
         },
         {
@@ -3397,6 +3521,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "29bebfccd484"
         },
         {
@@ -3440,6 +3566,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 3,
+            "internalCount": 0,
             "provenance": "95a1cee6eb52"
         },
         {
@@ -3474,6 +3602,8 @@
             "clusters": [
                 "workbench"
             ],
+            "requirementCount": 1,
+            "internalCount": 0,
             "provenance": "2a5ecfe8bd6a"
         },
         {
@@ -3535,6 +3665,8 @@
                 "wiki",
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "c78a342d5708"
         },
         {
@@ -3583,6 +3715,8 @@
             "clusters": [
                 "research"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "4d7121610f20"
         },
         {
@@ -3625,6 +3759,8 @@
                 "wiki",
                 "workbench"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "4daef588e160"
         },
         {
@@ -3679,6 +3815,8 @@
                 "wiki",
                 "workbench"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "30750ec63624"
         },
         {
@@ -3708,6 +3846,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "3d2b6badb606"
         },
         {
@@ -3737,6 +3877,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "791fedce6ac3"
         },
         {
@@ -3764,6 +3906,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 6,
+            "internalCount": 0,
             "provenance": "225045913f8c"
         },
         {
@@ -3791,6 +3935,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "7e97bfe5df41"
         },
         {
@@ -3819,6 +3965,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "b4b06de79023"
         },
         {
@@ -3848,6 +3996,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "6c7e08d5e8ce"
         },
         {
@@ -3877,6 +4027,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "de0972021509"
         },
         {
@@ -3906,6 +4058,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "f905f030b050"
         },
         {
@@ -3935,6 +4089,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "c75f6a118b1d"
         },
         {
@@ -3964,6 +4120,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 2,
+            "internalCount": 0,
             "provenance": "aa4d0c30a94e"
         },
         {
@@ -3995,6 +4153,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "c3696d2bbc4e"
         },
         {
@@ -4022,6 +4182,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "d165ae838365"
         },
         {
@@ -4049,6 +4211,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "fd6d3e911304"
         },
         {
@@ -4077,6 +4241,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "4ea9814d114d"
         },
         {
@@ -4106,6 +4272,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "ff981a95e720"
         },
         {
@@ -4134,6 +4302,8 @@
             "clusters": [
                 "session"
             ],
+            "requirementCount": 0,
+            "internalCount": 0,
             "provenance": "ce440da90973"
         }
     ]
