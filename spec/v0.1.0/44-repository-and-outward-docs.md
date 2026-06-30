@@ -459,20 +459,21 @@ Whether an issue stays outward-minimal — stating the defect without narrating 
 }
 ```
 
-A commit references its issue so the published trail threads together, and the granularity is coarse by default; the presence of the reference is checkable on the commit, while the exact identifier mapping stays with the git area:
+In a published repository a commit references its issue so the outward trail threads together, and the granularity is coarse by default; the presence of the reference is checkable on the commit, while the exact identifier mapping stays with the git area. Whether a unit of work references an issue at all is governed by Rule C1 ([17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)): a local-only repo orients by memo-ID and creates no outward issue, so the rule below is the published-repo case, not a universal one:
 
 ```requirement
 {
   "id": "REQ-725",
-  "title": "A commit references its issue",
-  "statement": "A commit MUST carry a reference to the issue it belongs to, so that from a commit a reader reaches the issue and a closing keyword can let the merge close it; the default granularity is one issue per phase, keeping the outward surface small.",
+  "title": "A published-repo commit references its issue (Rule C1)",
+  "statement": "In a published (outward) repository, a commit MUST carry a reference to the issue it belongs to, so that from a commit a reader reaches the issue and a closing keyword can let the merge close it; the default granularity is one issue per phase, keeping the outward surface small. This is the published-repo half of Rule C1 (17-git-workflow-and-ids.md): a local-only (never-pushed) repo creates no outward issue and orients by memo-ID instead, so this rule MUST NOT be read as requiring an issue in a repository that is never published.",
   "scope": { "repos": [], "categories": ["repository"], "tags": ["issue", "commit"] },
   "severity": "warning",
   "check": {
     "kind": "assertion",
     "assertions": [
-      "Each commit message carries a reference to its issue",
-      "The issue granularity is coarse (about one issue per phase, not one per change)"
+      "In a published repo, each commit message carries a reference to its issue",
+      "The issue granularity is coarse (about one issue per phase, not one per change)",
+      "A local-only repo is not required to carry an issue reference (it orients by memo-ID per Rule C1)"
     ]
   },
   "grade": "binary"

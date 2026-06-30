@@ -6,7 +6,7 @@ spec_file: "23-requirements.md"
 order: 23
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T15:19:28.422Z"
+generated_at: "2026-06-30T15:43:46.482Z"
 generated_from: "spec/v0.1.0/23-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/23-requirements.md."
@@ -103,7 +103,7 @@ A requirement entry is an English-language JSON file. The fields are:
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `id` | yes | Stable identifier, pattern `REQ-NNN` (three or more digits). |
+| `id` | yes | Stable identifier, canonical form `REQ-NNN` (three digits; natural beyond 999). Identity is the **numeric value** — zero-padding is cosmetic, NOT a namespace, so `REQ-050` and `REQ-0050` are the same id and never coexist. Allocate the next free id with `memo req next-id` (one past the highest active number); `memo req lint` fails on any numeric collision. |
 | `title` | yes | Short human name. |
 | `statement` | yes | One-line human-readable description of what is required. This text flows **into prompt generation**. |
 | `scope` | yes | Object with three array axes: `repos`, `categories`, `tags`. Decides which work the entry matches. |
@@ -200,7 +200,7 @@ A requirement set thereby doubles as an **eval set**: it is the explicit definit
 
 ## The Grading Model
 
-> **Build status — referenced, not yet built.** The scoring head described in this section — the continuous **1.0–5.0** scale, the bands, the **production gate 3.5**, the veto floor, the `GR-` codes, and the `checkMode` tiers — is **specified by reference, not yet implemented**. The requirement schema today carries only the optional `grade` axis (`binary` / `todo` / `{ dimension, weight }`); no code computes bands, enforces a numeric gate, assigns `GR-` codes, or runs `checkMode` tiers. Treat this section as the **target** grading contract the system imports by reference and builds against — not as a gate that runs today.
+> **Build status — referenced, not yet built (for requirements).** The scoring head described in this section — the continuous **1.0–5.0** scale, the bands, the **production gate 3.5**, the veto floor, the `GR-` codes, and the `checkMode` tiers — is **specified by reference, not yet implemented** for the *requirements* grading head. The requirement schema today carries only the optional `grade` axis (`binary` / `todo` / `{ dimension, weight }`); no code computes bands, enforces a numeric gate, assigns `GR-` codes, or runs `checkMode` tiers *for requirements*. This not-yet-built note is scoped to requirement grading only: the separate **executable skill grader** ([43-skill-authoring-and-quality.md](/specification/skill-authoring-and-quality/)) DOES implement skill-level grading (a shipped `gradeSkill()` with a ternary PASS/BLOCKED/INCONCLUSIVE), and is not governed by this note. Treat this section as the **target** grading contract the requirements system imports by reference and builds against — not as a gate that runs today.
 
 When a requirement carries an object `grade` (the grade axis above), its dimension feeds a shared **grading model** — one reusable scoring head that every family follows, rather than each domain re-inventing its own. The model is deliberately the same discipline already proven in a sibling content-grading specification; it is summarised here as the common head and imported by reference, not copied.
 

@@ -4259,7 +4259,7 @@ A requirement entry is an English-language JSON file. The fields are:
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `id` | yes | Stable identifier, pattern `REQ-NNN` (three or more digits). |
+| `id` | yes | Stable identifier, canonical form `REQ-NNN` (three digits; natural beyond 999). Identity is the **numeric value** — zero-padding is cosmetic, NOT a namespace, so `REQ-050` and `REQ-0050` are the same id and never coexist. Allocate the next free id with `memo req next-id` (one past the highest active number); `memo req lint` fails on any numeric collision. |
 | `title` | yes | Short human name. |
 | `statement` | yes | One-line human-readable description of what is required. This text flows **into prompt generation**. |
 | `scope` | yes | Object with three array axes: `repos`, `categories`, `tags`. Decides which work the entry matches. |
@@ -4356,7 +4356,7 @@ A requirement set thereby doubles as an **eval set**: it is the explicit definit
 
 ## The Grading Model
 
-> **Build status — referenced, not yet built.** The scoring head described in this section — the continuous **1.0–5.0** scale, the bands, the **production gate 3.5**, the veto floor, the `GR-` codes, and the `checkMode` tiers — is **specified by reference, not yet implemented**. The requirement schema today carries only the optional `grade` axis (`binary` / `todo` / `{ dimension, weight }`); no code computes bands, enforces a numeric gate, assigns `GR-` codes, or runs `checkMode` tiers. Treat this section as the **target** grading contract the system imports by reference and builds against — not as a gate that runs today.
+> **Build status — referenced, not yet built (for requirements).** The scoring head described in this section — the continuous **1.0–5.0** scale, the bands, the **production gate 3.5**, the veto floor, the `GR-` codes, and the `checkMode` tiers — is **specified by reference, not yet implemented** for the *requirements* grading head. The requirement schema today carries only the optional `grade` axis (`binary` / `todo` / `{ dimension, weight }`); no code computes bands, enforces a numeric gate, assigns `GR-` codes, or runs `checkMode` tiers *for requirements*. This not-yet-built note is scoped to requirement grading only: the separate **executable skill grader** ([43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md)) DOES implement skill-level grading (a shipped `gradeSkill()` with a ternary PASS/BLOCKED/INCONCLUSIVE), and is not governed by this note. Treat this section as the **target** grading contract the requirements system imports by reference and builds against — not as a gate that runs today.
 
 When a requirement carries an object `grade` (the grade axis above), its dimension feeds a shared **grading model** — one reusable scoring head that every family follows, rather than each domain re-inventing its own. The model is deliberately the same discipline already proven in a sibling content-grading specification; it is summarised here as the common head and imported by reference, not copied.
 
@@ -7508,20 +7508,21 @@ Whether an issue stays outward-minimal — stating the defect without narrating 
 }
 ```
 
-A commit references its issue so the published trail threads together, and the granularity is coarse by default; the presence of the reference is checkable on the commit, while the exact identifier mapping stays with the git area:
+In a published repository a commit references its issue so the outward trail threads together, and the granularity is coarse by default; the presence of the reference is checkable on the commit, while the exact identifier mapping stays with the git area. Whether a unit of work references an issue at all is governed by Rule C1 ([17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)): a local-only repo orients by memo-ID and creates no outward issue, so the rule below is the published-repo case, not a universal one:
 
 ```requirement
 {
   "id": "REQ-725",
-  "title": "A commit references its issue",
-  "statement": "A commit MUST carry a reference to the issue it belongs to, so that from a commit a reader reaches the issue and a closing keyword can let the merge close it; the default granularity is one issue per phase, keeping the outward surface small.",
+  "title": "A published-repo commit references its issue (Rule C1)",
+  "statement": "In a published (outward) repository, a commit MUST carry a reference to the issue it belongs to, so that from a commit a reader reaches the issue and a closing keyword can let the merge close it; the default granularity is one issue per phase, keeping the outward surface small. This is the published-repo half of Rule C1 (17-git-workflow-and-ids.md): a local-only (never-pushed) repo creates no outward issue and orients by memo-ID instead, so this rule MUST NOT be read as requiring an issue in a repository that is never published.",
   "scope": { "repos": [], "categories": ["repository"], "tags": ["issue", "commit"] },
   "severity": "warning",
   "check": {
     "kind": "assertion",
     "assertions": [
-      "Each commit message carries a reference to its issue",
-      "The issue granularity is coarse (about one issue per phase, not one per change)"
+      "In a published repo, each commit message carries a reference to its issue",
+      "The issue granularity is coarse (about one issue per phase, not one per change)",
+      "A local-only repo is not required to carry an issue reference (it orients by memo-ID per Rule C1)"
     ]
   },
   "grade": "binary"
@@ -9142,7 +9143,7 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 ## Conformity Requirements
 
-The inward `wiki-lint` OKF-conformance check is the strict layer, and its rules are file-level facts. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a knowledge bundle is generated, each `check` faces the bundle on disk. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The inward OKF-conformance check is the strict layer, and its rules are file-level facts. They apply to **every** OKF-adopting bundle, not only the wiki: per [16-context.md](./16-context.md) (REQ-958), OKF is adopted by exactly two folders — the project wiki **and** the `architecture-okf/` sub-folder of `context/` — so the conformance rules below MUST reach **both** bundles, and neither may be left silently un-checked. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a knowledge bundle is generated, each `check` faces the bundle on disk. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
 
 The one rule a bundle cannot drop and stay conformant is a hard yes/no fact:
 
@@ -9151,7 +9152,7 @@ The one rule a bundle cannot drop and stay conformant is a hard yes/no fact:
   "id": "REQ-976",
   "title": "Every concept page carries a type frontmatter field",
   "statement": "Every concept page under `pages/` of an OKF knowledge bundle MUST carry a `type` frontmatter field — OKF's single required field, the one rule a bundle cannot drop and stay conformant. A page's id is its file path minus the `.md` suffix; there are no naming rules beyond the suffix and the reserved filenames.",
-  "scope": { "repos": [], "categories": ["wiki"], "tags": ["okf", "wiki-lint", "frontmatter"] },
+  "scope": { "repos": [], "categories": ["wiki", "workbench"], "tags": ["okf", "wiki-lint", "frontmatter"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
@@ -9170,7 +9171,7 @@ The reserved files carry no concept frontmatter, with one permitted marker — a
   "id": "REQ-977",
   "title": "Reserved index.md files carry no concept frontmatter",
   "statement": "The reserved `index.md` (and `log.md`) files MUST NOT be used as concept documents and MUST NOT carry concept frontmatter (`title`, `type`, `sources`, and the rest). The single permitted exception is the bundle-root `index.md`, which MAY carry only the `okf_version` key; any other frontmatter key on an `index.md` is an error.",
-  "scope": { "repos": [], "categories": ["wiki"], "tags": ["okf", "wiki-lint", "reserved-files"] },
+  "scope": { "repos": [], "categories": ["wiki", "workbench"], "tags": ["okf", "wiki-lint", "reserved-files"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
@@ -9190,7 +9191,7 @@ Intra-bundle link resolution is a hard yes/no the strict inward lint enforces wh
   "id": "REQ-978",
   "title": "Intra-bundle Markdown links resolve to existing files",
   "statement": "Intra-bundle Markdown links MUST point at existing files. Where an external, permissive OKF consumer would tolerate a broken link, the wiki's own inward lint does not — a dangling intra-bundle link is an error. Links MUST be ordinary Markdown (relative or bundle-absolute), never a wiki-specific dialect.",
-  "scope": { "repos": [], "categories": ["wiki"], "tags": ["okf", "wiki-lint", "links"] },
+  "scope": { "repos": [], "categories": ["wiki", "workbench"], "tags": ["okf", "wiki-lint", "links"] },
   "severity": "warning",
   "check": {
     "kind": "assertion",
@@ -9210,7 +9211,7 @@ The bundle-root version marker is advisory, so its absence is information rather
   "id": "REQ-979",
   "title": "The bundle root declares okf_version (advisory)",
   "statement": "The bundle-root `index.md` SHOULD declare `okf_version`, set to the current OKF version read from the refs data rather than hardcoded in prose. Its absence is reported as information, not an error — the marker is the one frontmatter-like key OKF permits on a reserved file.",
-  "scope": { "repos": [], "categories": ["wiki"], "tags": ["okf", "wiki-lint", "version"] },
+  "scope": { "repos": [], "categories": ["wiki", "workbench"], "tags": ["okf", "wiki-lint", "version"] },
   "severity": "info",
   "check": {
     "kind": "assertion",
@@ -9925,13 +9926,13 @@ That the registry is the single, declared discovery source is a structural fact 
 }
 ```
 
-Whether a CLI's command tree is genuinely self-describing is a quality spectrum a reviewer judges, so this rule earns an object `grade`:
+Whether a CLI's command tree is genuinely self-describing is a quality spectrum a reviewer judges, so this rule earns an object `grade`. The Branch/Leaf contract itself is the core standard's (REQ-703); the workbench convention is one scoped instance of it, not a second specification:
 
 ```requirement
 {
   "id": "REQ-965",
-  "title": "A workbench CLI is a self-describing Branch/Leaf tree",
-  "statement": "A workbench CLI SHOULD be structured as a Branch/Leaf command tree: branches are grouping nodes that carry no behaviour, and each leaf is an executable command with typed `input` and `output` whose field descriptions encode the leaf's behaviour, so the tree is discoverable and re-implementable from its types alone. Making a CLI globally callable (for example via `npm link`) is only a registration mechanism and MUST NOT be conflated with this design contract or with registry discoverability.",
+  "title": "A workbench CLI follows the core Branch/Leaf contract (REQ-703)",
+  "statement": "A workbench CLI SHOULD follow the Branch/Leaf command-tree contract defined ONCE by the core CLI standard (REQ-703, [22-tree-cli-recommended-way.md](../../v0.1.0/22-tree-cli-recommended-way.md)): branches group without behaviour, and each leaf is re-implementable from its typed `input`/`output` alone. This is referenced, not re-authored — the workbench convention is one scoped instance of that single core contract. (Making a CLI globally callable, e.g. via `npm link`, is only a registration mechanism and MUST NOT be conflated with this design contract or registry discoverability.)",
   "scope": { "repos": [], "categories": ["workbench"], "tags": ["cli", "branch-leaf", "self-describing"] },
   "severity": "warning",
   "check": {
@@ -12066,7 +12067,7 @@ The gate's central safety property is a hard-block when the predecessor SOP is g
 }
 ```
 
-Whether the predecessor signal is read structurally rather than as forgeable prose is a hard yes/no contract (REQ-SS-SIGNAL), so its `check` is the whole story and its grade is `binary`:
+Whether the predecessor signal is read structurally rather than as forgeable prose is a hard yes/no contract (REQ-SS-SIGNAL); the gate is specified but not yet armed, so its grade carries the honest `todo` rather than `binary`:
 
 ```requirement
 {
@@ -12083,11 +12084,11 @@ Whether the predecessor signal is read structurally rather than as forgeable pro
       "The transcript scan is bounded and BSD-safe (tail -r with early exit, never tac)"
     ]
   },
-  "grade": "binary"
+  "grade": "todo"
 }
 ```
 
-The governing safety contract — never a lockout on trouble — is also a hard yes/no rule (REQ-SS-FAILOPEN / REQ-SS-CONFIG-LOUD), so it is `binary`:
+The governing safety contract — never a lockout on trouble — is also a hard yes/no rule (REQ-SS-FAILOPEN / REQ-SS-CONFIG-LOUD); the fail-open gate is specified but not yet fully armed, so its grade carries the honest `todo`:
 
 ```requirement
 {
@@ -12104,7 +12105,7 @@ The governing safety contract — never a lockout on trouble — is also a hard 
       "No infra/config fault path can reach a DENY"
     ]
   },
-  "grade": "binary"
+  "grade": "todo"
 }
 ```
 
@@ -12409,13 +12410,13 @@ A CLI conforms when:
 
 The CLI doctrine's binding `MUST`s for the session family are authored here **prose-first**: each block's `statement` faces generation (it shapes how a session CLI leaf is built) and its `check` faces the finalization gate with a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. Both rules below are enforced by shipped session leaves, so they are **checkable now** and carry a hard `binary` grade. The exit-code mirror is referenced (not re-authored here) by the core CLI standard at [/specification/tree-cli-recommended-way/](/specification/tree-cli-recommended-way/).
 
-The result envelope is a hard yes/no conformity rule shared by every leaf, so its `check` is the whole story (`grade: binary`):
+The result envelope is the SAME contract the core CLI standard authors once (REQ-701); the session family does not re-specify it, it binds to it (`grade: binary`):
 
 ```requirement
 {
   "id": "REQ-988",
-  "title": "Every memo session leaf returns the shared result envelope",
-  "statement": "Every `memo session` leaf MUST return the shared result envelope: a boolean `status`; on `status:false` a non-empty `error` AND a separate machine-readable `fix` carrying the concrete repair step (never prose mixed into `error`); on `status:true` the payload spread alongside `status`, with `error`/`fix` omitted.",
+  "title": "Every memo session leaf binds to the core result envelope (REQ-701)",
+  "statement": "Every `memo session` leaf MUST return the shared CLI result envelope as defined ONCE by the core CLI standard (REQ-701, [22-tree-cli-recommended-way.md](../../v0.1.0/22-tree-cli-recommended-way.md): boolean `status`; `error` plus a separate `fix` on `status:false`; payload spread on `status:true`). The envelope shape is referenced here, NOT re-authored — this rule binds the session leaves to the single core contract so the same shape is never specified twice.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "cli-conformance"] },
   "severity": "blocker",
   "check": {
@@ -12430,13 +12431,13 @@ The result envelope is a hard yes/no conformity rule shared by every leaf, so it
 }
 ```
 
-The `--describe` contract is verified by running the tool and parsing its output — a `tool`-kind check, again a hard yes/no rule (`grade: binary`):
+The `--describe` contract is likewise the core standard's (REQ-702); the session rule binds its branch to it rather than re-authoring the shape — a `tool`-kind check (`grade: binary`):
 
 ```requirement
 {
   "id": "REQ-989",
-  "title": "--describe exposes the session branch as a structured tree",
-  "statement": "The `memo` command tree MUST expose the `session` branch through the machine-readable `--describe` output: each session leaf entry MUST carry a `description`, the rendered `input` shape (field -> doc), the rendered `output` shape (field -> doc), and a call `example`, so the session CLI is discovered from the tool itself, never from a hand-kept second list.",
+  "title": "--describe exposes the session branch, per the core contract (REQ-702)",
+  "statement": "The `memo` command tree MUST expose the `session` branch through the machine-readable `--describe` contract defined ONCE by the core CLI standard (REQ-702, [22-tree-cli-recommended-way.md](../../v0.1.0/22-tree-cli-recommended-way.md)): each session leaf entry carrying a `description`, the rendered `input` and `output` shapes, and a call `example`, so the session CLI is discovered from the tool itself. Referenced, not re-authored — this rule binds the session branch to the single core `--describe` contract.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "cli-conformance"] },
   "severity": "blocker",
   "check": {

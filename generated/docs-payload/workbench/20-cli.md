@@ -6,7 +6,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T15:19:28.422Z"
+generated_at: "2026-06-30T15:43:46.482Z"
 generated_from: "spec/workbench/0.1.0/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/20-cli.md."
@@ -206,13 +206,13 @@ That the registry is the single, declared discovery source is a structural fact 
 }
 ```
 
-Whether a CLI's command tree is genuinely self-describing is a quality spectrum a reviewer judges, so this rule earns an object `grade`:
+Whether a CLI's command tree is genuinely self-describing is a quality spectrum a reviewer judges, so this rule earns an object `grade`. The Branch/Leaf contract itself is the core standard's (REQ-703); the workbench convention is one scoped instance of it, not a second specification:
 
 ```requirement
 {
   "id": "REQ-965",
-  "title": "A workbench CLI is a self-describing Branch/Leaf tree",
-  "statement": "A workbench CLI SHOULD be structured as a Branch/Leaf command tree: branches are grouping nodes that carry no behaviour, and each leaf is an executable command with typed `input` and `output` whose field descriptions encode the leaf's behaviour, so the tree is discoverable and re-implementable from its types alone. Making a CLI globally callable (for example via `npm link`) is only a registration mechanism and MUST NOT be conflated with this design contract or with registry discoverability.",
+  "title": "A workbench CLI follows the core Branch/Leaf contract (REQ-703)",
+  "statement": "A workbench CLI SHOULD follow the Branch/Leaf command-tree contract defined ONCE by the core CLI standard (REQ-703, [22-tree-cli-recommended-way.md](/specification/tree-cli-recommended-way/)): branches group without behaviour, and each leaf is re-implementable from its typed `input`/`output` alone. This is referenced, not re-authored — the workbench convention is one scoped instance of that single core contract. (Making a CLI globally callable, e.g. via `npm link`, is only a registration mechanism and MUST NOT be conflated with this design contract or registry discoverability.)",
   "scope": { "repos": [], "categories": ["workbench"], "tags": ["cli", "branch-leaf", "self-describing"] },
   "severity": "warning",
   "check": {

@@ -93,7 +93,7 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 ## Conformity Requirements
 
-The inward `wiki-lint` OKF-conformance check is the strict layer, and its rules are file-level facts. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a knowledge bundle is generated, each `check` faces the bundle on disk. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The inward OKF-conformance check is the strict layer, and its rules are file-level facts. They apply to **every** OKF-adopting bundle, not only the wiki: per [16-context.md](./16-context.md) (REQ-958), OKF is adopted by exactly two folders — the project wiki **and** the `architecture-okf/` sub-folder of `context/` — so the conformance rules below MUST reach **both** bundles, and neither may be left silently un-checked. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a knowledge bundle is generated, each `check` faces the bundle on disk. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
 
 The one rule a bundle cannot drop and stay conformant is a hard yes/no fact:
 
@@ -102,7 +102,7 @@ The one rule a bundle cannot drop and stay conformant is a hard yes/no fact:
   "id": "REQ-976",
   "title": "Every concept page carries a type frontmatter field",
   "statement": "Every concept page under `pages/` of an OKF knowledge bundle MUST carry a `type` frontmatter field — OKF's single required field, the one rule a bundle cannot drop and stay conformant. A page's id is its file path minus the `.md` suffix; there are no naming rules beyond the suffix and the reserved filenames.",
-  "scope": { "repos": [], "categories": ["wiki"], "tags": ["okf", "wiki-lint", "frontmatter"] },
+  "scope": { "repos": [], "categories": ["wiki", "workbench"], "tags": ["okf", "wiki-lint", "frontmatter"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
@@ -121,7 +121,7 @@ The reserved files carry no concept frontmatter, with one permitted marker — a
   "id": "REQ-977",
   "title": "Reserved index.md files carry no concept frontmatter",
   "statement": "The reserved `index.md` (and `log.md`) files MUST NOT be used as concept documents and MUST NOT carry concept frontmatter (`title`, `type`, `sources`, and the rest). The single permitted exception is the bundle-root `index.md`, which MAY carry only the `okf_version` key; any other frontmatter key on an `index.md` is an error.",
-  "scope": { "repos": [], "categories": ["wiki"], "tags": ["okf", "wiki-lint", "reserved-files"] },
+  "scope": { "repos": [], "categories": ["wiki", "workbench"], "tags": ["okf", "wiki-lint", "reserved-files"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
@@ -141,7 +141,7 @@ Intra-bundle link resolution is a hard yes/no the strict inward lint enforces wh
   "id": "REQ-978",
   "title": "Intra-bundle Markdown links resolve to existing files",
   "statement": "Intra-bundle Markdown links MUST point at existing files. Where an external, permissive OKF consumer would tolerate a broken link, the wiki's own inward lint does not — a dangling intra-bundle link is an error. Links MUST be ordinary Markdown (relative or bundle-absolute), never a wiki-specific dialect.",
-  "scope": { "repos": [], "categories": ["wiki"], "tags": ["okf", "wiki-lint", "links"] },
+  "scope": { "repos": [], "categories": ["wiki", "workbench"], "tags": ["okf", "wiki-lint", "links"] },
   "severity": "warning",
   "check": {
     "kind": "assertion",
@@ -161,7 +161,7 @@ The bundle-root version marker is advisory, so its absence is information rather
   "id": "REQ-979",
   "title": "The bundle root declares okf_version (advisory)",
   "statement": "The bundle-root `index.md` SHOULD declare `okf_version`, set to the current OKF version read from the refs data rather than hardcoded in prose. Its absence is reported as information, not an error — the marker is the one frontmatter-like key OKF permits on a reserved file.",
-  "scope": { "repos": [], "categories": ["wiki"], "tags": ["okf", "wiki-lint", "version"] },
+  "scope": { "repos": [], "categories": ["wiki", "workbench"], "tags": ["okf", "wiki-lint", "version"] },
   "severity": "info",
   "check": {
     "kind": "assertion",

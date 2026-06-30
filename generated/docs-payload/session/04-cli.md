@@ -6,7 +6,7 @@ spec_file: "04-cli.md"
 order: 4
 section: "Session"
 normative: true
-generated_at: "2026-06-30T15:19:28.422Z"
+generated_at: "2026-06-30T15:43:46.482Z"
 generated_from: "spec/session/0.1.0/04-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/04-cli.md."
@@ -144,13 +144,13 @@ A CLI conforms when:
 
 The CLI doctrine's binding `MUST`s for the session family are authored here **prose-first**: each block's `statement` faces generation (it shapes how a session CLI leaf is built) and its `check` faces the finalization gate with a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. Both rules below are enforced by shipped session leaves, so they are **checkable now** and carry a hard `binary` grade. The exit-code mirror is referenced (not re-authored here) by the core CLI standard at [/specification/tree-cli-recommended-way/](/specification/tree-cli-recommended-way/).
 
-The result envelope is a hard yes/no conformity rule shared by every leaf, so its `check` is the whole story (`grade: binary`):
+The result envelope is the SAME contract the core CLI standard authors once (REQ-701); the session family does not re-specify it, it binds to it (`grade: binary`):
 
 ```requirement
 {
   "id": "REQ-988",
-  "title": "Every memo session leaf returns the shared result envelope",
-  "statement": "Every `memo session` leaf MUST return the shared result envelope: a boolean `status`; on `status:false` a non-empty `error` AND a separate machine-readable `fix` carrying the concrete repair step (never prose mixed into `error`); on `status:true` the payload spread alongside `status`, with `error`/`fix` omitted.",
+  "title": "Every memo session leaf binds to the core result envelope (REQ-701)",
+  "statement": "Every `memo session` leaf MUST return the shared CLI result envelope as defined ONCE by the core CLI standard (REQ-701, [22-tree-cli-recommended-way.md](/specification/tree-cli-recommended-way/): boolean `status`; `error` plus a separate `fix` on `status:false`; payload spread on `status:true`). The envelope shape is referenced here, NOT re-authored — this rule binds the session leaves to the single core contract so the same shape is never specified twice.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "cli-conformance"] },
   "severity": "blocker",
   "check": {
@@ -165,13 +165,13 @@ The result envelope is a hard yes/no conformity rule shared by every leaf, so it
 }
 ```
 
-The `--describe` contract is verified by running the tool and parsing its output — a `tool`-kind check, again a hard yes/no rule (`grade: binary`):
+The `--describe` contract is likewise the core standard's (REQ-702); the session rule binds its branch to it rather than re-authoring the shape — a `tool`-kind check (`grade: binary`):
 
 ```requirement
 {
   "id": "REQ-989",
-  "title": "--describe exposes the session branch as a structured tree",
-  "statement": "The `memo` command tree MUST expose the `session` branch through the machine-readable `--describe` output: each session leaf entry MUST carry a `description`, the rendered `input` shape (field -> doc), the rendered `output` shape (field -> doc), and a call `example`, so the session CLI is discovered from the tool itself, never from a hand-kept second list.",
+  "title": "--describe exposes the session branch, per the core contract (REQ-702)",
+  "statement": "The `memo` command tree MUST expose the `session` branch through the machine-readable `--describe` contract defined ONCE by the core CLI standard (REQ-702, [22-tree-cli-recommended-way.md](/specification/tree-cli-recommended-way/)): each session leaf entry carrying a `description`, the rendered `input` and `output` shapes, and a call `example`, so the session CLI is discovered from the tool itself. Referenced, not re-authored — this rule binds the session branch to the single core `--describe` contract.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "cli-conformance"] },
   "severity": "blocker",
   "check": {

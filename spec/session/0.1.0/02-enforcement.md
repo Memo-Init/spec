@@ -167,7 +167,7 @@ The gate's central safety property is a hard-block when the predecessor SOP is g
 }
 ```
 
-Whether the predecessor signal is read structurally rather than as forgeable prose is a hard yes/no contract (REQ-SS-SIGNAL), so its `check` is the whole story and its grade is `binary`:
+Whether the predecessor signal is read structurally rather than as forgeable prose is a hard yes/no contract (REQ-SS-SIGNAL); the gate is specified but not yet armed, so its grade carries the honest `todo` rather than `binary`:
 
 ```requirement
 {
@@ -184,11 +184,11 @@ Whether the predecessor signal is read structurally rather than as forgeable pro
       "The transcript scan is bounded and BSD-safe (tail -r with early exit, never tac)"
     ]
   },
-  "grade": "binary"
+  "grade": "todo"
 }
 ```
 
-The governing safety contract — never a lockout on trouble — is also a hard yes/no rule (REQ-SS-FAILOPEN / REQ-SS-CONFIG-LOUD), so it is `binary`:
+The governing safety contract — never a lockout on trouble — is also a hard yes/no rule (REQ-SS-FAILOPEN / REQ-SS-CONFIG-LOUD); the fail-open gate is specified but not yet fully armed, so its grade carries the honest `todo`:
 
 ```requirement
 {
@@ -205,7 +205,7 @@ The governing safety contract — never a lockout on trouble — is also a hard 
       "No infra/config fault path can reach a DENY"
     ]
   },
-  "grade": "binary"
+  "grade": "todo"
 }
 ```
 
