@@ -683,7 +683,7 @@
 
 ## Graph views
 
-### Skill → primary chapter (memo)
+### Skill → skill requires / primary chapter (memo)
 
 ```mermaid
 flowchart TD

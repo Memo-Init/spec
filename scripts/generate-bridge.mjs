@@ -629,28 +629,53 @@ const renderBySkillSection = ( { records } ) => {
 
 
 // PRD-010: Mermaid graph views for the dist hub. Two flowchart TD blocks:
-//   (1) skill→primary-chapter — one directed edge per skill that is a primary owner of a
-//       chapter in this family (fallback: no explicit skill→skill edges in the map yet).
+//   (1) skill→skill or skill→primary-chapter — for skills whose skill-map entry carries a
+//       non-empty `requires: []` array, real skill→skill edges are rendered (PRD-012). For
+//       skills with no `requires`, the fallback skill→primary-chapter edge is used. Both
+//       edge types may coexist in one graph; skill nodes use sk_, chapter nodes use ch_.
 //   (2) SOP-flow — SOP anchor → explicitly-marked public-entry skills → the chapters they
 //       cover; falls back to the SOP anchor's own primary owners when no explicit entries exist.
 // Node ids: sk_ prefix for skill nodes, ch_ prefix for chapter nodes (avoids collisions).
-const renderMermaidSection = ( { records, familyName } ) => {
-    // (1) skill→primary-chapter: all primary-owner relationships in this family
+const renderMermaidSection = ( { records, familyName, skills } ) => {
+    // Build a lookup from skill name → skill data (for requires).
+    const skillsByName = new Map( ( skills ?? [] ).map( ( s ) => [ s.skill, s ] ) )
+
+    // (1) Hybrid skill→skill / skill→primary-chapter graph:
+    //     • skills with requires[] → skill→skill edges (real data per PRD-012)
+    //     • skills with no requires → skill→primary-chapter edge (existing fallback)
+    const allImplementerNames = [ ...new Set( records.flatMap( ( r ) => r.implementers.map( ( s ) => s.skill ) ) ) ]
+
+    const requiresEdges = allImplementerNames.flatMap( ( skillName ) => {
+        const data = skillsByName.get( skillName )
+        if( data === undefined || Array.isArray( data.requires ) === false || data.requires.length === 0 ) return []
+
+        return data.requires.map( ( target ) => ( { from: skillName, to: target } ) )
+    } )
+    const skillsWithRequires = new Set( requiresEdges.map( ( e ) => e.from ) )
+
     const primaryEdges = records.flatMap( ( r ) =>
         r.implementers
-            .filter( ( s ) => s.role === 'primary' )
+            .filter( ( s ) => s.role === 'primary' && skillsWithRequires.has( s.skill ) === false )
             .map( ( s ) => ( { skill: s.skill, chapter: r.stem } ) )
     )
-    const primarySkillSet = [ ...new Set( primaryEdges.map( ( e ) => e.skill ) ) ].sort()
+
+    // Collect node sets for both edge types
+    const requiresSkillNodes = [ ...new Set( [ ...requiresEdges.map( ( e ) => e.from ), ...requiresEdges.map( ( e ) => e.to ) ] ) ].sort()
+    const primarySkillSet = [ ...new Set( primaryEdges.map( ( e ) => e.skill ) ) ]
+        .filter( ( s ) => requiresSkillNodes.includes( s ) === false )
+        .sort()
     const primaryChapterSet = [ ...new Set( primaryEdges.map( ( e ) => e.chapter ) ) ].sort()
 
-    const primaryBlock = primaryEdges.length === 0
-        ? [ '_(no primary skill→chapter edges in this family)_' ]
+    const hasAnyEdge = requiresEdges.length > 0 || primaryEdges.length > 0
+    const primaryBlock = hasAnyEdge === false
+        ? [ '_(no skill edges in this family)_' ]
         : [
             '```mermaid',
             'flowchart TD',
+            ...requiresSkillNodes.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
             ...primarySkillSet.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
             ...primaryChapterSet.map( ( c ) => `    ch_${ toMermaidId( { text: c } ) }["${ c }"]` ),
+            ...requiresEdges.map( ( e ) => `    sk_${ toMermaidId( { text: e.from } ) } --> sk_${ toMermaidId( { text: e.to } ) }` ),
             ...primaryEdges.map( ( e ) => `    sk_${ toMermaidId( { text: e.skill } ) } --> ch_${ toMermaidId( { text: e.chapter } ) }` ),
             '```'
         ]
@@ -688,7 +713,7 @@ const renderMermaidSection = ( { records, familyName } ) => {
     return [
         '## Graph views',
         '',
-        `### Skill → primary chapter (${ familyName })`,
+        `### Skill → skill requires / primary chapter (${ familyName })`,
         '',
         ...primaryBlock,
         '',
@@ -703,12 +728,12 @@ const renderMermaidSection = ( { records, familyName } ) => {
 // click-to-scroll) + PRD-010 (Mermaid graph views) + PRD-011 (by-skill by namespace).
 // Written to dist/<family>/<version>/bridge/<nn>-bridge.md. The H1 title is distinct from
 // any ## section heading, so there is no double heading (H1 / identical H2) risk.
-const renderDistHub = ( { nn, family, records } ) => {
+const renderDistHub = ( { nn, family, records, skills } ) => {
     const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
     const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
     const byChapter = renderByChapterSection( { records } )
     const bySkill = renderBySkillSection( { records } )
-    const graphViews = renderMermaidSection( { records, familyName: family } )
+    const graphViews = renderMermaidSection( { records, familyName: family, skills: skills ?? [] } )
 
     return [
         `# ${ nn }. Bridge — ${ family }`,
@@ -801,7 +826,7 @@ const main = async () => {
         // PRD-008/009/010/011: write the dist hub (enhanced bridge view with named ## sections,
         // count head-table, Mermaid graph views, and by-skill namespace grouping)
         const bridgeOutDir = bridgeDirFor( { name: family.name, version: family.version } )
-        const distHubContent = renderDistHub( { nn, family: family.name, records: recordList } )
+        const distHubContent = renderDistHub( { nn, family: family.name, records: recordList, skills } )
         const distHubPath = join( bridgeOutDir, `${ nn }-bridge.md` )
         const prevDistHub = await readFile( distHubPath, 'utf-8' ).catch( () => null )
         if( prevDistHub !== distHubContent ) await writeFile( distHubPath, distHubContent, 'utf-8' )

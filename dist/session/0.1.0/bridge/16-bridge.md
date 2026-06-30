@@ -232,7 +232,7 @@
 
 ## Graph views
 
-### Skill → primary chapter (session)
+### Skill → skill requires / primary chapter (session)
 
 ```mermaid
 flowchart TD

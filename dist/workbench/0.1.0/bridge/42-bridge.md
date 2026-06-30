@@ -345,7 +345,7 @@
 
 ## Graph views
 
-### Skill → primary chapter (workbench)
+### Skill → skill requires / primary chapter (workbench)
 
 ```mermaid
 flowchart TD

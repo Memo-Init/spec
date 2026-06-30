@@ -87,6 +87,26 @@ const collectStems = async ( { specDirAbs } ) => {
 }
 
 
+// PRD-012: Requires-edge consistency gate.
+// Verifies that every skill name listed in a `requires` array is a known skill in the merged map.
+// A dangling requires target (a skill name that does not exist) is a violation.
+// Self-contained: loads the map once and checks before any bridge assertion.
+const checkRequiresEdges = ( { skills } ) => {
+    const known = new Set( skills.map( ( s ) => s.skill ) )
+    const dangling = []
+    skills.forEach( ( skill ) => {
+        if( Array.isArray( skill.requires ) === false || skill.requires.length === 0 ) return
+        skill.requires.forEach( ( target ) => {
+            if( known.has( target ) === false ) {
+                dangling.push( `${ skill.skill }.requires: "${ target }" is not a known skill in the merged map (dangling edge)` )
+            }
+        } )
+    } )
+
+    return dangling
+}
+
+
 const main = async () => {
     if( existsSync( SENTINEL_MAP ) === false ) {
         console.warn( `check-bridge-inverse: skipped the cross-repo assertion — per-family skill-spec-map.json not found at ${ SENTINEL_MAP } (the split maps live in the spec repo draft/ tree; absent in an isolated CI checkout). The full map-vs-bridge gate runs locally / pre-push.` )
@@ -95,6 +115,14 @@ const main = async () => {
     const map = await loadSkillMap( { repoRoot: REPO } )
     const skills = Array.isArray( map.skills ) === true ? map.skills : []
     const violations = []
+
+    // PRD-012: requires-edge consistency check (runs before bridge assertions).
+    const requiresViolations = checkRequiresEdges( { skills } )
+    if( requiresViolations.length > 0 ) {
+        console.error( `check-bridge-inverse: ${ requiresViolations.length } dangling requires-edge(s)` )
+        requiresViolations.forEach( ( v ) => console.error( `  ✗ ${ v }` ) )
+        process.exit( 1 )
+    }
 
     if( existsSync( INVERTED_PATH ) === false ) {
         console.error( 'check-bridge-inverse: dist/inverted-map.json missing — run the spec build first.' )

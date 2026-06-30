@@ -6,7 +6,7 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T23:32:54.347Z"
+generated_at: "2026-06-30T23:47:07.691Z"
 generated_from: "draft/memo/0.1.0/spec/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/02-memo-sop-entrypoint.md."
@@ -94,6 +94,33 @@ The SOP classifies every skill as either a public entry point or a private proce
 This classification drives **progressive disclosure**: public memos and skills are the visible UI entry points, shown so a reader can find the doors into the system; internal memos and skills are linked from the public ones but not displayed up front. A reader sees the few entry points first and reaches the private process steps only by following a link.
 
 Named in full, the memo system exposes exactly **three public skill entry points** — `memo-init` (Initialize), `memo-finalize` (Finalize), and `memo-plan` (Plan) — alongside two non-skill surfaces: the **memo-view API routes** and the **CLI**. Those are the doors into the system; everything else is reached through them.
+
+---
+
+## Skill-Map Role Hints (`roleHint`)
+
+The skill-to-spec map (`draft/memo/0.1.0/data/skill-spec-map.json`) carries an optional `roleHint` field on each skill entry. This field is an **ADD-only** marker that the bridge generator and downstream tooling consume to select authoritative skills for specific roles. When `roleHint` is absent, the generator falls back to a heuristic and marks the result `inferred`.
+
+Two values are defined:
+
+| `roleHint` value | Meaning | Applied to |
+|---|---|---|
+| `"public-entry"` | The skill is a **developer-triggered public entry point** — one of the few doors through which a developer enters the memo system. These skills validate strictly, set the switches, and MUST read `memo-sop` before any work proceeds (REQ-800). | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-rollout` (Execute/Plan — the lived single-memo execution path) |
+| `"grader"` | The skill is responsible for **grading or scoring** a memo artifact (goals, maintenance health, fidelity, etc.). The bridge uses the grader marker to assign grading responsibility unambiguously; without it the generator infers a grader from the skill's category or name and marks the result inferred. | `memo-goal-score`, `memo-goal-score-all`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-fidelity-audit`, and similar scoring skills |
+
+### The Three Canonical Developer-Triggered Entry Points
+
+The memo system exposes exactly three canonical developer-triggered skill entry points. Each maps to one of the Four Verbs (see above):
+
+| Verb | Skill | `roleHint` | Note |
+|---|---|---|---|
+| Initialize | `memo-init` | `public-entry` | Creates a memo from a transcript or intent. |
+| Finalize | `memo-finalize` | `public-entry` | Closes the memo; MUST be developer-triggered (never autonomous). |
+| Execute / Plan | `memo-rollout` | `public-entry` | Works a single finalized memo through its phases (the lived execution path). Multi-memo plan orchestration (`memo-plan`) is the aspiration built on top; the standalone planning layer is as-yet unfinished. |
+
+`memo-sop` is also marked `roleHint: "public-entry"` in the map as the **canonical reference entry** — it is the SOP document a developer (or agent) loads first to understand the whole system, and the bridge SOP-flow graph uses it as the anchor. It is not a developer-triggered verb in the Four Verbs sense but is the required pre-flight for all three verb skills (REQ-800).
+
+The `requires` field on a skill entry documents which other skills MUST be loaded or run first. For the three public entry-point skills, `requires: ["memo-sop"]` expresses the REQ-800 pre-flight mandate at the data layer, making the dependency machine-readable and checkable by the spec consistency gate.
 
 ---
 
