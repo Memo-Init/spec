@@ -111,6 +111,182 @@ Some skills encode a coding standard, a documentation style, or an external/doma
 
 ---
 
+## Conformity Requirements
+
+The quality standard above is authored **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](./35-memo-authoring.md)): each `statement` shapes how a skill and its evals are written, and each `check` feeds the finalization gate as a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE` result ([23-requirements.md](./23-requirements.md)). The blocks below scope to the `skill` work category in `core` and are **harvested** into the requirement store. The three quality dimensions earn object `grade`s where they measure a spectrum; the structural rules stay `binary`.
+
+Triggering is a measured spectrum — the ~90% standard above — so it carries an object `grade`:
+
+```requirement
+{
+  "id": "REQ-773",
+  "title": "Skill triggering meets the accuracy standard",
+  "statement": "A skill's `description` MUST fire on at least roughly 90% of its should-fire inputs, produce zero false positives across its should-not-fire inputs, and classify its edge-case inputs correctly; when the should-fire rate falls below the bar, the `description` is refined and the set re-run rather than left failing.",
+  "scope": { "repos": ["core"], "categories": ["skill"], "tags": ["skill-trigger"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context evaluator runs the skill's trigger set — should-fire, should-not-fire, and edge-case inputs — and measures activation. PASS when the should-fire hit rate is at or above ~90% AND no should-not-fire input activates the skill; BLOCKED when the hit rate is below the bar or any false positive occurs; INCONCLUSIVE when the trigger set could not be run.",
+    "verify": [
+      "Run the should-fire inputs and compute the hit rate",
+      "Run the should-not-fire inputs and confirm zero activations",
+      "Run the edge-case inputs and confirm correct classification"
+    ]
+  },
+  "grade": { "dimension": "trigger accuracy", "weight": 100 }
+}
+```
+
+The trigger set it measures against must itself be classified, a structural assertion:
+
+```requirement
+{
+  "id": "REQ-774",
+  "title": "Each skill carries a classified trigger query set",
+  "statement": "Every skill MUST carry a co-located trigger query set whose entries are classified into should-fire, should-not-fire, and edge-case buckets — each query assigned to exactly one bucket and all three buckets non-empty — so the triggering dimension has a representative set to measure against.",
+  "scope": { "repos": ["core"], "categories": ["skill"], "tags": ["skill-trigger", "skill-evals-infrastructure"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The skill has a trigger query set co-located with its `SKILL.md`",
+      "Each query is labelled exactly one of should-fire / should-not-fire / edge-case",
+      "All three buckets carry at least one query"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Execution assertions are counted and polarity-checked deterministically:
+
+```requirement
+{
+  "id": "REQ-775",
+  "title": "Each execution test carries three to five mixed-polarity assertions",
+  "statement": "Each skill execution test MUST carry between three and five assertions covering both the output's structure and its content, and MUST include at least one positive assertion (the output must contain X) and at least one negative assertion (the output must not contain Y).",
+  "scope": { "repos": ["core"], "categories": ["skill"], "tags": ["skill-execution"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each execution test declares between three and five assertions",
+      "The assertions cover both output structure and output content",
+      "At least one assertion is positive and at least one is negative"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether the output is actually correct is a judged spectrum, graded by a fresh-context evaluator:
+
+```requirement
+{
+  "id": "REQ-776",
+  "title": "Skill output is verified, never assumed from invocation",
+  "statement": "A skill's output MUST be checked against its declared format (files, folders, or structured content) and its content correctness MUST be verified against the input — the result is asserted, never inferred from the mere fact that the skill was invoked.",
+  "scope": { "repos": ["core"], "categories": ["skill"], "tags": ["skill-execution"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context evaluator runs the skill on a repo-local fixture input and judges the output. PASS when the output matches the declared format AND its content is factually correct and aligned with the input; BLOCKED when the format or content fails; INCONCLUSIVE when the skill could not be run against the fixture.",
+    "verify": [
+      "Run the skill against a repo-local fixture input",
+      "Assert the output shape matches the declared format",
+      "Assert the output content is correct and aligned with the input"
+    ]
+  },
+  "grade": { "dimension": "execution correctness", "weight": 100 }
+}
+```
+
+Autonomy is a countable property of a run:
+
+```requirement
+{
+  "id": "REQ-777",
+  "title": "Skill execution is autonomous",
+  "statement": "A skill MUST run to completion without emitting unnecessary user prompts: unless the skill's design genuinely requires an input, the number of clarifying questions it raises during a run MUST be zero.",
+  "scope": { "repos": ["core"], "categories": ["skill"], "tags": ["skill-execution"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Running the skill against a complete fixture input raises zero user prompts",
+      "Any prompt that does occur is justified by a documented input requirement of the skill"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Integration soundness is judged across the chain, and graded:
+
+```requirement
+{
+  "id": "REQ-778",
+  "title": "Skill integrates correctly within its declared chain",
+  "statement": "A skill that sits in a chain MUST be exercised end-to-end together with its declared dependencies, and the output of each link MUST be a valid input to the next — a contract change in one link is caught where it breaks the following one.",
+  "scope": { "repos": ["core"], "categories": ["skill"], "tags": ["skill-integration"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context evaluator runs the skill together with its declared upstream and downstream skills against fixtures. PASS when each link's output is consumed without error by the next; BLOCKED when a handoff fails; INCONCLUSIVE when the chain could not be exercised.",
+    "verify": [
+      "Identify the skill's declared chain neighbours",
+      "Run the chain end-to-end on fixtures",
+      "Confirm each output is a valid input to the next link"
+    ]
+  },
+  "grade": { "dimension": "integration soundness", "weight": 100 }
+}
+```
+
+Test isolation is the chapter's hard safety rule, a deterministic assertion that blocks:
+
+```requirement
+{
+  "id": "REQ-779",
+  "title": "Skill evaluations write only inside repo-local fixtures",
+  "statement": "A skill evaluation MUST NOT write into a user-home location, a real repository, or any shared production directory: every write the evaluation performs MUST target the repo-local fixture tree, and reads may range wider but no write escapes it.",
+  "scope": { "repos": ["core"], "categories": ["skill"], "tags": ["skill-testing-safety"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every write performed by a skill evaluation targets a path inside the repo-local fixture tree",
+      "No evaluation writes into a user-home path or a real (non-fixture) repository",
+      "Real repositories are byte-unchanged after the evaluation runs"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Finally, where the evals sit and what their fixtures mirror is structural:
+
+```requirement
+{
+  "id": "REQ-780",
+  "title": "Evals are co-located and fixtures mirror real structures",
+  "statement": "A skill's evaluations MUST live alongside the skill (an `evals/` folder next to its `SKILL.md`), test-run results MUST be kept in a separate workspace area rather than mixed into the fixtures, and the fixtures MUST mirror the real artifact structures the skill operates on (for example a mock memo, a mock repo, and a mock PRD with representative files).",
+  "scope": { "repos": ["core"], "categories": ["skill"], "tags": ["skill-evals-infrastructure"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "An `evals/` folder sits next to the skill's `SKILL.md`",
+      "Test-run results are written under a separate workspace area, not into the fixture tree",
+      "The fixture tree contains representative mock structures (mock memo, mock repo, mock PRD) that mirror real artifacts"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
 ## Related
 
 - [./14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — classifies skill versus agent versus task; this chapter governs skill *quality* and assumes that classification.

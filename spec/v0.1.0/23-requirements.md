@@ -224,6 +224,137 @@ In the target model the **production gate is 3.5**: work scoring below it is not
 
 ---
 
+## Conformity Requirements
+
+The requirement model described above is itself governed by binding rules, and those rules are authored here the same prose-first way every family authors its conformance ([35-memo-authoring.md](./35-memo-authoring.md)): each block's `statement` faces generation — it shapes how a requirement entry, a matcher, or a runner is built — and its `check` faces the finalization gate, verifying a built artifact with a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The structured blocks below are the machine-readable source the per-entry store is **harvested** from; they make the requirement model satisfy its own contract.
+
+An entry is well-formed only against the schema — required fields, the `id` pattern, and the three scope axes — so the first rule is a hard structural gate (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-840",
+  "title": "Requirement entry conforms to the entry schema",
+  "statement": "A requirement entry MUST conform to the entry schema: it MUST carry the required fields (`id`, `title`, `statement`, `scope`, `check`, `source`, `severity`, `origin`); its `id` MUST match the pattern `REQ-NNN` (three or more digits); and its `scope` MUST declare the three array axes `repos`, `categories`, and `tags`, where an empty array is the wildcard 'all'.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "schema"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Validating an entry against the requirement schema reports no missing-field error",
+      "The `id` matches the pattern `REQ-` followed by three or more digits",
+      "`scope` carries `repos`, `categories`, and `tags`, each an array, where an empty array means wildcard"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+A `check` is meaningful only when its `kind` brings its required subfields, so the kind-and-subfields pairing is its own gate (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-841",
+  "title": "check declares a valid kind with its required subfields",
+  "statement": "Every entry's `check` MUST declare a `kind` of `assertion`, `tool`, `evaluator`, or `skill`, and MUST carry the subfields that kind requires: `assertion` requires a non-empty `assertions`; `tool` requires `tool` and `tactic`; `evaluator` requires `rubric`; `skill` requires `skill`, `artifact`, and `verify`.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "schema"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "`check.kind` is one of assertion, tool, evaluator, skill",
+      "An assertion check carries a non-empty `assertions`; a tool check carries `tool` and `tactic`; an evaluator check carries `rubric`; a skill check carries `skill`, `artifact`, and `verify`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Selection must be reproducible, so the three-axis matcher is constrained to be deterministic — a hard yes/no rule (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-842",
+  "title": "Requirement selection is a deterministic three-axis match",
+  "statement": "Requirement selection MUST be a deterministic three-axis match: within a single axis an empty `scope` array is a wildcard and a non-empty array matches by exact-value intersection (never substring); across the three axes the result is an AND, so an entry applies only when every populated axis shares at least one value with the work context. A fully empty scope MUST match every context.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "matching"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Re-running the matcher on the same entry and the same work context yields the same membership decision",
+      "An entry with an empty axis matches any value on that axis; a populated axis matches only by exact intersection",
+      "An entry whose scope is empty on all three axes matches every context"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Every result must be honest about whether it actually ran, so the ternary-status and machine-evidence rule is a blocker (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-843",
+  "title": "Every check resolves to a ternary, evidence-backed status",
+  "statement": "Every check MUST resolve to a ternary status — `PASS`, `BLOCKED`, or `INCONCLUSIVE` — and MUST report `INCONCLUSIVE`, never `PASS`, when the check could not actually run. Each check SHOULD emit a machine artifact (a file list, an exit code, or a state hash) as reproducible evidence, and the runner MUST separate claim from evidence: only the machine sets the status, never a worker-supplied summary.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "runner"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A check result status is one of PASS, BLOCKED, INCONCLUSIVE",
+      "A check that did not execute reports INCONCLUSIVE, not a default PASS",
+      "The runner derives status from machine evidence read from real repo state, not from a worker-supplied claim"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether the verifier was independent of the doer is a process judgment, so the anti-cheat separation is checked by a fresh-context evaluator (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-844",
+  "title": "The doer is not the grader",
+  "statement": "Verification MUST run independently of the work it checks: the agent that performed the work MUST NOT be the agent that verifies it. Applicable checks are run adversarially in a fresh context by a separate verifier, so the proof of a requirement does not rest on the work that claimed to satisfy it.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "anti-cheat"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A fresh-context reviewer confirms the verifier that produced a requirement's result was a separate agent from the one that produced the work, running with no inherited context. PASS when verification provenance shows an independent fresh-context verifier; BLOCKED when the doer graded its own work; INCONCLUSIVE when provenance could not be established.",
+    "verify": [
+      "Inspect the run provenance for the requirement's result",
+      "Confirm the verifier context is distinct from the doer context"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The store must survive a gate run untouched and rebuild reproducibly, so append-safety and idempotent harvest are one blocker (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-845",
+  "title": "The per-entry store is append-safe and idempotently harvested",
+  "statement": "The per-entry store under `.memo/_requirements/` MUST be append-safe: the gate and the runner MUST NOT overwrite or delete a `.req.json` (NO-OVERWRITE / NO-DELETE), writing only their own report artifacts. The harvest and index generation that build the store MUST be idempotent and deterministic — running them twice over an unchanged source produces a byte-identical result with a stable sort by `id`.",
+  "scope": { "repos": ["core"], "categories": ["evals"], "tags": ["requirement-model", "store"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "After a gate or runner pass, the set of `.req.json` files is byte-identical before and after",
+      "Running harvest and index generation twice over unchanged input yields a byte-identical store",
+      "Store entries are sorted deterministically by `id`"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
 ## Related
 
 - [24-tools-registry.md](./24-tools-registry.md) — the parallel data folder; `check.kind: tool` requirements point into the tools registry for the tool and tactic that verify them.

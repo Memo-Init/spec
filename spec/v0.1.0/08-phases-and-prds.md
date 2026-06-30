@@ -159,6 +159,143 @@ The step is bounded by three rules so it composes with the dependency tree:
 
 ---
 
+## Conformity Requirements
+
+The PRD and phase rules above are not only prose. The chapter's binding `MUST`s for a PRD and its phase plan are authored here **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](./35-memo-authoring.md)): each `statement` faces generation — it shapes the prompt that produces or evaluates a PRD — and each `check` faces the finalization gate, resolving to the ternary `PASS` / `BLOCKED` / `INCONCLUSIVE` ([23-requirements.md](./23-requirements.md)). The blocks below are the machine-readable source the requirement store is **harvested** from; they scope to the `prd` work category with an empty `repos` wildcard, so they apply wherever PRDs are authored.
+
+The declared-context standard is a hard structural rule, so its `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-760",
+  "title": "PRD declares its Required Context as a pointer table into context/",
+  "statement": "Every PRD MUST carry a mandatory Required-Context section — a `| source | path |` table with at least one entry — and each supporting-research path MUST point into the memo's `context/` directory rather than copy the material into the PRD body, so the PRD stays self-contained through the pointer, not through duplication.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-declared-context"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each PRD file contains a Required-Context section rendered as a `| source | path |` table",
+      "That table carries at least one entry",
+      "Every supporting-material path in the table resolves under the memo's `context/` directory, with no copied research body inlined in its place"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Self-containment is likewise yes/no — a PRD either stands alone in a fresh context or it does not:
+
+```requirement
+{
+  "id": "REQ-761",
+  "title": "PRD is self-contained — no dangling memo references, no placeholder paths",
+  "statement": "A PRD MUST be implementable from its own text in a fresh, empty context: it MUST NOT defer to memo chapters by reference (no \"see the memo\" / \"see chapter N\" / \"described in\" pointers for content it needs), and every file path it names MUST be a concrete repository path, never placeholder prose such as \"the config file\" or a `{file-path}` token.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-self-containment"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No PRD body matches a deferring reference pattern (\"see memo\", \"see chapter\", \"described in\") for content it must carry itself",
+      "No PRD body contains a placeholder-path token such as `{file` or the phrases \"the config file\" / \"the file\"",
+      "Every file path named in a PRD is a concrete repository path"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Coverage is delegated to the bidirectional PRD validator — a `skill`-kind check:
+
+```requirement
+{
+  "id": "REQ-762",
+  "title": "Bidirectional memo<->PRD coverage is complete",
+  "statement": "The PRD set MUST cover the memo in both directions: every memo chapter or section that carries a concrete requirement MUST appear in at least one PRD (forward), and every PRD MUST trace back to a memo requirement (backward) — no uncovered chapter and no orphan PRD.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-coverage"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "skill",
+    "skill": "memo-prds-validate",
+    "artifact": "memo-prds-validate-report",
+    "presence": "required",
+    "verify": [
+      "Run the forward check: every memo chapter with concrete requirements maps to at least one PRD",
+      "Run the backward check: every PRD maps back to a memo requirement, with no orphan PRD"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The phase dependency graph is checked deterministically over the `depends-on` edges:
+
+```requirement
+{
+  "id": "REQ-763",
+  "title": "Phase dependency graph is acyclic and respected by ordering",
+  "statement": "The phases derived from a memo MUST form an acyclic dependency graph, and the planned execution order MUST respect it: no PRD in a phase may depend on a phase that runs later, and base components MUST be scheduled before the phases that build on them.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-phase-design"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The `depends-on` relation over phases contains no cycle (A -> B -> A is rejected)",
+      "No PRD in phase N declares a dependency on a phase M with M greater than N",
+      "A topological order of the phase graph exists and matches the planned execution order"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Plan-to-filesystem consistency is a direct set comparison, again `binary`:
+
+```requirement
+{
+  "id": "REQ-764",
+  "title": "PRD dependencies resolve and the plan matches the filesystem",
+  "statement": "Every declared PRD dependency MUST point at an existing PRD (no phantom or missing target), and the implementation plan MUST be in one-to-one correspondence with the PRD files on disk: every PRD file has a plan entry and every plan entry has a PRD file, with no orphan and no dangling reference.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-validation-plan-consistency"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every `depends-on` target names a PRD that exists",
+      "Every PRD file on disk has a corresponding entry in the implementation plan",
+      "Every PRD referenced by the implementation plan has a corresponding file on disk"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Integration coverage is delegated to the same validator skill:
+
+```requirement
+{
+  "id": "REQ-765",
+  "title": "Each component connection has an integration PRD with a contract test",
+  "statement": "For every component-to-component connection the memo declares, there MUST exist an integration PRD, and that PRD MUST carry testable acceptance criteria for the specific interface contract between the two components — not merely generic end-to-end checks.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-integration"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "skill",
+    "skill": "memo-prds-validate",
+    "artifact": "memo-prds-validate-report",
+    "presence": "required",
+    "verify": [
+      "Enumerate the component connections declared in the memo",
+      "Confirm each connection has a matching integration PRD",
+      "Confirm each integration PRD asserts the (A,B) interface contract, not only a generic integration test"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
 ## Related
 
 - [05-memo-strategies.md](./05-memo-strategies.md) — the type endpoint (Strategy / Implementation / Sorting) that decides whether PRDs are produced at all.

@@ -89,6 +89,154 @@ The same determinism applies to **authoring requirements inline**. Where a chapt
 
 > **Migration status — target model, not yet realized.** The generated-store direction is the **normative target**, not a description of the present. Today most of the store is still authored independently — by skills and by hand — rather than harvested from the spec, so the bulk of it *can* and does drift; only the subset already lifted into inline spec declarations is genuinely generated. The system is **migrating toward** the generated store one curated rule at a time, and the prose-first guard removes drift for each rule as it is lifted, not retroactively for the whole store. (Same status as [23-requirements.md](./23-requirements.md), *Storage and Scale*.)
 
+## Conformity Requirements
+
+The authoring rules above carry binding `MUST`s of their own, and this chapter eats its own dog food: they are written **prose-first** as declarative requirements (the prose-first guard described above), each `statement` feeding the prompt that generates or evaluates a memo's PRDs and each `check` feeding the finalization gate as a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE` result ([23-requirements.md](./23-requirements.md)). The blocks below scope to the `prd` work category and are **harvested** into the requirement store alongside the PRD-cutting rules of [08-phases-and-prds.md](./08-phases-and-prds.md); these govern how a PRD's *content* is authored, where 08 governs how a memo is *cut* into PRDs and phases.
+
+Section completeness is a structural yes/no, so its `grade` is `binary`:
+
+```requirement
+{
+  "id": "REQ-766",
+  "title": "Every PRD carries its mandatory sections",
+  "statement": "Every PRD MUST contain its full set of required sections — a goal, user stories, a scope, a changes-by-file list, a dependencies list, and a validation section — so a fresh-context agent finds every part it needs in a fixed place; a PRD missing any required section is incomplete and fails the gate.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-structure"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each PRD contains a goal section, a user-stories section, a scope section, a changes-by-file section, a dependencies section, and a validation section",
+      "No required section is empty"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The User-Story shape is a structural assertion over each story:
+
+```requirement
+{
+  "id": "REQ-767",
+  "title": "User Stories follow the role / capability / justification form",
+  "statement": "A PRD's user-stories section MUST carry at least one story in the canonical role / capability / justification form (\"as {role} I want {what} so that {why}\"), so every story names who it serves, what it enables, and why it is wanted.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-structure"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The user-stories section contains at least one story",
+      "Each story names a role, a desired capability, and a justification (the role / want / why triplet)"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Acceptance-criteria quality has a deterministic vagueness floor and a specificity spectrum above it, so it carries both a hard `check` and an object `grade`:
+
+```requirement
+{
+  "id": "REQ-768",
+  "title": "Acceptance criteria are testable at line granularity",
+  "statement": "A PRD's acceptance criteria MUST be testable — each phrased concretely enough to point at the exact line or artifact it checks — and MUST NOT use vague success language such as \"works correctly\" or \"is good\"; only PRDs whose criteria meet this bar may be marked Ralph-Loop suitable.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-assertions", "prd-ralph-loop"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No acceptance criterion matches a vague-success phrase such as \"works correctly\", \"is good\", or \"works\"",
+      "Each acceptance criterion names the concrete artifact, line, or condition it verifies",
+      "A PRD marked Ralph-Loop suitable carries only criteria that pass the two assertions above"
+    ]
+  },
+  "grade": { "dimension": "acceptance-criteria specificity", "weight": 100 }
+}
+```
+
+The feature-to-assertion set must close, and each assertion must be typed:
+
+```requirement
+{
+  "id": "REQ-769",
+  "title": "Feature<->assertion set is closed and each assertion is typed",
+  "statement": "A PRD's features and assertions MUST form a closed, bidirectionally-covered set — every feature has at least one assertion and every assertion belongs to at least one feature, with no orphan assertion — and each assertion MUST be marked either HARD (memo-fixed) or OPEN (negotiable).",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-assertions"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every feature references at least one assertion",
+      "Every assertion traces back to at least one feature, with no orphan assertion",
+      "Every assertion carries a type marker that is exactly one of HARD or OPEN"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The closeout workflow is a fixed section every PRD must end with — its check is structural, not a secrets scan:
+
+```requirement
+{
+  "id": "REQ-770",
+  "title": "Every PRD ends with the closeout workflow section",
+  "statement": "Every PRD MUST carry a closeout section that documents three steps in order — a friction test, the `git-security` check, and the `git-commit` preparation — and that states explicitly that commit is not push.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-structure", "prd-commit-strategy"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each PRD contains a closeout section",
+      "That section lists a friction test, a `git-security` step, and a `git-commit` step",
+      "That section states explicitly that commit is not push"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Concrete inline examples are a self-containment rule:
+
+```requirement
+{
+  "id": "REQ-771",
+  "title": "Data structures and code patterns are shown inline and concretely",
+  "statement": "Where a PRD specifies a data structure or a code pattern, it MUST show it concretely inline — a fenced JSON / YAML / code example, not an abstract description or an implicit assumption — so a fresh-context agent need not reconstruct the shape from prose.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["prd-self-containment", "prd-code-examples"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every PRD that specifies a data structure carries a concrete inline example as a fenced JSON / YAML / code block",
+      "Every PRD with a code requirement carries at least one fenced code block showing a concrete example",
+      "No specified structure or pattern is left as an abstract description only"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Finally, the way a requirement statement itself is worded is checkable — the prose-first guard's own conformance rule:
+
+```requirement
+{
+  "id": "REQ-772",
+  "title": "An authored requirement states a normative condition without hedging",
+  "statement": "A requirement statement authored inline MUST state a normative condition in RFC-2119 terms (MUST / SHOULD / MAY) and MUST NOT hedge it into a non-requirement with words such as \"could\", \"if possible\", or \"optional\"; the rule's force is explicit, not implied.",
+  "scope": { "repos": [], "categories": ["prd"], "tags": ["req-format"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "The statement contains at least one RFC-2119 normative keyword (MUST, SHOULD, or MAY)",
+      "The statement does not reduce a stated obligation to a non-requirement via hedging tokens such as \"could\", \"if possible\", or \"optional\""
+    ]
+  },
+  "grade": "binary"
+}
+```
+
 ## Related
 
 - [06-memo-structure.md](./06-memo-structure.md) — the on-disk shape of a memo that this chapter authors into.
