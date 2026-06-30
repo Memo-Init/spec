@@ -6,7 +6,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T15:46:49.415Z"
+generated_at: "2026-06-30T15:56:25.896Z"
 generated_from: "spec/v0.1.0/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/34-question-interface.md."

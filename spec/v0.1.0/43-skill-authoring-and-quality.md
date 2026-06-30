@@ -113,6 +113,8 @@ The coverage gate proves the link is *sound*; the **Bridge** makes it *legible*.
 
 The Bridge is never hand-written. It is generated from the skill-to-spec map, marked as generated, and regenerated on every build, so it cannot drift from the data it summarizes. The resolving coverage lint (check-skill-specs) is the gate that keeps that data true: it fails when a referenced chapter does not resolve, which is the same guarantee that lets the Bridge enumerate by name with confidence. Read together, the gate keeps the references real and the Bridge shows, at a glance, where the skills cluster and where the specification is still waiting for its first implementer.
 
+These checks are unified into one maintenance gate, `memo spec doctor`, which runs three views in a single command — **skills** (the forward coverage lint above), **pages** (the inverse projection: each source chapter carries only the authored-source placeholder while the rendered backlink, the per-page Bridge, and the inverted map all agree with the map), and **requirements** (the store has no id-namespace collision and its index is fresh) — across all three families, and fails the build on any gap. It is the deliberate enforcer of full coverage: a partial state — a chapter with a missing placeholder, a drifted backlink, an id collision, or a stale index — cannot pass unnoticed. Where a sibling repository or the store is not checked out, the affected view degrades to an honest skip rather than a false pass.
+
 ---
 
 ## When the Skill Leads the Spec
