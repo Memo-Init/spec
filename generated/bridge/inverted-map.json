@@ -1,7 +1,7 @@
 {
     "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.",
     "generator": "scripts/generate-bridge.mjs",
-    "mapHash": "5837897a1a1b",
+    "mapHash": "e6bee48bceeb",
     "pages": [
         {
             "family": "core",
@@ -2873,60 +2873,6 @@
                 "memo"
             ],
             "provenance": "917a89dd08cc"
-        },
-        {
-            "family": "core",
-            "id": "47-node-standards",
-            "stem": "47-node-standards",
-            "sopAnchor": "02-memo-sop-entrypoint",
-            "publicEntries": [
-                "node-formatting"
-            ],
-            "publicEntriesInferred": true,
-            "detailPages": [
-                "00-overview",
-                "22-tree-cli-recommended-way",
-                "23-requirements",
-                "43-skill-authoring-and-quality",
-                "44-repository-and-outward-docs"
-            ],
-            "implementers": [
-                {
-                    "skill": "node-class-architecture",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "node-environment-manager",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "node-error-codes",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "node-formatting",
-                    "role": "primary"
-                },
-                {
-                    "skill": "node-server-design",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "node-testing",
-                    "role": "contributing"
-                },
-                {
-                    "skill": "node-validation",
-                    "role": "contributing"
-                }
-            ],
-            "grader": null,
-            "gaps": [],
-            "outOfScope": [],
-            "clusters": [
-                "code-patterns"
-            ],
-            "provenance": "cb639c124118"
         },
         {
             "family": "workbench",

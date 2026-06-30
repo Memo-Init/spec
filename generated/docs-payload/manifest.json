@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-30T15:03:17.252Z",
+    "generated_at": "2026-06-30T15:09:59.784Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -472,16 +472,6 @@
             "section": "Specification",
             "normative": false,
             "sidebar_group": "bridge"
-        },
-        {
-            "filename": "47-node-standards.md",
-            "slug": "node-standards",
-            "title": "Node.js Standards",
-            "description": "Every piece of Node.js code in this organisation is written to one house style. The style is not a matter of taste applied per file; it is a single, deterministic contract so that any module reads...",
-            "order": 47,
-            "section": "Specification",
-            "normative": true,
-            "sidebar_group": "skills"
         }
     ],
     "workbench": {
@@ -905,11 +895,11 @@
         ]
     },
     "stats": {
-        "total_files": 89,
-        "core_files": 48,
+        "total_files": 88,
+        "core_files": 47,
         "workbench_files": 24,
         "session_files": 17,
-        "normative_files": 75,
+        "normative_files": 74,
         "informative_files": 14
     }
 }
