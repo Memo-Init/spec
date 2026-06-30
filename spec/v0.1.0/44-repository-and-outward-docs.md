@@ -14,7 +14,7 @@ The unifying idea is that a repository is the first thing an outside reader meet
 
 ## Repository Scaffolding
 
-A new repository is scaffolded into a **standard folder layout** rather than grown ad hoc. The layout makes the repository's shape predictable across projects: source under a `src/` root, tests under a `tests/` root split into unit, integration, and helper areas, a continuous-integration workflow under `.github/workflows/`, and the baseline files at the root. A reader who knows the layout knows where to look in any repository that follows it.
+A new repository is scaffolded with a **predictable shape** rather than grown ad hoc: a continuous-integration workflow under `.github/workflows/` and the baseline files at the root. A reader who knows the convention knows where to look in any repository that follows it. The language-specific source and test folder layout (for a Node project, a `src/` root and a `tests/` split) is a coding-standard concern governed by the project's own standard (personal-brand/user-preferences), not this org spec — this chapter keeps only the repository-process rules.
 
 The baseline files a scaffolded repository carries:
 
@@ -151,40 +151,38 @@ The conventions above are normative, and the binding `MUST`s of each section are
 
 ### Scaffolding
 
-A scaffolded repository is born with the standard folder layout and the baseline root files, which a script can assert by presence — a hard structural rule, so `grade` is `binary`:
+A scaffolded repository is born with a CI workflow and the baseline root files, which a script can assert by presence — a hard structural rule, so `grade` is `binary`. The language-specific source/test folder layout is out of scope here (it lives in the project coding standard, personal-brand/user-preferences):
 
 ```requirement
 {
   "id": "REQ-710",
-  "title": "Repository carries the standard layout and baseline files",
-  "statement": "A scaffolded repository MUST carry the standard folder layout — source under `src/`, tests under `tests/` split into unit, integration, and helper areas, and a CI workflow under `.github/workflows/` — together with the baseline root files `package.json`, `.gitignore`, `LICENSE`, and `README.md`.",
+  "title": "Repository carries the CI workflow and baseline root files",
+  "statement": "A scaffolded repository MUST carry a continuous-integration workflow under `.github/workflows/` together with the baseline root files `package.json`, `.gitignore`, `LICENSE`, and `README.md`. The language-specific source and test folder layout (for Node, a `src/` root and a `tests/` split) is governed by the project's own coding standard (personal-brand/user-preferences), not this spec.",
   "scope": { "repos": [], "categories": ["repository"], "tags": ["scaffolding"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
     "assertions": [
-      "The directories `src/`, `tests/`, and `.github/workflows/` all exist",
-      "The root files `package.json`, `.gitignore`, `LICENSE`, and `README.md` all exist",
-      "The `tests/` root is split into unit, integration, and helper areas"
+      "The directory `.github/workflows/` exists and carries a CI workflow",
+      "The root files `package.json`, `.gitignore`, `LICENSE`, and `README.md` all exist"
     ]
   },
   "grade": "binary"
 }
 ```
 
-The module manifest declares ES-module mode and the test scripts the CI workflow invokes; both are read directly from `package.json`, a hard yes/no:
+The module manifest defines the test scripts the CI workflow invokes, read directly from `package.json`, a hard yes/no. The ES-module mode (`"type": "module"`) is a Node language-level choice owned by the project coding standard (personal-brand/user-preferences), not this spec:
 
 ```requirement
 {
   "id": "REQ-711",
-  "title": "package.json declares ES modules and the CI test scripts",
-  "statement": "The repository's `package.json` MUST declare `\"type\": \"module\"` for Node ES modules and define the test scripts the CI workflow invokes (a `test` script plus the coverage script the test-on-push workflow runs), so the workflow references them by name rather than guessing.",
+  "title": "package.json defines the CI test scripts",
+  "statement": "The repository's `package.json` MUST define the test scripts the CI workflow invokes (a `test` script plus the coverage script the test-on-push workflow runs), so the workflow references them by name rather than guessing. The ES-module mode (`\"type\": \"module\"`) is a Node language-level choice governed by the project's own coding standard (personal-brand/user-preferences), not this spec.",
   "scope": { "repos": [], "categories": ["repository"], "tags": ["scaffolding"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
     "assertions": [
-      "`package.json` carries `type` set to `module`",
       "`package.json` `scripts` defines a `test` script and the coverage script the CI workflow invokes"
     ]
   },
