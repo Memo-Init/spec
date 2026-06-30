@@ -564,7 +564,7 @@ const main = async () => {
         const prevHub = await readFile( hubPath, 'utf-8' ).catch( () => null )
         if( prevHub !== hubContent ) await writeFile( hubPath, hubContent, 'utf-8' )
 
-        const readme = family.name === 'core'
+        const readme = family.name === 'memo'
             ? await updateReadmeCluster( { specDirAbs, records: recordList } )
             : { changed: false }
 

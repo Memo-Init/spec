@@ -6,10 +6,10 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T15:56:25.896Z"
-generated_from: "spec/v0.1.0/30-primitives.md"
+generated_at: "2026-06-30T22:23:50.208Z"
+generated_from: "draft/memo/0.1.0/spec/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
-edit_warning: "This file is auto-generated. Source: spec/v0.1.0/30-primitives.md."
+edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/30-primitives.md."
 ---
 
 

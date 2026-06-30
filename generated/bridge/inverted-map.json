@@ -4,7 +4,7 @@
     "mapHash": "955b73b36104",
     "pages": [
         {
-            "family": "core",
+            "family": "memo",
             "id": "00-overview",
             "stem": "00-overview",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -30,10 +30,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "5fc0c0c8698d"
+            "provenance": "9926b0addef8"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "01-philosophy",
             "stem": "01-philosophy",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -77,10 +77,10 @@
                 "memo",
                 "workbench"
             ],
-            "provenance": "2ff6a0805527"
+            "provenance": "2e60c686ad77"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "02-memo-sop-entrypoint",
             "stem": "02-memo-sop-entrypoint",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -171,10 +171,10 @@
                 "skill",
                 "workbench"
             ],
-            "provenance": "0cf0cd16be63"
+            "provenance": "16386cad65cf"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "03-input-paths",
             "stem": "03-input-paths",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -202,10 +202,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "1f55f331cb88"
+            "provenance": "ed9e01071e1f"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "04-input-pipeline",
             "stem": "04-input-pipeline",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -241,10 +241,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "f8e41062e4d0"
+            "provenance": "c2499ff9cb66"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "05-memo-strategies",
             "stem": "05-memo-strategies",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -274,10 +274,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "409546827cda"
+            "provenance": "788a9a4c8243"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "06-memo-structure",
             "stem": "06-memo-structure",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -332,10 +332,10 @@
                 "memo",
                 "workbench"
             ],
-            "provenance": "4fe30c9c6052"
+            "provenance": "fe7405a4dd77"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "07-revisions-and-questions",
             "stem": "07-revisions-and-questions",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -415,10 +415,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "864ee79581b6"
+            "provenance": "9cd38a020e92"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "08-phases-and-prds",
             "stem": "08-phases-and-prds",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -533,10 +533,10 @@
                 "prd",
                 "workbench"
             ],
-            "provenance": "a5e9421d3132"
+            "provenance": "d536850374d8"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "09-contamination-context-handover",
             "stem": "09-contamination-context-handover",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -667,10 +667,10 @@
                 "prd",
                 "workbench"
             ],
-            "provenance": "80a0c5daeda4"
+            "provenance": "39d6eb7ff252"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "10-proactive-research",
             "stem": "10-proactive-research",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -734,10 +734,10 @@
                 "research",
                 "wiki"
             ],
-            "provenance": "ebff7ae65708"
+            "provenance": "7ab086371100"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "11-quality-and-finalization",
             "stem": "11-quality-and-finalization",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -847,10 +847,10 @@
                 "research",
                 "workbench"
             ],
-            "provenance": "350e7c07e33e"
+            "provenance": "a1bc3ff32774"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "12-rollout",
             "stem": "12-rollout",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -915,10 +915,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "3151e7ba724f"
+            "provenance": "61cf325b4cfc"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "13-orchestration",
             "stem": "13-orchestration",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1029,10 +1029,10 @@
                 "prd",
                 "research"
             ],
-            "provenance": "e84898325a83"
+            "provenance": "578a8273d7cb"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "14-agents-skills-tasks",
             "stem": "14-agents-skills-tasks",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1080,10 +1080,10 @@
                 "skill",
                 "workbench"
             ],
-            "provenance": "7f7bc8fc8b34"
+            "provenance": "01369df8f7c3"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "15-prompt-generator",
             "stem": "15-prompt-generator",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1125,10 +1125,10 @@
                 "memo",
                 "prd"
             ],
-            "provenance": "b7bd28777858"
+            "provenance": "61935ca4ad9d"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "16-git-security-versioning",
             "stem": "16-git-security-versioning",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1231,10 +1231,10 @@
                 "memo",
                 "workbench"
             ],
-            "provenance": "411577bfaeb6"
+            "provenance": "2fe71f61526f"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "17-git-workflow-and-ids",
             "stem": "17-git-workflow-and-ids",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1305,10 +1305,10 @@
                 "prd",
                 "workbench"
             ],
-            "provenance": "c36971e32f0b"
+            "provenance": "2c44468db184"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "18-multidimensionality",
             "stem": "18-multidimensionality",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1342,10 +1342,10 @@
                 "git",
                 "memo"
             ],
-            "provenance": "14af5eef3063"
+            "provenance": "5e8d4bcdbf03"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "19-internal-vs-external-communication",
             "stem": "19-internal-vs-external-communication",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1400,10 +1400,10 @@
                 "git",
                 "workbench"
             ],
-            "provenance": "f12e4132de0d"
+            "provenance": "5d5970e0cc0d"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "20-flow-full-vs-update-revisions",
             "stem": "20-flow-full-vs-update-revisions",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1443,10 +1443,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "d426d77dd1ca"
+            "provenance": "5faafac7beb8"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "21-human-computer-interaction",
             "stem": "21-human-computer-interaction",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1498,10 +1498,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "e653557fc749"
+            "provenance": "01ff37d6252d"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "22-tree-cli-recommended-way",
             "stem": "22-tree-cli-recommended-way",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1539,10 +1539,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "c60d9db03dfc"
+            "provenance": "17349a0780e9"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "23-requirements",
             "stem": "23-requirements",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1651,10 +1651,10 @@
                 "skill",
                 "wiki"
             ],
-            "provenance": "35e063cc31ee"
+            "provenance": "e9c8accc6597"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "24-tools-registry",
             "stem": "24-tools-registry",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1699,10 +1699,10 @@
                 "wiki",
                 "workbench"
             ],
-            "provenance": "8eee6cdc2af3"
+            "provenance": "e6cf1eff520e"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "25-strands",
             "stem": "25-strands",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1731,10 +1731,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "5d9cb0343ae2"
+            "provenance": "e4871a9db0a4"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "26-memo-history",
             "stem": "26-memo-history",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1775,10 +1775,10 @@
                 "memo",
                 "wiki"
             ],
-            "provenance": "f7a064512312"
+            "provenance": "d27fc6971adc"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "27-landing-the-plane",
             "stem": "27-landing-the-plane",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1824,10 +1824,10 @@
                 "memo",
                 "workbench"
             ],
-            "provenance": "0e0cf5102dc4"
+            "provenance": "687cd266a110"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "28-drift",
             "stem": "28-drift",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1870,10 +1870,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "8b6daff9ecd3"
+            "provenance": "2732835582d9"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "29-behavioral-guardrails",
             "stem": "29-behavioral-guardrails",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1919,10 +1919,10 @@
                 "memo",
                 "workbench"
             ],
-            "provenance": "7fa0fbf20815"
+            "provenance": "e4c8bc8314f3"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "30-primitives",
             "stem": "30-primitives",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -1968,10 +1968,10 @@
                 "evals",
                 "memo"
             ],
-            "provenance": "28daa37a9808"
+            "provenance": "0671bc0ff8d0"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "31-goals",
             "stem": "31-goals",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2026,10 +2026,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "1e9d9556a0eb"
+            "provenance": "7e88389ba989"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "32-prompt-governance",
             "stem": "32-prompt-governance",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2068,10 +2068,10 @@
                 "memo",
                 "prd"
             ],
-            "provenance": "ebffb2f5096d"
+            "provenance": "ae52bd635f6a"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "33-maintenance",
             "stem": "33-maintenance",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2126,10 +2126,10 @@
                 "git",
                 "memo"
             ],
-            "provenance": "3dba24171576"
+            "provenance": "c32717268f65"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "34-question-interface",
             "stem": "34-question-interface",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2172,10 +2172,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "c620300c5491"
+            "provenance": "46dba8f1b1db"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "35-memo-authoring",
             "stem": "35-memo-authoring",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2217,10 +2217,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "abb4a15d0861"
+            "provenance": "e5be090ef249"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "36-agent-strategies",
             "stem": "36-agent-strategies",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2295,10 +2295,10 @@
                 "research",
                 "workbench"
             ],
-            "provenance": "f794562b1883"
+            "provenance": "a08d0129bdb2"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "37-transcript-reliability",
             "stem": "37-transcript-reliability",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2323,10 +2323,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "76f50d96f106"
+            "provenance": "b324675da112"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "38-stage-model",
             "stem": "38-stage-model",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2421,10 +2421,10 @@
                 "git",
                 "memo"
             ],
-            "provenance": "382f6e3d3ec5"
+            "provenance": "dc37cf7fc4e4"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "39-release-and-pinning",
             "stem": "39-release-and-pinning",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2466,10 +2466,10 @@
                 "git",
                 "memo"
             ],
-            "provenance": "78dd9a1cf8f2"
+            "provenance": "b8c6dfcc907d"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "40-diagrams",
             "stem": "40-diagrams",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2498,10 +2498,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "9ece5699d7bb"
+            "provenance": "12bca5e1fc7d"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "41-mental-model",
             "stem": "41-mental-model",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2540,10 +2540,10 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "6a590b621e98"
+            "provenance": "97837607999d"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "42-plans",
             "stem": "42-plans",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2647,10 +2647,10 @@
                 "code-patterns",
                 "memo"
             ],
-            "provenance": "9a6a8395c6be"
+            "provenance": "2805555081f7"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "43-skill-authoring-and-quality",
             "stem": "43-skill-authoring-and-quality",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2688,10 +2688,10 @@
             "clusters": [
                 "skill"
             ],
-            "provenance": "4edbe34dae88"
+            "provenance": "359603036d1b"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "44-repository-and-outward-docs",
             "stem": "44-repository-and-outward-docs",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2717,10 +2717,10 @@
                 "repo-readme"
             ],
             "clusters": [],
-            "provenance": "c9e8ad81a267"
+            "provenance": "49d6e773b9ab"
         },
         {
-            "family": "core",
+            "family": "memo",
             "id": "45-implementation-fidelity-audit",
             "stem": "45-implementation-fidelity-audit",
             "sopAnchor": "02-memo-sop-entrypoint",
@@ -2752,7 +2752,7 @@
             "clusters": [
                 "memo"
             ],
-            "provenance": "2b8a09b0f515"
+            "provenance": "0698573b167c"
         },
         {
             "family": "workbench",

@@ -82,8 +82,8 @@ const main = () => {
 
     const families = discoverSpecs( { repoRoot: REPO } )
     families.forEach( ( family ) => {
-        // Core files live at MANIFEST.files (top-level); all other families at MANIFEST[name].files.
-        const files = family.name === 'core' ? MANIFEST.files : MANIFEST[ family.name ].files
+        // Memo (core) files live at MANIFEST.files (top-level); all other families at MANIFEST[name].files.
+        const files = family.name === 'memo' ? MANIFEST.files : MANIFEST[ family.name ].files
         writeManifest( {
             specDir: family.specDir,
             namespace: family.namespace,

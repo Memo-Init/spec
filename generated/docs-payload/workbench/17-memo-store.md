@@ -6,10 +6,10 @@ spec_file: "17-memo-store.md"
 order: 17
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T15:56:25.896Z"
-generated_from: "spec/workbench/0.1.0/17-memo-store.md"
+generated_at: "2026-06-30T22:23:50.208Z"
+generated_from: "draft/workbench/0.1.0/spec/17-memo-store.md"
 generator: "scripts/generate-docs-payload.mjs"
-edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/17-memo-store.md."
+edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/17-memo-store.md."
 ---
 
 

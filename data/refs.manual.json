@@ -1,21 +1,21 @@
 {
     "schemaVersion": "refs/1.0.0",
-    "spec": {
+    "memo": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "v0.1.0",
         "historicalVersions": [ "0.1.0" ],
-        "specDir": "spec/v0.1.0"
+        "specDir": "draft/memo/0.1.0/spec"
     },
     "workbench": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
-        "specDir": "spec/workbench/0.1.0",
+        "specDir": "draft/workbench/0.1.0/spec",
         "url": "https://memo-init.github.io/workbench/overview/"
     },
     "session": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
-        "specDir": "spec/session/0.1.0",
+        "specDir": "draft/session/0.1.0/spec",
         "url": "https://memo-init.github.io/session/overview/"
     },
     "docs": {

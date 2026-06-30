@@ -26,7 +26,7 @@ const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 
 const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
-const SPEC_VERSION = REFS_MANUAL.spec.currentVersion
+const SPEC_VERSION = REFS_MANUAL.memo.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
 const SESSION_VERSION = REFS_MANUAL.session.currentVersion
 
@@ -84,7 +84,7 @@ const loadFamilyManifest = ( { specDir, label } ) => {
     return result
 }
 
-const SPEC_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.spec.specDir, label: 'core' } )
+const SPEC_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.memo.specDir, label: 'memo' } )
 const WORKBENCH_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.workbench.specDir, label: 'workbench' } )
 const SESSION_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.session.specDir, label: 'session' } )
 
@@ -148,7 +148,7 @@ const main = async () => {
     const now = new Date().toISOString()
 
     console.log( 'Building manifest from docs-payload...' )
-    const coreFiles = await collectEntries( { dir: PAYLOAD_DIR, groupFn: sidebarGroupFromFilename, label: 'core' } )
+    const coreFiles = await collectEntries( { dir: PAYLOAD_DIR, groupFn: sidebarGroupFromFilename, label: 'memo' } )
     const workbench = await buildFamilyBlock( { dir: WORKBENCH_PAYLOAD_DIR, groupFn: workbenchSidebarGroupFromFilename, label: 'workbench', version: WORKBENCH_VERSION } )
     const session = await buildFamilyBlock( { dir: SESSION_PAYLOAD_DIR, groupFn: sessionSidebarGroupFromFilename, label: 'session', version: SESSION_VERSION } )
 
@@ -173,7 +173,7 @@ const main = async () => {
 
     await writeFile( MANIFEST_PATH, JSON.stringify( manifest, null, 4 ) + '\n', 'utf-8' )
     console.log( `\nManifest written to ${ MANIFEST_PATH }` )
-    console.log( `Total: ${ manifest.stats.total_files } (core ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, session ${ manifest.stats.session_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
+    console.log( `Total: ${ manifest.stats.total_files } (memo ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, session ${ manifest.stats.session_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
 
     // Memo 052 Kap 8: copy each per-version spec-manifest into the docs-payload so it travels
     // the same path as the payload to the public site (sync-spec.mjs → src/data). The site's
@@ -184,7 +184,7 @@ const main = async () => {
 
 const copySpecManifestsToPayload = async () => {
     const families = [
-        { specDir: REFS_MANUAL.spec.specDir, label: 'core' },
+        { specDir: REFS_MANUAL.memo.specDir, label: 'memo' },
         { specDir: REFS_MANUAL.workbench.specDir, label: 'workbench' },
         { specDir: REFS_MANUAL.session.specDir, label: 'session' }
     ]

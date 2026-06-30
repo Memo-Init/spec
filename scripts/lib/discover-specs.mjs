@@ -1,74 +1,34 @@
-// discover-specs.mjs — central family discovery helper (M058 PRD-005, de-hardcoding seam).
+// discover-specs.mjs — central family discovery helper (M058 PRD-005 scanner).
 //
-// Reads each family's per-specDir spec.json (canonical source when present). Falls back to
-// refs.manual.json + hardcoded values when absent. Returns an ordered array (core → workbench
-// → session) of family records suitable for generate-bridge.mjs and build-spec-manifests.mjs.
+// Real directory scanner: reads draft/*/spec.json (glob the draft dir), derives
+// a full family record for each family found. The spec.json is the single source of
+// family identity; specDir and dataDir are structurally derived from the slug and
+// currentVersion so the record shape never drifts from the on-disk layout.
 //
 // Record shape:
 //   { name, namespace, prefix, version, specDir, dataDir, sopAnchor, docEntry, relatedRefs, manifestMeta }
-// where manifestMeta = { order:[...], labels:{...} } (sidebar group meta per family).
+// where:
+//   specDir  = 'draft/<name>/<version>/spec'
+//   dataDir  = 'draft/<name>/<version>/data'
+//   manifestMeta = { order:[...], labels:{...} } (sidebar group meta from sidebarMeta)
 //
-// Callers MUST NOT re-implement the family list — this is the single seam through which a new
-// parallel spec is added: add a spec.json in its specDir + extend refs.manual.json, done.
+// Family ORDER is canonical: memo → workbench → session. Unknown families are appended
+// after the known three (alphabetically), so new parallel specs slot in deterministically.
+// Callers MUST NOT re-implement the family list — add a spec.json under draft/<name>/
+// and extend refs.manual.json; discoverSpecs picks it up automatically.
 
-import { readFileSync, existsSync } from 'node:fs'
+import { readdirSync, readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 
 
-// Canonical fallback values used when no spec.json is present in the family's specDir.
-// These mirror the formerly hardcoded FAMILIES / CORE / WORKBENCH / SESSION constants across
-// generate-bridge.mjs and build-spec-manifests.mjs. When a spec.json exists it takes precedence.
-const FALLBACKS = {
-    core: {
-        name: 'core',
-        namespace: 'core',
-        prefix: '',
-        sopAnchor: '02-memo-sop-entrypoint',
-        relatedRefs: [ '43-skill-authoring-and-quality', '00-overview' ],
-        manifestMeta: {
-            order: [ 'introduction', 'input', 'initialisierung', 'revision', 'execution', 'procedure', 'behavior', 'health', 'agents', 'git', 'skills' ],
-            labels: {
-                introduction: 'Introduction', input: 'Input', initialisierung: 'Initialisierung', revision: 'Revision',
-                execution: 'Execution', procedure: 'Procedure', behavior: 'Behavior', health: 'Health',
-                agents: 'Agents', git: 'Git & Repo', skills: 'Skills'
-            }
-        }
-    },
-    workbench: {
-        name: 'workbench',
-        namespace: 'workbench',
-        prefix: 'workbench/',
-        sopAnchor: '02-sop-entrypoint',
-        relatedRefs: [ '00-overview' ],
-        manifestMeta: {
-            order: [ 'introduction', 'root', 'projects', 'folders', 'custom', 'cli', 'tools', 'wiki', 'storage', 'core' ],
-            labels: {
-                introduction: 'Introduction', root: 'Root', projects: 'Projects', folders: 'Folders', custom: 'Custom',
-                cli: 'CLI & Scripts', tools: 'Tools', wiki: 'Wiki', storage: 'Storage Formats', core: 'Core'
-            }
-        }
-    },
-    session: {
-        name: 'session',
-        namespace: 'session',
-        prefix: 'session/',
-        sopAnchor: '10-sop',
-        relatedRefs: [ '00-overview' ],
-        manifestMeta: {
-            order: [ 'introduction', 'sop', 'genesis-root', 'enforcement', 'cli', 'recovery' ],
-            labels: {
-                introduction: 'Introduction', sop: 'SOP', 'genesis-root': 'Genesis Root',
-                enforcement: 'Enforcement', cli: 'CLI', recovery: 'Recovery'
-            }
-        }
-    }
-}
+// Canonical family order for sorting. Unknown families sort after the known three.
+const FAMILY_ORDER = [ 'memo', 'workbench', 'session' ]
 
 
-// Read optional spec.json from a specDir. Returns null when absent or unreadable (never throws).
-const readSpecJson = ( { specDirAbs } ) => {
-    const path = join( specDirAbs, 'spec.json' )
-    if( existsSync( path ) === false ) return null
+// Read a spec.json from a draft family directory. Returns null when absent or unreadable.
+const readSpecJson = ( { familyDirAbs } ) => {
+    const path = join( familyDirAbs, 'spec.json' )
+    if ( existsSync( path ) === false ) return null
     try {
         return JSON.parse( readFileSync( path, 'utf-8' ) )
     } catch {
@@ -77,47 +37,57 @@ const readSpecJson = ( { specDirAbs } ) => {
 }
 
 
-// Derive the canonical docEntry for a family, using spec.json when available and falling back
-// to the refs.manual.json entryPoints (preserving the original resolution logic exactly).
-const resolveDocEntry = ( { specJson, refs, refKey } ) => {
-    if( specJson?.docEntry !== undefined ) return specJson.docEntry
-    if( refKey === 'session' ) return refs.session?.url ?? '/session/overview/'
-    if( refKey === 'workbench' ) return refs.docs?.entryPoints?.toolMaintainer ?? '/workbench/overview/'
-
-    return refs.docs?.entryPoints?.memoAuthor ?? '/specification/overview/'
-}
-
-
-// Build a full family record from refs + optional spec.json + fallback values.
-const buildFamilyRecord = ( { refs, refKey, fallback, repoRoot } ) => {
-    const refEntry = refs[ refKey ]
-    const specDir = refEntry.specDir
-    const specDirAbs = join( repoRoot, specDir )
-    const specJson = readSpecJson( { specDirAbs } )
+// Build a full family record from a spec.json manifest at draft/<name>/spec.json.
+// specDir and dataDir are structurally derived (never read from spec.json) so the layout
+// is always consistent: draft/<name>/<version>/spec and draft/<name>/<version>/data.
+const buildFamilyRecord = ( { name, specJson } ) => {
+    const version = specJson.currentVersion
+    const specDir = `draft/${ name }/${ version }/spec`
+    const dataDir = `draft/${ name }/${ version }/data`
 
     return {
-        name: fallback.name,
-        namespace: specJson?.namespace ?? specJson?.slug ?? fallback.namespace,
-        prefix: specJson?.prefix ?? fallback.prefix,
-        version: refEntry.currentVersion,
+        name,
+        namespace: specJson.namespace ?? specJson.slug ?? name,
+        prefix: specJson.prefix ?? '',
+        version,
         specDir,
-        dataDir: specDir,
-        sopAnchor: specJson?.sopAnchor ?? fallback.sopAnchor,
-        docEntry: resolveDocEntry( { specJson, refs, refKey } ),
-        relatedRefs: specJson?.relatedRefs ?? fallback.relatedRefs,
-        manifestMeta: specJson?.sidebarMeta ?? fallback.manifestMeta
+        dataDir,
+        sopAnchor: specJson.sopAnchor ?? '',
+        docEntry: specJson.docEntry ?? `/${ name }/overview/`,
+        relatedRefs: specJson.relatedRefs ?? [],
+        manifestMeta: specJson.sidebarMeta ?? { order: [], labels: {} }
     }
 }
 
 
-// Discover all spec families in canonical order: core (spec) → workbench → session.
-// Falls back fully to hardcoded values when no spec.json is found in a family's specDir.
+// Discover all spec families from draft/*/spec.json in canonical order:
+// memo → workbench → session, then any additional families alphabetically.
+// Falls back gracefully (returns empty array) when the draft dir does not exist yet.
 export const discoverSpecs = ( { repoRoot } ) => {
-    const refs = JSON.parse( readFileSync( join( repoRoot, 'data/refs.manual.json' ), 'utf-8' ) )
+    const draftDir = join( repoRoot, 'draft' )
+    if ( existsSync( draftDir ) === false ) return []
 
-    return [
-        buildFamilyRecord( { refs, refKey: 'spec', fallback: FALLBACKS.core, repoRoot } ),
-        buildFamilyRecord( { refs, refKey: 'workbench', fallback: FALLBACKS.workbench, repoRoot } ),
-        buildFamilyRecord( { refs, refKey: 'session', fallback: FALLBACKS.session, repoRoot } )
-    ]
+    const entries = readdirSync( draftDir, { withFileTypes: true } )
+    const records = entries
+        .filter( ( e ) => e.isDirectory() === true )
+        .map( ( e ) => {
+            const name = e.name
+            const specJson = readSpecJson( { familyDirAbs: join( draftDir, name ) } )
+            if ( specJson === null ) return null
+
+            return buildFamilyRecord( { name, specJson } )
+        } )
+        .filter( ( r ) => r !== null )
+
+    // Sort in canonical order: known families first (by FAMILY_ORDER index), then unknown
+    // families alphabetically so new specs appear in a stable, predictable position.
+    return records.sort( ( a, b ) => {
+        const ia = FAMILY_ORDER.indexOf( a.name )
+        const ib = FAMILY_ORDER.indexOf( b.name )
+        if ( ia !== -1 && ib !== -1 ) return ia - ib
+        if ( ia !== -1 ) return -1
+        if ( ib !== -1 ) return 1
+
+        return a.name.localeCompare( b.name )
+    } )
 }

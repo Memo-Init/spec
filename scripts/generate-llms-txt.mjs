@@ -19,14 +19,14 @@ const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 
 const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
-const SPEC_VERSION = REFS_MANUAL.spec.currentVersion
+const SPEC_VERSION = REFS_MANUAL.memo.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
 const SESSION_VERSION = REFS_MANUAL.session.currentVersion
 const SOURCE_URL = REFS_MANUAL.github.specRepo
 
-const SPEC_DIR = join( REPO, `spec/v${ SPEC_VERSION }` )
-const WORKBENCH_DIR = join( REPO, `spec/workbench/${ WORKBENCH_VERSION }` )
-const SESSION_DIR = join( REPO, `spec/session/${ SESSION_VERSION }` )
+const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
+const WORKBENCH_DIR = join( REPO, REFS_MANUAL.workbench.specDir )
+const SESSION_DIR = join( REPO, REFS_MANUAL.session.specDir )
 const LLMS_PATH = join( REPO, 'generated/llms.txt' )
 
 
@@ -73,7 +73,7 @@ const main = async () => {
     const body = [
         header,
         '\n========================================',
-        '# Core Specification',
+        '# Memo Specification',
         '========================================\n',
         core.text,
         '\n========================================',

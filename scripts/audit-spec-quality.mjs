@@ -25,8 +25,8 @@ const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 const PROJECT_ROOT = resolve( REPO, '..', '..' )
 
-const SPEC_VERSION = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) ).spec.currentVersion
-const SPEC_DIR = join( REPO, `spec/v${ SPEC_VERSION }` )
+const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
+const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
 
 const REQ_ID = 'REQ-056'
 
@@ -137,7 +137,7 @@ const emitEvidence = async ( { status, leakCount } ) => {
         status,
         scanner: 'audit-spec-quality.mjs',
         tactic: 'no-internal-ref-scan',
-        summary: { leakCount, checked: 'spec/v0.1.0 numbered pages + chapter-index README' }
+        summary: { leakCount, checked: `${ REFS_MANUAL.spec.specDir } numbered pages + chapter-index README` }
     }
     const evidencePath = resolve( evidenceDir, `${ REQ_ID }.evidence.json` )
     await writeFile( evidencePath, `${ JSON.stringify( evidence, null, 2 ) }\n` )

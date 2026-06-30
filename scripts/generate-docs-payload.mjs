@@ -41,13 +41,13 @@ const readFamilyVersion = ( { family } ) => {
     return version
 }
 
-const SPEC_VERSION = readFamilyVersion( { family: 'spec' } )
+const SPEC_VERSION = readFamilyVersion( { family: 'memo' } )
 const WORKBENCH_VERSION = readFamilyVersion( { family: 'workbench' } )
 const SESSION_VERSION = readFamilyVersion( { family: 'session' } )
 
-const SPEC_DIR = join( REPO, `spec/v${ SPEC_VERSION }` )
-const WORKBENCH_DIR = join( REPO, `spec/workbench/${ WORKBENCH_VERSION }` )
-const SESSION_DIR = join( REPO, `spec/session/${ SESSION_VERSION }` )
+const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
+const WORKBENCH_DIR = join( REPO, REFS_MANUAL.workbench.specDir )
+const SESSION_DIR = join( REPO, REFS_MANUAL.session.specDir )
 const PAYLOAD_DIR = join( REPO, 'generated/docs-payload' )
 const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
 const SESSION_PAYLOAD_DIR = join( PAYLOAD_DIR, 'session' )
@@ -266,17 +266,17 @@ const main = async () => {
     const now = new Date().toISOString()
 
     const coreResults = await generatePass( {
-        label: 'core',
+        label: 'memo',
         sourceDir: SPEC_DIR,
         targetDir: PAYLOAD_DIR,
         section: 'Specification',
         versionField: 'spec_version',
         versionValue: SPEC_VERSION,
-        sourceRelBase: `spec/v${ SPEC_VERSION }`,
+        sourceRelBase: REFS_MANUAL.memo.specDir,
         sourceCommit,
         now
     } )
-    reportPass( { label: 'core', results: coreResults, targetDir: PAYLOAD_DIR } )
+    reportPass( { label: 'memo', results: coreResults, targetDir: PAYLOAD_DIR } )
 
     const workbenchResults = await generatePass( {
         label: 'workbench',
@@ -285,7 +285,7 @@ const main = async () => {
         section: 'Workbench',
         versionField: 'workbench_version',
         versionValue: WORKBENCH_VERSION,
-        sourceRelBase: `spec/workbench/${ WORKBENCH_VERSION }`,
+        sourceRelBase: REFS_MANUAL.workbench.specDir,
         sourceCommit,
         now
     } )
@@ -298,7 +298,7 @@ const main = async () => {
         section: 'Session',
         versionField: 'session_version',
         versionValue: SESSION_VERSION,
-        sourceRelBase: `spec/session/${ SESSION_VERSION }`,
+        sourceRelBase: REFS_MANUAL.session.specDir,
         sourceCommit,
         now
     } )

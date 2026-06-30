@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-30T15:56:26.437Z",
+    "generated_at": "2026-06-30T22:23:50.787Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -467,7 +467,7 @@
             "filename": "46-bridge.md",
             "slug": "bridge",
             "title": "Bridge",
-            "description": "This page is the Bridge hub for the core specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries...",
+            "description": "This page is the Bridge hub for the memo specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries...",
             "order": 46,
             "section": "Specification",
             "normative": false,

@@ -1,21 +1,21 @@
 ---
 title: "Bridge"
-description: "This page is the Bridge hub for the core specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries..."
+description: "This page is the Bridge hub for the memo specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries..."
 spec_version: "0.1.0"
 spec_file: "46-bridge.md"
 order: 46
 section: "Specification"
 normative: false
-generated_at: "2026-06-30T15:56:25.896Z"
-generated_from: "spec/v0.1.0/46-bridge.md"
+generated_at: "2026-06-30T22:23:50.208Z"
+generated_from: "draft/memo/0.1.0/spec/46-bridge.md"
 generator: "scripts/generate-docs-payload.mjs"
-edit_warning: "This file is auto-generated. Source: spec/v0.1.0/46-bridge.md."
+edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/46-bridge.md."
 ---
 
 
 > **Informative.**
 
-This page is the Bridge hub for the core specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries requirements, and what it depends on. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under `generated/bridge/`. An empty list is an honest signal that nothing public has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.
+This page is the Bridge hub for the memo specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries requirements, and what it depends on. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under `generated/bridge/`. An empty list is an honest signal that nothing public has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.
 
 **Coverage:** 45 of 46 chapters have at least one public implementer (98%).
 

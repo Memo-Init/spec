@@ -1,23 +1,23 @@
 {
     "schemaVersion": "refs/1.0.0",
-    "spec": {
+    "memo": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "v0.1.0",
         "historicalVersions": [
             "0.1.0"
         ],
-        "specDir": "spec/v0.1.0"
+        "specDir": "draft/memo/0.1.0/spec"
     },
     "workbench": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
-        "specDir": "spec/workbench/0.1.0",
+        "specDir": "draft/workbench/0.1.0/spec",
         "url": "https://memo-init.github.io/workbench/overview/"
     },
     "session": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
-        "specDir": "spec/session/0.1.0",
+        "specDir": "draft/session/0.1.0/spec",
         "url": "https://memo-init.github.io/session/overview/"
     },
     "docs": {
@@ -43,8 +43,8 @@
         ]
     },
     "generated": {
-        "at": "2026-06-30T15:56:24.968Z",
-        "fromCommit": "97456bf",
+        "at": "2026-06-30T22:23:49.288Z",
+        "fromCommit": "74a0188",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {
@@ -56,13 +56,13 @@
                 "ok": true
             },
             {
-                "field": "spec.currentVersion",
+                "field": "memo.currentVersion",
                 "regex": "^\\d+\\.\\d+\\.\\d+$",
                 "ok": true
             },
             {
-                "field": "spec.specDir",
-                "regex": "^spec/v\\d+\\.\\d+\\.\\d+$",
+                "field": "memo.specDir",
+                "regex": "^draft/memo/\\d+\\.\\d+\\.\\d+/spec$",
                 "ok": true
             }
         ]

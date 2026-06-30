@@ -2,14 +2,14 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "memo-init Refs Manual Schema",
     "type": "object",
-    "required": [ "schemaVersion", "spec", "docs", "github", "llmsFiles", "robotsTxt" ],
+    "required": [ "schemaVersion", "memo", "docs", "github", "llmsFiles", "robotsTxt" ],
     "additionalProperties": false,
     "properties": {
         "schemaVersion": {
             "type": "string",
             "pattern": "^refs/\\d+\\.\\d+\\.\\d+$"
         },
-        "spec": {
+        "memo": {
             "type": "object",
             "required": [ "currentVersion", "recommendedRelease", "historicalVersions", "specDir" ],
             "additionalProperties": false,
@@ -21,7 +21,7 @@
                     "minItems": 1,
                     "items": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
                 },
-                "specDir": { "type": "string", "pattern": "^spec/v\\d+\\.\\d+\\.\\d+$" }
+                "specDir": { "type": "string", "pattern": "^draft/memo/\\d+\\.\\d+\\.\\d+/spec$" }
             }
         },
         "workbench": {
@@ -31,7 +31,7 @@
             "properties": {
                 "currentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
                 "recommendedRelease": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-                "specDir": { "type": "string", "pattern": "^spec/workbench/\\d+\\.\\d+\\.\\d+$" },
+                "specDir": { "type": "string", "pattern": "^draft/workbench/\\d+\\.\\d+\\.\\d+/spec$" },
                 "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
             }
         },
@@ -42,7 +42,7 @@
             "properties": {
                 "currentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
                 "recommendedRelease": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-                "specDir": { "type": "string", "pattern": "^spec/session/\\d+\\.\\d+\\.\\d+$" },
+                "specDir": { "type": "string", "pattern": "^draft/session/\\d+\\.\\d+\\.\\d+/spec$" },
                 "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
             }
         },
