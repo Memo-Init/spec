@@ -69,6 +69,54 @@ The principle is the division of responsibility introduced in [02-sop-entrypoint
 
 ---
 
+## Conformity Requirements
+
+The configuration is the contract surface enforcement reads, so its shape and its manual discipline are both checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how the configuration is authored, and each `check` faces the structure audit and the no-auto-write discipline. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+
+That a status record carries all three axes is a structural fact about the file's shape:
+
+```requirement
+{
+  "id": "REQ-959",
+  "title": "Each per-repository status record declares all three axes",
+  "statement": "Each per-repository status record in the project configuration MUST declare all three axes — `visibility` (`private` | `public`), `remote` (`none` | a URL), and `facing` (`inward` | `outward`). Stating all three once is what lets a push gate decide consistently; a record that omits an axis cannot be read deterministically by enforcement.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["config", "facing", "schema"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each repository entry carries a `visibility` field with an allowed value",
+      "Each repository entry carries a `remote` field (`none` or a URL)",
+      "Each repository entry carries a `facing` field with an allowed value"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+Whether the configuration was authored by hand and never silently overwritten is a behavioural discipline judged over how a tool touches the file, so this rule earns an object `grade`:
+
+```requirement
+{
+  "id": "REQ-960",
+  "title": "The project configuration is manual, never silently generated",
+  "statement": "The `.workbench/` configuration — the facing status, `folder-lints.json`, and `registry.json` — MUST be written and maintained by hand and MUST NOT be silently auto-generated or overwritten. Where tooling assists, it proposes a change for the developer to accept; a process records a repository's status, it does not infer it from the repository's current git state.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["config", "no-auto-write"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer inspects any tool that touches the `.workbench/` configuration. PASS when the tool only proposes changes for acceptance and never writes the file silently; BLOCKED when a tool generates or overwrites the configuration without review; INCONCLUSIVE when no tool touches the configuration.",
+    "verify": [
+      "Identify each writer of the `.workbench/` configuration",
+      "Confirm each writer proposes-then-accepts rather than auto-writing"
+    ]
+  },
+  "grade": { "dimension": "no-auto-write adherence", "weight": 100 }
+}
+```
+
+---
+
 ## Related
 
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract that consumes this configuration.

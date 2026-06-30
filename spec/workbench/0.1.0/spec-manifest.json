@@ -2,9 +2,9 @@
     "namespace": "workbench",
     "version": "0.1.0",
     "namespaceToken": "WB",
-    "hasRequirements": false,
+    "hasRequirements": true,
     "hasGrading": false,
-    "requirementsRef": null,
+    "requirementsRef": "25-validation-overview",
     "gradingRef": null,
     "groups": [
         {

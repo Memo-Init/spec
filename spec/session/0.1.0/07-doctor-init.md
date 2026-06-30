@@ -170,6 +170,56 @@ A missing `.session/config.json` is the canonical example: the gate's **ERROR(fa
 
 ---
 
+## Conformity Requirements
+
+The `doctor` / `init` contract's binding `MUST`s are authored here **prose-first**: each block's `statement` faces generation (it shapes how the reference pair is built) and its `check` faces the finalization gate with a ternary verdict. Both rules below are enforced by the shipped session reference pair (`memo session doctor` / `memo session init`), so they are **checkable now** and carry a hard `binary` grade.
+
+`init` is the canonical no-auto-write / no-overwrite case, a hard yes/no rule verified by running the tool (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-992",
+  "title": "session init scaffolds .session/ additively, never overwriting",
+  "statement": "`session init` MUST scaffold the session scope additively and NEVER overwrite: it creates `.session/` and a minimal `config.json` only when absent, and an existing `config.json` MUST be reported `created:false` and left byte-untouched — the no-auto-write / no-overwrite discipline applied to config.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "doctor-init", "no-overwrite"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "session-init-no-overwrite",
+    "verify": [
+      "Run `memo session init` into a scope that already carries .session/config.json",
+      "Assert the envelope reports created:false and the existing config file is byte-identical before and after"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+`doctor` is a read-only health report that may exit non-zero but never mutates and never blocks — a hard yes/no rule verified by running the tool (`grade: binary`):
+
+```requirement
+{
+  "id": "REQ-993",
+  "title": "session doctor reports a read-only health envelope with the resolved root",
+  "statement": "`session doctor` MUST emit a read-only health envelope reporting the resolved project root and per-check rows (the `.session/` scope, its `config.json` entry point, the store, and CLI discoverability) plus an overall `healthy` boolean. It MAY exit non-zero so a script can gate on it, but it MUST NEVER mutate state and MUST NEVER block the session.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "doctor-init", "readiness"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "session-doctor-health",
+    "verify": [
+      "Run `memo session doctor --project-root .` and parse the envelope",
+      "Assert it carries the resolved project root, per-check rows, and a healthy boolean, and that it wrote nothing"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
 ## Related
 
 - [05-config-cascade.md](./05-config-cascade.md) — the `.session/config.json ∪ config.d/*` cascade the doctor loads and `init` scaffolds; home of the REQ-061 migration.

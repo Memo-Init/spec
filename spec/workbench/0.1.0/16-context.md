@@ -63,6 +63,53 @@ Content **MUST** be organized under a **per-topic sub-folder** of `context/` rat
 
 ---
 
+## Conformity Requirements
+
+The `context/` organization rules are checkable against the folder's own shape. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how content is filed, and each `check` faces the structure audit and the write-time lint binding. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+
+Per-topic organization is a structural fact about where content sits:
+
+```requirement
+{
+  "id": "REQ-957",
+  "title": "context/ content is organized under per-topic sub-folders",
+  "statement": "Content under `context/` MUST be organized in a per-topic sub-folder rather than left as loose files at the folder root, so that every project groups its `context/` the same way and the wiki can index a coherent domain. A single stray file at the root is tolerable; a topic with more than one file MUST live in its own sub-folder.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["context", "structure"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each topic with more than one file lives under its own sub-folder of `context/`",
+      "No topic spreads multiple loose files across the `context/` root"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The opt-in scoping of OKF is the presence-or-absence of a binding, a hard yes/no fact:
+
+```requirement
+{
+  "id": "REQ-958",
+  "title": "OKF is opt-in per sub-folder, scoped to the architecture and wiki bundles",
+  "statement": "OKF MUST NOT be a `context/`-wide mandate. The default for a folder is plain Markdown; only the `architecture-okf/` sub-folder of `context/` (and the project wiki) adopt OKF. The opt-in MUST be expressed as a folder-lint binding scoped to exactly those folders — its absence everywhere else is what keeps OKF from spreading across the rest of `context/`.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["context", "okf", "convention"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "An OKF folder-lint binding exists for `context/architecture-okf/` and the wiki",
+      "No OKF binding covers any other `context/` sub-folder",
+      "Sub-folders without an OKF binding are treated as plain Markdown"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
 ## Related
 
 - [12-folders.md](./12-folders.md) — `data/` (raw) vs. `context/` (processed), and the folder contract this page is the registered entry for.

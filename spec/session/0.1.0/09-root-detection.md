@@ -92,6 +92,55 @@ Root detection adds **fields and a marker**, not a tier. The three-tier config c
 
 ---
 
+## Conformity Requirements
+
+The root-detection contract's binding `MUST`s are authored here **prose-first**: each block's `statement` faces generation (it shapes how the walk-up resolver and its read leaf are built) and its `check` faces the finalization gate with a ternary verdict. Today only the `flag > env > null` identity resolution ships; the nearest-ancestor walk-up and the `memo session root` read leaf are the spec'd **target**, so both rules carry the honest `grade: todo`.
+
+The walk-up to a `root:true` marker with no global env-var pin is the load-bearing rule; the resolver is not yet shipped, so the grade is `todo`:
+
+```requirement
+{
+  "id": "REQ-996",
+  "title": "Root detection walks up to a root:true marker, never a global env var",
+  "statement": "Project-root detection MUST be a nearest-ancestor walk-up over the `.session/` directory marker, stopping at the first `.session/` whose config declares `root:true`, with an optional relative `workbenchRoot` pointer as the only override. A machine-global environment-variable root pin MUST NOT be used (it leaks across worktrees and silently mis-roots every tool), and an unresolved root resolves to `null` with source `none` while the gate fails open.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "root-detection", "walk-up"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Root resolution is a pure function of the filesystem and the pinned start cwd, walking up to the nearest .session/ that declares root:true",
+      "No machine-global env var (e.g. WORKBENCH_ROOT / SESSION_ROOT) participates in resolution",
+      "An unresolved root yields null with source 'none' and a fail-open gate"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+The resolved root is reported by a single side-effect-free read leaf; that leaf is not yet shipped, so this `tool` check carries the honest `grade: todo`:
+
+```requirement
+{
+  "id": "REQ-997",
+  "title": "memo session root is a side-effect-free read leaf reporting path and source",
+  "statement": "The resolved root MUST be reported by a single side-effect-free read leaf, `memo session root`, that surfaces both the resolved path and its source (`root:true` marker / `workbenchRoot` pointer / `none`). The walk-up is implemented once and reported, never reimplemented per hook, and the leaf MUST NOT write a marker or pin a root.",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "root-detection", "read-leaf"] },
+  "severity": "warning",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "session-root-read",
+    "verify": [
+      "Run `memo session root` and parse the envelope",
+      "Assert it reports the resolved path and its source, and that the leaf wrote nothing"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+---
+
 ## Related
 
 - [08-identity-pin.md](./08-identity-pin.md) — the SessionStart-Pin that anchors resolution; the root is pinned once, never recomputed from a mutated cwd.

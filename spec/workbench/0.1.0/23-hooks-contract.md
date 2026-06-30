@@ -184,6 +184,75 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ---
 
+## Conformity Requirements
+
+This chapter is normative about the contract surface; its `MUST`s are the rules a hook satisfies. The blocks below encode them prose-first — each `statement` faces the building of a gate, and each `check` faces a built hook's behaviour. Because the hook *implementation* belongs to the deferred machine-tier spec, several blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+
+The five-step precondition chain is a deterministic mechanism whose completeness a reviewer judges against the contract:
+
+```requirement
+{
+  "id": "REQ-961",
+  "title": "The precondition hook resolves the whole dependency chain with no bypass",
+  "statement": "A PreToolUse precondition hook gating an orchestrator entry point MUST perform the five steps in order — intercept the `Skill(<name>)` call, look up the `requirements[]` `when: \"pre\"` edges, read the session transcript, check each required predecessor actually ran via the registry signals, and allow OR hard-block — and MUST resolve the whole transitive chain, denying with a message that lists every unmet link. A transitive precondition cannot be satisfied by skipping an intermediate link.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["hooks", "precondition", "enforcement"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer drives the gate with a multi-link chain where an intermediate predecessor is absent. PASS when the call is denied with a message naming the entire unmet chain; BLOCKED when the gate allows the call or names only the nearest edge; INCONCLUSIVE when no gate is wired to evaluate.",
+    "verify": [
+      "Construct a chain where an intermediate predecessor did not run",
+      "Confirm a hard-block whose message lists the whole chain"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+The inward-push gate is a deterministic, default-deny decision over the declared status; its behaviour is judged against the contract:
+
+```requirement
+{
+  "id": "REQ-962",
+  "title": "The inward-push gate is default-deny and never infers facing",
+  "statement": "A `git push`-class hook MUST read the declared per-repository status from the project configuration and block the push when the target repository is declared `inward`, OR when it lacks a declared `outward` status at all. It MUST allow the push only when the declared record says `facing: \"outward\"`, and MUST NOT infer facing from the repository's git state or remote. An undeclared repository is treated as not-pushable, not as outward by omission.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["hooks", "push-gate", "egress"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer drives the gate against three targets: declared `inward`, undeclared, and declared `outward`. PASS when the first two are blocked and only the declared `outward` is allowed, with the decision taken from the declared record; BLOCKED when an inward or undeclared target is allowed, or facing is inferred from git state; INCONCLUSIVE when no gate is wired.",
+    "verify": [
+      "Attempt a push to inward, undeclared, and outward targets",
+      "Confirm only the declared outward target is allowed, by reading the declaration"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+The write-time content lint is bound by a project-local map and its honest limits are part of the contract:
+
+```requirement
+{
+  "id": "REQ-963",
+  "title": "The write-time content lint is bound by the folder-lints map",
+  "statement": "The write-time content lint MUST fire on `Write`/`Edit`, read its `{ folder, pattern, linter, severity }` entries from the project's `folder-lints.json`, and block (`error`) or warn (`warn`) per the matched entry's severity. The contract's honest limits MUST hold: it gates only Claude tool writes, sees only the diff on an `Edit`, and a shell redirection bypasses it — so it is a first-line gate paired with after-the-fact validation, never a perimeter.",
+  "scope": { "repos": [], "categories": ["workbench"], "tags": ["hooks", "write-lint", "data-quality"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer issues a `Write` whose content violates a `folder-lints.json` entry. PASS when the write is blocked or warned per the entry's severity, and the documented limits are honored; BLOCKED when a matched violation is not acted on; INCONCLUSIVE when no lint map is configured.",
+    "verify": [
+      "Write content that violates a configured folder-lint entry",
+      "Confirm the block/warn outcome matches the entry severity"
+    ]
+  },
+  "grade": "todo"
+}
+```
+
+---
+
 ## Related
 
 - [25-validation-overview.md](./25-validation-overview.md) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.

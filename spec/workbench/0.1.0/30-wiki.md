@@ -78,6 +78,53 @@ The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](./2
 
 ---
 
+## Conformity Requirements
+
+The wiki's no-copy and ingest rules are checkable against its index. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how the wiki indexes and ingests, each `check` faces the built index. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+
+That the wiki points at the architecture rather than copying it is the no-copy rule, judged against the index:
+
+```requirement
+{
+  "id": "REQ-974",
+  "title": "The wiki points at the architecture, never duplicates it",
+  "statement": "The wiki MUST index the project architecture by reference — its index carries a pointer to the architecture bundle (`context/architecture-okf/`), and the bundle stays the single source of truth. The wiki MUST NOT hold a second, drifting copy of the repo graph; a deterministic consumer follows the pointer to the architecture resolver rather than reading a wiki-held copy.",
+  "scope": { "repos": [], "categories": ["wiki"], "tags": ["wiki", "no-copy", "architecture"] },
+  "severity": "warning",
+  "check": {
+    "kind": "evaluator",
+    "rubric": "A reviewer inspects the wiki index's architecture entry. PASS when it is a pointer to the architecture bundle and holds no copy of the repo graph; BLOCKED when the wiki embeds a second copy of the nodes/edges; INCONCLUSIVE when the project has no architecture bundle to index.",
+    "verify": [
+      "Locate the wiki index entry for the architecture",
+      "Confirm it references the bundle and holds no duplicated graph"
+    ]
+  },
+  "grade": { "dimension": "no-copy adherence", "weight": 100 }
+}
+```
+
+That a scripts subfolder's `About` is ingested into the wiki is a structural fact about the index:
+
+```requirement
+{
+  "id": "REQ-975",
+  "title": "A scripts subfolder's About is ingested into the wiki",
+  "statement": "When something is written into a `scripts/` subfolder, that subfolder SHOULD carry an `About` — a short description of what the folder is for — and that `About` MUST be ingested into the wiki, so the discovery system can answer for what a scripts folder does rather than leaving a reader to infer it from the name. This is the third ingest source, alongside landing-time ingest and periodic staleness detection.",
+  "scope": { "repos": [], "categories": ["wiki"], "tags": ["wiki", "about", "scripts"] },
+  "severity": "info",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each `scripts/` subfolder carrying an `About` is represented in the wiki index",
+      "The ingested entry reflects the subfolder's `About` description"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+---
+
 ## Related
 
 - [41-project-architecture.md](./41-project-architecture.md) — the structured layer the wiki indexes and points at.
