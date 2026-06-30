@@ -613,6 +613,20 @@ The public methods are tested and the suite passes in full before a push — a h
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `repo-docs-writing` — primary
+- `repo-github-org` — primary
+- `repo-init` — primary
+- `repo-issue` — primary
+- `repo-quality` — contributing
+- `repo-readme` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow and the security gate the pre-push checklist complements.

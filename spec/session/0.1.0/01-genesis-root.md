@@ -101,6 +101,15 @@ The statusline is the canonical **read** surface for the resolved session state.
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-genesis-root` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [02-enforcement.md](./02-enforcement.md) — how the chain is enforced deterministically at PreToolUse.

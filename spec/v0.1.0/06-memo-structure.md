@@ -175,6 +175,20 @@ The memo-structure rules above are authored **prose-first** as declarative requi
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-init` — primary
+- `memo-plan-init` — contributing
+- `memo-plan-status` — contributing
+- `memo-revision-execute` — contributing
+- `memo-sub-init` — primary
+- `workbench-project-setup` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — input processing, where topics are registered into the topic store's write side.

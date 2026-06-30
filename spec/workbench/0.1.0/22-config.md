@@ -117,6 +117,19 @@ Whether the configuration was authored by hand and never silently overwritten is
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-addons` — contributing
+- `workbench-config` — primary
+- `workbench-environment-scripts` — contributing
+- `workbench-hooks-contract` — contributing
+- `workbench-validation` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract that consumes this configuration.

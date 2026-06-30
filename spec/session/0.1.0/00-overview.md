@@ -115,6 +115,15 @@ The family is read in six nav groups; the sidebar lists the individual chapters,
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-overview` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [10-sop.md](./10-sop.md) — the SOP entry-point mechanism this family absorbs, and the common SOP standard `session-sop` is an instance of.

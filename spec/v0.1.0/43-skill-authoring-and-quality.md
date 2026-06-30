@@ -311,6 +311,17 @@ Finally, where the evals sit and what their fixtures mirror is structural:
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `image-art-architecture` — contributing
+- `skill-testing` — primary
+- `specs-to-skills` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [./14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — classifies skill versus agent versus task; this chapter governs skill *quality* and assumes that classification.

@@ -119,6 +119,18 @@ Whether a project boots through its declared script rather than an inline sequen
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-cli` — contributing
+- `workbench-environment-scripts` — primary
+- `workbench-skills-scope` — contributing
+- `workbench-validation` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [20-cli.md](./20-cli.md) — the meaningful-subfolder convention, shared with the CLI.

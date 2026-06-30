@@ -296,6 +296,33 @@ Integration coverage is delegated to the same validator skill:
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `drift-resolution` — contributing
+- `memo-finalize` — contributing
+- `memo-init` — contributing
+- `memo-phase-evaluate` — contributing
+- `memo-phase-execute` — contributing
+- `memo-phase-generate` — primary
+- `memo-plan-add` — contributing
+- `memo-plan-evaluate` — contributing
+- `memo-plan-init` — contributing
+- `memo-prd-evaluate` — primary
+- `memo-prd-generate` — primary
+- `memo-prds-validate` — primary
+- `memo-references` — contributing
+- `memo-reset-recommend` — primary
+- `memo-revision-execute` — contributing
+- `memo-rollout-evaluate` — contributing
+- `memo-rollout-execute` — contributing
+- `memo-rollout-generate` — primary
+- `workbench-modes` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [05-memo-strategies.md](./05-memo-strategies.md) — the type endpoint (Strategy / Implementation / Sorting) that decides whether PRDs are produced at all.

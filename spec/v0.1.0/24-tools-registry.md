@@ -167,6 +167,19 @@ Tactic selection must be reproducible and refuse to guess, so determinism and th
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-req-registry` — contributing
+- `memo-req-store` — contributing
+- `memo-req-template` — contributing
+- `wiki-query` — contributing
+- `workbench-audit` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [23-requirements.md](./23-requirements.md) — the parallel data folder; `check.kind: tool` requirements point into this registry for the tool and tactic that verify them.

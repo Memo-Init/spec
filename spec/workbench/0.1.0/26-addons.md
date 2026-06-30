@@ -49,6 +49,16 @@ Whether a custom folder reserves only its small declared area, with bulk data pr
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-addons` — primary
+- `workbench-skills-scope` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [session/15-addons.md](/session/addons/) — the Add-on model: definition, data boundaries, the per-Add-on SOP, the weight landscape, standard entry points, and the CLI/skill split.

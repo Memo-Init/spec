@@ -274,6 +274,15 @@ Whether the policy-checkpoint branch only ever redirects (never hard-locks, neve
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-enforcement` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [03-recovery.md](./03-recovery.md) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.

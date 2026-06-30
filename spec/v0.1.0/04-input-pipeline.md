@@ -153,6 +153,16 @@ Research-result persistence is checked against the stored knowledge base; the ru
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-goal-optimize` — contributing
+- `memo-input-processing` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [03-input-paths.md](./03-input-paths.md) — the four transcript types and their follow-up flows.

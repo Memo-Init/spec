@@ -141,6 +141,15 @@ The resolved root is reported by a single side-effect-free read leaf; that leaf 
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-root-detection` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [08-identity-pin.md](./08-identity-pin.md) — the SessionStart-Pin that anchors resolution; the root is pinned once, never recomputed from a mutated cwd.

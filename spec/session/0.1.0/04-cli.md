@@ -182,6 +182,15 @@ The `--describe` contract is verified by running the tool and parsing its output
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `session-cli` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [workbench/20-cli.md](/workbench/cli/) — the workbench CLI convention and the registry as the single discovery source.

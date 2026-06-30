@@ -89,6 +89,15 @@ Some skills are deliberately **out of scope** for this process specification and
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-sop` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [01-philosophy.md](./01-philosophy.md) — the guardrail analogy and interaction model.

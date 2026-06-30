@@ -253,6 +253,20 @@ The write-time content lint is bound by a project-local map and its honest limit
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `workbench-cli` — contributing
+- `workbench-config` — contributing
+- `workbench-environment-scripts` — contributing
+- `workbench-hooks-contract` — primary
+- `workbench-skills-scope` — contributing
+- `workbench-validation` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [25-validation-overview.md](./25-validation-overview.md) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.

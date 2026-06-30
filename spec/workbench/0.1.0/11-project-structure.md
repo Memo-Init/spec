@@ -92,6 +92,18 @@ The egress rule is a content judgement on what may leave the local context, so i
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `repo-init` — contributing
+- `wiki-init` — contributing
+- `workbench-audit` — primary
+- `workbench-project-setup` — primary
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project split that this guarantee spans.

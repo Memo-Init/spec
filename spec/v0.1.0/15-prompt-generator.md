@@ -102,6 +102,19 @@ This is exactly what the agent layer needs: the generator produces the **determi
 
 ---
 
+
+<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
+## Implemented by
+
+The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
+
+- `memo-phase-execute` — contributing
+- `memo-phase-generate` — contributing
+- `memo-prd-generate` — contributing
+- `memo-req-template` — contributing
+- `memo-rollout-generate` — contributing
+
+<!-- BRIDGE:IMPLEMENTED-BY END -->
 ## Related
 
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the `AGENTS.md` agents whose per-invocation start-prompt this generator produces.
