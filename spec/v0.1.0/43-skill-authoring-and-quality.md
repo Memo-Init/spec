@@ -64,9 +64,33 @@ The three dimensions are scored with the same **shared scoring head** specified 
 
 ---
 
+## The Executable Skill Grader
+
+The three-dimensional standard above says what good looks like; on its own that is still a description a reader has to apply by hand. The standard is therefore given an **executable grader** — a harness that reads a skill's co-located evals and returns a score over the same three dimensions, so quality is *measured* rather than asserted. The grader is deliberately split along the line that separates what a machine can decide from what still needs judgement, and it never blurs the two.
+
+**Triggering is scored deterministically where it can be.** The grader runs the skill's classified trigger set through a shared matcher and computes the hit rate directly — no judge is needed to know whether a labelled should-fire query activated the description. That hit rate maps onto the 1.0–5.0 band, with the ~90% standard landing near the top of the scale. Cases that carry no deterministic label, or are explicitly marked judgeable, are not faked into the number: they are emitted as a structured judge prompt for a fresh-context reader to decide, and they never silently inflate the score.
+
+**Execution and Integration are scored in two tiers.** What can be read structurally — whether execution assertions are present at all, whether an integration-chain fixture exists — is decided deterministically and caps the dimension below the top of the scale, because presence alone is not proof. Whether those assertions actually *hold*, and whether the chain actually carries end to end, is a judgement: the grader emits a judge prompt rather than inventing a verdict it cannot earn. Presence is counted; correctness is judged.
+
+The dimensions are combined with the **shared grading head** ([23-requirements.md](./23-requirements.md), The Grading Model), not a private one. Each dimension scores 1.0–5.0 under a provisional, openly-uncalibrated weight; the applicable weights sum to one, and a dimension the grader could not resolve is dropped and its weight redistributed rather than scored as a silent failure. The weighted aggregate is held against a single **production gate of 3.5** — a floored dimension drags the aggregate under the gate on its own, so there is no separate pass flag to forget. The outcome is **ternary** — `PASS` / `BLOCKED` / `INCONCLUSIVE` — and a missing eval file is `INCONCLUSIVE`, never a quiet `PASS`: an undecidable skill is reported as undecidable, not waved through.
+
+Two rules bound the grader the same way they bound every other measurement in this specification. The **doer is never the grader** ([23-requirements.md](./23-requirements.md)): the harness runs in a fresh context, never the session that built the skill, so a skill cannot grade itself green. And the grader **measures only what the specification governs**: a skill marked out of process scope — one carrying `primary: null` and a `scope` marker — is *skipped*, not failed, because grading a coding-standard or external-domain skill against the process dimensions would invent a verdict that has no meaning. The grader's silence on those skills is the same honesty the scope boundary draws everywhere else in this chapter.
+
+---
+
 ## Where Skill Evals Live
 
 A skill's evaluations live **alongside the skill** — an `evals/` folder sitting next to the `SKILL.md` it exercises. Co-location is the convention because it keeps the proof of a skill with the skill: when the procedure changes, its evals are right there to change with it, and a skill is never separated from the fixtures that assert its behavior. This is a convention about *placement*, not a mandate for a particular runner; the standard fixes where the evidence sits and what it must cover, and leaves the mechanism that runs it to the tooling.
+
+---
+
+## Skill Scaffolding & Build Order
+
+A skill is graded against its evals, which presupposes the evals exist. The author leg of the same discipline supplies the **build order** that gets a skill to that starting line — and it is careful to prepare scaffolding, never to write the procedure itself. Authoring a skill's body is craft; preparing its machine layer is mechanical, and only the mechanical part is automated.
+
+Scaffolding does two things and stops. First it **stamps the skill-to-spec link**, reusing the exact same injector the coverage stamper uses, so a skill's `metadata.memo.specs` block is written by one parser and cannot drift between the two paths. Second it **scaffolds the missing eval skeletons** — the classified trigger set and the execution/integration assertions — as empty-but-valid shapes that parse cleanly and carry a loud "to be authored" marker, so the not-yet state announces itself rather than hiding behind an absent file.
+
+The scaffold is bound by a hard **no-overwrite** rule: an eval file that already exists is never read and never rewritten, only reported as skipped. A skeleton is an instruction to the author, not a substitute for one — overwriting an authored fixture with an empty shape would destroy exactly the work the grader depends on. The leg is idempotent, so it can be re-run safely, and it writes nothing but the spec stamp and the missing skeletons: the body of the skill, the real cases inside those skeletons, and the judgement they encode all remain the author's to write.
 
 ---
 
