@@ -17,25 +17,7 @@ When work decomposes into independent units — one repo, one file, one chapter,
 Measurement and grading are **never** done by the session that did the work — a working session reports "all done" and hides the gap. The strategy is to evaluate in a **fresh context**: a separate, unbiased reader that inspects the real artifacts rather than trusting a PASS-report. This is the operating principle behind goal scoring and maintenance scoring ([31-goals.md](./31-goals.md)); as a general agent strategy it applies wherever a result must be judged honestly — spawn a clean reader, hand it the artifacts and the intent, and let it measure against reality. The contamination boundary that makes a context "fresh" is defined in [09-contamination-context-handover.md](./09-contamination-context-handover.md).
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-chronic-build` — contributing
-- `memo-goal-score` — contributing
-- `memo-goal-score-all` — contributing
-- `memo-input-processing` — contributing
-- `memo-maintenance-score` — contributing
-- `memo-maintenance-score-all` — contributing
-- `memo-mental-model-derive` — contributing
-- `memo-phase-evaluate` — contributing
-- `memo-research-agent` — contributing
-- `memo-rollout-evaluate` — contributing
-- `research-workflow` — contributing
-- `workbench-persona-audit` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestration machinery these strategies run on (the boundary: machinery there, patterns here).

@@ -82,17 +82,7 @@ A topic in the wiki tells you the current answer; the chronicle tells you how th
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-chronic-add` — primary
-- `memo-chronic-build` — primary
-- `memo-rollout-execute` — contributing
-- `wiki-ingest` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [18-multidimensionality.md](./18-multidimensionality.md) — memos as time documents and the state-preservation model the timeline depends on.

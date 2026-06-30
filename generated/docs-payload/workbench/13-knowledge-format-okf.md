@@ -6,7 +6,7 @@ spec_file: "13-knowledge-format-okf.md"
 order: 13
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/workbench/0.1.0/13-knowledge-format-okf.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/13-knowledge-format-okf.md."
@@ -183,18 +183,7 @@ The bundle-root version marker is advisory, so its absence is information rather
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `wiki-ingest` — contributing
-- `wiki-init` — contributing
-- `wiki-lint` — primary
-- `wiki-query` — contributing
-- `wiki-update` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](/specification/overview/) — the workbench spec and its independent versioning, where the format version is read from refs data.

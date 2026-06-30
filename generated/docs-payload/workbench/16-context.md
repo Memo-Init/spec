@@ -6,7 +6,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/workbench/0.1.0/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/16-context.md."
@@ -118,15 +118,7 @@ The opt-in scoping of OKF is the presence-or-absence of a binding, a hard yes/no
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-context` — primary
-- `workbench-tmp` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [12-folders.md](/specification/folders/) — `data/` (raw) vs. `context/` (processed), and the folder contract this page is the registered entry for.

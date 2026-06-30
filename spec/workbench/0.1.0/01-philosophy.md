@@ -37,14 +37,7 @@ Splitting the specification this way lets each family evolve at its own pace and
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-philosophy` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the sibling-spec framing and the workbench's place among the families.

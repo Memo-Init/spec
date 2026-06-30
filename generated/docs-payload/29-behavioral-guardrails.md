@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/29-behavioral-guardrails.md."
@@ -86,19 +86,7 @@ The same logic governs scope that genuinely must be deferred. Deferred scope is 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-pencil-playwright-diff` — contributing
-- `memo-coherence` — contributing
-- `memo-init` — contributing
-- `memo-phase-execute` — contributing
-- `release` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-philosophy.md](/specification/philosophy/) — the "Work It In Instead of Deferring" principle behind C7.

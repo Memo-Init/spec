@@ -283,16 +283,7 @@ Whether a tool's folder list has drifted from the registry is judged against the
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-environment-scripts` — contributing
-- `workbench-folders` — primary
-- `workbench-tmp` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project split.

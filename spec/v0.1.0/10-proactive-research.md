@@ -281,22 +281,7 @@ A reusable browser session must never leak a credential into the repo, so the `a
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-evidence` — contributing
-- `memo-init` — contributing
-- `memo-input-processing` — contributing
-- `memo-research-agent` — primary
-- `memo-revision-generate` — contributing
-- `research-best-practice-playwright` — contributing
-- `research-scrape-docs` — contributing
-- `research-workflow` — contributing
-- `wiki-ingest` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline whose final step derives the research topics this chapter consumes.

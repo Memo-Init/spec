@@ -78,14 +78,7 @@ Contamination describes the model's own degraded **output** context; transcript 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-input-processing` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — Step 2b, where the reliability estimate runs, and Step 1's raw-transcript preservation rule this chapter's interpretation rule extends.

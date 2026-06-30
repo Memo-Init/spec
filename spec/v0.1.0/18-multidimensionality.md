@@ -44,16 +44,7 @@ The coordination happens at the **memo** level (the planning unit), not at the r
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-merge-strategy` — contributing
-- `git-push` — contributing
-- `memo-plan-add` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — the per-repo pull request and the memo-ID trail that ties the repositories together.

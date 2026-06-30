@@ -89,19 +89,7 @@ A goal and the chronicle ([26-memo-history.md](./26-memo-history.md)) are **comp
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-chronic-add` — contributing
-- `memo-fidelity-audit` — contributing
-- `memo-goal-optimize` — primary
-- `memo-goal-score` — primary
-- `memo-goal-score-all` — primary
-- `memo-rollout-evaluate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [30-primitives.md](./30-primitives.md) — the central glossary; the goal primitive is summarized there and specified in full here.

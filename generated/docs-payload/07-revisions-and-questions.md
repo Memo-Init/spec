@@ -6,7 +6,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/07-revisions-and-questions.md."
@@ -293,24 +293,7 @@ The revision and question-format rules above are authored **prose-first** as dec
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-balance` — contributing
-- `memo-coherence` — contributing
-- `memo-evidence` — contributing
-- `memo-fidelity-audit` — contributing
-- `memo-init` — contributing
-- `memo-mental-model-derive` — contributing
-- `memo-references` — contributing
-- `memo-revision-consolidate` — contributing
-- `memo-revision-evaluate` — primary
-- `memo-revision-execute` — primary
-- `memo-revision-generate` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](/specification/input-pipeline/) — input processing that runs before each revision is generated.

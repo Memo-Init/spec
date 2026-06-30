@@ -6,7 +6,7 @@ spec_file: "08-identity-pin.md"
 order: 8
 section: "Session"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/session/0.1.0/08-identity-pin.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/08-identity-pin.md."
@@ -140,14 +140,7 @@ The cd-soft-guard WARNs but never blocks and never re-pins (REQ-SS-CDGUARD); the
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-identity-pin` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-genesis-root.md](/specification/genesis-root/) — the genesis root that establishes the identity this chapter pins.

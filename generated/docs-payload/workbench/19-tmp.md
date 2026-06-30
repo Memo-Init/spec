@@ -6,7 +6,7 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/workbench/0.1.0/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/19-tmp.md."
@@ -54,14 +54,7 @@ The distinction from `.trash/` is the point: a deletion routed to `.trash/` is a
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-tmp` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [32-trash.md](/specification/trash/) — the recoverable-deletion folder `.tmp/` is the throwaway counterpart to.

@@ -63,15 +63,7 @@ When the input is a transcript-server URL produced by the Viewer, the default he
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-goal-optimize` — contributing
-- `memo-input-processing` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline every type runs through, and the URL-header activation.

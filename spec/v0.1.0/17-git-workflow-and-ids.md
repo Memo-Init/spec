@@ -275,24 +275,7 @@ The unit of a pull request is the affected repo, not the memo, and no single rep
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-commit` — primary
-- `git-merge-strategy` — contributing
-- `git-push` — contributing
-- `memo-phase-execute` — contributing
-- `memo-plan-execute` — contributing
-- `memo-plan-stop` — contributing
-- `memo-plan-update-checkbox` — contributing
-- `memo-prd-generate` — contributing
-- `memo-rollout-execute` — contributing
-- `repo-issue` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow, worktree cleanup, `git-security` gate, and issue rules.

@@ -126,19 +126,7 @@ That a scripts subfolder's `About` is ingested into the wiki is a structural fac
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `wiki-ingest` — primary
-- `wiki-init` — primary
-- `wiki-lint` — contributing
-- `wiki-query` — primary
-- `wiki-update` — primary
-- `workbench-project-setup` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [41-project-architecture.md](./41-project-architecture.md) — the structured layer the wiki indexes and points at.

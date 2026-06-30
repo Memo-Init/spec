@@ -133,14 +133,7 @@ The cd-soft-guard WARNs but never blocks and never re-pins (REQ-SS-CDGUARD); the
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-identity-pin` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-genesis-root.md](./01-genesis-root.md) — the genesis root that establishes the identity this chapter pins.

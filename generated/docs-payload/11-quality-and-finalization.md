@@ -6,7 +6,7 @@ spec_file: "11-quality-and-finalization.md"
 order: 11
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/11-quality-and-finalization.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/11-quality-and-finalization.md."
@@ -326,30 +326,7 @@ The completeness gate is judged by a fresh-context reviewer against the union of
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `drift-resolution` — contributing
-- `git-commit` — contributing
-- `git-push` — contributing
-- `git-security` — contributing
-- `memo-balance` — primary
-- `memo-coherence` — primary
-- `memo-evidence` — primary
-- `memo-fidelity-audit` — contributing
-- `memo-finalize` — primary
-- `memo-prds-validate` — contributing
-- `memo-references` — primary
-- `memo-research-agent` — contributing
-- `memo-revision-consolidate` — contributing
-- `memo-rollout` — contributing
-- `memo-rollout-generate` — contributing
-- `repo-quality` — contributing
-- `workbench-persona-audit` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-proactive-research.md](/specification/proactive-research/) — the research that closes `[ASSUMPTION]` / `[CONJECTURE]` items before gate 1 and gate 2 are checked.

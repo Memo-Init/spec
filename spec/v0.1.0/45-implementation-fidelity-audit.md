@@ -77,14 +77,7 @@ This audit is **not** the workbench's validation overview. The workbench `valida
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-fidelity-audit` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the completeness gate (gate 10) is the special case of Hop B: topic granularity, at finalization, once. This audit generalizes it to information-item granularity across the whole chain, retrospectively.

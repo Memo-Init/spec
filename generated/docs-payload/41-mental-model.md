@@ -6,7 +6,7 @@ spec_file: "41-mental-model.md"
 order: 41
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/41-mental-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/41-mental-model.md."
@@ -83,16 +83,7 @@ This staleness is a **counting signal**, not a guess: compare the highest memo n
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-init` — contributing
-- `memo-mental-model-derive` — primary
-- `memo-revision-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [21-human-computer-interaction.md](/specification/human-computer-interaction/) — the two developer touchpoints and the canonical interaction model the mental model learns from and serves.

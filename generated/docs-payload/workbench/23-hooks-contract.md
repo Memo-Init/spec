@@ -6,7 +6,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/workbench/0.1.0/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/23-hooks-contract.md."
@@ -261,19 +261,7 @@ The write-time content lint is bound by a project-local map and its honest limit
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-cli` — contributing
-- `workbench-config` — contributing
-- `workbench-environment-scripts` — contributing
-- `workbench-hooks-contract` — primary
-- `workbench-skills-scope` — contributing
-- `workbench-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [25-validation-overview.md](/specification/validation-overview/) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.

@@ -170,17 +170,7 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-research-agent` — contributing
-- `research-best-practice-playwright` — primary
-- `research-scrape-docs` — primary
-- `research-workflow` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the workbench spec framing and the global helpers it exposes.

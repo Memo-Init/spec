@@ -6,7 +6,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/workbench/0.1.0/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/10-root-and-projects.md."
@@ -95,14 +95,7 @@ Once a convention lives in its authoritative home, a `CLAUDE.md` adds value only
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-root-projects` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [11-project-structure.md](/specification/project-structure/) — the local guarantee that protects both levels.

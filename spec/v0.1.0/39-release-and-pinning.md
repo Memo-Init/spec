@@ -70,17 +70,7 @@ This prerequisite is **explicitly deferred**, and the deferral is handled by the
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-push` — contributing
-- `memo-maintenance-score-all` — contributing
-- `memo-maintenance-verify` — contributing
-- `release` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow, the commit-is-not-push rule, and the security gate that governs what leaves a repository.

@@ -192,17 +192,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-req-registry` — contributing
-- `memo-req-runner` — contributing
-- `memo-req-store` — contributing
-- `memo-sop` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.

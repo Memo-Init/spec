@@ -6,7 +6,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/35-memo-authoring.md."
@@ -245,18 +245,7 @@ Finally, the way a requirement statement itself is worded is checkable — the p
 ```
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-diagram-excalidraw` — contributing
-- `memo-balance` — contributing
-- `memo-coherence` — contributing
-- `memo-init` — contributing
-- `memo-revision-execute` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [06-memo-structure.md](/specification/memo-structure/) — the on-disk shape of a memo that this chapter authors into.

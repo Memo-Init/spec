@@ -188,16 +188,7 @@ Spec and memo diagrams are working decision tools, so they are text the reader c
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-art-architecture` — primary
-- `image-diagram-excalidraw` — primary
-- `memo-init` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [35-memo-authoring.md](./35-memo-authoring.md) — diagrams as first-class memo content and the portrait-orientation rule these recommendations build on.

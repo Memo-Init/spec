@@ -74,14 +74,7 @@ The operational steps — how to disable, diagnose, and re-arm the gate — live
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-recovery` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [02-enforcement.md](./02-enforcement.md) — the three-state contract and the fail-open mechanism these recovery primitives protect and reference.

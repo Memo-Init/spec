@@ -223,20 +223,7 @@ Whether a CLI's command tree is genuinely self-describing is a quality spectrum 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-addons` — contributing
-- `workbench-cli` — primary
-- `workbench-config` — contributing
-- `workbench-environment-scripts` — contributing
-- `workbench-hooks-contract` — contributing
-- `workbench-skills-scope` — contributing
-- `workbench-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.

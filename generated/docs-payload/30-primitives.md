@@ -6,7 +6,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/30-primitives.md."
@@ -199,17 +199,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-req-registry` — contributing
-- `memo-req-runner` — contributing
-- `memo-req-store` — contributing
-- `memo-sop` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [08-phases-and-prds.md](/specification/phases-and-prds/) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.

@@ -104,14 +104,7 @@ Some skills are deliberately **out of scope** for this process specification and
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-sop` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-philosophy.md](./01-philosophy.md) — the guardrail analogy and interaction model.
@@ -247,18 +240,7 @@ The aim of all this is **moving forward** — innovation and shipped progress �
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-coherence` — contributing
-- `memo-mental-model-derive` — contributing
-- `memo-revision-generate` — contributing
-- `memo-sop` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — mission and verified-system framing.
@@ -407,27 +389,7 @@ The few-public-doors discipline is a structural property of the skill set — ch
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-finalize` — contributing
-- `memo-init` — contributing
-- `memo-plan-add` — contributing
-- `memo-plan-execute` — contributing
-- `memo-plan-finalize` — contributing
-- `memo-plan-init` — contributing
-- `memo-plan-status` — contributing
-- `memo-plan-stop` — contributing
-- `memo-plan-update-checkbox` — contributing
-- `memo-reset-recommend` — contributing
-- `memo-sop` — primary
-- `memo-sub-init` — contributing
-- `skill-testing` — contributing
-- `workbench-modes` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-philosophy.md](./01-philosophy.md) — why the SOP defines the guardrails.
@@ -502,15 +464,7 @@ When the input is a transcript-server URL produced by the Viewer, the default he
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-goal-optimize` — contributing
-- `memo-input-processing` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline every type runs through, and the URL-header activation.
@@ -675,15 +629,7 @@ Research-result persistence is checked against the stored knowledge base; the ru
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-goal-optimize` — contributing
-- `memo-input-processing` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [03-input-paths.md](./03-input-paths.md) — the four transcript types and their follow-up flows.
@@ -749,15 +695,7 @@ Naming this strategy makes the interleaving explicit and reviewable, rather than
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-init` — contributing
-- `memo-sub-init` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [03-input-paths.md](./03-input-paths.md) — the transcript type that opens a memo and where the strategy is first set.
@@ -944,19 +882,7 @@ The memo-structure rules above are authored **prose-first** as declarative requi
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-init` — primary
-- `memo-plan-init` — contributing
-- `memo-plan-status` — contributing
-- `memo-revision-execute` — contributing
-- `memo-sub-init` — primary
-- `workbench-project-setup` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — input processing, where topics are registered into the topic store's write side.
@@ -1258,24 +1184,7 @@ The revision and question-format rules above are authored **prose-first** as dec
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-balance` — contributing
-- `memo-coherence` — contributing
-- `memo-evidence` — contributing
-- `memo-fidelity-audit` — contributing
-- `memo-init` — contributing
-- `memo-mental-model-derive` — contributing
-- `memo-references` — contributing
-- `memo-revision-consolidate` — contributing
-- `memo-revision-evaluate` — primary
-- `memo-revision-execute` — primary
-- `memo-revision-generate` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — input processing that runs before each revision is generated.
@@ -1586,32 +1495,7 @@ Integration coverage is delegated to the same validator skill:
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `drift-resolution` — contributing
-- `memo-finalize` — contributing
-- `memo-init` — contributing
-- `memo-phase-evaluate` — contributing
-- `memo-phase-execute` — contributing
-- `memo-phase-generate` — primary
-- `memo-plan-add` — contributing
-- `memo-plan-evaluate` — contributing
-- `memo-plan-init` — contributing
-- `memo-prd-evaluate` — primary
-- `memo-prd-generate` — primary
-- `memo-prds-validate` — primary
-- `memo-references` — contributing
-- `memo-reset-recommend` — primary
-- `memo-revision-execute` — contributing
-- `memo-rollout-evaluate` — contributing
-- `memo-rollout-execute` — contributing
-- `memo-rollout-generate` — primary
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [05-memo-strategies.md](./05-memo-strategies.md) — the type endpoint (Strategy / Implementation / Sorting) that decides whether PRDs are produced at all.
@@ -1733,38 +1617,7 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-chronic-add` — contributing
-- `memo-chronic-build` — contributing
-- `memo-finalize` — contributing
-- `memo-goal-optimize` — contributing
-- `memo-goal-score` — contributing
-- `memo-goal-score-all` — contributing
-- `memo-handover` — primary
-- `memo-init` — contributing
-- `memo-maintenance-score` — contributing
-- `memo-maintenance-verify` — contributing
-- `memo-mental-model-derive` — contributing
-- `memo-phase-evaluate` — contributing
-- `memo-phase-execute` — contributing
-- `memo-phase-generate` — contributing
-- `memo-plan-evaluate` — contributing
-- `memo-plan-execute` — contributing
-- `memo-plan-stop` — contributing
-- `memo-prd-evaluate` — contributing
-- `memo-prds-validate` — contributing
-- `memo-reset-recommend` — contributing
-- `memo-revision-evaluate` — contributing
-- `memo-rollout-evaluate` — contributing
-- `memo-rollout-execute` — contributing
-- `memo-sub-init` — contributing
-- `workbench-persona-audit` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [07-revisions-and-questions.md](./07-revisions-and-questions.md) — the append-only revision structure that is the rescue infrastructure for a contaminated memo.
@@ -2058,22 +1911,7 @@ A reusable browser session must never leak a credential into the repo, so the `a
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-evidence` — contributing
-- `memo-init` — contributing
-- `memo-input-processing` — contributing
-- `memo-research-agent` — primary
-- `memo-revision-generate` — contributing
-- `research-best-practice-playwright` — contributing
-- `research-scrape-docs` — contributing
-- `research-workflow` — contributing
-- `wiki-ingest` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — the five-step pipeline whose final step derives the research topics this chapter consumes.
@@ -2407,30 +2245,7 @@ The completeness gate is judged by a fresh-context reviewer against the union of
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `drift-resolution` — contributing
-- `git-commit` — contributing
-- `git-push` — contributing
-- `git-security` — contributing
-- `memo-balance` — primary
-- `memo-coherence` — primary
-- `memo-evidence` — primary
-- `memo-fidelity-audit` — contributing
-- `memo-finalize` — primary
-- `memo-prds-validate` — contributing
-- `memo-references` — primary
-- `memo-research-agent` — contributing
-- `memo-revision-consolidate` — contributing
-- `memo-rollout` — contributing
-- `memo-rollout-generate` — contributing
-- `repo-quality` — contributing
-- `workbench-persona-audit` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-proactive-research.md](./10-proactive-research.md) — the research that closes `[ASSUMPTION]` / `[CONJECTURE]` items before gate 1 and gate 2 are checked.
@@ -2542,21 +2357,7 @@ The two files are deliberately separate and **MUST NOT** be conflated:
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-pencil-playwright-diff` — contributing
-- `memo-fidelity-audit` — contributing
-- `memo-finalize` — contributing
-- `memo-phase-execute` — contributing
-- `memo-rollout` — primary
-- `memo-rollout-evaluate` — primary
-- `memo-rollout-execute` — primary
-- `memo-sop` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestrator, agent team, state files, crash recovery, and Tasks that execute the rollout.
@@ -2834,32 +2635,7 @@ The Worker↔Evaluator limit deserves emphasis: hitting three iterations without
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `drift-resolution` — contributing
-- `git-merge-strategy` — contributing
-- `memo-chronic-build` — contributing
-- `memo-handover` — contributing
-- `memo-phase-evaluate` — primary
-- `memo-phase-execute` — primary
-- `memo-phase-generate` — contributing
-- `memo-plan-execute` — contributing
-- `memo-prd-evaluate` — contributing
-- `memo-prds-validate` — contributing
-- `memo-references` — contributing
-- `memo-research-agent` — contributing
-- `memo-revision-evaluate` — contributing
-- `memo-revision-generate` — contributing
-- `memo-rollout` — contributing
-- `memo-rollout-execute` — contributing
-- `memo-rollout-generate` — contributing
-- `memo-sop` — contributing
-- `research-workflow` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [12-rollout.md](./12-rollout.md) — the Generate→Execute→Evaluate rollout that this orchestration executes, and the standing lessons-learned file.
@@ -2972,19 +2748,7 @@ The `null` primary plus the `scope` marker is the honest signal: *acknowledged o
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-plan-evaluate` — contributing
-- `memo-prd-evaluate` — contributing
-- `repo-docs-writing` — contributing
-- `repo-readme` — contributing
-- `skill-testing` — contributing
-- `workbench-persona-audit` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [15-prompt-generator.md](./15-prompt-generator.md) — the deterministic compositor that produces an agent's per-invocation start-prompt.
@@ -3101,18 +2865,7 @@ This is exactly what the agent layer needs: the generator produces the **determi
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-phase-execute` — contributing
-- `memo-phase-generate` — contributing
-- `memo-prd-generate` — contributing
-- `memo-req-template` — contributing
-- `memo-rollout-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the `AGENTS.md` agents whose per-invocation start-prompt this generator produces.
@@ -3390,34 +3143,7 @@ A broad destructive git operation over a dirty tree is an irreversible data-loss
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `drift-resolution` — contributing
-- `git-commit` — contributing
-- `git-merge-strategy` — contributing
-- `git-push` — contributing
-- `git-security` — primary
-- `image-pencil-playwright-diff` — contributing
-- `memo-finalize` — contributing
-- `memo-handover` — contributing
-- `memo-maintenance-verify` — contributing
-- `memo-phase-execute` — contributing
-- `memo-phase-generate` — contributing
-- `memo-plan-execute` — contributing
-- `memo-req-runner` — contributing
-- `memo-rollout` — contributing
-- `memo-rollout-execute` — contributing
-- `release` — contributing
-- `repo-init` — contributing
-- `repo-issue` — contributing
-- `repo-quality` — primary
-- `workbench-audit` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — the memo-ID scheme, the phase/issue/commit/PR mapping, and the commit-is-not-push rule.
@@ -3704,24 +3430,7 @@ The unit of a pull request is the affected repo, not the memo, and no single rep
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-commit` — primary
-- `git-merge-strategy` — contributing
-- `git-push` — contributing
-- `memo-phase-execute` — contributing
-- `memo-plan-execute` — contributing
-- `memo-plan-stop` — contributing
-- `memo-plan-update-checkbox` — contributing
-- `memo-prd-generate` — contributing
-- `memo-rollout-execute` — contributing
-- `repo-issue` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow, worktree cleanup, `git-security` gate, and issue rules.
@@ -3778,16 +3487,7 @@ The coordination happens at the **memo** level (the planning unit), not at the r
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-merge-strategy` — contributing
-- `git-push` — contributing
-- `memo-plan-add` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — the per-repo pull request and the memo-ID trail that ties the repositories together.
@@ -3959,25 +3659,7 @@ The clean-terminal *mechanisms* that make this enforceable rather than merely as
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-commit` — contributing
-- `git-push` — contributing
-- `git-security` — contributing
-- `image-art-architecture` — contributing
-- `memo-req-runner` — contributing
-- `repo-docs-writing` — contributing
-- `repo-github-org` — contributing
-- `repo-issue` — contributing
-- `repo-quality` — contributing
-- `repo-readme` — contributing
-- `workbench-audit` — contributing
-- `workbench-persona-audit` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — conformance language and the self-explanatory-to-a-stranger requirement.
@@ -4045,17 +3727,7 @@ Consolidation is the `F` node in the diagram: `consolidate: Full + Updates -> ne
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-finalize` — contributing
-- `memo-revision-consolidate` — primary
-- `memo-revision-execute` — contributing
-- `memo-revision-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [07-revisions-and-questions.md](./07-revisions-and-questions.md) — the three-area revision structure and the question format that every revision carries.
@@ -4216,20 +3888,7 @@ The full stage model around this — Rollout, Landing, Merge-preparation, Merge/
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-finalize` — contributing
-- `memo-goal-score-all` — contributing
-- `memo-maintenance-score-all` — contributing
-- `memo-mental-model-derive` — contributing
-- `memo-plan-execute` — contributing
-- `memo-reset-recommend` — contributing
-- `memo-sop` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [20-flow-full-vs-update-revisions.md](./20-flow-full-vs-update-revisions.md) — the Full/Update revision flow that this interaction model wraps.
@@ -4493,17 +4152,7 @@ Capability discoverability is delegated to the spec-to-skill conformity check �
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-goal-score` — contributing
-- `memo-maintenance-score` — contributing
-- `memo-plan-status` — contributing
-- `memo-plan-update-checkbox` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestration and state layer the tool tree is invoked from.
@@ -4871,33 +4520,7 @@ The store must survive a gate run untouched and rebuild reproducibly, so append-
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-push` — contributing
-- `git-security` — contributing
-- `image-pencil-playwright-diff` — primary
-- `memo-finalize` — contributing
-- `memo-phase-evaluate` — contributing
-- `memo-phase-execute` — contributing
-- `memo-phase-generate` — contributing
-- `memo-prd-evaluate` — contributing
-- `memo-prd-generate` — contributing
-- `memo-prds-validate` — contributing
-- `memo-req-registry` — primary
-- `memo-req-runner` — primary
-- `memo-req-store` — primary
-- `memo-req-template` — primary
-- `memo-rollout-evaluate` — contributing
-- `memo-rollout-generate` — contributing
-- `repo-github-org` — contributing
-- `repo-quality` — contributing
-- `specs-to-skills` — contributing
-- `wiki-lint` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [24-tools-registry.md](./24-tools-registry.md) — the parallel data folder; `check.kind: tool` requirements point into the tools registry for the tool and tactic that verify them.
@@ -5077,18 +4700,7 @@ Tactic selection must be reproducible and refuse to guess, so determinism and th
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-req-registry` — contributing
-- `memo-req-store` — contributing
-- `memo-req-template` — contributing
-- `wiki-query` — contributing
-- `workbench-audit` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [23-requirements.md](./23-requirements.md) — the parallel data folder; `check.kind: tool` requirements point into this registry for the tool and tactic that verify them.
@@ -5152,15 +4764,7 @@ A strand is a **tag or label**, not a component of the numeric memo identifier, 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-finalize` — contributing
-- `memo-rollout-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [23-requirements.md](./23-requirements.md) — a strand's PRDs draw their requirements from this registry.
@@ -5259,17 +4863,7 @@ A topic in the wiki tells you the current answer; the chronicle tells you how th
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-chronic-add` — primary
-- `memo-chronic-build` — primary
-- `memo-rollout-execute` — contributing
-- `wiki-ingest` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [18-multidimensionality.md](./18-multidimensionality.md) — memos as time documents and the state-preservation model the timeline depends on.
@@ -5337,18 +4931,7 @@ Two distinctions sharpen this. A commit is not a push: the system writes the com
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-merge-strategy` — contributing
-- `memo-handover` — contributing
-- `memo-rollout-execute` — contributing
-- `memo-sop` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [12-rollout.md](./12-rollout.md) — the rollout (Stage 1) that runs Generate, Execute, and Evaluate before this landing stage.
@@ -5431,17 +5014,7 @@ When drift is discovered while a phase is running, the rule is: do NOT abort the
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `drift-resolution` — primary
-- `memo-maintenance-score` — contributing
-- `memo-maintenance-score-all` — contributing
-- `memo-references` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — owns the post-phase drift-elimination step that the escalation rule defers to.
@@ -5530,19 +5103,7 @@ The same logic governs scope that genuinely must be deferred. Deferred scope is 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-pencil-playwright-diff` — contributing
-- `memo-coherence` — contributing
-- `memo-init` — contributing
-- `memo-phase-execute` — contributing
-- `release` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-philosophy.md](./01-philosophy.md) — the "Work It In Instead of Deferring" principle behind C7.
@@ -5745,17 +5306,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-req-registry` — contributing
-- `memo-req-runner` — contributing
-- `memo-req-store` — contributing
-- `memo-sop` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.
@@ -5860,19 +5411,7 @@ A goal and the chronicle ([26-memo-history.md](./26-memo-history.md)) are **comp
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-chronic-add` — contributing
-- `memo-fidelity-audit` — contributing
-- `memo-goal-optimize` — primary
-- `memo-goal-score` — primary
-- `memo-goal-score-all` — primary
-- `memo-rollout-evaluate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [30-primitives.md](./30-primitives.md) — the central glossary; the goal primitive is summarized there and specified in full here.
@@ -5963,17 +5502,7 @@ Because the generator is both a lever and a single point of failure, it MUST be 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-phase-generate` — contributing
-- `memo-prd-generate` — contributing
-- `memo-req-template` — contributing
-- `memo-rollout-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [15-prompt-generator.md](./15-prompt-generator.md) — the engine this chapter governs: the deterministic, hash-stable producer whose code stays untouched.
@@ -6092,19 +5621,7 @@ The maintainer is **reporting-autonomous**: it reads the diff, clusters changes,
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-goal-score-all` — contributing
-- `memo-maintenance-score` — primary
-- `memo-maintenance-score-all` — primary
-- `memo-maintenance-verify` — primary
-- `memo-rollout` — contributing
-- `release` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [26-memo-history.md](./26-memo-history.md) — the chronicle, the shared run-up that maintenance is derived from (backward) just as goals are (forward).
@@ -6225,18 +5742,7 @@ The **question-count lint gate (MEMO-025)** applies to the **markdown-only** pat
 When a `questions-json` block **is** present it is the single source (07's authority rule), and the count gate **does not** cross-check the `### F{N}` heading count against it. This is the single-source split defined in [07-revisions-and-questions.md](./07-revisions-and-questions.md): **open** questions live in the json block only — there is no hand-written `### F{N}` mirror, the human-readable form is generated by `renderQuestionsMarkdown` — while **answered** questions keep their `### F{N}` decision records (the `AI recommendation` vs `user decision` pair that [41-mental-model.md](./41-mental-model.md) reads). The two artefacts legitimately differ in count, so cross-checking them would misfire; the json is trusted instead. Authoring rule: **pose open questions only as `questions-json`, never as extra `### F{N}` headings.** What the renderer needs to draw a question as a card — including each option's `kind` ∈ `{option, custom, topic}` — is the one shared render contract; an invalid `kind` is rejected fail-loud at registration (MEMO-033), not silently dropped at the screen.
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-goal-optimize` — contributing
-- `memo-init` — contributing
-- `memo-revision-evaluate` — contributing
-- `memo-revision-execute` — contributing
-- `memo-revision-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [07-revisions-and-questions.md](./07-revisions-and-questions.md) — the raw `### F{N}` and `questions-json` format and the authority rule this chapter builds on.
@@ -6488,18 +5994,7 @@ Finally, the way a requirement statement itself is worded is checkable — the p
 ```
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-diagram-excalidraw` — contributing
-- `memo-balance` — contributing
-- `memo-coherence` — contributing
-- `memo-init` — contributing
-- `memo-revision-execute` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [06-memo-structure.md](./06-memo-structure.md) — the on-disk shape of a memo that this chapter authors into.
@@ -6530,25 +6025,7 @@ When work decomposes into independent units — one repo, one file, one chapter,
 Measurement and grading are **never** done by the session that did the work — a working session reports "all done" and hides the gap. The strategy is to evaluate in a **fresh context**: a separate, unbiased reader that inspects the real artifacts rather than trusting a PASS-report. This is the operating principle behind goal scoring and maintenance scoring ([31-goals.md](./31-goals.md)); as a general agent strategy it applies wherever a result must be judged honestly — spawn a clean reader, hand it the artifacts and the intent, and let it measure against reality. The contamination boundary that makes a context "fresh" is defined in [09-contamination-context-handover.md](./09-contamination-context-handover.md).
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-chronic-build` — contributing
-- `memo-goal-score` — contributing
-- `memo-goal-score-all` — contributing
-- `memo-input-processing` — contributing
-- `memo-maintenance-score` — contributing
-- `memo-maintenance-score-all` — contributing
-- `memo-mental-model-derive` — contributing
-- `memo-phase-evaluate` — contributing
-- `memo-research-agent` — contributing
-- `memo-rollout-evaluate` — contributing
-- `research-workflow` — contributing
-- `workbench-persona-audit` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestration machinery these strategies run on (the boundary: machinery there, patterns here).
@@ -6639,14 +6116,7 @@ Contamination describes the model's own degraded **output** context; transcript 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-input-processing` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](./04-input-pipeline.md) — Step 2b, where the reliability estimate runs, and Step 1's raw-transcript preservation rule this chapter's interpretation rule extends.
@@ -6728,29 +6198,7 @@ The two gates are the checkable boundaries: the Evaluate gate closes stage one, 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-merge-strategy` — primary
-- `git-push` — primary
-- `memo-fidelity-audit` — contributing
-- `memo-plan-add` — contributing
-- `memo-plan-evaluate` — contributing
-- `memo-plan-execute` — contributing
-- `memo-plan-finalize` — contributing
-- `memo-plan-init` — contributing
-- `memo-plan-status` — contributing
-- `memo-plan-stop` — contributing
-- `memo-plan-update-checkbox` — contributing
-- `memo-rollout` — contributing
-- `memo-rollout-evaluate` — contributing
-- `memo-rollout-execute` — contributing
-- `memo-sop` — contributing
-- `release` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [12-rollout.md](./12-rollout.md) — stage one, the autonomous Generate → Execute → Evaluate that ends on a green Evaluate.
@@ -6833,17 +6281,7 @@ This prerequisite is **explicitly deferred**, and the deferral is handled by the
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-push` — contributing
-- `memo-maintenance-score-all` — contributing
-- `memo-maintenance-verify` — contributing
-- `release` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow, the commit-is-not-push rule, and the security gate that governs what leaves a repository.
@@ -7043,16 +6481,7 @@ Spec and memo diagrams are working decision tools, so they are text the reader c
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-art-architecture` — primary
-- `image-diagram-excalidraw` — primary
-- `memo-init` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [35-memo-authoring.md](./35-memo-authoring.md) — diagrams as first-class memo content and the portrait-orientation rule these recommendations build on.
@@ -7140,16 +6569,7 @@ This staleness is a **counting signal**, not a guess: compare the highest memo n
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-init` — contributing
-- `memo-mental-model-derive` — primary
-- `memo-revision-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [21-human-computer-interaction.md](./21-human-computer-interaction.md) — the two developer touchpoints and the canonical interaction model the mental model learns from and serves.
@@ -7288,23 +6708,7 @@ A rollout runs in one of two modes, and both coexist. In the **direct path**, a 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-budget-paste` — primary
-- `memo-handover` — contributing
-- `memo-plan-add` — primary
-- `memo-plan-evaluate` — primary
-- `memo-plan-execute` — primary
-- `memo-plan-finalize` — primary
-- `memo-plan-init` — primary
-- `memo-plan-status` — primary
-- `memo-plan-stop` — primary
-- `memo-plan-update-checkbox` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [./30-primitives.md](./30-primitives.md) — the eleven primitives, of which the plan is the one that spans many memos.
@@ -7631,16 +7035,7 @@ Finally, where the evals sit and what their fixtures mirror is structural:
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-art-architecture` — contributing
-- `skill-testing` — primary
-- `specs-to-skills` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [./14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — classifies skill versus agent versus task; this chapter governs skill *quality* and assumes that classification.
@@ -8268,19 +7663,7 @@ The public methods are tested and the suite passes in full before a push — a h
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `repo-docs-writing` — primary
-- `repo-github-org` — primary
-- `repo-init` — primary
-- `repo-issue` — primary
-- `repo-quality` — contributing
-- `repo-readme` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow and the security gate the pre-push checklist complements.
@@ -8373,14 +7756,7 @@ This audit is **not** the workbench's validation overview. The workbench `valida
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-fidelity-audit` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [11-quality-and-finalization.md](./11-quality-and-finalization.md) — the completeness gate (gate 10) is the special case of Hop B: topic granularity, at finalization, once. This audit generalizes it to information-item granularity across the whole chain, retrospectively.
@@ -9455,20 +8831,7 @@ Whether the severity mix actually drives a sound A/B/C grade is a judgment about
 ```
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `node-class-architecture` — contributing
-- `node-environment-manager` — contributing
-- `node-error-codes` — contributing
-- `node-formatting` — primary
-- `node-server-design` — contributing
-- `node-testing` — contributing
-- `node-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md) — the internal-CLI build pattern these standards apply to.
@@ -9594,15 +8957,7 @@ Three categories carry a meaning worth stating here:
 - **Folders** holds the registered-folder pages and the things that attach to folders: the folder contract, the per-folder pages, the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
 - **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `design.md` (the design format); both therefore sit conceptually under the wiki rather than standing alone.
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-audit` — contributing
-- `workbench-project-setup` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 
 ---
 
@@ -9645,14 +9000,7 @@ Splitting the specification this way lets each family evolve at its own pace and
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-philosophy` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the sibling-spec framing and the workbench's place among the families.
@@ -9775,18 +9123,7 @@ The division of responsibility is the load-bearing idea: **the workbench declare
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-addons` — contributing
-- `workbench-cli` — contributing
-- `workbench-config` — contributing
-- `workbench-hooks-contract` — contributing
-- `workbench-sop-entry` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the sibling-spec framing and the scope of this spec.
@@ -9891,14 +9228,7 @@ Once a convention lives in its authoritative home, a `CLAUDE.md` adds value only
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-root-projects` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [11-project-structure.md](./11-project-structure.md) — the local guarantee that protects both levels.
@@ -10005,17 +9335,7 @@ The egress rule is a content judgement on what may leave the local context, so i
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `repo-init` — contributing
-- `wiki-init` — contributing
-- `workbench-audit` — primary
-- `workbench-project-setup` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project split that this guarantee spans.
@@ -10309,16 +9629,7 @@ Whether a tool's folder list has drifted from the registry is judged against the
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-environment-scripts` — contributing
-- `workbench-folders` — primary
-- `workbench-tmp` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-root-and-projects.md](./10-root-and-projects.md) — the workbench-root vs. project split.
@@ -10508,18 +9819,7 @@ The bundle-root version marker is advisory, so its absence is information rather
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `wiki-ingest` — contributing
-- `wiki-init` — contributing
-- `wiki-lint` — primary
-- `wiki-query` — contributing
-- `wiki-update` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the workbench spec and its independent versioning, where the format version is read from refs data.
@@ -10633,14 +9933,7 @@ A declared status that contradicts the repository's real git state is a hard fai
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-repos` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [11-project-structure.md](./11-project-structure.md) — the local guarantee: `repos/` as the only sanctioned home for shareable code.
@@ -10763,15 +10056,7 @@ The opt-in scoping of OKF is the presence-or-absence of a binding, a hard yes/no
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-context` — primary
-- `workbench-tmp` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [12-folders.md](./12-folders.md) — `data/` (raw) vs. `context/` (processed), and the folder contract this page is the registered entry for.
@@ -10839,14 +10124,7 @@ The canonical layout places memos under `.memo/memos/<NNN-slug>/`; a flat legacy
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-memo-store` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [26-addons.md](./26-addons.md) — the custom folder (Add-on) model `.memo/` is an instance of.
@@ -10972,14 +10250,7 @@ Multiple design surfaces under per-topic sub-folders is a structural fact, paral
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-design` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [12-folders.md](./12-folders.md) — the folder contract and the convention model `design/` is a registered, optional instance of.
@@ -11038,14 +10309,7 @@ The distinction from `.trash/` is the point: a deletion routed to `.trash/` is a
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-tmp` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [32-trash.md](./32-trash.md) — the recoverable-deletion folder `.tmp/` is the throwaway counterpart to.
@@ -11279,20 +10543,7 @@ Whether a CLI's command tree is genuinely self-describing is a quality spectrum 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-addons` — contributing
-- `workbench-cli` — primary
-- `workbench-config` — contributing
-- `workbench-environment-scripts` — contributing
-- `workbench-hooks-contract` — contributing
-- `workbench-skills-scope` — contributing
-- `workbench-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.
@@ -11428,17 +10679,7 @@ Whether a project boots through its declared script rather than an inline sequen
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-cli` — contributing
-- `workbench-environment-scripts` — primary
-- `workbench-skills-scope` — contributing
-- `workbench-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [20-cli.md](./20-cli.md) — the meaningful-subfolder convention, shared with the CLI.
@@ -11571,18 +10812,7 @@ Whether the configuration was authored by hand and never silently overwritten is
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-addons` — contributing
-- `workbench-config` — primary
-- `workbench-environment-scripts` — contributing
-- `workbench-hooks-contract` — contributing
-- `workbench-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract that consumes this configuration.
@@ -11847,19 +11077,7 @@ The write-time content lint is bound by a project-local map and its honest limit
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-cli` — contributing
-- `workbench-config` — contributing
-- `workbench-environment-scripts` — contributing
-- `workbench-hooks-contract` — primary
-- `workbench-skills-scope` — contributing
-- `workbench-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [25-validation-overview.md](./25-validation-overview.md) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.
@@ -12006,16 +11224,7 @@ This chapter fixes the typed contract **spec-side now**; the implementation is *
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-addons` — contributing
-- `workbench-hooks-contract` — contributing
-- `workbench-skills-scope` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [26-addons.md](./26-addons.md) — the custom folder model the Setup/Health/Update/Extras frame generalizes to.
@@ -12239,17 +11448,7 @@ Keeping block and warn distinct is a property of how an outcome is treated, judg
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-cli` — contributing
-- `workbench-hooks-contract` — contributing
-- `workbench-skills-scope` — contributing
-- `workbench-validation` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [23-hooks-contract.md](./23-hooks-contract.md) — the contract for every hook-based family, and the hub for the "before" and "after" checkability mechanisms.
@@ -12314,15 +11513,7 @@ Whether a custom folder reserves only its small declared area, with bulk data pr
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `workbench-addons` — primary
-- `workbench-skills-scope` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [session/15-addons.md](/session/addons/) — the Add-on model: definition, data boundaries, the per-Add-on SOP, the weight landscape, standard entry points, and the CLI/skill split.
@@ -12462,19 +11653,7 @@ That a scripts subfolder's `About` is ingested into the wiki is a structural fac
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `wiki-ingest` — primary
-- `wiki-init` — primary
-- `wiki-lint` — contributing
-- `wiki-query` — primary
-- `wiki-update` — primary
-- `workbench-project-setup` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [41-project-architecture.md](./41-project-architecture.md) — the structured layer the wiki indexes and points at.
@@ -12657,17 +11836,7 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-research-agent` — contributing
-- `research-best-practice-playwright` — primary
-- `research-scrape-docs` — primary
-- `research-workflow` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the workbench spec framing and the global helpers it exposes.
@@ -12736,18 +11905,7 @@ Destructive recursive removal is **forbidden**.
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `wiki-init` — contributing
-- `wiki-update` — contributing
-- `workbench-project-setup` — contributing
-- `workbench-tmp` — contributing
-- `workbench-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [11-project-structure.md](./11-project-structure.md) — the `.trash/` folder and the local guarantee that contains it.
@@ -12906,19 +12064,7 @@ That each edge carries a provenance commit so drift is a count is a structural f
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-maintenance-score` — contributing
-- `memo-maintenance-score-all` — contributing
-- `memo-maintenance-verify` — contributing
-- `wiki-lint` — contributing
-- `workbench-audit` — contributing
-- `workbench-config` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-root-and-projects.md](./10-root-and-projects.md) — the two-level model the core diagram depicts.
@@ -13224,14 +12370,7 @@ The family is read in six nav groups; the sidebar lists the individual chapters,
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-overview` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-sop.md](./10-sop.md) — the SOP entry-point mechanism this family absorbs, and the common SOP standard `session-sop` is an instance of.
@@ -13344,14 +12483,7 @@ The statusline is the canonical **read** surface for the resolved session state.
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-genesis-root` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [02-enforcement.md](./02-enforcement.md) — how the chain is enforced deterministically at PreToolUse.
@@ -13637,14 +12769,7 @@ Whether the policy-checkpoint branch only ever redirects (never hard-locks, neve
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-enforcement` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [03-recovery.md](./03-recovery.md) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
@@ -13732,14 +12857,7 @@ The operational steps — how to disable, diagnose, and re-arm the gate — live
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-recovery` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [02-enforcement.md](./02-enforcement.md) — the three-state contract and the fail-open mechanism these recovery primitives protect and reference.
@@ -13932,14 +13050,7 @@ The `--describe` contract is verified by running the tool and parsing its output
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-cli` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [workbench/20-cli.md](/workbench/cli/) — the workbench CLI convention and the registry as the single discovery source.
@@ -14156,14 +13267,7 @@ The two-structures-two-merge-rules contract guards the classic cascade bug (conf
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-config-cascade` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-genesis-root.md](./01-genesis-root.md) — the tier model, identity, and the security level this cascade keeps resolved-not-overridable.
@@ -14380,14 +13484,7 @@ This is how three independent registrants coexist sustainably: `memo`, `workbenc
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-namespace-registry` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [05-config-cascade.md](./05-config-cascade.md) — the `.session/config.json` schema and `config.d/` cascade the `sops[]` array lives in.
@@ -14620,14 +13717,7 @@ The `doctor` / `init` contract's binding `MUST`s are authored here **prose-first
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-doctor-init` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [05-config-cascade.md](./05-config-cascade.md) — the `.session/config.json ∪ config.d/*` cascade the doctor loads and `init` scaffolds; home of the REQ-061 migration.
@@ -14772,14 +13862,7 @@ The cd-soft-guard WARNs but never blocks and never re-pins (REQ-SS-CDGUARD); the
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-identity-pin` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-genesis-root.md](./01-genesis-root.md) — the genesis root that establishes the identity this chapter pins.
@@ -14933,14 +14016,7 @@ The resolved root is reported by a single side-effect-free read leaf; that leaf 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-root-detection` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [08-identity-pin.md](./08-identity-pin.md) — the SessionStart-Pin that anchors resolution; the root is pinned once, never recomputed from a mutated cwd.
@@ -15023,14 +14099,7 @@ memo-init and workbench are **SOP-instance blocks**: they participate in the pre
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-sop` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the session family this SOP area is part of.
@@ -15113,14 +14182,7 @@ The contract is three things together: the opening **inheritance declaration** (
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-common-denominator` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-sop.md](./10-sop.md) — why a thin connecting mechanism exists inside the session standard.
@@ -15181,14 +14243,7 @@ Each instance **SHOULD** also name its **entry points** — the holistic "what t
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-instances` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-sop.md](./10-sop.md) — the purpose of the SOP entry-point mechanism.
@@ -15270,14 +14325,7 @@ The Folder Contract is **normative, not advisory** (the MUST above), and it is e
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-conventions` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-sop.md](./10-sop.md) — why a thin connecting mechanism exists inside the session standard.
@@ -15337,14 +14385,7 @@ The config migration ([05-config-cascade.md](./05-config-cascade.md)) also reach
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-migration` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the absorbed SOP area whose URLs this fold preserves.
@@ -15437,14 +14478,7 @@ An Add-on is reachable two ways, with a clear division of labor:
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-addons` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — the session glossary that owns the term **Add-on**.

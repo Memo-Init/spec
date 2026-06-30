@@ -6,7 +6,7 @@ spec_file: "20-flow-full-vs-update-revisions.md"
 order: 20
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/20-flow-full-vs-update-revisions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/20-flow-full-vs-update-revisions.md."
@@ -62,17 +62,7 @@ Consolidation is the `F` node in the diagram: `consolidate: Full + Updates -> ne
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-finalize` — contributing
-- `memo-revision-consolidate` — primary
-- `memo-revision-execute` — contributing
-- `memo-revision-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [07-revisions-and-questions.md](/specification/revisions-and-questions/) — the three-area revision structure and the question format that every revision carries.

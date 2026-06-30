@@ -6,7 +6,7 @@ spec_file: "40-diagrams.md"
 order: 40
 section: "Specification"
 normative: false
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/40-diagrams.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/40-diagrams.md."
@@ -195,16 +195,7 @@ Spec and memo diagrams are working decision tools, so they are text the reader c
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-art-architecture` — primary
-- `image-diagram-excalidraw` — primary
-- `memo-init` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [35-memo-authoring.md](/specification/memo-authoring/) — diagrams as first-class memo content and the portrait-orientation rule these recommendations build on.

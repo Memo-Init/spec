@@ -54,18 +54,7 @@ Two distinctions sharpen this. A commit is not a push: the system writes the com
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-merge-strategy` — contributing
-- `memo-handover` — contributing
-- `memo-rollout-execute` — contributing
-- `memo-sop` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [12-rollout.md](./12-rollout.md) — the rollout (Stage 1) that runs Generate, Execute, and Evaluate before this landing stage.

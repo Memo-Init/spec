@@ -29,6 +29,9 @@ const INVERTED_PATH = join( BRIDGE_OUT, 'inverted-map.json' )
 const NN_RE = /^\d{2}-.*\.md$/
 const BACKLINK_START = '<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->'
 const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
+// F2 Dist-Split (Memo 057): byte-identical to the generator's PLACEHOLDER. The source must
+// carry this AND must NOT carry a full block; the rendered block lives only in the dist.
+const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->'
 
 const FAMILIES = [
     { key: 'core', prefix: '', specDir: REFS.spec.specDir },
@@ -102,13 +105,24 @@ const main = async () => {
             const id = `${ family.prefix }${ stem }`
             const expected = expectedImplementers( { skills, id } )
 
-            // (1) backlink in the source chapter
+            // (1) F2 Dist-Split: source carries the placeholder and NOT a full block.
             const content = await readFile( join( specDirAbs, `${ stem }.md` ), 'utf-8' )
-            const backlink = backlinkImplementers( { content } )
+            if( content.indexOf( PLACEHOLDER ) === -1 ) {
+                violations.push( `${ family.key }/${ stem }: source missing the <!-- IMPLEMENTED-BY --> placeholder (F2 Dist-Split)` )
+            }
+            if( content.indexOf( BACKLINK_START ) !== -1 ) {
+                violations.push( `${ family.key }/${ stem }: full "## Implemented by" block present in source — it must live only in the dist (F2 Dist-Split)` )
+            }
+
+            // (1b) the rendered backlink in the DIST agrees with the map
+            const backlinkPath = join( BRIDGE_OUT, family.key, `${ stem }.backlink.md` )
+            const backlink = existsSync( backlinkPath ) === true
+                ? backlinkImplementers( { content: readFileSync( backlinkPath, 'utf-8' ) } )
+                : null
             if( backlink === null ) {
-                violations.push( `${ family.key }/${ stem }: source chapter has no "## Implemented by" backlink block` )
+                violations.push( `${ family.key }/${ stem }: dist backlink generated/bridge/${ family.key }/${ stem }.backlink.md missing` )
             } else if( sameList( { a: backlink, b: expected } ) === false ) {
-                violations.push( `${ family.key }/${ stem }: backlink [${ backlink.join( ', ' ) }] != map [${ expected.join( ', ' ) }]` )
+                violations.push( `${ family.key }/${ stem }: dist backlink [${ backlink.join( ', ' ) }] != map [${ expected.join( ', ' ) }]` )
             }
 
             // (2) per-page bridge materialized

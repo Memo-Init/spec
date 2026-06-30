@@ -6,7 +6,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/06-memo-structure.md."
@@ -183,19 +183,7 @@ The memo-structure rules above are authored **prose-first** as declarative requi
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-init` — primary
-- `memo-plan-init` — contributing
-- `memo-plan-status` — contributing
-- `memo-revision-execute` — contributing
-- `memo-sub-init` — primary
-- `workbench-project-setup` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [04-input-pipeline.md](/specification/input-pipeline/) — input processing, where topics are registered into the topic store's write side.

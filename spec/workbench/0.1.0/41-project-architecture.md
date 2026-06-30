@@ -147,19 +147,7 @@ That each edge carries a provenance commit so drift is a count is a structural f
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-maintenance-score` — contributing
-- `memo-maintenance-score-all` — contributing
-- `memo-maintenance-verify` — contributing
-- `wiki-lint` — contributing
-- `workbench-audit` — contributing
-- `workbench-config` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-root-and-projects.md](./10-root-and-projects.md) — the two-level model the core diagram depicts.

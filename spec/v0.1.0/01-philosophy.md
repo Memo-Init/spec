@@ -123,18 +123,7 @@ The aim of all this is **moving forward** — innovation and shipped progress �
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-coherence` — contributing
-- `memo-mental-model-derive` — contributing
-- `memo-revision-generate` — contributing
-- `memo-sop` — contributing
-- `workbench-modes` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [00-overview.md](./00-overview.md) — mission and verified-system framing.

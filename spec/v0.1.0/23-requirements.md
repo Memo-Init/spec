@@ -356,33 +356,7 @@ The store must survive a gate run untouched and rebuild reproducibly, so append-
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-push` — contributing
-- `git-security` — contributing
-- `image-pencil-playwright-diff` — primary
-- `memo-finalize` — contributing
-- `memo-phase-evaluate` — contributing
-- `memo-phase-execute` — contributing
-- `memo-phase-generate` — contributing
-- `memo-prd-evaluate` — contributing
-- `memo-prd-generate` — contributing
-- `memo-prds-validate` — contributing
-- `memo-req-registry` — primary
-- `memo-req-runner` — primary
-- `memo-req-store` — primary
-- `memo-req-template` — primary
-- `memo-rollout-evaluate` — contributing
-- `memo-rollout-generate` — contributing
-- `repo-github-org` — contributing
-- `repo-quality` — contributing
-- `specs-to-skills` — contributing
-- `wiki-lint` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [24-tools-registry.md](./24-tools-registry.md) — the parallel data folder; `check.kind: tool` requirements point into the tools registry for the tool and tactic that verify them.

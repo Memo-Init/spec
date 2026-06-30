@@ -49,6 +49,13 @@ const BRIDGE_OUT = join( REPO, 'generated/bridge' )
 const BACKLINK_START = '<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->'
 const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
 
+// F2 Dist-Split (Memo 057): the source chapter is authored-only and carries ONLY this
+// placeholder; the rendered "## Implemented by" block is a derived artifact written to the
+// dist (generated/bridge/<family>/<stem>.backlink.md). Constant string — kept byte-identical
+// in check-bridge-inverse.mjs, which fails when a source is missing the placeholder OR still
+// carries a full block (error in all directions).
+const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->'
+
 // Out-of-process skill clusters: their capabilities have no numbered spec chapter by design
 // (spec 06 / 40 say so explicitly). Used for field (7) and the README cluster note.
 const OUT_OF_SCOPE_CATEGORIES = [ 'visual', 'domain', 'flowmcp', 'grade' ]
@@ -350,27 +357,29 @@ const renderBacklink = ( { implementers } ) => {
 }
 
 
-// Insert/replace the backlink block in a source chapter: replace between markers if present,
-// else insert immediately before "## Related", else append. Returns the (possibly) new content.
-const applyBacklink = ( { content, block } ) => {
+// F2 Dist-Split: ensure the source chapter carries ONLY the placeholder (never the full
+// block). A legacy full block (marker-bounded) is collapsed to the placeholder; an already-
+// placeholdered source is left untouched; a source with neither gets the placeholder inserted
+// before "## Related" (else appended). Idempotent. The rendered block is written to the dist.
+const ensurePlaceholder = ( { content } ) => {
     const startIdx = content.indexOf( BACKLINK_START )
     if( startIdx !== -1 ) {
         const endIdx = content.indexOf( BACKLINK_END, startIdx )
         const tail = content.slice( endIdx + BACKLINK_END.length )
-        const next = `${ content.slice( 0, startIdx ) }${ block }${ tail }`
 
-        return next
+        return `${ content.slice( 0, startIdx ) }${ PLACEHOLDER }${ tail }`
     }
+    if( content.indexOf( PLACEHOLDER ) !== -1 ) return content
     const relatedMatch = content.match( /\n##\s+Related\s*\n/ )
     if( relatedMatch !== null ) {
         const at = relatedMatch.index
-        const next = `${ content.slice( 0, at ) }\n\n${ block }\n${ content.slice( at + 1 ) }`
+        const next = `${ content.slice( 0, at ) }\n\n${ PLACEHOLDER }\n${ content.slice( at + 1 ) }`
 
         return next
     }
     const trimmed = content.replace( /\s+$/, '' )
 
-    return `${ trimmed }\n\n${ block }\n`
+    return `${ trimmed }\n\n${ PLACEHOLDER }\n`
 }
 
 
@@ -476,9 +485,11 @@ const main = async () => {
             await mkdir( outDir, { recursive: true } )
             await writeFile( join( outDir, `${ stem }.md` ), renderBridgePage( { record } ), 'utf-8' )
 
-            // "## Implemented by" backlink → source chapter (idempotent)
+            // F2 Dist-Split: the rendered "## Implemented by" block → DIST only; the source
+            // carries the placeholder (authored vs derived boundary).
             const block = renderBacklink( { implementers: record.implementers } )
-            const nextContent = applyBacklink( { content, block } )
+            await writeFile( join( outDir, `${ stem }.backlink.md` ), `${ block }\n`, 'utf-8' )
+            const nextContent = ensurePlaceholder( { content } )
             const backlinkChanged = nextContent !== content
             if( backlinkChanged === true ) await writeFile( sourcePath, nextContent, 'utf-8' )
 

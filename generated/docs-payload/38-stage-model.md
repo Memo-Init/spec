@@ -6,7 +6,7 @@ spec_file: "38-stage-model.md"
 order: 38
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/38-stage-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/38-stage-model.md."
@@ -76,29 +76,7 @@ The two gates are the checkable boundaries: the Evaluate gate closes stage one, 
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `git-merge-strategy` — primary
-- `git-push` — primary
-- `memo-fidelity-audit` — contributing
-- `memo-plan-add` — contributing
-- `memo-plan-evaluate` — contributing
-- `memo-plan-execute` — contributing
-- `memo-plan-finalize` — contributing
-- `memo-plan-init` — contributing
-- `memo-plan-status` — contributing
-- `memo-plan-stop` — contributing
-- `memo-plan-update-checkbox` — contributing
-- `memo-rollout` — contributing
-- `memo-rollout-evaluate` — contributing
-- `memo-rollout-execute` — contributing
-- `memo-sop` — contributing
-- `release` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [12-rollout.md](/specification/rollout/) — stage one, the autonomous Generate → Execute → Evaluate that ends on a green Evaluate.

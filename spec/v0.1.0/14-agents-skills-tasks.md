@@ -96,19 +96,7 @@ The `null` primary plus the `scope` marker is the honest signal: *acknowledged o
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-plan-evaluate` — contributing
-- `memo-prd-evaluate` — contributing
-- `repo-docs-writing` — contributing
-- `repo-readme` — contributing
-- `skill-testing` — contributing
-- `workbench-persona-audit` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [15-prompt-generator.md](./15-prompt-generator.md) — the deterministic compositor that produces an agent's per-invocation start-prompt.

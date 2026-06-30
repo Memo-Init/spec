@@ -98,21 +98,7 @@ The two files are deliberately separate and **MUST NOT** be conflated:
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `image-pencil-playwright-diff` — contributing
-- `memo-fidelity-audit` — contributing
-- `memo-finalize` — contributing
-- `memo-phase-execute` — contributing
-- `memo-rollout` — primary
-- `memo-rollout-evaluate` — primary
-- `memo-rollout-execute` — primary
-- `memo-sop` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [13-orchestration.md](./13-orchestration.md) — the orchestrator, agent team, state files, crash recovery, and Tasks that execute the rollout.

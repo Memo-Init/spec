@@ -6,7 +6,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/workbench/0.1.0/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/32-trash.md."
@@ -63,18 +63,7 @@ Destructive recursive removal is **forbidden**.
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `wiki-init` — contributing
-- `wiki-update` — contributing
-- `workbench-project-setup` — contributing
-- `workbench-tmp` — contributing
-- `workbench-validation` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [11-project-structure.md](/specification/project-structure/) — the `.trash/` folder and the local guarantee that contains it.

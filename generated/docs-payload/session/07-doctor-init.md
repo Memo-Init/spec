@@ -6,7 +6,7 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/session/0.1.0/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/07-doctor-init.md."
@@ -228,14 +228,7 @@ The `doctor` / `init` contract's binding `MUST`s are authored here **prose-first
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `session-doctor-init` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [05-config-cascade.md](/specification/config-cascade/) — the `.session/config.json ∪ config.d/*` cascade the doctor loads and `init` scaffolds; home of the REQ-061 migration.

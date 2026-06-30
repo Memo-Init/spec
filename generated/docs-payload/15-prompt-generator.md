@@ -6,7 +6,7 @@ spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/v0.1.0/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/15-prompt-generator.md."
@@ -110,18 +110,7 @@ This is exactly what the agent layer needs: the generator produces the **determi
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `memo-phase-execute` — contributing
-- `memo-phase-generate` — contributing
-- `memo-prd-generate` — contributing
-- `memo-req-template` — contributing
-- `memo-rollout-generate` — contributing
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the `AGENTS.md` agents whose per-invocation start-prompt this generator produces.

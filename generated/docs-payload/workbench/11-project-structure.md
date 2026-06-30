@@ -6,7 +6,7 @@ spec_file: "11-project-structure.md"
 order: 11
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T11:51:56.985Z"
+generated_at: "2026-06-30T15:03:16.770Z"
 generated_from: "spec/workbench/0.1.0/11-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/11-project-structure.md."
@@ -100,17 +100,7 @@ The egress rule is a content judgement on what may leave the local context, so i
 ---
 
 
-<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->
-## Implemented by
-
-The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.
-
-- `repo-init` — contributing
-- `wiki-init` — contributing
-- `workbench-audit` — primary
-- `workbench-project-setup` — primary
-
-<!-- BRIDGE:IMPLEMENTED-BY END -->
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [10-root-and-projects.md](/specification/root-and-projects/) — the workbench-root vs. project split that this guarantee spans.
