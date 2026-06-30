@@ -7,8 +7,8 @@
 // with the skill-to-spec map. For every non-bridge chapter across all three families it
 // asserts that
 //   (1) the chapter's "## Implemented by" backlink lists EXACTLY the map's implementer set,
-//   (2) generated/bridge/<family>/<stem>.md exists (the per-page projection is materialized),
-//   (3) generated/bridge/inverted-map.json lists EXACTLY the map's implementer set for it.
+//   (2) dist/<family>/<version>/bridge/<stem>.md exists (the per-page projection is materialized),
+//   (3) dist/inverted-map.json lists EXACTLY the map's implementer set for it.
 // Any divergence — a stale backlink, a missing bridge page, a drifted inverted map — is a
 // hard violation. The gate regenerates nothing; it only reads, so injected drift surfaces.
 // No network, no secrets. Exit 0 when the projection is consistent, 1 on any drift.
@@ -25,8 +25,9 @@ const REPO = resolve( __dirname, '..' )
 // Sentinel file: presence confirms the split map is available (replaces the old MAP_PATH check).
 const SENTINEL_MAP = resolve( REPO, 'draft', 'memo', '0.1.0', 'data', 'skill-spec-map.json' )
 const REFS = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
-const BRIDGE_OUT = join( REPO, 'generated/bridge' )
-const INVERTED_PATH = join( BRIDGE_OUT, 'inverted-map.json' )
+const INVERTED_PATH = join( REPO, 'dist', 'inverted-map.json' )
+// Per-family bridge dir: dist/<name>/<version>/bridge/
+const bridgeDirFor = ( { name, version } ) => join( REPO, 'dist', name, version, 'bridge' )
 
 const NN_RE = /^\d{2}-.*\.md$/
 const BACKLINK_START = '<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->'
@@ -36,9 +37,9 @@ const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
 const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->'
 
 const FAMILIES = [
-    { key: 'memo', prefix: '', specDir: REFS.memo.specDir },
-    { key: 'workbench', prefix: 'workbench/', specDir: REFS.workbench.specDir },
-    { key: 'session', prefix: 'session/', specDir: REFS.session.specDir }
+    { key: 'memo', prefix: '', specDir: REFS.memo.specDir, version: REFS.memo.currentVersion },
+    { key: 'workbench', prefix: 'workbench/', specDir: REFS.workbench.specDir, version: REFS.workbench.currentVersion },
+    { key: 'session', prefix: 'session/', specDir: REFS.session.specDir, version: REFS.session.currentVersion }
 ]
 
 
@@ -96,7 +97,7 @@ const main = async () => {
     const violations = []
 
     if( existsSync( INVERTED_PATH ) === false ) {
-        console.error( 'check-bridge-inverse: generated/bridge/inverted-map.json missing — run the spec build first.' )
+        console.error( 'check-bridge-inverse: dist/inverted-map.json missing — run the spec build first.' )
         process.exit( 1 )
     }
     const inverted = JSON.parse( await readFile( INVERTED_PATH, 'utf-8' ) )
@@ -120,20 +121,21 @@ const main = async () => {
             }
 
             // (1b) the rendered backlink in the DIST agrees with the map
-            const backlinkPath = join( BRIDGE_OUT, family.key, `${ stem }.backlink.md` )
+            const familyBridgeDir = bridgeDirFor( { name: family.key, version: family.version } )
+            const backlinkPath = join( familyBridgeDir, `${ stem }.backlink.md` )
             const backlink = existsSync( backlinkPath ) === true
                 ? backlinkImplementers( { content: readFileSync( backlinkPath, 'utf-8' ) } )
                 : null
             if( backlink === null ) {
-                violations.push( `${ family.key }/${ stem }: dist backlink generated/bridge/${ family.key }/${ stem }.backlink.md missing` )
+                violations.push( `${ family.key }/${ stem }: dist backlink dist/${ family.key }/${ family.version }/bridge/${ stem }.backlink.md missing` )
             } else if( sameList( { a: backlink, b: expected } ) === false ) {
                 violations.push( `${ family.key }/${ stem }: dist backlink [${ backlink.join( ', ' ) }] != map [${ expected.join( ', ' ) }]` )
             }
 
             // (2) per-page bridge materialized
-            const bridgePath = join( BRIDGE_OUT, family.key, `${ stem }.md` )
+            const bridgePath = join( familyBridgeDir, `${ stem }.md` )
             if( existsSync( bridgePath ) === false ) {
-                violations.push( `${ family.key }/${ stem }: per-page bridge generated/bridge/${ family.key }/${ stem }.md missing` )
+                violations.push( `${ family.key }/${ stem }: per-page bridge dist/${ family.key }/${ family.version }/bridge/${ stem }.md missing` )
             }
 
             // (3) inverted-map entry

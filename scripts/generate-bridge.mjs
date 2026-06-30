@@ -20,7 +20,7 @@
 //     (marker-bounded, inserted before "## Related"),
 //   - the three NN-bridge.md hub pages reshaped to a coverage index that points at the
 //     projection,
-//   - the inverted map published to generated/bridge/inverted-map.json,
+//   - the inverted map published to dist/inverted-map.json,
 //   - a "Cluster" column maintained on the core chapter-index README.
 //
 // roleHint markers (grader / public-entry) are an ADD-only field on the map; where absent
@@ -46,14 +46,15 @@ const SENTINEL_MAP = resolve( REPO, 'draft', 'memo', '0.1.0', 'data', 'skill-spe
 const GENERATOR = 'scripts/generate-bridge.mjs'
 const NN_RE = /^\d{2}-.*\.md$/
 const BRIDGE_RE = /^\d{2}-bridge\.md$/
-const BRIDGE_OUT = join( REPO, 'generated/bridge' )
+const INVERTED_MAP_PATH = join( REPO, 'dist', 'inverted-map.json' )
+const bridgeDirFor = ( { name, version } ) => join( REPO, 'dist', name, version, 'bridge' )
 
 const BACKLINK_START = '<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->'
 const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
 
 // F2 Dist-Split (Memo 057): the source chapter is authored-only and carries ONLY this
 // placeholder; the rendered "## Implemented by" block is a derived artifact written to the
-// dist (generated/bridge/<family>/<stem>.backlink.md). Constant string — kept byte-identical
+// dist (dist/<family>/<version>/bridge/<stem>.backlink.md). Constant string — kept byte-identical
 // in check-bridge-inverse.mjs, which fails when a source is missing the placeholder OR still
 // carries a full block (error in all directions).
 const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->'
@@ -353,7 +354,7 @@ const renderBacklink = ( { implementers } ) => {
         BACKLINK_START,
         '## Implemented by',
         '',
-        'The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `generated/bridge/`.',
+        'The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `dist/<family>/<version>/bridge/`.',
         '',
         body,
         '',
@@ -474,7 +475,7 @@ const renderHubPage = ( { nn, family, records, relatedRefs } ) => {
         '',
         '> **Informative.**',
         '',
-        `This page is the Bridge hub for the ${ family } specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries requirements, and what it depends on. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under \`generated/bridge/\`. An empty list is an honest signal that nothing public has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.`,
+        `This page is the Bridge hub for the ${ family } specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries requirements, and what it depends on. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under \`dist/${ family }/<version>/bridge/\`. An empty list is an honest signal that nothing public has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.`,
         '',
         `**Coverage:** ${ covered } of ${ records.length } chapters have at least one public implementer (${ pct }%).`,
         '',
@@ -542,8 +543,8 @@ const main = async () => {
             const content = await readFile( sourcePath, 'utf-8' )
             const record = buildRecord( { family, stem, id, content, skills, purposes } )
 
-            // per-page bridge → generated/bridge/<family>/<stem>.md
-            const outDir = join( BRIDGE_OUT, family.name )
+            // per-page bridge → dist/<family>/<version>/bridge/<stem>.md
+            const outDir = bridgeDirFor( { name: family.name, version: family.version } )
             await mkdir( outDir, { recursive: true } )
             await writeFile( join( outDir, `${ stem }.md` ), renderBridgePage( { record } ), 'utf-8' )
 
@@ -572,6 +573,7 @@ const main = async () => {
 
         return {
             key: family.name,
+            version: family.version,
             specDir: family.specDir,
             nn,
             records: recordList,
@@ -581,7 +583,7 @@ const main = async () => {
         }
     } ) )
 
-    // publish the inverted map → generated/bridge/inverted-map.json
+    // publish the inverted map → dist/inverted-map.json
     const mapHash = createHash( 'sha256' ).update( JSON.stringify( map ) ).digest( 'hex' ).slice( 0, 12 )
     const inverted = {
         note: 'Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.',
@@ -603,15 +605,15 @@ const main = async () => {
             provenance: r.provenance
         } ) )
     }
-    await mkdir( BRIDGE_OUT, { recursive: true } )
-    await writeFile( join( BRIDGE_OUT, 'inverted-map.json' ), `${ JSON.stringify( inverted, null, 4 ) }\n`, 'utf-8' )
+    await mkdir( dirname( INVERTED_MAP_PATH ), { recursive: true } )
+    await writeFile( INVERTED_MAP_PATH, `${ JSON.stringify( inverted, null, 4 ) }\n`, 'utf-8' )
 
     const totalPages = families.reduce( ( sum, f ) => sum + f.records.length, 0 )
     families.forEach( ( f ) => {
         const covered = f.records.filter( ( r ) => r.implementers.length > 0 ).length
-        console.log( `  ✓ ${ f.key }: ${ f.records.length } per-page bridge(s) → generated/bridge/${ f.key }/ (${ covered } covered), hub ${ f.specDir }/${ f.nn }-bridge.md, ${ f.backlinkChanges } backlink change(s)${ f.readmeChanged === true ? ', README cluster updated' : '' }` )
+        console.log( `  ✓ ${ f.key }: ${ f.records.length } per-page bridge(s) → dist/${ f.key }/${ f.version }/bridge/ (${ covered } covered), hub ${ f.specDir }/${ f.nn }-bridge.md, ${ f.backlinkChanges } backlink change(s)${ f.readmeChanged === true ? ', README cluster updated' : '' }` )
     } )
-    console.log( `generate-bridge: ${ totalPages } per-page bridges across ${ families.length } families; inverted-map.json published (mapHash ${ mapHash }).` )
+    console.log( `generate-bridge: ${ totalPages } per-page bridges across ${ families.length } families; inverted-map.json published to dist/ (mapHash ${ mapHash }).` )
 }
 
 

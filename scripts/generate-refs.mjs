@@ -2,7 +2,7 @@
 // generate-refs.mjs — memo-init spec refs resolver
 //
 // Reads data/refs.manual.json + data/refs.schema.json, validates the manual
-// against the schema with AJV, and on success writes generated/refs.resolved.json
+// against the schema with AJV, and on success writes dist/refs.resolved.json
 // (the manual plus a `generated` provenance block and a `validation` block).
 //
 // memo-init is simpler than FlowMCP: there are no github: imports to expand and
@@ -19,7 +19,7 @@ const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO_ROOT = join( __dirname, '..' )
 const MANUAL_PATH = join( REPO_ROOT, 'data/refs.manual.json' )
 const SCHEMA_PATH = join( REPO_ROOT, 'data/refs.schema.json' )
-const RESOLVED_PATH = join( REPO_ROOT, 'generated/refs.resolved.json' )
+const RESOLVED_PATH = join( REPO_ROOT, 'dist/refs.resolved.json' )
 const GENERATOR = 'scripts/generate-refs.mjs'
 
 

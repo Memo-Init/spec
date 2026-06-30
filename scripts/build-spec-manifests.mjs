@@ -2,7 +2,7 @@
 // build-spec-manifests.mjs — Memo 052 Kap 8 (one-time extraction).
 //
 // Emits the three per-version spec-manifest.json files (core/workbench/session) by reading
-// the CURRENT generated/docs-payload/manifest.json and grouping each family's files by
+// the CURRENT dist/manifest.json and grouping each family's files by
 // their existing sidebar_group. The group display labels + order are taken 1:1 from the
 // site's (former) hardcoded sidebar.mjs maps, frozen here into the manifests. After this,
 // the spec-manifest is the SINGLE source of the sub-categories — generate-manifest.mjs and
@@ -16,7 +16,7 @@ import { discoverSpecs } from './lib/discover-specs.mjs'
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
-const MANIFEST = JSON.parse( readFileSync( join( REPO, 'generated/docs-payload/manifest.json' ), 'utf-8' ) )
+const MANIFEST = JSON.parse( readFileSync( join( REPO, 'dist/manifest.json' ), 'utf-8' ) )
 
 
 // Group display metadata is now sourced from each family's spec.json sidebarMeta field via

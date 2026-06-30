@@ -7,7 +7,7 @@
 
 > **Informative.**
 
-This page is the Bridge hub for the session specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries requirements, and what it depends on. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under `generated/bridge/`. An empty list is an honest signal that nothing public has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.
+This page is the Bridge hub for the session specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries requirements, and what it depends on. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under `dist/session/<version>/bridge/`. An empty list is an honest signal that nothing public has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.
 
 **Coverage:** 16 of 16 chapters have at least one public implementer (100%).
 

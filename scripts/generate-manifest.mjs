@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // generate-manifest.mjs — memo-init docs-payload manifest
 //
-// Reads generated/docs-payload/**/*.md, parses each frontmatter, and writes
-// generated/docs-payload/manifest.json summarizing all files across the three
+// Reads dist/<name>/<version>/spec/**/*.md, parses each frontmatter, and writes
+// dist/manifest.json summarizing all files across the three
 // sibling spec families:
 //   manifest.files            — core chapters (manifest.spec_version)
 //   manifest.workbench        — { version, files[] } (own version line)
@@ -12,9 +12,9 @@
 // FlowMCP's buildGradingBlock / buildBestPracticeBlock. The workbench/session blocks
 // are additive — manifest.files (core) stays byte-compatible.
 //
-// Output format documented in generated/README.md.
+// Output format documented in dist/README.md.
 
-import { readdir, readFile, writeFile, copyFile } from 'node:fs/promises'
+import { readdir, readFile, writeFile, copyFile, mkdir } from 'node:fs/promises'
 import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -30,10 +30,10 @@ const SPEC_VERSION = REFS_MANUAL.memo.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
 const SESSION_VERSION = REFS_MANUAL.session.currentVersion
 
-const PAYLOAD_DIR = join( REPO, 'generated/docs-payload' )
-const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
-const SESSION_PAYLOAD_DIR = join( PAYLOAD_DIR, 'session' )
-const MANIFEST_PATH = join( PAYLOAD_DIR, 'manifest.json' )
+const PAYLOAD_DIR = join( REPO, 'dist', 'memo', SPEC_VERSION, 'spec' )
+const WORKBENCH_PAYLOAD_DIR = join( REPO, 'dist', 'workbench', WORKBENCH_VERSION, 'spec' )
+const SESSION_PAYLOAD_DIR = join( REPO, 'dist', 'session', SESSION_VERSION, 'spec' )
+const MANIFEST_PATH = join( REPO, 'dist', 'manifest.json' )
 const GENERATOR = 'scripts/generate-manifest.mjs'
 
 
@@ -171,6 +171,7 @@ const main = async () => {
         }
     }
 
+    await mkdir( dirname( MANIFEST_PATH ), { recursive: true } )
     await writeFile( MANIFEST_PATH, JSON.stringify( manifest, null, 4 ) + '\n', 'utf-8' )
     console.log( `\nManifest written to ${ MANIFEST_PATH }` )
     console.log( `Total: ${ manifest.stats.total_files } (memo ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, session ${ manifest.stats.session_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
@@ -184,18 +185,20 @@ const main = async () => {
 
 const copySpecManifestsToPayload = async () => {
     const families = [
-        { specDir: REFS_MANUAL.memo.specDir, label: 'memo' },
-        { specDir: REFS_MANUAL.workbench.specDir, label: 'workbench' },
-        { specDir: REFS_MANUAL.session.specDir, label: 'session' }
+        { specDir: REFS_MANUAL.memo.specDir, name: 'memo', version: SPEC_VERSION },
+        { specDir: REFS_MANUAL.workbench.specDir, name: 'workbench', version: WORKBENCH_VERSION },
+        { specDir: REFS_MANUAL.session.specDir, name: 'session', version: SESSION_VERSION }
     ]
 
     await Promise.all( families.map( async ( family ) => {
         const src = join( REPO, family.specDir, 'spec-manifest.json' )
         if( !existsSync( src ) ) {
-            console.warn( `  ! ${ family.label }: no spec-manifest.json at ${ src } — site sidebar will fall back` )
+            console.warn( `  ! ${ family.name }: no spec-manifest.json at ${ src } — site sidebar will fall back` )
             return
         }
-        const dst = join( PAYLOAD_DIR, `spec-manifest.${ family.label }.json` )
+        const dataDir = join( REPO, 'dist', family.name, family.version, 'data' )
+        await mkdir( dataDir, { recursive: true } )
+        const dst = join( dataDir, 'spec-manifest.json' )
         await copyFile( src, dst )
         console.log( `  ✓ spec-manifest → ${ dst.replace( REPO + '/', '' ) }` )
     } ) )

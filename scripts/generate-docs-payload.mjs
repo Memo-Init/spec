@@ -4,10 +4,10 @@
 // Reads every chapter in three sibling spec families and prepends YAML
 // frontmatter with discovery metadata, rewrites intra-spec links
 // ./NN-name.md → /specification/<slug>/, and writes the result to
-// generated/docs-payload/:
-//   core      spec/v<spec_version>/*.md               → docs-payload/<NN-name>.md
-//   workbench spec/workbench/<wb_version>/*.md         → docs-payload/workbench/<NN-name>.md
-//   session   spec/session/<session_version>/*.md      → docs-payload/session/<NN-name>.md
+// dist/<name>/<version>/spec/:
+//   memo      draft/memo/<version>/spec/*.md           → dist/memo/<version>/spec/<NN-name>.md
+//   workbench draft/workbench/<version>/spec/*.md      → dist/workbench/<version>/spec/<NN-name>.md
+//   session   draft/session/<version>/spec/*.md        → dist/session/<version>/spec/<NN-name>.md
 //
 // (The former SOP family was folded into the session family in Memo 049.)
 // Each family carries its OWN version line (refs.manual.json keys spec /
@@ -17,7 +17,7 @@
 // family (the version rides in frontmatter, not the payload path), so the
 // site sync paths stay stable.
 //
-// Output format documented in generated/README.md.
+// Output format documented in dist/README.md.
 
 import { readdir, readFile, writeFile, mkdir, rm } from 'node:fs/promises'
 import { readFileSync } from 'node:fs'
@@ -48,9 +48,9 @@ const SESSION_VERSION = readFamilyVersion( { family: 'session' } )
 const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
 const WORKBENCH_DIR = join( REPO, REFS_MANUAL.workbench.specDir )
 const SESSION_DIR = join( REPO, REFS_MANUAL.session.specDir )
-const PAYLOAD_DIR = join( REPO, 'generated/docs-payload' )
-const WORKBENCH_PAYLOAD_DIR = join( PAYLOAD_DIR, 'workbench' )
-const SESSION_PAYLOAD_DIR = join( PAYLOAD_DIR, 'session' )
+const PAYLOAD_DIR = join( REPO, 'dist', 'memo', SPEC_VERSION, 'spec' )
+const WORKBENCH_PAYLOAD_DIR = join( REPO, 'dist', 'workbench', WORKBENCH_VERSION, 'spec' )
+const SESSION_PAYLOAD_DIR = join( REPO, 'dist', 'session', SESSION_VERSION, 'spec' )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 

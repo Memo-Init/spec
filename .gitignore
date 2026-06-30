@@ -6,7 +6,6 @@ npm-debug.log*
 .env.*
 !.env.example
 coverage/
-dist/
 .astro/
 .cache/
 
