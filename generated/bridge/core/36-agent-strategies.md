@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [36-agent-strategies](./36-agent-strategies.md) |
-| Provenance | `d2ad9bcf0405` |
+| Provenance | `f794562b1883` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -53,4 +53,4 @@ Grading handled by `memo-goal-score`.
 
 ## 8. Provenance
 
-Derived-record hash `d2ad9bcf0405` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f794562b1883` over the skill-to-spec map. Regenerated on every build.

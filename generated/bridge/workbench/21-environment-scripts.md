@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [21-environment-scripts](./21-environment-scripts.md) |
-| Provenance | `3c59dd90e65c` |
+| Provenance | `6d78e7be925d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `3c59dd90e65c` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `6d78e7be925d` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [08-identity-pin](./08-identity-pin.md) |
-| Provenance | `89e0745ec1ae` |
+| Provenance | `c75f6a118b1d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `89e0745ec1ae` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `c75f6a118b1d` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [14-migration](./14-migration.md) |
-| Provenance | `378f81ef34e1` |
+| Provenance | `ff981a95e720` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `378f81ef34e1` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `ff981a95e720` over the skill-to-spec map. Regenerated on every build.

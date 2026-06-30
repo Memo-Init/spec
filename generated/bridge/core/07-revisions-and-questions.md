@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [07-revisions-and-questions](./07-revisions-and-questions.md) |
-| Provenance | `cb9c5412efa5` |
+| Provenance | `864ee79581b6` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -61,4 +61,4 @@ Grading handled by `memo-fidelity-audit`.
 
 ## 8. Provenance
 
-Derived-record hash `cb9c5412efa5` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `864ee79581b6` over the skill-to-spec map. Regenerated on every build.

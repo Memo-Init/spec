@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [03-input-paths](./03-input-paths.md) |
-| Provenance | `37f9d58ba06f` |
+| Provenance | `1f55f331cb88` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -43,4 +43,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `37f9d58ba06f` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `1f55f331cb88` over the skill-to-spec map. Regenerated on every build.

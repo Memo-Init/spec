@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [14-agents-skills-tasks](./14-agents-skills-tasks.md) |
-| Provenance | `dcb61a8554c6` |
+| Provenance | `7f7bc8fc8b34` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -47,4 +47,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `dcb61a8554c6` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `7f7bc8fc8b34` over the skill-to-spec map. Regenerated on every build.

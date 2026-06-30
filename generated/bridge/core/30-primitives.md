@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [30-primitives](./30-primitives.md) |
-| Provenance | `15095de7e183` |
+| Provenance | `28daa37a9808` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ Grading handled by `memo-req-registry` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `15095de7e183` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `28daa37a9808` over the skill-to-spec map. Regenerated on every build.

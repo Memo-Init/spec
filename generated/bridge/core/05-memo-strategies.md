@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [05-memo-strategies](./05-memo-strategies.md) |
-| Provenance | `02c792c13c4e` |
+| Provenance | `409546827cda` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -43,4 +43,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `02c792c13c4e` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `409546827cda` over the skill-to-spec map. Regenerated on every build.

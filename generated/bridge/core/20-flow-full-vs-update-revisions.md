@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md) |
-| Provenance | `49287fb15348` |
+| Provenance | `d426d77dd1ca` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `49287fb15348` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `d426d77dd1ca` over the skill-to-spec map. Regenerated on every build.

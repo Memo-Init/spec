@@ -43,8 +43,8 @@
         ]
     },
     "generated": {
-        "at": "2026-06-30T15:43:44.922Z",
-        "fromCommit": "acba7b0",
+        "at": "2026-06-30T15:46:48.138Z",
+        "fromCommit": "ca20f06",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {

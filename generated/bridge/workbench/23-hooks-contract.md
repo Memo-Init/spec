@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [23-hooks-contract](./23-hooks-contract.md) |
-| Provenance | `6e79f428491f` |
+| Provenance | `be9a435b9836` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -47,4 +47,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `6e79f428491f` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `be9a435b9836` over the skill-to-spec map. Regenerated on every build.

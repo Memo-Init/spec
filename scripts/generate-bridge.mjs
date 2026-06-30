@@ -247,6 +247,8 @@ const buildRecord = ( { family, stem, id, content, skills, purposes } ) => {
         publicEntries: publicEntriesFor( { implementers, family } ),
         detailPages: detailPagesFrom( { content, selfStem: stem } ),
         implementers: enumeration,
+        internalCount: internal.length,
+        requirementCount: ( content.match( /```requirement/g ) ?? [] ).length,
         grader: graderFor( { implementers } ),
         gaps: gapsRollup( { implementers } ),
         outOfScope: internalToolingFor( { internal } ),
@@ -387,20 +389,79 @@ const ensurePlaceholder = ( { content } ) => {
 }
 
 
-// The reshaped NN-bridge.md hub: a coverage index + projection pointer (in-nav, audit-clean).
+// F6 (Memo 057): the family Overview + Sichten (view tables), generated into the hub. Three
+// views over the same derived records: requirement presence per chapter, implementer presence
+// per chapter (public vs internal tooling, from F4), and the skill->dependencies inversion.
+// "Bedienbarkeit, kein Sherlock Holmes": the whole family is legible from one page.
+const renderOverviewAndViews = ( { records } ) => {
+    const publicSkills = new Set( records.flatMap( ( r ) => r.implementers.map( ( s ) => s.skill ) ) )
+    const internalSkills = new Set( records.flatMap( ( r ) => r.outOfScope.map( ( o ) => o.skill ) ) )
+    const sopAnchor = records.length === 0 ? null : records[ 0 ].sopAnchor
+    const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
+    const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
+    const withReqs = records.filter( ( r ) => r.requirementCount > 0 ).length
+
+    const chapterRows = records
+        .map( ( r ) => {
+            const reqCell = r.requirementCount === 0 ? '—' : String( r.requirementCount )
+            const publicCell = r.implementers.length === 0 ? '— none —' : r.implementers.map( ( s ) => `\`${ s.skill }\`` ).join( ', ' )
+            const internalCell = r.outOfScope.length === 0 ? '—' : r.outOfScope.map( ( o ) => `\`${ o.skill }\`` ).join( ', ' )
+            const dependsCell = r.detailPages.length === 0 ? '—' : r.detailPages.map( ( s ) => relLink( { stem: s } ) ).join( ', ' )
+
+            return `| ${ relLink( { stem: r.stem } ) } | ${ reqCell } | ${ publicCell } | ${ internalCell } | ${ dependsCell } |`
+        } )
+        .join( '\n' )
+
+    const skillToChapters = records.reduce( ( acc, r ) => {
+        r.implementers.forEach( ( s ) => {
+            const list = acc.get( s.skill ) ?? []
+            acc.set( s.skill, [ ...list, { stem: r.stem, role: s.role } ] )
+        } )
+
+        return acc
+    }, new Map() )
+    const skillRows = [ ...skillToChapters.entries() ]
+        .sort( ( a, b ) => a[ 0 ].localeCompare( b[ 0 ] ) )
+        .map( ( pair ) => {
+            const chapters = pair[ 1 ]
+            const primaries = chapters.filter( ( c ) => c.role === 'primary' ).map( ( c ) => `${ relLink( { stem: c.stem } ) } (primary)` )
+            const contribs = chapters.filter( ( c ) => c.role !== 'primary' ).map( ( c ) => relLink( { stem: c.stem } ) )
+            const deps = [ ...primaries, ...contribs ].join( ', ' )
+
+            return `| \`${ pair[ 0 ] }\` | ${ deps } |`
+        } )
+        .join( '\n' )
+
+    return [
+        '## Overview',
+        '',
+        `- **Public implementer skills:** ${ publicSkills.size }`,
+        `- **Internal tooling skills (out-of-scope, F4):** ${ internalSkills.size }`,
+        `- **SOP anchor:** ${ sopAnchor === null ? '—' : relLink( { stem: sopAnchor } ) }`,
+        `- **Public coverage:** ${ covered } of ${ records.length } chapters (${ pct }%); ${ withReqs } chapter(s) carry inline requirements.`,
+        '',
+        '## Views',
+        '',
+        '### By chapter — requirements · implementers · dependencies',
+        '',
+        '| Chapter | Reqs | Public implementers | Internal tooling | Depends on |',
+        '|---|---|---|---|---|',
+        chapterRows === '' ? '| — | — | — | — | — |' : chapterRows,
+        '',
+        '### By skill — dependencies (skill → chapters)',
+        '',
+        '| Skill | Chapters (dependencies) |',
+        '|---|---|',
+        skillRows === '' ? '| — | — |' : skillRows
+    ].join( '\n' )
+}
+
+
+// The reshaped NN-bridge.md hub: an Overview + Sichten (F6) + projection pointer (in-nav, audit-clean).
 const renderHubPage = ( { nn, family, records, relatedRefs } ) => {
     const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
     const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
-    const sections = records
-        .map( ( r ) => {
-            const head = `### ${ relLink( { stem: r.stem } ) }`
-            const body = r.implementers.length === 0
-                ? '— none yet —'
-                : r.implementers.map( ( s ) => `- \`${ s.skill }\` — ${ s.role }` ).join( '\n' )
-
-            return `${ head }\n\n${ body }`
-        } )
-        .join( '\n\n' )
+    const overviewAndViews = renderOverviewAndViews( { records } )
     const relatedRow = relatedRefs.map( ( ref ) => `[./${ ref }.md](./${ ref }.md)` ).join( ', ' )
     const relatedList = relatedRefs.map( ( ref ) => `- [./${ ref }.md](./${ ref }.md)` ).join( '\n' )
 
@@ -414,16 +475,14 @@ const renderHubPage = ( { nn, family, records, relatedRefs } ) => {
         '',
         '> **Informative.**',
         '',
-        `This page is the Bridge hub for the ${ family } specification family: the in-navigation coverage index that names, for every chapter, the skills that implement it and marks the primary owner. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under \`generated/bridge/\`. An empty list is an honest signal that nothing has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.`,
+        `This page is the Bridge hub for the ${ family } specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries requirements, and what it depends on. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under \`generated/bridge/\`. An empty list is an honest signal that nothing public has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.`,
         '',
-        `**Coverage:** ${ covered } of ${ records.length } chapters have at least one implementer (${ pct }%).`,
+        `**Coverage:** ${ covered } of ${ records.length } chapters have at least one public implementer (${ pct }%).`,
         '',
         '<!-- generated -->',
         `<!-- Auto-generated by ${ GENERATOR } from the skill-to-spec map. Do not edit by hand; re-run the spec build to regenerate. -->`,
         '',
-        '## Coverage',
-        '',
-        sections,
+        overviewAndViews,
         '',
         '## Related',
         '',

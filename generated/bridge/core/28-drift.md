@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [28-drift](./28-drift.md) |
-| Provenance | `2b5231e21728` |
+| Provenance | `8b6daff9ecd3` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -46,4 +46,4 @@ Grading handled by `memo-maintenance-score`.
 
 ## 8. Provenance
 
-Derived-record hash `2b5231e21728` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `8b6daff9ecd3` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [45-implementation-fidelity-audit](./45-implementation-fidelity-audit.md) |
-| Provenance | `917a89dd08cc` |
+| Provenance | `2b8a09b0f515` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ Grading handled by `memo-fidelity-audit`.
 
 ## 8. Provenance
 
-Derived-record hash `917a89dd08cc` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `2b8a09b0f515` over the skill-to-spec map. Regenerated on every build.

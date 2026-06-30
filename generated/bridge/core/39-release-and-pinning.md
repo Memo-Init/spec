@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [39-release-and-pinning](./39-release-and-pinning.md) |
-| Provenance | `1be30ed3e3d8` |
+| Provenance | `78dd9a1cf8f2` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ Grading handled by `memo-maintenance-score-all`.
 
 ## 8. Provenance
 
-Derived-record hash `1be30ed3e3d8` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `78dd9a1cf8f2` over the skill-to-spec map. Regenerated on every build.

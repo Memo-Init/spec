@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [12-folders](./12-folders.md) |
-| Provenance | `93521d4d3e8b` |
+| Provenance | `4ad8b654d5a1` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -44,4 +44,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `93521d4d3e8b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `4ad8b654d5a1` over the skill-to-spec map. Regenerated on every build.

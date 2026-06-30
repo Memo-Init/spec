@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [44-repository-and-outward-docs](./44-repository-and-outward-docs.md) |
-| Provenance | `0d1f6eb8cd90` |
+| Provenance | `c9e8ad81a267` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -47,4 +47,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `0d1f6eb8cd90` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `c9e8ad81a267` over the skill-to-spec map. Regenerated on every build.

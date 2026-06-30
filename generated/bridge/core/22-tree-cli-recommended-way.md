@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [22-tree-cli-recommended-way](./22-tree-cli-recommended-way.md) |
-| Provenance | `5fda123d7113` |
+| Provenance | `c60d9db03dfc` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ Grading handled by `memo-goal-score`.
 
 ## 8. Provenance
 
-Derived-record hash `5fda123d7113` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `c60d9db03dfc` over the skill-to-spec map. Regenerated on every build.

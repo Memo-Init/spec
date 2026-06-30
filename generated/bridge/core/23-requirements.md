@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [23-requirements](./23-requirements.md) |
-| Provenance | `ecde12ee330b` |
+| Provenance | `35e063cc31ee` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -63,4 +63,4 @@ Grading handled by `memo-req-registry` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `ecde12ee330b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `35e063cc31ee` over the skill-to-spec map. Regenerated on every build.

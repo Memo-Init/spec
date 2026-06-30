@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [32-prompt-governance](./32-prompt-governance.md) |
-| Provenance | `df2c2d872a41` |
+| Provenance | `ebffb2f5096d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `df2c2d872a41` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `ebffb2f5096d` over the skill-to-spec map. Regenerated on every build.

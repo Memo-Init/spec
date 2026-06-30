@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [01-genesis-root](./01-genesis-root.md) |
-| Provenance | `2c9cc24f8fd3` |
+| Provenance | `791fedce6ac3` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `2c9cc24f8fd3` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `791fedce6ac3` over the skill-to-spec map. Regenerated on every build.

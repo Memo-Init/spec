@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [15-repos](./15-repos.md) |
-| Provenance | `85d6be52f532` |
+| Provenance | `a922b453c927` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `85d6be52f532` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `a922b453c927` over the skill-to-spec map. Regenerated on every build.

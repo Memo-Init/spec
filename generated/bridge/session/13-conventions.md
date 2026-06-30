@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [13-conventions](./13-conventions.md) |
-| Provenance | `38972f1ae7bc` |
+| Provenance | `4ea9814d114d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `38972f1ae7bc` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `4ea9814d114d` over the skill-to-spec map. Regenerated on every build.

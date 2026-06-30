@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [38-stage-model](./38-stage-model.md) |
-| Provenance | `2b8d07c41c29` |
+| Provenance | `382f6e3d3ec5` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -58,4 +58,4 @@ Grading handled by `memo-fidelity-audit`.
 
 ## 8. Provenance
 
-Derived-record hash `2b8d07c41c29` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `382f6e3d3ec5` over the skill-to-spec map. Regenerated on every build.

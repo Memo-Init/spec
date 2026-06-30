@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [11-common-denominator](./11-common-denominator.md) |
-| Provenance | `b63a24cb3653` |
+| Provenance | `d165ae838365` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `b63a24cb3653` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `d165ae838365` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [41-project-architecture](./41-project-architecture.md) |
-| Provenance | `c157f9c13e7a` |
+| Provenance | `30750ec63624` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -47,4 +47,4 @@ Grading handled by `memo-maintenance-score`.
 
 ## 8. Provenance
 
-Derived-record hash `c157f9c13e7a` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `30750ec63624` over the skill-to-spec map. Regenerated on every build.

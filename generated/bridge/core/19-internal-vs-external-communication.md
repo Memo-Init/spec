@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [19-internal-vs-external-communication](./19-internal-vs-external-communication.md) |
-| Provenance | `292539c5a211` |
+| Provenance | `f12e4132de0d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -52,4 +52,4 @@ Grading handled by `memo-req-runner` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `292539c5a211` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f12e4132de0d` over the skill-to-spec map. Regenerated on every build.

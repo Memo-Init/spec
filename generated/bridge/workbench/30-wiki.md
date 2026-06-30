@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [30-wiki](./30-wiki.md) |
-| Provenance | `b804937eeba1` |
+| Provenance | `c78a342d5708` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -53,4 +53,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `b804937eeba1` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `c78a342d5708` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [29-behavioral-guardrails](./29-behavioral-guardrails.md) |
-| Provenance | `55ec29e4f599` |
+| Provenance | `7fa0fbf20815` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `55ec29e4f599` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `7fa0fbf20815` over the skill-to-spec map. Regenerated on every build.

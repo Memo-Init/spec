@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [25-validation-overview](./25-validation-overview.md) |
-| Provenance | `7b31077cc272` |
+| Provenance | `95a1cee6eb52` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `7b31077cc272` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `95a1cee6eb52` over the skill-to-spec map. Regenerated on every build.

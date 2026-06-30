@@ -6,7 +6,7 @@ spec_file: "41-mental-model.md"
 order: 41
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T15:43:46.482Z"
+generated_at: "2026-06-30T15:46:49.415Z"
 generated_from: "spec/v0.1.0/41-mental-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/v0.1.0/41-mental-model.md."

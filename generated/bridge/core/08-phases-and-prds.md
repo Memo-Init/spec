@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [08-phases-and-prds](./08-phases-and-prds.md) |
-| Provenance | `b39b0ee6d86b` |
+| Provenance | `a5e9421d3132` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -70,4 +70,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `b39b0ee6d86b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `a5e9421d3132` over the skill-to-spec map. Regenerated on every build.

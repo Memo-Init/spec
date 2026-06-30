@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [07-doctor-init](./07-doctor-init.md) |
-| Provenance | `53e19c33083b` |
+| Provenance | `f905f030b050` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `53e19c33083b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f905f030b050` over the skill-to-spec map. Regenerated on every build.

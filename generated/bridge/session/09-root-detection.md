@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [09-root-detection](./09-root-detection.md) |
-| Provenance | `2fa1131784bd` |
+| Provenance | `aa4d0c30a94e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `2fa1131784bd` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `aa4d0c30a94e` over the skill-to-spec map. Regenerated on every build.

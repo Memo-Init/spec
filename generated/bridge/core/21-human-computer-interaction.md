@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [21-human-computer-interaction](./21-human-computer-interaction.md) |
-| Provenance | `b2ae0fb98d0b` |
+| Provenance | `e653557fc749` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -48,4 +48,4 @@ Grading handled by `memo-goal-score-all`.
 
 ## 8. Provenance
 
-Derived-record hash `b2ae0fb98d0b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `e653557fc749` over the skill-to-spec map. Regenerated on every build.

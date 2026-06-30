@@ -4,7 +4,7 @@
 |---|---|
 | Family | core |
 | Chapter | [42-plans](./42-plans.md) |
-| Provenance | `699a9ef9c026` |
+| Provenance | `9a6a8395c6be` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -80,4 +80,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `699a9ef9c026` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `9a6a8395c6be` over the skill-to-spec map. Regenerated on every build.
