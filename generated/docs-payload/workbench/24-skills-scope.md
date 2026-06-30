@@ -6,7 +6,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-06-30T02:52:28.721Z"
+generated_at: "2026-06-30T11:51:22.091Z"
 generated_from: "spec/workbench/0.1.0/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/24-skills-scope.md."

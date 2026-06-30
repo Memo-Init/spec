@@ -29,7 +29,7 @@
 // any free text pulled out of a SKILL.md. Run-guarded; exit 0 on success.
 
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises'
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
@@ -453,6 +453,10 @@ const updateReadmeCluster = async ( { specDirAbs, records } ) => {
 
 
 const main = async () => {
+    if( existsSync( MAP_PATH ) === false ) {
+        console.warn( `generate-bridge: skipped — skill-spec-map.json not found at ${ MAP_PATH }. The bridge is a cross-repo artifact (skills live in the core repo); when core is not checked out alongside (e.g. an isolated CI checkout), the committed bridge artifacts are kept as-is. Full regeneration + the inverse gate run locally / pre-push, where both repos exist.` )
+        return
+    }
     const map = JSON.parse( await readFile( MAP_PATH, 'utf-8' ) )
     const skills = Array.isArray( map.skills ) === true ? map.skills : []
     const purposes = await loadPurposes( { skills } )

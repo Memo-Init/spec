@@ -79,6 +79,10 @@ const collectStems = async ( { specDirAbs } ) => {
 
 
 const main = async () => {
+    if( existsSync( MAP_PATH ) === false ) {
+        console.warn( `check-bridge-inverse: skipped the cross-repo assertion — skill-spec-map.json not found at ${ MAP_PATH } (the core repo is not checked out alongside, e.g. an isolated CI checkout). The full map-vs-bridge gate runs locally / pre-push, where both repos exist.` )
+        return
+    }
     const map = JSON.parse( await readFile( MAP_PATH, 'utf-8' ) )
     const skills = Array.isArray( map.skills ) === true ? map.skills : []
     const violations = []
