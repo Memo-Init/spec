@@ -11,39 +11,17 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { discoverSpecs } from './lib/discover-specs.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
-const REFS = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
 const MANIFEST = JSON.parse( readFileSync( join( REPO, 'generated/docs-payload/manifest.json' ), 'utf-8' ) )
 
 
-// Group display metadata — 1:1 from memo-init.github.io/src/data/sidebar.mjs (frozen here).
-const CORE = {
-    order: [ 'introduction', 'input', 'initialisierung', 'revision', 'execution', 'procedure', 'behavior', 'health', 'agents', 'git', 'skills' ],
-    labels: {
-        introduction: 'Introduction', input: 'Input', initialisierung: 'Initialisierung', revision: 'Revision',
-        execution: 'Execution', procedure: 'Procedure', behavior: 'Behavior', health: 'Health',
-        agents: 'Agents', git: 'Git & Repo', skills: 'Skills'
-    }
-}
-
-const WORKBENCH = {
-    order: [ 'introduction', 'root', 'projects', 'folders', 'custom', 'cli', 'tools', 'wiki', 'storage', 'core' ],
-    labels: {
-        introduction: 'Introduction', root: 'Root', projects: 'Projects', folders: 'Folders', custom: 'Custom',
-        cli: 'CLI & Scripts', tools: 'Tools', wiki: 'Wiki', storage: 'Storage Formats', core: 'Core'
-    }
-}
-
-const SESSION = {
-    order: [ 'introduction', 'sop', 'genesis-root', 'enforcement', 'cli', 'recovery' ],
-    labels: {
-        introduction: 'Introduction', sop: 'SOP', 'genesis-root': 'Genesis Root',
-        enforcement: 'Enforcement', cli: 'CLI', recovery: 'Recovery'
-    }
-}
+// Group display metadata is now sourced from each family's spec.json sidebarMeta field via
+// discoverSpecs (M058 PRD-005 de-hardcoding seam). The formerly hardcoded CORE / WORKBENCH /
+// SESSION consts are removed; their values are preserved byte-for-byte in spec.json manifests.
 
 
 // Build the groups[] for one family from its manifest file entries. Files are bucketed by
@@ -102,17 +80,17 @@ const writeManifest = ( { specDir, namespace, version, files, meta } ) => {
 const main = () => {
     console.log( 'Extracting spec-manifests from manifest.json...' )
 
-    writeManifest( {
-        specDir: REFS.spec.specDir, namespace: 'core', version: REFS.spec.currentVersion,
-        files: MANIFEST.files, meta: CORE
-    } )
-    writeManifest( {
-        specDir: REFS.workbench.specDir, namespace: 'workbench', version: REFS.workbench.currentVersion,
-        files: MANIFEST.workbench.files, meta: WORKBENCH
-    } )
-    writeManifest( {
-        specDir: REFS.session.specDir, namespace: 'session', version: REFS.session.currentVersion,
-        files: MANIFEST.session.files, meta: SESSION
+    const families = discoverSpecs( { repoRoot: REPO } )
+    families.forEach( ( family ) => {
+        // Core files live at MANIFEST.files (top-level); all other families at MANIFEST[name].files.
+        const files = family.name === 'core' ? MANIFEST.files : MANIFEST[ family.name ].files
+        writeManifest( {
+            specDir: family.specDir,
+            namespace: family.namespace,
+            version: family.version,
+            files,
+            meta: family.manifestMeta
+        } )
     } )
 
     console.log( 'Done.' )

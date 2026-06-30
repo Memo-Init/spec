@@ -33,13 +33,13 @@ import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
+import { discoverSpecs } from './lib/discover-specs.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 const PROJECT_ROOT = resolve( REPO, '..', '..' )
 const MAP_PATH = resolve( REPO, '..', 'core', 'data', 'skill-spec-map.json' )
-const REFS = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
 
 const GENERATOR = 'scripts/generate-bridge.mjs'
 const NN_RE = /^\d{2}-.*\.md$/
@@ -56,14 +56,11 @@ const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
 // carries a full block (error in all directions).
 const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->'
 
-// The three local families. `prefix` is the family-qualifier prepended to a page stem to
-// form the id a skill's `all[]` carries; `sopAnchor` is the family's SOP entry chapter;
-// `docEntry` is the canonical public documentation entry; `relatedRefs` seed the hub footer.
-const FAMILIES = [
-    { key: 'core', prefix: '', specDir: REFS.spec.specDir, sopAnchor: '02-memo-sop-entrypoint', docEntry: REFS.docs?.entryPoints?.memoAuthor ?? '/specification/overview/', relatedRefs: [ '43-skill-authoring-and-quality', '00-overview' ] },
-    { key: 'workbench', prefix: 'workbench/', specDir: REFS.workbench.specDir, sopAnchor: '02-sop-entrypoint', docEntry: REFS.docs?.entryPoints?.toolMaintainer ?? '/workbench/overview/', relatedRefs: [ '00-overview' ] },
-    { key: 'session', prefix: 'session/', specDir: REFS.session.specDir, sopAnchor: '10-sop', docEntry: REFS.session?.url ?? '/session/overview/', relatedRefs: [ '00-overview' ] }
-]
+// The three local families — derived from per-specDir spec.json manifests via discoverSpecs
+// (M058 PRD-005 de-hardcoding seam). `name` is the family key; `prefix` qualifies page ids;
+// `sopAnchor` is the SOP entry chapter; `docEntry` is the canonical public documentation
+// entry; `relatedRefs` seed the hub footer. Falls back to hardcoded values when spec.json absent.
+const FAMILIES = discoverSpecs( { repoRoot: REPO } )
 
 
 const numberFromName = ( { name } ) => {
@@ -240,7 +237,7 @@ const buildRecord = ( { family, stem, id, content, skills, purposes } ) => {
         purpose: purposes.get( skill.skill ) ?? ''
     } ) )
     const record = {
-        family: family.key,
+        family: family.name,
         stem,
         id,
         sopAnchor: family.sopAnchor,
@@ -544,7 +541,7 @@ const main = async () => {
             const record = buildRecord( { family, stem, id, content, skills, purposes } )
 
             // per-page bridge → generated/bridge/<family>/<stem>.md
-            const outDir = join( BRIDGE_OUT, family.key )
+            const outDir = join( BRIDGE_OUT, family.name )
             await mkdir( outDir, { recursive: true } )
             await writeFile( join( outDir, `${ stem }.md` ), renderBridgePage( { record } ), 'utf-8' )
 
@@ -563,16 +560,16 @@ const main = async () => {
 
         // reshape the NN-bridge.md hub
         const hubPath = join( specDirAbs, `${ nn }-bridge.md` )
-        const hubContent = renderHubPage( { nn, family: family.key, records: recordList, relatedRefs: family.relatedRefs } )
+        const hubContent = renderHubPage( { nn, family: family.name, records: recordList, relatedRefs: family.relatedRefs } )
         const prevHub = await readFile( hubPath, 'utf-8' ).catch( () => null )
         if( prevHub !== hubContent ) await writeFile( hubPath, hubContent, 'utf-8' )
 
-        const readme = family.key === 'core'
+        const readme = family.name === 'core'
             ? await updateReadmeCluster( { specDirAbs, records: recordList } )
             : { changed: false }
 
         return {
-            key: family.key,
+            key: family.name,
             specDir: family.specDir,
             nn,
             records: recordList,
