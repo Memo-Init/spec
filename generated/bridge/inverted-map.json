@@ -1,7 +1,7 @@
 {
     "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.",
     "generator": "scripts/generate-bridge.mjs",
-    "mapHash": "955b73b36104",
+    "mapHash": "1fe93954ab0e",
     "pages": [
         {
             "family": "memo",

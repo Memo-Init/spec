@@ -17,11 +17,13 @@ import { readdir, readFile } from 'node:fs/promises'
 import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { loadSkillMap } from './lib/load-skill-map.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
-const MAP_PATH = resolve( REPO, '..', 'core', 'data', 'skill-spec-map.json' )
+// Sentinel file: presence confirms the split map is available (replaces the old MAP_PATH check).
+const SENTINEL_MAP = resolve( REPO, 'draft', 'memo', '0.1.0', 'data', 'skill-spec-map.json' )
 const REFS = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
 const BRIDGE_OUT = join( REPO, 'generated/bridge' )
 const INVERTED_PATH = join( BRIDGE_OUT, 'inverted-map.json' )
@@ -85,11 +87,11 @@ const collectStems = async ( { specDirAbs } ) => {
 
 
 const main = async () => {
-    if( existsSync( MAP_PATH ) === false ) {
-        console.warn( `check-bridge-inverse: skipped the cross-repo assertion — skill-spec-map.json not found at ${ MAP_PATH } (the core repo is not checked out alongside, e.g. an isolated CI checkout). The full map-vs-bridge gate runs locally / pre-push, where both repos exist.` )
+    if( existsSync( SENTINEL_MAP ) === false ) {
+        console.warn( `check-bridge-inverse: skipped the cross-repo assertion — per-family skill-spec-map.json not found at ${ SENTINEL_MAP } (the split maps live in the spec repo draft/ tree; absent in an isolated CI checkout). The full map-vs-bridge gate runs locally / pre-push.` )
         return
     }
-    const map = JSON.parse( await readFile( MAP_PATH, 'utf-8' ) )
+    const map = await loadSkillMap( { repoRoot: REPO } )
     const skills = Array.isArray( map.skills ) === true ? map.skills : []
     const violations = []
 

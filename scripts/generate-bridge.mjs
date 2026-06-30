@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // generate-bridge.mjs — per-page "Bridge" projection generator (one read-projection of the
-// single skill->spec edge in repos/core/data/skill-spec-map.json — no second data store).
+// single skill->spec edge — split per family in repos/spec/draft/*/0.1.0/data/ — no second data store).
 //
 // Emits, across all three spec families, ONE per-page bridge for every non-bridge chapter
 // (the three NN-bridge.md hub pages are excluded — they are the in-nav output hubs). A
@@ -34,12 +34,14 @@ import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 import { discoverSpecs } from './lib/discover-specs.mjs'
+import { loadSkillMap } from './lib/load-skill-map.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 const PROJECT_ROOT = resolve( REPO, '..', '..' )
-const MAP_PATH = resolve( REPO, '..', 'core', 'data', 'skill-spec-map.json' )
+// Sentinel file: presence of any family map confirms the split map is available.
+const SENTINEL_MAP = resolve( REPO, 'draft', 'memo', '0.1.0', 'data', 'skill-spec-map.json' )
 
 const GENERATOR = 'scripts/generate-bridge.mjs'
 const NN_RE = /^\d{2}-.*\.md$/
@@ -522,11 +524,11 @@ const updateReadmeCluster = async ( { specDirAbs, records } ) => {
 
 
 const main = async () => {
-    if( existsSync( MAP_PATH ) === false ) {
-        console.warn( `generate-bridge: skipped — skill-spec-map.json not found at ${ MAP_PATH }. The bridge is a cross-repo artifact (skills live in the core repo); when core is not checked out alongside (e.g. an isolated CI checkout), the committed bridge artifacts are kept as-is. Full regeneration + the inverse gate run locally / pre-push, where both repos exist.` )
+    if( existsSync( SENTINEL_MAP ) === false ) {
+        console.warn( `generate-bridge: skipped — per-family skill-spec-map.json not found at ${ SENTINEL_MAP }. The bridge is a cross-repo artifact (split maps live in the spec repo draft/ tree); when the data files are absent (e.g. an isolated CI checkout with stale assets), the committed bridge artifacts are kept as-is. Full regeneration + the inverse gate run locally / pre-push.` )
         return
     }
-    const map = JSON.parse( await readFile( MAP_PATH, 'utf-8' ) )
+    const map = await loadSkillMap( { repoRoot: REPO } )
     const skills = Array.isArray( map.skills ) === true ? map.skills : []
     const purposes = await loadPurposes( { skills } )
 
