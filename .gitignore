@@ -9,3 +9,5 @@ coverage/
 dist/
 .astro/
 .cache/
+
+.trash/

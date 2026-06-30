@@ -12,12 +12,11 @@
         "generate-docs-payload": "node scripts/generate-docs-payload.mjs",
         "generate-manifest": "node scripts/generate-manifest.mjs",
         "generate-bridge": "node scripts/generate-bridge.mjs",
-        "generate-llms-txt": "node scripts/generate-llms-txt.mjs",
         "audit-spec-quality": "node scripts/audit-spec-quality.mjs",
         "check-bridge-inverse": "node scripts/check-bridge-inverse.mjs",
         "spec-doctor": "memo spec doctor",
         "test": "node scripts/audit-spec-quality.mjs && node scripts/check-bridge-inverse.mjs",
-        "build": "npm run generate-refs && npm run generate-bridge && npm run generate-docs-payload && npm run generate-manifest && npm run generate-llms-txt && npm run check-bridge-inverse"
+        "build": "npm run generate-refs && npm run generate-bridge && npm run generate-docs-payload && npm run generate-manifest && npm run check-bridge-inverse"
     },
     "devDependencies": {
         "ajv": "^8.20.0"
