@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [19-tmp](./19-tmp.md) |
-| Provenance | `e62e9c2a2017` |
+| Provenance | `555332a00436` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-tmp` | primary | Operate a project's `.tmp/` ephemeral scratch folder — the dot-prefixed, machine-local, gitignored area for throwaway working f… |
+| `workbench-tmp` | primary | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `e62e9c2a2017` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `555332a00436` over the skill-to-spec map. Regenerated on every build.

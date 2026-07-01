@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [15-addons](./15-addons.md) |
-| Provenance | `ce440da90973` |
+| Provenance | `18b45d3c1797` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-addons` | primary | The canonical Add-on model — onboard a custom-folder tool (a global extension that lives in its own folder and is NOT a reserve… |
+| `session-addons` | primary | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `ce440da90973` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `18b45d3c1797` over the skill-to-spec map. Regenerated on every build.

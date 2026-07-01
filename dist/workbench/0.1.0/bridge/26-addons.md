@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [26-addons](./26-addons.md) |
-| Provenance | `2a5ecfe8bd6a` |
+| Provenance | `f3a891af7ed1` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,8 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-addons` | primary | Integrate an Add-on — a custom-folder tool that reserves a small declared area inside a project's `.workbench/` descriptor and… |
-| `workbench-skills-scope` | contributing | Author workbench- and custom-folder skills under the common SOP standard (Setup / Health / Update / Extras), assign the orchest… |
+| `workbench-addons` | primary | — |
+| `workbench-skills-scope` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -43,4 +43,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `2a5ecfe8bd6a` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f3a891af7ed1` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [16-context](./16-context.md) |
-| Provenance | `0e16c1d308ba` |
+| Provenance | `67aa91f351f5` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,8 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-context` | primary | The context/ folder contract — a project's store of processed, authored knowledge (the primary, immutable source memos draw on)… |
-| `workbench-tmp` | contributing | Operate a project's `.tmp/` ephemeral scratch folder — the dot-prefixed, machine-local, gitignored area for throwaway working f… |
+| `workbench-context` | primary | — |
+| `workbench-tmp` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -43,4 +43,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `0e16c1d308ba` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `67aa91f351f5` over the skill-to-spec map. Regenerated on every build.

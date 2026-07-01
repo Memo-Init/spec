@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [41-mental-model](./41-mental-model.md) |
-| Provenance | `d00bcfa5093e` |
+| Provenance | `153001706e2e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,9 +26,9 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-mental-model-derive` | primary | Derive the project-global User Mental Model in a FRESH context (never the working session) by walking the finalized memos chron… |
-| `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
+| `memo-init` | contributing | — |
+| `memo-mental-model-derive` | primary | — |
+| `memo-revision-generate` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `d00bcfa5093e` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `153001706e2e` over the skill-to-spec map. Regenerated on every build.

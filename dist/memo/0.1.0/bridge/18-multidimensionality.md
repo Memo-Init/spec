@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [18-multidimensionality](./18-multidimensionality.md) |
-| Provenance | `43eba1ce0fe6` |
+| Provenance | `060edb5c8f83` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,9 +26,9 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
-| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
-| `memo-plan-add` | contributing | Fuegt ein finalisiertes Memo zu einem bestehenden Plan hinzu |
+| `git-merge-strategy` | contributing | — |
+| `git-push` | contributing | — |
+| `memo-plan-add` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -44,4 +44,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `43eba1ce0fe6` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `060edb5c8f83` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [31-goals](./31-goals.md) |
-| Provenance | `a6d1fc49f124` |
+| Provenance | `caa57bd407ba` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,12 +26,12 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-chronic-add` | contributing | Append exactly ONE narrated chronicle entry per memo to a flat Markdown file in.memo/chronic/ |
-| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
-| `memo-goal-optimize` | primary | LLM-initiated goal-optimization pipeline |
-| `memo-goal-score` | primary | Score ONE goal in a FRESH context (never the working session) |
-| `memo-goal-score-all` | primary | Score EVERY goal in a fresh context and render the goal board — the standard output of the goal-scoring system |
-| `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
+| `memo-chronic-add` | contributing | — |
+| `memo-fidelity-audit` | contributing | — |
+| `memo-goal-optimize` | primary | — |
+| `memo-goal-score` | primary | — |
+| `memo-goal-score-all` | primary | — |
+| `memo-rollout-evaluate` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -47,4 +47,4 @@ Grading handled by `memo-fidelity-audit`.
 
 ## 8. Provenance
 
-Derived-record hash `a6d1fc49f124` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `caa57bd407ba` over the skill-to-spec map. Regenerated on every build.

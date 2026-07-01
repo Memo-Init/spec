@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [18-design](./18-design.md) |
-| Provenance | `bfb774e39da3` |
+| Provenance | `5f00aacf15fb` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-design` | primary | The design/ folder and its design.md convention — the optional, no-dot, project-level home for a project's design system (YAML… |
+| `workbench-design` | primary | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `bfb774e39da3` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `5f00aacf15fb` over the skill-to-spec map. Regenerated on every build.
