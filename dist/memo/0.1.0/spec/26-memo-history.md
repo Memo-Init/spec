@@ -6,7 +6,7 @@ spec_file: "26-memo-history.md"
 order: 26
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T00:36:59.539Z"
+generated_at: "2026-07-01T00:43:54.490Z"
 generated_from: "draft/memo/0.1.0/spec/26-memo-history.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/26-memo-history.md."

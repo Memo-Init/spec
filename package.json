@@ -15,7 +15,7 @@
         "audit-spec-quality": "node scripts/audit-spec-quality.mjs",
         "check-bridge-inverse": "node scripts/check-bridge-inverse.mjs",
         "spec-doctor": "memo spec doctor",
-        "test": "node scripts/audit-spec-quality.mjs && node scripts/check-bridge-inverse.mjs",
+        "test": "node scripts/audit-spec-quality.mjs && node scripts/check-bridge-inverse.mjs && node scripts/check-skill-specs.mjs",
         "build": "npm run generate-refs && npm run generate-docs-payload && npm run generate-bridge && npm run generate-manifest && npm run check-bridge-inverse"
     },
     "devDependencies": {
