@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-06-30T23:47:09.105Z",
+    "generated_at": "2026-06-30T23:59:54.010Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -467,7 +467,7 @@
             "filename": "46-bridge.md",
             "slug": "bridge",
             "title": "Bridge",
-            "description": "This page is the Bridge hub for the memo specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries...",
+            "description": "Bridge hub for the memo specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping (45 of 46 chapters covered).",
             "order": 46,
             "section": "Specification",
             "normative": false,
@@ -711,7 +711,7 @@
                 "filename": "42-bridge.md",
                 "slug": "bridge",
                 "title": "Bridge",
-                "description": "This page is the Bridge hub for the workbench specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it...",
+                "description": "Bridge hub for the workbench specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping (23 of 23 chapters covered).",
                 "order": 42,
                 "section": "Workbench",
                 "normative": false,
@@ -886,7 +886,7 @@
                 "filename": "16-bridge.md",
                 "slug": "bridge",
                 "title": "Bridge",
-                "description": "This page is the Bridge hub for the session specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it...",
+                "description": "Bridge hub for the session specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping (16 of 16 chapters covered).",
                 "order": 16,
                 "section": "Session",
                 "normative": false,
