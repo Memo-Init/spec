@@ -25,16 +25,16 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-budget-paste` | primary | Capture Anthropic subscription token-budget via User-Paste of /usage output |
-| `memo-handover` | contributing | Zwei-Stufen-Handover-Skill fuer kontaminierte Session-Uebergaben |
-| `memo-plan-add` | primary | Fuegt ein finalisiertes Memo zu einem bestehenden Plan hinzu |
-| `memo-plan-evaluate` | primary | Bidirektionale Konformitaetspruefung Plan vs Memos |
-| `memo-plan-execute` | primary | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
-| `memo-plan-finalize` | primary | Archiviert einen abgeschlossenen Plan |
-| `memo-plan-init` | primary | Erstellt einen neuen Plan-Folder mit Skeleton (plan.md + plan-status.json) |
-| `memo-plan-status` | primary | Zeigt Plan-Status (Phasen + Issues + HEAD-Commits + Budget) in Klartext-Terminal-Format |
-| `memo-plan-stop` | primary | Externer Stop-Befehl (/memo-plan-stop) |
-| `memo-plan-update-checkbox` | primary | Setzt einzelne Phasen-Task-Checkboxen in plan.md programmatisch |
+| `memo-budget-paste` | primary | — |
+| `memo-handover` | contributing | — |
+| `memo-plan-add` | primary | — |
+| `memo-plan-evaluate` | primary | — |
+| `memo-plan-execute` | primary | — |
+| `memo-plan-finalize` | primary | — |
+| `memo-plan-init` | primary | — |
+| `memo-plan-status` | primary | — |
+| `memo-plan-stop` | primary | — |
+| `memo-plan-update-checkbox` | primary | — |
 
 ## 5. Grading assignment
 

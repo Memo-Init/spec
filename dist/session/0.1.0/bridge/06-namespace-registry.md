@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-namespace-registry` | primary | Author and validate the sops[] namespace registry — the registrant blocks that replace the flat skills[] list |
+| `session-namespace-registry` | primary | — |
 
 ## 5. Grading assignment
 

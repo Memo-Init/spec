@@ -6,7 +6,7 @@ spec_file: "20-flow-full-vs-update-revisions.md"
 order: 20
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T20:09:54.700Z"
+generated_at: "2026-07-01T20:10:10.023Z"
 generated_from: "draft/memo/0.1.0/spec/20-flow-full-vs-update-revisions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/20-flow-full-vs-update-revisions.md."

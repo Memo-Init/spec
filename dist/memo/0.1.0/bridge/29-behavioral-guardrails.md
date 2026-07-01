@@ -25,11 +25,11 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-coherence` | contributing | Provide honest, critical feedback on a memo — find gaps, contradictions, redundancies, and logical issues |
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `release` | contributing | Two-stage release and pinning policy |
-| `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
+| `memo-coherence` | contributing | — |
+| `memo-init` | contributing | — |
+| `memo-phase-execute` | contributing | — |
+| `release` | contributing | — |
+| `workbench-modes` | contributing | — |
 
 ## 5. Grading assignment
 

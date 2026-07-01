@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-enforcement` | primary | Realize the deterministic PreToolUse gate of the genesis tier — the contract sop-precondition.sh MUST satisfy |
+| `session-enforcement` | primary | — |
 
 ## 5. Grading assignment
 

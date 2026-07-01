@@ -6,7 +6,7 @@ spec_file: "03-recovery.md"
 order: 3
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:09:54.700Z"
+generated_at: "2026-07-01T20:10:10.023Z"
 generated_from: "draft/session/0.1.0/spec/03-recovery.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/03-recovery.md."

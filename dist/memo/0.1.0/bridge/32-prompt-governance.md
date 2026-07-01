@@ -25,10 +25,10 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
-| `memo-prd-generate` | contributing | Create PRDs (Product Requirement Documents) from a finalized memo |
-| `memo-req-template` | contributing | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements (eval-styl… |
-| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
+| `memo-phase-generate` | contributing | — |
+| `memo-prd-generate` | contributing | — |
+| `memo-req-template` | contributing | — |
+| `memo-rollout-generate` | contributing | — |
 
 ## 5. Grading assignment
 

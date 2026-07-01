@@ -25,15 +25,15 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-evidence` | contributing | Tag all statements in a memo by evidence level (FAKT/ANNAHME/VERMUTUNG) |
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-input-processing` | contributing | Strict 5-step input processing pipeline for voice memos, text, and linked files |
-| `memo-research-agent` | primary | Research agent with a fixed output format and a fixed storage location |
-| `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
-| `research-best-practice-playwright` | contributing | Playwright CLI vs MCP Server decision framework |
-| `research-scrape-docs` | contributing | Systematically scrape documentation websites into a single text file |
-| `research-workflow` | contributing | Research orchestration for choosing the right information gathering tool |
-| `wiki-ingest` | contributing | Process source files from context/ or finalized memos into wiki pages |
+| `memo-evidence` | contributing | — |
+| `memo-init` | contributing | — |
+| `memo-input-processing` | contributing | — |
+| `memo-research-agent` | primary | — |
+| `memo-revision-generate` | contributing | — |
+| `research-best-practice-playwright` | contributing | — |
+| `research-scrape-docs` | contributing | — |
+| `research-workflow` | contributing | — |
+| `wiki-ingest` | contributing | — |
 
 ## 5. Grading assignment
 
