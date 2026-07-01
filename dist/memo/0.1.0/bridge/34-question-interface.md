@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [34-question-interface](./34-question-interface.md) |
-| Provenance | `65196165f655` |
+| Provenance | `6872f998d557` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,11 +26,11 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-optimize` | contributing | — |
-| `memo-init` | contributing | — |
-| `memo-revision-evaluate` | contributing | — |
-| `memo-revision-execute` | contributing | — |
-| `memo-revision-generate` | contributing | — |
+| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization pipeline |
+| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
+| `memo-revision-evaluate` | contributing | Mandatory auto-check after each revision |
+| `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
+| `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
 
 ## 5. Grading assignment
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `65196165f655` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `6872f998d557` over the skill-to-spec map. Regenerated on every build.

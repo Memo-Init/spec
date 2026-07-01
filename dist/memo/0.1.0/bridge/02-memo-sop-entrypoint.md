@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md) |
-| Provenance | `d8ec399b0548` |
+| Provenance | `5c4ea66bbb37` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,20 +26,20 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-finalize` | contributing | — |
-| `memo-init` | contributing | — |
-| `memo-plan-add` | contributing | — |
-| `memo-plan-execute` | contributing | — |
-| `memo-plan-finalize` | contributing | — |
-| `memo-plan-init` | contributing | — |
-| `memo-plan-status` | contributing | — |
-| `memo-plan-stop` | contributing | — |
-| `memo-plan-update-checkbox` | contributing | — |
-| `memo-reset-recommend` | contributing | — |
-| `memo-sop` | primary | — |
-| `memo-sub-init` | contributing | — |
-| `skill-testing` | contributing | — |
-| `workbench-modes` | primary | — |
+| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
+| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
+| `memo-plan-add` | contributing | Fuegt ein finalisiertes Memo zu einem bestehenden Plan hinzu |
+| `memo-plan-execute` | contributing | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
+| `memo-plan-finalize` | contributing | Archiviert einen abgeschlossenen Plan |
+| `memo-plan-init` | contributing | Erstellt einen neuen Plan-Folder mit Skeleton (plan.md + plan-status.json) |
+| `memo-plan-status` | contributing | Zeigt Plan-Status (Phasen + Issues + HEAD-Commits + Budget) in Klartext-Terminal-Format |
+| `memo-plan-stop` | contributing | Externer Stop-Befehl (/memo-plan-stop) |
+| `memo-plan-update-checkbox` | contributing | Setzt einzelne Phasen-Task-Checkboxen in plan.md programmatisch |
+| `memo-reset-recommend` | contributing | Evaluates whether a /clear reset should be recommended after a phase boundary |
+| `memo-sop` | primary | Parent-Skill for the complete Memo-Workflow SOP |
+| `memo-sub-init` | contributing | Erzeugt Sub-Memos autonom aus den Sub-Memo-Zeilen der Triage-Tabelle eines Sortier-Memos |
+| `skill-testing` | contributing | Systematic testing strategy for Claude Code skills |
+| `workbench-modes` | primary | Three modes of agentic coding in the One-Pizza workbench |
 
 ## 5. Grading assignment
 
@@ -60,4 +60,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `d8ec399b0548` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `5c4ea66bbb37` over the skill-to-spec map. Regenerated on every build.

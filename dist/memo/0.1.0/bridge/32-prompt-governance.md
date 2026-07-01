@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [32-prompt-governance](./32-prompt-governance.md) |
-| Provenance | `543c8471dd75` |
+| Provenance | `e141d638b514` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,10 +26,10 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-phase-generate` | contributing | — |
-| `memo-prd-generate` | contributing | — |
-| `memo-req-template` | contributing | — |
-| `memo-rollout-generate` | contributing | — |
+| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
+| `memo-prd-generate` | contributing | Create PRDs (Product Requirement Documents) from a finalized memo |
+| `memo-req-template` | contributing | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements (eval-styl… |
+| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
 
 ## 5. Grading assignment
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `543c8471dd75` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `e141d638b514` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [07-doctor-init](./07-doctor-init.md) |
-| Provenance | `2bac5dfc91ba` |
+| Provenance | `f905f030b050` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-doctor-init` | primary | — |
+| `session-doctor-init` | primary | Run the foreground readiness pair of the session namespace — the reference doctor/init of an SOP-instance namespace |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `2bac5dfc91ba` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f905f030b050` over the skill-to-spec map. Regenerated on every build.

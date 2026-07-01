@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [06-memo-structure](./06-memo-structure.md) |
-| Provenance | `235b5bb915e2` |
+| Provenance | `fcf24f57a8c4` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,12 +26,12 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-init` | primary | — |
-| `memo-plan-init` | contributing | — |
-| `memo-plan-status` | contributing | — |
-| `memo-revision-execute` | contributing | — |
-| `memo-sub-init` | primary | — |
-| `workbench-project-setup` | contributing | — |
+| `memo-init` | primary | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
+| `memo-plan-init` | contributing | Erstellt einen neuen Plan-Folder mit Skeleton (plan.md + plan-status.json) |
+| `memo-plan-status` | contributing | Zeigt Plan-Status (Phasen + Issues + HEAD-Commits + Budget) in Klartext-Terminal-Format |
+| `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
+| `memo-sub-init` | primary | Erzeugt Sub-Memos autonom aus den Sub-Memo-Zeilen der Triage-Tabelle eines Sortier-Memos |
+| `workbench-project-setup` | contributing | Project setup and installation pattern for the One-Pizza workbench |
 
 ## 5. Grading assignment
 
@@ -53,4 +53,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `235b5bb915e2` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `fcf24f57a8c4` over the skill-to-spec map. Regenerated on every build.

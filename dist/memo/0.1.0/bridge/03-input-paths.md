@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [03-input-paths](./03-input-paths.md) |
-| Provenance | `56aee77cef11` |
+| Provenance | `ac4e5f8970cc` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,8 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-optimize` | contributing | — |
-| `memo-input-processing` | contributing | — |
+| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization pipeline |
+| `memo-input-processing` | contributing | Strict 5-step input processing pipeline for voice memos, text, and linked files |
 
 ## 5. Grading assignment
 
@@ -43,4 +43,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `56aee77cef11` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `ac4e5f8970cc` over the skill-to-spec map. Regenerated on every build.

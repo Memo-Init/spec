@@ -6,7 +6,7 @@ spec_file: "28-drift.md"
 order: 28
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T01:33:48.544Z"
+generated_at: "2026-07-01T03:52:15.369Z"
 generated_from: "draft/memo/0.1.0/spec/28-drift.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/28-drift.md."

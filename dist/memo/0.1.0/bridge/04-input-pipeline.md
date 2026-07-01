@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [04-input-pipeline](./04-input-pipeline.md) |
-| Provenance | `52ee993f8da0` |
+| Provenance | `13c9fa2d470e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-optimize` | contributing | — |
-| `memo-input-processing` | primary | — |
+| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization pipeline |
+| `memo-input-processing` | primary | Strict 5-step input processing pipeline for voice memos, text, and linked files |
 
 ## 5. Grading assignment
 
@@ -47,4 +47,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `52ee993f8da0` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `13c9fa2d470e` over the skill-to-spec map. Regenerated on every build.

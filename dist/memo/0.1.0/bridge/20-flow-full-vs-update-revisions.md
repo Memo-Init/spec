@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md) |
-| Provenance | `dfc7baa3c73a` |
+| Provenance | `4cbc9d5e161e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,10 +26,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-finalize` | contributing | — |
-| `memo-revision-consolidate` | primary | — |
-| `memo-revision-execute` | contributing | — |
-| `memo-revision-generate` | contributing | — |
+| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
+| `memo-revision-consolidate` | primary | Merges the last Full revision plus all subsequent Update revisions into a new Full revision |
+| `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
+| `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
 
 ## 5. Grading assignment
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `dfc7baa3c73a` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `4cbc9d5e161e` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [39-release-and-pinning](./39-release-and-pinning.md) |
-| Provenance | `3aa7480e5683` |
+| Provenance | `db89a2595ba1` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,10 +26,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-push` | contributing | — |
-| `memo-maintenance-score-all` | contributing | — |
-| `memo-maintenance-verify` | contributing | — |
-| `release` | primary | — |
+| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
+| `memo-maintenance-score-all` | contributing | Score EVERY repo card in a fresh context and render the maintenance board — the standard output of the maintenance system |
+| `memo-maintenance-verify` | contributing | The gated re-bless of the maintenance system — the handelnde pendant to memo-goal-optimize |
+| `release` | primary | Two-stage release and pinning policy |
 
 ## 5. Grading assignment
 
@@ -45,4 +45,4 @@ Grading handled by `memo-maintenance-score-all`.
 
 ## 8. Provenance
 
-Derived-record hash `3aa7480e5683` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `db89a2595ba1` over the skill-to-spec map. Regenerated on every build.

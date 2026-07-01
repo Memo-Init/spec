@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [15-prompt-generator](./15-prompt-generator.md) |
-| Provenance | `9ec67918ae84` |
+| Provenance | `22294b06e071` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,11 +26,11 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-phase-execute` | contributing | — |
-| `memo-phase-generate` | contributing | — |
-| `memo-prd-generate` | contributing | — |
-| `memo-req-template` | contributing | — |
-| `memo-rollout-generate` | contributing | — |
+| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
+| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
+| `memo-prd-generate` | contributing | Create PRDs (Product Requirement Documents) from a finalized memo |
+| `memo-req-template` | contributing | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements (eval-styl… |
+| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
 
 ## 5. Grading assignment
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `9ec67918ae84` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `22294b06e071` over the skill-to-spec map. Regenerated on every build.

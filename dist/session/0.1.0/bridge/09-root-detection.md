@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [09-root-detection](./09-root-detection.md) |
-| Provenance | `5b9eedf04d9a` |
+| Provenance | `aa4d0c30a94e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-root-detection` | primary | — |
+| `session-root-detection` | primary | Locate the session/workbench root by a nearest-ancestor.session/ walk-up bounded by a root:true stop-flag, with an opt-in relat… |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `5b9eedf04d9a` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `aa4d0c30a94e` over the skill-to-spec map. Regenerated on every build.

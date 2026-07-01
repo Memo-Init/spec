@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [15-repos](./15-repos.md) |
-| Provenance | `cf724d9e235c` |
+| Provenance | `a922b453c927` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-repos` | primary | — |
+| `workbench-repos` | primary | The repos/ folder contract — the only place git lives in a project, one domain per repository, the only git units (project root… |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `cf724d9e235c` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `a922b453c927` over the skill-to-spec map. Regenerated on every build.

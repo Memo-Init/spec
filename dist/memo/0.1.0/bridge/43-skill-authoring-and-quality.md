@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md) |
-| Provenance | `b4af4ee4a739` |
+| Provenance | `5ec071d8d72c` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `skill-testing` | primary | — |
-| `specs-to-skills` | primary | — |
+| `skill-testing` | primary | Systematic testing strategy for Claude Code skills |
+| `specs-to-skills` | primary | Scaffold skill skeletons from the spec-to-skill map and grade skill quality against the three authoring dimensions |
 
 ## 5. Grading assignment
 
@@ -44,4 +44,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `b4af4ee4a739` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `5ec071d8d72c` over the skill-to-spec map. Regenerated on every build.

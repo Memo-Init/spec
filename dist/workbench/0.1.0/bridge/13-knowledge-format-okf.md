@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [13-knowledge-format-okf](./13-knowledge-format-okf.md) |
-| Provenance | `d252b7d07aa2` |
+| Provenance | `bf9e5795ad5f` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,11 +26,11 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `wiki-ingest` | contributing | — |
-| `wiki-init` | contributing | — |
-| `wiki-lint` | primary | — |
-| `wiki-query` | contributing | — |
-| `wiki-update` | contributing | — |
+| `wiki-ingest` | contributing | Process source files from context/ or finalized memos into wiki pages |
+| `wiki-init` | contributing | Initialize a project wiki (.wiki/) with index, log, page directories and local git |
+| `wiki-lint` | primary | Health-check the wiki |
+| `wiki-query` | contributing | Answer questions against the project wiki by reading index.md and navigating to relevant pages |
+| `wiki-update` | contributing | Update existing wiki pages after source changes |
 
 ## 5. Grading assignment
 
@@ -47,4 +47,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `d252b7d07aa2` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `bf9e5795ad5f` over the skill-to-spec map. Regenerated on every build.

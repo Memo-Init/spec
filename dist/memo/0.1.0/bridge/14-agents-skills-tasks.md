@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [14-agents-skills-tasks](./14-agents-skills-tasks.md) |
-| Provenance | `5a5a38087457` |
+| Provenance | `7d944ebb4ea2` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,10 +26,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-plan-evaluate` | contributing | — |
-| `memo-prd-evaluate` | contributing | — |
-| `skill-testing` | contributing | — |
-| `workbench-persona-audit` | primary | — |
+| `memo-plan-evaluate` | contributing | Bidirektionale Konformitaetspruefung Plan vs Memos |
+| `memo-prd-evaluate` | contributing | Validate PRDs against the source memo |
+| `skill-testing` | contributing | Systematic testing strategy for Claude Code skills |
+| `workbench-persona-audit` | primary | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
 
 ## 5. Grading assignment
 
@@ -47,4 +47,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `5a5a38087457` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `7d944ebb4ea2` over the skill-to-spec map. Regenerated on every build.

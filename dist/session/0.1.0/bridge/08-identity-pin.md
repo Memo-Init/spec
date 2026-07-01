@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [08-identity-pin](./08-identity-pin.md) |
-| Provenance | `507916a1e83c` |
+| Provenance | `c75f6a118b1d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-identity-pin` | primary | — |
+| `session-identity-pin` | primary | Pin the session identity once at SessionStart and keep it stable for the whole session |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `507916a1e83c` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `c75f6a118b1d` over the skill-to-spec map. Regenerated on every build.

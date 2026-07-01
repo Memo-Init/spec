@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [41-project-architecture](./41-project-architecture.md) |
-| Provenance | `720d66b10c0b` |
+| Provenance | `30750ec63624` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,12 +26,12 @@ Canonical docs entry: `/workbench/overview/`. No entry-point skill flagged yet.
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-maintenance-score` | contributing | — |
-| `memo-maintenance-score-all` | contributing | — |
-| `memo-maintenance-verify` | contributing | — |
-| `wiki-lint` | contributing | — |
-| `workbench-audit` | contributing | — |
-| `workbench-config` | contributing | — |
+| `memo-maintenance-score` | contributing | Score ONE repo card in a FRESH context (never the working session) |
+| `memo-maintenance-score-all` | contributing | Score EVERY repo card in a fresh context and render the maintenance board — the standard output of the maintenance system |
+| `memo-maintenance-verify` | contributing | The gated re-bless of the maintenance system — the handelnde pendant to memo-goal-optimize |
+| `wiki-lint` | contributing | Health-check the wiki |
+| `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
+| `workbench-config` | contributing | Declare and maintain a project's `.workbench/` configuration — the MANUAL, never-auto-generated single source of policy |
 
 ## 5. Grading assignment
 
@@ -47,4 +47,4 @@ Grading handled by `memo-maintenance-score`.
 
 ## 8. Provenance
 
-Derived-record hash `720d66b10c0b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `30750ec63624` over the skill-to-spec map. Regenerated on every build.

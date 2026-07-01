@@ -6,6 +6,21 @@
 
 **Coverage:** 16 of 16 chapters have at least one public implementer (100%).
 
+## Graph views
+
+### Skill → skill dependencies (session)
+
+_(no skill→skill dependencies declared in this family)_
+
+### SOP entry points
+
+```mermaid
+flowchart LR
+    sop["10-sop (SOP anchor)"]
+    sk_session_sop["session-sop"]
+    sop --> sk_session_sop
+```
+
 ## Coverage summary
 
 | Chapter | Covered | Public | Internal | Reqs | Gaps |
@@ -229,70 +244,3 @@
 | `session-sop` | [10-sop](./10-sop.md) (primary) |
 
 **Summary: 1 namespace · 16 skills total**
-
-## Graph views
-
-### Skill → skill requires / primary chapter (session)
-
-```mermaid
-flowchart TD
-    sk_session_addons["session-addons"]
-    sk_session_cli["session-cli"]
-    sk_session_common_denominator["session-common-denominator"]
-    sk_session_config_cascade["session-config-cascade"]
-    sk_session_conventions["session-conventions"]
-    sk_session_doctor_init["session-doctor-init"]
-    sk_session_enforcement["session-enforcement"]
-    sk_session_genesis_root["session-genesis-root"]
-    sk_session_identity_pin["session-identity-pin"]
-    sk_session_instances["session-instances"]
-    sk_session_migration["session-migration"]
-    sk_session_namespace_registry["session-namespace-registry"]
-    sk_session_overview["session-overview"]
-    sk_session_recovery["session-recovery"]
-    sk_session_root_detection["session-root-detection"]
-    sk_session_sop["session-sop"]
-    ch_n_00_overview["00-overview"]
-    ch_n_01_genesis_root["01-genesis-root"]
-    ch_n_02_enforcement["02-enforcement"]
-    ch_n_03_recovery["03-recovery"]
-    ch_n_04_cli["04-cli"]
-    ch_n_05_config_cascade["05-config-cascade"]
-    ch_n_06_namespace_registry["06-namespace-registry"]
-    ch_n_07_doctor_init["07-doctor-init"]
-    ch_n_08_identity_pin["08-identity-pin"]
-    ch_n_09_root_detection["09-root-detection"]
-    ch_n_10_sop["10-sop"]
-    ch_n_11_common_denominator["11-common-denominator"]
-    ch_n_12_instances["12-instances"]
-    ch_n_13_conventions["13-conventions"]
-    ch_n_14_migration["14-migration"]
-    ch_n_15_addons["15-addons"]
-    sk_session_overview --> ch_n_00_overview
-    sk_session_genesis_root --> ch_n_01_genesis_root
-    sk_session_enforcement --> ch_n_02_enforcement
-    sk_session_recovery --> ch_n_03_recovery
-    sk_session_cli --> ch_n_04_cli
-    sk_session_config_cascade --> ch_n_05_config_cascade
-    sk_session_namespace_registry --> ch_n_06_namespace_registry
-    sk_session_doctor_init --> ch_n_07_doctor_init
-    sk_session_identity_pin --> ch_n_08_identity_pin
-    sk_session_root_detection --> ch_n_09_root_detection
-    sk_session_sop --> ch_n_10_sop
-    sk_session_common_denominator --> ch_n_11_common_denominator
-    sk_session_instances --> ch_n_12_instances
-    sk_session_conventions --> ch_n_13_conventions
-    sk_session_migration --> ch_n_14_migration
-    sk_session_addons --> ch_n_15_addons
-```
-
-### SOP flow
-
-```mermaid
-flowchart TD
-    sop["10-sop (SOP anchor)"]
-    sk_session_sop["session-sop"]
-    ch_n_10_sop["10-sop"]
-    sop --> sk_session_sop
-    sk_session_sop --> ch_n_10_sop
-```

@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [27-landing-the-plane](./27-landing-the-plane.md) |
-| Provenance | `39cba80ecc5f` |
+| Provenance | `fabe9773cfe1` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,11 +26,11 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-merge-strategy` | contributing | — |
-| `memo-handover` | contributing | — |
-| `memo-rollout-execute` | contributing | — |
-| `memo-sop` | contributing | — |
-| `workbench-modes` | contributing | — |
+| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
+| `memo-handover` | contributing | Zwei-Stufen-Handover-Skill fuer kontaminierte Session-Uebergaben |
+| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
+| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
+| `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
 
 ## 5. Grading assignment
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `39cba80ecc5f` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `fabe9773cfe1` over the skill-to-spec map. Regenerated on every build.

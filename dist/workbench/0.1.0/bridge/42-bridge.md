@@ -6,6 +6,21 @@
 
 **Coverage:** 23 of 23 chapters have at least one public implementer (100%).
 
+## Graph views
+
+### Skill → skill dependencies (workbench)
+
+_(no skill→skill dependencies declared in this family)_
+
+### SOP entry points
+
+```mermaid
+flowchart LR
+    sop["02-sop-entrypoint (SOP anchor)"]
+    sk_workbench_sop_entry["workbench-sop-entry"]
+    sop --> sk_workbench_sop_entry
+```
+
 ## Coverage summary
 
 | Chapter | Covered | Public | Internal | Reqs | Gaps |
@@ -342,92 +357,3 @@
 | `workbench-validation` | [25-validation-overview](./25-validation-overview.md) (primary), [20-cli](./20-cli.md), [21-environment-scripts](./21-environment-scripts.md), [22-config](./22-config.md), [23-hooks-contract](./23-hooks-contract.md), [32-trash](./32-trash.md) |
 
 **Summary: 4 namespaces · 30 skills total**
-
-## Graph views
-
-### Skill → skill requires / primary chapter (workbench)
-
-```mermaid
-flowchart TD
-    sk_research_best_practice_playwright["research-best-practice-playwright"]
-    sk_research_scrape_docs["research-scrape-docs"]
-    sk_wiki_ingest["wiki-ingest"]
-    sk_wiki_init["wiki-init"]
-    sk_wiki_lint["wiki-lint"]
-    sk_wiki_query["wiki-query"]
-    sk_wiki_update["wiki-update"]
-    sk_workbench_addons["workbench-addons"]
-    sk_workbench_audit["workbench-audit"]
-    sk_workbench_cli["workbench-cli"]
-    sk_workbench_config["workbench-config"]
-    sk_workbench_context["workbench-context"]
-    sk_workbench_design["workbench-design"]
-    sk_workbench_environment_scripts["workbench-environment-scripts"]
-    sk_workbench_folders["workbench-folders"]
-    sk_workbench_hooks_contract["workbench-hooks-contract"]
-    sk_workbench_memo_store["workbench-memo-store"]
-    sk_workbench_philosophy["workbench-philosophy"]
-    sk_workbench_project_setup["workbench-project-setup"]
-    sk_workbench_repos["workbench-repos"]
-    sk_workbench_root_projects["workbench-root-projects"]
-    sk_workbench_skills_scope["workbench-skills-scope"]
-    sk_workbench_sop_entry["workbench-sop-entry"]
-    sk_workbench_tmp["workbench-tmp"]
-    sk_workbench_validation["workbench-validation"]
-    ch_n_01_philosophy["01-philosophy"]
-    ch_n_02_sop_entrypoint["02-sop-entrypoint"]
-    ch_n_10_root_and_projects["10-root-and-projects"]
-    ch_n_11_project_structure["11-project-structure"]
-    ch_n_12_folders["12-folders"]
-    ch_n_13_knowledge_format_okf["13-knowledge-format-okf"]
-    ch_n_15_repos["15-repos"]
-    ch_n_16_context["16-context"]
-    ch_n_17_memo_store["17-memo-store"]
-    ch_n_18_design["18-design"]
-    ch_n_19_tmp["19-tmp"]
-    ch_n_20_cli["20-cli"]
-    ch_n_21_environment_scripts["21-environment-scripts"]
-    ch_n_22_config["22-config"]
-    ch_n_23_hooks_contract["23-hooks-contract"]
-    ch_n_24_skills_scope["24-skills-scope"]
-    ch_n_25_validation_overview["25-validation-overview"]
-    ch_n_26_addons["26-addons"]
-    ch_n_30_wiki["30-wiki"]
-    ch_n_31_browser_automation["31-browser-automation"]
-    sk_workbench_philosophy --> ch_n_01_philosophy
-    sk_workbench_sop_entry --> ch_n_02_sop_entrypoint
-    sk_workbench_root_projects --> ch_n_10_root_and_projects
-    sk_workbench_audit --> ch_n_11_project_structure
-    sk_workbench_project_setup --> ch_n_11_project_structure
-    sk_workbench_folders --> ch_n_12_folders
-    sk_wiki_lint --> ch_n_13_knowledge_format_okf
-    sk_workbench_repos --> ch_n_15_repos
-    sk_workbench_context --> ch_n_16_context
-    sk_workbench_memo_store --> ch_n_17_memo_store
-    sk_workbench_design --> ch_n_18_design
-    sk_workbench_tmp --> ch_n_19_tmp
-    sk_workbench_cli --> ch_n_20_cli
-    sk_workbench_environment_scripts --> ch_n_21_environment_scripts
-    sk_workbench_config --> ch_n_22_config
-    sk_workbench_hooks_contract --> ch_n_23_hooks_contract
-    sk_workbench_skills_scope --> ch_n_24_skills_scope
-    sk_workbench_validation --> ch_n_25_validation_overview
-    sk_workbench_addons --> ch_n_26_addons
-    sk_wiki_ingest --> ch_n_30_wiki
-    sk_wiki_init --> ch_n_30_wiki
-    sk_wiki_query --> ch_n_30_wiki
-    sk_wiki_update --> ch_n_30_wiki
-    sk_research_best_practice_playwright --> ch_n_31_browser_automation
-    sk_research_scrape_docs --> ch_n_31_browser_automation
-```
-
-### SOP flow
-
-```mermaid
-flowchart TD
-    sop["02-sop-entrypoint (SOP anchor)"]
-    sk_workbench_sop_entry["workbench-sop-entry"]
-    ch_n_02_sop_entrypoint["02-sop-entrypoint"]
-    sop --> sk_workbench_sop_entry
-    sk_workbench_sop_entry --> ch_n_02_sop_entrypoint
-```

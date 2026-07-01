@@ -651,9 +651,10 @@ const renderMermaidSection = ( { records, familyName, skills } ) => {
     // Build a lookup from skill name → skill data (for requires).
     const skillsByName = new Map( ( skills ?? [] ).map( ( s ) => [ s.skill, s ] ) )
 
-    // (1) Hybrid skill→skill / skill→primary-chapter graph:
-    //     • skills with requires[] → skill→skill edges (real data per PRD-012)
-    //     • skills with no requires → skill→primary-chapter edge (existing fallback)
+    // (1) Skill→skill dependency DAG — ONLY the declared `requires` edges (compact + readable).
+    //     The old "skill → primary-chapter for every skill" fallback fanned one node out to
+    //     ~40 chapters in a single row and was unreadable; a graph view is the DECLARED
+    //     dependency structure, not a coverage dump (that lives in the count table + sections).
     const allImplementerNames = [ ...new Set( records.flatMap( ( r ) => r.implementers.map( ( s ) => s.skill ) ) ) ]
 
     const requiresEdges = allImplementerNames.flatMap( ( skillName ) => {
@@ -662,73 +663,48 @@ const renderMermaidSection = ( { records, familyName, skills } ) => {
 
         return data.requires.map( ( target ) => ( { from: skillName, to: target } ) )
     } )
-    const skillsWithRequires = new Set( requiresEdges.map( ( e ) => e.from ) )
+    const requiresNodes = [ ...new Set( [ ...requiresEdges.map( ( e ) => e.from ), ...requiresEdges.map( ( e ) => e.to ) ] ) ].sort()
 
-    const primaryEdges = records.flatMap( ( r ) =>
-        r.implementers
-            .filter( ( s ) => s.role === 'primary' && skillsWithRequires.has( s.skill ) === false )
-            .map( ( s ) => ( { skill: s.skill, chapter: r.stem } ) )
-    )
-
-    // Collect node sets for both edge types
-    const requiresSkillNodes = [ ...new Set( [ ...requiresEdges.map( ( e ) => e.from ), ...requiresEdges.map( ( e ) => e.to ) ] ) ].sort()
-    const primarySkillSet = [ ...new Set( primaryEdges.map( ( e ) => e.skill ) ) ]
-        .filter( ( s ) => requiresSkillNodes.includes( s ) === false )
-        .sort()
-    const primaryChapterSet = [ ...new Set( primaryEdges.map( ( e ) => e.chapter ) ) ].sort()
-
-    const hasAnyEdge = requiresEdges.length > 0 || primaryEdges.length > 0
-    const primaryBlock = hasAnyEdge === false
-        ? [ '_(no skill edges in this family)_' ]
+    const dagBlock = requiresEdges.length === 0
+        ? [ '_(no skill→skill dependencies declared in this family)_' ]
         : [
             '```mermaid',
-            'flowchart TD',
-            ...requiresSkillNodes.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
-            ...primarySkillSet.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
-            ...primaryChapterSet.map( ( c ) => `    ch_${ toMermaidId( { text: c } ) }["${ c }"]` ),
+            'flowchart LR',
+            ...requiresNodes.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
             ...requiresEdges.map( ( e ) => `    sk_${ toMermaidId( { text: e.from } ) } --> sk_${ toMermaidId( { text: e.to } ) }` ),
-            ...primaryEdges.map( ( e ) => `    sk_${ toMermaidId( { text: e.skill } ) } --> ch_${ toMermaidId( { text: e.chapter } ) }` ),
             '```'
         ]
 
-    // (2) SOP-flow: prefer explicitly-marked public-entry skills; fall back to the SOP chapter's own primary owners
+    // (2) SOP entry-point flow — SOP anchor → the public-entry skills ONLY (a compact star,
+    //     not each entry skill fanned out to every chapter it covers).
     const sopAnchor = records.length > 0 ? records[ 0 ].sopAnchor : null
-    const explicitEntryEdges = records
+    const explicitEntrySkills = [ ...new Set( records
         .filter( ( r ) => r.publicEntries.inferred === false )
-        .flatMap( ( r ) => r.publicEntries.skills.map( ( s ) => ( { skill: s, chapter: r.stem } ) ) )
-    const fallbackEdges = sopAnchor === null ? [] : records
+        .flatMap( ( r ) => r.publicEntries.skills ) ) ].sort()
+    const fallbackEntrySkills = sopAnchor === null ? [] : [ ...new Set( records
         .filter( ( r ) => r.stem === sopAnchor )
-        .flatMap( ( r ) => r.implementers
-            .filter( ( s ) => s.role === 'primary' )
-            .map( ( s ) => ( { skill: s.skill, chapter: r.stem } ) )
-        )
-    const entryEdges = explicitEntryEdges.length > 0 ? explicitEntryEdges : fallbackEdges
-    const entrySkillSet = [ ...new Set( entryEdges.map( ( e ) => e.skill ) ) ].sort()
-    const entryChapterSet = [ ...new Set( entryEdges.map( ( e ) => e.chapter ) ) ].sort()
+        .flatMap( ( r ) => r.implementers.filter( ( s ) => s.role === 'primary' ).map( ( s ) => s.skill ) ) ) ].sort()
+    const entrySkills = explicitEntrySkills.length > 0 ? explicitEntrySkills : fallbackEntrySkills
 
-    const sopBlock = entryEdges.length === 0
+    const sopBlock = ( entrySkills.length === 0 || sopAnchor === null )
         ? [ '_(no public entry points defined)_' ]
         : [
             '```mermaid',
-            'flowchart TD',
-            ...( sopAnchor !== null ? [ `    sop["${ sopAnchor } (SOP anchor)"]` ] : [] ),
-            ...entrySkillSet.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
-            ...entryChapterSet.map( ( c ) => `    ch_${ toMermaidId( { text: c } ) }["${ c }"]` ),
-            ...( sopAnchor !== null
-                ? entrySkillSet.map( ( s ) => `    sop --> sk_${ toMermaidId( { text: s } ) }` )
-                : [] ),
-            ...entryEdges.map( ( e ) => `    sk_${ toMermaidId( { text: e.skill } ) } --> ch_${ toMermaidId( { text: e.chapter } ) }` ),
+            'flowchart LR',
+            `    sop["${ sopAnchor } (SOP anchor)"]`,
+            ...entrySkills.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
+            ...entrySkills.map( ( s ) => `    sop --> sk_${ toMermaidId( { text: s } ) }` ),
             '```'
         ]
 
     return [
         '## Graph views',
         '',
-        `### Skill → skill requires / primary chapter (${ familyName })`,
+        `### Skill → skill dependencies (${ familyName })`,
         '',
-        ...primaryBlock,
+        ...dagBlock,
         '',
-        '### SOP flow',
+        '### SOP entry points',
         '',
         ...sopBlock,
     ].join( '\n' )
@@ -755,11 +731,11 @@ const renderDistHub = ( { nn, family, records, skills } ) => {
         '',
         `**Coverage:** ${ covered } of ${ records.length } chapters have at least one public implementer (${ pct }%).`,
         '',
+        graphViews,
+        '',
         byChapter,
         '',
         bySkill,
-        '',
-        graphViews,
         ''
     ].join( '\n' )
 }

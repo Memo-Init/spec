@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [00-overview](./00-overview.md) |
-| Provenance | `ae693241c02b` |
+| Provenance | `3d2b6badb606` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-overview` | primary | — |
+| `session-overview` | primary | Orient inside the Session spec — the genesis-root family that is global per session (session-sop) |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `ae693241c02b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `3d2b6badb606` over the skill-to-spec map. Regenerated on every build.

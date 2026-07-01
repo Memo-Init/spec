@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [26-memo-history](./26-memo-history.md) |
-| Provenance | `fc4ab4edca2c` |
+| Provenance | `28733ff91c5e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,10 +26,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-chronic-add` | primary | — |
-| `memo-chronic-build` | primary | — |
-| `memo-rollout-execute` | contributing | — |
-| `wiki-ingest` | contributing | — |
+| `memo-chronic-add` | primary | Append exactly ONE narrated chronicle entry per memo to a flat Markdown file in.memo/chronic/ |
+| `memo-chronic-build` | primary | Orchestrate the chronicle over ALL memos in.memo/ in one run |
+| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
+| `wiki-ingest` | contributing | Process source files from context/ or finalized memos into wiki pages |
 
 ## 5. Grading assignment
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `fc4ab4edca2c` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `28733ff91c5e` over the skill-to-spec map. Regenerated on every build.

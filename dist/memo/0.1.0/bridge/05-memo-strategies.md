@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [05-memo-strategies](./05-memo-strategies.md) |
-| Provenance | `6cec7dec7a8f` |
+| Provenance | `3d5b1d7f0b4d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-init` | contributing | — |
-| `memo-sub-init` | contributing | — |
+| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
+| `memo-sub-init` | contributing | Erzeugt Sub-Memos autonom aus den Sub-Memo-Zeilen der Triage-Tabelle eines Sortier-Memos |
 
 ## 5. Grading assignment
 
@@ -43,4 +43,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `6cec7dec7a8f` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `3d5b1d7f0b4d` over the skill-to-spec map. Regenerated on every build.
