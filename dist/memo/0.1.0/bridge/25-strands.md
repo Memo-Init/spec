@@ -25,8 +25,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-finalize` | contributing | — |
-| `memo-rollout-generate` | contributing | — |
+| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
+| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
 
 ## 5. Grading assignment
 

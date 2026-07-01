@@ -25,23 +25,23 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `drift-resolution` | contributing | — |
-| `git-commit` | contributing | — |
-| `git-merge-strategy` | contributing | — |
-| `git-push` | contributing | — |
-| `git-security` | primary | — |
-| `memo-finalize` | contributing | — |
-| `memo-handover` | contributing | — |
-| `memo-maintenance-verify` | contributing | — |
-| `memo-phase-execute` | contributing | — |
-| `memo-phase-generate` | contributing | — |
-| `memo-plan-execute` | contributing | — |
-| `memo-req-runner` | contributing | — |
-| `memo-rollout` | contributing | — |
-| `memo-rollout-execute` | contributing | — |
-| `release` | contributing | — |
-| `workbench-audit` | contributing | — |
-| `workbench-modes` | contributing | — |
+| `drift-resolution` | contributing | Detect and resolve DRIFT — a knowledge-unit (a statement, command, number, or convention) replicated across many artifacts that… |
+| `git-commit` | contributing | Structured commit workflow — security check, MANDATORY issue creation, staging, commit message with issue reference |
+| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
+| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
+| `git-security` | primary | Standalone security check for Git repositories |
+| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
+| `memo-handover` | contributing | Zwei-Stufen-Handover-Skill fuer kontaminierte Session-Uebergaben |
+| `memo-maintenance-verify` | contributing | The gated re-bless of the maintenance system — the handelnde pendant to memo-goal-optimize |
+| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
+| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
+| `memo-plan-execute` | contributing | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
+| `memo-req-runner` | contributing | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
+| `memo-rollout` | contributing | Orchestrator fuer den kompletten Rollout |
+| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
+| `release` | contributing | Two-stage release and pinning policy |
+| `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
+| `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
 
 ## 5. Grading assignment
 

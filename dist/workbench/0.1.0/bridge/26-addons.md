@@ -25,8 +25,8 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-addons` | primary | — |
-| `workbench-skills-scope` | contributing | — |
+| `workbench-addons` | primary | Integrate an Add-on — a custom-folder tool that reserves a small declared area inside a project's `.workbench/` descriptor and… |
+| `workbench-skills-scope` | contributing | Author workbench- and custom-folder skills under the common SOP standard (Setup / Health / Update / Extras), assign the orchest… |
 
 ## 5. Grading assignment
 

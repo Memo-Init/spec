@@ -25,13 +25,13 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-fidelity-audit` | contributing | — |
-| `memo-finalize` | contributing | — |
-| `memo-phase-execute` | contributing | — |
-| `memo-rollout` | primary | — |
-| `memo-rollout-evaluate` | primary | — |
-| `memo-rollout-execute` | primary | — |
-| `memo-sop` | contributing | — |
+| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
+| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
+| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
+| `memo-rollout` | primary | Orchestrator fuer den kompletten Rollout |
+| `memo-rollout-evaluate` | primary | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
+| `memo-rollout-execute` | primary | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
+| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
 
 ## 5. Grading assignment
 

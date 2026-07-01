@@ -25,11 +25,11 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-merge-strategy` | contributing | — |
-| `memo-handover` | contributing | — |
-| `memo-rollout-execute` | contributing | — |
-| `memo-sop` | contributing | — |
-| `workbench-modes` | contributing | — |
+| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
+| `memo-handover` | contributing | Zwei-Stufen-Handover-Skill fuer kontaminierte Session-Uebergaben |
+| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
+| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
+| `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
 
 ## 5. Grading assignment
 

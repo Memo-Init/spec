@@ -25,11 +25,11 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-req-registry` | contributing | — |
-| `memo-req-store` | contributing | — |
-| `memo-req-template` | contributing | — |
-| `wiki-query` | contributing | — |
-| `workbench-audit` | contributing | — |
+| `memo-req-registry` | contributing | Catalog of tools usable as requirements (Pencil, Playwright, get-sheet, getui, FlowMCP) with named validation tactics, plus a d… |
+| `memo-req-store` | contributing | Storage convention and entry schema for the requirements/eval calibration layer, plus the three-axis scoping/matching engine |
+| `memo-req-template` | contributing | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements (eval-styl… |
+| `wiki-query` | contributing | Answer questions against the project wiki by reading index.md and navigating to relevant pages |
+| `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
 
 ## 5. Grading assignment
 

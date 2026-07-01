@@ -25,12 +25,12 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-commit` | contributing | — |
-| `git-push` | contributing | — |
-| `git-security` | contributing | — |
-| `memo-req-runner` | contributing | — |
-| `workbench-audit` | contributing | — |
-| `workbench-persona-audit` | contributing | — |
+| `git-commit` | contributing | Structured commit workflow — security check, MANDATORY issue creation, staging, commit message with issue reference |
+| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
+| `git-security` | contributing | Standalone security check for Git repositories |
+| `memo-req-runner` | contributing | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
+| `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
+| `workbench-persona-audit` | contributing | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
 
 ## 5. Grading assignment
 

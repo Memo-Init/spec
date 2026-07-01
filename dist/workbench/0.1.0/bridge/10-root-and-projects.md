@@ -25,7 +25,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-root-projects` | primary | — |
+| `workbench-root-projects` | primary | The two-level boundary — workbench root vs |
 
 ## 5. Grading assignment
 
