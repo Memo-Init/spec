@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [35-memo-authoring](./35-memo-authoring.md) |
-| Provenance | `f8698810d652` |
+| Provenance | `8a7cfc40044d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,10 +26,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-balance` | contributing | Check memo chapters for over-engineering and under-engineering |
-| `memo-coherence` | contributing | Provide honest, critical feedback on a memo — find gaps, contradictions, redundancies, and logical issues |
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
+| `memo-balance` | contributing | — |
+| `memo-coherence` | contributing | — |
+| `memo-init` | contributing | — |
+| `memo-revision-execute` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `f8698810d652` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `8a7cfc40044d` over the skill-to-spec map. Regenerated on every build.

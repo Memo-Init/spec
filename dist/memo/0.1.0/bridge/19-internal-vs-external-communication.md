@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [19-internal-vs-external-communication](./19-internal-vs-external-communication.md) |
-| Provenance | `e7c57de96fc3` |
+| Provenance | `a90bfa77968f` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,12 +26,12 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-commit` | contributing | Structured commit workflow — security check, MANDATORY issue creation, staging, commit message with issue reference |
-| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
-| `git-security` | contributing | Standalone security check for Git repositories |
-| `memo-req-runner` | contributing | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
-| `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
-| `workbench-persona-audit` | contributing | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
+| `git-commit` | contributing | — |
+| `git-push` | contributing | — |
+| `git-security` | contributing | — |
+| `memo-req-runner` | contributing | — |
+| `workbench-audit` | contributing | — |
+| `workbench-persona-audit` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -52,4 +52,4 @@ Grading handled by `memo-req-runner` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `e7c57de96fc3` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `a90bfa77968f` over the skill-to-spec map. Regenerated on every build.

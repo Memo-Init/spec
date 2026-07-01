@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [13-orchestration](./13-orchestration.md) |
-| Provenance | `1588eee35808` |
+| Provenance | `250fade194a0` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,25 +26,25 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `drift-resolution` | contributing | Detect and resolve DRIFT — a knowledge-unit (a statement, command, number, or convention) replicated across many artifacts that… |
-| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
-| `memo-chronic-build` | contributing | Orchestrate the chronicle over ALL memos in.memo/ in one run |
-| `memo-handover` | contributing | Zwei-Stufen-Handover-Skill fuer kontaminierte Session-Uebergaben |
-| `memo-phase-evaluate` | primary | Prueft das Zusammenspiel aller PRDs innerhalb einer Phase |
-| `memo-phase-execute` | primary | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
-| `memo-plan-execute` | contributing | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
-| `memo-prd-evaluate` | contributing | Validate PRDs against the source memo |
-| `memo-prds-validate` | contributing | Bidirectional validation of Memo vs |
-| `memo-references` | contributing | Verify all code references in a memo (file paths, line numbers, code snippets) |
-| `memo-research-agent` | contributing | Research agent with a fixed output format and a fixed storage location |
-| `memo-revision-evaluate` | contributing | Mandatory auto-check after each revision |
-| `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
-| `memo-rollout` | contributing | Orchestrator fuer den kompletten Rollout |
-| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
-| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
-| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
-| `research-workflow` | primary | Research orchestration for choosing the right information gathering tool |
+| `drift-resolution` | contributing | — |
+| `git-merge-strategy` | contributing | — |
+| `memo-chronic-build` | contributing | — |
+| `memo-handover` | contributing | — |
+| `memo-phase-evaluate` | primary | — |
+| `memo-phase-execute` | primary | — |
+| `memo-phase-generate` | contributing | — |
+| `memo-plan-execute` | contributing | — |
+| `memo-prd-evaluate` | contributing | — |
+| `memo-prds-validate` | contributing | — |
+| `memo-references` | contributing | — |
+| `memo-research-agent` | contributing | — |
+| `memo-revision-evaluate` | contributing | — |
+| `memo-revision-generate` | contributing | — |
+| `memo-rollout` | contributing | — |
+| `memo-rollout-execute` | contributing | — |
+| `memo-rollout-generate` | contributing | — |
+| `memo-sop` | contributing | — |
+| `research-workflow` | primary | — |
 
 ## 5. Grading assignment
 
@@ -66,4 +66,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `1588eee35808` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `250fade194a0` over the skill-to-spec map. Regenerated on every build.

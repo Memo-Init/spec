@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [12-folders](./12-folders.md) |
-| Provenance | `4ad8b654d5a1` |
+| Provenance | `eabdaa11e7ea` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,9 +26,9 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-environment-scripts` | contributing | Operate a project's `scripts/` family (dev/staging/cleanup/health-check) under the declarative boot contract, and run Workbench… |
-| `workbench-folders` | primary | The authoritative project folder contract — the registered-vocabulary registry of mandatory, reserved-default-on, and optional… |
-| `workbench-tmp` | contributing | Operate a project's `.tmp/` ephemeral scratch folder — the dot-prefixed, machine-local, gitignored area for throwaway working f… |
+| `workbench-environment-scripts` | contributing | — |
+| `workbench-folders` | primary | — |
+| `workbench-tmp` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -44,4 +44,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `4ad8b654d5a1` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `eabdaa11e7ea` over the skill-to-spec map. Regenerated on every build.

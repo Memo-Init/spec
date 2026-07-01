@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [00-overview](./00-overview.md) |
-| Provenance | `86c8747fe383` |
+| Provenance | `ded22c49bc42` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,8 @@ Canonical docs entry: `/workbench/overview/`. No entry-point skill flagged yet.
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
-| `workbench-project-setup` | contributing | Project setup and installation pattern for the One-Pizza workbench |
+| `workbench-audit` | contributing | — |
+| `workbench-project-setup` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -43,4 +43,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `86c8747fe383` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `ded22c49bc42` over the skill-to-spec map. Regenerated on every build.

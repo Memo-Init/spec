@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [12-rollout](./12-rollout.md) |
-| Provenance | `8813ef2e233d` |
+| Provenance | `f8c2979ec7f9` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,13 +26,13 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
-| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
-| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `memo-rollout` | primary | Orchestrator fuer den kompletten Rollout |
-| `memo-rollout-evaluate` | primary | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
-| `memo-rollout-execute` | primary | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
-| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
+| `memo-fidelity-audit` | contributing | — |
+| `memo-finalize` | contributing | — |
+| `memo-phase-execute` | contributing | — |
+| `memo-rollout` | primary | — |
+| `memo-rollout-evaluate` | primary | — |
+| `memo-rollout-execute` | primary | — |
+| `memo-sop` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -54,4 +54,4 @@ Grading handled by `memo-fidelity-audit`.
 
 ## 8. Provenance
 
-Derived-record hash `8813ef2e233d` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f8c2979ec7f9` over the skill-to-spec map. Regenerated on every build.

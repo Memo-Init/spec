@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [02-sop-entrypoint](./02-sop-entrypoint.md) |
-| Provenance | `b515dbfc1909` |
+| Provenance | `b74a5c9783f7` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,11 +26,11 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-addons` | contributing | Integrate an Add-on — a custom-folder tool that reserves a small declared area inside a project's `.workbench/` descriptor and… |
-| `workbench-cli` | contributing | Apply the workbench CLI convention — a self-describing Branch/Leaf command tree, `.workbench/registry.json` as the single deter… |
-| `workbench-config` | contributing | Declare and maintain a project's `.workbench/` configuration — the MANUAL, never-auto-generated single source of policy |
-| `workbench-hooks-contract` | contributing | Author and reason about the workbench hooks contract — the policy the workbench DECLARES for deterministic PreToolUse enforceme… |
-| `workbench-sop-entry` | primary | The Workbench-SOP entry-point signpost — read first on every fresh start to learn where you are and what you may do |
+| `workbench-addons` | contributing | — |
+| `workbench-cli` | contributing | — |
+| `workbench-config` | contributing | — |
+| `workbench-hooks-contract` | contributing | — |
+| `workbench-sop-entry` | primary | — |
 
 ## 5. Grading assignment
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `b515dbfc1909` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `b74a5c9783f7` over the skill-to-spec map. Regenerated on every build.

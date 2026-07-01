@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [37-transcript-reliability](./37-transcript-reliability.md) |
-| Provenance | `e17cb8ecc3f3` |
+| Provenance | `3f5b3908084d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-input-processing` | contributing | Strict 5-step input processing pipeline for voice memos, text, and linked files |
+| `memo-input-processing` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `e17cb8ecc3f3` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `3f5b3908084d` over the skill-to-spec map. Regenerated on every build.

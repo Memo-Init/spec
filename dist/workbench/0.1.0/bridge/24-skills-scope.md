@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [24-skills-scope](./24-skills-scope.md) |
-| Provenance | `29bebfccd484` |
+| Provenance | `acdd9fd49779` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,9 +26,9 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-addons` | contributing | Integrate an Add-on — a custom-folder tool that reserves a small declared area inside a project's `.workbench/` descriptor and… |
-| `workbench-hooks-contract` | contributing | Author and reason about the workbench hooks contract — the policy the workbench DECLARES for deterministic PreToolUse enforceme… |
-| `workbench-skills-scope` | primary | Author workbench- and custom-folder skills under the common SOP standard (Setup / Health / Update / Extras), assign the orchest… |
+| `workbench-addons` | contributing | — |
+| `workbench-hooks-contract` | contributing | — |
+| `workbench-skills-scope` | primary | — |
 
 ## 5. Grading assignment
 
@@ -44,4 +44,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `29bebfccd484` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `acdd9fd49779` over the skill-to-spec map. Regenerated on every build.

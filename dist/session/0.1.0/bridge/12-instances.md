@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [12-instances](./12-instances.md) |
-| Provenance | `fd6d3e911304` |
+| Provenance | `c830538a295a` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-instances` | primary | Register a concrete SOP as an instance of the SOP standard and tie it back to the common denominator by reference, not by copy |
+| `session-instances` | primary | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `fd6d3e911304` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `c830538a295a` over the skill-to-spec map. Regenerated on every build.

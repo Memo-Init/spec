@@ -6,7 +6,7 @@ spec_file: "04-cli.md"
 order: 4
 section: "Session"
 normative: true
-generated_at: "2026-07-01T01:12:29.418Z"
+generated_at: "2026-07-01T01:33:48.544Z"
 generated_from: "draft/session/0.1.0/spec/04-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/04-cli.md."

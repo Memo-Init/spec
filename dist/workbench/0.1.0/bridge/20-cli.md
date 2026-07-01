@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [20-cli](./20-cli.md) |
-| Provenance | `a957f69fb887` |
+| Provenance | `034b95773087` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,13 +26,13 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-addons` | contributing | Integrate an Add-on — a custom-folder tool that reserves a small declared area inside a project's `.workbench/` descriptor and… |
-| `workbench-cli` | primary | Apply the workbench CLI convention — a self-describing Branch/Leaf command tree, `.workbench/registry.json` as the single deter… |
-| `workbench-config` | contributing | Declare and maintain a project's `.workbench/` configuration — the MANUAL, never-auto-generated single source of policy |
-| `workbench-environment-scripts` | contributing | Operate a project's `scripts/` family (dev/staging/cleanup/health-check) under the declarative boot contract, and run Workbench… |
-| `workbench-hooks-contract` | contributing | Author and reason about the workbench hooks contract — the policy the workbench DECLARES for deterministic PreToolUse enforceme… |
-| `workbench-skills-scope` | contributing | Author workbench- and custom-folder skills under the common SOP standard (Setup / Health / Update / Extras), assign the orchest… |
-| `workbench-validation` | contributing | The workbench validation wayfinder and requirements home — the single index of every validation family (WRITE-LINT, ENTRY-PRE,… |
+| `workbench-addons` | contributing | — |
+| `workbench-cli` | primary | — |
+| `workbench-config` | contributing | — |
+| `workbench-environment-scripts` | contributing | — |
+| `workbench-hooks-contract` | contributing | — |
+| `workbench-skills-scope` | contributing | — |
+| `workbench-validation` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -48,4 +48,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `a957f69fb887` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `034b95773087` over the skill-to-spec map. Regenerated on every build.

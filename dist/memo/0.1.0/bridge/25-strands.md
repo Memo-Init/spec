@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [25-strands](./25-strands.md) |
-| Provenance | `dcc0ab032892` |
+| Provenance | `60d063ed3718` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,8 +26,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
-| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
+| `memo-finalize` | contributing | — |
+| `memo-rollout-generate` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -43,4 +43,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `dcc0ab032892` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `60d063ed3718` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [22-tree-cli-recommended-way](./22-tree-cli-recommended-way.md) |
-| Provenance | `8be5284b8207` |
+| Provenance | `d14e232fa8c5` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,10 +26,10 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-score` | contributing | Score ONE goal in a FRESH context (never the working session) |
-| `memo-maintenance-score` | contributing | Score ONE repo card in a FRESH context (never the working session) |
-| `memo-plan-status` | contributing | Zeigt Plan-Status (Phasen + Issues + HEAD-Commits + Budget) in Klartext-Terminal-Format |
-| `memo-plan-update-checkbox` | contributing | Setzt einzelne Phasen-Task-Checkboxen in plan.md programmatisch |
+| `memo-goal-score` | contributing | — |
+| `memo-maintenance-score` | contributing | — |
+| `memo-plan-status` | contributing | — |
+| `memo-plan-update-checkbox` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -45,4 +45,4 @@ Grading handled by `memo-goal-score`.
 
 ## 8. Provenance
 
-Derived-record hash `8be5284b8207` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `d14e232fa8c5` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | workbench |
 | Chapter | [32-trash](./32-trash.md) |
-| Provenance | `4daef588e160` |
+| Provenance | `7c853651a280` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,11 +26,11 @@ Canonical docs entry: `/workbench/overview/`. No entry-point skill flagged yet.
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `wiki-init` | contributing | Initialize a project wiki (.wiki/) with index, log, page directories and local git |
-| `wiki-update` | contributing | Update existing wiki pages after source changes |
-| `workbench-project-setup` | contributing | Project setup and installation pattern for the One-Pizza workbench |
-| `workbench-tmp` | contributing | Operate a project's `.tmp/` ephemeral scratch folder — the dot-prefixed, machine-local, gitignored area for throwaway working f… |
-| `workbench-validation` | contributing | The workbench validation wayfinder and requirements home — the single index of every validation family (WRITE-LINT, ENTRY-PRE,… |
+| `wiki-init` | contributing | — |
+| `wiki-update` | contributing | — |
+| `workbench-project-setup` | contributing | — |
+| `workbench-tmp` | contributing | — |
+| `workbench-validation` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `4daef588e160` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `7c853651a280` over the skill-to-spec map. Regenerated on every build.

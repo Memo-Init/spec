@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [05-config-cascade](./05-config-cascade.md) |
-| Provenance | `6c7e08d5e8ce` |
+| Provenance | `755db48bd4b3` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-config-cascade` | primary | Author and resolve the.session/config.json — the genesis-tier config the PreToolUse gate reads |
+| `session-config-cascade` | primary | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `6c7e08d5e8ce` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `755db48bd4b3` over the skill-to-spec map. Regenerated on every build.

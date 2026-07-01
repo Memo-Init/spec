@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [02-enforcement](./02-enforcement.md) |
-| Provenance | `225045913f8c` |
+| Provenance | `7cd70a70452a` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-enforcement` | primary | Realize the deterministic PreToolUse gate of the genesis tier — the contract sop-precondition.sh MUST satisfy |
+| `session-enforcement` | primary | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `225045913f8c` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `7cd70a70452a` over the skill-to-spec map. Regenerated on every build.

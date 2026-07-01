@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [01-philosophy](./01-philosophy.md) |
-| Provenance | `3352c5dfef5e` |
+| Provenance | `f7118f2f2a1d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,11 +26,11 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-coherence` | contributing | Provide honest, critical feedback on a memo — find gaps, contradictions, redundancies, and logical issues |
-| `memo-mental-model-derive` | contributing | Derive the project-global User Mental Model in a FRESH context (never the working session) by walking the finalized memos chron… |
-| `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
-| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
-| `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
+| `memo-coherence` | contributing | — |
+| `memo-mental-model-derive` | contributing | — |
+| `memo-revision-generate` | contributing | — |
+| `memo-sop` | contributing | — |
+| `workbench-modes` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `3352c5dfef5e` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f7118f2f2a1d` over the skill-to-spec map. Regenerated on every build.

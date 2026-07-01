@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [06-namespace-registry](./06-namespace-registry.md) |
-| Provenance | `de0972021509` |
+| Provenance | `5c4670876ed0` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-namespace-registry` | primary | Author and validate the sops[] namespace registry — the registrant blocks that replace the flat skills[] list |
+| `session-namespace-registry` | primary | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `de0972021509` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `5c4670876ed0` over the skill-to-spec map. Regenerated on every build.

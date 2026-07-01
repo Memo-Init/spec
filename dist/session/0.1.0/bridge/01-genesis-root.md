@@ -4,7 +4,7 @@
 |---|---|
 | Family | session |
 | Chapter | [01-genesis-root](./01-genesis-root.md) |
-| Provenance | `791fedce6ac3` |
+| Provenance | `f6d199b81367` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,7 +26,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-genesis-root` | primary | Resolve and reason about the Session Genesis Root (session-sop) — the lowest tier, global per session |
+| `session-genesis-root` | primary | — |
 
 ## 5. Grading assignment
 
@@ -42,4 +42,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `791fedce6ac3` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f6d199b81367` over the skill-to-spec map. Regenerated on every build.

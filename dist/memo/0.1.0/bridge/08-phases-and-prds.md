@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [08-phases-and-prds](./08-phases-and-prds.md) |
-| Provenance | `2d708521758f` |
+| Provenance | `0e13871f2c8d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,25 +26,25 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `drift-resolution` | contributing | Detect and resolve DRIFT — a knowledge-unit (a statement, command, number, or convention) replicated across many artifacts that… |
-| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-phase-evaluate` | contributing | Prueft das Zusammenspiel aller PRDs innerhalb einer Phase |
-| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `memo-phase-generate` | primary | Erstellt eine einzelne Phase mit PRDs |
-| `memo-plan-add` | contributing | Fuegt ein finalisiertes Memo zu einem bestehenden Plan hinzu |
-| `memo-plan-evaluate` | contributing | Bidirektionale Konformitaetspruefung Plan vs Memos |
-| `memo-plan-init` | contributing | Erstellt einen neuen Plan-Folder mit Skeleton (plan.md + plan-status.json) |
-| `memo-prd-evaluate` | primary | Validate PRDs against the source memo |
-| `memo-prd-generate` | primary | Create PRDs (Product Requirement Documents) from a finalized memo |
-| `memo-prds-validate` | primary | Bidirectional validation of Memo vs |
-| `memo-references` | contributing | Verify all code references in a memo (file paths, line numbers, code snippets) |
-| `memo-reset-recommend` | primary | Evaluates whether a /clear reset should be recommended after a phase boundary |
-| `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
-| `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
-| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
-| `memo-rollout-generate` | primary | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
-| `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
+| `drift-resolution` | contributing | — |
+| `memo-finalize` | contributing | — |
+| `memo-init` | contributing | — |
+| `memo-phase-evaluate` | contributing | — |
+| `memo-phase-execute` | contributing | — |
+| `memo-phase-generate` | primary | — |
+| `memo-plan-add` | contributing | — |
+| `memo-plan-evaluate` | contributing | — |
+| `memo-plan-init` | contributing | — |
+| `memo-prd-evaluate` | primary | — |
+| `memo-prd-generate` | primary | — |
+| `memo-prds-validate` | primary | — |
+| `memo-references` | contributing | — |
+| `memo-reset-recommend` | primary | — |
+| `memo-revision-execute` | contributing | — |
+| `memo-rollout-evaluate` | contributing | — |
+| `memo-rollout-execute` | contributing | — |
+| `memo-rollout-generate` | primary | — |
+| `workbench-modes` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -70,4 +70,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `2d708521758f` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `0e13871f2c8d` over the skill-to-spec map. Regenerated on every build.

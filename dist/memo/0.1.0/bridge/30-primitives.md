@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [30-primitives](./30-primitives.md) |
-| Provenance | `faa6bc489ed1` |
+| Provenance | `e23795e40615` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -26,10 +26,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-req-registry` | contributing | Catalog of tools usable as requirements (Pencil, Playwright, get-sheet, getui, FlowMCP) with named validation tactics, plus a d… |
-| `memo-req-runner` | contributing | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
-| `memo-req-store` | contributing | Storage convention and entry schema for the requirements/eval calibration layer, plus the three-axis scoping/matching engine |
-| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
+| `memo-req-registry` | contributing | — |
+| `memo-req-runner` | contributing | — |
+| `memo-req-store` | contributing | — |
+| `memo-sop` | contributing | — |
 
 ## 5. Grading assignment
 
@@ -45,4 +45,4 @@ Grading handled by `memo-req-registry` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `faa6bc489ed1` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `e23795e40615` over the skill-to-spec map. Regenerated on every build.
