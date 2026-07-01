@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-instances` | primary | — |
+| `session-instances` | primary | Register a concrete SOP as an instance of the SOP standard and tie it back to the common denominator by reference, not by copy |
 
 ## 5. Grading assignment
 

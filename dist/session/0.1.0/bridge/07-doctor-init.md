@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-doctor-init` | primary | — |
+| `session-doctor-init` | primary | Run the foreground readiness pair of the session namespace — the reference doctor/init of an SOP-instance namespace |
 
 ## 5. Grading assignment
 

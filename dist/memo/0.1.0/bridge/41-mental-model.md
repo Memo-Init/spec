@@ -25,9 +25,9 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-init` | contributing | — |
-| `memo-mental-model-derive` | primary | — |
-| `memo-revision-generate` | contributing | — |
+| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
+| `memo-mental-model-derive` | primary | Derive the project-global User Mental Model in a FRESH context (never the working session) by walking the finalized memos chron… |
+| `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
 
 ## 5. Grading assignment
 

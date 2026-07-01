@@ -25,8 +25,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `skill-testing` | primary | — |
-| `specs-to-skills` | primary | — |
+| `skill-testing` | primary | Systematic testing strategy for Claude Code skills |
+| `specs-to-skills` | primary | Scaffold skill skeletons from the spec-to-skill map and grade skill quality against the three authoring dimensions |
 
 ## 5. Grading assignment
 

@@ -25,10 +25,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-push` | contributing | — |
-| `memo-maintenance-score-all` | contributing | — |
-| `memo-maintenance-verify` | contributing | — |
-| `release` | primary | — |
+| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
+| `memo-maintenance-score-all` | contributing | Score EVERY repo card in a fresh context and render the maintenance board — the standard output of the maintenance system |
+| `memo-maintenance-verify` | contributing | The gated re-bless of the maintenance system — the handelnde pendant to memo-goal-optimize |
+| `release` | primary | Two-stage release and pinning policy |
 
 ## 5. Grading assignment
 

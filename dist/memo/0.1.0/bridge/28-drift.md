@@ -25,10 +25,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `drift-resolution` | primary | — |
-| `memo-maintenance-score` | contributing | — |
-| `memo-maintenance-score-all` | contributing | — |
-| `memo-references` | contributing | — |
+| `drift-resolution` | primary | Detect and resolve DRIFT — a knowledge-unit (a statement, command, number, or convention) replicated across many artifacts that… |
+| `memo-maintenance-score` | contributing | Score ONE repo card in a FRESH context (never the working session) |
+| `memo-maintenance-score-all` | contributing | Score EVERY repo card in a fresh context and render the maintenance board — the standard output of the maintenance system |
+| `memo-references` | contributing | Verify all code references in a memo (file paths, line numbers, code snippets) |
 
 ## 5. Grading assignment
 

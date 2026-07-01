@@ -25,7 +25,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-design` | primary | — |
+| `workbench-design` | primary | The design/ folder and its design.md convention — the optional, no-dot, project-level home for a project's design system (YAML… |
 
 ## 5. Grading assignment
 

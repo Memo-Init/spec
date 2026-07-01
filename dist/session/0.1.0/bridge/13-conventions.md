@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-conventions` | primary | — |
+| `session-conventions` | primary | Enforce the cross-cutting session conventions that apply wherever skills, CLIs, and SOP prose appear — the lowercase prefix-hyp… |
 
 ## 5. Grading assignment
 

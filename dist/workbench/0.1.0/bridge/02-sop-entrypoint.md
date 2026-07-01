@@ -25,11 +25,11 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-addons` | contributing | — |
-| `workbench-cli` | contributing | — |
-| `workbench-config` | contributing | — |
-| `workbench-hooks-contract` | contributing | — |
-| `workbench-sop-entry` | primary | — |
+| `workbench-addons` | contributing | Integrate an Add-on — a custom-folder tool that reserves a small declared area inside a project's `.workbench/` descriptor and… |
+| `workbench-cli` | contributing | Apply the workbench CLI convention — a self-describing Branch/Leaf command tree, `.workbench/registry.json` as the single deter… |
+| `workbench-config` | contributing | Declare and maintain a project's `.workbench/` configuration — the MANUAL, never-auto-generated single source of policy |
+| `workbench-hooks-contract` | contributing | Author and reason about the workbench hooks contract — the policy the workbench DECLARES for deterministic PreToolUse enforceme… |
+| `workbench-sop-entry` | primary | The Workbench-SOP entry-point signpost — read first on every fresh start to learn where you are and what you may do |
 
 ## 5. Grading assignment
 

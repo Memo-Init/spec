@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Meta-Spec"
 normative: false
-generated_at: "2026-07-01T20:09:09.479Z"
+generated_at: "2026-07-01T20:09:54.700Z"
 generated_from: "draft/spec/0.1.0/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/00-overview.md."

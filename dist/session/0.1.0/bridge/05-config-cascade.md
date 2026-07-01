@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-config-cascade` | primary | — |
+| `session-config-cascade` | primary | Author and resolve the.session/config.json — the genesis-tier config the PreToolUse gate reads |
 
 ## 5. Grading assignment
 

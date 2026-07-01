@@ -25,10 +25,10 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-research-agent` | contributing | — |
-| `research-best-practice-playwright` | primary | — |
-| `research-scrape-docs` | primary | — |
-| `research-workflow` | contributing | — |
+| `memo-research-agent` | contributing | Research agent with a fixed output format and a fixed storage location |
+| `research-best-practice-playwright` | primary | Playwright CLI vs MCP Server decision framework |
+| `research-scrape-docs` | primary | Systematically scrape documentation websites into a single text file |
+| `research-workflow` | contributing | Research orchestration for choosing the right information gathering tool |
 
 ## 5. Grading assignment
 
