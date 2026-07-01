@@ -25,7 +25,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-philosophy` | primary | Guardrails for the workbench's three founding convictions — single source not duplication, develop-centrally-roll-out-easily up… |
+| `workbench-philosophy` | primary | — |
 
 ## 5. Grading assignment
 

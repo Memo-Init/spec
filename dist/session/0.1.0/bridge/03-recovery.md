@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-recovery` | primary | Keep the genesis-tier gate always recoverable |
+| `session-recovery` | primary | — |
 
 ## 5. Grading assignment
 

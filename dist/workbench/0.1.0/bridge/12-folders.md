@@ -25,9 +25,9 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-environment-scripts` | contributing | Operate a project's `scripts/` family (dev/staging/cleanup/health-check) under the declarative boot contract, and run Workbench… |
-| `workbench-folders` | primary | The authoritative project folder contract — the registered-vocabulary registry of mandatory, reserved-default-on, and optional… |
-| `workbench-tmp` | contributing | Operate a project's `.tmp/` ephemeral scratch folder — the dot-prefixed, machine-local, gitignored area for throwaway working f… |
+| `workbench-environment-scripts` | contributing | — |
+| `workbench-folders` | primary | — |
+| `workbench-tmp` | contributing | — |
 
 ## 5. Grading assignment
 
