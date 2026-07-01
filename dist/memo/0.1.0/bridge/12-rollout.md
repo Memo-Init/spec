@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [12-rollout](./12-rollout.md) |
-| Provenance | `6f74c94469ae` |
+| Provenance | `8813ef2e233d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-rollout`, `memo-sop` · docs entry `/specification/overview/`
+`memo-finalize`, `memo-rollout`, `memo-sop` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -54,4 +54,4 @@ Grading handled by `memo-fidelity-audit`.
 
 ## 8. Provenance
 
-Derived-record hash `6f74c94469ae` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `8813ef2e233d` over the skill-to-spec map. Regenerated on every build.

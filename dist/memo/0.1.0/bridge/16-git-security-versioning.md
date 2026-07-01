@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [16-git-security-versioning](./16-git-security-versioning.md) |
-| Provenance | `623470e490c4` |
+| Provenance | `eade5206f0fb` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-rollout`, `workbench-modes` · docs entry `/specification/overview/`
+`memo-finalize`, `memo-rollout`, `workbench-modes` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -61,4 +61,4 @@ Grading handled by `memo-req-runner` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `623470e490c4` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `eade5206f0fb` over the skill-to-spec map. Regenerated on every build.

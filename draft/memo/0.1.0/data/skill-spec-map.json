@@ -310,7 +310,11 @@
                 "Dependency smoke-check at finalization",
                 "Rollout-Entry-Points section + filesystem check"
             ],
-            "visibility": "public"
+            "visibility": "public",
+            "requires": [
+                "memo-sop"
+            ],
+            "roleHint": "public-entry"
         },
         {
             "skill": "memo-goal-optimize",
@@ -402,7 +406,10 @@
                 "Memo-vs-Phase default decision + new-memo cost"
             ],
             "roleHint": "public-entry",
-            "visibility": "public"
+            "visibility": "public",
+            "requires": [
+                "memo-sop"
+            ]
         },
         {
             "skill": "memo-input-processing",
@@ -986,7 +993,10 @@
                 "Sub-Memo HARD-STOP check",
                 "User Mental Model consult mechanism"
             ],
-            "visibility": "public"
+            "visibility": "public",
+            "requires": [
+                "memo-sop"
+            ]
         },
         {
             "skill": "memo-rollout",
@@ -1006,7 +1016,10 @@
                 "plan-context operating modes"
             ],
             "roleHint": "public-entry",
-            "visibility": "public"
+            "visibility": "public",
+            "requires": [
+                "memo-sop"
+            ]
         },
         {
             "skill": "memo-rollout-evaluate",
@@ -1026,7 +1039,10 @@
                 "utilization gate (built-but-unwired)",
                 "UI before/after diff + proofs evidence layout"
             ],
-            "visibility": "public"
+            "visibility": "public",
+            "requires": [
+                "memo-rollout-execute"
+            ]
         },
         {
             "skill": "memo-rollout-execute",
@@ -1049,7 +1065,10 @@
                 "between-phase integration follow-up policy",
                 "user-triggered landing as the only valid stop point"
             ],
-            "visibility": "public"
+            "visibility": "public",
+            "requires": [
+                "memo-rollout-generate"
+            ]
         },
         {
             "skill": "memo-rollout-generate",

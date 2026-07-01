@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md) |
-| Provenance | `5e2588236904` |
+| Provenance | `4cbc9d5e161e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-revision-consolidate` _(inferred from primary owners)_ · docs entry `/specification/overview/`
+`memo-finalize` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `5e2588236904` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `4cbc9d5e161e` over the skill-to-spec map. Regenerated on every build.

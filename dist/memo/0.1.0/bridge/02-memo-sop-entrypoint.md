@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md) |
-| Provenance | `2a45cbb5b79b` |
+| Provenance | `5c4ea66bbb37` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-init`, `memo-sop`, `workbench-modes` · docs entry `/specification/overview/`
+`memo-finalize`, `memo-init`, `memo-sop`, `workbench-modes` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -60,4 +60,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `2a45cbb5b79b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `5c4ea66bbb37` over the skill-to-spec map. Regenerated on every build.

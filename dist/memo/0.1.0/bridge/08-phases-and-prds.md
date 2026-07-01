@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [08-phases-and-prds](./08-phases-and-prds.md) |
-| Provenance | `8b9f9ea83adc` |
+| Provenance | `2d708521758f` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-init`, `workbench-modes` · docs entry `/specification/overview/`
+`memo-finalize`, `memo-init`, `workbench-modes` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -70,4 +70,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `8b9f9ea83adc` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `2d708521758f` over the skill-to-spec map. Regenerated on every build.

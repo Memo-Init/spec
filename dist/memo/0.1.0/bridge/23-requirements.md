@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [23-requirements](./23-requirements.md) |
-| Provenance | `1ef694676445` |
+| Provenance | `fe40eff1b28a` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-req-template` _(inferred from primary owners)_ · docs entry `/specification/overview/`
+`memo-finalize` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -63,4 +63,4 @@ Grading handled by `memo-req-registry` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `1ef694676445` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `fe40eff1b28a` over the skill-to-spec map. Regenerated on every build.

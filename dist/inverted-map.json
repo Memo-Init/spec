@@ -1,7 +1,7 @@
 {
     "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.",
     "generator": "scripts/generate-bridge.mjs",
-    "mapHash": "c5b7b6b4e5ea",
+    "mapHash": "bf0b03f4ecfe",
     "pages": [
         {
             "family": "memo",
@@ -89,6 +89,7 @@
             "stem": "02-memo-sop-entrypoint",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-finalize",
                 "memo-init",
                 "memo-sop",
                 "workbench-modes"
@@ -177,7 +178,7 @@
             ],
             "requirementCount": 2,
             "internalCount": 0,
-            "provenance": "2a45cbb5b79b"
+            "provenance": "5c4ea66bbb37"
         },
         {
             "family": "memo",
@@ -439,6 +440,7 @@
             "stem": "08-phases-and-prds",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-finalize",
                 "memo-init",
                 "workbench-modes"
             ],
@@ -551,7 +553,7 @@
             ],
             "requirementCount": 6,
             "internalCount": 0,
-            "provenance": "8b9f9ea83adc"
+            "provenance": "2d708521758f"
         },
         {
             "family": "memo",
@@ -559,6 +561,7 @@
             "stem": "09-contamination-context-handover",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-finalize",
                 "memo-init"
             ],
             "publicEntriesInferred": false,
@@ -687,7 +690,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "5f17c041cebb"
+            "provenance": "997ba2ae8418"
         },
         {
             "family": "memo",
@@ -764,6 +767,7 @@
             "stem": "11-quality-and-finalization",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-finalize",
                 "memo-rollout"
             ],
             "publicEntriesInferred": false,
@@ -871,7 +875,7 @@
             ],
             "requirementCount": 5,
             "internalCount": 1,
-            "provenance": "b652367d558c"
+            "provenance": "d71d77fe9cba"
         },
         {
             "family": "memo",
@@ -879,6 +883,7 @@
             "stem": "12-rollout",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-finalize",
                 "memo-rollout",
                 "memo-sop"
             ],
@@ -941,7 +946,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 1,
-            "provenance": "6f74c94469ae"
+            "provenance": "8813ef2e233d"
         },
         {
             "family": "memo",
@@ -1165,6 +1170,7 @@
             "stem": "16-git-security-versioning",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-finalize",
                 "memo-rollout",
                 "workbench-modes"
             ],
@@ -1265,7 +1271,7 @@
             ],
             "requirementCount": 8,
             "internalCount": 4,
-            "provenance": "623470e490c4"
+            "provenance": "eade5206f0fb"
         },
         {
             "family": "memo",
@@ -1448,9 +1454,9 @@
             "stem": "20-flow-full-vs-update-revisions",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
-                "memo-revision-consolidate"
+                "memo-finalize"
             ],
-            "publicEntriesInferred": true,
+            "publicEntriesInferred": false,
             "detailPages": [
                 "00-overview",
                 "07-revisions-and-questions",
@@ -1485,7 +1491,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "5e2588236904"
+            "provenance": "4cbc9d5e161e"
         },
         {
             "family": "memo",
@@ -1493,6 +1499,7 @@
             "stem": "21-human-computer-interaction",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-finalize",
                 "memo-sop"
             ],
             "publicEntriesInferred": false,
@@ -1542,7 +1549,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "7b95f803d20e"
+            "provenance": "ea07027c0f3c"
         },
         {
             "family": "memo",
@@ -1593,12 +1600,9 @@
             "stem": "23-requirements",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
-                "memo-req-registry",
-                "memo-req-runner",
-                "memo-req-store",
-                "memo-req-template"
+                "memo-finalize"
             ],
-            "publicEntriesInferred": true,
+            "publicEntriesInferred": false,
             "detailPages": [
                 "00-overview",
                 "11-quality-and-finalization",
@@ -1699,7 +1703,7 @@
             ],
             "requirementCount": 6,
             "internalCount": 3,
-            "provenance": "1ef694676445"
+            "provenance": "fe40eff1b28a"
         },
         {
             "family": "memo",
@@ -1756,8 +1760,10 @@
             "id": "memo/25-strands",
             "stem": "25-strands",
             "sopAnchor": "02-memo-sop-entrypoint",
-            "publicEntries": [],
-            "publicEntriesInferred": true,
+            "publicEntries": [
+                "memo-finalize"
+            ],
+            "publicEntriesInferred": false,
             "detailPages": [
                 "00-overview",
                 "06-memo-structure",
@@ -1783,7 +1789,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "7cb174eafd53"
+            "provenance": "dcc0ab032892"
         },
         {
             "family": "memo",

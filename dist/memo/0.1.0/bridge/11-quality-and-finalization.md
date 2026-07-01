@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [11-quality-and-finalization](./11-quality-and-finalization.md) |
-| Provenance | `b652367d558c` |
+| Provenance | `d71d77fe9cba` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-rollout` · docs entry `/specification/overview/`
+`memo-finalize`, `memo-rollout` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -69,4 +69,4 @@ Grading handled by `memo-fidelity-audit`.
 
 ## 8. Provenance
 
-Derived-record hash `b652367d558c` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `d71d77fe9cba` over the skill-to-spec map. Regenerated on every build.

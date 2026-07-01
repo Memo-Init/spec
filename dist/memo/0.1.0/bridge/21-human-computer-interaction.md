@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [21-human-computer-interaction](./21-human-computer-interaction.md) |
-| Provenance | `7b95f803d20e` |
+| Provenance | `ea07027c0f3c` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-sop` · docs entry `/specification/overview/`
+`memo-finalize`, `memo-sop` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -48,4 +48,4 @@ Grading handled by `memo-goal-score-all`.
 
 ## 8. Provenance
 
-Derived-record hash `7b95f803d20e` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `ea07027c0f3c` over the skill-to-spec map. Regenerated on every build.

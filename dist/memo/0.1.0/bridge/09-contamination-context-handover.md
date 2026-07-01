@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [09-contamination-context-handover](./09-contamination-context-handover.md) |
-| Provenance | `5f17c041cebb` |
+| Provenance | `997ba2ae8418` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -16,7 +16,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-init` · docs entry `/specification/overview/`
+`memo-finalize`, `memo-init` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
@@ -67,4 +67,4 @@ Grading handled by `memo-goal-score`.
 
 ## 8. Provenance
 
-Derived-record hash `5f17c041cebb` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `997ba2ae8418` over the skill-to-spec map. Regenerated on every build.
