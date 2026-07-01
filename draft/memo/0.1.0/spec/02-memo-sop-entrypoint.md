@@ -30,16 +30,16 @@ Because finalized memos are optimized for in-context learning, an empty agent co
 
 ## The Four Verbs
 
-The SOP organizes the whole system under four verbs. Exactly three of them are public entry points that the developer triggers directly; one is internal and runs autonomously.
+The SOP organizes the whole system under four verbs. All four are public entry points that the developer triggers directly. The Revise verb is the developer-triggered **re-entry** into the revision loop ("here is revision X"); once re-entered, its internal Generate → Execute → Evaluate loop then runs autonomously, without a per-step trigger.
 
 | Verb | Visibility | Meaning |
 |------|------------|---------|
 | **Initialize** | public | Create a memo / place a transcript. |
-| **Revise** | internal / autonomous | Iterate the memo in a Generate → Execute → Evaluate loop, without a per-step trigger. |
+| **Revise** | public (re-entry) — loop then autonomous | Re-enter the revision loop with new feedback ("here is revision X"); the Generate → Execute → Evaluate loop then runs autonomously, without a per-step trigger. |
 | **Finalize** | public | Close the memo. MUST be developer-triggered; the AI MUST NOT finalize autonomously. |
 | **Execute / Plan** | public | Work a finalized memo through a plan. |
 
-The public entry points validate strictly and set the switches — like the public functions of a module — while the remaining skills are private process steps. Their trigger words are chosen to be mutually exclusive: no single trigger activates two entry points at once.
+The public entry points validate strictly and set the switches — like the public functions of a module — while the remaining skills are private process steps. Their trigger words are chosen to be mutually exclusive: no single trigger activates two entry points at once. The Revise re-entry promotes only `memo-revision-generate` to public; the loop's `memo-revision-execute` and `memo-revision-evaluate` stay internal.
 
 ---
 
@@ -81,12 +81,12 @@ The SOP classifies every skill as either a public entry point or a private proce
 
 | Class | Role | Examples |
 |-------|------|----------|
-| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-plan` (Plan) |
-| **Private** | Internal process steps, invoked by the public entry points. | the revision-loop skills, the quality skills, `memo-rollout` and the rollout machinery |
+| **Public** | Developer entry points. Validate strictly, set switches. | `memo-init` (Initialize), `memo-revision-generate` (Revise re-entry), `memo-finalize` (Finalize), `memo-plan` (Plan) |
+| **Private** | Internal process steps, invoked by the public entry points. | the revision loop's `memo-revision-execute` / `memo-revision-evaluate` steps, the quality skills, `memo-rollout` and the rollout machinery |
 
 This classification drives **progressive disclosure**: public memos and skills are the visible UI entry points, shown so a reader can find the doors into the system; internal memos and skills are linked from the public ones but not displayed up front. A reader sees the few entry points first and reaches the private process steps only by following a link.
 
-Named in full, the memo system exposes exactly **three public skill entry points** — `memo-init` (Initialize), `memo-finalize` (Finalize), and `memo-plan` (Plan) — alongside two non-skill surfaces: the **memo-view API routes** and the **CLI**. Those are the doors into the system; everything else is reached through them.
+Named in full, the memo system exposes exactly **four public skill entry points** — `memo-init` (Initialize), `memo-revision-generate` (Revise re-entry), `memo-finalize` (Finalize), and `memo-plan` (Plan) — alongside two non-skill surfaces: the **memo-view API routes** and the **CLI**. Those are the doors into the system; everything else is reached through them.
 
 ---
 
@@ -101,19 +101,20 @@ Two values are defined:
 | `"public-entry"` | The skill is a **developer-triggered public entry point** — one of the few doors through which a developer enters the memo system. These skills validate strictly, set the switches, and MUST read `memo-sop` before any work proceeds (REQ-800). | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-rollout` (Execute/Plan — the lived single-memo execution path) |
 | `"grader"` | The skill is responsible for **grading or scoring** a memo artifact (goals, maintenance health, fidelity, etc.). The bridge uses the grader marker to assign grading responsibility unambiguously; without it the generator infers a grader from the skill's category or name and marks the result inferred. | `memo-goal-score`, `memo-goal-score-all`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-fidelity-audit`, and similar scoring skills |
 
-### The Three Canonical Developer-Triggered Entry Points
+### The Four Canonical Developer-Triggered Entry Points
 
-The memo system exposes exactly three canonical developer-triggered skill entry points. Each maps to one of the Four Verbs (see above):
+The memo system exposes exactly four canonical developer-triggered skill entry points. Each maps to one of the Four Verbs (see above):
 
 | Verb | Skill | `roleHint` | Note |
 |---|---|---|---|
 | Initialize | `memo-init` | `public-entry` | Creates a memo from a transcript or intent. |
+| Revise | `memo-revision-generate` | `public-entry` | Re-enters the revision loop with new feedback ("here is revision X"); the Generate → Execute → Evaluate loop then runs autonomously. Only `memo-revision-generate` is public; `memo-revision-execute` / `memo-revision-evaluate` stay internal. |
 | Finalize | `memo-finalize` | `public-entry` | Closes the memo; MUST be developer-triggered (never autonomous). |
 | Execute / Plan | `memo-rollout` | `public-entry` | Works a single finalized memo through its phases (the lived execution path). Multi-memo plan orchestration (`memo-plan`) is the aspiration built on top; the standalone planning layer is as-yet unfinished. |
 
-`memo-sop` is also marked `roleHint: "public-entry"` in the map as the **canonical reference entry** — it is the SOP document a developer (or agent) loads first to understand the whole system, and the bridge SOP-flow graph uses it as the anchor. It is not a developer-triggered verb in the Four Verbs sense but is the required pre-flight for all three verb skills (REQ-800).
+`memo-sop` is also marked `roleHint: "public-entry"` in the map as the **canonical reference entry** — it is the SOP document a developer (or agent) loads first to understand the whole system, and the bridge SOP-flow graph uses it as the anchor. It is not a developer-triggered verb in the Four Verbs sense but is the required pre-flight for all four verb skills (REQ-800).
 
-The `requires` field on a skill entry documents which other skills MUST be loaded or run first. For the three public entry-point skills, `requires: ["memo-sop"]` expresses the REQ-800 pre-flight mandate at the data layer, making the dependency machine-readable and checkable by the spec consistency gate.
+The `requires` field on a skill entry documents which other skills MUST be loaded or run first. For the four public entry-point skills, `requires: ["memo-sop"]` expresses the REQ-800 pre-flight mandate at the data layer, making the dependency machine-readable and checkable by the spec consistency gate.
 
 ---
 
@@ -147,13 +148,13 @@ The few-public-doors discipline is a structural property of the skill set — ch
 {
   "id": "REQ-801",
   "title": "Public entry-point trigger words are mutually exclusive",
-  "statement": "The memo system MUST expose a small, fixed set of public skill entry points — Initialize, Finalize, and Execute/Plan — whose trigger words are mutually exclusive: no single trigger word activates two entry points at once. Every other memo skill is a private process step reached only through a public entry point, never triggered directly.",
+  "statement": "The memo system MUST expose a small, fixed set of public skill entry points — Initialize, Revise, Finalize, and Execute/Plan — whose trigger words are mutually exclusive: no single trigger word activates two entry points at once. Every other memo skill is a private process step reached only through a public entry point, never triggered directly.",
   "scope": { "repos": [], "categories": ["memo"], "tags": ["memo-sop", "entry-points"] },
   "severity": "warning",
   "check": {
     "kind": "assertion",
     "assertions": [
-      "Exactly the three public entry points declare developer-facing trigger words; all other memo skills are marked private",
+      "Exactly the four public entry points declare developer-facing trigger words; all other memo skills are marked private",
       "The trigger-word sets of the public entry points are pairwise disjoint"
     ]
   },

@@ -6,7 +6,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: false
-generated_at: "2026-07-01T14:52:41.218Z"
+generated_at: "2026-07-01T15:36:43.547Z"
 generated_from: "draft/workbench/0.1.0/spec/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/02-sop-entrypoint.md."

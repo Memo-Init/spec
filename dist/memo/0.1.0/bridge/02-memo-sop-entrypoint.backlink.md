@@ -13,6 +13,7 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `memo-plan-stop` — contributing
 - `memo-plan-update-checkbox` — contributing
 - `memo-reset-recommend` — contributing
+- `memo-revision-generate` — contributing
 - `memo-sop` — primary
 - `memo-sub-init` — contributing
 - `skill-testing` — contributing

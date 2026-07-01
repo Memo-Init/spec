@@ -12,7 +12,7 @@ This page maps each specification chapter to the skills that implement it — so
 |---|---|---|---|---|
 | [00-overview](#00-overview) | ✓ | 1 | 0 | — |
 | [01-philosophy](#01-philosophy) | ✓ | 5 | 0 | — |
-| [02-memo-sop-entrypoint](#02-memo-sop-entrypoint) | ✓ | 14 | 0 | 2 |
+| [02-memo-sop-entrypoint](#02-memo-sop-entrypoint) | ✓ | 15 | 0 | 2 |
 | [03-input-paths](#03-input-paths) | ✓ | 2 | 0 | — |
 | [04-input-pipeline](#04-input-pipeline) | ✓ | 2 | 0 | 2 |
 | [05-memo-strategies](#05-memo-strategies) | ✓ | 2 | 0 | — |
@@ -123,7 +123,7 @@ This page maps each specification chapter to the skills that implement it — so
 | `memo-revision-consolidate` | [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md) (primary), [07-revisions-and-questions](./07-revisions-and-questions.md), [11-quality-and-finalization](./11-quality-and-finalization.md) |
 | `memo-revision-evaluate` | [07-revisions-and-questions](./07-revisions-and-questions.md) (primary), [09-contamination-context-handover](./09-contamination-context-handover.md), [13-orchestration](./13-orchestration.md), [34-question-interface](./34-question-interface.md) |
 | `memo-revision-execute` | [07-revisions-and-questions](./07-revisions-and-questions.md) (primary), [06-memo-structure](./06-memo-structure.md), [08-phases-and-prds](./08-phases-and-prds.md), [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md), [34-question-interface](./34-question-interface.md), [35-memo-authoring](./35-memo-authoring.md) |
-| `memo-revision-generate` | [07-revisions-and-questions](./07-revisions-and-questions.md) (primary), [01-philosophy](./01-philosophy.md), [10-proactive-research](./10-proactive-research.md), [13-orchestration](./13-orchestration.md), [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md), [34-question-interface](./34-question-interface.md), [41-mental-model](./41-mental-model.md) |
+| `memo-revision-generate` | [07-revisions-and-questions](./07-revisions-and-questions.md) (primary), [01-philosophy](./01-philosophy.md), [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md), [10-proactive-research](./10-proactive-research.md), [13-orchestration](./13-orchestration.md), [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md), [34-question-interface](./34-question-interface.md), [41-mental-model](./41-mental-model.md) |
 | `memo-rollout` | [12-rollout](./12-rollout.md) (primary), [11-quality-and-finalization](./11-quality-and-finalization.md), [13-orchestration](./13-orchestration.md), [16-git-security-versioning](./16-git-security-versioning.md), [33-maintenance](./33-maintenance.md), [38-stage-model](./38-stage-model.md) |
 | `memo-rollout-evaluate` | [12-rollout](./12-rollout.md) (primary), [08-phases-and-prds](./08-phases-and-prds.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [23-requirements](./23-requirements.md), [31-goals](./31-goals.md), [36-agent-strategies](./36-agent-strategies.md), [38-stage-model](./38-stage-model.md) |
 | `memo-rollout-execute` | [12-rollout](./12-rollout.md) (primary), [08-phases-and-prds](./08-phases-and-prds.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [13-orchestration](./13-orchestration.md), [16-git-security-versioning](./16-git-security-versioning.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md), [26-memo-history](./26-memo-history.md), [27-landing-the-plane](./27-landing-the-plane.md), [38-stage-model](./38-stage-model.md) |
@@ -203,7 +203,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `memo-finalize`, `memo-init`, `memo-plan-add`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-reset-recommend`, `memo-sop`, `memo-sub-init`, `skill-testing`, `workbench-modes` |
+| Public skills | `memo-finalize`, `memo-init`, `memo-plan-add`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-reset-recommend`, `memo-revision-generate`, `memo-sop`, `memo-sub-init`, `skill-testing`, `workbench-modes` |
 | Internal tooling | — |
 | Requirements | 2 |
 | Depends on | [00-overview](./00-overview.md), [01-philosophy](./01-philosophy.md), [03-input-paths](./03-input-paths.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md) |

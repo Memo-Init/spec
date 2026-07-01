@@ -1,7 +1,7 @@
 {
     "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its public implementer skills with role + the public projection fields. Generated from skill-spec-map.json. The internal-only gaps roll-up is not published here (Memo 059, PRD-003).",
     "generator": "scripts/generate-bridge.mjs",
-    "mapHash": "3fd465ddfac8",
+    "mapHash": "4b848637a1d5",
     "pages": [
         {
             "family": "memo",
@@ -39,6 +39,7 @@
             "stem": "01-philosophy",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-revision-generate",
                 "memo-sop",
                 "workbench-modes"
             ],
@@ -79,7 +80,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "f7118f2f2a1d"
+            "provenance": "59d67ce03870"
         },
         {
             "family": "memo",
@@ -89,6 +90,7 @@
             "publicEntries": [
                 "memo-finalize",
                 "memo-init",
+                "memo-revision-generate",
                 "memo-sop",
                 "workbench-modes"
             ],
@@ -143,6 +145,10 @@
                     "role": "contributing"
                 },
                 {
+                    "skill": "memo-revision-generate",
+                    "role": "contributing"
+                },
+                {
                     "skill": "memo-sop",
                     "role": "primary"
                 },
@@ -168,7 +174,7 @@
             ],
             "requirementCount": 2,
             "internalCount": 0,
-            "provenance": "45b7105e446c"
+            "provenance": "0afd81ae6a5c"
         },
         {
             "family": "memo",
@@ -327,7 +333,8 @@
             "stem": "07-revisions-and-questions",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
-                "memo-init"
+                "memo-init",
+                "memo-revision-generate"
             ],
             "publicEntriesInferred": false,
             "detailPages": [
@@ -392,7 +399,7 @@
             ],
             "requirementCount": 5,
             "internalCount": 0,
-            "provenance": "d44beeac8c2e"
+            "provenance": "588ff48fdc16"
         },
         {
             "family": "memo",
@@ -641,7 +648,8 @@
             "stem": "10-proactive-research",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
-                "memo-init"
+                "memo-init",
+                "memo-revision-generate"
             ],
             "publicEntriesInferred": false,
             "detailPages": [
@@ -698,7 +706,7 @@
             ],
             "requirementCount": 8,
             "internalCount": 0,
-            "provenance": "d811f94a3fd4"
+            "provenance": "9181b367786a"
         },
         {
             "family": "memo",
@@ -869,6 +877,7 @@
             "stem": "13-orchestration",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
+                "memo-revision-generate",
                 "memo-rollout",
                 "memo-sop"
             ],
@@ -968,7 +977,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "250fade194a0"
+            "provenance": "5085122d0e22"
         },
         {
             "family": "memo",
@@ -1348,7 +1357,8 @@
             "stem": "20-flow-full-vs-update-revisions",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
-                "memo-finalize"
+                "memo-finalize",
+                "memo-revision-generate"
             ],
             "publicEntriesInferred": false,
             "detailPages": [
@@ -1382,7 +1392,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "dfc7baa3c73a"
+            "provenance": "5fecc432e9e1"
         },
         {
             "family": "memo",
@@ -2074,7 +2084,8 @@
             "stem": "34-question-interface",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
-                "memo-init"
+                "memo-init",
+                "memo-revision-generate"
             ],
             "publicEntriesInferred": false,
             "detailPages": [
@@ -2113,7 +2124,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "65196165f655"
+            "provenance": "f42b636ea4a7"
         },
         {
             "family": "memo",
@@ -2450,7 +2461,8 @@
             "stem": "41-mental-model",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
-                "memo-init"
+                "memo-init",
+                "memo-revision-generate"
             ],
             "publicEntriesInferred": false,
             "detailPages": [
@@ -2482,7 +2494,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "153001706e2e"
+            "provenance": "b6d8437578f9"
         },
         {
             "family": "memo",

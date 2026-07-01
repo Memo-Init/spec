@@ -981,6 +981,7 @@
             "primary": "memo/07-revisions-and-questions",
             "all": [
                 "memo/07-revisions-and-questions",
+                "memo/02-memo-sop-entrypoint",
                 "memo/20-flow-full-vs-update-revisions",
                 "memo/34-question-interface",
                 "memo/10-proactive-research",
@@ -993,6 +994,7 @@
                 "Sub-Memo HARD-STOP check",
                 "User Mental Model consult mechanism"
             ],
+            "roleHint": "public-entry",
             "visibility": "public",
             "requires": [
                 "memo-sop"

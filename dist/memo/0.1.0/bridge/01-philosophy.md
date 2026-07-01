@@ -15,7 +15,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 2. Public entry points
 
-`memo-sop`, `workbench-modes` · docs entry `/specification/overview/`
+`memo-revision-generate`, `memo-sop`, `workbench-modes` · docs entry `/specification/overview/`
 
 ## 3. Required detail pages
 
