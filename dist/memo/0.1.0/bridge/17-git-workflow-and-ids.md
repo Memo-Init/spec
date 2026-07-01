@@ -25,16 +25,16 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-commit` | primary | — |
-| `git-merge-strategy` | contributing | — |
-| `git-push` | contributing | — |
-| `memo-phase-execute` | contributing | — |
-| `memo-plan-execute` | contributing | — |
-| `memo-plan-stop` | contributing | — |
-| `memo-plan-update-checkbox` | contributing | — |
-| `memo-prd-generate` | contributing | — |
-| `memo-rollout-execute` | contributing | — |
-| `workbench-modes` | contributing | — |
+| `git-commit` | primary | Structured commit workflow — security check, MANDATORY issue creation, staging, commit message with issue reference |
+| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
+| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
+| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
+| `memo-plan-execute` | contributing | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
+| `memo-plan-stop` | contributing | Externer Stop-Befehl (/memo-plan-stop) |
+| `memo-plan-update-checkbox` | contributing | Setzt einzelne Phasen-Task-Checkboxen in plan.md programmatisch |
+| `memo-prd-generate` | contributing | Create PRDs (Product Requirement Documents) from a finalized memo |
+| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
+| `workbench-modes` | contributing | Three modes of agentic coding in the One-Pizza workbench |
 
 ## 5. Grading assignment
 

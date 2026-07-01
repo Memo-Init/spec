@@ -25,10 +25,10 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-cli` | contributing | — |
-| `workbench-environment-scripts` | primary | — |
-| `workbench-skills-scope` | contributing | — |
-| `workbench-validation` | contributing | — |
+| `workbench-cli` | contributing | Apply the workbench CLI convention — a self-describing Branch/Leaf command tree, `.workbench/registry.json` as the single deter… |
+| `workbench-environment-scripts` | primary | Operate a project's `scripts/` family (dev/staging/cleanup/health-check) under the declarative boot contract, and run Workbench… |
+| `workbench-skills-scope` | contributing | Author workbench- and custom-folder skills under the common SOP standard (Setup / Health / Update / Extras), assign the orchest… |
+| `workbench-validation` | contributing | The workbench validation wayfinder and requirements home — the single index of every validation family (WRITE-LINT, ENTRY-PRE,… |
 
 ## 5. Grading assignment
 

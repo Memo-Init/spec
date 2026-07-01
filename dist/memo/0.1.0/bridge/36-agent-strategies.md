@@ -25,18 +25,18 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-chronic-build` | contributing | — |
-| `memo-goal-score` | contributing | — |
-| `memo-goal-score-all` | contributing | — |
-| `memo-input-processing` | contributing | — |
-| `memo-maintenance-score` | contributing | — |
-| `memo-maintenance-score-all` | contributing | — |
-| `memo-mental-model-derive` | contributing | — |
-| `memo-phase-evaluate` | contributing | — |
-| `memo-research-agent` | contributing | — |
-| `memo-rollout-evaluate` | contributing | — |
-| `research-workflow` | contributing | — |
-| `workbench-persona-audit` | contributing | — |
+| `memo-chronic-build` | contributing | Orchestrate the chronicle over ALL memos in.memo/ in one run |
+| `memo-goal-score` | contributing | Score ONE goal in a FRESH context (never the working session) |
+| `memo-goal-score-all` | contributing | Score EVERY goal in a fresh context and render the goal board — the standard output of the goal-scoring system |
+| `memo-input-processing` | contributing | Strict 5-step input processing pipeline for voice memos, text, and linked files |
+| `memo-maintenance-score` | contributing | Score ONE repo card in a FRESH context (never the working session) |
+| `memo-maintenance-score-all` | contributing | Score EVERY repo card in a fresh context and render the maintenance board — the standard output of the maintenance system |
+| `memo-mental-model-derive` | contributing | Derive the project-global User Mental Model in a FRESH context (never the working session) by walking the finalized memos chron… |
+| `memo-phase-evaluate` | contributing | Prueft das Zusammenspiel aller PRDs innerhalb einer Phase |
+| `memo-research-agent` | contributing | Research agent with a fixed output format and a fixed storage location |
+| `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
+| `research-workflow` | contributing | Research orchestration for choosing the right information gathering tool |
+| `workbench-persona-audit` | contributing | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
 
 ## 5. Grading assignment
 

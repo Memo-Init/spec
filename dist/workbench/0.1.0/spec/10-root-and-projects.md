@@ -6,7 +6,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T16:07:39.189Z"
+generated_at: "2026-07-01T16:39:52.592Z"
 generated_from: "draft/workbench/0.1.0/spec/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/10-root-and-projects.md."

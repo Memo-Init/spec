@@ -6,7 +6,7 @@ spec_file: "02-per-chapter-format.md"
 order: 2
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-01T16:07:39.189Z"
+generated_at: "2026-07-01T16:39:52.592Z"
 generated_from: "draft/spec/0.1.0/spec/02-per-chapter-format.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/02-per-chapter-format.md."

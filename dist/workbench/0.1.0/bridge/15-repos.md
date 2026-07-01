@@ -25,7 +25,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-repos` | primary | — |
+| `workbench-repos` | primary | The repos/ folder contract — the only place git lives in a project, one domain per repository, the only git units (project root… |
 
 ## 5. Grading assignment
 

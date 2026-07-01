@@ -25,10 +25,10 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-score` | contributing | — |
-| `memo-maintenance-score` | contributing | — |
-| `memo-plan-status` | contributing | — |
-| `memo-plan-update-checkbox` | contributing | — |
+| `memo-goal-score` | contributing | Score ONE goal in a FRESH context (never the working session) |
+| `memo-maintenance-score` | contributing | Score ONE repo card in a FRESH context (never the working session) |
+| `memo-plan-status` | contributing | Zeigt Plan-Status (Phasen + Issues + HEAD-Commits + Budget) in Klartext-Terminal-Format |
+| `memo-plan-update-checkbox` | contributing | Setzt einzelne Phasen-Task-Checkboxen in plan.md programmatisch |
 
 ## 5. Grading assignment
 

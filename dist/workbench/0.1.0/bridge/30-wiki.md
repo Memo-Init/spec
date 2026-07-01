@@ -25,12 +25,12 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `wiki-ingest` | primary | — |
-| `wiki-init` | primary | — |
-| `wiki-lint` | contributing | — |
-| `wiki-query` | primary | — |
-| `wiki-update` | primary | — |
-| `workbench-project-setup` | contributing | — |
+| `wiki-ingest` | primary | Process source files from context/ or finalized memos into wiki pages |
+| `wiki-init` | primary | Initialize a project wiki (.wiki/) with index, log, page directories and local git |
+| `wiki-lint` | contributing | Health-check the wiki |
+| `wiki-query` | primary | Answer questions against the project wiki by reading index.md and navigating to relevant pages |
+| `wiki-update` | primary | Update existing wiki pages after source changes |
+| `workbench-project-setup` | contributing | Project setup and installation pattern for the One-Pizza workbench |
 
 ## 5. Grading assignment
 

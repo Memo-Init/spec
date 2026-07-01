@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-overview` | primary | — |
+| `session-overview` | primary | Orient inside the Session spec — the genesis-root family that is global per session (session-sop) |
 
 ## 5. Grading assignment
 

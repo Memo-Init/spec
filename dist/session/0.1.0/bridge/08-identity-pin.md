@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-identity-pin` | primary | — |
+| `session-identity-pin` | primary | Pin the session identity once at SessionStart and keep it stable for the whole session |
 
 ## 5. Grading assignment
 
