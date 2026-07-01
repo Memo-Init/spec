@@ -46,6 +46,17 @@
                 "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
             }
         },
+        "spec": {
+            "type": "object",
+            "required": [ "currentVersion", "recommendedRelease", "specDir", "url" ],
+            "additionalProperties": false,
+            "properties": {
+                "currentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+                "recommendedRelease": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+                "specDir": { "type": "string", "pattern": "^draft/spec/\\d+\\.\\d+\\.\\d+/spec$" },
+                "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
+            }
+        },
         "docs": {
             "type": "object",
             "required": [ "canonical", "entryPoints" ],

@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-07-01T13:54:49.847Z",
+    "generated_at": "2026-07-01T14:52:42.736Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -894,12 +894,88 @@
             }
         ]
     },
+    "spec": {
+        "version": "0.1.0",
+        "files": [
+            {
+                "filename": "00-overview.md",
+                "slug": "overview",
+                "title": "Overview",
+                "description": "This is the entry point for the memo-init **Meta-Specification**, version `v0.1.0` (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes...",
+                "order": 0,
+                "section": "Meta-Spec",
+                "normative": false,
+                "sidebar_group": "introduction"
+            },
+            {
+                "filename": "01-bridge.md",
+                "slug": "bridge",
+                "title": "Bridge",
+                "description": "Bridge hub for the spec specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping (0 of 6 chapters covered).",
+                "order": 1,
+                "section": "Meta-Spec",
+                "normative": false,
+                "sidebar_group": "bridge"
+            },
+            {
+                "filename": "02-per-chapter-format.md",
+                "slug": "per-chapter-format",
+                "title": "Per-Chapter Format",
+                "description": "Every specification chapter in this organization has the same shape. The shape is not a style preference — it is what lets a build pipeline read any chapter of any family uniformly, lets a reader...",
+                "order": 2,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "structure"
+            },
+            {
+                "filename": "03-categories.md",
+                "slug": "categories",
+                "title": "Navigation Categories",
+                "description": "A family is more than a flat list of chapters. Its chapters cluster into topics — an introduction, one or more subject areas, and the generated bridge — and the reader meets those clusters as the...",
+                "order": 3,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "structure"
+            },
+            {
+                "filename": "04-bridge-standard.md",
+                "slug": "bridge-standard",
+                "title": "The Bridge Standard",
+                "description": "Every family carries one generated chapter that is not authored prose: the **bridge**. The bridge maps each specification chapter to the skills that implement it, so a reader can see which parts of...",
+                "order": 4,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "structure"
+            },
+            {
+                "filename": "05-publishing-principle.md",
+                "slug": "publishing-principle",
+                "title": "The Publishing Principle",
+                "description": "The organization publishes its specifications openly and keeps the skills that implement them private. That division has been lived architecturally — the site publishes the spec, the skill library is...",
+                "order": 5,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "publication"
+            },
+            {
+                "filename": "06-conventions-writing.md",
+                "slug": "conventions-writing",
+                "title": "Writing Conventions",
+                "description": "A **convention** is a standing rule the whole organization follows — how the orchestrator talks to the user, how a repository is scaffolded, how code in a given language is formatted. A convention is...",
+                "order": 6,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "conventions"
+            }
+        ]
+    },
     "stats": {
-        "total_files": 88,
+        "total_files": 95,
         "core_files": 47,
         "workbench_files": 24,
         "session_files": 17,
-        "normative_files": 74,
-        "informative_files": 14
+        "spec_files": 7,
+        "normative_files": 79,
+        "informative_files": 16
     }
 }

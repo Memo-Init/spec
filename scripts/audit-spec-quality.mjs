@@ -137,7 +137,7 @@ const emitEvidence = async ( { status, leakCount } ) => {
         status,
         scanner: 'audit-spec-quality.mjs',
         tactic: 'no-internal-ref-scan',
-        summary: { leakCount, checked: `${ REFS_MANUAL.spec.specDir } numbered pages + chapter-index README` }
+        summary: { leakCount, checked: `${ REFS_MANUAL.memo.specDir } numbered pages + chapter-index README` }
     }
     const evidencePath = resolve( evidenceDir, `${ REQ_ID }.evidence.json` )
     await writeFile( evidencePath, `${ JSON.stringify( evidence, null, 2 ) }\n` )

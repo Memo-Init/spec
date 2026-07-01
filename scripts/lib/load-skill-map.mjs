@@ -1,16 +1,18 @@
 // load-skill-map.mjs — Canonical per-family skill-spec-map loader (Memo 058 PRD-002).
 //
-// The skill-to-spec map is now split into three per-family files living alongside the spec:
+// The skill-to-spec map is now split into per-family files living alongside the spec:
 //   draft/<family>/0.1.0/data/skill-spec-map.json
-// This module merges all three into a single { note, totals, skills: [] } object, preserving
-// the family order memo → workbench → session (stable, matches original file order).
+// This module merges them into a single { note, totals, skills: [] } object, preserving
+// the family order memo → workbench → session → spec (stable, matches file order). The
+// spec meta-family carries an intentionally EMPTY map (0 implementers by design); its file
+// is present for symmetry, so every family has a map and the merge stays uniform.
 // House style: 4-space, no semicolons, single quotes, array methods, object returns.
 
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 
-const FAMILIES = [ 'memo', 'workbench', 'session' ]
+const FAMILIES = [ 'memo', 'workbench', 'session', 'spec' ]
 
 
 const computeTotals = ( { skills } ) => ( {

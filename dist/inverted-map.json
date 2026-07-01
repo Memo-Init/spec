@@ -4062,7 +4062,127 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "18b45d3c1797"
+            "provenance": "ce440da90973"
+        },
+        {
+            "family": "spec",
+            "id": "spec/00-overview",
+            "stem": "00-overview",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-per-chapter-format",
+                "04-bridge-standard"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0,
+            "provenance": "a76ae9e52279"
+        },
+        {
+            "family": "spec",
+            "id": "spec/02-per-chapter-format",
+            "stem": "02-per-chapter-format",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "03-categories",
+                "04-bridge-standard"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0,
+            "provenance": "7c40bdde4aed"
+        },
+        {
+            "family": "spec",
+            "id": "spec/03-categories",
+            "stem": "03-categories",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-per-chapter-format",
+                "04-bridge-standard"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0,
+            "provenance": "9cd7f29dccc9"
+        },
+        {
+            "family": "spec",
+            "id": "spec/04-bridge-standard",
+            "stem": "04-bridge-standard",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-bridge",
+                "02-per-chapter-format",
+                "03-categories",
+                "05-publishing-principle"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0,
+            "provenance": "6a0428fee81e"
+        },
+        {
+            "family": "spec",
+            "id": "spec/05-publishing-principle",
+            "stem": "05-publishing-principle",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "04-bridge-standard",
+                "06-conventions-writing"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0,
+            "provenance": "feefd7cf0c5d"
+        },
+        {
+            "family": "spec",
+            "id": "spec/06-conventions-writing",
+            "stem": "06-conventions-writing",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-per-chapter-format",
+                "05-publishing-principle"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0,
+            "provenance": "ac85505b617f"
         }
     ]
 }

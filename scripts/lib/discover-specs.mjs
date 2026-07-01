@@ -12,8 +12,9 @@
 //   dataDir  = 'draft/<name>/<version>/data'
 //   manifestMeta = { order:[...], labels:{...} } (sidebar group meta from sidebarMeta)
 //
-// Family ORDER is canonical: memo → workbench → session. Unknown families are appended
-// after the known three (alphabetically), so new parallel specs slot in deterministically.
+// Family ORDER is canonical: memo → workbench → session → spec (the meta-spec last).
+// Unknown families are appended after the known ones (alphabetically), so new parallel
+// specs slot in deterministically.
 // Callers MUST NOT re-implement the family list — add a spec.json under draft/<name>/
 // and extend refs.manual.json; discoverSpecs picks it up automatically.
 
@@ -21,8 +22,8 @@ import { readdirSync, readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 
 
-// Canonical family order for sorting. Unknown families sort after the known three.
-const FAMILY_ORDER = [ 'memo', 'workbench', 'session' ]
+// Canonical family order for sorting. Unknown families sort after the known ones.
+const FAMILY_ORDER = [ 'memo', 'workbench', 'session', 'spec' ]
 
 
 // Read a spec.json from a draft family directory. Returns null when absent or unreadable.
@@ -61,7 +62,7 @@ const buildFamilyRecord = ( { name, specJson } ) => {
 
 
 // Discover all spec families from draft/*/spec.json in canonical order:
-// memo → workbench → session, then any additional families alphabetically.
+// memo → workbench → session → spec, then any additional families alphabetically.
 // Falls back gracefully (returns empty array) when the draft dir does not exist yet.
 export const discoverSpecs = ( { repoRoot } ) => {
     const draftDir = join( repoRoot, 'draft' )

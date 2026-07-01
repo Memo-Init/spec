@@ -143,10 +143,11 @@ const main = async () => {
         const specChapters = ( await readdir( specDir ) )
             .filter( ( f ) => /^\d{2}-.*\.md$/.test( f ) )
             .map( ( f ) => `memo/${ f }` )
-        // Sibling families (workbench, session) live at draft/<family>/<ver>/spec (local).
-        // specDir = draft/memo/<ver>/spec → go up 3 levels to reach draft/.
+        // Sibling families (workbench, session, spec) live at draft/<family>/<ver>/spec (local).
+        // specDir = draft/memo/<ver>/spec → go up 3 levels to reach draft/. The spec meta-family
+        // has no implementer skills, so its chapters only surface in the (non-blocking) orphan report.
         const specRoot = resolve( specDir, '..', '..', '..' )
-        const families = [ 'workbench', 'session' ]
+        const families = [ 'workbench', 'session', 'spec' ]
             .map( ( prefix ) => ( { prefix, dir: latestFamilyDir( { familyRoot: join( specRoot, prefix ) } ) } ) )
         const familyChapters = ( await Promise.all( families.map( async ( { prefix, dir } ) => {
             if( dir === null ) return []

@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T13:54:48.375Z"
+generated_at: "2026-07-01T14:52:41.218Z"
 generated_from: "draft/memo/0.1.0/spec/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/19-internal-vs-external-communication.md."
@@ -25,6 +25,8 @@ Everything outside `.memo/` is **outward-facing** by default. The working assump
 
 - Material inside `.memo/` **MAY** carry internal references, working register, and insider shorthand. It is calibrated for the author and the agent, not for a stranger.
 - Outside `.memo/`, an artifact is outward-facing unless explicitly declared otherwise. The burden is on the author to justify keeping something internal — not to prove an artifact is fit to go out.
+
+> **The publishing principle.** A specific application of this direction governs what the organization publishes as a whole: the **specification** and the **build-plan** (how one authors skills, including the fact that a skill exists and **its name**) are published, while the **actual skills** and **our internal interpretation/classification of the spec** are private. Skill names are therefore publishable — what is withheld is the skill implementation and our inward reasoning about coverage, not the names. The principle has its home in the Spec family (see [/spec/publishing-principle/](/spec/publishing-principle/)); this chapter does not restate it.
 
 ---
 

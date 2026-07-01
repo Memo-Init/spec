@@ -59,7 +59,8 @@ const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
 const FAMILY_META = {
     memo: { versionField: 'spec_version', section: 'Specification' },
     workbench: { versionField: 'workbench_version', section: 'Workbench' },
-    session: { versionField: 'session_version', section: 'Session' }
+    session: { versionField: 'session_version', section: 'Session' },
+    spec: { versionField: 'spec_meta_version', section: 'Meta-Spec' }
 }
 
 // dist/<name>/<version>/spec/ — the directory sync-spec.mjs reads to serve site content.

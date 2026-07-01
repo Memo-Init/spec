@@ -20,6 +20,12 @@
         "specDir": "draft/session/0.1.0/spec",
         "url": "https://memo-init.github.io/session/overview/"
     },
+    "spec": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "draft/spec/0.1.0/spec",
+        "url": "https://memo-init.github.io/spec/overview/"
+    },
     "docs": {
         "canonical": "https://memo-init.github.io",
         "entryPoints": {
@@ -43,8 +49,8 @@
         ]
     },
     "generated": {
-        "at": "2026-07-01T13:54:47.954Z",
-        "fromCommit": "6cd927d",
+        "at": "2026-07-01T14:52:40.833Z",
+        "fromCommit": "caa9ca8",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {

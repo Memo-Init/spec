@@ -1,0 +1,54 @@
+{
+    "namespace": "spec",
+    "version": "0.1.0",
+    "namespaceToken": "SPEC",
+    "hasRequirements": false,
+    "hasGrading": false,
+    "requirementsRef": null,
+    "gradingRef": null,
+    "groups": [
+        {
+            "id": "introduction",
+            "label": "Introduction",
+            "order": 1,
+            "pages": [
+                "00-overview"
+            ]
+        },
+        {
+            "id": "structure",
+            "label": "Structure",
+            "order": 2,
+            "pages": [
+                "02-per-chapter-format",
+                "03-categories",
+                "04-bridge-standard"
+            ]
+        },
+        {
+            "id": "publication",
+            "label": "Publication",
+            "order": 3,
+            "pages": [
+                "05-publishing-principle"
+            ]
+        },
+        {
+            "id": "conventions",
+            "label": "Conventions",
+            "order": 4,
+            "pages": [
+                "06-conventions-writing"
+            ]
+        },
+        {
+            "id": "bridge",
+            "label": "Bridge",
+            "order": 5,
+            "pages": [
+                "01-bridge"
+            ]
+        }
+    ],
+    "fallback": "append-by-NN"
+}

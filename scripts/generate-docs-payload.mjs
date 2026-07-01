@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 // generate-docs-payload.mjs — memo-init spec → docs payload
 //
-// Reads every chapter in three sibling spec families and prepends YAML
+// Reads every chapter in four sibling spec families and prepends YAML
 // frontmatter with discovery metadata, rewrites intra-spec links
 // ./NN-name.md → /specification/<slug>/, and writes the result to
 // dist/<name>/<version>/spec/:
 //   memo      draft/memo/<version>/spec/*.md           → dist/memo/<version>/spec/<NN-name>.md
 //   workbench draft/workbench/<version>/spec/*.md      → dist/workbench/<version>/spec/<NN-name>.md
 //   session   draft/session/<version>/spec/*.md        → dist/session/<version>/spec/<NN-name>.md
+//   spec      draft/spec/<version>/spec/*.md           → dist/spec/<version>/spec/<NN-name>.md (Meta-Spec, Memo 059)
 //
 // (The former SOP family was folded into the session family in Memo 049.)
 // Each family carries its OWN version line (refs.manual.json keys spec /
@@ -44,13 +45,16 @@ const readFamilyVersion = ( { family } ) => {
 const SPEC_VERSION = readFamilyVersion( { family: 'memo' } )
 const WORKBENCH_VERSION = readFamilyVersion( { family: 'workbench' } )
 const SESSION_VERSION = readFamilyVersion( { family: 'session' } )
+const SPEC_META_VERSION = readFamilyVersion( { family: 'spec' } )
 
 const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
 const WORKBENCH_DIR = join( REPO, REFS_MANUAL.workbench.specDir )
 const SESSION_DIR = join( REPO, REFS_MANUAL.session.specDir )
+const SPEC_META_DIR = join( REPO, REFS_MANUAL.spec.specDir )
 const PAYLOAD_DIR = join( REPO, 'dist', 'memo', SPEC_VERSION, 'spec' )
 const WORKBENCH_PAYLOAD_DIR = join( REPO, 'dist', 'workbench', WORKBENCH_VERSION, 'spec' )
 const SESSION_PAYLOAD_DIR = join( REPO, 'dist', 'session', SESSION_VERSION, 'spec' )
+const SPEC_META_PAYLOAD_DIR = join( REPO, 'dist', 'spec', SPEC_META_VERSION, 'spec' )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 
@@ -303,6 +307,22 @@ const main = async () => {
         now
     } )
     reportPass( { label: 'session', results: sessionResults, targetDir: SESSION_PAYLOAD_DIR } )
+
+    // Fourth family: the Meta-Specification (spec). Its own version line rides in the
+    // spec_meta_version frontmatter field (distinct from memo's spec_version) so the two
+    // never collide even though both live under a "spec"-named path/route.
+    const specMetaResults = await generatePass( {
+        label: 'spec',
+        sourceDir: SPEC_META_DIR,
+        targetDir: SPEC_META_PAYLOAD_DIR,
+        section: 'Meta-Spec',
+        versionField: 'spec_meta_version',
+        versionValue: SPEC_META_VERSION,
+        sourceRelBase: REFS_MANUAL.spec.specDir,
+        sourceCommit,
+        now
+    } )
+    reportPass( { label: 'spec', results: specMetaResults, targetDir: SPEC_META_PAYLOAD_DIR } )
 }
 
 

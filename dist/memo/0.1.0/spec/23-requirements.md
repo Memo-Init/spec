@@ -6,7 +6,7 @@ spec_file: "23-requirements.md"
 order: 23
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T13:54:48.375Z"
+generated_at: "2026-07-01T14:52:41.218Z"
 generated_from: "draft/memo/0.1.0/spec/23-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/23-requirements.md."
@@ -81,17 +81,12 @@ _requirements/
 
 ### The Family Manifest Head
 
-Each spec family declares a machine-readable head so tooling can read every family uniformly. Both container forms are allowed — a `spec.json` or a `spec-manifest.json` — but one common field set is mandatory:
+Each spec family declares a machine-readable head so tooling can read every family uniformly — a `spec.json` or a `spec-manifest.json` carrying one common, mandatory field set. That head, and the full structural field set every family satisfies, is specified in the Spec family (see its per-chapter-format chapter: [/spec/per-chapter-format/](/spec/per-chapter-format/)); it is normative there and is not restated here.
 
-| Field | Meaning |
-|-------|---------|
-| `namespaceToken` | A short, globally-unique uppercase token for the family, so cross-family references never collide. |
-| `hasRequirements` | Whether the family authors its own requirements inline (the harvest source). |
-| `hasGrading` | Whether the family carries a grading head (the grade axis above). |
-| `requirementsRef` | The chapter that hosts the family's requirement standard, or `null`. |
-| `gradingRef` | The chapter that hosts the family's grading model, or `null` — a thin family points this at the shared model it imports. |
+Two of the head's fields are what the requirements system reads:
 
-A family that hosts the standard sets the flags `true` and points the refs at the hosting chapter; a thin family that only consumes sets them `false`/`null` and, when it grades, imports the model via `gradingRef`. External families adopt the same field set when they are ready; the field set is the contract, not the container filename.
+- `hasRequirements` — whether the family authors its own requirements inline, which is the harvest source for this registry.
+- `requirementsRef` — the chapter that hosts the family's requirement standard, or `null`.
 
 A thin family resolves its requirements one of two ways, never both: it either carries **its own requirement series** in its own chapters (and points `requirementsRef` at them), or it **declares inheritance** — naming the host-family requirements it must satisfy — instead of duplicating a parallel series. The second is preferred where a family has no domain-specific rules of its own, because a cross-family coverage board can then read one set of obligations per family without double-counting. A family's own series uses its own id vocabulary; the shared `REQ-NNN` store holds the curated, harvested rules.
 

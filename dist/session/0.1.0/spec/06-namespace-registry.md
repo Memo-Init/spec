@@ -6,7 +6,7 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-07-01T13:54:48.375Z"
+generated_at: "2026-07-01T14:52:41.218Z"
 generated_from: "draft/session/0.1.0/spec/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/06-namespace-registry.md."
@@ -52,7 +52,7 @@ The same `sops[]` array holds three kinds of block, distinguished by **how — a
 |------|--------------|-----------|------|---------|
 | **SOP-instance block** | carries dependencies | `requirements[]` — its entry point sits behind a `when:pre` edge | a process that gates work behind a predecessor SOP | `memo`, `workbench` |
 | **Catalog block** | empty | **nothing** — never a gate | a plain capability catalog: tools that are *available*, not *gated* | `flowmcp` |
-| **Policy block** | empty (never a chain predecessor) | `assertions[]` — only as a checkpoint `redirect`, never a `when:pre` edge | a body of standards that is *always findable*, of which a sub-set must be *read by a checkpoint* | `node` |
+| **Policy block** | empty (never a chain predecessor) | `assertions[]` — only as a checkpoint `redirect`, never a `when:pre` edge | a body of standards that is *always findable*, of which a sub-set must be *read by a checkpoint* | `node`, `communication` |
 
 A **catalog** block reserves a namespace and contributes skills like any block, but it is **never a precondition for anything**. FlowMCP reserves `flowmcp` and contributes `flowmcp-usage`; calling a FlowMCP tool is never gated behind a predecessor SOP:
 
@@ -171,6 +171,32 @@ The policy block registers *how* the standards are activated and tracked; it doe
 
 ---
 
+## The Communication Policy Block
+
+The `node` block is not the only body of standards. The **communication conventions** `J1`–`J12` — the orchestrator-to-user trust layer specified in [../memo/19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/) — register as a **second** policy block, reusing the same `kind:"policy"` primitive with **no** new registry kind. A policy block's body of standards need not be skills: the `node` block's standards are skills, the communication block's standards are named convention rules. Both are the same policy primitive, gated only through `assertions[]` per `REQ-SS-POLICY`, and neither is ever a chain predecessor.
+
+The block reserves the `communication` namespace, names its `owner`, keeps `requires[]` empty, feeds **no** `requirements[]` edge, and carries its convention set as addressable entries. Because these entries are rules rather than skills, they use the communication chapter's own `J`-numbering as their stable id (the skill-id form of N-2 constrains skill members, not convention entries):
+
+```jsonc
+{ "namespace": "communication", "owner": "memo-sop", "tier": 2,
+  "cli": null, "folders": [], "requires": [],
+  "source": "spec:memo/19 — the J1–J12 trust-layer table",
+  "conventions": [
+    { "id": "J1",  "mode": "always" }, { "id": "J2",  "mode": "always" },
+    { "id": "J3",  "mode": "always" }, { "id": "J4",  "mode": "always" },
+    { "id": "J5",  "mode": "always" }, { "id": "J6",  "mode": "always" },
+    { "id": "J7",  "mode": "always" }, { "id": "J8",  "mode": "always" },
+    { "id": "J9",  "mode": "always" }, { "id": "J10", "mode": "always" },
+    { "id": "J11", "mode": "always" }, { "id": "J12", "mode": "always" }
+  ] }
+```
+
+The twelve conventions are the ambient communication discipline in force on every user-facing turn, so each is `mode: "always"`; the block feeds no checkpoint group today, but MAY pull a sub-set into `assertions[]` later exactly as the `node` block does (the mechanism is unchanged). Like the `node` block, this block registers *how* the conventions are found and tracked — it does **not** restate what each `J`-rule says. The readable `J1`–`J12` table stays single-source in the communication chapter; the policy block is single-source for the registration. `REQ-SS-POLICY` already governs every policy block, so it covers `J1`–`J12` here with no change to its statement: the communication block is findable by construction and gates only as an `assertions[]` redirect at a checkpoint, never as a hard block or a chain predecessor.
+
+*(How a convention is written and why it registers as a policy block rather than a new primitive is specified in the Spec family — see [its conventions-writing chapter](/spec/conventions-writing/).)*
+
+---
+
 ## Two Dependency Granularities
 
 A registrant carries dependency information at **two granularities**, and both are kept, clearly separated:
@@ -219,3 +245,4 @@ This is how three independent registrants coexist sustainably: `memo`, `workbenc
 - [07-doctor-init.md](/specification/doctor-init/) — where N-1/N-2 are enforced: the foreground readiness preflight and additive scaffold.
 - [02-enforcement.md](/specification/enforcement/) — the three-state gate and why a collision degrades to fail-open ALLOW, never block.
 - [10-sop.md](/specification/sop/) — the SOP-instance-vs-catalog framing in full.
+- [/spec/conventions-writing/](/spec/conventions-writing/) — how a convention is written and why it registers as a policy block, not a new primitive.

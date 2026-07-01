@@ -2,11 +2,12 @@
 // generate-manifest.mjs — memo-init docs-payload manifest
 //
 // Reads dist/<name>/<version>/spec/**/*.md, parses each frontmatter, and writes
-// dist/manifest.json summarizing all files across the three
+// dist/manifest.json summarizing all files across the four
 // sibling spec families:
 //   manifest.files            — core chapters (manifest.spec_version)
 //   manifest.workbench        — { version, files[] } (own version line)
 //   manifest.session          — { version, files[] } (own version line; absorbs the former SOP family, Memo 049)
+//   manifest.spec             — { version, files[] } (the Meta-Specification: how specs are built, Memo 059)
 //
 // Each family gets its own sidebar_group mapping (Introduction-first), mirroring
 // FlowMCP's buildGradingBlock / buildBestPracticeBlock. The workbench/session blocks
@@ -29,10 +30,12 @@ const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json
 const SPEC_VERSION = REFS_MANUAL.memo.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
 const SESSION_VERSION = REFS_MANUAL.session.currentVersion
+const SPEC_META_VERSION = REFS_MANUAL.spec.currentVersion
 
 const PAYLOAD_DIR = join( REPO, 'dist', 'memo', SPEC_VERSION, 'spec' )
 const WORKBENCH_PAYLOAD_DIR = join( REPO, 'dist', 'workbench', WORKBENCH_VERSION, 'spec' )
 const SESSION_PAYLOAD_DIR = join( REPO, 'dist', 'session', SESSION_VERSION, 'spec' )
+const SPEC_META_PAYLOAD_DIR = join( REPO, 'dist', 'spec', SPEC_META_VERSION, 'spec' )
 const MANIFEST_PATH = join( REPO, 'dist', 'manifest.json' )
 const GENERATOR = 'scripts/generate-manifest.mjs'
 
@@ -87,6 +90,7 @@ const loadFamilyManifest = ( { specDir, label } ) => {
 const SPEC_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.memo.specDir, label: 'memo' } )
 const WORKBENCH_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.workbench.specDir, label: 'workbench' } )
 const SESSION_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.session.specDir, label: 'session' } )
+const SPEC_META_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.spec.specDir, label: 'spec' } )
 
 // Per-family grouping closure: spec-manifest lookup, fallback to the first group id.
 const makeGroupFn = ( { manifest } ) => {
@@ -97,6 +101,7 @@ const makeGroupFn = ( { manifest } ) => {
 const sidebarGroupFromFilename = makeGroupFn( { manifest: SPEC_MANIFEST } )
 const workbenchSidebarGroupFromFilename = makeGroupFn( { manifest: WORKBENCH_MANIFEST } )
 const sessionSidebarGroupFromFilename = makeGroupFn( { manifest: SESSION_MANIFEST } )
+const specMetaSidebarGroupFromFilename = makeGroupFn( { manifest: SPEC_META_MANIFEST } )
 
 
 const collectEntries = async ( { dir, groupFn, label } ) => {
@@ -151,8 +156,9 @@ const main = async () => {
     const coreFiles = await collectEntries( { dir: PAYLOAD_DIR, groupFn: sidebarGroupFromFilename, label: 'memo' } )
     const workbench = await buildFamilyBlock( { dir: WORKBENCH_PAYLOAD_DIR, groupFn: workbenchSidebarGroupFromFilename, label: 'workbench', version: WORKBENCH_VERSION } )
     const session = await buildFamilyBlock( { dir: SESSION_PAYLOAD_DIR, groupFn: sessionSidebarGroupFromFilename, label: 'session', version: SESSION_VERSION } )
+    const spec = await buildFamilyBlock( { dir: SPEC_META_PAYLOAD_DIR, groupFn: specMetaSidebarGroupFromFilename, label: 'spec', version: SPEC_META_VERSION } )
 
-    const allFiles = [ ...coreFiles, ...workbench.files, ...session.files ]
+    const allFiles = [ ...coreFiles, ...workbench.files, ...session.files, ...spec.files ]
 
     const manifest = {
         spec_version: SPEC_VERSION,
@@ -161,11 +167,13 @@ const main = async () => {
         files: coreFiles,
         workbench,
         session,
+        spec,
         stats: {
             total_files: allFiles.length,
             core_files: coreFiles.length,
             workbench_files: workbench.files.length,
             session_files: session.files.length,
+            spec_files: spec.files.length,
             normative_files: allFiles.filter( ( f ) => f.normative ).length,
             informative_files: allFiles.filter( ( f ) => !f.normative ).length
         }
@@ -174,7 +182,7 @@ const main = async () => {
     await mkdir( dirname( MANIFEST_PATH ), { recursive: true } )
     await writeFile( MANIFEST_PATH, JSON.stringify( manifest, null, 4 ) + '\n', 'utf-8' )
     console.log( `\nManifest written to ${ MANIFEST_PATH }` )
-    console.log( `Total: ${ manifest.stats.total_files } (memo ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, session ${ manifest.stats.session_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
+    console.log( `Total: ${ manifest.stats.total_files } (memo ${ manifest.stats.core_files }, workbench ${ manifest.stats.workbench_files }, session ${ manifest.stats.session_files }, spec ${ manifest.stats.spec_files }), Normative: ${ manifest.stats.normative_files }, Informative: ${ manifest.stats.informative_files }` )
 
     // Memo 052 Kap 8: copy each per-version spec-manifest into the docs-payload so it travels
     // the same path as the payload to the public site (sync-spec.mjs → src/data). The site's
@@ -187,7 +195,8 @@ const copySpecManifestsToPayload = async () => {
     const families = [
         { specDir: REFS_MANUAL.memo.specDir, name: 'memo', version: SPEC_VERSION },
         { specDir: REFS_MANUAL.workbench.specDir, name: 'workbench', version: WORKBENCH_VERSION },
-        { specDir: REFS_MANUAL.session.specDir, name: 'session', version: SESSION_VERSION }
+        { specDir: REFS_MANUAL.session.specDir, name: 'session', version: SESSION_VERSION },
+        { specDir: REFS_MANUAL.spec.specDir, name: 'spec', version: SPEC_META_VERSION }
     ]
 
     await Promise.all( families.map( async ( family ) => {
