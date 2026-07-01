@@ -1,20 +1,21 @@
 # spec — CI workflows & cross-repo fan-out
 
-The `spec` repo is the source of truth. On change it regenerates `generated/` and
-fans out to the two consuming repos via `repository_dispatch`.
+The `spec` repo is the source of truth. On change it regenerates the `dist/` mirror
+(authored source lives under `draft/`, Memo 058) and fans out to the two consuming
+repos via `repository_dispatch`.
 
 ```
-spec (push to spec/** or data/refs.*)
-  ├─ generate.yml ........ runs npm run build → commits generated/*
+spec (push to draft/** or data/refs.*)
+  ├─ generate.yml ........ runs npm run build → commits dist/*
   ├─ notify-docs-site.yml  → dispatch "spec-updated"  → Memo-Init/memo-init.github.io (deploy.yml)
   └─ notify-org-profile.yml→ dispatch "refs-updated"  → Memo-Init/.github (update-readme.yaml)
 ```
 
 | Workflow | Trigger | Effect |
 |----------|---------|--------|
-| `generate.yml` | push to `spec/**`, `data/refs.*`, `scripts/**` | regenerate + commit `generated/` |
-| `notify-docs-site.yml` | push to `spec/**`, `generated/**` | `repository_dispatch: spec-updated` → website rebuild |
-| `notify-org-profile.yml` | push to `data/refs.manual.json`, `generated/refs.resolved.json` | `repository_dispatch: refs-updated` → org profile regen |
+| `generate.yml` | push to `draft/**`, `data/refs.*`, `scripts/**` | regenerate + commit `dist/` |
+| `notify-docs-site.yml` | push to `dist/**` | `repository_dispatch: spec-updated` → website rebuild |
+| `notify-org-profile.yml` | push to `data/refs.manual.json`, `dist/refs.resolved.json` | `repository_dispatch: refs-updated` → org profile regen |
 
 ## Required secret: `PUBLISH_SPEC_CHANGES`
 
