@@ -16,29 +16,29 @@ _(no skill dependencies declared in this family)_
 
 | Chapter | Covered | Implementers | Reqs |
 |---|---|---|---|
-| [00-overview](#00-overview) | ✓ | 2 | — |
-| [01-philosophy](#01-philosophy) | ✓ | 1 | — |
-| [02-sop-entrypoint](#02-sop-entrypoint) | ✓ | 5 | — |
-| [10-root-and-projects](#10-root-and-projects) | ✓ | 1 | — |
-| [11-project-structure](#11-project-structure) | ✓ | 3 | 2 |
-| [12-folders](#12-folders) | ✓ | 3 | 3 |
-| [13-knowledge-format-okf](#13-knowledge-format-okf) | ✓ | 5 | 4 |
-| [15-repos](#15-repos) | ✓ | 1 | 2 |
-| [16-context](#16-context) | ✓ | 2 | 2 |
-| [17-memo-store](#17-memo-store) | ✓ | 1 | — |
-| [18-design](#18-design) | ✓ | 1 | 2 |
-| [19-tmp](#19-tmp) | ✓ | 1 | — |
-| [20-cli](#20-cli) | ✓ | 7 | 2 |
-| [21-environment-scripts](#21-environment-scripts) | ✓ | 4 | 2 |
-| [22-config](#22-config) | ✓ | 5 | 2 |
-| [23-hooks-contract](#23-hooks-contract) | ✓ | 6 | 3 |
-| [24-skills-scope](#24-skills-scope) | ✓ | 3 | — |
-| [25-validation-overview](#25-validation-overview) | ✓ | 4 | 3 |
-| [26-addons](#26-addons) | ✓ | 2 | 1 |
-| [30-wiki](#30-wiki) | ✓ | 6 | 2 |
-| [31-browser-automation](#31-browser-automation) | ✓ | 4 | — |
-| [32-trash](#32-trash) | ✓ | 5 | — |
-| [41-project-architecture](#41-project-architecture) | ✓ | 6 | 2 |
+| [00-overview](./00-overview.md) | ✓ | 2 | — |
+| [01-philosophy](./01-philosophy.md) | ✓ | 1 | — |
+| [02-sop-entrypoint](./02-sop-entrypoint.md) | ✓ | 5 | — |
+| [10-root-and-projects](./10-root-and-projects.md) | ✓ | 1 | — |
+| [11-project-structure](./11-project-structure.md) | ✓ | 3 | 2 |
+| [12-folders](./12-folders.md) | ✓ | 3 | 3 |
+| [13-knowledge-format-okf](./13-knowledge-format-okf.md) | ✓ | 5 | 4 |
+| [15-repos](./15-repos.md) | ✓ | 1 | 2 |
+| [16-context](./16-context.md) | ✓ | 2 | 2 |
+| [17-memo-store](./17-memo-store.md) | ✓ | 1 | — |
+| [18-design](./18-design.md) | ✓ | 1 | 2 |
+| [19-tmp](./19-tmp.md) | ✓ | 1 | — |
+| [20-cli](./20-cli.md) | ✓ | 7 | 2 |
+| [21-environment-scripts](./21-environment-scripts.md) | ✓ | 4 | 2 |
+| [22-config](./22-config.md) | ✓ | 5 | 2 |
+| [23-hooks-contract](./23-hooks-contract.md) | ✓ | 6 | 3 |
+| [24-skills-scope](./24-skills-scope.md) | ✓ | 3 | — |
+| [25-validation-overview](./25-validation-overview.md) | ✓ | 4 | 3 |
+| [26-addons](./26-addons.md) | ✓ | 2 | 1 |
+| [30-wiki](./30-wiki.md) | ✓ | 6 | 2 |
+| [31-browser-automation](./31-browser-automation.md) | ✓ | 4 | — |
+| [32-trash](./32-trash.md) | ✓ | 5 | — |
+| [41-project-architecture](./41-project-architecture.md) | ✓ | 6 | 2 |
 | **Summary** | **23 / 23** | — | 32 |
 
 ## Skills by namespace
@@ -99,224 +99,47 @@ _(no skill dependencies declared in this family)_
 
 ### Introduction
 
-#### 00-overview
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-audit`, `workbench-project-setup` |
-| Requirements | — |
-| Depends on | [01-philosophy](./01-philosophy.md), [02-sop-entrypoint](./02-sop-entrypoint.md), [11-project-structure](./11-project-structure.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [32-trash](./32-trash.md) |
-
-#### 01-philosophy
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-philosophy` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [02-sop-entrypoint](./02-sop-entrypoint.md), [20-cli](./20-cli.md), [22-config](./22-config.md) |
-
-#### 02-sop-entrypoint
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-hooks-contract`, `workbench-sop-entry` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [01-philosophy](./01-philosophy.md), [10-root-and-projects](./10-root-and-projects.md), [22-config](./22-config.md), [23-hooks-contract](./23-hooks-contract.md) |
+- [00-overview](./00-overview.md) — `workbench-audit`, `workbench-project-setup`
+- [01-philosophy](./01-philosophy.md) — `workbench-philosophy`
+- [02-sop-entrypoint](./02-sop-entrypoint.md) — `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-hooks-contract`, `workbench-sop-entry`
 
 ### Root
 
-#### 10-root-and-projects
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-root-projects` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [02-sop-entrypoint](./02-sop-entrypoint.md), [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [22-config](./22-config.md) |
+- [10-root-and-projects](./10-root-and-projects.md) — `workbench-root-projects`
 
 ### Projects
 
-#### 11-project-structure
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `wiki-init`, `workbench-audit`, `workbench-project-setup` |
-| Requirements | 2 |
-| Depends on | [00-overview](./00-overview.md), [10-root-and-projects](./10-root-and-projects.md), [12-folders](./12-folders.md), [32-trash](./32-trash.md) |
-
-#### 12-folders
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-environment-scripts`, `workbench-folders`, `workbench-tmp` |
-| Requirements | 3 |
-| Depends on | [10-root-and-projects](./10-root-and-projects.md), [11-project-structure](./11-project-structure.md), [22-config](./22-config.md), [30-wiki](./30-wiki.md), [31-browser-automation](./31-browser-automation.md), [32-trash](./32-trash.md) |
+- [11-project-structure](./11-project-structure.md) — `wiki-init`, `workbench-audit`, `workbench-project-setup`
+- [12-folders](./12-folders.md) — `workbench-environment-scripts`, `workbench-folders`, `workbench-tmp`
 
 ### Folders
 
-#### 16-context
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-context`, `workbench-tmp` |
-| Requirements | 2 |
-| Depends on | [10-root-and-projects](./10-root-and-projects.md), [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [30-wiki](./30-wiki.md), [41-project-architecture](./41-project-architecture.md) |
-
-#### 15-repos
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-repos` |
-| Requirements | 2 |
-| Depends on | [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [22-config](./22-config.md), [41-project-architecture](./41-project-architecture.md) |
-
-#### 21-environment-scripts
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation` |
-| Requirements | 2 |
-| Depends on | [00-overview](./00-overview.md), [12-folders](./12-folders.md), [20-cli](./20-cli.md), [22-config](./22-config.md), [23-hooks-contract](./23-hooks-contract.md), [24-skills-scope](./24-skills-scope.md) |
-
-#### 19-tmp
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-tmp` |
-| Requirements | — |
-| Depends on | [12-folders](./12-folders.md), [16-context](./16-context.md), [32-trash](./32-trash.md) |
-
-#### 32-trash
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [11-project-structure](./11-project-structure.md) |
-
-#### 17-memo-store
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-memo-store` |
-| Requirements | — |
-| Depends on | [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [26-addons](./26-addons.md) |
-
-#### 26-addons
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-addons`, `workbench-skills-scope` |
-| Requirements | 1 |
-| Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [12-folders](./12-folders.md), [20-cli](./20-cli.md), [22-config](./22-config.md), [24-skills-scope](./24-skills-scope.md) |
+- [16-context](./16-context.md) — `workbench-context`, `workbench-tmp`
+- [15-repos](./15-repos.md) — `workbench-repos`
+- [21-environment-scripts](./21-environment-scripts.md) — `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation`
+- [19-tmp](./19-tmp.md) — `workbench-tmp`
+- [32-trash](./32-trash.md) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
+- [17-memo-store](./17-memo-store.md) — `workbench-memo-store`
+- [26-addons](./26-addons.md) — `workbench-addons`, `workbench-skills-scope`
 
 ### CLI & Scripts
 
-#### 20-cli
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
-| Requirements | 2 |
-| Depends on | [00-overview](./00-overview.md), [21-environment-scripts](./21-environment-scripts.md), [30-wiki](./30-wiki.md) |
-
-#### 24-skills-scope
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-addons`, `workbench-hooks-contract`, `workbench-skills-scope` |
-| Requirements | — |
-| Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [21-environment-scripts](./21-environment-scripts.md), [31-browser-automation](./31-browser-automation.md) |
+- [20-cli](./20-cli.md) — `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
+- [24-skills-scope](./24-skills-scope.md) — `workbench-addons`, `workbench-hooks-contract`, `workbench-skills-scope`
 
 ### Tools
 
-#### 31-browser-automation
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [32-trash](./32-trash.md) |
+- [31-browser-automation](./31-browser-automation.md) — `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`
 
 ### Wiki
 
-#### 30-wiki
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup` |
-| Requirements | 2 |
-| Depends on | [00-overview](./00-overview.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [20-cli](./20-cli.md), [41-project-architecture](./41-project-architecture.md) |
-
-#### 13-knowledge-format-okf
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update` |
-| Requirements | 4 |
-| Depends on | [00-overview](./00-overview.md), [11-project-structure](./11-project-structure.md), [18-design](./18-design.md), [30-wiki](./30-wiki.md), [32-trash](./32-trash.md) |
-
-#### 18-design
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-design` |
-| Requirements | 2 |
-| Depends on | [12-folders](./12-folders.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [23-hooks-contract](./23-hooks-contract.md), [30-wiki](./30-wiki.md) |
+- [30-wiki](./30-wiki.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup`
+- [13-knowledge-format-okf](./13-knowledge-format-okf.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`
+- [18-design](./18-design.md) — `workbench-design`
 
 ### Core
 
-#### 22-config
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation` |
-| Requirements | 2 |
-| Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [12-folders](./12-folders.md), [23-hooks-contract](./23-hooks-contract.md), [41-project-architecture](./41-project-architecture.md) |
-
-#### 23-hooks-contract
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
-| Requirements | 3 |
-| Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [21-environment-scripts](./21-environment-scripts.md), [22-config](./22-config.md) |
-
-#### 25-validation-overview
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `workbench-cli`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
-| Requirements | 3 |
-| Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [20-cli](./20-cli.md), [21-environment-scripts](./21-environment-scripts.md), [22-config](./22-config.md), [23-hooks-contract](./23-hooks-contract.md), [32-trash](./32-trash.md) |
-
-#### 41-project-architecture
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `wiki-lint`, `workbench-audit`, `workbench-config` |
-| Requirements | 2 |
-| Depends on | [00-overview](./00-overview.md), [02-sop-entrypoint](./02-sop-entrypoint.md), [10-root-and-projects](./10-root-and-projects.md), [11-project-structure](./11-project-structure.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [30-wiki](./30-wiki.md) |
-
+- [22-config](./22-config.md) — `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation`
+- [23-hooks-contract](./23-hooks-contract.md) — `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
+- [25-validation-overview](./25-validation-overview.md) — `workbench-cli`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
+- [41-project-architecture](./41-project-architecture.md) — `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `wiki-lint`, `workbench-audit`, `workbench-config`

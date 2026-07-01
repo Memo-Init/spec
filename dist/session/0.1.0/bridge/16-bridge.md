@@ -16,22 +16,22 @@ _(no skill dependencies declared in this family)_
 
 | Chapter | Covered | Implementers | Reqs |
 |---|---|---|---|
-| [00-overview](#00-overview) | ✓ | 1 | — |
-| [01-genesis-root](#01-genesis-root) | ✓ | 1 | — |
-| [02-enforcement](#02-enforcement) | ✓ | 1 | 6 |
-| [03-recovery](#03-recovery) | ✓ | 1 | — |
-| [04-cli](#04-cli) | ✓ | 1 | 2 |
-| [05-config-cascade](#05-config-cascade) | ✓ | 1 | 2 |
-| [06-namespace-registry](#06-namespace-registry) | ✓ | 1 | — |
-| [07-doctor-init](#07-doctor-init) | ✓ | 1 | 2 |
-| [08-identity-pin](#08-identity-pin) | ✓ | 1 | 2 |
-| [09-root-detection](#09-root-detection) | ✓ | 1 | 2 |
-| [10-sop](#10-sop) | ✓ | 1 | — |
-| [11-common-denominator](#11-common-denominator) | ✓ | 1 | — |
-| [12-instances](#12-instances) | ✓ | 1 | — |
-| [13-conventions](#13-conventions) | ✓ | 1 | — |
-| [14-migration](#14-migration) | ✓ | 1 | — |
-| [15-addons](#15-addons) | ✓ | 1 | — |
+| [00-overview](./00-overview.md) | ✓ | 1 | — |
+| [01-genesis-root](./01-genesis-root.md) | ✓ | 1 | — |
+| [02-enforcement](./02-enforcement.md) | ✓ | 1 | 6 |
+| [03-recovery](./03-recovery.md) | ✓ | 1 | — |
+| [04-cli](./04-cli.md) | ✓ | 1 | 2 |
+| [05-config-cascade](./05-config-cascade.md) | ✓ | 1 | 2 |
+| [06-namespace-registry](./06-namespace-registry.md) | ✓ | 1 | — |
+| [07-doctor-init](./07-doctor-init.md) | ✓ | 1 | 2 |
+| [08-identity-pin](./08-identity-pin.md) | ✓ | 1 | 2 |
+| [09-root-detection](./09-root-detection.md) | ✓ | 1 | 2 |
+| [10-sop](./10-sop.md) | ✓ | 1 | — |
+| [11-common-denominator](./11-common-denominator.md) | ✓ | 1 | — |
+| [12-instances](./12-instances.md) | ✓ | 1 | — |
+| [13-conventions](./13-conventions.md) | ✓ | 1 | — |
+| [14-migration](./14-migration.md) | ✓ | 1 | — |
+| [15-addons](./15-addons.md) | ✓ | 1 | — |
 | **Summary** | **16 / 16** | — | 16 |
 
 ## Skills by namespace
@@ -63,157 +63,34 @@ _(no skill dependencies declared in this family)_
 
 ### Introduction
 
-#### 00-overview
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-overview` |
-| Requirements | — |
-| Depends on | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [10-sop](./10-sop.md) |
+- [00-overview](./00-overview.md) — `session-overview`
 
 ### SOP
 
-#### 10-sop
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-sop` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [01-genesis-root](./01-genesis-root.md), [06-namespace-registry](./06-namespace-registry.md), [11-common-denominator](./11-common-denominator.md), [12-instances](./12-instances.md), [13-conventions](./13-conventions.md) |
-
-#### 11-common-denominator
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-common-denominator` |
-| Requirements | — |
-| Depends on | [10-sop](./10-sop.md), [12-instances](./12-instances.md) |
-
-#### 12-instances
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-instances` |
-| Requirements | — |
-| Depends on | [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md) |
-
-#### 13-conventions
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-conventions` |
-| Requirements | — |
-| Depends on | [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md), [12-instances](./12-instances.md) |
-
-#### 15-addons
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-addons` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md) |
+- [10-sop](./10-sop.md) — `session-sop`
+- [11-common-denominator](./11-common-denominator.md) — `session-common-denominator`
+- [12-instances](./12-instances.md) — `session-instances`
+- [13-conventions](./13-conventions.md) — `session-conventions`
+- [15-addons](./15-addons.md) — `session-addons`
 
 ### Genesis Root
 
-#### 01-genesis-root
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-genesis-root` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [10-sop](./10-sop.md) |
-
-#### 05-config-cascade
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-config-cascade` |
-| Requirements | 2 |
-| Depends on | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [06-namespace-registry](./06-namespace-registry.md), [07-doctor-init](./07-doctor-init.md) |
-
-#### 06-namespace-registry
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-namespace-registry` |
-| Requirements | — |
-| Depends on | [02-enforcement](./02-enforcement.md), [05-config-cascade](./05-config-cascade.md), [07-doctor-init](./07-doctor-init.md), [10-sop](./10-sop.md) |
-
-#### 09-root-detection
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-root-detection` |
-| Requirements | 2 |
-| Depends on | [01-genesis-root](./01-genesis-root.md), [04-cli](./04-cli.md), [05-config-cascade](./05-config-cascade.md), [08-identity-pin](./08-identity-pin.md) |
+- [01-genesis-root](./01-genesis-root.md) — `session-genesis-root`
+- [05-config-cascade](./05-config-cascade.md) — `session-config-cascade`
+- [06-namespace-registry](./06-namespace-registry.md) — `session-namespace-registry`
+- [09-root-detection](./09-root-detection.md) — `session-root-detection`
 
 ### Enforcement
 
-#### 02-enforcement
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-enforcement` |
-| Requirements | 6 |
-| Depends on | [01-genesis-root](./01-genesis-root.md), [03-recovery](./03-recovery.md) |
-
-#### 08-identity-pin
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-identity-pin` |
-| Requirements | 2 |
-| Depends on | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [09-root-detection](./09-root-detection.md) |
+- [02-enforcement](./02-enforcement.md) — `session-enforcement`
+- [08-identity-pin](./08-identity-pin.md) — `session-identity-pin`
 
 ### CLI
 
-#### 04-cli
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-cli` |
-| Requirements | 2 |
-| Depends on | [00-overview](./00-overview.md), [05-config-cascade](./05-config-cascade.md), [07-doctor-init](./07-doctor-init.md) |
-
-#### 07-doctor-init
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-doctor-init` |
-| Requirements | 2 |
-| Depends on | [02-enforcement](./02-enforcement.md), [04-cli](./04-cli.md), [05-config-cascade](./05-config-cascade.md), [06-namespace-registry](./06-namespace-registry.md) |
+- [04-cli](./04-cli.md) — `session-cli`
+- [07-doctor-init](./07-doctor-init.md) — `session-doctor-init`
 
 ### Recovery
 
-#### 03-recovery
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-recovery` |
-| Requirements | — |
-| Depends on | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md) |
-
-#### 14-migration
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `session-migration` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [03-recovery](./03-recovery.md), [05-config-cascade](./05-config-cascade.md), [10-sop](./10-sop.md) |
-
+- [03-recovery](./03-recovery.md) — `session-recovery`
+- [14-migration](./14-migration.md) — `session-migration`

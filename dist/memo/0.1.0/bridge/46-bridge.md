@@ -32,52 +32,52 @@ flowchart TD
 
 | Chapter | Covered | Implementers | Reqs |
 |---|---|---|---|
-| [00-overview](#00-overview) | ✓ | 1 | — |
-| [01-philosophy](#01-philosophy) | ✓ | 5 | — |
-| [02-memo-sop-entrypoint](#02-memo-sop-entrypoint) | ✓ | 15 | 2 |
-| [03-input-paths](#03-input-paths) | ✓ | 2 | — |
-| [04-input-pipeline](#04-input-pipeline) | ✓ | 2 | 2 |
-| [05-memo-strategies](#05-memo-strategies) | ✓ | 2 | — |
-| [06-memo-structure](#06-memo-structure) | ✓ | 6 | 4 |
-| [07-revisions-and-questions](#07-revisions-and-questions) | ✓ | 11 | 5 |
-| [08-phases-and-prds](#08-phases-and-prds) | ✓ | 19 | 6 |
-| [09-contamination-context-handover](#09-contamination-context-handover) | ✓ | 25 | — |
-| [10-proactive-research](#10-proactive-research) | ✓ | 9 | 8 |
-| [11-quality-and-finalization](#11-quality-and-finalization) | ✓ | 16 | 5 |
-| [12-rollout](#12-rollout) | ✓ | 7 | — |
-| [13-orchestration](#13-orchestration) | ✓ | 19 | — |
-| [14-agents-skills-tasks](#14-agents-skills-tasks) | ✓ | 4 | — |
-| [15-prompt-generator](#15-prompt-generator) | ✓ | 5 | — |
-| [16-git-security-versioning](#16-git-security-versioning) | ✓ | 17 | 8 |
-| [17-git-workflow-and-ids](#17-git-workflow-and-ids) | ✓ | 10 | 6 |
-| [18-multidimensionality](#18-multidimensionality) | ✓ | 3 | — |
-| [19-internal-vs-external-communication](#19-internal-vs-external-communication) | ✓ | 6 | 1 |
-| [20-flow-full-vs-update-revisions](#20-flow-full-vs-update-revisions) | ✓ | 4 | — |
-| [21-human-computer-interaction](#21-human-computer-interaction) | ✓ | 7 | — |
-| [22-tree-cli-recommended-way](#22-tree-cli-recommended-way) | ✓ | 4 | 4 |
-| [23-requirements](#23-requirements) | ✓ | 17 | 6 |
-| [24-tools-registry](#24-tools-registry) | ✓ | 5 | 5 |
-| [25-strands](#25-strands) | ✓ | 2 | — |
-| [26-memo-history](#26-memo-history) | ✓ | 4 | — |
-| [27-landing-the-plane](#27-landing-the-plane) | ✓ | 5 | 1 |
-| [28-drift](#28-drift) | ✓ | 4 | — |
-| [29-behavioral-guardrails](#29-behavioral-guardrails) | ✓ | 5 | 1 |
-| [30-primitives](#30-primitives) | ✓ | 4 | — |
-| [31-goals](#31-goals) | ✓ | 6 | — |
-| [32-prompt-governance](#32-prompt-governance) | ✓ | 4 | — |
-| [33-maintenance](#33-maintenance) | ✓ | 6 | 2 |
-| [34-question-interface](#34-question-interface) | ✓ | 5 | — |
-| [35-memo-authoring](#35-memo-authoring) | ✓ | 4 | 7 |
-| [36-agent-strategies](#36-agent-strategies) | ✓ | 12 | — |
-| [37-transcript-reliability](#37-transcript-reliability) | ✓ | 1 | — |
-| [38-stage-model](#38-stage-model) | ✓ | 16 | — |
-| [39-release-and-pinning](#39-release-and-pinning) | ✓ | 4 | — |
-| [40-diagrams](#40-diagrams) | ✓ | 1 | 4 |
-| [41-mental-model](#41-mental-model) | ✓ | 3 | — |
-| [42-plans](#42-plans) | ✓ | 10 | — |
-| [43-skill-authoring-and-quality](#43-skill-authoring-and-quality) | ✓ | 2 | 8 |
-| [44-repository-and-outward-docs](#44-repository-and-outward-docs) | — | 0 | 22 |
-| [45-implementation-fidelity-audit](#45-implementation-fidelity-audit) | ✓ | 1 | — |
+| [00-overview](./00-overview.md) | ✓ | 1 | — |
+| [01-philosophy](./01-philosophy.md) | ✓ | 5 | — |
+| [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md) | ✓ | 15 | 2 |
+| [03-input-paths](./03-input-paths.md) | ✓ | 2 | — |
+| [04-input-pipeline](./04-input-pipeline.md) | ✓ | 2 | 2 |
+| [05-memo-strategies](./05-memo-strategies.md) | ✓ | 2 | — |
+| [06-memo-structure](./06-memo-structure.md) | ✓ | 6 | 4 |
+| [07-revisions-and-questions](./07-revisions-and-questions.md) | ✓ | 11 | 5 |
+| [08-phases-and-prds](./08-phases-and-prds.md) | ✓ | 19 | 6 |
+| [09-contamination-context-handover](./09-contamination-context-handover.md) | ✓ | 25 | — |
+| [10-proactive-research](./10-proactive-research.md) | ✓ | 9 | 8 |
+| [11-quality-and-finalization](./11-quality-and-finalization.md) | ✓ | 16 | 5 |
+| [12-rollout](./12-rollout.md) | ✓ | 7 | — |
+| [13-orchestration](./13-orchestration.md) | ✓ | 19 | — |
+| [14-agents-skills-tasks](./14-agents-skills-tasks.md) | ✓ | 4 | — |
+| [15-prompt-generator](./15-prompt-generator.md) | ✓ | 5 | — |
+| [16-git-security-versioning](./16-git-security-versioning.md) | ✓ | 17 | 8 |
+| [17-git-workflow-and-ids](./17-git-workflow-and-ids.md) | ✓ | 10 | 6 |
+| [18-multidimensionality](./18-multidimensionality.md) | ✓ | 3 | — |
+| [19-internal-vs-external-communication](./19-internal-vs-external-communication.md) | ✓ | 6 | 1 |
+| [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md) | ✓ | 4 | — |
+| [21-human-computer-interaction](./21-human-computer-interaction.md) | ✓ | 7 | — |
+| [22-tree-cli-recommended-way](./22-tree-cli-recommended-way.md) | ✓ | 4 | 4 |
+| [23-requirements](./23-requirements.md) | ✓ | 17 | 6 |
+| [24-tools-registry](./24-tools-registry.md) | ✓ | 5 | 5 |
+| [25-strands](./25-strands.md) | ✓ | 2 | — |
+| [26-memo-history](./26-memo-history.md) | ✓ | 4 | — |
+| [27-landing-the-plane](./27-landing-the-plane.md) | ✓ | 5 | 1 |
+| [28-drift](./28-drift.md) | ✓ | 4 | — |
+| [29-behavioral-guardrails](./29-behavioral-guardrails.md) | ✓ | 5 | 1 |
+| [30-primitives](./30-primitives.md) | ✓ | 4 | — |
+| [31-goals](./31-goals.md) | ✓ | 6 | — |
+| [32-prompt-governance](./32-prompt-governance.md) | ✓ | 4 | — |
+| [33-maintenance](./33-maintenance.md) | ✓ | 6 | 2 |
+| [34-question-interface](./34-question-interface.md) | ✓ | 5 | — |
+| [35-memo-authoring](./35-memo-authoring.md) | ✓ | 4 | 7 |
+| [36-agent-strategies](./36-agent-strategies.md) | ✓ | 12 | — |
+| [37-transcript-reliability](./37-transcript-reliability.md) | ✓ | 1 | — |
+| [38-stage-model](./38-stage-model.md) | ✓ | 16 | — |
+| [39-release-and-pinning](./39-release-and-pinning.md) | ✓ | 4 | — |
+| [40-diagrams](./40-diagrams.md) | ✓ | 1 | 4 |
+| [41-mental-model](./41-mental-model.md) | ✓ | 3 | — |
+| [42-plans](./42-plans.md) | ✓ | 10 | — |
+| [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md) | ✓ | 2 | 8 |
+| [44-repository-and-outward-docs](./44-repository-and-outward-docs.md) | — | 0 | 22 |
+| [45-implementation-fidelity-audit](./45-implementation-fidelity-audit.md) | ✓ | 1 | — |
 | **Summary** | **45 / 46** | — | 107 |
 
 ## Skills by namespace
@@ -200,437 +200,79 @@ flowchart TD
 
 ### Introduction
 
-#### 00-overview
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-sop` |
-| Requirements | — |
-| Depends on | [01-philosophy](./01-philosophy.md), [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md), [08-phases-and-prds](./08-phases-and-prds.md), [18-multidimensionality](./18-multidimensionality.md) |
-
-#### 01-philosophy
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-coherence`, `memo-mental-model-derive`, `memo-revision-generate`, `memo-sop`, `workbench-modes` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md), [04-input-pipeline](./04-input-pipeline.md), [12-rollout](./12-rollout.md) |
-
-#### 02-memo-sop-entrypoint
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-finalize`, `memo-init`, `memo-plan-add`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-reset-recommend`, `memo-revision-generate`, `memo-sop`, `memo-sub-init`, `skill-testing`, `workbench-modes` |
-| Requirements | 2 |
-| Depends on | [00-overview](./00-overview.md), [01-philosophy](./01-philosophy.md), [03-input-paths](./03-input-paths.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md) |
-
-#### 30-primitives
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-sop` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [04-input-pipeline](./04-input-pipeline.md), [06-memo-structure](./06-memo-structure.md), [07-revisions-and-questions](./07-revisions-and-questions.md), [08-phases-and-prds](./08-phases-and-prds.md), [23-requirements](./23-requirements.md), [24-tools-registry](./24-tools-registry.md), [25-strands](./25-strands.md) |
+- [00-overview](./00-overview.md) — `memo-sop`
+- [01-philosophy](./01-philosophy.md) — `memo-coherence`, `memo-mental-model-derive`, `memo-revision-generate`, `memo-sop`, `workbench-modes`
+- [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md) — `memo-finalize`, `memo-init`, `memo-plan-add`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-reset-recommend`, `memo-revision-generate`, `memo-sop`, `memo-sub-init`, `skill-testing`, `workbench-modes`
+- [30-primitives](./30-primitives.md) — `memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-sop`
 
 ### Input
 
-#### 03-input-paths
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-goal-optimize`, `memo-input-processing` |
-| Requirements | — |
-| Depends on | [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md), [04-input-pipeline](./04-input-pipeline.md), [05-memo-strategies](./05-memo-strategies.md), [07-revisions-and-questions](./07-revisions-and-questions.md) |
-
-#### 04-input-pipeline
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-goal-optimize`, `memo-input-processing` |
-| Requirements | 2 |
-| Depends on | [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md), [03-input-paths](./03-input-paths.md), [05-memo-strategies](./05-memo-strategies.md), [10-proactive-research](./10-proactive-research.md) |
-
-#### 37-transcript-reliability
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-input-processing` |
-| Requirements | — |
-| Depends on | [03-input-paths](./03-input-paths.md), [04-input-pipeline](./04-input-pipeline.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [10-proactive-research](./10-proactive-research.md), [30-primitives](./30-primitives.md) |
+- [03-input-paths](./03-input-paths.md) — `memo-goal-optimize`, `memo-input-processing`
+- [04-input-pipeline](./04-input-pipeline.md) — `memo-goal-optimize`, `memo-input-processing`
+- [37-transcript-reliability](./37-transcript-reliability.md) — `memo-input-processing`
 
 ### Initialization
 
-#### 05-memo-strategies
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-init`, `memo-sub-init` |
-| Requirements | — |
-| Depends on | [03-input-paths](./03-input-paths.md), [06-memo-structure](./06-memo-structure.md), [08-phases-and-prds](./08-phases-and-prds.md), [11-quality-and-finalization](./11-quality-and-finalization.md) |
-
-#### 06-memo-structure
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-init`, `memo-plan-init`, `memo-plan-status`, `memo-revision-execute`, `memo-sub-init`, `workbench-project-setup` |
-| Requirements | 4 |
-| Depends on | [05-memo-strategies](./05-memo-strategies.md), [07-revisions-and-questions](./07-revisions-and-questions.md), [12-rollout](./12-rollout.md), [16-git-security-versioning](./16-git-security-versioning.md) |
-
-#### 10-proactive-research
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-evidence`, `memo-init`, `memo-input-processing`, `memo-research-agent`, `memo-revision-generate`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`, `wiki-ingest` |
-| Requirements | 8 |
-| Depends on | [00-overview](./00-overview.md), [04-input-pipeline](./04-input-pipeline.md), [07-revisions-and-questions](./07-revisions-and-questions.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [11-quality-and-finalization](./11-quality-and-finalization.md) |
-
-#### 35-memo-authoring
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-balance`, `memo-coherence`, `memo-init`, `memo-revision-execute` |
-| Requirements | 7 |
-| Depends on | [01-philosophy](./01-philosophy.md), [05-memo-strategies](./05-memo-strategies.md), [06-memo-structure](./06-memo-structure.md), [10-proactive-research](./10-proactive-research.md), [30-primitives](./30-primitives.md), [34-question-interface](./34-question-interface.md) |
+- [05-memo-strategies](./05-memo-strategies.md) — `memo-init`, `memo-sub-init`
+- [06-memo-structure](./06-memo-structure.md) — `memo-init`, `memo-plan-init`, `memo-plan-status`, `memo-revision-execute`, `memo-sub-init`, `workbench-project-setup`
+- [10-proactive-research](./10-proactive-research.md) — `memo-evidence`, `memo-init`, `memo-input-processing`, `memo-research-agent`, `memo-revision-generate`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`, `wiki-ingest`
+- [35-memo-authoring](./35-memo-authoring.md) — `memo-balance`, `memo-coherence`, `memo-init`, `memo-revision-execute`
 
 ### Revision
 
-#### 07-revisions-and-questions
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-balance`, `memo-coherence`, `memo-evidence`, `memo-fidelity-audit`, `memo-init`, `memo-mental-model-derive`, `memo-references`, `memo-revision-consolidate`, `memo-revision-evaluate`, `memo-revision-execute`, `memo-revision-generate` |
-| Requirements | 5 |
-| Depends on | [04-input-pipeline](./04-input-pipeline.md), [06-memo-structure](./06-memo-structure.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md) |
-
-#### 11-quality-and-finalization
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `drift-resolution`, `git-commit`, `git-push`, `git-security`, `memo-balance`, `memo-coherence`, `memo-evidence`, `memo-fidelity-audit`, `memo-finalize`, `memo-prds-validate`, `memo-references`, `memo-research-agent`, `memo-revision-consolidate`, `memo-rollout`, `memo-rollout-generate`, `workbench-persona-audit` |
-| Requirements | 5 |
-| Depends on | [00-overview](./00-overview.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [10-proactive-research](./10-proactive-research.md), [12-rollout](./12-rollout.md), [16-git-security-versioning](./16-git-security-versioning.md), [23-requirements](./23-requirements.md) |
-
-#### 20-flow-full-vs-update-revisions
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-finalize`, `memo-revision-consolidate`, `memo-revision-execute`, `memo-revision-generate` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [07-revisions-and-questions](./07-revisions-and-questions.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [12-rollout](./12-rollout.md) |
-
-#### 34-question-interface
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-goal-optimize`, `memo-init`, `memo-revision-evaluate`, `memo-revision-execute`, `memo-revision-generate` |
-| Requirements | — |
-| Depends on | [05-memo-strategies](./05-memo-strategies.md), [07-revisions-and-questions](./07-revisions-and-questions.md), [21-human-computer-interaction](./21-human-computer-interaction.md), [29-behavioral-guardrails](./29-behavioral-guardrails.md), [31-goals](./31-goals.md) |
-
-#### 40-diagrams
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-init` |
-| Requirements | 4 |
-| Depends on | [00-overview](./00-overview.md), [06-memo-structure](./06-memo-structure.md), [21-human-computer-interaction](./21-human-computer-interaction.md), [35-memo-authoring](./35-memo-authoring.md) |
+- [07-revisions-and-questions](./07-revisions-and-questions.md) — `memo-balance`, `memo-coherence`, `memo-evidence`, `memo-fidelity-audit`, `memo-init`, `memo-mental-model-derive`, `memo-references`, `memo-revision-consolidate`, `memo-revision-evaluate`, `memo-revision-execute`, `memo-revision-generate`
+- [11-quality-and-finalization](./11-quality-and-finalization.md) — `drift-resolution`, `git-commit`, `git-push`, `git-security`, `memo-balance`, `memo-coherence`, `memo-evidence`, `memo-fidelity-audit`, `memo-finalize`, `memo-prds-validate`, `memo-references`, `memo-research-agent`, `memo-revision-consolidate`, `memo-rollout`, `memo-rollout-generate`, `workbench-persona-audit`
+- [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md) — `memo-finalize`, `memo-revision-consolidate`, `memo-revision-execute`, `memo-revision-generate`
+- [34-question-interface](./34-question-interface.md) — `memo-goal-optimize`, `memo-init`, `memo-revision-evaluate`, `memo-revision-execute`, `memo-revision-generate`
+- [40-diagrams](./40-diagrams.md) — `memo-init`
 
 ### Execution
 
-#### 08-phases-and-prds
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `drift-resolution`, `memo-finalize`, `memo-init`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-init`, `memo-prd-evaluate`, `memo-prd-generate`, `memo-prds-validate`, `memo-references`, `memo-reset-recommend`, `memo-revision-execute`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-rollout-generate`, `workbench-modes` |
-| Requirements | 6 |
-| Depends on | [05-memo-strategies](./05-memo-strategies.md), [07-revisions-and-questions](./07-revisions-and-questions.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [15-prompt-generator](./15-prompt-generator.md), [18-multidimensionality](./18-multidimensionality.md) |
-
-#### 12-rollout
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-fidelity-audit`, `memo-finalize`, `memo-phase-execute`, `memo-rollout`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-sop` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [13-orchestration](./13-orchestration.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md), [16-git-security-versioning](./16-git-security-versioning.md) |
-
-#### 13-orchestration
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `drift-resolution`, `git-merge-strategy`, `memo-chronic-build`, `memo-handover`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-execute`, `memo-prd-evaluate`, `memo-prds-validate`, `memo-references`, `memo-research-agent`, `memo-revision-evaluate`, `memo-revision-generate`, `memo-rollout`, `memo-rollout-execute`, `memo-rollout-generate`, `memo-sop`, `research-workflow` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [12-rollout](./12-rollout.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md), [16-git-security-versioning](./16-git-security-versioning.md) |
-
-#### 25-strands
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-finalize`, `memo-rollout-generate` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [06-memo-structure](./06-memo-structure.md), [08-phases-and-prds](./08-phases-and-prds.md), [23-requirements](./23-requirements.md), [24-tools-registry](./24-tools-registry.md) |
-
-#### 27-landing-the-plane
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `git-merge-strategy`, `memo-handover`, `memo-rollout-execute`, `memo-sop`, `workbench-modes` |
-| Requirements | 1 |
-| Depends on | [00-overview](./00-overview.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [16-git-security-versioning](./16-git-security-versioning.md), [38-stage-model](./38-stage-model.md) |
-
-#### 32-prompt-governance
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-phase-generate`, `memo-prd-generate`, `memo-req-template`, `memo-rollout-generate` |
-| Requirements | — |
-| Depends on | [08-phases-and-prds](./08-phases-and-prds.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md), [15-prompt-generator](./15-prompt-generator.md), [23-requirements](./23-requirements.md), [30-primitives](./30-primitives.md), [31-goals](./31-goals.md) |
-
-#### 38-stage-model
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `git-merge-strategy`, `git-push`, `memo-fidelity-audit`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-rollout`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-sop`, `release` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md), [27-landing-the-plane](./27-landing-the-plane.md) |
-
-#### 42-plans
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-budget-paste`, `memo-handover`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox` |
-| Requirements | — |
-| Depends on | [06-memo-structure](./06-memo-structure.md), [08-phases-and-prds](./08-phases-and-prds.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [30-primitives](./30-primitives.md), [38-stage-model](./38-stage-model.md) |
+- [08-phases-and-prds](./08-phases-and-prds.md) — `drift-resolution`, `memo-finalize`, `memo-init`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-init`, `memo-prd-evaluate`, `memo-prd-generate`, `memo-prds-validate`, `memo-references`, `memo-reset-recommend`, `memo-revision-execute`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-rollout-generate`, `workbench-modes`
+- [12-rollout](./12-rollout.md) — `memo-fidelity-audit`, `memo-finalize`, `memo-phase-execute`, `memo-rollout`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-sop`
+- [13-orchestration](./13-orchestration.md) — `drift-resolution`, `git-merge-strategy`, `memo-chronic-build`, `memo-handover`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-execute`, `memo-prd-evaluate`, `memo-prds-validate`, `memo-references`, `memo-research-agent`, `memo-revision-evaluate`, `memo-revision-generate`, `memo-rollout`, `memo-rollout-execute`, `memo-rollout-generate`, `memo-sop`, `research-workflow`
+- [25-strands](./25-strands.md) — `memo-finalize`, `memo-rollout-generate`
+- [27-landing-the-plane](./27-landing-the-plane.md) — `git-merge-strategy`, `memo-handover`, `memo-rollout-execute`, `memo-sop`, `workbench-modes`
+- [32-prompt-governance](./32-prompt-governance.md) — `memo-phase-generate`, `memo-prd-generate`, `memo-req-template`, `memo-rollout-generate`
+- [38-stage-model](./38-stage-model.md) — `git-merge-strategy`, `git-push`, `memo-fidelity-audit`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-rollout`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-sop`, `release`
+- [42-plans](./42-plans.md) — `memo-budget-paste`, `memo-handover`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`
 
 ### Procedure
 
-#### 22-tree-cli-recommended-way
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-goal-score`, `memo-maintenance-score`, `memo-plan-status`, `memo-plan-update-checkbox` |
-| Requirements | 4 |
-| Depends on | [00-overview](./00-overview.md), [13-orchestration](./13-orchestration.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md) |
-
-#### 23-requirements
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `git-push`, `git-security`, `memo-finalize`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-prd-evaluate`, `memo-prd-generate`, `memo-prds-validate`, `memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-req-template`, `memo-rollout-evaluate`, `memo-rollout-generate`, `specs-to-skills`, `wiki-lint` |
-| Requirements | 6 |
-| Depends on | [00-overview](./00-overview.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [24-tools-registry](./24-tools-registry.md) |
-
-#### 24-tools-registry
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-req-registry`, `memo-req-store`, `memo-req-template`, `wiki-query`, `workbench-audit` |
-| Requirements | 5 |
-| Depends on | [00-overview](./00-overview.md), [08-phases-and-prds](./08-phases-and-prds.md), [23-requirements](./23-requirements.md) |
+- [22-tree-cli-recommended-way](./22-tree-cli-recommended-way.md) — `memo-goal-score`, `memo-maintenance-score`, `memo-plan-status`, `memo-plan-update-checkbox`
+- [23-requirements](./23-requirements.md) — `git-push`, `git-security`, `memo-finalize`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-prd-evaluate`, `memo-prd-generate`, `memo-prds-validate`, `memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-req-template`, `memo-rollout-evaluate`, `memo-rollout-generate`, `specs-to-skills`, `wiki-lint`
+- [24-tools-registry](./24-tools-registry.md) — `memo-req-registry`, `memo-req-store`, `memo-req-template`, `wiki-query`, `workbench-audit`
 
 ### Behavior
 
-#### 09-contamination-context-handover
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-chronic-add`, `memo-chronic-build`, `memo-finalize`, `memo-goal-optimize`, `memo-goal-score`, `memo-goal-score-all`, `memo-handover`, `memo-init`, `memo-maintenance-score`, `memo-maintenance-verify`, `memo-mental-model-derive`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-stop`, `memo-prd-evaluate`, `memo-prds-validate`, `memo-reset-recommend`, `memo-revision-evaluate`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-sub-init`, `workbench-persona-audit` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [08-phases-and-prds](./08-phases-and-prds.md), [10-proactive-research](./10-proactive-research.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [13-orchestration](./13-orchestration.md) |
-
-#### 18-multidimensionality
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `git-merge-strategy`, `git-push`, `memo-plan-add` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [08-phases-and-prds](./08-phases-and-prds.md), [13-orchestration](./13-orchestration.md), [16-git-security-versioning](./16-git-security-versioning.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md) |
-
-#### 21-human-computer-interaction
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-finalize`, `memo-goal-score-all`, `memo-maintenance-score-all`, `memo-mental-model-derive`, `memo-plan-execute`, `memo-reset-recommend`, `memo-sop` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [20-flow-full-vs-update-revisions](./20-flow-full-vs-update-revisions.md) |
-
-#### 28-drift
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `drift-resolution`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-references` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [08-phases-and-prds](./08-phases-and-prds.md), [13-orchestration](./13-orchestration.md) |
-
-#### 29-behavioral-guardrails
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-coherence`, `memo-init`, `memo-phase-execute`, `release`, `workbench-modes` |
-| Requirements | 1 |
-| Depends on | [00-overview](./00-overview.md), [13-orchestration](./13-orchestration.md), [21-human-computer-interaction](./21-human-computer-interaction.md) |
-
-#### 41-mental-model
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-init`, `memo-mental-model-derive`, `memo-revision-generate` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [12-rollout](./12-rollout.md), [21-human-computer-interaction](./21-human-computer-interaction.md), [31-goals](./31-goals.md), [33-maintenance](./33-maintenance.md), [34-question-interface](./34-question-interface.md) |
+- [09-contamination-context-handover](./09-contamination-context-handover.md) — `memo-chronic-add`, `memo-chronic-build`, `memo-finalize`, `memo-goal-optimize`, `memo-goal-score`, `memo-goal-score-all`, `memo-handover`, `memo-init`, `memo-maintenance-score`, `memo-maintenance-verify`, `memo-mental-model-derive`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-stop`, `memo-prd-evaluate`, `memo-prds-validate`, `memo-reset-recommend`, `memo-revision-evaluate`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-sub-init`, `workbench-persona-audit`
+- [18-multidimensionality](./18-multidimensionality.md) — `git-merge-strategy`, `git-push`, `memo-plan-add`
+- [21-human-computer-interaction](./21-human-computer-interaction.md) — `memo-finalize`, `memo-goal-score-all`, `memo-maintenance-score-all`, `memo-mental-model-derive`, `memo-plan-execute`, `memo-reset-recommend`, `memo-sop`
+- [28-drift](./28-drift.md) — `drift-resolution`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-references`
+- [29-behavioral-guardrails](./29-behavioral-guardrails.md) — `memo-coherence`, `memo-init`, `memo-phase-execute`, `release`, `workbench-modes`
+- [41-mental-model](./41-mental-model.md) — `memo-init`, `memo-mental-model-derive`, `memo-revision-generate`
 
 ### Health
 
-#### 26-memo-history
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-chronic-add`, `memo-chronic-build`, `memo-rollout-execute`, `wiki-ingest` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [18-multidimensionality](./18-multidimensionality.md), [24-tools-registry](./24-tools-registry.md), [31-goals](./31-goals.md), [33-maintenance](./33-maintenance.md) |
-
-#### 31-goals
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-chronic-add`, `memo-fidelity-audit`, `memo-goal-optimize`, `memo-goal-score`, `memo-goal-score-all`, `memo-rollout-evaluate` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [06-memo-structure](./06-memo-structure.md), [13-orchestration](./13-orchestration.md), [26-memo-history](./26-memo-history.md), [30-primitives](./30-primitives.md), [33-maintenance](./33-maintenance.md) |
-
-#### 33-maintenance
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-goal-score-all`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `memo-rollout`, `release` |
-| Requirements | 2 |
-| Depends on | [19-internal-vs-external-communication](./19-internal-vs-external-communication.md), [26-memo-history](./26-memo-history.md), [27-landing-the-plane](./27-landing-the-plane.md), [28-drift](./28-drift.md), [30-primitives](./30-primitives.md), [31-goals](./31-goals.md), [32-prompt-governance](./32-prompt-governance.md) |
-
-#### 45-implementation-fidelity-audit
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-fidelity-audit` |
-| Requirements | — |
-| Depends on | [07-revisions-and-questions](./07-revisions-and-questions.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [12-rollout](./12-rollout.md), [28-drift](./28-drift.md), [31-goals](./31-goals.md), [33-maintenance](./33-maintenance.md), [38-stage-model](./38-stage-model.md) |
+- [26-memo-history](./26-memo-history.md) — `memo-chronic-add`, `memo-chronic-build`, `memo-rollout-execute`, `wiki-ingest`
+- [31-goals](./31-goals.md) — `memo-chronic-add`, `memo-fidelity-audit`, `memo-goal-optimize`, `memo-goal-score`, `memo-goal-score-all`, `memo-rollout-evaluate`
+- [33-maintenance](./33-maintenance.md) — `memo-goal-score-all`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `memo-rollout`, `release`
+- [45-implementation-fidelity-audit](./45-implementation-fidelity-audit.md) — `memo-fidelity-audit`
 
 ### Agents
 
-#### 14-agents-skills-tasks
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-plan-evaluate`, `memo-prd-evaluate`, `skill-testing`, `workbench-persona-audit` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [15-prompt-generator](./15-prompt-generator.md) |
-
-#### 15-prompt-generator
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-phase-execute`, `memo-phase-generate`, `memo-prd-generate`, `memo-req-template`, `memo-rollout-generate` |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md), [16-git-security-versioning](./16-git-security-versioning.md) |
-
-#### 36-agent-strategies
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `memo-chronic-build`, `memo-goal-score`, `memo-goal-score-all`, `memo-input-processing`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-mental-model-derive`, `memo-phase-evaluate`, `memo-research-agent`, `memo-rollout-evaluate`, `research-workflow`, `workbench-persona-audit` |
-| Requirements | — |
-| Depends on | [09-contamination-context-handover](./09-contamination-context-handover.md), [10-proactive-research](./10-proactive-research.md), [13-orchestration](./13-orchestration.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md), [31-goals](./31-goals.md), [35-memo-authoring](./35-memo-authoring.md) |
+- [14-agents-skills-tasks](./14-agents-skills-tasks.md) — `memo-plan-evaluate`, `memo-prd-evaluate`, `skill-testing`, `workbench-persona-audit`
+- [15-prompt-generator](./15-prompt-generator.md) — `memo-phase-execute`, `memo-phase-generate`, `memo-prd-generate`, `memo-req-template`, `memo-rollout-generate`
+- [36-agent-strategies](./36-agent-strategies.md) — `memo-chronic-build`, `memo-goal-score`, `memo-goal-score-all`, `memo-input-processing`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-mental-model-derive`, `memo-phase-evaluate`, `memo-research-agent`, `memo-rollout-evaluate`, `research-workflow`, `workbench-persona-audit`
 
 ### Git & Repo
 
-#### 16-git-security-versioning
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `drift-resolution`, `git-commit`, `git-merge-strategy`, `git-push`, `git-security`, `memo-finalize`, `memo-handover`, `memo-maintenance-verify`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-execute`, `memo-req-runner`, `memo-rollout`, `memo-rollout-execute`, `release`, `workbench-audit`, `workbench-modes` |
-| Requirements | 8 |
-| Depends on | [00-overview](./00-overview.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [13-orchestration](./13-orchestration.md), [15-prompt-generator](./15-prompt-generator.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md) |
-
-#### 17-git-workflow-and-ids
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `git-commit`, `git-merge-strategy`, `git-push`, `memo-phase-execute`, `memo-plan-execute`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-prd-generate`, `memo-rollout-execute`, `workbench-modes` |
-| Requirements | 6 |
-| Depends on | [00-overview](./00-overview.md), [08-phases-and-prds](./08-phases-and-prds.md), [13-orchestration](./13-orchestration.md), [16-git-security-versioning](./16-git-security-versioning.md), [18-multidimensionality](./18-multidimensionality.md) |
-
-#### 19-internal-vs-external-communication
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `git-commit`, `git-push`, `git-security`, `memo-req-runner`, `workbench-audit`, `workbench-persona-audit` |
-| Requirements | 1 |
-| Depends on | [00-overview](./00-overview.md), [16-git-security-versioning](./16-git-security-versioning.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md) |
-
-#### 39-release-and-pinning
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `git-push`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `release` |
-| Requirements | — |
-| Depends on | [16-git-security-versioning](./16-git-security-versioning.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md), [19-internal-vs-external-communication](./19-internal-vs-external-communication.md), [33-maintenance](./33-maintenance.md) |
-
-#### 44-repository-and-outward-docs
-
-| Field | Value |
-|---|---|
-| Covered | — not yet |
-| Skills | — none yet — |
-| Requirements | 22 |
-| Depends on | [00-overview](./00-overview.md), [16-git-security-versioning](./16-git-security-versioning.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md), [19-internal-vs-external-communication](./19-internal-vs-external-communication.md), [24-tools-registry](./24-tools-registry.md), [35-memo-authoring](./35-memo-authoring.md) |
+- [16-git-security-versioning](./16-git-security-versioning.md) — `drift-resolution`, `git-commit`, `git-merge-strategy`, `git-push`, `git-security`, `memo-finalize`, `memo-handover`, `memo-maintenance-verify`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-execute`, `memo-req-runner`, `memo-rollout`, `memo-rollout-execute`, `release`, `workbench-audit`, `workbench-modes`
+- [17-git-workflow-and-ids](./17-git-workflow-and-ids.md) — `git-commit`, `git-merge-strategy`, `git-push`, `memo-phase-execute`, `memo-plan-execute`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-prd-generate`, `memo-rollout-execute`, `workbench-modes`
+- [19-internal-vs-external-communication](./19-internal-vs-external-communication.md) — `git-commit`, `git-push`, `git-security`, `memo-req-runner`, `workbench-audit`, `workbench-persona-audit`
+- [39-release-and-pinning](./39-release-and-pinning.md) — `git-push`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `release`
+- [44-repository-and-outward-docs](./44-repository-and-outward-docs.md) — _— no implementer skill yet —_
 
 ### Skills
 
-#### 43-skill-authoring-and-quality
-
-| Field | Value |
-|---|---|
-| Covered | ✓ yes |
-| Skills | `skill-testing`, `specs-to-skills` |
-| Requirements | 8 |
-| Depends on | [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md), [23-requirements](./23-requirements.md), [30-primitives](./30-primitives.md), [33-maintenance](./33-maintenance.md) |
-
+- [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md) — `skill-testing`, `specs-to-skills`

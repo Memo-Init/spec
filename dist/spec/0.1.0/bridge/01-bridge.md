@@ -16,12 +16,12 @@ _(no skill dependencies declared in this family)_
 
 | Chapter | Covered | Implementers | Reqs |
 |---|---|---|---|
-| [00-overview](#00-overview) | — | 0 | — |
-| [02-per-chapter-format](#02-per-chapter-format) | — | 0 | — |
-| [03-categories](#03-categories) | — | 0 | — |
-| [04-bridge-standard](#04-bridge-standard) | — | 0 | — |
-| [05-publishing-principle](#05-publishing-principle) | — | 0 | — |
-| [06-conventions-writing](#06-conventions-writing) | — | 0 | — |
+| [00-overview](./00-overview.md) | — | 0 | — |
+| [02-per-chapter-format](./02-per-chapter-format.md) | — | 0 | — |
+| [03-categories](./03-categories.md) | — | 0 | — |
+| [04-bridge-standard](./04-bridge-standard.md) | — | 0 | — |
+| [05-publishing-principle](./05-publishing-principle.md) | — | 0 | — |
+| [06-conventions-writing](./06-conventions-writing.md) | — | 0 | — |
 | **Summary** | **0 / 6** | — | — |
 
 ## Skills by namespace
@@ -32,63 +32,18 @@ _(no skill dependencies declared in this family)_
 
 ### Introduction
 
-#### 00-overview
-
-| Field | Value |
-|---|---|
-| Covered | — not yet |
-| Skills | — none yet — |
-| Requirements | — |
-| Depends on | [02-per-chapter-format](./02-per-chapter-format.md), [04-bridge-standard](./04-bridge-standard.md) |
+- [00-overview](./00-overview.md) — _— no implementer skill yet —_
 
 ### Structure
 
-#### 02-per-chapter-format
-
-| Field | Value |
-|---|---|
-| Covered | — not yet |
-| Skills | — none yet — |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [03-categories](./03-categories.md), [04-bridge-standard](./04-bridge-standard.md) |
-
-#### 03-categories
-
-| Field | Value |
-|---|---|
-| Covered | — not yet |
-| Skills | — none yet — |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [02-per-chapter-format](./02-per-chapter-format.md), [04-bridge-standard](./04-bridge-standard.md) |
-
-#### 04-bridge-standard
-
-| Field | Value |
-|---|---|
-| Covered | — not yet |
-| Skills | — none yet — |
-| Requirements | — |
-| Depends on | [01-bridge](./01-bridge.md), [02-per-chapter-format](./02-per-chapter-format.md), [03-categories](./03-categories.md), [05-publishing-principle](./05-publishing-principle.md) |
+- [02-per-chapter-format](./02-per-chapter-format.md) — _— no implementer skill yet —_
+- [03-categories](./03-categories.md) — _— no implementer skill yet —_
+- [04-bridge-standard](./04-bridge-standard.md) — _— no implementer skill yet —_
 
 ### Publication
 
-#### 05-publishing-principle
-
-| Field | Value |
-|---|---|
-| Covered | — not yet |
-| Skills | — none yet — |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [04-bridge-standard](./04-bridge-standard.md), [06-conventions-writing](./06-conventions-writing.md) |
+- [05-publishing-principle](./05-publishing-principle.md) — _— no implementer skill yet —_
 
 ### Conventions
 
-#### 06-conventions-writing
-
-| Field | Value |
-|---|---|
-| Covered | — not yet |
-| Skills | — none yet — |
-| Requirements | — |
-| Depends on | [00-overview](./00-overview.md), [02-per-chapter-format](./02-per-chapter-format.md), [05-publishing-principle](./05-publishing-principle.md) |
-
+- [06-conventions-writing](./06-conventions-writing.md) — _— no implementer skill yet —_

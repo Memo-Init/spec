@@ -519,7 +519,7 @@ const renderCoverageSummary = ( { records } ) => {
         const coveredCell = r.implementers.length > 0 ? '✓' : '—'
         const reqCell = r.requirementCount === 0 ? '—' : String( r.requirementCount )
 
-        return `| [${ r.stem }](#${ r.stem }) | ${ coveredCell } | ${ r.implementers.length } | ${ reqCell } |`
+        return `| ${ relLink( { stem: r.stem } ) } | ${ coveredCell } | ${ r.implementers.length } | ${ reqCell } |`
     } ).join( '\n' )
 
     const summaryRow = `| **Summary** | **${ covered } / ${ records.length }** | — | ${ totalReqs > 0 ? String( totalReqs ) : '—' } |`
@@ -535,42 +535,27 @@ const renderCoverageSummary = ( { records } ) => {
 }
 
 
-// PRD-008: one named block per chapter (public skills, requirements, depends-on). The gaps row
-// and the internal-tooling classification (Memo 059, Kap 1) are not rendered on the public page
-// (PRD-003). The stem is the heading text so the coverage-summary link `(#<stem>)` resolves to
-// this block's slug.
-const renderChapterBlock = ( { record } ) => {
-    const publicCell = record.implementers.length === 0
-        ? '— none yet —'
-        : record.implementers.map( ( s ) => `\`${ s.skill }\`` ).join( ', ' )
-    const reqCell = record.requirementCount === 0 ? '—' : String( record.requirementCount )
-    const depsCell = record.detailPages.length === 0
-        ? '—'
-        : record.detailPages.map( ( s ) => relLink( { stem: s } ) ).join( ', ' )
-
-    return [
-        `#### ${ record.stem }`,
-        '',
-        '| Field | Value |',
-        '|---|---|',
-        `| Covered | ${ record.implementers.length > 0 ? '✓ yes' : '— not yet' } |`,
-        `| Skills | ${ publicCell } |`,
-        `| Requirements | ${ reqCell } |`,
-        `| Depends on | ${ depsCell } |`,
-        ''
-    ].join( '\n' )
-}
-
-
-// PRD-004 (Memo 059): the "## Chapters" section — the per-chapter blocks GROUPED by the
-// spec-manifest groups[] categories (mirroring the left sidebar), each group a "### <label>"
-// heading in manifest.groups[].order with its chapters indented under it as "#### <stem>". A
-// chapter that belongs to no manifest group falls into a trailing "Other" group. The chapter
-// stem stays the anchor target, so the coverage-summary click-to-scroll links keep working.
+// PRD-004 (Memo 059): the "## Chapters" section — chapters GROUPED by the spec-manifest
+// groups[] categories (mirroring the left sidebar), each group a "### <label>" heading in
+// manifest.groups[].order with its chapters as an indented bullet list (chapter link →
+// implementing skills). The bullet indent is the visual nesting under the category, like the
+// left sidebar. A chapter in no manifest group falls into a trailing "Other" group. Chapters
+// link to their site page (relLink → /specification/<name>/), same as the coverage-summary rows.
 const renderChaptersSection = ( { records, groups } ) => {
     const byStem = new Map( records.map( ( r ) => [ r.stem, r ] ) )
     const assigned = new Set()
     const orderedGroups = [ ...( groups ?? [] ) ].sort( ( a, b ) => ( a.order ?? 0 ) - ( b.order ?? 0 ) )
+
+    // One indented bullet per chapter under its category heading: the chapter (linked to its
+    // site page) followed by the skills that implement it. The bullet indent is the visual
+    // nesting under the category, mirroring the left sidebar (PRD-004 "Einrückung").
+    const chapterLine = ( { record } ) => {
+        const skills = record.implementers.length === 0
+            ? '_— no implementer skill yet —_'
+            : record.implementers.map( ( s ) => `\`${ s.skill }\`` ).join( ', ' )
+
+        return `- ${ relLink( { stem: record.stem } ) } — ${ skills }`
+    }
 
     const groupBlocks = orderedGroups.flatMap( ( group ) => {
         const inGroup = ( group.pages ?? [] )
@@ -582,7 +567,7 @@ const renderChaptersSection = ( { records, groups } ) => {
         return [ [
             `### ${ group.label ?? group.id }`,
             '',
-            inGroup.map( ( record ) => renderChapterBlock( { record } ) ).join( '\n' )
+            inGroup.map( ( record ) => chapterLine( { record } ) ).join( '\n' )
         ].join( '\n' ) ]
     } )
 
@@ -592,7 +577,7 @@ const renderChaptersSection = ( { records, groups } ) => {
         : [ [
             '### Other',
             '',
-            leftover.map( ( record ) => renderChapterBlock( { record } ) ).join( '\n' )
+            leftover.map( ( record ) => chapterLine( { record } ) ).join( '\n' )
         ].join( '\n' ) ]
 
     const allBlocks = [ ...groupBlocks, ...otherBlock ]
@@ -600,7 +585,7 @@ const renderChaptersSection = ( { records, groups } ) => {
     return [
         '## Chapters',
         '',
-        allBlocks.length === 0 ? '— no chapters —' : allBlocks.join( '\n' )
+        allBlocks.length === 0 ? '— no chapters —' : allBlocks.join( '\n\n' )
     ].join( '\n' )
 }
 
