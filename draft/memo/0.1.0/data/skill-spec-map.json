@@ -35,12 +35,12 @@
             "skill": "git-commit",
             "category": "git",
             "path": "repos/core/skills/git/git-commit/SKILL.md",
-            "primary": "17-git-workflow-and-ids",
+            "primary": "memo/17-git-workflow-and-ids",
             "all": [
-                "17-git-workflow-and-ids",
-                "16-git-security-versioning",
-                "19-internal-vs-external-communication",
-                "11-quality-and-finalization"
+                "memo/17-git-workflow-and-ids",
+                "memo/16-git-security-versioning",
+                "memo/19-internal-vs-external-communication",
+                "memo/11-quality-and-finalization"
             ],
             "gaps": [
                 "Mandatory-issue-per-commit doctrine",
@@ -52,14 +52,14 @@
             "skill": "git-merge-strategy",
             "category": "git",
             "path": "repos/core/skills/git/git-merge-strategy/SKILL.md",
-            "primary": "38-stage-model",
+            "primary": "memo/38-stage-model",
             "all": [
-                "38-stage-model",
-                "27-landing-the-plane",
-                "16-git-security-versioning",
-                "17-git-workflow-and-ids",
-                "18-multidimensionality",
-                "13-orchestration"
+                "memo/38-stage-model",
+                "memo/27-landing-the-plane",
+                "memo/16-git-security-versioning",
+                "memo/17-git-workflow-and-ids",
+                "memo/18-multidimensionality",
+                "memo/13-orchestration"
             ],
             "visibility": "public"
         },
@@ -67,16 +67,16 @@
             "skill": "git-push",
             "category": "git",
             "path": "repos/core/skills/git/git-push/SKILL.md",
-            "primary": "38-stage-model",
+            "primary": "memo/38-stage-model",
             "all": [
-                "38-stage-model",
-                "16-git-security-versioning",
-                "23-requirements",
-                "19-internal-vs-external-communication",
-                "18-multidimensionality",
-                "39-release-and-pinning",
-                "17-git-workflow-and-ids",
-                "11-quality-and-finalization"
+                "memo/38-stage-model",
+                "memo/16-git-security-versioning",
+                "memo/23-requirements",
+                "memo/19-internal-vs-external-communication",
+                "memo/18-multidimensionality",
+                "memo/39-release-and-pinning",
+                "memo/17-git-workflow-and-ids",
+                "memo/11-quality-and-finalization"
             ],
             "gaps": [
                 "Post-push CodeCov / coverage / overview-page conventions",
@@ -88,12 +88,12 @@
             "skill": "git-security",
             "category": "git",
             "path": "repos/core/skills/git/git-security/SKILL.md",
-            "primary": "16-git-security-versioning",
+            "primary": "memo/16-git-security-versioning",
             "all": [
-                "16-git-security-versioning",
-                "19-internal-vs-external-communication",
-                "11-quality-and-finalization",
-                "23-requirements"
+                "memo/16-git-security-versioning",
+                "memo/19-internal-vs-external-communication",
+                "memo/11-quality-and-finalization",
+                "memo/23-requirements"
             ],
             "policy": {
                 "namespace": "git",
@@ -140,11 +140,11 @@
             "skill": "image-art-architecture",
             "category": "visual",
             "path": "repos/core/skills/visual/image-art-architecture/SKILL.md",
-            "primary": "40-diagrams",
+            "primary": "memo/40-diagrams",
             "all": [
-                "40-diagrams",
-                "19-internal-vs-external-communication",
-                "43-skill-authoring-and-quality"
+                "memo/40-diagrams",
+                "memo/19-internal-vs-external-communication",
+                "memo/43-skill-authoring-and-quality"
             ],
             "gaps": [
                 "Artistic image generation (9 art styles, branch-color palettes, image-generator prompts)",
@@ -156,10 +156,10 @@
             "skill": "image-diagram-excalidraw",
             "category": "visual",
             "path": "repos/core/skills/visual/image-diagram-excalidraw/SKILL.md",
-            "primary": "40-diagrams",
+            "primary": "memo/40-diagrams",
             "all": [
-                "40-diagrams",
-                "35-memo-authoring"
+                "memo/40-diagrams",
+                "memo/35-memo-authoring"
             ],
             "gaps": [
                 "Generated-image tooling (Nano Banana / Google ImageFX prompt pipeline)",
@@ -183,12 +183,12 @@
             "skill": "image-pencil-playwright-diff",
             "category": "visual",
             "path": "repos/core/skills/visual/image-pencil-playwright-diff/SKILL.md",
-            "primary": "23-requirements",
+            "primary": "memo/23-requirements",
             "all": [
-                "23-requirements",
-                "29-behavioral-guardrails",
-                "12-rollout",
-                "16-git-security-versioning"
+                "memo/23-requirements",
+                "memo/29-behavioral-guardrails",
+                "memo/12-rollout",
+                "memo/16-git-security-versioning"
             ],
             "gaps": [
                 "Pencil-Playwright Soll-Ist diff technique itself",
@@ -200,11 +200,11 @@
             "skill": "memo-balance",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-balance/SKILL.md",
-            "primary": "11-quality-and-finalization",
+            "primary": "memo/11-quality-and-finalization",
             "all": [
-                "11-quality-and-finalization",
-                "35-memo-authoring",
-                "07-revisions-and-questions"
+                "memo/11-quality-and-finalization",
+                "memo/35-memo-authoring",
+                "memo/07-revisions-and-questions"
             ],
             "gaps": [
                 "Calibration rating scale and indicator catalog",
@@ -216,9 +216,9 @@
             "skill": "memo-budget-paste",
             "category": "code-patterns",
             "path": "repos/core/skills/code-patterns/memo-budget-paste/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans"
+                "memo/42-plans"
             ],
             "gaps": [
                 "token-budget awareness",
@@ -231,11 +231,11 @@
             "skill": "memo-chronic-add",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-chronic-add/SKILL.md",
-            "primary": "26-memo-history",
+            "primary": "memo/26-memo-history",
             "all": [
-                "26-memo-history",
-                "09-contamination-context-handover",
-                "31-goals"
+                "memo/26-memo-history",
+                "memo/09-contamination-context-handover",
+                "memo/31-goals"
             ],
             "visibility": "public"
         },
@@ -243,12 +243,12 @@
             "skill": "memo-chronic-build",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-chronic-build/SKILL.md",
-            "primary": "26-memo-history",
+            "primary": "memo/26-memo-history",
             "all": [
-                "26-memo-history",
-                "36-agent-strategies",
-                "13-orchestration",
-                "09-contamination-context-handover"
+                "memo/26-memo-history",
+                "memo/36-agent-strategies",
+                "memo/13-orchestration",
+                "memo/09-contamination-context-handover"
             ],
             "visibility": "public"
         },
@@ -256,13 +256,13 @@
             "skill": "memo-coherence",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-coherence/SKILL.md",
-            "primary": "11-quality-and-finalization",
+            "primary": "memo/11-quality-and-finalization",
             "all": [
-                "11-quality-and-finalization",
-                "29-behavioral-guardrails",
-                "01-philosophy",
-                "07-revisions-and-questions",
-                "35-memo-authoring"
+                "memo/11-quality-and-finalization",
+                "memo/29-behavioral-guardrails",
+                "memo/01-philosophy",
+                "memo/07-revisions-and-questions",
+                "memo/35-memo-authoring"
             ],
             "gaps": [
                 "Maturity rating taxonomy"
@@ -273,11 +273,11 @@
             "skill": "memo-evidence",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-evidence/SKILL.md",
-            "primary": "11-quality-and-finalization",
+            "primary": "memo/11-quality-and-finalization",
             "all": [
-                "11-quality-and-finalization",
-                "10-proactive-research",
-                "07-revisions-and-questions"
+                "memo/11-quality-and-finalization",
+                "memo/10-proactive-research",
+                "memo/07-revisions-and-questions"
             ],
             "gaps": [
                 "Inline tag insertion format",
@@ -289,18 +289,18 @@
             "skill": "memo-finalize",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-finalize/SKILL.md",
-            "primary": "11-quality-and-finalization",
+            "primary": "memo/11-quality-and-finalization",
             "all": [
-                "11-quality-and-finalization",
-                "02-memo-sop-entrypoint",
-                "21-human-computer-interaction",
-                "20-flow-full-vs-update-revisions",
-                "23-requirements",
-                "12-rollout",
-                "08-phases-and-prds",
-                "25-strands",
-                "16-git-security-versioning",
-                "09-contamination-context-handover"
+                "memo/11-quality-and-finalization",
+                "memo/02-memo-sop-entrypoint",
+                "memo/21-human-computer-interaction",
+                "memo/20-flow-full-vs-update-revisions",
+                "memo/23-requirements",
+                "memo/12-rollout",
+                "memo/08-phases-and-prds",
+                "memo/25-strands",
+                "memo/16-git-security-versioning",
+                "memo/09-contamination-context-handover"
             ],
             "gaps": [
                 "Sub-memo HARD-STOP at finalization",
@@ -316,13 +316,13 @@
             "skill": "memo-goal-optimize",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-goal-optimize/SKILL.md",
-            "primary": "31-goals",
+            "primary": "memo/31-goals",
             "all": [
-                "31-goals",
-                "09-contamination-context-handover",
-                "03-input-paths",
-                "04-input-pipeline",
-                "34-question-interface"
+                "memo/31-goals",
+                "memo/09-contamination-context-handover",
+                "memo/03-input-paths",
+                "memo/04-input-pipeline",
+                "memo/34-question-interface"
             ],
             "visibility": "public"
         },
@@ -330,12 +330,12 @@
             "skill": "memo-goal-score",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-goal-score/SKILL.md",
-            "primary": "31-goals",
+            "primary": "memo/31-goals",
             "all": [
-                "31-goals",
-                "36-agent-strategies",
-                "09-contamination-context-handover",
-                "22-tree-cli-recommended-way"
+                "memo/31-goals",
+                "memo/36-agent-strategies",
+                "memo/09-contamination-context-handover",
+                "memo/22-tree-cli-recommended-way"
             ],
             "roleHint": "grader",
             "visibility": "public"
@@ -344,13 +344,13 @@
             "skill": "memo-goal-score-all",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-goal-score-all/SKILL.md",
-            "primary": "31-goals",
+            "primary": "memo/31-goals",
             "all": [
-                "31-goals",
-                "36-agent-strategies",
-                "33-maintenance",
-                "21-human-computer-interaction",
-                "09-contamination-context-handover"
+                "memo/31-goals",
+                "memo/36-agent-strategies",
+                "memo/33-maintenance",
+                "memo/21-human-computer-interaction",
+                "memo/09-contamination-context-handover"
             ],
             "gaps": [
                 "terminal output channel (R1)"
@@ -362,13 +362,13 @@
             "skill": "memo-handover",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-handover/SKILL.md",
-            "primary": "09-contamination-context-handover",
+            "primary": "memo/09-contamination-context-handover",
             "all": [
-                "09-contamination-context-handover",
-                "27-landing-the-plane",
-                "13-orchestration",
-                "16-git-security-versioning",
-                "42-plans"
+                "memo/09-contamination-context-handover",
+                "memo/27-landing-the-plane",
+                "memo/13-orchestration",
+                "memo/16-git-security-versioning",
+                "memo/42-plans"
             ],
             "gaps": [
                 "state-recovery state-file taxonomy",
@@ -380,20 +380,20 @@
             "skill": "memo-init",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-init/SKILL.md",
-            "primary": "06-memo-structure",
+            "primary": "memo/06-memo-structure",
             "all": [
-                "06-memo-structure",
-                "02-memo-sop-entrypoint",
-                "05-memo-strategies",
-                "07-revisions-and-questions",
-                "34-question-interface",
-                "35-memo-authoring",
-                "29-behavioral-guardrails",
-                "09-contamination-context-handover",
-                "10-proactive-research",
-                "08-phases-and-prds",
-                "40-diagrams",
-                "41-mental-model"
+                "memo/06-memo-structure",
+                "memo/02-memo-sop-entrypoint",
+                "memo/05-memo-strategies",
+                "memo/07-revisions-and-questions",
+                "memo/34-question-interface",
+                "memo/35-memo-authoring",
+                "memo/29-behavioral-guardrails",
+                "memo/09-contamination-context-handover",
+                "memo/10-proactive-research",
+                "memo/08-phases-and-prds",
+                "memo/40-diagrams",
+                "memo/41-mental-model"
             ],
             "gaps": [
                 "Cross-memo status check / 'marked finalized but never built' trap",
@@ -408,13 +408,13 @@
             "skill": "memo-input-processing",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-input-processing/SKILL.md",
-            "primary": "04-input-pipeline",
+            "primary": "memo/04-input-pipeline",
             "all": [
-                "04-input-pipeline",
-                "03-input-paths",
-                "37-transcript-reliability",
-                "10-proactive-research",
-                "36-agent-strategies"
+                "memo/04-input-pipeline",
+                "memo/03-input-paths",
+                "memo/37-transcript-reliability",
+                "memo/10-proactive-research",
+                "memo/36-agent-strategies"
             ],
             "gaps": [
                 "Topic-store write-side (register) mechanics",
@@ -429,14 +429,14 @@
             "skill": "memo-maintenance-score",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-maintenance-score/SKILL.md",
-            "primary": "33-maintenance",
+            "primary": "memo/33-maintenance",
             "all": [
-                "33-maintenance",
-                "28-drift",
-                "36-agent-strategies",
-                "09-contamination-context-handover",
+                "memo/33-maintenance",
+                "memo/28-drift",
+                "memo/36-agent-strategies",
+                "memo/09-contamination-context-handover",
                 "workbench/41-project-architecture",
-                "22-tree-cli-recommended-way"
+                "memo/22-tree-cli-recommended-way"
             ],
             "roleHint": "grader",
             "visibility": "public"
@@ -445,14 +445,14 @@
             "skill": "memo-maintenance-score-all",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-maintenance-score-all/SKILL.md",
-            "primary": "33-maintenance",
+            "primary": "memo/33-maintenance",
             "all": [
-                "33-maintenance",
-                "28-drift",
-                "36-agent-strategies",
+                "memo/33-maintenance",
+                "memo/28-drift",
+                "memo/36-agent-strategies",
                 "workbench/41-project-architecture",
-                "39-release-and-pinning",
-                "21-human-computer-interaction"
+                "memo/39-release-and-pinning",
+                "memo/21-human-computer-interaction"
             ],
             "gaps": [
                 "terminal output channel (R1)"
@@ -464,14 +464,14 @@
             "skill": "memo-fidelity-audit",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-fidelity-audit/SKILL.md",
-            "primary": "45-implementation-fidelity-audit",
+            "primary": "memo/45-implementation-fidelity-audit",
             "all": [
-                "45-implementation-fidelity-audit",
-                "11-quality-and-finalization",
-                "12-rollout",
-                "07-revisions-and-questions",
-                "38-stage-model",
-                "31-goals"
+                "memo/45-implementation-fidelity-audit",
+                "memo/11-quality-and-finalization",
+                "memo/12-rollout",
+                "memo/07-revisions-and-questions",
+                "memo/38-stage-model",
+                "memo/31-goals"
             ],
             "roleHint": "grader",
             "visibility": "public"
@@ -480,13 +480,13 @@
             "skill": "memo-maintenance-verify",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-maintenance-verify/SKILL.md",
-            "primary": "33-maintenance",
+            "primary": "memo/33-maintenance",
             "all": [
-                "33-maintenance",
-                "39-release-and-pinning",
-                "09-contamination-context-handover",
+                "memo/33-maintenance",
+                "memo/39-release-and-pinning",
+                "memo/09-contamination-context-handover",
                 "workbench/41-project-architecture",
-                "16-git-security-versioning"
+                "memo/16-git-security-versioning"
             ],
             "visibility": "public"
         },
@@ -494,14 +494,14 @@
             "skill": "memo-mental-model-derive",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-mental-model-derive/SKILL.md",
-            "primary": "41-mental-model",
+            "primary": "memo/41-mental-model",
             "all": [
-                "41-mental-model",
-                "01-philosophy",
-                "21-human-computer-interaction",
-                "36-agent-strategies",
-                "09-contamination-context-handover",
-                "07-revisions-and-questions"
+                "memo/41-mental-model",
+                "memo/01-philosophy",
+                "memo/21-human-computer-interaction",
+                "memo/36-agent-strategies",
+                "memo/09-contamination-context-handover",
+                "memo/07-revisions-and-questions"
             ],
             "gaps": [
                 "answered-question pair format",
@@ -513,13 +513,13 @@
             "skill": "memo-phase-evaluate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-phase-evaluate/SKILL.md",
-            "primary": "13-orchestration",
+            "primary": "memo/13-orchestration",
             "all": [
-                "13-orchestration",
-                "09-contamination-context-handover",
-                "36-agent-strategies",
-                "23-requirements",
-                "08-phases-and-prds"
+                "memo/13-orchestration",
+                "memo/09-contamination-context-handover",
+                "memo/36-agent-strategies",
+                "memo/23-requirements",
+                "memo/08-phases-and-prds"
             ],
             "gaps": [
                 "UI baseline capture at phase-start",
@@ -531,17 +531,17 @@
             "skill": "memo-phase-execute",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-phase-execute/SKILL.md",
-            "primary": "13-orchestration",
+            "primary": "memo/13-orchestration",
             "all": [
-                "13-orchestration",
-                "16-git-security-versioning",
-                "17-git-workflow-and-ids",
-                "15-prompt-generator",
-                "23-requirements",
-                "09-contamination-context-handover",
-                "29-behavioral-guardrails",
-                "08-phases-and-prds",
-                "12-rollout"
+                "memo/13-orchestration",
+                "memo/16-git-security-versioning",
+                "memo/17-git-workflow-and-ids",
+                "memo/15-prompt-generator",
+                "memo/23-requirements",
+                "memo/09-contamination-context-handover",
+                "memo/29-behavioral-guardrails",
+                "memo/08-phases-and-prds",
+                "memo/12-rollout"
             ],
             "gaps": [
                 "file-based contract negotiation protocol",
@@ -555,15 +555,15 @@
             "skill": "memo-phase-generate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-phase-generate/SKILL.md",
-            "primary": "08-phases-and-prds",
+            "primary": "memo/08-phases-and-prds",
             "all": [
-                "08-phases-and-prds",
-                "15-prompt-generator",
-                "32-prompt-governance",
-                "13-orchestration",
-                "09-contamination-context-handover",
-                "23-requirements",
-                "16-git-security-versioning"
+                "memo/08-phases-and-prds",
+                "memo/15-prompt-generator",
+                "memo/32-prompt-governance",
+                "memo/13-orchestration",
+                "memo/09-contamination-context-handover",
+                "memo/23-requirements",
+                "memo/16-git-security-versioning"
             ],
             "gaps": [
                 "max-PRDs-per-phase hard number",
@@ -575,13 +575,13 @@
             "skill": "memo-plan-add",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-plan-add/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans",
-                "38-stage-model",
-                "08-phases-and-prds",
-                "18-multidimensionality",
-                "02-memo-sop-entrypoint"
+                "memo/42-plans",
+                "memo/38-stage-model",
+                "memo/08-phases-and-prds",
+                "memo/18-multidimensionality",
+                "memo/02-memo-sop-entrypoint"
             ],
             "gaps": [
                 "cross-memo phaseRef translation",
@@ -595,13 +595,13 @@
             "skill": "memo-plan-evaluate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-plan-evaluate/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans",
-                "38-stage-model",
-                "09-contamination-context-handover",
-                "14-agents-skills-tasks",
-                "08-phases-and-prds"
+                "memo/42-plans",
+                "memo/38-stage-model",
+                "memo/09-contamination-context-handover",
+                "memo/14-agents-skills-tasks",
+                "memo/08-phases-and-prds"
             ],
             "gaps": [
                 "plan conformance model",
@@ -614,16 +614,16 @@
             "skill": "memo-plan-execute",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-plan-execute/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans",
-                "38-stage-model",
-                "02-memo-sop-entrypoint",
-                "13-orchestration",
-                "09-contamination-context-handover",
-                "16-git-security-versioning",
-                "17-git-workflow-and-ids",
-                "21-human-computer-interaction"
+                "memo/42-plans",
+                "memo/38-stage-model",
+                "memo/02-memo-sop-entrypoint",
+                "memo/13-orchestration",
+                "memo/09-contamination-context-handover",
+                "memo/16-git-security-versioning",
+                "memo/17-git-workflow-and-ids",
+                "memo/21-human-computer-interaction"
             ],
             "gaps": [
                 "next-phase algorithm",
@@ -639,11 +639,11 @@
             "skill": "memo-plan-finalize",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-plan-finalize/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans",
-                "38-stage-model",
-                "02-memo-sop-entrypoint"
+                "memo/42-plans",
+                "memo/38-stage-model",
+                "memo/02-memo-sop-entrypoint"
             ],
             "gaps": [
                 "plan archival lifecycle",
@@ -655,13 +655,13 @@
             "skill": "memo-plan-init",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-plan-init/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans",
-                "38-stage-model",
-                "02-memo-sop-entrypoint",
-                "06-memo-structure",
-                "08-phases-and-prds"
+                "memo/42-plans",
+                "memo/38-stage-model",
+                "memo/02-memo-sop-entrypoint",
+                "memo/06-memo-structure",
+                "memo/08-phases-and-prds"
             ],
             "gaps": [
                 "plan folder structure",
@@ -675,13 +675,13 @@
             "skill": "memo-plan-status",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-plan-status/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans",
-                "38-stage-model",
-                "02-memo-sop-entrypoint",
-                "06-memo-structure",
-                "22-tree-cli-recommended-way"
+                "memo/42-plans",
+                "memo/38-stage-model",
+                "memo/02-memo-sop-entrypoint",
+                "memo/06-memo-structure",
+                "memo/22-tree-cli-recommended-way"
             ],
             "gaps": [
                 "plan status terminal format",
@@ -693,13 +693,13 @@
             "skill": "memo-plan-stop",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-plan-stop/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans",
-                "09-contamination-context-handover",
-                "02-memo-sop-entrypoint",
-                "38-stage-model",
-                "17-git-workflow-and-ids"
+                "memo/42-plans",
+                "memo/09-contamination-context-handover",
+                "memo/02-memo-sop-entrypoint",
+                "memo/38-stage-model",
+                "memo/17-git-workflow-and-ids"
             ],
             "gaps": [
                 "phase-boundary stop discipline",
@@ -712,13 +712,13 @@
             "skill": "memo-plan-update-checkbox",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-plan-update-checkbox/SKILL.md",
-            "primary": "42-plans",
+            "primary": "memo/42-plans",
             "all": [
-                "42-plans",
-                "17-git-workflow-and-ids",
-                "38-stage-model",
-                "22-tree-cli-recommended-way",
-                "02-memo-sop-entrypoint"
+                "memo/42-plans",
+                "memo/17-git-workflow-and-ids",
+                "memo/38-stage-model",
+                "memo/22-tree-cli-recommended-way",
+                "memo/02-memo-sop-entrypoint"
             ],
             "gaps": [
                 "checkbox-as-state mechanic",
@@ -731,13 +731,13 @@
             "skill": "memo-prd-evaluate",
             "category": "prd",
             "path": "repos/core/skills/prd/memo-prd-evaluate/SKILL.md",
-            "primary": "08-phases-and-prds",
+            "primary": "memo/08-phases-and-prds",
             "all": [
-                "08-phases-and-prds",
-                "09-contamination-context-handover",
-                "13-orchestration",
-                "14-agents-skills-tasks",
-                "23-requirements"
+                "memo/08-phases-and-prds",
+                "memo/09-contamination-context-handover",
+                "memo/13-orchestration",
+                "memo/14-agents-skills-tasks",
+                "memo/23-requirements"
             ],
             "gaps": [
                 "validation report path/template + integration-PRD requirement"
@@ -748,13 +748,13 @@
             "skill": "memo-prd-generate",
             "category": "prd",
             "path": "repos/core/skills/prd/memo-prd-generate/SKILL.md",
-            "primary": "08-phases-and-prds",
+            "primary": "memo/08-phases-and-prds",
             "all": [
-                "08-phases-and-prds",
-                "32-prompt-governance",
-                "15-prompt-generator",
-                "23-requirements",
-                "17-git-workflow-and-ids"
+                "memo/08-phases-and-prds",
+                "memo/32-prompt-governance",
+                "memo/15-prompt-generator",
+                "memo/23-requirements",
+                "memo/17-git-workflow-and-ids"
             ],
             "gaps": [
                 "PRD on-disk layout, header sections, and Ralph-Loop config"
@@ -765,13 +765,13 @@
             "skill": "memo-prds-validate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-prds-validate/SKILL.md",
-            "primary": "08-phases-and-prds",
+            "primary": "memo/08-phases-and-prds",
             "all": [
-                "08-phases-and-prds",
-                "13-orchestration",
-                "09-contamination-context-handover",
-                "23-requirements",
-                "11-quality-and-finalization"
+                "memo/08-phases-and-prds",
+                "memo/13-orchestration",
+                "memo/09-contamination-context-handover",
+                "memo/23-requirements",
+                "memo/11-quality-and-finalization"
             ],
             "gaps": [
                 "assertion-layer / closed-set rule",
@@ -783,13 +783,13 @@
             "skill": "memo-references",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-references/SKILL.md",
-            "primary": "11-quality-and-finalization",
+            "primary": "memo/11-quality-and-finalization",
             "all": [
-                "11-quality-and-finalization",
-                "28-drift",
-                "08-phases-and-prds",
-                "07-revisions-and-questions",
-                "13-orchestration"
+                "memo/11-quality-and-finalization",
+                "memo/28-drift",
+                "memo/08-phases-and-prds",
+                "memo/07-revisions-and-questions",
+                "memo/13-orchestration"
             ],
             "gaps": [
                 "Reference status taxonomy and auto-fix policy",
@@ -801,13 +801,13 @@
             "skill": "drift-resolution",
             "category": "memo",
             "path": "repos/core/skills/memo/drift-resolution/SKILL.md",
-            "primary": "28-drift",
+            "primary": "memo/28-drift",
             "all": [
-                "28-drift",
-                "13-orchestration",
-                "08-phases-and-prds",
-                "16-git-security-versioning",
-                "11-quality-and-finalization"
+                "memo/28-drift",
+                "memo/13-orchestration",
+                "memo/08-phases-and-prds",
+                "memo/16-git-security-versioning",
+                "memo/11-quality-and-finalization"
             ],
             "gaps": [
                 "Enumeration of artifact-surface roots that the D1 grep must cover",
@@ -819,11 +819,11 @@
             "skill": "memo-req-registry",
             "category": "evals",
             "path": "repos/core/skills/evals/memo-req-registry/SKILL.md",
-            "primary": "23-requirements",
+            "primary": "memo/23-requirements",
             "all": [
-                "23-requirements",
-                "24-tools-registry",
-                "30-primitives"
+                "memo/23-requirements",
+                "memo/24-tools-registry",
+                "memo/30-primitives"
             ],
             "gaps": [
                 "validation tactics catalog + signal->tactic selection map"
@@ -834,12 +834,12 @@
             "skill": "memo-req-runner",
             "category": "evals",
             "path": "repos/core/skills/evals/memo-req-runner/SKILL.md",
-            "primary": "23-requirements",
+            "primary": "memo/23-requirements",
             "all": [
-                "23-requirements",
-                "16-git-security-versioning",
-                "30-primitives",
-                "19-internal-vs-external-communication"
+                "memo/23-requirements",
+                "memo/16-git-security-versioning",
+                "memo/30-primitives",
+                "memo/19-internal-vs-external-communication"
             ],
             "gaps": [
                 "report storage path + producer/consumer evidence round-trip"
@@ -850,11 +850,11 @@
             "skill": "memo-req-store",
             "category": "evals",
             "path": "repos/core/skills/evals/memo-req-store/SKILL.md",
-            "primary": "23-requirements",
+            "primary": "memo/23-requirements",
             "all": [
-                "23-requirements",
-                "30-primitives",
-                "24-tools-registry"
+                "memo/23-requirements",
+                "memo/30-primitives",
+                "memo/24-tools-registry"
             ],
             "gaps": [
                 "topic-as-MatchContext / topic-attach wrapper"
@@ -865,12 +865,12 @@
             "skill": "memo-req-template",
             "category": "prd",
             "path": "repos/core/skills/prd/memo-req-template/SKILL.md",
-            "primary": "23-requirements",
+            "primary": "memo/23-requirements",
             "all": [
-                "23-requirements",
-                "15-prompt-generator",
-                "32-prompt-governance",
-                "24-tools-registry"
+                "memo/23-requirements",
+                "memo/15-prompt-generator",
+                "memo/32-prompt-governance",
+                "memo/24-tools-registry"
             ],
             "gaps": [
                 "tool/requirement entry FORMAT (YAML/object schema) and intake flow"
@@ -881,12 +881,12 @@
             "skill": "memo-research-agent",
             "category": "research",
             "path": "repos/core/skills/research/memo-research-agent/SKILL.md",
-            "primary": "10-proactive-research",
+            "primary": "memo/10-proactive-research",
             "all": [
-                "10-proactive-research",
-                "36-agent-strategies",
-                "13-orchestration",
-                "11-quality-and-finalization",
+                "memo/10-proactive-research",
+                "memo/36-agent-strategies",
+                "memo/13-orchestration",
+                "memo/11-quality-and-finalization",
                 "workbench/31-browser-automation"
             ],
             "gaps": [
@@ -899,12 +899,12 @@
             "skill": "memo-reset-recommend",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-reset-recommend/SKILL.md",
-            "primary": "08-phases-and-prds",
+            "primary": "memo/08-phases-and-prds",
             "all": [
-                "08-phases-and-prds",
-                "09-contamination-context-handover",
-                "02-memo-sop-entrypoint",
-                "21-human-computer-interaction"
+                "memo/08-phases-and-prds",
+                "memo/09-contamination-context-handover",
+                "memo/02-memo-sop-entrypoint",
+                "memo/21-human-computer-interaction"
             ],
             "gaps": [
                 "Reset-recommendation algorithm and thresholds",
@@ -917,11 +917,11 @@
             "skill": "memo-revision-consolidate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-revision-consolidate/SKILL.md",
-            "primary": "20-flow-full-vs-update-revisions",
+            "primary": "memo/20-flow-full-vs-update-revisions",
             "all": [
-                "20-flow-full-vs-update-revisions",
-                "07-revisions-and-questions",
-                "11-quality-and-finalization"
+                "memo/20-flow-full-vs-update-revisions",
+                "memo/07-revisions-and-questions",
+                "memo/11-quality-and-finalization"
             ],
             "gaps": [
                 "Merge conflict resolution rule"
@@ -932,12 +932,12 @@
             "skill": "memo-revision-evaluate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-revision-evaluate/SKILL.md",
-            "primary": "07-revisions-and-questions",
+            "primary": "memo/07-revisions-and-questions",
             "all": [
-                "07-revisions-and-questions",
-                "13-orchestration",
-                "09-contamination-context-handover",
-                "34-question-interface"
+                "memo/07-revisions-and-questions",
+                "memo/13-orchestration",
+                "memo/09-contamination-context-handover",
+                "memo/34-question-interface"
             ],
             "gaps": [
                 "Feedback-coverage as a gate",
@@ -950,14 +950,14 @@
             "skill": "memo-revision-execute",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-revision-execute/SKILL.md",
-            "primary": "07-revisions-and-questions",
+            "primary": "memo/07-revisions-and-questions",
             "all": [
-                "07-revisions-and-questions",
-                "20-flow-full-vs-update-revisions",
-                "06-memo-structure",
-                "08-phases-and-prds",
-                "35-memo-authoring",
-                "34-question-interface"
+                "memo/07-revisions-and-questions",
+                "memo/20-flow-full-vs-update-revisions",
+                "memo/06-memo-structure",
+                "memo/08-phases-and-prds",
+                "memo/35-memo-authoring",
+                "memo/34-question-interface"
             ],
             "gaps": [
                 "Vorwort section (placement + single-channel)",
@@ -971,15 +971,15 @@
             "skill": "memo-revision-generate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-revision-generate/SKILL.md",
-            "primary": "07-revisions-and-questions",
+            "primary": "memo/07-revisions-and-questions",
             "all": [
-                "07-revisions-and-questions",
-                "20-flow-full-vs-update-revisions",
-                "34-question-interface",
-                "10-proactive-research",
-                "13-orchestration",
-                "01-philosophy",
-                "41-mental-model"
+                "memo/07-revisions-and-questions",
+                "memo/20-flow-full-vs-update-revisions",
+                "memo/34-question-interface",
+                "memo/10-proactive-research",
+                "memo/13-orchestration",
+                "memo/01-philosophy",
+                "memo/41-mental-model"
             ],
             "gaps": [
                 "Prepare file as a primary artifact",
@@ -992,14 +992,14 @@
             "skill": "memo-rollout",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-rollout/SKILL.md",
-            "primary": "12-rollout",
+            "primary": "memo/12-rollout",
             "all": [
-                "12-rollout",
-                "38-stage-model",
-                "13-orchestration",
-                "11-quality-and-finalization",
-                "33-maintenance",
-                "16-git-security-versioning"
+                "memo/12-rollout",
+                "memo/38-stage-model",
+                "memo/13-orchestration",
+                "memo/11-quality-and-finalization",
+                "memo/33-maintenance",
+                "memo/16-git-security-versioning"
             ],
             "gaps": [
                 "duty-of-care contract exact 9 points",
@@ -1012,15 +1012,15 @@
             "skill": "memo-rollout-evaluate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-rollout-evaluate/SKILL.md",
-            "primary": "12-rollout",
+            "primary": "memo/12-rollout",
             "all": [
-                "12-rollout",
-                "38-stage-model",
-                "09-contamination-context-handover",
-                "36-agent-strategies",
-                "08-phases-and-prds",
-                "23-requirements",
-                "31-goals"
+                "memo/12-rollout",
+                "memo/38-stage-model",
+                "memo/09-contamination-context-handover",
+                "memo/36-agent-strategies",
+                "memo/08-phases-and-prds",
+                "memo/23-requirements",
+                "memo/31-goals"
             ],
             "gaps": [
                 "utilization gate (built-but-unwired)",
@@ -1032,17 +1032,17 @@
             "skill": "memo-rollout-execute",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-rollout-execute/SKILL.md",
-            "primary": "12-rollout",
+            "primary": "memo/12-rollout",
             "all": [
-                "12-rollout",
-                "38-stage-model",
-                "13-orchestration",
-                "08-phases-and-prds",
-                "27-landing-the-plane",
-                "17-git-workflow-and-ids",
-                "16-git-security-versioning",
-                "26-memo-history",
-                "09-contamination-context-handover"
+                "memo/12-rollout",
+                "memo/38-stage-model",
+                "memo/13-orchestration",
+                "memo/08-phases-and-prds",
+                "memo/27-landing-the-plane",
+                "memo/17-git-workflow-and-ids",
+                "memo/16-git-security-versioning",
+                "memo/26-memo-history",
+                "memo/09-contamination-context-handover"
             ],
             "gaps": [
                 "plan-context write-back delegation",
@@ -1055,15 +1055,15 @@
             "skill": "memo-rollout-generate",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-rollout-generate/SKILL.md",
-            "primary": "08-phases-and-prds",
+            "primary": "memo/08-phases-and-prds",
             "all": [
-                "08-phases-and-prds",
-                "13-orchestration",
-                "15-prompt-generator",
-                "32-prompt-governance",
-                "23-requirements",
-                "25-strands",
-                "11-quality-and-finalization"
+                "memo/08-phases-and-prds",
+                "memo/13-orchestration",
+                "memo/15-prompt-generator",
+                "memo/32-prompt-governance",
+                "memo/23-requirements",
+                "memo/25-strands",
+                "memo/11-quality-and-finalization"
             ],
             "gaps": [
                 "category tag taxonomy",
@@ -1075,17 +1075,17 @@
             "skill": "memo-sop",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-sop/SKILL.md",
-            "primary": "02-memo-sop-entrypoint",
+            "primary": "memo/02-memo-sop-entrypoint",
             "all": [
-                "02-memo-sop-entrypoint",
-                "00-overview",
-                "01-philosophy",
-                "13-orchestration",
-                "12-rollout",
-                "38-stage-model",
-                "27-landing-the-plane",
-                "30-primitives",
-                "21-human-computer-interaction"
+                "memo/02-memo-sop-entrypoint",
+                "memo/00-overview",
+                "memo/01-philosophy",
+                "memo/13-orchestration",
+                "memo/12-rollout",
+                "memo/38-stage-model",
+                "memo/27-landing-the-plane",
+                "memo/30-primitives",
+                "memo/21-human-computer-interaction"
             ],
             "gaps": [
                 "Reset / context-clear jumps",
@@ -1100,12 +1100,12 @@
             "skill": "memo-sub-init",
             "category": "memo",
             "path": "repos/core/skills/memo/memo-sub-init/SKILL.md",
-            "primary": "06-memo-structure",
+            "primary": "memo/06-memo-structure",
             "all": [
-                "06-memo-structure",
-                "09-contamination-context-handover",
-                "05-memo-strategies",
-                "02-memo-sop-entrypoint"
+                "memo/06-memo-structure",
+                "memo/09-contamination-context-handover",
+                "memo/05-memo-strategies",
+                "memo/02-memo-sop-entrypoint"
             ],
             "gaps": [
                 "Sub-memo lifecycle HARD-STOP",
@@ -1273,13 +1273,13 @@
             "skill": "release",
             "category": "git",
             "path": "repos/core/skills/git/release/SKILL.md",
-            "primary": "39-release-and-pinning",
+            "primary": "memo/39-release-and-pinning",
             "all": [
-                "39-release-and-pinning",
-                "33-maintenance",
-                "38-stage-model",
-                "29-behavioral-guardrails",
-                "16-git-security-versioning"
+                "memo/39-release-and-pinning",
+                "memo/33-maintenance",
+                "memo/38-stage-model",
+                "memo/29-behavioral-guardrails",
+                "memo/16-git-security-versioning"
             ],
             "visibility": "public"
         },
@@ -1287,11 +1287,11 @@
             "skill": "repo-docs-writing",
             "category": "repository",
             "path": "repos/core/skills/repository/repo-docs-writing/SKILL.md",
-            "primary": "44-repository-and-outward-docs",
+            "primary": "memo/44-repository-and-outward-docs",
             "all": [
-                "44-repository-and-outward-docs",
-                "19-internal-vs-external-communication",
-                "14-agents-skills-tasks"
+                "memo/44-repository-and-outward-docs",
+                "memo/19-internal-vs-external-communication",
+                "memo/14-agents-skills-tasks"
             ],
             "gaps": [
                 "Prose writing-style rules"
@@ -1302,11 +1302,11 @@
             "skill": "repo-github-org",
             "category": "repository",
             "path": "repos/core/skills/repository/repo-github-org/SKILL.md",
-            "primary": "44-repository-and-outward-docs",
+            "primary": "memo/44-repository-and-outward-docs",
             "all": [
-                "44-repository-and-outward-docs",
-                "19-internal-vs-external-communication",
-                "23-requirements"
+                "memo/44-repository-and-outward-docs",
+                "memo/19-internal-vs-external-communication",
+                "memo/23-requirements"
             ],
             "gaps": [
                 "BadgeTable org-profile mechanism"
@@ -1317,10 +1317,10 @@
             "skill": "repo-init",
             "category": "repository",
             "path": "repos/core/skills/repository/repo-init/SKILL.md",
-            "primary": "44-repository-and-outward-docs",
+            "primary": "memo/44-repository-and-outward-docs",
             "all": [
-                "44-repository-and-outward-docs",
-                "16-git-security-versioning",
+                "memo/44-repository-and-outward-docs",
+                "memo/16-git-security-versioning",
                 "workbench/11-project-structure"
             ],
             "gaps": [
@@ -1335,12 +1335,12 @@
             "skill": "repo-issue",
             "category": "repository",
             "path": "repos/core/skills/repository/repo-issue/SKILL.md",
-            "primary": "44-repository-and-outward-docs",
+            "primary": "memo/44-repository-and-outward-docs",
             "all": [
-                "44-repository-and-outward-docs",
-                "17-git-workflow-and-ids",
-                "16-git-security-versioning",
-                "19-internal-vs-external-communication"
+                "memo/44-repository-and-outward-docs",
+                "memo/17-git-workflow-and-ids",
+                "memo/16-git-security-versioning",
+                "memo/19-internal-vs-external-communication"
             ],
             "gaps": [
                 "Issue classification taxonomy",
@@ -1352,13 +1352,13 @@
             "skill": "repo-quality",
             "category": "repository",
             "path": "repos/core/skills/repository/repo-quality/SKILL.md",
-            "primary": "16-git-security-versioning",
+            "primary": "memo/16-git-security-versioning",
             "all": [
-                "16-git-security-versioning",
-                "23-requirements",
-                "19-internal-vs-external-communication",
-                "11-quality-and-finalization",
-                "44-repository-and-outward-docs"
+                "memo/16-git-security-versioning",
+                "memo/23-requirements",
+                "memo/19-internal-vs-external-communication",
+                "memo/11-quality-and-finalization",
+                "memo/44-repository-and-outward-docs"
             ],
             "gaps": [
                 "Repo structure + test-coverage + open-source compliance checklist"
@@ -1369,11 +1369,11 @@
             "skill": "repo-readme",
             "category": "repository",
             "path": "repos/core/skills/repository/repo-readme/SKILL.md",
-            "primary": "44-repository-and-outward-docs",
+            "primary": "memo/44-repository-and-outward-docs",
             "all": [
-                "44-repository-and-outward-docs",
-                "19-internal-vs-external-communication",
-                "14-agents-skills-tasks"
+                "memo/44-repository-and-outward-docs",
+                "memo/19-internal-vs-external-communication",
+                "memo/14-agents-skills-tasks"
             ],
             "gaps": [
                 "README block structure and method-doc format",
@@ -1385,11 +1385,11 @@
             "skill": "research-workflow",
             "category": "research",
             "path": "repos/core/skills/research/research-workflow/SKILL.md",
-            "primary": "13-orchestration",
+            "primary": "memo/13-orchestration",
             "all": [
-                "13-orchestration",
-                "10-proactive-research",
-                "36-agent-strategies",
+                "memo/13-orchestration",
+                "memo/10-proactive-research",
+                "memo/36-agent-strategies",
                 "workbench/31-browser-automation"
             ],
             "gaps": [
@@ -1401,11 +1401,11 @@
             "skill": "skill-testing",
             "category": "skill",
             "path": "repos/core/skills/skill/skill-testing/SKILL.md",
-            "primary": "43-skill-authoring-and-quality",
+            "primary": "memo/43-skill-authoring-and-quality",
             "all": [
-                "43-skill-authoring-and-quality",
-                "14-agents-skills-tasks",
-                "02-memo-sop-entrypoint"
+                "memo/43-skill-authoring-and-quality",
+                "memo/14-agents-skills-tasks",
+                "memo/02-memo-sop-entrypoint"
             ],
             "gaps": [
                 "skill quality / testing has no spec (Memo-039 core)",
@@ -1417,10 +1417,10 @@
             "skill": "specs-to-skills",
             "category": "skill",
             "path": "repos/core/skills/skill/specs-to-skills/SKILL.md",
-            "primary": "43-skill-authoring-and-quality",
+            "primary": "memo/43-skill-authoring-and-quality",
             "all": [
-                "43-skill-authoring-and-quality",
-                "23-requirements"
+                "memo/43-skill-authoring-and-quality",
+                "memo/23-requirements"
             ],
             "visibility": "public"
         },
@@ -1428,15 +1428,15 @@
             "skill": "workbench-modes",
             "category": "workbench",
             "path": "repos/core/skills/workbench/workbench-modes/SKILL.md",
-            "primary": "02-memo-sop-entrypoint",
+            "primary": "memo/02-memo-sop-entrypoint",
             "all": [
-                "02-memo-sop-entrypoint",
-                "01-philosophy",
-                "08-phases-and-prds",
-                "16-git-security-versioning",
-                "17-git-workflow-and-ids",
-                "27-landing-the-plane",
-                "29-behavioral-guardrails"
+                "memo/02-memo-sop-entrypoint",
+                "memo/01-philosophy",
+                "memo/08-phases-and-prds",
+                "memo/16-git-security-versioning",
+                "memo/17-git-workflow-and-ids",
+                "memo/27-landing-the-plane",
+                "memo/29-behavioral-guardrails"
             ],
             "gaps": [
                 "three-mode-taxonomy",
@@ -1449,13 +1449,13 @@
             "skill": "workbench-persona-audit",
             "category": "workbench",
             "path": "repos/core/skills/workbench/workbench-persona-audit/SKILL.md",
-            "primary": "14-agents-skills-tasks",
+            "primary": "memo/14-agents-skills-tasks",
             "all": [
-                "14-agents-skills-tasks",
-                "09-contamination-context-handover",
-                "36-agent-strategies",
-                "19-internal-vs-external-communication",
-                "11-quality-and-finalization"
+                "memo/14-agents-skills-tasks",
+                "memo/09-contamination-context-handover",
+                "memo/36-agent-strategies",
+                "memo/19-internal-vs-external-communication",
+                "memo/11-quality-and-finalization"
             ],
             "gaps": [
                 "persona-audit-schemas",

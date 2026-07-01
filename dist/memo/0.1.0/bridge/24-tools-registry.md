@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [24-tools-registry](./24-tools-registry.md) |
-| Provenance | `e6cf1eff520e` |
+| Provenance | `3025bb96ecda` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -46,4 +46,4 @@ Grading handled by `memo-req-registry` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `e6cf1eff520e` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `3025bb96ecda` over the skill-to-spec map. Regenerated on every build.

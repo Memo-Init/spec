@@ -5,7 +5,7 @@
     "namespaceToken": "MEMO",
     "currentVersion": "0.1.0",
     "specDir": "draft/memo/0.1.0/spec",
-    "prefix": "",
+    "prefix": "memo/",
     "sopAnchor": "02-memo-sop-entrypoint",
     "docEntry": "/specification/overview/",
     "relatedRefs": [ "43-skill-authoring-and-quality", "00-overview" ],

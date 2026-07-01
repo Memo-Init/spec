@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [13-orchestration](./13-orchestration.md) |
-| Provenance | `578a8273d7cb` |
+| Provenance | `1588eee35808` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -66,4 +66,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `578a8273d7cb` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `1588eee35808` over the skill-to-spec map. Regenerated on every build.

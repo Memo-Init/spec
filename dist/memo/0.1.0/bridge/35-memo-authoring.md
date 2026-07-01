@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [35-memo-authoring](./35-memo-authoring.md) |
-| Provenance | `e5be090ef249` |
+| Provenance | `f8698810d652` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `e5be090ef249` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `f8698810d652` over the skill-to-spec map. Regenerated on every build.

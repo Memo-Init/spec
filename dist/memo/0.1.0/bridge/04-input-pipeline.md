@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [04-input-pipeline](./04-input-pipeline.md) |
-| Provenance | `c2499ff9cb66` |
+| Provenance | `13c9fa2d470e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -47,4 +47,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `c2499ff9cb66` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `13c9fa2d470e` over the skill-to-spec map. Regenerated on every build.

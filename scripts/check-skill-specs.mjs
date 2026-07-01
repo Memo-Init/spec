@@ -138,7 +138,11 @@ const main = async () => {
     if( specDir === null ) {
         console.log( 'check-skill-specs: spec draft tree not found — spec-existence + orphan checks skipped.' )
     } else {
-        const specChapters = ( await readdir( specDir ) ).filter( ( f ) => /^\d{2}-.*\.md$/.test( f ) )
+        // Memo family chapters are prefixed with 'memo/' to match the family-qualified id convention
+        // (F8=B full symmetry: memo ids are now 'memo/NN-slug', mirroring 'workbench/' and 'session/').
+        const specChapters = ( await readdir( specDir ) )
+            .filter( ( f ) => /^\d{2}-.*\.md$/.test( f ) )
+            .map( ( f ) => `memo/${ f }` )
         // Sibling families (workbench, session) live at draft/<family>/<ver>/spec (local).
         // specDir = draft/memo/<ver>/spec → go up 3 levels to reach draft/.
         const specRoot = resolve( specDir, '..', '..', '..' )

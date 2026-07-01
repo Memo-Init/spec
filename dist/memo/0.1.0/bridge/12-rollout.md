@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [12-rollout](./12-rollout.md) |
-| Provenance | `61cf325b4cfc` |
+| Provenance | `6f74c94469ae` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -54,4 +54,4 @@ Grading handled by `memo-fidelity-audit`.
 
 ## 8. Provenance
 
-Derived-record hash `61cf325b4cfc` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `6f74c94469ae` over the skill-to-spec map. Regenerated on every build.

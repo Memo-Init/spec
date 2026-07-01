@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [33-maintenance](./33-maintenance.md) |
-| Provenance | `4d7a6524954f` |
+| Provenance | `b82329de5347` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -47,4 +47,4 @@ Grading handled by `memo-goal-score-all`.
 
 ## 8. Provenance
 
-Derived-record hash `4d7a6524954f` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `b82329de5347` over the skill-to-spec map. Regenerated on every build.

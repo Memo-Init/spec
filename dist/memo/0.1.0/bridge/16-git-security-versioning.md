@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [16-git-security-versioning](./16-git-security-versioning.md) |
-| Provenance | `2fe71f61526f` |
+| Provenance | `623470e490c4` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -61,4 +61,4 @@ Grading handled by `memo-req-runner` _(inferred)_.
 
 ## 8. Provenance
 
-Derived-record hash `2fe71f61526f` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `623470e490c4` over the skill-to-spec map. Regenerated on every build.

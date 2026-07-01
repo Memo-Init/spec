@@ -37,7 +37,7 @@ const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
 const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->'
 
 const FAMILIES = [
-    { key: 'memo', prefix: '', specDir: REFS.memo.specDir, version: REFS.memo.currentVersion },
+    { key: 'memo', prefix: 'memo/', specDir: REFS.memo.specDir, version: REFS.memo.currentVersion },
     { key: 'workbench', prefix: 'workbench/', specDir: REFS.workbench.specDir, version: REFS.workbench.currentVersion },
     { key: 'session', prefix: 'session/', specDir: REFS.session.specDir, version: REFS.session.currentVersion }
 ]

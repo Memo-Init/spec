@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md) |
-| Provenance | `16386cad65cf` |
+| Provenance | `2a45cbb5b79b` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -60,4 +60,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `16386cad65cf` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `2a45cbb5b79b` over the skill-to-spec map. Regenerated on every build.

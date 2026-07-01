@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [01-philosophy](./01-philosophy.md) |
-| Provenance | `2e60c686ad77` |
+| Provenance | `3352c5dfef5e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `2e60c686ad77` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `3352c5dfef5e` over the skill-to-spec map. Regenerated on every build.

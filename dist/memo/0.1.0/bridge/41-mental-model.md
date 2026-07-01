@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [41-mental-model](./41-mental-model.md) |
-| Provenance | `97837607999d` |
+| Provenance | `d00bcfa5093e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `97837607999d` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `d00bcfa5093e` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md) |
-| Provenance | `359603036d1b` |
+| Provenance | `5ec071d8d72c` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -44,4 +44,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `359603036d1b` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `5ec071d8d72c` over the skill-to-spec map. Regenerated on every build.

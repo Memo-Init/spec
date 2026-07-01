@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [10-proactive-research](./10-proactive-research.md) |
-| Provenance | `7ab086371100` |
+| Provenance | `2d729aa74004` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -51,4 +51,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `7ab086371100` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `2d729aa74004` over the skill-to-spec map. Regenerated on every build.

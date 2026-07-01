@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [09-contamination-context-handover](./09-contamination-context-handover.md) |
-| Provenance | `39d6eb7ff252` |
+| Provenance | `5f17c041cebb` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -67,4 +67,4 @@ Grading handled by `memo-goal-score`.
 
 ## 8. Provenance
 
-Derived-record hash `39d6eb7ff252` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `5f17c041cebb` over the skill-to-spec map. Regenerated on every build.

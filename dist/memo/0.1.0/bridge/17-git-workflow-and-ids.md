@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [17-git-workflow-and-ids](./17-git-workflow-and-ids.md) |
-| Provenance | `2c44468db184` |
+| Provenance | `555f71df1f2d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -52,4 +52,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `2c44468db184` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `555f71df1f2d` over the skill-to-spec map. Regenerated on every build.

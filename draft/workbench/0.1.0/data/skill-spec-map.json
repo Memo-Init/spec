@@ -14,7 +14,7 @@
             "primary": "workbench/31-browser-automation",
             "all": [
                 "workbench/31-browser-automation",
-                "10-proactive-research"
+                "memo/10-proactive-research"
             ],
             "gaps": [
                 "browser-automation-method",
@@ -29,7 +29,7 @@
             "primary": "workbench/31-browser-automation",
             "all": [
                 "workbench/31-browser-automation",
-                "10-proactive-research"
+                "memo/10-proactive-research"
             ],
             "gaps": [
                 "documentation-scraping-method",
@@ -46,8 +46,8 @@
             "all": [
                 "workbench/30-wiki",
                 "workbench/13-knowledge-format-okf",
-                "26-memo-history",
-                "10-proactive-research"
+                "memo/26-memo-history",
+                "memo/10-proactive-research"
             ],
             "gaps": [
                 "Ingest extraction rules (summary caps, chunking, dedup)",
@@ -82,7 +82,7 @@
                 "workbench/13-knowledge-format-okf",
                 "workbench/30-wiki",
                 "workbench/41-project-architecture",
-                "23-requirements"
+                "memo/23-requirements"
             ],
             "gaps": [
                 "Non-OKF lint checks (orphans, contradictions, stubs, missing cross-refs)",
@@ -97,7 +97,7 @@
             "primary": "workbench/30-wiki",
             "all": [
                 "workbench/30-wiki",
-                "24-tools-registry",
+                "memo/24-tools-registry",
                 "workbench/13-knowledge-format-okf"
             ],
             "gaps": [
@@ -129,9 +129,9 @@
                 "workbench/11-project-structure",
                 "workbench/00-overview",
                 "workbench/41-project-architecture",
-                "24-tools-registry",
-                "16-git-security-versioning",
-                "19-internal-vs-external-communication"
+                "memo/24-tools-registry",
+                "memo/16-git-security-versioning",
+                "memo/19-internal-vs-external-communication"
             ],
             "gaps": [
                 "memo-079-eleven-ecken",
@@ -148,7 +148,7 @@
             "all": [
                 "workbench/11-project-structure",
                 "workbench/00-overview",
-                "06-memo-structure",
+                "memo/06-memo-structure",
                 "workbench/32-trash",
                 "workbench/30-wiki"
             ],

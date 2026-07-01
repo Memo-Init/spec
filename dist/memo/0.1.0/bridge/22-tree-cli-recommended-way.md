@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [22-tree-cli-recommended-way](./22-tree-cli-recommended-way.md) |
-| Provenance | `17349a0780e9` |
+| Provenance | `8be5284b8207` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,4 +45,4 @@ Grading handled by `memo-goal-score`.
 
 ## 8. Provenance
 
-Derived-record hash `17349a0780e9` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `8be5284b8207` over the skill-to-spec map. Regenerated on every build.

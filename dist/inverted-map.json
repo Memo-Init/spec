@@ -1,11 +1,11 @@
 {
     "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.",
     "generator": "scripts/generate-bridge.mjs",
-    "mapHash": "1fe93954ab0e",
+    "mapHash": "c5b7b6b4e5ea",
     "pages": [
         {
             "family": "memo",
-            "id": "00-overview",
+            "id": "memo/00-overview",
             "stem": "00-overview",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -32,11 +32,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "9926b0addef8"
+            "provenance": "6c72e85accd9"
         },
         {
             "family": "memo",
-            "id": "01-philosophy",
+            "id": "memo/01-philosophy",
             "stem": "01-philosophy",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -81,11 +81,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "2e60c686ad77"
+            "provenance": "3352c5dfef5e"
         },
         {
             "family": "memo",
-            "id": "02-memo-sop-entrypoint",
+            "id": "memo/02-memo-sop-entrypoint",
             "stem": "02-memo-sop-entrypoint",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -177,11 +177,11 @@
             ],
             "requirementCount": 2,
             "internalCount": 0,
-            "provenance": "16386cad65cf"
+            "provenance": "2a45cbb5b79b"
         },
         {
             "family": "memo",
-            "id": "03-input-paths",
+            "id": "memo/03-input-paths",
             "stem": "03-input-paths",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -210,11 +210,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "ed9e01071e1f"
+            "provenance": "ac4e5f8970cc"
         },
         {
             "family": "memo",
-            "id": "04-input-pipeline",
+            "id": "memo/04-input-pipeline",
             "stem": "04-input-pipeline",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -251,11 +251,11 @@
             ],
             "requirementCount": 2,
             "internalCount": 0,
-            "provenance": "c2499ff9cb66"
+            "provenance": "13c9fa2d470e"
         },
         {
             "family": "memo",
-            "id": "05-memo-strategies",
+            "id": "memo/05-memo-strategies",
             "stem": "05-memo-strategies",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -286,11 +286,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "788a9a4c8243"
+            "provenance": "3d5b1d7f0b4d"
         },
         {
             "family": "memo",
-            "id": "06-memo-structure",
+            "id": "memo/06-memo-structure",
             "stem": "06-memo-structure",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -346,11 +346,11 @@
             ],
             "requirementCount": 4,
             "internalCount": 0,
-            "provenance": "fe7405a4dd77"
+            "provenance": "fcf24f57a8c4"
         },
         {
             "family": "memo",
-            "id": "07-revisions-and-questions",
+            "id": "memo/07-revisions-and-questions",
             "stem": "07-revisions-and-questions",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -431,11 +431,11 @@
             ],
             "requirementCount": 5,
             "internalCount": 0,
-            "provenance": "9cd38a020e92"
+            "provenance": "9f82a684f6c1"
         },
         {
             "family": "memo",
-            "id": "08-phases-and-prds",
+            "id": "memo/08-phases-and-prds",
             "stem": "08-phases-and-prds",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -551,11 +551,11 @@
             ],
             "requirementCount": 6,
             "internalCount": 0,
-            "provenance": "d536850374d8"
+            "provenance": "8b9f9ea83adc"
         },
         {
             "family": "memo",
-            "id": "09-contamination-context-handover",
+            "id": "memo/09-contamination-context-handover",
             "stem": "09-contamination-context-handover",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -687,11 +687,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "39d6eb7ff252"
+            "provenance": "5f17c041cebb"
         },
         {
             "family": "memo",
-            "id": "10-proactive-research",
+            "id": "memo/10-proactive-research",
             "stem": "10-proactive-research",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -756,11 +756,11 @@
             ],
             "requirementCount": 8,
             "internalCount": 0,
-            "provenance": "7ab086371100"
+            "provenance": "2d729aa74004"
         },
         {
             "family": "memo",
-            "id": "11-quality-and-finalization",
+            "id": "memo/11-quality-and-finalization",
             "stem": "11-quality-and-finalization",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -871,11 +871,11 @@
             ],
             "requirementCount": 5,
             "internalCount": 1,
-            "provenance": "a1bc3ff32774"
+            "provenance": "b652367d558c"
         },
         {
             "family": "memo",
-            "id": "12-rollout",
+            "id": "memo/12-rollout",
             "stem": "12-rollout",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -941,11 +941,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 1,
-            "provenance": "61cf325b4cfc"
+            "provenance": "6f74c94469ae"
         },
         {
             "family": "memo",
-            "id": "13-orchestration",
+            "id": "memo/13-orchestration",
             "stem": "13-orchestration",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1057,11 +1057,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "578a8273d7cb"
+            "provenance": "1588eee35808"
         },
         {
             "family": "memo",
-            "id": "14-agents-skills-tasks",
+            "id": "memo/14-agents-skills-tasks",
             "stem": "14-agents-skills-tasks",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1110,11 +1110,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 2,
-            "provenance": "01369df8f7c3"
+            "provenance": "7d944ebb4ea2"
         },
         {
             "family": "memo",
-            "id": "15-prompt-generator",
+            "id": "memo/15-prompt-generator",
             "stem": "15-prompt-generator",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -1157,11 +1157,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "61935ca4ad9d"
+            "provenance": "22294b06e071"
         },
         {
             "family": "memo",
-            "id": "16-git-security-versioning",
+            "id": "memo/16-git-security-versioning",
             "stem": "16-git-security-versioning",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1265,11 +1265,11 @@
             ],
             "requirementCount": 8,
             "internalCount": 4,
-            "provenance": "2fe71f61526f"
+            "provenance": "623470e490c4"
         },
         {
             "family": "memo",
-            "id": "17-git-workflow-and-ids",
+            "id": "memo/17-git-workflow-and-ids",
             "stem": "17-git-workflow-and-ids",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1341,11 +1341,11 @@
             ],
             "requirementCount": 6,
             "internalCount": 1,
-            "provenance": "2c44468db184"
+            "provenance": "555f71df1f2d"
         },
         {
             "family": "memo",
-            "id": "18-multidimensionality",
+            "id": "memo/18-multidimensionality",
             "stem": "18-multidimensionality",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -1380,11 +1380,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "5e8d4bcdbf03"
+            "provenance": "43eba1ce0fe6"
         },
         {
             "family": "memo",
-            "id": "19-internal-vs-external-communication",
+            "id": "memo/19-internal-vs-external-communication",
             "stem": "19-internal-vs-external-communication",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -1440,11 +1440,11 @@
             ],
             "requirementCount": 1,
             "internalCount": 6,
-            "provenance": "5d5970e0cc0d"
+            "provenance": "e7c57de96fc3"
         },
         {
             "family": "memo",
-            "id": "20-flow-full-vs-update-revisions",
+            "id": "memo/20-flow-full-vs-update-revisions",
             "stem": "20-flow-full-vs-update-revisions",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1485,11 +1485,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "5faafac7beb8"
+            "provenance": "5e2588236904"
         },
         {
             "family": "memo",
-            "id": "21-human-computer-interaction",
+            "id": "memo/21-human-computer-interaction",
             "stem": "21-human-computer-interaction",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1542,11 +1542,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "01ff37d6252d"
+            "provenance": "7b95f803d20e"
         },
         {
             "family": "memo",
-            "id": "22-tree-cli-recommended-way",
+            "id": "memo/22-tree-cli-recommended-way",
             "stem": "22-tree-cli-recommended-way",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -1585,11 +1585,11 @@
             ],
             "requirementCount": 4,
             "internalCount": 0,
-            "provenance": "17349a0780e9"
+            "provenance": "8be5284b8207"
         },
         {
             "family": "memo",
-            "id": "23-requirements",
+            "id": "memo/23-requirements",
             "stem": "23-requirements",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1699,11 +1699,11 @@
             ],
             "requirementCount": 6,
             "internalCount": 3,
-            "provenance": "e9c8accc6597"
+            "provenance": "1ef694676445"
         },
         {
             "family": "memo",
-            "id": "24-tools-registry",
+            "id": "memo/24-tools-registry",
             "stem": "24-tools-registry",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -1749,11 +1749,11 @@
             ],
             "requirementCount": 5,
             "internalCount": 0,
-            "provenance": "e6cf1eff520e"
+            "provenance": "3025bb96ecda"
         },
         {
             "family": "memo",
-            "id": "25-strands",
+            "id": "memo/25-strands",
             "stem": "25-strands",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -1783,11 +1783,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "e4871a9db0a4"
+            "provenance": "7cb174eafd53"
         },
         {
             "family": "memo",
-            "id": "26-memo-history",
+            "id": "memo/26-memo-history",
             "stem": "26-memo-history",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1829,11 +1829,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "d27fc6971adc"
+            "provenance": "28733ff91c5e"
         },
         {
             "family": "memo",
-            "id": "27-landing-the-plane",
+            "id": "memo/27-landing-the-plane",
             "stem": "27-landing-the-plane",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1880,11 +1880,11 @@
             ],
             "requirementCount": 1,
             "internalCount": 0,
-            "provenance": "79af3aba6806"
+            "provenance": "fabe9773cfe1"
         },
         {
             "family": "memo",
-            "id": "28-drift",
+            "id": "memo/28-drift",
             "stem": "28-drift",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1928,11 +1928,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "2732835582d9"
+            "provenance": "4b8384f8588d"
         },
         {
             "family": "memo",
-            "id": "29-behavioral-guardrails",
+            "id": "memo/29-behavioral-guardrails",
             "stem": "29-behavioral-guardrails",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -1979,11 +1979,11 @@
             ],
             "requirementCount": 1,
             "internalCount": 1,
-            "provenance": "1d9befd43d6b"
+            "provenance": "7d5155f3dfcd"
         },
         {
             "family": "memo",
-            "id": "30-primitives",
+            "id": "memo/30-primitives",
             "stem": "30-primitives",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2030,11 +2030,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "0671bc0ff8d0"
+            "provenance": "faa6bc489ed1"
         },
         {
             "family": "memo",
-            "id": "31-goals",
+            "id": "memo/31-goals",
             "stem": "31-goals",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2090,11 +2090,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "7e88389ba989"
+            "provenance": "a6d1fc49f124"
         },
         {
             "family": "memo",
-            "id": "32-prompt-governance",
+            "id": "memo/32-prompt-governance",
             "stem": "32-prompt-governance",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -2134,11 +2134,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "ae52bd635f6a"
+            "provenance": "e141d638b514"
         },
         {
             "family": "memo",
-            "id": "33-maintenance",
+            "id": "memo/33-maintenance",
             "stem": "33-maintenance",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2194,11 +2194,11 @@
             ],
             "requirementCount": 2,
             "internalCount": 0,
-            "provenance": "4d7a6524954f"
+            "provenance": "b82329de5347"
         },
         {
             "family": "memo",
-            "id": "34-question-interface",
+            "id": "memo/34-question-interface",
             "stem": "34-question-interface",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2242,11 +2242,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "46dba8f1b1db"
+            "provenance": "6872f998d557"
         },
         {
             "family": "memo",
-            "id": "35-memo-authoring",
+            "id": "memo/35-memo-authoring",
             "stem": "35-memo-authoring",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2289,11 +2289,11 @@
             ],
             "requirementCount": 7,
             "internalCount": 1,
-            "provenance": "e5be090ef249"
+            "provenance": "f8698810d652"
         },
         {
             "family": "memo",
-            "id": "36-agent-strategies",
+            "id": "memo/36-agent-strategies",
             "stem": "36-agent-strategies",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -2369,11 +2369,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "a08d0129bdb2"
+            "provenance": "02319f98c346"
         },
         {
             "family": "memo",
-            "id": "37-transcript-reliability",
+            "id": "memo/37-transcript-reliability",
             "stem": "37-transcript-reliability",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -2399,11 +2399,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "b324675da112"
+            "provenance": "e17cb8ecc3f3"
         },
         {
             "family": "memo",
-            "id": "38-stage-model",
+            "id": "memo/38-stage-model",
             "stem": "38-stage-model",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2499,11 +2499,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "dc37cf7fc4e4"
+            "provenance": "48efa06a3a16"
         },
         {
             "family": "memo",
-            "id": "39-release-and-pinning",
+            "id": "memo/39-release-and-pinning",
             "stem": "39-release-and-pinning",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2546,11 +2546,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "b8c6dfcc907d"
+            "provenance": "db89a2595ba1"
         },
         {
             "family": "memo",
-            "id": "40-diagrams",
+            "id": "memo/40-diagrams",
             "stem": "40-diagrams",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2580,11 +2580,11 @@
             ],
             "requirementCount": 4,
             "internalCount": 2,
-            "provenance": "12bca5e1fc7d"
+            "provenance": "6689c26658f7"
         },
         {
             "family": "memo",
-            "id": "41-mental-model",
+            "id": "memo/41-mental-model",
             "stem": "41-mental-model",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2624,11 +2624,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "97837607999d"
+            "provenance": "d00bcfa5093e"
         },
         {
             "family": "memo",
-            "id": "42-plans",
+            "id": "memo/42-plans",
             "stem": "42-plans",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2733,11 +2733,11 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "2805555081f7"
+            "provenance": "7919794e3590"
         },
         {
             "family": "memo",
-            "id": "43-skill-authoring-and-quality",
+            "id": "memo/43-skill-authoring-and-quality",
             "stem": "43-skill-authoring-and-quality",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2776,11 +2776,11 @@
             ],
             "requirementCount": 8,
             "internalCount": 1,
-            "provenance": "359603036d1b"
+            "provenance": "5ec071d8d72c"
         },
         {
             "family": "memo",
-            "id": "44-repository-and-outward-docs",
+            "id": "memo/44-repository-and-outward-docs",
             "stem": "44-repository-and-outward-docs",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [],
@@ -2807,11 +2807,11 @@
             "clusters": [],
             "requirementCount": 22,
             "internalCount": 6,
-            "provenance": "49d6e773b9ab"
+            "provenance": "edf9fc2ab691"
         },
         {
             "family": "memo",
-            "id": "45-implementation-fidelity-audit",
+            "id": "memo/45-implementation-fidelity-audit",
             "stem": "45-implementation-fidelity-audit",
             "sopAnchor": "02-memo-sop-entrypoint",
             "publicEntries": [
@@ -2844,7 +2844,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "0698573b167c"
+            "provenance": "f59d5dcd8514"
         },
         {
             "family": "workbench",
