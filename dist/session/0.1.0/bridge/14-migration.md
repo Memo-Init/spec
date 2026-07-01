@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-migration` | primary | Execute the fold of the former published SOP spec family into the session family without breaking any live URL |
+| `session-migration` | primary | — |
 
 ## 5. Grading assignment
 

@@ -25,7 +25,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
+| `memo-sop` | contributing | — |
 
 ## 5. Grading assignment
 

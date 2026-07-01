@@ -25,8 +25,8 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization pipeline |
-| `memo-input-processing` | contributing | Strict 5-step input processing pipeline for voice memos, text, and linked files |
+| `memo-goal-optimize` | contributing | — |
+| `memo-input-processing` | contributing | — |
 
 ## 5. Grading assignment
 

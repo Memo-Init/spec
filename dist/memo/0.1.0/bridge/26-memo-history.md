@@ -25,10 +25,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-chronic-add` | primary | Append exactly ONE narrated chronicle entry per memo to a flat Markdown file in.memo/chronic/ |
-| `memo-chronic-build` | primary | Orchestrate the chronicle over ALL memos in.memo/ in one run |
-| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
-| `wiki-ingest` | contributing | Process source files from context/ or finalized memos into wiki pages |
+| `memo-chronic-add` | primary | — |
+| `memo-chronic-build` | primary | — |
+| `memo-rollout-execute` | contributing | — |
+| `wiki-ingest` | contributing | — |
 
 ## 5. Grading assignment
 

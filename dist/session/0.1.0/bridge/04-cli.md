@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-cli` | primary | Apply the universal CLI doctrine that binds every CLI in the system (session, workbench, memo, flowmcp, future families) |
+| `session-cli` | primary | — |
 
 ## 5. Grading assignment
 

@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-addons` | primary | The canonical Add-on model — onboard a custom-folder tool (a global extension that lives in its own folder and is NOT a reserve… |
+| `session-addons` | primary | — |
 
 ## 5. Grading assignment
 

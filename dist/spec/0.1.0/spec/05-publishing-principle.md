@@ -6,7 +6,7 @@ spec_file: "05-publishing-principle.md"
 order: 5
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-01T17:09:35.557Z"
+generated_at: "2026-07-01T17:10:03.597Z"
 generated_from: "draft/spec/0.1.0/spec/05-publishing-principle.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/05-publishing-principle.md."

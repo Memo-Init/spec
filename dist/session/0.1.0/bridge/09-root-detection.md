@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-root-detection` | primary | Locate the session/workbench root by a nearest-ancestor.session/ walk-up bounded by a root:true stop-flag, with an opt-in relat… |
+| `session-root-detection` | primary | — |
 
 ## 5. Grading assignment
 

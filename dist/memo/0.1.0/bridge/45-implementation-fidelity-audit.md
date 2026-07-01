@@ -25,7 +25,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-fidelity-audit` | primary | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
+| `memo-fidelity-audit` | primary | — |
 
 ## 5. Grading assignment
 

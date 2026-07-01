@@ -25,7 +25,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-sop` | primary | The SOP entry point of the session standard — the genesis-root SOP through which every tool connects to the session |
+| `session-sop` | primary | — |
 
 ## 5. Grading assignment
 

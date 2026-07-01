@@ -25,31 +25,31 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-chronic-add` | contributing | Append exactly ONE narrated chronicle entry per memo to a flat Markdown file in.memo/chronic/ |
-| `memo-chronic-build` | contributing | Orchestrate the chronicle over ALL memos in.memo/ in one run |
-| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
-| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization pipeline |
-| `memo-goal-score` | contributing | Score ONE goal in a FRESH context (never the working session) |
-| `memo-goal-score-all` | contributing | Score EVERY goal in a fresh context and render the goal board — the standard output of the goal-scoring system |
-| `memo-handover` | primary | Zwei-Stufen-Handover-Skill fuer kontaminierte Session-Uebergaben |
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-maintenance-score` | contributing | Score ONE repo card in a FRESH context (never the working session) |
-| `memo-maintenance-verify` | contributing | The gated re-bless of the maintenance system — the handelnde pendant to memo-goal-optimize |
-| `memo-mental-model-derive` | contributing | Derive the project-global User Mental Model in a FRESH context (never the working session) by walking the finalized memos chron… |
-| `memo-phase-evaluate` | contributing | Prueft das Zusammenspiel aller PRDs innerhalb einer Phase |
-| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
-| `memo-plan-evaluate` | contributing | Bidirektionale Konformitaetspruefung Plan vs Memos |
-| `memo-plan-execute` | contributing | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
-| `memo-plan-stop` | contributing | Externer Stop-Befehl (/memo-plan-stop) |
-| `memo-prd-evaluate` | contributing | Validate PRDs against the source memo |
-| `memo-prds-validate` | contributing | Bidirectional validation of Memo vs |
-| `memo-reset-recommend` | contributing | Evaluates whether a /clear reset should be recommended after a phase boundary |
-| `memo-revision-evaluate` | contributing | Mandatory auto-check after each revision |
-| `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
-| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
-| `memo-sub-init` | contributing | Erzeugt Sub-Memos autonom aus den Sub-Memo-Zeilen der Triage-Tabelle eines Sortier-Memos |
-| `workbench-persona-audit` | contributing | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
+| `memo-chronic-add` | contributing | — |
+| `memo-chronic-build` | contributing | — |
+| `memo-finalize` | contributing | — |
+| `memo-goal-optimize` | contributing | — |
+| `memo-goal-score` | contributing | — |
+| `memo-goal-score-all` | contributing | — |
+| `memo-handover` | primary | — |
+| `memo-init` | contributing | — |
+| `memo-maintenance-score` | contributing | — |
+| `memo-maintenance-verify` | contributing | — |
+| `memo-mental-model-derive` | contributing | — |
+| `memo-phase-evaluate` | contributing | — |
+| `memo-phase-execute` | contributing | — |
+| `memo-phase-generate` | contributing | — |
+| `memo-plan-evaluate` | contributing | — |
+| `memo-plan-execute` | contributing | — |
+| `memo-plan-stop` | contributing | — |
+| `memo-prd-evaluate` | contributing | — |
+| `memo-prds-validate` | contributing | — |
+| `memo-reset-recommend` | contributing | — |
+| `memo-revision-evaluate` | contributing | — |
+| `memo-rollout-evaluate` | contributing | — |
+| `memo-rollout-execute` | contributing | — |
+| `memo-sub-init` | contributing | — |
+| `workbench-persona-audit` | contributing | — |
 
 ## 5. Grading assignment
 

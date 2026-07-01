@@ -25,23 +25,23 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
-| `git-security` | contributing | Standalone security check for Git repositories |
-| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
-| `memo-phase-evaluate` | contributing | Prueft das Zusammenspiel aller PRDs innerhalb einer Phase |
-| `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
-| `memo-prd-evaluate` | contributing | Validate PRDs against the source memo |
-| `memo-prd-generate` | contributing | Create PRDs (Product Requirement Documents) from a finalized memo |
-| `memo-prds-validate` | contributing | Bidirectional validation of Memo vs |
-| `memo-req-registry` | primary | Catalog of tools usable as requirements (Pencil, Playwright, get-sheet, getui, FlowMCP) with named validation tactics, plus a d… |
-| `memo-req-runner` | primary | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
-| `memo-req-store` | primary | Storage convention and entry schema for the requirements/eval calibration layer, plus the three-axis scoping/matching engine |
-| `memo-req-template` | primary | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements (eval-styl… |
-| `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
-| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
-| `specs-to-skills` | contributing | Scaffold skill skeletons from the spec-to-skill map and grade skill quality against the three authoring dimensions |
-| `wiki-lint` | contributing | Health-check the wiki |
+| `git-push` | contributing | — |
+| `git-security` | contributing | — |
+| `memo-finalize` | contributing | — |
+| `memo-phase-evaluate` | contributing | — |
+| `memo-phase-execute` | contributing | — |
+| `memo-phase-generate` | contributing | — |
+| `memo-prd-evaluate` | contributing | — |
+| `memo-prd-generate` | contributing | — |
+| `memo-prds-validate` | contributing | — |
+| `memo-req-registry` | primary | — |
+| `memo-req-runner` | primary | — |
+| `memo-req-store` | primary | — |
+| `memo-req-template` | primary | — |
+| `memo-rollout-evaluate` | contributing | — |
+| `memo-rollout-generate` | contributing | — |
+| `specs-to-skills` | contributing | — |
+| `wiki-lint` | contributing | — |
 
 ## 5. Grading assignment
 
