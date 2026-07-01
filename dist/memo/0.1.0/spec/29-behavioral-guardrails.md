@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T23:59:52.996Z"
+generated_at: "2026-07-01T00:36:59.539Z"
 generated_from: "draft/memo/0.1.0/spec/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/29-behavioral-guardrails.md."
@@ -90,6 +90,31 @@ This rule is deliberately bounded, and the boundary must be stated explicitly so
 - **The two coexist.** Fix the small adjacent defect; add no speculative scope. One rule closes the gap where real defects get hidden; the other closes the gap where imagined needs get built. Neither overrides the other, and neither overrides the prioritization and deferral rules above (C7) — a *large* adjacent defect is still surfaced to the user, not silently absorbed.
 
 The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in the memo's `context/`** (memo-scoped, not the project-wide store) — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
+
+---
+
+## Conformity Requirements
+
+The guardrails above bind every actor, and maintenance is the case that most tempts an actor to act without a gate. That the maintainer holds to these guardrails is authored here as a declarative requirement ([23-requirements.md](/specification/requirements/)) so it can be verified, not merely assumed.
+
+Maintenance work is autonomous in reporting but gated in acting, so the check is a hard yes/no over the maintainer's behavior:
+
+```requirement
+{
+  "id": "REQ-055",
+  "title": "Maintenance work holds to the behavioral guardrails",
+  "statement": "Maintenance work honors the behavioral guardrails of this chapter: it reports autonomously but acts only behind a gate or human approval, never runs a destructive recursive remove, and never makes a system-level commit. Deletion always goes to a recoverable trash, never a destructive remove.",
+  "scope": { "repos": [], "categories": ["repo"], "tags": [] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Maintenance reporting runs autonomously, but any acting step (deletion, re-blessing an edge, spawning work) happens only behind a gate or human approval",
+      "No destructive recursive remove and no system-level commit is performed by maintenance work"
+    ]
+  }
+}
+```
 
 ---
 

@@ -6,7 +6,7 @@ spec_file: "24-tools-registry.md"
 order: 24
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T23:59:52.996Z"
+generated_at: "2026-07-01T00:36:59.539Z"
 generated_from: "draft/memo/0.1.0/spec/24-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/24-tools-registry.md."

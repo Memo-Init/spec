@@ -53,6 +53,31 @@ Two distinctions sharpen this. A commit is not a push: the system writes the com
 
 ---
 
+## Conformity Requirements
+
+The landing checklist above is a binding gate, not only guidance. The rule that a completed phase leaves no loose ends behind — no open worktrees, branches, or stashes and no dead code — is authored here as a declarative requirement, the machine-readable source the requirement store is harvested from ([23-requirements.md](./23-requirements.md)). The check faces the end-of-phase gate, and the doer is not the grader.
+
+The landing is complete only when the working state is clean, so the check is a hard yes/no over the repository state:
+
+```requirement
+{
+  "id": "REQ-052",
+  "title": "A completed phase leaves no loose git state or dead code",
+  "statement": "After a phase completes there are no open worktrees, branches, or stashes and no dead code left behind — the work is landed. Worktrees created for the phase are removed or pruned, temporary branches are folded in, and stashes are resolved rather than left dangling.",
+  "scope": { "repos": [], "categories": ["repo"], "tags": [] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No open worktrees, branches, or stashes belonging to the completed phase remain",
+      "No dead or commented-out code introduced by the phase is left behind"
+    ]
+  }
+}
+```
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

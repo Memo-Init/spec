@@ -6,7 +6,7 @@ spec_file: "33-maintenance.md"
 order: 33
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T23:59:52.996Z"
+generated_at: "2026-07-01T00:36:59.539Z"
 generated_from: "draft/memo/0.1.0/spec/33-maintenance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/33-maintenance.md."
@@ -108,6 +108,50 @@ A maintenance discipline must also keep an explicit **blind-spots list** — the
 ## Autonomy Boundary
 
 The maintainer is **reporting-autonomous**: it reads the diff, clusters changes, traverses the affected graph, renders the board and an evidence trail, and *proposes* removals. It is **acting only behind a gate or human approval**: re-blessing an edge, deleting anything, or spawning new work all require the gate to qualify or a person to decide. The system never commits on its own, and deletion always goes to a recoverable trash, never a destructive remove. "When a human decides" is an explicit output of every maintenance run, not an implicit default.
+
+---
+
+## Conformity Requirements
+
+The maintenance mechanics above rest on two preconditions the prose states and that are authored here as declarative requirements ([23-requirements.md](/specification/requirements/)): every dependency edge is explicitly declared, and every edge carries a provenance pin. Both face the maintenance gate, and the doer is not the grader.
+
+A silent soft edge makes staleness unmeasurable, so an edge's declaration is a hard yes/no:
+
+```requirement
+{
+  "id": "REQ-053",
+  "title": "Every dependency edge is explicitly declared, never a silent soft edge",
+  "statement": "Every repo or node dependency edge in the maintenance graph is declared explicitly as set, justified-omit, or blocked — never left as a silent soft edge. A guessed or implicit edge is forbidden: an edge that cannot reach set is marked justified-omit or blocked with a stated reason.",
+  "scope": { "repos": [], "categories": ["repo"], "tags": [] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every dependency edge is declared as set, justified-omit, or blocked",
+      "No edge is left implicit or guessed"
+    ]
+  }
+}
+```
+
+Without a provenance pin staleness is a guess rather than a count, so the pin is required on every edge:
+
+```requirement
+{
+  "id": "REQ-054",
+  "title": "Every dependency edge carries a provenance pin",
+  "statement": "Every declared dependency edge in the maintenance store carries a provenance pin — verifiedAtSha, the commit of the source at which the edge was last verified — and the pin is re-stamped on every edge change. With the pin, staleness is a count of commits since the pin; without it, staleness is unmeasurable.",
+  "scope": { "repos": [], "categories": ["repo"], "tags": [] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every declared maintenance-store edge carries a verifiedAtSha provenance pin",
+      "The pin is re-stamped whenever the edge changes"
+    ]
+  }
+}
+```
 
 ---
 

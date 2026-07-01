@@ -1878,9 +1878,9 @@
                 "memo",
                 "workbench"
             ],
-            "requirementCount": 0,
+            "requirementCount": 1,
             "internalCount": 0,
-            "provenance": "687cd266a110"
+            "provenance": "79af3aba6806"
         },
         {
             "family": "memo",
@@ -1977,9 +1977,9 @@
                 "memo",
                 "workbench"
             ],
-            "requirementCount": 0,
+            "requirementCount": 1,
             "internalCount": 1,
-            "provenance": "e4c8bc8314f3"
+            "provenance": "1d9befd43d6b"
         },
         {
             "family": "memo",
@@ -2192,9 +2192,9 @@
                 "git",
                 "memo"
             ],
-            "requirementCount": 0,
+            "requirementCount": 2,
             "internalCount": 0,
-            "provenance": "c32717268f65"
+            "provenance": "4d7a6524954f"
         },
         {
             "family": "memo",

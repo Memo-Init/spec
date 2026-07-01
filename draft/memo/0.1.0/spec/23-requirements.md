@@ -105,6 +105,8 @@ A requirement entry is an English-language JSON file. The fields are:
 | `severity` | yes | One of `blocker`, `warning`, `info`. Governs how hard the gate enforces it. |
 | `origin` | yes | One of `predefined`, `ai-added`, `evaluator-session` — how the entry entered the registry. |
 | `grade` | no | Optional grade axis: the string `binary`, the string `todo`, or `{ dimension, weight }`. See **The Grade Axis** above. |
+| `namespaceToken` | no | Parallel-spec uniqueness (optional, additive): a short per-spec token that, paired with `code`, forms the requirement's **global identity** — so a spec can be copied or paralleled without colliding on the shared `REQ` number space. When present it is typically the family manifest's `namespaceToken`. |
+| `code` | no | Parallel-spec uniqueness (optional, additive): a human-stable code, scoped by `namespaceToken`. The pair `(namespaceToken, code)` is checked for global uniqueness; the maintenance gate fails on a duplicate pair. An entry that carries neither field is outside the namespaced set — the current, un-migrated default. |
 
 The `check` object **MUST** declare a `kind`, one of:
 

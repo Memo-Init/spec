@@ -4,7 +4,7 @@
 |---|---|
 | Family | memo |
 | Chapter | [27-landing-the-plane](./27-landing-the-plane.md) |
-| Provenance | `687cd266a110` |
+| Provenance | `79af3aba6806` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -46,4 +46,4 @@ No grader assigned yet.
 
 ## 8. Provenance
 
-Derived-record hash `687cd266a110` over the skill-to-spec map. Regenerated on every build.
+Derived-record hash `79af3aba6806` over the skill-to-spec map. Regenerated on every build.

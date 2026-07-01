@@ -6,7 +6,7 @@ spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-06-30T23:59:52.996Z"
+generated_at: "2026-07-01T00:36:59.539Z"
 generated_from: "draft/memo/0.1.0/spec/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/27-landing-the-plane.md."
@@ -58,6 +58,31 @@ Landing is complete when these items hold:
 The **user is the pilot**; the system prepares a landing the pilot can act on with as few questions as possible. The boundary is sharp and is a hard rule, but it falls at the push, not at the commit. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's. This replaces the older "never committed by the system" framing with "committed and locally merged, never pushed".
 
 Two distinctions sharpen this. A commit is not a push: the system writes the commits and folds the branches together locally, but the push that releases them is a further, separate act that is never automatic. And a clean, push-ready `main` is the system's ceiling — the work is committed, merged, and explained, but the decision to release it is the pilot's, taken at the next break. A `verdict: OPEN` is not a failure: honest landing names open ends rather than hiding them, and the system's job remains to leave the pilot a landing that needs as few questions as possible.
+
+---
+
+## Conformity Requirements
+
+The landing checklist above is a binding gate, not only guidance. The rule that a completed phase leaves no loose ends behind — no open worktrees, branches, or stashes and no dead code — is authored here as a declarative requirement, the machine-readable source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)). The check faces the end-of-phase gate, and the doer is not the grader.
+
+The landing is complete only when the working state is clean, so the check is a hard yes/no over the repository state:
+
+```requirement
+{
+  "id": "REQ-052",
+  "title": "A completed phase leaves no loose git state or dead code",
+  "statement": "After a phase completes there are no open worktrees, branches, or stashes and no dead code left behind — the work is landed. Worktrees created for the phase are removed or pruned, temporary branches are folded in, and stashes are resolved rather than left dangling.",
+  "scope": { "repos": [], "categories": ["repo"], "tags": [] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No open worktrees, branches, or stashes belonging to the completed phase remain",
+      "No dead or commented-out code introduced by the phase is left behind"
+    ]
+  }
+}
+```
 
 ---
 

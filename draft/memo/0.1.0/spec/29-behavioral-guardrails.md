@@ -85,6 +85,31 @@ The same logic governs scope that genuinely must be deferred. Deferred scope is 
 
 ---
 
+## Conformity Requirements
+
+The guardrails above bind every actor, and maintenance is the case that most tempts an actor to act without a gate. That the maintainer holds to these guardrails is authored here as a declarative requirement ([23-requirements.md](./23-requirements.md)) so it can be verified, not merely assumed.
+
+Maintenance work is autonomous in reporting but gated in acting, so the check is a hard yes/no over the maintainer's behavior:
+
+```requirement
+{
+  "id": "REQ-055",
+  "title": "Maintenance work holds to the behavioral guardrails",
+  "statement": "Maintenance work honors the behavioral guardrails of this chapter: it reports autonomously but acts only behind a gate or human approval, never runs a destructive recursive remove, and never makes a system-level commit. Deletion always goes to a recoverable trash, never a destructive remove.",
+  "scope": { "repos": [], "categories": ["repo"], "tags": [] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Maintenance reporting runs autonomously, but any acting step (deletion, re-blessing an edge, spawning work) happens only behind a gate or human approval",
+      "No destructive recursive remove and no system-level commit is performed by maintenance work"
+    ]
+  }
+}
+```
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

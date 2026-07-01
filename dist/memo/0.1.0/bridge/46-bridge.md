@@ -37,13 +37,13 @@
 | [24-tools-registry](#24-tools-registry) | ✓ | 5 | 0 | 5 | — |
 | [25-strands](#25-strands) | ✓ | 2 | 0 | — | — |
 | [26-memo-history](#26-memo-history) | ✓ | 4 | 0 | — | — |
-| [27-landing-the-plane](#27-landing-the-plane) | ✓ | 5 | 0 | — | — |
+| [27-landing-the-plane](#27-landing-the-plane) | ✓ | 5 | 0 | 1 | — |
 | [28-drift](#28-drift) | ✓ | 4 | 0 | — | 2 |
-| [29-behavioral-guardrails](#29-behavioral-guardrails) | ✓ | 5 | 1 | — | — |
+| [29-behavioral-guardrails](#29-behavioral-guardrails) | ✓ | 5 | 1 | 1 | — |
 | [30-primitives](#30-primitives) | ✓ | 4 | 0 | — | — |
 | [31-goals](#31-goals) | ✓ | 6 | 0 | — | 1 |
 | [32-prompt-governance](#32-prompt-governance) | ✓ | 4 | 0 | — | — |
-| [33-maintenance](#33-maintenance) | ✓ | 6 | 0 | — | 1 |
+| [33-maintenance](#33-maintenance) | ✓ | 6 | 0 | 2 | 1 |
 | [34-question-interface](#34-question-interface) | ✓ | 5 | 0 | — | — |
 | [35-memo-authoring](#35-memo-authoring) | ✓ | 4 | 1 | 7 | — |
 | [36-agent-strategies](#36-agent-strategies) | ✓ | 12 | 0 | — | — |
@@ -56,7 +56,7 @@
 | [43-skill-authoring-and-quality](#43-skill-authoring-and-quality) | ✓ | 2 | 1 | 8 | 2 |
 | [44-repository-and-outward-docs](#44-repository-and-outward-docs) | — | 0 | 6 | 22 | — |
 | [45-implementation-fidelity-audit](#45-implementation-fidelity-audit) | ✓ | 1 | 0 | — | — |
-| **Summary** | **45 / 46 (98%)** | — | — | 103 | 119 |
+| **Summary** | **45 / 46 (98%)** | — | — | 107 | 119 |
 
 ## 00-overview
 
@@ -362,7 +362,7 @@
 | Covered | ✓ yes |
 | Public skills | `git-merge-strategy`, `memo-handover`, `memo-rollout-execute`, `memo-sop`, `workbench-modes` |
 | Internal tooling | — |
-| Requirements | — |
+| Requirements | 1 |
 | Gaps | — |
 | Depends on | [00-overview](./00-overview.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [16-git-security-versioning](./16-git-security-versioning.md), [38-stage-model](./38-stage-model.md) |
 
@@ -384,7 +384,7 @@
 | Covered | ✓ yes |
 | Public skills | `memo-coherence`, `memo-init`, `memo-phase-execute`, `release`, `workbench-modes` |
 | Internal tooling | `image-pencil-playwright-diff` |
-| Requirements | — |
+| Requirements | 1 |
 | Gaps | — |
 | Depends on | [00-overview](./00-overview.md), [13-orchestration](./13-orchestration.md), [21-human-computer-interaction](./21-human-computer-interaction.md) |
 
@@ -428,7 +428,7 @@
 | Covered | ✓ yes |
 | Public skills | `memo-goal-score-all`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `memo-rollout`, `release` |
 | Internal tooling | — |
-| Requirements | — |
+| Requirements | 2 |
 | Gaps | terminal output channel (R1) |
 | Depends on | [19-internal-vs-external-communication](./19-internal-vs-external-communication.md), [26-memo-history](./26-memo-history.md), [27-landing-the-plane](./27-landing-the-plane.md), [28-drift](./28-drift.md), [30-primitives](./30-primitives.md), [31-goals](./31-goals.md), [32-prompt-governance](./32-prompt-governance.md) |
 
