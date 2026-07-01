@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [29-behavioral-guardrails](./29-behavioral-guardrails.md) |
-| Provenance | `2cafe5419028` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -36,14 +35,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-— none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `image-pencil-playwright-diff` — visual cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `2cafe5419028` over the skill-to-spec map. Regenerated on every build.

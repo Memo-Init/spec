@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [28-drift](./28-drift.md) |
-| Provenance | `116568184b06` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -35,15 +34,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 Grading handled by `memo-maintenance-score`.
 
-## 6. Gaps roll-up
-
-- Enumeration of artifact-surface roots that the D1 grep must cover
-- Per-unit-class authoring of the idempotent gate (literal vs pattern)
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `116568184b06` over the skill-to-spec map. Regenerated on every build.

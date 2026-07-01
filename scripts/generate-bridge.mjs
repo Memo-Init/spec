@@ -3,17 +3,19 @@
 // single skill->spec edge — split per family in repos/spec/draft/*/0.1.0/data/ — no second data store).
 //
 // Emits, across all three spec families, ONE per-page bridge for every non-bridge chapter
-// (the three NN-bridge.md hub pages are excluded — they are the in-nav output hubs). A
-// per-page bridge carries the EIGHT mandatory fields of the projection:
+// (the three NN-bridge.md hub pages are excluded — they are the in-nav output hubs). The
+// derived record carries eight fields; the PUBLIC per-page bridge renders the reader-facing
+// subset (Memo 059, PRD-001/PRD-003):
 //   (1) SOP anchor              the family's canonical SOP entry chapter
 //   (2) public entry points     skills marked roleHint:public-entry (else inferred: primary owners)
 //   (3) required detail pages    the chapter's own Depends-on / Related links
 //   (4) skill enumeration        100% named implementers, primary vs contributing, one-line purpose
 //   (5) grading assignment       the grader skill (roleHint:grader, else inferred heuristic)
-//   (6) gaps roll-up             skill-ahead-of-spec gaps of the chapter's primary owners
 //   (7) acknowledged out-of-scope primary owners whose domain has no numbered chapter
-//   (8) provenance hash          a content hash of the derived record (idempotent)
-// An empty implementer list is rendered as an honest "nothing built yet" — never hidden.
+// The (6) gaps roll-up (skill-ahead-of-spec, internal reification delta) and (8) provenance
+// hash are computed on the record but NOT published on the public page or the inverted map —
+// they are internal-only interpretation. An empty implementer list is rendered as an honest
+// "nothing built yet" — never hidden.
 //
 // Side projections, all generated and idempotent:
 //   - a per-page "## Implemented by" backlink written into EACH non-bridge source chapter
@@ -128,7 +130,10 @@ const loadPurposes = async ( { skills } ) => {
 
 
 // Page list for a family: the union of the manifest pages[] and the on-disk NN-*.md chapters,
-// minus any bridge page, sorted by chapter number. Each entry is a { stem, id } pair.
+// minus any bridge page, sorted by chapter number. Returns { pages, groups } where pages is a
+// list of { stem, id } pairs and groups carries the manifest groups ({ id, label, order, pages })
+// so the dist hub can group its "## Chapters" section by category, mirroring the left sidebar
+// (PRD-004, Memo 059). The bridge page itself is stripped from each group's page list.
 const collectPages = async ( { specDirAbs, prefix } ) => {
     const manifest = JSON.parse( readFileSync( join( specDirAbs, 'spec-manifest.json' ), 'utf-8' ) )
     const fromManifest = ( manifest.groups ?? [] )
@@ -139,8 +144,15 @@ const collectPages = async ( { specDirAbs, prefix } ) => {
     const stems = [ ...new Set( [ ...fromManifest, ...onDisk ] ) ]
         .filter( ( stem ) => /-bridge$/.test( stem ) === false )
         .sort( ( a, b ) => numberFromName( { name: `${ a }.md` } ) - numberFromName( { name: `${ b }.md` } ) )
+    const groups = ( manifest.groups ?? [] ).map( ( group ) => ( {
+        id: group.id,
+        label: group.label,
+        order: group.order,
+        pages: ( Array.isArray( group.pages ) === true ? group.pages : [] )
+            .filter( ( stem ) => /-bridge$/.test( stem ) === false )
+    } ) )
 
-    return stems.map( ( stem ) => ( { stem, id: `${ prefix }${ stem }` } ) )
+    return { pages: stems.map( ( stem ) => ( { stem, id: `${ prefix }${ stem }` } ) ), groups }
 }
 
 
@@ -274,9 +286,12 @@ const buildRecord = ( { family, stem, id, content, skills, purposes } ) => {
 const relLink = ( { stem } ) => `[${ stem }](./${ stem }.md)`
 
 
-// One per-page bridge page rendered with all eight fields, leak-safe and generated.
+// One per-page bridge page rendered with its public projection fields, leak-safe and generated.
+// PRD-001/PRD-003 (Memo 059): the internal-only gaps roll-up and the provenance hash are no
+// longer rendered on this public-facing page (the provenance hash is still computed on the
+// record for idempotency and the inverted map; it is simply not displayed here).
 const renderBridgePage = ( { record } ) => {
-    const { stem, family, sopAnchor, publicEntries, detailPages, implementers, grader, gaps, outOfScope, provenance } = record
+    const { stem, family, sopAnchor, publicEntries, detailPages, implementers, grader, outOfScope } = record
 
     const entryLine = publicEntries.skills.length === 0
         ? `Canonical docs entry: \`${ publicEntries.doc }\`. No entry-point skill flagged yet.`
@@ -296,10 +311,6 @@ const renderBridgePage = ( { record } ) => {
         ? 'No grader assigned yet.'
         : `Grading handled by \`${ grader.skill }\`${ grader.inferred === true ? ' _(inferred)_' : '' }.`
 
-    const gapsBlock = gaps.length === 0
-        ? '— none —'
-        : gaps.map( ( g ) => `- ${ g }` ).join( '\n' )
-
     const outOfScopeBlock = outOfScope.length === 0
         ? '— none —'
         : outOfScope.map( ( o ) => `- \`${ o.skill }\` — ${ o.category } cluster, internal tooling (excluded from public coverage)` ).join( '\n' )
@@ -311,7 +322,6 @@ const renderBridgePage = ( { record } ) => {
         '|---|---|',
         '| Family | ' + family + ' |',
         '| Chapter | ' + relLink( { stem } ) + ' |',
-        '| Provenance | `' + provenance + '` |',
         '',
         '> **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.',
         '',
@@ -339,17 +349,9 @@ const renderBridgePage = ( { record } ) => {
         '',
         gradingLine,
         '',
-        '## 6. Gaps roll-up',
-        '',
-        gapsBlock,
-        '',
-        '## 7. Acknowledged internal tooling (out-of-scope)',
+        '## 6. Acknowledged internal tooling (out-of-scope)',
         '',
         outOfScopeBlock,
-        '',
-        '## 8. Provenance',
-        '',
-        `Derived-record hash \`${ provenance }\` over the skill-to-spec map. Regenerated on every build.`,
         ''
     ].join( '\n' )
 }
@@ -409,7 +411,6 @@ const renderOverviewAndViews = ( { records } ) => {
     const internalSkills = new Set( records.flatMap( ( r ) => r.outOfScope.map( ( o ) => o.skill ) ) )
     const sopAnchor = records.length === 0 ? null : records[ 0 ].sopAnchor
     const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
-    const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
     const withReqs = records.filter( ( r ) => r.requirementCount > 0 ).length
 
     const chapterRows = records
@@ -449,7 +450,7 @@ const renderOverviewAndViews = ( { records } ) => {
         `- **Public implementer skills:** ${ publicSkills.size }`,
         `- **Internal tooling skills (out-of-scope, F4):** ${ internalSkills.size }`,
         `- **SOP anchor:** ${ sopAnchor === null ? '—' : relLink( { stem: sopAnchor } ) }`,
-        `- **Public coverage:** ${ covered } of ${ records.length } chapters (${ pct }%); ${ withReqs } chapter(s) carry inline requirements.`,
+        `- **Public coverage:** ${ covered } of ${ records.length } chapters; ${ withReqs } chapter(s) carry inline requirements.`,
         '',
         '## Views',
         '',
@@ -468,10 +469,10 @@ const renderOverviewAndViews = ( { records } ) => {
 }
 
 
-// The reshaped NN-bridge.md hub: an Overview + Sichten (F6) + projection pointer (in-nav, audit-clean).
+// The reshaped NN-bridge.md hub: a public overview + Sichten (F6) + projection pointer (in-nav,
+// audit-clean). PRD-001 (Memo 059): the reader-facing intro is the public Soll-text; internal
+// interpretation (coverage %, provenance, projection internals) is not surfaced in the prose.
 const renderHubPage = ( { nn, family, records, relatedRefs } ) => {
-    const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
-    const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
     const overviewAndViews = renderOverviewAndViews( { records } )
     const relatedRow = relatedRefs.map( ( ref ) => `[./${ ref }.md](./${ ref }.md)` ).join( ', ' )
     const relatedList = relatedRefs.map( ( ref ) => `- [./${ ref }.md](./${ ref }.md)` ).join( '\n' )
@@ -486,9 +487,7 @@ const renderHubPage = ( { nn, family, records, relatedRefs } ) => {
         '',
         '> **Informative.**',
         '',
-        `This page is the Bridge hub for the ${ family } specification family: the in-navigation overview that names, for every chapter, the skills that implement it (public vs internal tooling), whether it carries requirements, and what it depends on. It is the entry point to the per-page Bridge projection (SOP anchor, public entry points, required detail pages, the fully named skill enumeration with grading assignment, the gaps roll-up, the acknowledged out-of-scope surface, and a provenance hash) published under \`dist/${ family }/<version>/bridge/\`. An empty list is an honest signal that nothing public has been built against that chapter yet; the mapping is derived from the skill-to-spec map and kept truthful by the inverse coverage gate.`,
-        '',
-        `**Coverage:** ${ covered } of ${ records.length } chapters have at least one public implementer (${ pct }%).`,
+        'This page maps each specification chapter to the skills that implement it — so you can see which parts of the workflow are covered and where to look next.',
         '',
         '<!-- generated -->',
         `<!-- Auto-generated by ${ GENERATOR } from the skill-to-spec map. Do not edit by hand; re-run the spec build to regenerate. -->`,
@@ -511,64 +510,104 @@ const toMermaidId = ( { text } ) => {
 }
 
 
-// PRD-009 + PRD-008: By-chapter section for the dist hub. A quantification head-table with
-// click-to-scroll intra-page anchor links (PRD-009) is followed by one named ## section per
-// chapter (PRD-008). The chapter stem doubles as the intra-page anchor — no double heading.
-const renderByChapterSection = ( { records } ) => {
+// PRD-009 + PRD-003 (Memo 059): the "## Coverage summary" head-table for the dist hub. One
+// quantification row per chapter, each chapter name a click-to-scroll intra-page anchor link
+// into its block under "## Chapters". The internal-only gaps column and the coverage percentage
+// are no longer surfaced on the public page (PRD-001/PRD-003); the honest covered/total count
+// stays.
+const renderCoverageSummary = ( { records } ) => {
     const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
     const totalReqs = records.reduce( ( sum, r ) => sum + r.requirementCount, 0 )
-    const totalGaps = records.reduce( ( sum, r ) => sum + r.gaps.length, 0 )
-    const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
 
-    // PRD-009: one table row per chapter, each chapter name links to its ## anchor
     const headRows = records.map( ( r ) => {
         const coveredCell = r.implementers.length > 0 ? '✓' : '—'
         const reqCell = r.requirementCount === 0 ? '—' : String( r.requirementCount )
-        const gapCell = r.gaps.length === 0 ? '—' : String( r.gaps.length )
 
-        return `| [${ r.stem }](#${ r.stem }) | ${ coveredCell } | ${ r.implementers.length } | ${ r.outOfScope.length } | ${ reqCell } | ${ gapCell } |`
+        return `| [${ r.stem }](#${ r.stem }) | ${ coveredCell } | ${ r.implementers.length } | ${ r.outOfScope.length } | ${ reqCell } |`
     } ).join( '\n' )
 
-    const summaryRow = `| **Summary** | **${ covered } / ${ records.length } (${ pct }%)** | — | — | ${ totalReqs > 0 ? String( totalReqs ) : '—' } | ${ totalGaps > 0 ? String( totalGaps ) : '—' } |`
-
-    // PRD-008: one named ## section per chapter; stem used as anchor target
-    const chapterBlocks = records.map( ( r ) => {
-        const publicCell = r.implementers.length === 0
-            ? '— none yet —'
-            : r.implementers.map( ( s ) => `\`${ s.skill }\`` ).join( ', ' )
-        const internalCell = r.outOfScope.length === 0
-            ? '—'
-            : r.outOfScope.map( ( o ) => `\`${ o.skill }\`` ).join( ', ' )
-        const reqCell = r.requirementCount === 0 ? '—' : String( r.requirementCount )
-        const gapCell = r.gaps.length === 0 ? '—' : r.gaps.join( ', ' )
-        const depsCell = r.detailPages.length === 0
-            ? '—'
-            : r.detailPages.map( ( s ) => relLink( { stem: s } ) ).join( ', ' )
-
-        return [
-            `## ${ r.stem }`,
-            '',
-            '| Field | Value |',
-            '|---|---|',
-            `| Covered | ${ r.implementers.length > 0 ? '✓ yes' : '— not yet' } |`,
-            `| Public skills | ${ publicCell } |`,
-            `| Internal tooling | ${ internalCell } |`,
-            `| Requirements | ${ reqCell } |`,
-            `| Gaps | ${ gapCell } |`,
-            `| Depends on | ${ depsCell } |`,
-            ''
-        ].join( '\n' )
-    } ).join( '\n' )
+    const summaryRow = `| **Summary** | **${ covered } / ${ records.length }** | — | — | ${ totalReqs > 0 ? String( totalReqs ) : '—' } |`
 
     return [
         '## Coverage summary',
         '',
-        '| Chapter | Covered | Public | Internal | Reqs | Gaps |',
-        '|---|---|---|---|---|---|',
-        headRows,
-        summaryRow,
+        '| Chapter | Covered | Public | Internal | Reqs |',
+        '|---|---|---|---|---|',
+        headRows === '' ? '| — | — | — | — | — |' : headRows,
+        summaryRow
+    ].join( '\n' )
+}
+
+
+// PRD-008: one named block per chapter (public skills, internal tooling, requirements, depends-on).
+// The gaps row is not rendered on the public page (PRD-003). The stem is the heading text so the
+// coverage-summary link `(#<stem>)` resolves to this block's slug.
+const renderChapterBlock = ( { record } ) => {
+    const publicCell = record.implementers.length === 0
+        ? '— none yet —'
+        : record.implementers.map( ( s ) => `\`${ s.skill }\`` ).join( ', ' )
+    const internalCell = record.outOfScope.length === 0
+        ? '—'
+        : record.outOfScope.map( ( o ) => `\`${ o.skill }\`` ).join( ', ' )
+    const reqCell = record.requirementCount === 0 ? '—' : String( record.requirementCount )
+    const depsCell = record.detailPages.length === 0
+        ? '—'
+        : record.detailPages.map( ( s ) => relLink( { stem: s } ) ).join( ', ' )
+
+    return [
+        `#### ${ record.stem }`,
         '',
-        chapterBlocks
+        '| Field | Value |',
+        '|---|---|',
+        `| Covered | ${ record.implementers.length > 0 ? '✓ yes' : '— not yet' } |`,
+        `| Public skills | ${ publicCell } |`,
+        `| Internal tooling | ${ internalCell } |`,
+        `| Requirements | ${ reqCell } |`,
+        `| Depends on | ${ depsCell } |`,
+        ''
+    ].join( '\n' )
+}
+
+
+// PRD-004 (Memo 059): the "## Chapters" section — the per-chapter blocks GROUPED by the
+// spec-manifest groups[] categories (mirroring the left sidebar), each group a "### <label>"
+// heading in manifest.groups[].order with its chapters indented under it as "#### <stem>". A
+// chapter that belongs to no manifest group falls into a trailing "Other" group. The chapter
+// stem stays the anchor target, so the coverage-summary click-to-scroll links keep working.
+const renderChaptersSection = ( { records, groups } ) => {
+    const byStem = new Map( records.map( ( r ) => [ r.stem, r ] ) )
+    const assigned = new Set()
+    const orderedGroups = [ ...( groups ?? [] ) ].sort( ( a, b ) => ( a.order ?? 0 ) - ( b.order ?? 0 ) )
+
+    const groupBlocks = orderedGroups.flatMap( ( group ) => {
+        const inGroup = ( group.pages ?? [] )
+            .map( ( stem ) => byStem.get( stem ) )
+            .filter( ( record ) => record !== undefined )
+        inGroup.forEach( ( record ) => assigned.add( record.stem ) )
+        if( inGroup.length === 0 ) return []
+
+        return [ [
+            `### ${ group.label ?? group.id }`,
+            '',
+            inGroup.map( ( record ) => renderChapterBlock( { record } ) ).join( '\n' )
+        ].join( '\n' ) ]
+    } )
+
+    const leftover = records.filter( ( record ) => assigned.has( record.stem ) === false )
+    const otherBlock = leftover.length === 0
+        ? []
+        : [ [
+            '### Other',
+            '',
+            leftover.map( ( record ) => renderChapterBlock( { record } ) ).join( '\n' )
+        ].join( '\n' ) ]
+
+    const allBlocks = [ ...groupBlocks, ...otherBlock ]
+
+    return [
+        '## Chapters',
+        '',
+        allBlocks.length === 0 ? '— no chapters —' : allBlocks.join( '\n' )
     ].join( '\n' )
 }
 
@@ -639,24 +678,18 @@ const renderBySkillSection = ( { records } ) => {
 }
 
 
-// PRD-010: Mermaid graph views for the dist hub. Two flowchart TD blocks:
-//   (1) skill→skill or skill→primary-chapter — for skills whose skill-map entry carries a
-//       non-empty `requires: []` array, real skill→skill edges are rendered (PRD-012). For
-//       skills with no `requires`, the fallback skill→primary-chapter edge is used. Both
-//       edge types may coexist in one graph; skill nodes use sk_, chapter nodes use ch_.
-//   (2) SOP-flow — SOP anchor → explicitly-marked public-entry skills → the chapters they
-//       cover; falls back to the SOP anchor's own primary owners when no explicit entries exist.
-// Node ids: sk_ prefix for skill nodes, ch_ prefix for chapter nodes (avoids collisions).
+// PRD-010 + PRD-005 (Memo 059): ONE Mermaid graph view for the dist hub — the skill dependency
+// graph derived from the declared `requires` edges in the skill-spec map (real edges, not
+// hardcoded). For the memo family this is the SOP entry graph: every requires-edge points
+// X --> memo-sop, so memo-sop is the root of the graph, plus the rollout sub-chain
+// (evaluate --> execute --> generate). The former second diagram — a reversed "SOP entry points"
+// star (sop --> skill) — was a near-duplicate with the opposite arrow direction and has been
+// removed (PRD-005). Rendered `flowchart TD`. A family with no declared requires edges renders an
+// honest placeholder instead of a diagram. Skill nodes use the sk_ id prefix.
 const renderMermaidSection = ( { records, familyName, skills } ) => {
-    // Build a lookup from skill name → skill data (for requires).
     const skillsByName = new Map( ( skills ?? [] ).map( ( s ) => [ s.skill, s ] ) )
 
-    // (1) Skill→skill dependency DAG — ONLY the declared `requires` edges (compact + readable).
-    //     The old "skill → primary-chapter for every skill" fallback fanned one node out to
-    //     ~40 chapters in a single row and was unreadable; a graph view is the DECLARED
-    //     dependency structure, not a coverage dump (that lives in the count table + sections).
     const allImplementerNames = [ ...new Set( records.flatMap( ( r ) => r.implementers.map( ( s ) => s.skill ) ) ) ]
-
     const requiresEdges = allImplementerNames.flatMap( ( skillName ) => {
         const data = skillsByName.get( skillName )
         if( data === undefined || Array.isArray( data.requires ) === false || data.requires.length === 0 ) return []
@@ -666,76 +699,53 @@ const renderMermaidSection = ( { records, familyName, skills } ) => {
     const requiresNodes = [ ...new Set( [ ...requiresEdges.map( ( e ) => e.from ), ...requiresEdges.map( ( e ) => e.to ) ] ) ].sort()
 
     const dagBlock = requiresEdges.length === 0
-        ? [ '_(no skill→skill dependencies declared in this family)_' ]
+        ? [ '_(no skill dependencies declared in this family)_' ]
         : [
             '```mermaid',
-            'flowchart LR',
+            'flowchart TD',
             ...requiresNodes.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
             ...requiresEdges.map( ( e ) => `    sk_${ toMermaidId( { text: e.from } ) } --> sk_${ toMermaidId( { text: e.to } ) }` ),
-            '```'
-        ]
-
-    // (2) SOP entry-point flow — SOP anchor → the public-entry skills ONLY (a compact star,
-    //     not each entry skill fanned out to every chapter it covers).
-    const sopAnchor = records.length > 0 ? records[ 0 ].sopAnchor : null
-    const explicitEntrySkills = [ ...new Set( records
-        .filter( ( r ) => r.publicEntries.inferred === false )
-        .flatMap( ( r ) => r.publicEntries.skills ) ) ].sort()
-    const fallbackEntrySkills = sopAnchor === null ? [] : [ ...new Set( records
-        .filter( ( r ) => r.stem === sopAnchor )
-        .flatMap( ( r ) => r.implementers.filter( ( s ) => s.role === 'primary' ).map( ( s ) => s.skill ) ) ) ].sort()
-    const entrySkills = explicitEntrySkills.length > 0 ? explicitEntrySkills : fallbackEntrySkills
-
-    const sopBlock = ( entrySkills.length === 0 || sopAnchor === null )
-        ? [ '_(no public entry points defined)_' ]
-        : [
-            '```mermaid',
-            'flowchart LR',
-            `    sop["${ sopAnchor } (SOP anchor)"]`,
-            ...entrySkills.map( ( s ) => `    sk_${ toMermaidId( { text: s } ) }["${ s }"]` ),
-            ...entrySkills.map( ( s ) => `    sop --> sk_${ toMermaidId( { text: s } ) }` ),
             '```'
         ]
 
     return [
         '## Graph views',
         '',
-        `### Skill → skill dependencies (${ familyName })`,
+        `### Skill dependency graph — \`requires\` edges (${ familyName })`,
         '',
-        ...dagBlock,
-        '',
-        '### SOP entry points',
-        '',
-        ...sopBlock,
+        ...dagBlock
     ].join( '\n' )
 }
 
 
-// Dist-hub page combining PRD-008 (named ## sections) + PRD-009 (count head-table with
-// click-to-scroll) + PRD-010 (Mermaid graph views) + PRD-011 (by-skill by namespace).
-// Written to dist/<family>/<version>/bridge/<nn>-bridge.md. The H1 title is distinct from
-// any ## section heading, so there is no double heading (H1 / identical H2) risk.
-const renderDistHub = ( { nn, family, records, skills } ) => {
-    const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
-    const pct = records.length === 0 ? 0 : Math.round( ( covered / records.length ) * 100 )
-    const byChapter = renderByChapterSection( { records } )
+// Dist-hub page for dist/<family>/<version>/bridge/<nn>-bridge.md (also served on the site).
+// PRD-004 (Memo 059) in-page order: a public Soll-text overview, then Coverage summary →
+// Skills by namespace → Chapters (grouped by manifest groups[], mirroring the left sidebar) →
+// Graph views. PRD-001: the intro is the reader-facing Soll-text; the coverage percentage and
+// other internal interpretation are not surfaced (the generated-file notice is kept). The H1
+// title is distinct from every ## / ### / #### heading, so there is no double-heading risk.
+const renderDistHub = ( { nn, family, records, skills, groups } ) => {
+    const coverageSummary = renderCoverageSummary( { records } )
     const bySkill = renderBySkillSection( { records } )
+    const chapters = renderChaptersSection( { records, groups } )
     const graphViews = renderMermaidSection( { records, familyName: family, skills: skills ?? [] } )
 
     return [
         `# ${ nn }. Bridge — ${ family }`,
         '',
-        '> **Informative · generated.** Dist-mirror of the bridge hub with expanded per-chapter sections (PRD-008), a quantification head-table with click-to-scroll (PRD-009), Mermaid graph views (PRD-010), and by-skill namespace grouping (PRD-011). Do not edit by hand; re-run the spec build to regenerate.',
+        'This page maps each specification chapter to the skills that implement it — so you can see which parts of the workflow are covered and where to look next.',
+        '',
+        '> **Informative · generated.** Do not edit by hand; re-run the spec build to regenerate.',
         '',
         `<!-- Auto-generated by ${ GENERATOR } from the skill-to-spec map. -->`,
         '',
-        `**Coverage:** ${ covered } of ${ records.length } chapters have at least one public implementer (${ pct }%).`,
-        '',
-        graphViews,
-        '',
-        byChapter,
+        coverageSummary,
         '',
         bySkill,
+        '',
+        chapters,
+        '',
+        graphViews,
         ''
     ].join( '\n' )
 }
@@ -837,7 +847,7 @@ const main = async () => {
     const families = await Promise.all( FAMILIES.map( async ( family ) => {
         const specDirAbs = join( REPO, family.specDir )
         const nn = await resolveBridgeNN( { specDirAbs } )
-        const pages = await collectPages( { specDirAbs, prefix: family.prefix } )
+        const { pages, groups } = await collectPages( { specDirAbs, prefix: family.prefix } )
 
         const records = await Promise.all( pages.map( async ( { stem, id } ) => {
             const sourcePath = join( specDirAbs, `${ stem }.md` )
@@ -865,7 +875,7 @@ const main = async () => {
         // PRD-008/009/010/011: write the dist hub (enhanced bridge view with named ## sections,
         // count head-table, Mermaid graph views, and by-skill namespace grouping)
         const bridgeOutDir = bridgeDirFor( { name: family.name, version: family.version } )
-        const distHubContent = renderDistHub( { nn, family: family.name, records: recordList, skills } )
+        const distHubContent = renderDistHub( { nn, family: family.name, records: recordList, skills, groups } )
         const distHubPath = join( bridgeOutDir, `${ nn }-bridge.md` )
         const prevDistHub = await readFile( distHubPath, 'utf-8' ).catch( () => null )
         if( prevDistHub !== distHubContent ) await writeFile( distHubPath, distHubContent, 'utf-8' )
@@ -914,7 +924,7 @@ const main = async () => {
     // publish the inverted map → dist/inverted-map.json
     const mapHash = createHash( 'sha256' ).update( JSON.stringify( map ) ).digest( 'hex' ).slice( 0, 12 )
     const inverted = {
-        note: 'Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.',
+        note: 'Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its public implementer skills with role + the public projection fields. Generated from skill-spec-map.json. The internal-only gaps roll-up is not published here (Memo 059, PRD-003).',
         generator: GENERATOR,
         mapHash,
         pages: families.flatMap( ( family ) => family.records ).map( ( r ) => ( {
@@ -927,7 +937,6 @@ const main = async () => {
             detailPages: r.detailPages,
             implementers: r.implementers.map( ( s ) => ( { skill: s.skill, role: s.role } ) ),
             grader: r.grader,
-            gaps: r.gaps,
             outOfScope: r.outOfScope.map( ( o ) => o.skill ),
             clusters: r.clusters,
             requirementCount: r.requirementCount,

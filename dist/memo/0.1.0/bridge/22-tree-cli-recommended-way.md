@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [22-tree-cli-recommended-way](./22-tree-cli-recommended-way.md) |
-| Provenance | `d14e232fa8c5` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -35,14 +34,6 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 Grading handled by `memo-goal-score`.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `d14e232fa8c5` over the skill-to-spec map. Regenerated on every build.

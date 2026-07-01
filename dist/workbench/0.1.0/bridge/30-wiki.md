@@ -4,7 +4,6 @@
 |---|---|
 | Family | workbench |
 | Chapter | [30-wiki](./30-wiki.md) |
-| Provenance | `46590de3eb39` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -37,20 +36,6 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- CLAUDE.md auto-extension contract
-- Ingest extraction rules (summary caps, chunking, dedup)
-- Parallel sub-agent ingest threshold + central index rebuild
-- Query answer discipline (max-5-pages, mandatory citations, contradiction handling)
-- Stale detection definition (mtime vs updated)
-- Wiki internal directory taxonomy
-- Wiki local-git + log.md store
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `46590de3eb39` over the skill-to-spec map. Regenerated on every build.

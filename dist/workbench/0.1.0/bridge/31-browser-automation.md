@@ -4,7 +4,6 @@
 |---|---|
 | Family | workbench |
 | Chapter | [31-browser-automation](./31-browser-automation.md) |
-| Provenance | `87b84a6985e1` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -35,18 +34,6 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- browser-automation-method
-- documentation-scraping-method
-- playwright-operational-rules
-- temp-cleanup-vs-trash
-- untrusted-web-content-banner
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `87b84a6985e1` over the skill-to-spec map. Regenerated on every build.

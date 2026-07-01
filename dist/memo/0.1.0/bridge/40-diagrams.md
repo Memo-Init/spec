@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [40-diagrams](./40-diagrams.md) |
-| Provenance | `161e2b508a70` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -32,15 +31,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-— none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `image-art-architecture` — visual cluster, internal tooling (excluded from public coverage)
 - `image-diagram-excalidraw` — visual cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `161e2b508a70` over the skill-to-spec map. Regenerated on every build.

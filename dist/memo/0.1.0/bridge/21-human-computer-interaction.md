@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [21-human-computer-interaction](./21-human-computer-interaction.md) |
-| Provenance | `fb0532ab370a` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -38,14 +37,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 Grading handled by `memo-goal-score-all`.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `fb0532ab370a` over the skill-to-spec map. Regenerated on every build.

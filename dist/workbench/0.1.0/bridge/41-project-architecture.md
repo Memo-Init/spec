@@ -4,7 +4,6 @@
 |---|---|
 | Family | workbench |
 | Chapter | [41-project-architecture](./41-project-architecture.md) |
-| Provenance | `720d66b10c0b` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -37,14 +36,6 @@ Canonical docs entry: `/workbench/overview/`. No entry-point skill flagged yet.
 
 Grading handled by `memo-maintenance-score`.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `720d66b10c0b` over the skill-to-spec map. Regenerated on every build.

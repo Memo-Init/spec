@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [00-overview](./00-overview.md) |
-| Provenance | `50988e91eeca` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -32,14 +31,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `50988e91eeca` over the skill-to-spec map. Regenerated on every build.

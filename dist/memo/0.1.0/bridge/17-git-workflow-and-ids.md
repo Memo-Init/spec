@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [17-git-workflow-and-ids](./17-git-workflow-and-ids.md) |
-| Provenance | `e918465fd425` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -41,15 +40,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- Decision hierarchy on commit content
-- Mandatory-issue-per-commit doctrine
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `e918465fd425` over the skill-to-spec map. Regenerated on every build.

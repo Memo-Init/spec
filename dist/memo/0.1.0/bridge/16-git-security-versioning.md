@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [16-git-security-versioning](./16-git-security-versioning.md) |
-| Provenance | `c8782d78831d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -48,17 +47,9 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 Grading handled by `memo-req-runner` _(inferred)_.
 
-## 6. Gaps roll-up
-
-— none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `image-pencil-playwright-diff` — visual cluster, internal tooling (excluded from public coverage)
 - `repo-init` — repository cluster, internal tooling (excluded from public coverage)
 - `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
 - `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `c8782d78831d` over the skill-to-spec map. Regenerated on every build.

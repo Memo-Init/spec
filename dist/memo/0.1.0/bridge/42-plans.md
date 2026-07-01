@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [42-plans](./42-plans.md) |
-| Provenance | `cb1e3d332c3b` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -41,43 +40,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- [PHASE-DONE] output + reset auto-call
-- add gate on finalization
-- budget / ScheduleWakeup
-- checkbox-as-state mechanic
-- coexistence gate (direct vs plan)
-- conformance report location
-- cross-memo phaseRef translation
-- executionOrder mandate
-- ICL cold-start / bitter lesson
-- ICL cold-start gate
-- mandatory 7 phase fields
-- memo-hoheit over phase order
-- next-phase algorithm
-- phase-boundary stop discipline
-- plan archival lifecycle
-- plan conformance model
-- plan folder structure
-- plan integrity re-check
-- plan status terminal format
-- plan-done vs memo-done
-- plan-status.json budget block
-- plan-status.json schema
-- plan-stop atomic three steps
-- plan.md skeleton
-- skill code conventions
-- token-budget awareness
-- unplanned-memos subroutine
-- write-ahead / crash recovery
-- write-ahead finalization
-- write-ahead marker referenced-not-spec'd
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `cb1e3d332c3b` over the skill-to-spec map. Regenerated on every build.

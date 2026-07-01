@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [24-tools-registry](./24-tools-registry.md) |
-| Provenance | `cd77ce076785` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -36,14 +35,6 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 Grading handled by `memo-req-registry` _(inferred)_.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `cd77ce076785` over the skill-to-spec map. Regenerated on every build.

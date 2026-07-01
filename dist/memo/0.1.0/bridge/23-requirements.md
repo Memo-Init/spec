@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [23-requirements](./23-requirements.md) |
-| Provenance | `a6c9411ca150` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -48,19 +47,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 Grading handled by `memo-req-registry` _(inferred)_.
 
-## 6. Gaps roll-up
-
-- report storage path + producer/consumer evidence round-trip
-- tool/requirement entry FORMAT (YAML/object schema) and intake flow
-- topic-as-MatchContext / topic-attach wrapper
-- validation tactics catalog + signal->tactic selection map
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `image-pencil-playwright-diff` — visual cluster, internal tooling (excluded from public coverage)
 - `repo-github-org` — repository cluster, internal tooling (excluded from public coverage)
 - `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `a6c9411ca150` over the skill-to-spec map. Regenerated on every build.

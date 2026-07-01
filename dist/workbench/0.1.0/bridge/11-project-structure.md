@@ -4,7 +4,6 @@
 |---|---|
 | Family | workbench |
 | Chapter | [11-project-structure](./11-project-structure.md) |
-| Provenance | `40e9323bae56` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -34,18 +33,6 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- audit-report-format
-- claude-md-runbook-required-sections
-- five-step-installation-process
-- memo-079-eleven-ecken
-- required-claude-md-sections-and-scripts
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `repo-init` — repository cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `40e9323bae56` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md) |
-| Provenance | `d8ec399b0548` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -45,19 +44,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- issue-severity-classification-thresholds
-- Notification / acoustic-signal hook
-- Reset / context-clear jumps
-- Success definition / Mass und Ziel anti-pattern
-- Third-party token-tracking veto
-- three-mode-taxonomy
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `d8ec399b0548` over the skill-to-spec map. Regenerated on every build.

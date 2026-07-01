@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [07-revisions-and-questions](./07-revisions-and-questions.md) |
-| Provenance | `bb8073657326` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -42,23 +41,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 Grading handled by `memo-fidelity-audit`.
 
-## 6. Gaps roll-up
-
-- [Research offen] tag / Forschungsbedarf carry-over
-- Auto-iteration loop (max 2x then ask)
-- Feedback-coverage as a gate
-- Meta-block memo identity fields (ICL)
-- Post-revision lint gate (!memo lint)
-- Prepare file as a primary artifact
-- REV-02 detector trigger + risk-threshold lowering
-- Sub-Memo HARD-STOP check
-- User Mental Model consult mechanism
-- Vorwort section (placement + single-channel)
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `bb8073657326` over the skill-to-spec map. Regenerated on every build.

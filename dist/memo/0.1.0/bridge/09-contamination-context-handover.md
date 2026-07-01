@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [09-contamination-context-handover](./09-contamination-context-handover.md) |
-| Provenance | `3dd3b6ae494f` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -56,15 +55,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 Grading handled by `memo-goal-score`.
 
-## 6. Gaps roll-up
-
-- plan-stop / plan-handover facade and plan re-entry
-- state-recovery state-file taxonomy
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `3dd3b6ae494f` over the skill-to-spec map. Regenerated on every build.

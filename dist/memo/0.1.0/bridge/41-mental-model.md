@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [41-mental-model](./41-mental-model.md) |
-| Provenance | `153001706e2e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -34,15 +33,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- answered-question pair format
-- User Mental Model store as a primitive
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `153001706e2e` over the skill-to-spec map. Regenerated on every build.

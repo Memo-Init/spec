@@ -4,7 +4,6 @@
 |---|---|
 | Family | workbench |
 | Chapter | [13-knowledge-format-okf](./13-knowledge-format-okf.md) |
-| Provenance | `d252b7d07aa2` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -36,15 +35,6 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- Auto-run-before-memo-init coupling
-- Non-OKF lint checks (orphans, contradictions, stubs, missing cross-refs)
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `d252b7d07aa2` over the skill-to-spec map. Regenerated on every build.

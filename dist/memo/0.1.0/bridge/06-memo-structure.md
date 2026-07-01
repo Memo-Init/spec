@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [06-memo-structure](./06-memo-structure.md) |
-| Provenance | `235b5bb915e2` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -37,20 +36,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- Cross-memo status check / 'marked finalized but never built' trap
-- Fact-briefing for autonomous memos
-- Lessons-Learned / Ancillary Files mandatory sections
-- Mandatory finalization checklist + auto F1 question
-- Memo-vs-Phase default decision + new-memo cost
-- Sub-memo lifecycle HARD-STOP
-- Triage table -> sub-memo fan-out + parent index
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `235b5bb915e2` over the skill-to-spec map. Regenerated on every build.

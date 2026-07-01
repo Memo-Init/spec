@@ -4,7 +4,6 @@
 |---|---|
 | Family | workbench |
 | Chapter | [10-root-and-projects](./10-root-and-projects.md) |
-| Provenance | `229fa1febede` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -32,14 +31,6 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `229fa1febede` over the skill-to-spec map. Regenerated on every build.

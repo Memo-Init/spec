@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [08-phases-and-prds](./08-phases-and-prds.md) |
-| Provenance | `0e13871f2c8d` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -50,24 +49,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- AI cannot self-execute /clear
-- assertion-layer / closed-set rule
-- category tag taxonomy
-- coverage classification taxonomy
-- eval-set file as a generate output
-- max-PRDs-per-phase hard number
-- plan-status.json.reset-check state schema
-- PRD on-disk layout, header sections, and Ralph-Loop config
-- Reset-recommendation algorithm and thresholds
-- retry budget for PRD generation/evaluation
-- validation report path/template + integration-PRD requirement
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `0e13871f2c8d` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [32-prompt-governance](./32-prompt-governance.md) |
-| Provenance | `543c8471dd75` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -35,14 +34,6 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `543c8471dd75` over the skill-to-spec map. Regenerated on every build.

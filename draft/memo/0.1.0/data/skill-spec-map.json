@@ -191,7 +191,7 @@
                 "memo/16-git-security-versioning"
             ],
             "gaps": [
-                "Pencil-Playwright Soll-Ist diff technique itself",
+                "Pencil-Playwright target-vs-actual diff technique itself",
                 "Playwright CLI-vs-MCP cost policy linkage"
             ],
             "visibility": "internal"
@@ -427,8 +427,8 @@
                 "Topic-store write-side (register) mechanics",
                 "Prompt-injection data/instruction boundary for URL mode",
                 "URL-mode error codes + schema-version legacy handling",
-                "Interview-Modus (bundled question catalog)",
-                "Information-content (FAKT:ANNAHME) score gate"
+                "Interview mode (bundled question catalog)",
+                "Information-content (fact-vs-assumption) score gate"
             ],
             "visibility": "public"
         },
@@ -637,7 +637,7 @@
                 "budget / ScheduleWakeup",
                 "write-ahead / crash recovery",
                 "ICL cold-start gate",
-                "memo-hoheit over phase order",
+                "memo authority over phase order",
                 "coexistence gate (direct vs plan)"
             ],
             "visibility": "public"
@@ -967,8 +967,8 @@
                 "memo/34-question-interface"
             ],
             "gaps": [
-                "Vorwort section (placement + single-channel)",
-                "[Research offen] tag / Forschungsbedarf carry-over",
+                "Preface section (placement + single-channel)",
+                "[Research open] tag / research-needed carry-over",
                 "Post-revision lint gate (!memo lint)",
                 "Meta-block memo identity fields (ICL)"
             ],
@@ -1109,7 +1109,7 @@
             "gaps": [
                 "Reset / context-clear jumps",
                 "Third-party token-tracking veto",
-                "Success definition / Mass und Ziel anti-pattern",
+                "Success definition / measure-and-goal anti-pattern",
                 "Notification / acoustic-signal hook"
             ],
             "roleHint": "public-entry",

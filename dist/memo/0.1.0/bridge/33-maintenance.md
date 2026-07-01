@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [33-maintenance](./33-maintenance.md) |
-| Provenance | `da7fd3eeb117` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -37,14 +36,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 Grading handled by `memo-goal-score-all`.
 
-## 6. Gaps roll-up
-
-- terminal output channel (R1)
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `da7fd3eeb117` over the skill-to-spec map. Regenerated on every build.

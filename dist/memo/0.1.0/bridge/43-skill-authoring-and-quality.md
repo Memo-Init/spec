@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md) |
-| Provenance | `b4af4ee4a739` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -33,15 +32,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- skill quality / testing has no spec (Memo-039 core)
-- skill-authoring counterpart absent
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `image-art-architecture` — visual cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `b4af4ee4a739` over the skill-to-spec map. Regenerated on every build.

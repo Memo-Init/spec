@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [14-agents-skills-tasks](./14-agents-skills-tasks.md) |
-| Provenance | `5a5a38087457` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -35,16 +34,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- no-overwrite-and-output-location
-- persona-audit-schemas
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `repo-docs-writing` — repository cluster, internal tooling (excluded from public coverage)
 - `repo-readme` — repository cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `5a5a38087457` over the skill-to-spec map. Regenerated on every build.

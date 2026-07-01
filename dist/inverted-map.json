@@ -1,7 +1,7 @@
 {
-    "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its implementer skills with role + the eight projection fields. Generated from skill-spec-map.json.",
+    "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its public implementer skills with role + the public projection fields. Generated from skill-spec-map.json. The internal-only gaps roll-up is not published here (Memo 059, PRD-003).",
     "generator": "scripts/generate-bridge.mjs",
-    "mapHash": "bf0b03f4ecfe",
+    "mapHash": "3fd465ddfac8",
     "pages": [
         {
             "family": "memo",
@@ -25,7 +25,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -73,7 +72,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -162,14 +160,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "issue-severity-classification-thresholds",
-                "Notification / acoustic-signal hook",
-                "Reset / context-clear jumps",
-                "Success definition / Mass und Ziel anti-pattern",
-                "Third-party token-tracking veto",
-                "three-mode-taxonomy"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -178,7 +168,7 @@
             ],
             "requirementCount": 2,
             "internalCount": 0,
-            "provenance": "d8ec399b0548"
+            "provenance": "45b7105e446c"
         },
         {
             "family": "memo",
@@ -204,7 +194,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -239,20 +228,13 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "Information-content (FAKT:ANNAHME) score gate",
-                "Interview-Modus (bundled question catalog)",
-                "Prompt-injection data/instruction boundary for URL mode",
-                "Topic-store write-side (register) mechanics",
-                "URL-mode error codes + schema-version legacy handling"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo"
             ],
             "requirementCount": 2,
             "internalCount": 0,
-            "provenance": "52ee993f8da0"
+            "provenance": "231afd4c7595"
         },
         {
             "family": "memo",
@@ -280,7 +262,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -331,15 +312,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "Cross-memo status check / 'marked finalized but never built' trap",
-                "Fact-briefing for autonomous memos",
-                "Lessons-Learned / Ancillary Files mandatory sections",
-                "Mandatory finalization checklist + auto F1 question",
-                "Memo-vs-Phase default decision + new-memo cost",
-                "Sub-memo lifecycle HARD-STOP",
-                "Triage table -> sub-memo fan-out + parent index"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -414,25 +386,13 @@
                 "skill": "memo-fidelity-audit",
                 "inferred": false
             },
-            "gaps": [
-                "[Research offen] tag / Forschungsbedarf carry-over",
-                "Auto-iteration loop (max 2x then ask)",
-                "Feedback-coverage as a gate",
-                "Meta-block memo identity fields (ICL)",
-                "Post-revision lint gate (!memo lint)",
-                "Prepare file as a primary artifact",
-                "REV-02 detector trigger + risk-threshold lowering",
-                "Sub-Memo HARD-STOP check",
-                "User Mental Model consult mechanism",
-                "Vorwort section (placement + single-channel)"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo"
             ],
             "requirementCount": 5,
             "internalCount": 0,
-            "provenance": "bb8073657326"
+            "provenance": "d44beeac8c2e"
         },
         {
             "family": "memo",
@@ -532,19 +492,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "AI cannot self-execute /clear",
-                "assertion-layer / closed-set rule",
-                "category tag taxonomy",
-                "coverage classification taxonomy",
-                "eval-set file as a generate output",
-                "max-PRDs-per-phase hard number",
-                "plan-status.json.reset-check state schema",
-                "PRD on-disk layout, header sections, and Ralph-Loop config",
-                "Reset-recommendation algorithm and thresholds",
-                "retry budget for PRD generation/evaluation",
-                "validation report path/template + integration-PRD requirement"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -678,10 +625,6 @@
                 "skill": "memo-goal-score",
                 "inferred": false
             },
-            "gaps": [
-                "plan-stop / plan-handover facade and plan re-entry",
-                "state-recovery state-file taxonomy"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -747,10 +690,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "research-output-format",
-                "untrusted-web-content-as-data"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -849,21 +788,6 @@
                 "skill": "memo-fidelity-audit",
                 "inferred": false
             },
-            "gaps": [
-                "Budget snapshot as the single legitimate paste point",
-                "Calibration rating scale and indicator catalog",
-                "Dependency smoke-check at finalization",
-                "Inline tag insertion format",
-                "Large-codebase sub-agent threshold",
-                "Maturity rating taxonomy",
-                "Ralph-Loop suitability gate",
-                "Reference status taxonomy and auto-fix policy",
-                "Rollout-Entry-Points section + filesystem check",
-                "SKILL header drift vs the description's three-level shorthand",
-                "Sub-memo HARD-STOP at finalization",
-                "Third-party token-tracking veto",
-                "YAGNI / minimal-code overlap not referenced"
-            ],
             "outOfScope": [
                 "repo-quality"
             ],
@@ -929,15 +853,6 @@
                 "skill": "memo-fidelity-audit",
                 "inferred": false
             },
-            "gaps": [
-                "between-phase integration follow-up policy",
-                "duty-of-care contract exact 9 points",
-                "plan-context operating modes",
-                "plan-context write-back delegation",
-                "UI before/after diff + proofs evidence layout",
-                "user-triggered landing as the only valid stop point",
-                "utilization gate (built-but-unwired)"
-            ],
             "outOfScope": [
                 "image-pencil-playwright-diff"
             ],
@@ -1044,15 +959,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "file-based contract negotiation protocol",
-                "follow-up-PRD escalation on stuck PRD",
-                "max iteration / phase-eval iteration limits",
-                "shared findings store",
-                "tool-selection-decision-tree",
-                "trivial-independent-PRDs verdict",
-                "UI baseline capture at phase-start"
-            ],
             "outOfScope": [],
             "clusters": [
                 "git",
@@ -1099,10 +1005,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "no-overwrite-and-output-location",
-                "persona-audit-schemas"
-            ],
             "outOfScope": [
                 "repo-docs-writing",
                 "repo-readme"
@@ -1154,7 +1056,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -1256,7 +1157,6 @@
                 "skill": "memo-req-runner",
                 "inferred": true
             },
-            "gaps": [],
             "outOfScope": [
                 "image-pencil-playwright-diff",
                 "repo-init",
@@ -1332,10 +1232,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "Decision hierarchy on commit content",
-                "Mandatory-issue-per-commit doctrine"
-            ],
             "outOfScope": [
                 "repo-issue"
             ],
@@ -1378,7 +1274,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "git",
@@ -1430,7 +1325,6 @@
                 "skill": "memo-req-runner",
                 "inferred": true
             },
-            "gaps": [],
             "outOfScope": [
                 "image-art-architecture",
                 "repo-docs-writing",
@@ -1482,9 +1376,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "Merge conflict resolution rule"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -1542,7 +1433,6 @@
                 "skill": "memo-goal-score-all",
                 "inferred": false
             },
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -1585,7 +1475,6 @@
                 "skill": "memo-goal-score",
                 "inferred": false
             },
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -1682,12 +1571,6 @@
                 "skill": "memo-req-registry",
                 "inferred": true
             },
-            "gaps": [
-                "report storage path + producer/consumer evidence round-trip",
-                "tool/requirement entry FORMAT (YAML/object schema) and intake flow",
-                "topic-as-MatchContext / topic-attach wrapper",
-                "validation tactics catalog + signal->tactic selection map"
-            ],
             "outOfScope": [
                 "image-pencil-playwright-diff",
                 "repo-github-org",
@@ -1743,7 +1626,6 @@
                 "skill": "memo-req-registry",
                 "inferred": true
             },
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "evals",
@@ -1782,7 +1664,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -1827,7 +1708,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -1877,7 +1757,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "git",
@@ -1924,10 +1803,6 @@
                 "skill": "memo-maintenance-score",
                 "inferred": false
             },
-            "gaps": [
-                "Enumeration of artifact-surface roots that the D1 grep must cover",
-                "Per-unit-class authoring of the idempotent gate (literal vs pattern)"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -1974,7 +1849,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [
                 "image-pencil-playwright-diff"
             ],
@@ -2028,7 +1902,6 @@
                 "skill": "memo-req-registry",
                 "inferred": true
             },
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "evals",
@@ -2087,9 +1960,6 @@
                 "skill": "memo-fidelity-audit",
                 "inferred": false
             },
-            "gaps": [
-                "terminal output channel (R1)"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -2132,7 +2002,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -2190,9 +2059,6 @@
                 "skill": "memo-goal-score-all",
                 "inferred": false
             },
-            "gaps": [
-                "terminal output channel (R1)"
-            ],
             "outOfScope": [],
             "clusters": [
                 "git",
@@ -2241,7 +2107,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -2286,7 +2151,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [
                 "image-diagram-excalidraw"
             ],
@@ -2366,7 +2230,6 @@
                 "skill": "memo-goal-score",
                 "inferred": false
             },
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -2398,7 +2261,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -2494,10 +2356,6 @@
                 "skill": "memo-fidelity-audit",
                 "inferred": false
             },
-            "gaps": [
-                "Mandatory issue-close cycle after push",
-                "Post-push CodeCov / coverage / overview-page conventions"
-            ],
             "outOfScope": [],
             "clusters": [
                 "git",
@@ -2544,7 +2402,6 @@
                 "skill": "memo-maintenance-score-all",
                 "inferred": false
             },
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "git",
@@ -2576,7 +2433,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [
                 "image-art-architecture",
                 "image-diagram-excalidraw"
@@ -2620,10 +2476,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "answered-question pair format",
-                "User Mental Model store as a primitive"
-            ],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -2700,38 +2552,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "[PHASE-DONE] output + reset auto-call",
-                "add gate on finalization",
-                "budget / ScheduleWakeup",
-                "checkbox-as-state mechanic",
-                "coexistence gate (direct vs plan)",
-                "conformance report location",
-                "cross-memo phaseRef translation",
-                "executionOrder mandate",
-                "ICL cold-start / bitter lesson",
-                "ICL cold-start gate",
-                "mandatory 7 phase fields",
-                "memo-hoheit over phase order",
-                "next-phase algorithm",
-                "phase-boundary stop discipline",
-                "plan archival lifecycle",
-                "plan conformance model",
-                "plan folder structure",
-                "plan integrity re-check",
-                "plan status terminal format",
-                "plan-done vs memo-done",
-                "plan-status.json budget block",
-                "plan-status.json schema",
-                "plan-stop atomic three steps",
-                "plan.md skeleton",
-                "skill code conventions",
-                "token-budget awareness",
-                "unplanned-memos subroutine",
-                "write-ahead / crash recovery",
-                "write-ahead finalization",
-                "write-ahead marker referenced-not-spec'd"
-            ],
             "outOfScope": [],
             "clusters": [
                 "code-patterns",
@@ -2739,7 +2559,7 @@
             ],
             "requirementCount": 0,
             "internalCount": 0,
-            "provenance": "cb1e3d332c3b"
+            "provenance": "b83dbc5c6a14"
         },
         {
             "family": "memo",
@@ -2770,10 +2590,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "skill quality / testing has no spec (Memo-039 core)",
-                "skill-authoring counterpart absent"
-            ],
             "outOfScope": [
                 "image-art-architecture"
             ],
@@ -2801,7 +2617,6 @@
             ],
             "implementers": [],
             "grader": null,
-            "gaps": [],
             "outOfScope": [
                 "repo-docs-writing",
                 "repo-github-org",
@@ -2843,7 +2658,6 @@
                 "skill": "memo-fidelity-audit",
                 "inferred": false
             },
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo"
@@ -2877,7 +2691,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -2908,7 +2721,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -2956,7 +2768,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -2988,7 +2799,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3028,13 +2838,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "audit-report-format",
-                "claude-md-runbook-required-sections",
-                "five-step-installation-process",
-                "memo-079-eleven-ecken",
-                "required-claude-md-sections-and-scripts"
-            ],
             "outOfScope": [
                 "repo-init"
             ],
@@ -3044,7 +2847,7 @@
             ],
             "requirementCount": 2,
             "internalCount": 1,
-            "provenance": "40e9323bae56"
+            "provenance": "08d5a96710bf"
         },
         {
             "family": "workbench",
@@ -3078,7 +2881,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3126,10 +2928,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "Auto-run-before-memo-init coupling",
-                "Non-OKF lint checks (orphans, contradictions, stubs, missing cross-refs)"
-            ],
             "outOfScope": [],
             "clusters": [
                 "wiki"
@@ -3160,7 +2958,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3197,7 +2994,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3227,7 +3023,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3258,7 +3053,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3288,7 +3082,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3342,7 +3135,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3387,7 +3179,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3434,7 +3225,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3484,7 +3274,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3522,7 +3311,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3567,7 +3355,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3603,7 +3390,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "workbench"
@@ -3657,15 +3443,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "CLAUDE.md auto-extension contract",
-                "Ingest extraction rules (summary caps, chunking, dedup)",
-                "Parallel sub-agent ingest threshold + central index rebuild",
-                "Query answer discipline (max-5-pages, mandatory citations, contradiction handling)",
-                "Stale detection definition (mtime vs updated)",
-                "Wiki internal directory taxonomy",
-                "Wiki local-git + log.md store"
-            ],
             "outOfScope": [],
             "clusters": [
                 "wiki",
@@ -3710,13 +3487,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [
-                "browser-automation-method",
-                "documentation-scraping-method",
-                "playwright-operational-rules",
-                "temp-cleanup-vs-trash",
-                "untrusted-web-content-banner"
-            ],
             "outOfScope": [],
             "clusters": [
                 "research"
@@ -3759,7 +3529,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "wiki",
@@ -3814,7 +3583,6 @@
                 "skill": "memo-maintenance-score",
                 "inferred": false
             },
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "memo",
@@ -3847,7 +3615,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -3878,7 +3645,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -3907,7 +3673,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -3936,7 +3701,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -3966,7 +3730,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -3997,7 +3760,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4028,7 +3790,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4059,7 +3820,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4090,7 +3850,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4121,7 +3880,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4154,7 +3912,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4183,7 +3940,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4212,7 +3968,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4242,7 +3997,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4273,7 +4027,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"
@@ -4303,7 +4056,6 @@
                 }
             ],
             "grader": null,
-            "gaps": [],
             "outOfScope": [],
             "clusters": [
                 "session"

@@ -4,7 +4,6 @@
 |---|---|
 | Family | session |
 | Chapter | [10-sop](./10-sop.md) |
-| Provenance | `5818e1301c0e` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -32,14 +31,6 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `5818e1301c0e` over the skill-to-spec map. Regenerated on every build.

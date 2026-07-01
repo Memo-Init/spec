@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [19-internal-vs-external-communication](./19-internal-vs-external-communication.md) |
-| Provenance | `a90bfa77968f` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -37,11 +36,7 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 Grading handled by `memo-req-runner` _(inferred)_.
 
-## 6. Gaps roll-up
-
-— none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `image-art-architecture` — visual cluster, internal tooling (excluded from public coverage)
 - `repo-docs-writing` — repository cluster, internal tooling (excluded from public coverage)
@@ -49,7 +44,3 @@ Grading handled by `memo-req-runner` _(inferred)_.
 - `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
 - `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
 - `repo-readme` — repository cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `a90bfa77968f` over the skill-to-spec map. Regenerated on every build.

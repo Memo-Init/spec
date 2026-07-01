@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [11-quality-and-finalization](./11-quality-and-finalization.md) |
-| Provenance | `c843f979c7b5` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -47,26 +46,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 Grading handled by `memo-fidelity-audit`.
 
-## 6. Gaps roll-up
-
-- Budget snapshot as the single legitimate paste point
-- Calibration rating scale and indicator catalog
-- Dependency smoke-check at finalization
-- Inline tag insertion format
-- Large-codebase sub-agent threshold
-- Maturity rating taxonomy
-- Ralph-Loop suitability gate
-- Reference status taxonomy and auto-fix policy
-- Rollout-Entry-Points section + filesystem check
-- SKILL header drift vs the description's three-level shorthand
-- Sub-memo HARD-STOP at finalization
-- Third-party token-tracking veto
-- YAGNI / minimal-code overlap not referenced
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 - `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
-
-## 8. Provenance
-
-Derived-record hash `c843f979c7b5` over the skill-to-spec map. Regenerated on every build.

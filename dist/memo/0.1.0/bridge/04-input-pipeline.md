@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [04-input-pipeline](./04-input-pipeline.md) |
-| Provenance | `52ee993f8da0` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -33,18 +32,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- Information-content (FAKT:ANNAHME) score gate
-- Interview-Modus (bundled question catalog)
-- Prompt-injection data/instruction boundary for URL mode
-- Topic-store write-side (register) mechanics
-- URL-mode error codes + schema-version legacy handling
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `52ee993f8da0` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [13-orchestration](./13-orchestration.md) |
-| Provenance | `250fade194a0` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -50,20 +49,6 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
-
-- file-based contract negotiation protocol
-- follow-up-PRD escalation on stuck PRD
-- max iteration / phase-eval iteration limits
-- shared findings store
-- tool-selection-decision-tree
-- trivial-independent-PRDs verdict
-- UI baseline capture at phase-start
-
-## 7. Acknowledged internal tooling (out-of-scope)
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 8. Provenance
-
-Derived-record hash `250fade194a0` over the skill-to-spec map. Regenerated on every build.

@@ -4,7 +4,6 @@
 |---|---|
 | Family | memo |
 | Chapter | [18-multidimensionality](./18-multidimensionality.md) |
-| Provenance | `060edb5c8f83` |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -34,14 +33,6 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 No grader assigned yet.
 
-## 6. Gaps roll-up
+## 6. Acknowledged internal tooling (out-of-scope)
 
 — none —
-
-## 7. Acknowledged internal tooling (out-of-scope)
-
-— none —
-
-## 8. Provenance
-
-Derived-record hash `060edb5c8f83` over the skill-to-spec map. Regenerated on every build.
