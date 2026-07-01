@@ -35,12 +35,3 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 ## 5. Grading assignment
 
 Grading handled by `memo-req-runner` _(inferred)_.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-- `image-art-architecture` — visual cluster, internal tooling (excluded from public coverage)
-- `repo-docs-writing` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-github-org` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-readme` — repository cluster, internal tooling (excluded from public coverage)

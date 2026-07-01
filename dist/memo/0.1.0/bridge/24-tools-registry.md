@@ -34,7 +34,3 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 ## 5. Grading assignment
 
 Grading handled by `memo-req-registry` _(inferred)_.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-— none —

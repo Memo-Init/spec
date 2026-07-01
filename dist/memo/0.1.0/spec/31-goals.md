@@ -6,7 +6,7 @@ spec_file: "31-goals.md"
 order: 31
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T15:36:43.547Z"
+generated_at: "2026-07-01T16:07:39.189Z"
 generated_from: "draft/memo/0.1.0/spec/31-goals.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/31-goals.md."

@@ -8,32 +8,32 @@ This page maps each specification chapter to the skills that implement it — so
 
 ## Coverage summary
 
-| Chapter | Covered | Public | Internal | Reqs |
-|---|---|---|---|---|
-| [00-overview](#00-overview) | ✓ | 2 | 0 | — |
-| [01-philosophy](#01-philosophy) | ✓ | 1 | 0 | — |
-| [02-sop-entrypoint](#02-sop-entrypoint) | ✓ | 5 | 0 | — |
-| [10-root-and-projects](#10-root-and-projects) | ✓ | 1 | 0 | — |
-| [11-project-structure](#11-project-structure) | ✓ | 3 | 1 | 2 |
-| [12-folders](#12-folders) | ✓ | 3 | 0 | 3 |
-| [13-knowledge-format-okf](#13-knowledge-format-okf) | ✓ | 5 | 0 | 4 |
-| [15-repos](#15-repos) | ✓ | 1 | 0 | 2 |
-| [16-context](#16-context) | ✓ | 2 | 0 | 2 |
-| [17-memo-store](#17-memo-store) | ✓ | 1 | 0 | — |
-| [18-design](#18-design) | ✓ | 1 | 0 | 2 |
-| [19-tmp](#19-tmp) | ✓ | 1 | 0 | — |
-| [20-cli](#20-cli) | ✓ | 7 | 0 | 2 |
-| [21-environment-scripts](#21-environment-scripts) | ✓ | 4 | 0 | 2 |
-| [22-config](#22-config) | ✓ | 5 | 0 | 2 |
-| [23-hooks-contract](#23-hooks-contract) | ✓ | 6 | 0 | 3 |
-| [24-skills-scope](#24-skills-scope) | ✓ | 3 | 0 | — |
-| [25-validation-overview](#25-validation-overview) | ✓ | 4 | 0 | 3 |
-| [26-addons](#26-addons) | ✓ | 2 | 0 | 1 |
-| [30-wiki](#30-wiki) | ✓ | 6 | 0 | 2 |
-| [31-browser-automation](#31-browser-automation) | ✓ | 4 | 0 | — |
-| [32-trash](#32-trash) | ✓ | 5 | 0 | — |
-| [41-project-architecture](#41-project-architecture) | ✓ | 6 | 0 | 2 |
-| **Summary** | **23 / 23** | — | — | 32 |
+| Chapter | Covered | Implementers | Reqs |
+|---|---|---|---|
+| [00-overview](#00-overview) | ✓ | 2 | — |
+| [01-philosophy](#01-philosophy) | ✓ | 1 | — |
+| [02-sop-entrypoint](#02-sop-entrypoint) | ✓ | 5 | — |
+| [10-root-and-projects](#10-root-and-projects) | ✓ | 1 | — |
+| [11-project-structure](#11-project-structure) | ✓ | 3 | 2 |
+| [12-folders](#12-folders) | ✓ | 3 | 3 |
+| [13-knowledge-format-okf](#13-knowledge-format-okf) | ✓ | 5 | 4 |
+| [15-repos](#15-repos) | ✓ | 1 | 2 |
+| [16-context](#16-context) | ✓ | 2 | 2 |
+| [17-memo-store](#17-memo-store) | ✓ | 1 | — |
+| [18-design](#18-design) | ✓ | 1 | 2 |
+| [19-tmp](#19-tmp) | ✓ | 1 | — |
+| [20-cli](#20-cli) | ✓ | 7 | 2 |
+| [21-environment-scripts](#21-environment-scripts) | ✓ | 4 | 2 |
+| [22-config](#22-config) | ✓ | 5 | 2 |
+| [23-hooks-contract](#23-hooks-contract) | ✓ | 6 | 3 |
+| [24-skills-scope](#24-skills-scope) | ✓ | 3 | — |
+| [25-validation-overview](#25-validation-overview) | ✓ | 4 | 3 |
+| [26-addons](#26-addons) | ✓ | 2 | 1 |
+| [30-wiki](#30-wiki) | ✓ | 6 | 2 |
+| [31-browser-automation](#31-browser-automation) | ✓ | 4 | — |
+| [32-trash](#32-trash) | ✓ | 5 | — |
+| [41-project-architecture](#41-project-architecture) | ✓ | 6 | 2 |
+| **Summary** | **23 / 23** | — | 32 |
 
 ## Skills by namespace
 
@@ -98,8 +98,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-audit`, `workbench-project-setup` |
-| Internal tooling | — |
+| Skills | `workbench-audit`, `workbench-project-setup` |
 | Requirements | — |
 | Depends on | [01-philosophy](./01-philosophy.md), [02-sop-entrypoint](./02-sop-entrypoint.md), [11-project-structure](./11-project-structure.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [32-trash](./32-trash.md) |
 
@@ -108,8 +107,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-philosophy` |
-| Internal tooling | — |
+| Skills | `workbench-philosophy` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [02-sop-entrypoint](./02-sop-entrypoint.md), [20-cli](./20-cli.md), [22-config](./22-config.md) |
 
@@ -118,8 +116,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-hooks-contract`, `workbench-sop-entry` |
-| Internal tooling | — |
+| Skills | `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-hooks-contract`, `workbench-sop-entry` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [01-philosophy](./01-philosophy.md), [10-root-and-projects](./10-root-and-projects.md), [22-config](./22-config.md), [23-hooks-contract](./23-hooks-contract.md) |
 
@@ -130,8 +127,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-root-projects` |
-| Internal tooling | — |
+| Skills | `workbench-root-projects` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [02-sop-entrypoint](./02-sop-entrypoint.md), [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [22-config](./22-config.md) |
 
@@ -142,8 +138,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `wiki-init`, `workbench-audit`, `workbench-project-setup` |
-| Internal tooling | `repo-init` |
+| Skills | `wiki-init`, `workbench-audit`, `workbench-project-setup` |
 | Requirements | 2 |
 | Depends on | [00-overview](./00-overview.md), [10-root-and-projects](./10-root-and-projects.md), [12-folders](./12-folders.md), [32-trash](./32-trash.md) |
 
@@ -152,8 +147,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-environment-scripts`, `workbench-folders`, `workbench-tmp` |
-| Internal tooling | — |
+| Skills | `workbench-environment-scripts`, `workbench-folders`, `workbench-tmp` |
 | Requirements | 3 |
 | Depends on | [10-root-and-projects](./10-root-and-projects.md), [11-project-structure](./11-project-structure.md), [22-config](./22-config.md), [30-wiki](./30-wiki.md), [31-browser-automation](./31-browser-automation.md), [32-trash](./32-trash.md) |
 
@@ -164,8 +158,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-context`, `workbench-tmp` |
-| Internal tooling | — |
+| Skills | `workbench-context`, `workbench-tmp` |
 | Requirements | 2 |
 | Depends on | [10-root-and-projects](./10-root-and-projects.md), [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [30-wiki](./30-wiki.md), [41-project-architecture](./41-project-architecture.md) |
 
@@ -174,8 +167,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-repos` |
-| Internal tooling | — |
+| Skills | `workbench-repos` |
 | Requirements | 2 |
 | Depends on | [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [22-config](./22-config.md), [41-project-architecture](./41-project-architecture.md) |
 
@@ -184,8 +176,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation` |
-| Internal tooling | — |
+| Skills | `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation` |
 | Requirements | 2 |
 | Depends on | [00-overview](./00-overview.md), [12-folders](./12-folders.md), [20-cli](./20-cli.md), [22-config](./22-config.md), [23-hooks-contract](./23-hooks-contract.md), [24-skills-scope](./24-skills-scope.md) |
 
@@ -194,8 +185,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-tmp` |
-| Internal tooling | — |
+| Skills | `workbench-tmp` |
 | Requirements | — |
 | Depends on | [12-folders](./12-folders.md), [16-context](./16-context.md), [32-trash](./32-trash.md) |
 
@@ -204,8 +194,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation` |
-| Internal tooling | — |
+| Skills | `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [11-project-structure](./11-project-structure.md) |
 
@@ -214,8 +203,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-memo-store` |
-| Internal tooling | — |
+| Skills | `workbench-memo-store` |
 | Requirements | — |
 | Depends on | [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [26-addons](./26-addons.md) |
 
@@ -224,8 +212,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-addons`, `workbench-skills-scope` |
-| Internal tooling | — |
+| Skills | `workbench-addons`, `workbench-skills-scope` |
 | Requirements | 1 |
 | Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [12-folders](./12-folders.md), [20-cli](./20-cli.md), [22-config](./22-config.md), [24-skills-scope](./24-skills-scope.md) |
 
@@ -236,8 +223,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
-| Internal tooling | — |
+| Skills | `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
 | Requirements | 2 |
 | Depends on | [00-overview](./00-overview.md), [21-environment-scripts](./21-environment-scripts.md), [30-wiki](./30-wiki.md) |
 
@@ -246,8 +232,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-addons`, `workbench-hooks-contract`, `workbench-skills-scope` |
-| Internal tooling | — |
+| Skills | `workbench-addons`, `workbench-hooks-contract`, `workbench-skills-scope` |
 | Requirements | — |
 | Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [21-environment-scripts](./21-environment-scripts.md), [31-browser-automation](./31-browser-automation.md) |
 
@@ -258,8 +243,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow` |
-| Internal tooling | — |
+| Skills | `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [11-project-structure](./11-project-structure.md), [12-folders](./12-folders.md), [32-trash](./32-trash.md) |
 
@@ -270,8 +254,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup` |
-| Internal tooling | — |
+| Skills | `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup` |
 | Requirements | 2 |
 | Depends on | [00-overview](./00-overview.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [20-cli](./20-cli.md), [41-project-architecture](./41-project-architecture.md) |
 
@@ -280,8 +263,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update` |
-| Internal tooling | — |
+| Skills | `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update` |
 | Requirements | 4 |
 | Depends on | [00-overview](./00-overview.md), [11-project-structure](./11-project-structure.md), [18-design](./18-design.md), [30-wiki](./30-wiki.md), [32-trash](./32-trash.md) |
 
@@ -290,8 +272,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-design` |
-| Internal tooling | — |
+| Skills | `workbench-design` |
 | Requirements | 2 |
 | Depends on | [12-folders](./12-folders.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [23-hooks-contract](./23-hooks-contract.md), [30-wiki](./30-wiki.md) |
 
@@ -302,8 +283,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation` |
-| Internal tooling | — |
+| Skills | `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation` |
 | Requirements | 2 |
 | Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [12-folders](./12-folders.md), [23-hooks-contract](./23-hooks-contract.md), [41-project-architecture](./41-project-architecture.md) |
 
@@ -312,8 +292,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
-| Internal tooling | — |
+| Skills | `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
 | Requirements | 3 |
 | Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [21-environment-scripts](./21-environment-scripts.md), [22-config](./22-config.md) |
 
@@ -322,8 +301,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `workbench-cli`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
-| Internal tooling | — |
+| Skills | `workbench-cli`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation` |
 | Requirements | 3 |
 | Depends on | [02-sop-entrypoint](./02-sop-entrypoint.md), [20-cli](./20-cli.md), [21-environment-scripts](./21-environment-scripts.md), [22-config](./22-config.md), [23-hooks-contract](./23-hooks-contract.md), [32-trash](./32-trash.md) |
 
@@ -332,8 +310,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `wiki-lint`, `workbench-audit`, `workbench-config` |
-| Internal tooling | — |
+| Skills | `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `wiki-lint`, `workbench-audit`, `workbench-config` |
 | Requirements | 2 |
 | Depends on | [00-overview](./00-overview.md), [02-sop-entrypoint](./02-sop-entrypoint.md), [10-root-and-projects](./10-root-and-projects.md), [11-project-structure](./11-project-structure.md), [13-knowledge-format-okf](./13-knowledge-format-okf.md), [30-wiki](./30-wiki.md) |
 

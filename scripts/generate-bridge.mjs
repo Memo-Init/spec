@@ -5,17 +5,20 @@
 // Emits, across all three spec families, ONE per-page bridge for every non-bridge chapter
 // (the three NN-bridge.md hub pages are excluded — they are the in-nav output hubs). The
 // derived record carries eight fields; the PUBLIC per-page bridge renders the reader-facing
-// subset (Memo 059, PRD-001/PRD-003):
+// subset (Memo 059, PRD-001/PRD-003, Kap 1):
 //   (1) SOP anchor              the family's canonical SOP entry chapter
 //   (2) public entry points     skills marked roleHint:public-entry (else inferred: primary owners)
 //   (3) required detail pages    the chapter's own Depends-on / Related links
 //   (4) skill enumeration        100% named implementers, primary vs contributing, one-line purpose
 //   (5) grading assignment       the grader skill (roleHint:grader, else inferred heuristic)
-//   (7) acknowledged out-of-scope primary owners whose domain has no numbered chapter
-// The (6) gaps roll-up (skill-ahead-of-spec, internal reification delta) and (8) provenance
-// hash are computed on the record but NOT published on the public page or the inverted map —
-// they are internal-only interpretation. An empty implementer list is rendered as an honest
-// "nothing built yet" — never hidden.
+// The (7) internal-tooling classification (visibility:"internal" split-off) is retained on the
+// internal inverted map, but is NOT rendered on any public bridge surface — per-page, hub, or
+// coverage table. Publishing our public-vs-internal skill classification is itself an internal
+// interpretation (Memo 059, Kap 1/Kap 6): the skill NAMES are publishable, our verdict about
+// them is not. The (6) gaps roll-up (skill-ahead-of-spec, internal reification delta) and the
+// (8) provenance hash are likewise computed on the record but NOT published on the public page
+// or the inverted map. An empty implementer list is rendered as an honest "nothing built yet"
+// — never hidden.
 //
 // Side projections, all generated and idempotent:
 //   - a per-page "## Implemented by" backlink written into EACH non-bridge source chapter
@@ -288,11 +291,13 @@ const relLink = ( { stem } ) => `[${ stem }](./${ stem }.md)`
 
 
 // One per-page bridge page rendered with its public projection fields, leak-safe and generated.
-// PRD-001/PRD-003 (Memo 059): the internal-only gaps roll-up and the provenance hash are no
-// longer rendered on this public-facing page (the provenance hash is still computed on the
-// record for idempotency and the inverted map; it is simply not displayed here).
+// PRD-001/PRD-003 (Memo 059, Kap 1): the internal-only gaps roll-up, the provenance hash, and
+// the internal-tooling (out-of-scope) classification are no longer rendered on this public-facing
+// page — publishing our public-vs-internal verdict is itself internal interpretation. The
+// provenance hash and the out-of-scope set are still computed on the record for idempotency and
+// the internal inverted map; they are simply not displayed here.
 const renderBridgePage = ( { record } ) => {
-    const { stem, family, sopAnchor, publicEntries, detailPages, implementers, grader, outOfScope } = record
+    const { stem, family, sopAnchor, publicEntries, detailPages, implementers, grader } = record
 
     const entryLine = publicEntries.skills.length === 0
         ? `Canonical docs entry: \`${ publicEntries.doc }\`. No entry-point skill flagged yet.`
@@ -311,10 +316,6 @@ const renderBridgePage = ( { record } ) => {
     const gradingLine = grader === null
         ? 'No grader assigned yet.'
         : `Grading handled by \`${ grader.skill }\`${ grader.inferred === true ? ' _(inferred)_' : '' }.`
-
-    const outOfScopeBlock = outOfScope.length === 0
-        ? '— none —'
-        : outOfScope.map( ( o ) => `- \`${ o.skill }\` — ${ o.category } cluster, internal tooling (excluded from public coverage)` ).join( '\n' )
 
     return [
         `# Bridge — ${ stem }`,
@@ -349,10 +350,6 @@ const renderBridgePage = ( { record } ) => {
         '## 5. Grading assignment',
         '',
         gradingLine,
-        '',
-        '## 6. Acknowledged internal tooling (out-of-scope)',
-        '',
-        outOfScopeBlock,
         ''
     ].join( '\n' )
 }
@@ -404,12 +401,12 @@ const ensurePlaceholder = ( { content } ) => {
 
 
 // F6 (Memo 057): the family Overview + Sichten (view tables), generated into the hub. Three
-// views over the same derived records: requirement presence per chapter, implementer presence
-// per chapter (public vs internal tooling, from F4), and the skill->dependencies inversion.
+// views over the same derived records: requirement presence per chapter, public implementer
+// presence per chapter, and the skill->dependencies inversion. The internal-tooling
+// classification (Memo 059, Kap 1) is not surfaced here — only the public implementer set is.
 // "Bedienbarkeit, kein Sherlock Holmes": the whole family is legible from one page.
 const renderOverviewAndViews = ( { records } ) => {
     const publicSkills = new Set( records.flatMap( ( r ) => r.implementers.map( ( s ) => s.skill ) ) )
-    const internalSkills = new Set( records.flatMap( ( r ) => r.outOfScope.map( ( o ) => o.skill ) ) )
     const sopAnchor = records.length === 0 ? null : records[ 0 ].sopAnchor
     const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
     const withReqs = records.filter( ( r ) => r.requirementCount > 0 ).length
@@ -418,10 +415,9 @@ const renderOverviewAndViews = ( { records } ) => {
         .map( ( r ) => {
             const reqCell = r.requirementCount === 0 ? '—' : String( r.requirementCount )
             const publicCell = r.implementers.length === 0 ? '— none —' : r.implementers.map( ( s ) => `\`${ s.skill }\`` ).join( ', ' )
-            const internalCell = r.outOfScope.length === 0 ? '—' : r.outOfScope.map( ( o ) => `\`${ o.skill }\`` ).join( ', ' )
             const dependsCell = r.detailPages.length === 0 ? '—' : r.detailPages.map( ( s ) => relLink( { stem: s } ) ).join( ', ' )
 
-            return `| ${ relLink( { stem: r.stem } ) } | ${ reqCell } | ${ publicCell } | ${ internalCell } | ${ dependsCell } |`
+            return `| ${ relLink( { stem: r.stem } ) } | ${ reqCell } | ${ publicCell } | ${ dependsCell } |`
         } )
         .join( '\n' )
 
@@ -448,18 +444,17 @@ const renderOverviewAndViews = ( { records } ) => {
     return [
         '## Overview',
         '',
-        `- **Public implementer skills:** ${ publicSkills.size }`,
-        `- **Internal tooling skills (out-of-scope, F4):** ${ internalSkills.size }`,
+        `- **Implementer skills:** ${ publicSkills.size }`,
         `- **SOP anchor:** ${ sopAnchor === null ? '—' : relLink( { stem: sopAnchor } ) }`,
-        `- **Public coverage:** ${ covered } of ${ records.length } chapters; ${ withReqs } chapter(s) carry inline requirements.`,
+        `- **Coverage:** ${ covered } of ${ records.length } chapters; ${ withReqs } chapter(s) carry inline requirements.`,
         '',
         '## Views',
         '',
         '### By chapter — requirements · implementers · dependencies',
         '',
-        '| Chapter | Reqs | Public implementers | Internal tooling | Depends on |',
-        '|---|---|---|---|---|',
-        chapterRows === '' ? '| — | — | — | — | — |' : chapterRows,
+        '| Chapter | Reqs | Implementers | Depends on |',
+        '|---|---|---|---|',
+        chapterRows === '' ? '| — | — | — | — |' : chapterRows,
         '',
         '### By skill — dependencies (skill → chapters)',
         '',
@@ -511,11 +506,11 @@ const toMermaidId = ( { text } ) => {
 }
 
 
-// PRD-009 + PRD-003 (Memo 059): the "## Coverage summary" head-table for the dist hub. One
-// quantification row per chapter, each chapter name a click-to-scroll intra-page anchor link
-// into its block under "## Chapters". The internal-only gaps column and the coverage percentage
-// are no longer surfaced on the public page (PRD-001/PRD-003); the honest covered/total count
-// stays.
+// PRD-009 + PRD-003 (Memo 059, Kap 1): the "## Coverage summary" head-table for the dist hub.
+// One quantification row per chapter, each chapter name a click-to-scroll intra-page anchor link
+// into its block under "## Chapters". The internal-only gaps column, the coverage percentage, and
+// the internal-classification count are no longer surfaced on the public page (PRD-001/PRD-003);
+// the honest covered/total count and the public implementer count stay.
 const renderCoverageSummary = ( { records } ) => {
     const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
     const totalReqs = records.reduce( ( sum, r ) => sum + r.requirementCount, 0 )
@@ -524,32 +519,30 @@ const renderCoverageSummary = ( { records } ) => {
         const coveredCell = r.implementers.length > 0 ? '✓' : '—'
         const reqCell = r.requirementCount === 0 ? '—' : String( r.requirementCount )
 
-        return `| [${ r.stem }](#${ r.stem }) | ${ coveredCell } | ${ r.implementers.length } | ${ r.outOfScope.length } | ${ reqCell } |`
+        return `| [${ r.stem }](#${ r.stem }) | ${ coveredCell } | ${ r.implementers.length } | ${ reqCell } |`
     } ).join( '\n' )
 
-    const summaryRow = `| **Summary** | **${ covered } / ${ records.length }** | — | — | ${ totalReqs > 0 ? String( totalReqs ) : '—' } |`
+    const summaryRow = `| **Summary** | **${ covered } / ${ records.length }** | — | ${ totalReqs > 0 ? String( totalReqs ) : '—' } |`
 
     return [
         '## Coverage summary',
         '',
-        '| Chapter | Covered | Public | Internal | Reqs |',
-        '|---|---|---|---|---|',
-        headRows === '' ? '| — | — | — | — | — |' : headRows,
+        '| Chapter | Covered | Implementers | Reqs |',
+        '|---|---|---|---|',
+        headRows === '' ? '| — | — | — | — |' : headRows,
         summaryRow
     ].join( '\n' )
 }
 
 
-// PRD-008: one named block per chapter (public skills, internal tooling, requirements, depends-on).
-// The gaps row is not rendered on the public page (PRD-003). The stem is the heading text so the
-// coverage-summary link `(#<stem>)` resolves to this block's slug.
+// PRD-008: one named block per chapter (public skills, requirements, depends-on). The gaps row
+// and the internal-tooling classification (Memo 059, Kap 1) are not rendered on the public page
+// (PRD-003). The stem is the heading text so the coverage-summary link `(#<stem>)` resolves to
+// this block's slug.
 const renderChapterBlock = ( { record } ) => {
     const publicCell = record.implementers.length === 0
         ? '— none yet —'
         : record.implementers.map( ( s ) => `\`${ s.skill }\`` ).join( ', ' )
-    const internalCell = record.outOfScope.length === 0
-        ? '—'
-        : record.outOfScope.map( ( o ) => `\`${ o.skill }\`` ).join( ', ' )
     const reqCell = record.requirementCount === 0 ? '—' : String( record.requirementCount )
     const depsCell = record.detailPages.length === 0
         ? '—'
@@ -561,8 +554,7 @@ const renderChapterBlock = ( { record } ) => {
         '| Field | Value |',
         '|---|---|',
         `| Covered | ${ record.implementers.length > 0 ? '✓ yes' : '— not yet' } |`,
-        `| Public skills | ${ publicCell } |`,
-        `| Internal tooling | ${ internalCell } |`,
+        `| Skills | ${ publicCell } |`,
         `| Requirements | ${ reqCell } |`,
         `| Depends on | ${ depsCell } |`,
         ''
@@ -776,12 +768,11 @@ const rewriteLinks = ( { content } ) => {
 // PRD-014: Astro frontmatter for the enhanced hub written to dist/spec/. Mirrors the
 // frontmatter shape that generate-docs-payload.mjs produces so generate-manifest and
 // sync-spec.mjs consume it without surprises. normative=false (the hub is Informative).
-const buildHubFrontmatter = ( { nn, family, records } ) => {
+const buildHubFrontmatter = ( { nn, family } ) => {
     const meta = FAMILY_META[ family ] ?? { versionField: `${ family }_version`, section: family }
     const version = FAMILIES.find( ( f ) => f.name === family )?.version ?? '0.1.0'
-    const covered = records.filter( ( r ) => r.implementers.length > 0 ).length
     const desc = escapeYaml( {
-        value: `Bridge hub for the ${ family } specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping (${ covered } of ${ records.length } chapters covered).`
+        value: `Bridge hub for the ${ family } specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.`
     } )
     const order = parseInt( nn, 10 )
     const now = new Date().toISOString()
@@ -889,7 +880,7 @@ const main = async () => {
         // sibling families, mirroring generate-docs-payload's rewriteSpecLinks behaviour).
         const specOutDir = specPayloadDirFor( { name: family.name, version: family.version } )
         await mkdir( specOutDir, { recursive: true } )
-        const specHubFrontmatter = buildHubFrontmatter( { nn, family: family.name, records: recordList } )
+        const specHubFrontmatter = buildHubFrontmatter( { nn, family: family.name } )
         const specHubBodyNoH1 = distHubContent.replace( /^#[^\n]+\n+/, '' )
         const specHubBodyRewritten = rewriteLinks( { content: specHubBodyNoH1 } )
         const specHubContent = specHubFrontmatter + '\n' + specHubBodyRewritten

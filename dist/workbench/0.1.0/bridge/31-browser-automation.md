@@ -33,7 +33,3 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 ## 5. Grading assignment
 
 No grader assigned yet.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-— none —

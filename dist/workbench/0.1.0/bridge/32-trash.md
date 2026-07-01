@@ -34,7 +34,3 @@ Canonical docs entry: `/workbench/overview/`. No entry-point skill flagged yet.
 ## 5. Grading assignment
 
 No grader assigned yet.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-— none —

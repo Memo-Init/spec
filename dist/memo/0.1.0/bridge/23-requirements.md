@@ -46,9 +46,3 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 ## 5. Grading assignment
 
 Grading handled by `memo-req-registry` _(inferred)_.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-- `image-pencil-playwright-diff` — visual cluster, internal tooling (excluded from public coverage)
-- `repo-github-org` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-quality` — repository cluster, internal tooling (excluded from public coverage)

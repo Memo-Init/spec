@@ -33,8 +33,3 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 ## 5. Grading assignment
 
 No grader assigned yet.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-- `repo-docs-writing` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-readme` — repository cluster, internal tooling (excluded from public coverage)

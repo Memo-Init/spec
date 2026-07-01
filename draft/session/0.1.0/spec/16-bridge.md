@@ -14,33 +14,32 @@ This page maps each specification chapter to the skills that implement it — so
 
 ## Overview
 
-- **Public implementer skills:** 16
-- **Internal tooling skills (out-of-scope, F4):** 0
+- **Implementer skills:** 16
 - **SOP anchor:** [10-sop](./10-sop.md)
-- **Public coverage:** 16 of 16 chapters; 6 chapter(s) carry inline requirements.
+- **Coverage:** 16 of 16 chapters; 6 chapter(s) carry inline requirements.
 
 ## Views
 
 ### By chapter — requirements · implementers · dependencies
 
-| Chapter | Reqs | Public implementers | Internal tooling | Depends on |
-|---|---|---|---|---|
-| [00-overview](./00-overview.md) | — | `session-overview` | — | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [10-sop](./10-sop.md) |
-| [01-genesis-root](./01-genesis-root.md) | — | `session-genesis-root` | — | [00-overview](./00-overview.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [10-sop](./10-sop.md) |
-| [02-enforcement](./02-enforcement.md) | 6 | `session-enforcement` | — | [01-genesis-root](./01-genesis-root.md), [03-recovery](./03-recovery.md) |
-| [03-recovery](./03-recovery.md) | — | `session-recovery` | — | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md) |
-| [04-cli](./04-cli.md) | 2 | `session-cli` | — | [00-overview](./00-overview.md), [05-config-cascade](./05-config-cascade.md), [07-doctor-init](./07-doctor-init.md) |
-| [05-config-cascade](./05-config-cascade.md) | 2 | `session-config-cascade` | — | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [06-namespace-registry](./06-namespace-registry.md), [07-doctor-init](./07-doctor-init.md) |
-| [06-namespace-registry](./06-namespace-registry.md) | — | `session-namespace-registry` | — | [02-enforcement](./02-enforcement.md), [05-config-cascade](./05-config-cascade.md), [07-doctor-init](./07-doctor-init.md), [10-sop](./10-sop.md) |
-| [07-doctor-init](./07-doctor-init.md) | 2 | `session-doctor-init` | — | [02-enforcement](./02-enforcement.md), [04-cli](./04-cli.md), [05-config-cascade](./05-config-cascade.md), [06-namespace-registry](./06-namespace-registry.md) |
-| [08-identity-pin](./08-identity-pin.md) | 2 | `session-identity-pin` | — | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [09-root-detection](./09-root-detection.md) |
-| [09-root-detection](./09-root-detection.md) | 2 | `session-root-detection` | — | [01-genesis-root](./01-genesis-root.md), [04-cli](./04-cli.md), [05-config-cascade](./05-config-cascade.md), [08-identity-pin](./08-identity-pin.md) |
-| [10-sop](./10-sop.md) | — | `session-sop` | — | [00-overview](./00-overview.md), [01-genesis-root](./01-genesis-root.md), [06-namespace-registry](./06-namespace-registry.md), [11-common-denominator](./11-common-denominator.md), [12-instances](./12-instances.md), [13-conventions](./13-conventions.md) |
-| [11-common-denominator](./11-common-denominator.md) | — | `session-common-denominator` | — | [10-sop](./10-sop.md), [12-instances](./12-instances.md) |
-| [12-instances](./12-instances.md) | — | `session-instances` | — | [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md) |
-| [13-conventions](./13-conventions.md) | — | `session-conventions` | — | [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md), [12-instances](./12-instances.md) |
-| [14-migration](./14-migration.md) | — | `session-migration` | — | [00-overview](./00-overview.md), [03-recovery](./03-recovery.md), [05-config-cascade](./05-config-cascade.md), [10-sop](./10-sop.md) |
-| [15-addons](./15-addons.md) | — | `session-addons` | — | [00-overview](./00-overview.md), [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md) |
+| Chapter | Reqs | Implementers | Depends on |
+|---|---|---|---|
+| [00-overview](./00-overview.md) | — | `session-overview` | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [10-sop](./10-sop.md) |
+| [01-genesis-root](./01-genesis-root.md) | — | `session-genesis-root` | [00-overview](./00-overview.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [10-sop](./10-sop.md) |
+| [02-enforcement](./02-enforcement.md) | 6 | `session-enforcement` | [01-genesis-root](./01-genesis-root.md), [03-recovery](./03-recovery.md) |
+| [03-recovery](./03-recovery.md) | — | `session-recovery` | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md) |
+| [04-cli](./04-cli.md) | 2 | `session-cli` | [00-overview](./00-overview.md), [05-config-cascade](./05-config-cascade.md), [07-doctor-init](./07-doctor-init.md) |
+| [05-config-cascade](./05-config-cascade.md) | 2 | `session-config-cascade` | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [06-namespace-registry](./06-namespace-registry.md), [07-doctor-init](./07-doctor-init.md) |
+| [06-namespace-registry](./06-namespace-registry.md) | — | `session-namespace-registry` | [02-enforcement](./02-enforcement.md), [05-config-cascade](./05-config-cascade.md), [07-doctor-init](./07-doctor-init.md), [10-sop](./10-sop.md) |
+| [07-doctor-init](./07-doctor-init.md) | 2 | `session-doctor-init` | [02-enforcement](./02-enforcement.md), [04-cli](./04-cli.md), [05-config-cascade](./05-config-cascade.md), [06-namespace-registry](./06-namespace-registry.md) |
+| [08-identity-pin](./08-identity-pin.md) | 2 | `session-identity-pin` | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [09-root-detection](./09-root-detection.md) |
+| [09-root-detection](./09-root-detection.md) | 2 | `session-root-detection` | [01-genesis-root](./01-genesis-root.md), [04-cli](./04-cli.md), [05-config-cascade](./05-config-cascade.md), [08-identity-pin](./08-identity-pin.md) |
+| [10-sop](./10-sop.md) | — | `session-sop` | [00-overview](./00-overview.md), [01-genesis-root](./01-genesis-root.md), [06-namespace-registry](./06-namespace-registry.md), [11-common-denominator](./11-common-denominator.md), [12-instances](./12-instances.md), [13-conventions](./13-conventions.md) |
+| [11-common-denominator](./11-common-denominator.md) | — | `session-common-denominator` | [10-sop](./10-sop.md), [12-instances](./12-instances.md) |
+| [12-instances](./12-instances.md) | — | `session-instances` | [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md) |
+| [13-conventions](./13-conventions.md) | — | `session-conventions` | [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md), [12-instances](./12-instances.md) |
+| [14-migration](./14-migration.md) | — | `session-migration` | [00-overview](./00-overview.md), [03-recovery](./03-recovery.md), [05-config-cascade](./05-config-cascade.md), [10-sop](./10-sop.md) |
+| [15-addons](./15-addons.md) | — | `session-addons` | [00-overview](./00-overview.md), [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md) |
 
 ### By skill — dependencies (skill → chapters)
 

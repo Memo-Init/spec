@@ -6,7 +6,7 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T15:36:43.547Z"
+generated_at: "2026-07-01T16:07:39.189Z"
 generated_from: "draft/memo/0.1.0/spec/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/02-memo-sop-entrypoint.md."
@@ -105,7 +105,7 @@ Two values are defined:
 
 | `roleHint` value | Meaning | Applied to |
 |---|---|---|
-| `"public-entry"` | The skill is a **developer-triggered public entry point** — one of the few doors through which a developer enters the memo system. These skills validate strictly, set the switches, and MUST read `memo-sop` before any work proceeds (REQ-800). | `memo-init` (Initialize), `memo-finalize` (Finalize), `memo-rollout` (Execute/Plan — the lived single-memo execution path) |
+| `"public-entry"` | The skill is a **developer-triggered public entry point** — one of the few doors through which a developer enters the memo system. These skills validate strictly, set the switches, and MUST read `memo-sop` before any work proceeds (REQ-800). | `memo-init` (Initialize), `memo-revision-generate` (Revise re-entry), `memo-finalize` (Finalize), `memo-rollout` (Execute/Plan — the lived single-memo execution path) |
 | `"grader"` | The skill is responsible for **grading or scoring** a memo artifact (goals, maintenance health, fidelity, etc.). The bridge uses the grader marker to assign grading responsibility unambiguously; without it the generator infers a grader from the skill's category or name and marks the result inferred. | `memo-goal-score`, `memo-goal-score-all`, `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-fidelity-audit`, and similar scoring skills |
 
 ### The Four Canonical Developer-Triggered Entry Points

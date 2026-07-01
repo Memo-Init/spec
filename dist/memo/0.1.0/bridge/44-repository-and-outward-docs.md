@@ -30,12 +30,3 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 ## 5. Grading assignment
 
 No grader assigned yet.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-- `repo-docs-writing` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-github-org` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-init` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-issue` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-quality` — repository cluster, internal tooling (excluded from public coverage)
-- `repo-readme` — repository cluster, internal tooling (excluded from public coverage)

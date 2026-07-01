@@ -33,7 +33,3 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 ## 5. Grading assignment
 
 No grader assigned yet.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-— none —

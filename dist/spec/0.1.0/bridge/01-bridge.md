@@ -8,15 +8,15 @@ This page maps each specification chapter to the skills that implement it — so
 
 ## Coverage summary
 
-| Chapter | Covered | Public | Internal | Reqs |
-|---|---|---|---|---|
-| [00-overview](#00-overview) | — | 0 | 0 | — |
-| [02-per-chapter-format](#02-per-chapter-format) | — | 0 | 0 | — |
-| [03-categories](#03-categories) | — | 0 | 0 | — |
-| [04-bridge-standard](#04-bridge-standard) | — | 0 | 0 | — |
-| [05-publishing-principle](#05-publishing-principle) | — | 0 | 0 | — |
-| [06-conventions-writing](#06-conventions-writing) | — | 0 | 0 | — |
-| **Summary** | **0 / 6** | — | — | — |
+| Chapter | Covered | Implementers | Reqs |
+|---|---|---|---|
+| [00-overview](#00-overview) | — | 0 | — |
+| [02-per-chapter-format](#02-per-chapter-format) | — | 0 | — |
+| [03-categories](#03-categories) | — | 0 | — |
+| [04-bridge-standard](#04-bridge-standard) | — | 0 | — |
+| [05-publishing-principle](#05-publishing-principle) | — | 0 | — |
+| [06-conventions-writing](#06-conventions-writing) | — | 0 | — |
+| **Summary** | **0 / 6** | — | — |
 
 ## Skills by namespace
 
@@ -31,8 +31,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | — not yet |
-| Public skills | — none yet — |
-| Internal tooling | — |
+| Skills | — none yet — |
 | Requirements | — |
 | Depends on | [02-per-chapter-format](./02-per-chapter-format.md), [04-bridge-standard](./04-bridge-standard.md) |
 
@@ -43,8 +42,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | — not yet |
-| Public skills | — none yet — |
-| Internal tooling | — |
+| Skills | — none yet — |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [03-categories](./03-categories.md), [04-bridge-standard](./04-bridge-standard.md) |
 
@@ -53,8 +51,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | — not yet |
-| Public skills | — none yet — |
-| Internal tooling | — |
+| Skills | — none yet — |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [02-per-chapter-format](./02-per-chapter-format.md), [04-bridge-standard](./04-bridge-standard.md) |
 
@@ -63,8 +60,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | — not yet |
-| Public skills | — none yet — |
-| Internal tooling | — |
+| Skills | — none yet — |
 | Requirements | — |
 | Depends on | [01-bridge](./01-bridge.md), [02-per-chapter-format](./02-per-chapter-format.md), [03-categories](./03-categories.md), [05-publishing-principle](./05-publishing-principle.md) |
 
@@ -75,8 +71,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | — not yet |
-| Public skills | — none yet — |
-| Internal tooling | — |
+| Skills | — none yet — |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [04-bridge-standard](./04-bridge-standard.md), [06-conventions-writing](./06-conventions-writing.md) |
 
@@ -87,8 +82,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | — not yet |
-| Public skills | — none yet — |
-| Internal tooling | — |
+| Skills | — none yet — |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [02-per-chapter-format](./02-per-chapter-format.md), [05-publishing-principle](./05-publishing-principle.md) |
 

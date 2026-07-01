@@ -8,25 +8,25 @@ This page maps each specification chapter to the skills that implement it — so
 
 ## Coverage summary
 
-| Chapter | Covered | Public | Internal | Reqs |
-|---|---|---|---|---|
-| [00-overview](#00-overview) | ✓ | 1 | 0 | — |
-| [01-genesis-root](#01-genesis-root) | ✓ | 1 | 0 | — |
-| [02-enforcement](#02-enforcement) | ✓ | 1 | 0 | 6 |
-| [03-recovery](#03-recovery) | ✓ | 1 | 0 | — |
-| [04-cli](#04-cli) | ✓ | 1 | 0 | 2 |
-| [05-config-cascade](#05-config-cascade) | ✓ | 1 | 0 | 2 |
-| [06-namespace-registry](#06-namespace-registry) | ✓ | 1 | 0 | — |
-| [07-doctor-init](#07-doctor-init) | ✓ | 1 | 0 | 2 |
-| [08-identity-pin](#08-identity-pin) | ✓ | 1 | 0 | 2 |
-| [09-root-detection](#09-root-detection) | ✓ | 1 | 0 | 2 |
-| [10-sop](#10-sop) | ✓ | 1 | 0 | — |
-| [11-common-denominator](#11-common-denominator) | ✓ | 1 | 0 | — |
-| [12-instances](#12-instances) | ✓ | 1 | 0 | — |
-| [13-conventions](#13-conventions) | ✓ | 1 | 0 | — |
-| [14-migration](#14-migration) | ✓ | 1 | 0 | — |
-| [15-addons](#15-addons) | ✓ | 1 | 0 | — |
-| **Summary** | **16 / 16** | — | — | 16 |
+| Chapter | Covered | Implementers | Reqs |
+|---|---|---|---|
+| [00-overview](#00-overview) | ✓ | 1 | — |
+| [01-genesis-root](#01-genesis-root) | ✓ | 1 | — |
+| [02-enforcement](#02-enforcement) | ✓ | 1 | 6 |
+| [03-recovery](#03-recovery) | ✓ | 1 | — |
+| [04-cli](#04-cli) | ✓ | 1 | 2 |
+| [05-config-cascade](#05-config-cascade) | ✓ | 1 | 2 |
+| [06-namespace-registry](#06-namespace-registry) | ✓ | 1 | — |
+| [07-doctor-init](#07-doctor-init) | ✓ | 1 | 2 |
+| [08-identity-pin](#08-identity-pin) | ✓ | 1 | 2 |
+| [09-root-detection](#09-root-detection) | ✓ | 1 | 2 |
+| [10-sop](#10-sop) | ✓ | 1 | — |
+| [11-common-denominator](#11-common-denominator) | ✓ | 1 | — |
+| [12-instances](#12-instances) | ✓ | 1 | — |
+| [13-conventions](#13-conventions) | ✓ | 1 | — |
+| [14-migration](#14-migration) | ✓ | 1 | — |
+| [15-addons](#15-addons) | ✓ | 1 | — |
+| **Summary** | **16 / 16** | — | 16 |
 
 ## Skills by namespace
 
@@ -62,8 +62,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-overview` |
-| Internal tooling | — |
+| Skills | `session-overview` |
 | Requirements | — |
 | Depends on | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [10-sop](./10-sop.md) |
 
@@ -74,8 +73,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-sop` |
-| Internal tooling | — |
+| Skills | `session-sop` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [01-genesis-root](./01-genesis-root.md), [06-namespace-registry](./06-namespace-registry.md), [11-common-denominator](./11-common-denominator.md), [12-instances](./12-instances.md), [13-conventions](./13-conventions.md) |
 
@@ -84,8 +82,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-common-denominator` |
-| Internal tooling | — |
+| Skills | `session-common-denominator` |
 | Requirements | — |
 | Depends on | [10-sop](./10-sop.md), [12-instances](./12-instances.md) |
 
@@ -94,8 +91,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-instances` |
-| Internal tooling | — |
+| Skills | `session-instances` |
 | Requirements | — |
 | Depends on | [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md) |
 
@@ -104,8 +100,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-conventions` |
-| Internal tooling | — |
+| Skills | `session-conventions` |
 | Requirements | — |
 | Depends on | [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md), [12-instances](./12-instances.md) |
 
@@ -114,8 +109,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-addons` |
-| Internal tooling | — |
+| Skills | `session-addons` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [10-sop](./10-sop.md), [11-common-denominator](./11-common-denominator.md) |
 
@@ -126,8 +120,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-genesis-root` |
-| Internal tooling | — |
+| Skills | `session-genesis-root` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [10-sop](./10-sop.md) |
 
@@ -136,8 +129,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-config-cascade` |
-| Internal tooling | — |
+| Skills | `session-config-cascade` |
 | Requirements | 2 |
 | Depends on | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [06-namespace-registry](./06-namespace-registry.md), [07-doctor-init](./07-doctor-init.md) |
 
@@ -146,8 +138,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-namespace-registry` |
-| Internal tooling | — |
+| Skills | `session-namespace-registry` |
 | Requirements | — |
 | Depends on | [02-enforcement](./02-enforcement.md), [05-config-cascade](./05-config-cascade.md), [07-doctor-init](./07-doctor-init.md), [10-sop](./10-sop.md) |
 
@@ -156,8 +147,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-root-detection` |
-| Internal tooling | — |
+| Skills | `session-root-detection` |
 | Requirements | 2 |
 | Depends on | [01-genesis-root](./01-genesis-root.md), [04-cli](./04-cli.md), [05-config-cascade](./05-config-cascade.md), [08-identity-pin](./08-identity-pin.md) |
 
@@ -168,8 +158,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-enforcement` |
-| Internal tooling | — |
+| Skills | `session-enforcement` |
 | Requirements | 6 |
 | Depends on | [01-genesis-root](./01-genesis-root.md), [03-recovery](./03-recovery.md) |
 
@@ -178,8 +167,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-identity-pin` |
-| Internal tooling | — |
+| Skills | `session-identity-pin` |
 | Requirements | 2 |
 | Depends on | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md), [03-recovery](./03-recovery.md), [09-root-detection](./09-root-detection.md) |
 
@@ -190,8 +178,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-cli` |
-| Internal tooling | — |
+| Skills | `session-cli` |
 | Requirements | 2 |
 | Depends on | [00-overview](./00-overview.md), [05-config-cascade](./05-config-cascade.md), [07-doctor-init](./07-doctor-init.md) |
 
@@ -200,8 +187,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-doctor-init` |
-| Internal tooling | — |
+| Skills | `session-doctor-init` |
 | Requirements | 2 |
 | Depends on | [02-enforcement](./02-enforcement.md), [04-cli](./04-cli.md), [05-config-cascade](./05-config-cascade.md), [06-namespace-registry](./06-namespace-registry.md) |
 
@@ -212,8 +198,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-recovery` |
-| Internal tooling | — |
+| Skills | `session-recovery` |
 | Requirements | — |
 | Depends on | [01-genesis-root](./01-genesis-root.md), [02-enforcement](./02-enforcement.md) |
 
@@ -222,8 +207,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Field | Value |
 |---|---|
 | Covered | ✓ yes |
-| Public skills | `session-migration` |
-| Internal tooling | — |
+| Skills | `session-migration` |
 | Requirements | — |
 | Depends on | [00-overview](./00-overview.md), [03-recovery](./03-recovery.md), [05-config-cascade](./05-config-cascade.md), [10-sop](./10-sop.md) |
 

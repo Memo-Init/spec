@@ -30,7 +30,3 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 ## 5. Grading assignment
 
 No grader assigned yet.
-
-## 6. Acknowledged internal tooling (out-of-scope)
-
-— none —
