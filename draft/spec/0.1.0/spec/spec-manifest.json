@@ -2,9 +2,9 @@
     "namespace": "spec",
     "version": "0.1.0",
     "namespaceToken": "SPEC",
-    "hasRequirements": false,
+    "hasRequirements": true,
     "hasGrading": false,
-    "requirementsRef": null,
+    "requirementsRef": "02-per-chapter-format",
     "gradingRef": null,
     "groups": [
         {
@@ -34,9 +34,17 @@
             ]
         },
         {
+            "id": "versioning",
+            "label": "Versioning",
+            "order": 4,
+            "pages": [
+                "07-versioning"
+            ]
+        },
+        {
             "id": "conventions",
             "label": "Conventions",
-            "order": 4,
+            "order": 5,
             "pages": [
                 "06-conventions-writing"
             ]
@@ -44,7 +52,7 @@
         {
             "id": "bridge",
             "label": "Bridge",
-            "order": 5,
+            "order": 6,
             "pages": [
                 "01-bridge"
             ]

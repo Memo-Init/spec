@@ -24,11 +24,9 @@ Writing a convention therefore has two moves: author the readable rule in its ow
 
 ## The Policy-Block Mechanism
 
-Conventions are registered as a **policy block** in the session namespace registry ([/session/namespace-registry/](/session/namespace-registry/)). The policy block is the existing registry primitive for "a body of standards that is always findable, of which a sub-set must be read by a checkpoint" — the same `kind:"policy"` block that already registers the development standards. A convention set reuses it as-is:
+Conventions are registered as a **policy block** in the session namespace registry ([/session/namespace-registry/](/session/namespace-registry/)), which is the **normative home** of the policy-block mechanism. The policy block is the existing registry primitive for "a body of standards that is always findable, of which a sub-set must be read by a checkpoint" — the same `kind:"policy"` block that already registers the development standards. A convention set reuses it as-is. This chapter does **not** re-specify how a policy block behaves — that would be the double normativity the next section forbids — but summarizes, informatively, the three properties that bear on writing a convention:
 
-- A policy block reserves a namespace and contributes its member rules, but it is **never a gate predecessor** — its `requires[]` is empty and it feeds no precondition edge.
-- It gates only through the separate assertions axis, and only as a redirect at a named checkpoint, never as a hard block.
-- Registration follows the trinary `REQ-SS-POLICY`: being registered does not make a policy block gate the way an SOP-instance block gates — a policy block is findable by construction and enforced only at its checkpoints.
+> **Informative** (normative source: [/session/namespace-registry/](/session/namespace-registry/)). A policy block reserves a namespace and contributes its member rules but is never a gate predecessor (its `requires[]` is empty and it feeds no precondition edge); it gates only through the separate assertions axis, as a redirect at a named checkpoint, never as a hard block; and its registration follows the trinary `REQ-SS-POLICY`, so being registered does not make it gate the way an SOP-instance block gates — it is findable by construction and enforced only at its checkpoints.
 
 Because the mechanism already exists, registering a new convention set is a matter of adding its rules to a policy block, not of designing new machinery. This is the YAGNI discipline in force: the standards body ("a set of conventions that must be followed") is exactly what a policy block models, so a convention set **MUST** register as one rather than spawn a parallel primitive.
 

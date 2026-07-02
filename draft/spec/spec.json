@@ -10,11 +10,12 @@
     "docEntry": "/spec/overview/",
     "relatedRefs": [ "00-overview" ],
     "sidebarMeta": {
-        "order": [ "introduction", "structure", "publication", "conventions" ],
+        "order": [ "introduction", "structure", "publication", "versioning", "conventions" ],
         "labels": {
             "introduction": "Introduction",
             "structure": "Structure",
             "publication": "Publication",
+            "versioning": "Versioning",
             "conventions": "Conventions"
         }
     }

@@ -10,11 +10,13 @@ Every family carries one generated chapter that is not authored prose: the **bri
 
 The bridge is a **read-projection** of a single edge — the skill-to-spec map — and nothing else is a second source of truth. It is regenerated deterministically; it is never hand-edited.
 
+The map is authored data, not generated: it lives at `draft/<family>/<version>/data/skill-spec-map.json` ([Per-Chapter Format](./02-per-chapter-format.md)). Its minimal schema is one entry per implementing skill, each carrying the chapter stem it implements, a `roleHint` of `primary` or `contributor`, and a one-line `purpose`; an entry **MAY** additionally carry an internal `gaps` note and a `visibility` marker. The stem-to-skill edges are the whole public projection; the `gaps` and `visibility` fields are internal and never published (see *What the Bridge Does Not Publish* below, and [The Publishing Principle](./05-publishing-principle.md)).
+
 ---
 
 ## The Public Projection
 
-For each non-bridge chapter the bridge derives a record and renders the reader-facing subset of it. The published fields are:
+For each non-bridge chapter the bridge derives a record and renders the reader-facing subset of it. The published fields are, in full, these **six**:
 
 | Field | Content |
 |-------|---------|
@@ -25,7 +27,9 @@ For each non-bridge chapter the bridge derives a record and renders the reader-f
 | **Grading assignment** | The skill that grades the chapter's work, where one exists. |
 | **Acknowledged internal tooling** | Skills that touch the chapter but are internal (out of public scope) — listed openly, never silently dropped. |
 
-The bridge hub gathers these per-chapter records into a family overview: a coverage summary (how many chapters have an implementer), a by-skill view (which chapters each skill depends on, grouped by namespace), the per-chapter blocks **grouped by the navigation categories** ([Navigation Categories](./03-categories.md)), and a graph view of the skills' declared dependency edges. The whole family stays legible from this one page.
+The bridge hub gathers these per-chapter records into a family overview: a coverage summary (a raw count of how many chapters have an implementer — an `n of m` figure, never a percentage or a coverage classification, [The Publishing Principle](./05-publishing-principle.md)), a by-skill view (which chapters each skill depends on, grouped by namespace), the per-chapter blocks **grouped by the navigation categories** ([Navigation Categories](./03-categories.md)), and a graph view of the skills' declared dependency edges. The whole family stays legible from this one page.
+
+A family bridge therefore renders in **two forms**, both generated from the same map: the family **hub page** — the reserved `NN-bridge` chapter ([01-bridge](./01-bridge.md)) that carries the overview, the views, and every per-chapter block — and the **per-chapter backlink** materialized into `dist/<family>/<version>/bridge/<stem>.backlink.md`, projected onto each authored chapter through its placeholder. The hub is the family-wide view; the backlink is the single-chapter view.
 
 ---
 
@@ -36,7 +40,7 @@ Two fields are computed on the internal record but **MUST NOT** be rendered on t
 - **The gaps roll-up** — where a skill's capability runs ahead of what a chapter specifies. This is *our internal interpretation* of the delta between skill and spec, not a fact about the published specification.
 - **The provenance hash** — an internal idempotency and drift marker.
 
-These are withheld for a principled reason, not an incidental one: they are internal interpretation and classification of the generated spec, and internal interpretation is private ([The Publishing Principle](./05-publishing-principle.md)). The provenance hash is still computed on the record — it drives idempotency and the internal inverted map — but it is not displayed. The rule is direction, not secrecy: a reader outside the project does not share the context that makes a gaps note meaningful, so publishing it would leak inward calibration onto an outward page.
+These are withheld for a principled reason, not an incidental one: they are internal interpretation and classification of the generated spec, and internal interpretation is private ([The Publishing Principle](./05-publishing-principle.md)). The provenance hash is still computed on the record — it drives idempotency and the *internal* inverted map — but it **MUST NOT** appear in any **published** artifact: neither displayed on the public bridge page nor carried as a field in the published `dist/<family>/<version>/inverted-map.json`. "Rendered" here means both surfaces — the human-readable page and the machine-readable JSON — and a leak assertion in the bridge inverse gate checks both. The rule is direction, not secrecy: a reader outside the project does not share the context that makes a gaps note meaningful, so publishing it would leak inward calibration onto an outward page.
 
 An **empty** implementer list, by contrast, is always shown — "nothing built against this chapter yet" is an honest public fact about coverage, not internal interpretation.
 
@@ -57,6 +61,30 @@ This is why the bridge can be trusted as a coverage view: it is not maintained b
 ## Leak Safety
 
 Because the bridge pulls free text (a skill's one-line purpose) out of skill definitions, the generator neutralizes outward-facing leak patterns — internal references, absolute paths, internal codes — before rendering, so an inward instance never reaches a published page. The bridge is an outward-facing artifact and is held to the same review as any other ([/specification/internal-vs-external-communication/](/specification/internal-vs-external-communication/)).
+
+---
+
+
+## Conformity Requirements
+
+```requirement
+{
+  "id": "SPEC-REQ-006",
+  "title": "The public bridge does not leak internal fields",
+  "statement": "The gaps roll-up and the provenance hash are internal interpretation and MUST NOT appear in any published bridge artifact — neither on the public bridge page nor as a field in the published `dist/<family>/<version>/inverted-map.json`. A leak assertion in the bridge inverse gate MUST verify both surfaces. An empty implementer list, by contrast, is always shown honestly.",
+  "scope": { "repos": [], "categories": ["spec"], "tags": ["spec-bridge", "spec-publishing"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No published bridge page renders a gaps roll-up or a provenance hash",
+      "The published inverted-map.json carries no provenance field",
+      "A chapter with zero implementers renders 'nothing built yet' rather than being omitted"
+    ]
+  },
+  "grade": "binary"
+}
+```
 
 ---
 

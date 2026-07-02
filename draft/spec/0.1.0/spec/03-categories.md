@@ -40,10 +40,10 @@ A minimal head declares at least an `introduction` group holding `00-overview` a
 
 ## Assignment Rules
 
-Two rules keep grouping unambiguous, and a build **MAY** enforce them:
+Two rules keep grouping unambiguous, and a build **MUST** enforce them:
 
-- **One category per chapter.** A chapter stem appears in exactly one group's `pages[]`. A chapter listed in two groups is a conflict.
-- **Fallback is explicit, not silent.** A chapter present on disk but absent from every group's `pages[]` falls into the family's declared `fallback` (by default appended by its `NN` number to a trailing position). The fallback is a named, warned degradation — never a silent drop — so an unlisted chapter surfaces in review rather than disappearing from the navigation.
+- **One category per chapter.** A chapter stem appears in exactly one group's `pages[]`. A chapter listed in two groups is a conflict and **MUST fail the build** — the grouping is never resolved by an arbitrary pick.
+- **Fallback is explicit, not silent.** A chapter present on disk but absent from every group's `pages[]` is stamped into the family's **first group**, with a warning — a named, warned degradation, never a silent drop, so an unlisted chapter surfaces in review rather than disappearing from the navigation. The family's declared `fallback` (default `append-by-NN`) governs a separate concern: how an unknown *group key* is ordered relative to the declared groups (appended by its number), not where an unlisted *page* lands.
 
 Category `order` is independent of chapter number. The generated bridge is conventionally the **last** category even though its chapter number may be low, and a subject group may gather chapters whose numbers are not contiguous. Ordering the navigation by category rather than by raw file number is deliberate: it lets a family regroup its reading path without renumbering, and it keeps published slugs — which are number-independent ([Per-Chapter Format](./02-per-chapter-format.md)) — stable across a regroup.
 
@@ -60,6 +60,29 @@ The categories are declared **once**, in the family's `spec-manifest.json`, and 
 | Bridge hub | Groups its per-chapter coverage blocks under the same category headings, mirroring the sidebar ([The Bridge Standard](./04-bridge-standard.md)). |
 
 Having one declaration read by all three is the point: an earlier design duplicated the grouping as a hardcoded map inside each consumer, and the copies drifted. The rule is that a family's grouping lives in its head and nowhere else — the `spec.json` **MAY** carry a parallel sidebar-metadata view for a viewer that consumes it, but that view is derived from the same category set, and the `bridge` group is conventionally omitted from it because a viewer surfaces authored chapters, not the generated hub.
+
+---
+
+
+## Conformity Requirements
+
+```requirement
+{
+  "id": "SPEC-REQ-005",
+  "title": "One category per chapter, explicit fallback",
+  "statement": "Every chapter stem MUST appear in exactly one group's `pages[]`. A stem listed in two groups MUST fail the build. A chapter present on disk but absent from every group is assigned to the family's first group with a warning — never silently dropped.",
+  "scope": { "repos": [], "categories": ["spec"], "tags": ["spec-categories"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "No chapter stem appears in more than one group's pages[]",
+      "An unlisted on-disk chapter is stamped into the first group and a warning is emitted"
+    ]
+  },
+  "grade": "binary"
+}
+```
 
 ---
 

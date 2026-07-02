@@ -6,7 +6,7 @@
 | Depends on | — (meta-specification entry point) |
 | Related | [./02-per-chapter-format.md](./02-per-chapter-format.md), [./04-bridge-standard.md](./04-bridge-standard.md) |
 
-> **Informative.** This document is the entry point of the Meta-Specification. It is written in prose and does not itself carry normative requirements. Its purpose is to describe *how* the specifications in this organization are authored, structured, and published.
+> **Overview.** This document is the entry point of the Meta-Specification. It is written as prose, and its `## Conformance` section is normative: it establishes the RFC-2119 conformance interpretation that every chapter of this family assumes. The remainder describes *how* the specifications in this organization are authored, structured, and published.
 
 This is the entry point for the memo-init **Meta-Specification**, version `v0.1.0` (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes the *specifications themselves* — the shared conventions every family follows, the per-chapter document shape, the RFC-2119 conformance model, and the build pipeline that turns authored draft chapters into published documentation and the skill bridge.
 
@@ -19,6 +19,14 @@ It is a **meta-spec**: a specification about specifications. It exists so that t
 The memo-init organization publishes three sibling specification families — memo, workbench, and session. Each family shares the same skeleton: a per-chapter metadata table, an intro-prose-before-first-heading rule, a bottom `## Related` section, a per-version `spec-manifest.json` that drives the sidebar grouping, and a generated Bridge that maps chapters to the skills that implement them.
 
 Until now those shared conventions lived only as tribal knowledge inside the generators and the authored chapters. The Meta-Specification gives them a home: one family whose subject *is* the shared structure, so a new spec family can be added by reading a document instead of reverse-engineering the pipeline.
+
+---
+
+## Conformance
+
+The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** in the chapters of this family are to be interpreted as described in RFC 2119 and RFC 8174 (BCP 14), and only when they appear in all capitals. This chapter is the **conformance anchor** the other chapters refer to when they assume the RFC-2119 interpretation.
+
+A chapter that is motivation or index prose rather than binding rules marks itself non-normative with a short blockquote near its top whose bold lead word is `Informative.` ([02-per-chapter-format.md](./02-per-chapter-format.md)); every chapter without that marker is normative and is read under this interpretation. The machine-checkable invariants this family asserts are authored as inline `SPEC-REQ` requirement blocks and harvested into the requirement store ([02-per-chapter-format.md](./02-per-chapter-format.md), section *Conformity Requirements*).
 
 ---
 
