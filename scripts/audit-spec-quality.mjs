@@ -1,24 +1,36 @@
 #!/usr/bin/env node
-// audit-spec-quality.mjs — idempotent spec-quality gate
+// audit-spec-quality.mjs — idempotent spec-quality gate over ALL FOUR spec families
+// (memo, workbench, session, spec — WI-025 / Z7-10; formerly the memo family only).
 //
-// Checks every numbered spec page (00-NN) in the source tree for
-//   (a) intro prose between the metadata table and the first "## " heading
-//   (b) a bottom "## Related" section
-//   (c) no internal references in outward-facing text (Memo 035, ch19) — over the
-//       numbered pages AND the chapter-index README. This is the deterministic check
-//       (runner) of REQ-056: outward-facing spec text MUST NOT carry memo-numbered gate
-//       codes, concrete goal-store ids, or memo references in prose. The ID/goal SCHEMA
-//       itself is public vocabulary and exempt (a line documenting the format).
-// README (repo-level) is exempt from (a)/(b); the chapter-index README is leak-scanned.
-// Exits 1 on any violation, 0 when clean.
-// Read-only by default: writes nothing, so repeated runs are stable (Spec ch28 idempotent
-// gate). Opt-in: --emit-evidence back-writes the REQ-056 scanner evidence into the
+// It runs two tiers of checks over every numbered spec page:
+//
+//   BLOCKING (exit 1) — machine-checkable structural invariants that hold across all families:
+//     (H1)          a single `# NN. Title` heading on the first line
+//     (META/STATUS) a header metadata table with a `Status` row directly under the H1
+//     (PLACEHOLDER) a non-bridge chapter carries the implemented-by placeholder and NOT a
+//                   hand-written "## Implemented by" backlink (the authored-vs-derived split)
+//     (CATEGORY)    one category per chapter — no stem appears in two of the manifest's groups
+//     (MARKER)      a top-of-page `Informative` marker uses the exact `**Informative.**` lead
+//     (INTRO/REL)   intro prose before the first `##` and a bottom `## Related` — for the memo
+//                   family these stay BLOCKING (unchanged); for the sibling families they are
+//                   reported as P3-handoff (Phase 3 owns the content backfill)
+//     (LEAK)        no internal references (REQ-056) in outward-facing text — over the numbered
+//                   pages AND the chapter-index README of every family
+//
+//   P3-HANDOFF (exit 0, reported ⚠) — content debts Phase 3 owns, surfaced but non-blocking:
+//     (LINK-FORM)   a cross-family link authored in relative `../…` form instead of the target
+//                   family's absolute route (the ~55 legacy link migrations)
+//     (INTRO/REL)   missing intro/Related on a sibling (non-memo) family page
+//
+// README (repo-level) is exempt from the structural rules; the chapter-index README is leak-scanned.
+// Read-only by default. Opt-in: --emit-evidence back-writes the REQ-056 scanner evidence into the
 // requirements store (used by the memo-finalize gate; never on the CI/push path).
 
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises'
 import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { discoverSpecs } from './lib/discover-specs.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
@@ -26,9 +38,16 @@ const REPO = resolve( __dirname, '..' )
 const PROJECT_ROOT = resolve( REPO, '..', '..' )
 
 const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
-const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
+// All spec families (memo, workbench, session, spec) discovered from draft/*/spec.json.
+const FAMILIES = discoverSpecs( { repoRoot: REPO } )
 
 const REQ_ID = 'REQ-056'
+
+const NN_RE = /^\d{2}-.*\.md$/
+const BRIDGE_RE = /^\d{2}-bridge\.md$/
+// F2 Dist-Split placeholder — byte-identical to generate-bridge.mjs / check-bridge-inverse.mjs.
+const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->'
+const BACKLINK_START = '<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->'
 
 
 // Internal-reference catalog (REQ-056, derived from ch19 "No Internal References" /
@@ -72,9 +91,26 @@ const isMetaTableLine = ( { line } ) => {
 }
 
 
+// The chapter head = everything before the first `## ` section heading (the H1, metadata table
+// and intro prose live here).
+const headOf = ( { content } ) => content.split( /\n##\s/ )[ 0 ]
+
+
+const hasH1 = ( { content } ) => {
+    const first = content.split( '\n' ).find( ( line ) => line.trim() !== '' ) ?? ''
+
+    return /^#\s+\d{2}\.\s+\S/.test( first )
+}
+
+
+// A metadata table (identified by a `Status` row) sits in the head, directly under the H1.
+const hasMetaStatusTable = ( { content } ) => {
+    return /^\|\s*Status\s*\|/m.test( headOf( { content } ) )
+}
+
+
 const hasIntroProse = ( { content } ) => {
     const lines = content.split( '\n' )
-    // Find the metadata table block (the leading "|...|" run that contains a Status row).
     const firstTableIndex = lines.findIndex( ( line ) => isMetaTableLine( { line } ) )
     if( firstTableIndex === -1 ) return false
     const afterTable = lines
@@ -103,19 +139,89 @@ const hasRelatedSection = ( { content } ) => {
 }
 
 
-const auditPage = async ( { filename, leakOnly = false } ) => {
-    const content = await readFile( join( SPEC_DIR, filename ), 'utf-8' )
-    const violations = []
-    if( leakOnly === false ) {
-        if( !hasIntroProse( { content } ) ) violations.push( 'MISSING_INTRO' )
-        if( !hasRelatedSection( { content } ) ) violations.push( 'MISSING_RELATED' )
-    }
-    const internalRefs = findInternalRefs( { content } )
-    internalRefs.forEach( ( ref ) => {
-        violations.push( `INTERNAL_REF:${ ref.pattern }@L${ ref.line }(${ ref.match })` )
+// The authored-vs-derived split (SPEC-REQ-003): a non-bridge chapter MUST carry the placeholder
+// and MUST NOT carry a full hand-written "## Implemented by" block (that lives only in the dist).
+const placeholderViolations = ( { content, isBridge } ) => {
+    const out = []
+    if( isBridge === false && content.indexOf( PLACEHOLDER ) === -1 ) out.push( 'MISSING_PLACEHOLDER' )
+    if( content.indexOf( BACKLINK_START ) !== -1 ) out.push( 'HANDWRITTEN_BACKLINK' )
+    return out
+}
+
+
+// Marker position/form (WI-022 / SPEC-REQ marker rule): a page-level `Informative` marker in the
+// head must use the exact bold lead `**Informative.**`. A decorated lead ("Informative /
+// forward-looking.") is only valid as a sectional marker deeper in the body, never as a page
+// marker; caught here so a malformed page marker cannot silently mis-flag the chapter.
+const markerFormViolation = ( { content } ) => {
+    const headMarker = headOf( { content } ).match( /^>\s*\*\*Informative[^\n]*/m )
+    if( headMarker === null ) return null
+    return /^>\s*\*\*Informative\.\*\*/.test( headMarker[ 0 ] ) ? null : 'MARKER_MALFORMED'
+}
+
+
+// A cross-family link authored in relative `../…/NN-name.md` form (SPEC-REQ-002): it MUST be the
+// target family's absolute route instead. Same-family links stay relative `./NN-name.md`. Returns
+// the count of cross-family relative links (Phase 3 owns the migration of these).
+const crossFamilyRelativeLinks = ( { content } ) => {
+    return [ ...content.matchAll( /\]\(\.\.\/[^)]+\.md[^)]*\)/g ) ].length
+}
+
+
+// One-category-per-chapter (SPEC-REQ-005): a stem listed in two of the manifest's groups is a
+// conflict. Read once per family from its spec-manifest.json.
+const categoryConflicts = ( { specDirAbs } ) => {
+    const manifestPath = join( specDirAbs, 'spec-manifest.json' )
+    if( existsSync( manifestPath ) === false ) return []
+    const manifest = JSON.parse( readFileSync( manifestPath, 'utf-8' ) )
+    const groups = Array.isArray( manifest.groups ) === true ? manifest.groups : []
+    const counts = new Map()
+    groups.forEach( ( group ) => {
+        const stems = Array.isArray( group.pages ) === true ? group.pages : []
+        stems.forEach( ( stem ) => {
+            counts.set( stem, ( counts.get( stem ) ?? 0 ) + 1 )
+        } )
     } )
 
-    return { filename, violations, internalRefs }
+    return [ ...counts.entries() ]
+        .filter( ( pair ) => pair[ 1 ] > 1 )
+        .map( ( pair ) => `CATEGORY_CONFLICT:${ pair[ 0 ] }` )
+}
+
+
+// Audit one page. `family` is null for the repo-level README (leak-only). Returns the page's
+// blocking + handoff violation lists and its internal-ref hits.
+const auditPage = async ( { specDirAbs, filename, family, leakOnly = false } ) => {
+    const content = await readFile( join( specDirAbs, filename ), 'utf-8' )
+    const blocking = []
+    const handoff = []
+
+    if( leakOnly === false ) {
+        const isBridge = BRIDGE_RE.test( filename )
+        const isMemo = family === 'memo'
+
+        // Structural invariants — blocking for every family.
+        if( !hasH1( { content } ) ) blocking.push( 'MISSING_H1' )
+        if( !hasMetaStatusTable( { content } ) ) blocking.push( 'MISSING_META_STATUS' )
+        placeholderViolations( { content, isBridge } ).forEach( ( v ) => blocking.push( v ) )
+        const marker = markerFormViolation( { content } )
+        if( marker !== null ) blocking.push( marker )
+
+        // Intro / Related — blocking for memo (unchanged), P3-handoff for the sibling families.
+        if( !hasIntroProse( { content } ) ) ( isMemo ? blocking : handoff ).push( 'MISSING_INTRO' )
+        if( !hasRelatedSection( { content } ) ) ( isMemo ? blocking : handoff ).push( 'MISSING_RELATED' )
+
+        // Link form — the cross-family relative links Phase 3 migrates.
+        const crossRel = crossFamilyRelativeLinks( { content } )
+        if( crossRel > 0 ) handoff.push( `LINK_FORM:${ crossRel } cross-family relative link(s)` )
+    }
+
+    const internalRefs = findInternalRefs( { content } )
+    internalRefs.forEach( ( ref ) => {
+        blocking.push( `INTERNAL_REF:${ ref.pattern }@L${ ref.line }(${ ref.match })` )
+    } )
+
+    return { family, filename, blocking, handoff, internalRefs }
 }
 
 
@@ -137,7 +243,7 @@ const emitEvidence = async ( { status, leakCount } ) => {
         status,
         scanner: 'audit-spec-quality.mjs',
         tactic: 'no-internal-ref-scan',
-        summary: { leakCount, checked: `${ REFS_MANUAL.memo.specDir } numbered pages + chapter-index README` }
+        summary: { leakCount, checked: 'all 4 spec families (numbered pages + chapter-index README)' }
     }
     const evidencePath = resolve( evidenceDir, `${ REQ_ID }.evidence.json` )
     await writeFile( evidencePath, `${ JSON.stringify( evidence, null, 2 ) }\n` )
@@ -145,35 +251,60 @@ const emitEvidence = async ( { status, leakCount } ) => {
 }
 
 
+const auditFamily = async ( { family } ) => {
+    const specDirAbs = join( REPO, family.specDir )
+    const all = await readdir( specDirAbs )
+    const pages = all
+        .filter( ( f ) => NN_RE.test( f ) === true )
+        .sort()
+    const numbered = await Promise.all( pages.map( ( filename ) => auditPage( { specDirAbs, filename, family: family.name } ) ) )
+    // The chapter-index README is outward-facing too — leak-scan it (no structural rules).
+    const readmeResult = existsSync( join( specDirAbs, 'README.md' ) ) === true
+        ? [ await auditPage( { specDirAbs, filename: 'README.md', family: family.name, leakOnly: true } ) ]
+        : []
+    // One-category-per-chapter is a family-level (manifest) invariant.
+    const catViolations = categoryConflicts( { specDirAbs } )
+
+    return { family: family.name, results: [ ...numbered, ...readmeResult ], catViolations, pageCount: pages.length }
+}
+
+
 const main = async () => {
     const emit = process.argv.slice( 2 ).includes( '--emit-evidence' )
-    const all = await readdir( SPEC_DIR )
-    const pages = all
-        .filter( ( f ) => /^\d{2}-/.test( f ) && f.endsWith( '.md' ) )
-        .sort()
-    const numbered = await Promise.all( pages.map( ( filename ) => auditPage( { filename } ) ) )
-    // The chapter-index README is outward-facing too — leak-scan it (no intro/related rule).
-    const readmeResult = existsSync( join( SPEC_DIR, 'README.md' ) ) === true
-        ? [ await auditPage( { filename: 'README.md', leakOnly: true } ) ]
-        : []
-    const results = [ ...numbered, ...readmeResult ]
-    const failures = results.filter( ( r ) => r.violations.length > 0 )
-    const leakCount = results.reduce( ( sum, r ) => sum + r.internalRefs.length, 0 )
+    const families = await Promise.all( FAMILIES.map( ( family ) => auditFamily( { family } ) ) )
 
-    results.forEach( ( r ) => {
-        const status = r.violations.length === 0 ? 'ok' : r.violations.join( ',' )
-        console.log( `  ${ r.violations.length === 0 ? '✓' : '✗' } ${ r.filename } — ${ status }` )
+    const allResults = families.flatMap( ( f ) => f.results )
+    const blockingCount = families.reduce( ( sum, f ) => {
+        const pageBlockers = f.results.reduce( ( n, r ) => n + r.blocking.length, 0 )
+        return sum + pageBlockers + f.catViolations.length
+    }, 0 )
+    const handoffs = allResults.flatMap( ( r ) => r.handoff.map( ( v ) => `${ r.family }/${ r.filename }: ${ v }` ) )
+    const leakCount = allResults.reduce( ( sum, r ) => sum + r.internalRefs.length, 0 )
+
+    families.forEach( ( f ) => {
+        console.log( `\n== ${ f.family } (${ f.pageCount } pages) ==` )
+        f.catViolations.forEach( ( v ) => console.log( `  ✗ [manifest] ${ v }` ) )
+        f.results.forEach( ( r ) => {
+            const marks = [ ...r.blocking, ...r.handoff.map( ( v ) => `⚠${ v }` ) ]
+            const status = marks.length === 0 ? 'ok' : marks.join( ', ' )
+            console.log( `  ${ r.blocking.length === 0 ? '✓' : '✗' } ${ r.filename } — ${ status }` )
+        } )
     } )
+
+    if( handoffs.length > 0 ) {
+        console.log( `\n⚠ P3-handoff (${ handoffs.length } non-blocking content debt(s) — Phase 3 owns these):` )
+        handoffs.forEach( ( h ) => console.log( `  ⚠ ${ h }` ) )
+    }
 
     if( emit === true ) {
         await emitEvidence( { status: leakCount === 0 ? 'PASS' : 'BLOCKED', leakCount } )
     }
 
-    if( failures.length > 0 ) {
-        console.error( `\nSpec-quality gate FAILED: ${ failures.length } page(s) with violations (${ leakCount } internal-reference leak(s)).` )
+    if( blockingCount > 0 ) {
+        console.error( `\nSpec-quality gate FAILED: ${ blockingCount } blocking violation(s) across ${ FAMILIES.length } families (${ leakCount } internal-reference leak(s)).` )
         process.exit( 1 )
     }
-    console.log( `\nSpec-quality gate PASSED: ${ pages.length } pages + README, 0 violations, 0 internal-reference leaks.` )
+    console.log( `\nSpec-quality gate PASSED: ${ FAMILIES.length } families, 0 blocking violations, 0 internal-reference leaks; ${ handoffs.length } P3-handoff note(s).` )
 }
 
 

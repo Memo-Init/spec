@@ -85,4 +85,4 @@ This page maps each specification chapter to the skills that implement it — so
 
 ## Related
 
-- [./00-overview.md](./00-overview.md)
+- [./00-overview.md](./00-overview.md) — family entry point

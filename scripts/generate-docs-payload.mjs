@@ -58,6 +58,29 @@ const SPEC_META_PAYLOAD_DIR = join( REPO, 'dist', 'spec', SPEC_META_VERSION, 'sp
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 
+// The per-family head (draft/<family>/spec.json) carries the family's identity and route.
+const readFamilyHead = ( { family } ) => JSON.parse( readFileSync( join( REPO, 'draft', family, 'spec.json' ), 'utf-8' ) )
+
+
+// Derive a family's own published route base from its head docEntry — never a route
+// hardcoded to another family (WI-023 / SPEC-REQ-002). docEntry is either an absolute path
+// (/specification/overview/) or a full URL (https://…/session/overview/); in both cases the
+// FIRST path segment is the family's route (/specification/, /workbench/, /session/, /spec/).
+// This is the single seam that lets a same-family link publish under the AUTHORING family's
+// own route, so the site sync no longer has to compensate for a hardcoded intermediate route.
+const routeBaseFromDocEntry = ( { docEntry } ) => {
+    const pathPart = docEntry.replace( /^https?:\/\/[^/]+/, '' )
+    const first = pathPart.split( '/' ).filter( ( seg ) => seg.length > 0 )[ 0 ] ?? ''
+
+    return `/${ first }/`
+}
+
+const MEMO_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'memo' } ).docEntry } )
+const WORKBENCH_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'workbench' } ).docEntry } )
+const SESSION_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'session' } ).docEntry } )
+const SPEC_META_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'spec' } ).docEntry } )
+
+
 // Strip the top metadata table (Status / Depends on / Related) that each source
 // chapter carries directly under its H1. The reading order should be content-first;
 // the same metadata is preserved in the chapter's bottom "## Related" footer, which
@@ -139,29 +162,42 @@ const orderFromFilename = ( { filename } ) => {
 }
 
 
-// Normative detection: a chapter explicitly marked "> **Informative.**" near its
-// top is non-normative (philosophy / motivation / index prose). All other
-// chapters carry normative language and assume the conformance interpretation.
+// Normative detection (WI-022 / Z1-14) — POSITION-AWARE, not a full-text match:
+//   1. Hybrid override — a chapter that hosts an inline ```requirement block is normative
+//      regardless of any Informative. lead: its requirement blocks stay binding, so the
+//      machine-checkable rules are never read as non-normative.
+//   2. Page marker — ONLY a `> **Informative.**` blockquote NEAR THE TOP (in the intro, before
+//      the first `## ` heading) marks the WHOLE chapter non-normative.
+//   3. Sectional marker — the same blockquote deeper in the body opens a single `## ` section
+//      and marks only that section; it does NOT flip the whole chapter (a mid-page marker no
+//      longer topples the chapter, which the former full-text regex did — e.g. workbench/02).
+// The bold lead word must be exactly `Informative.`; a decorated lead (e.g.
+// "Informative / forward-looking.") is not a page marker.
 const detectNormative = ( { content } ) => {
-    return !/\*\*Informative\.\*\*/.test( content )
+    if( /```requirement/.test( content ) === true ) { return true }
+    const head = content.split( /\n##\s/ )[ 0 ]
+    const pageMarker = /^>\s*\*\*Informative\.\*\*/m.test( head )
+
+    return pageMarker === false
 }
 
 
 // Rewrite spec links to published routes; an optional #anchor is preserved.
 //
-// (1) Same-family intra-spec links "./NN-name.md" → "/specification/<slug>/". For
-//     workbench/session pages, sync-spec re-routes "/specification/<slug>/" to the page's
-//     own family route (family-scoped), so same-family links land correctly.
+// (1) Same-family intra-spec links "./NN-name.md" → "<routeBase><slug>/" where routeBase is the
+//     AUTHORING family's OWN route, derived from its head docEntry (WI-023). The generator now
+//     emits the correct per-family route directly (memo → /specification/, workbench → /workbench/,
+//     session → /session/, spec → /spec/), so the site no longer re-routes an intermediate token.
 // (2) Cross-family links "../[../]<family>[/<version>]/NN-name.md" → the absolute route
 //     of the TARGET family: core "v<x.y.z>" → /specification/, workbench → /workbench/,
-//     session → /session/. The final route is emitted directly because sync-spec's re-routing is
-//     family-scoped and cannot fix a cross-family link (this is why such links previously
-//     survived unrewritten and 404'd on the site). Any depth of "../" and an optional
-//     version subdir are tolerated, so the rewrite is robust to where the source file sits.
-const rewriteSpecLinks = ( { content } ) => {
+//     session → /session/. The final route is emitted directly because a relative path across
+//     families is ambiguous (this is why such links previously survived unrewritten and 404'd on
+//     the site). Any depth of "../" and an optional version subdir are tolerated, so the rewrite
+//     is robust to where the source file sits.
+const rewriteSpecLinks = ( { content, routeBase } ) => {
     const sameFamily = content.replace(
         /\]\(\.\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
-        ( match, fname, anchor ) => `](/specification/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
+        ( match, fname, anchor ) => `](${ routeBase }${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
     )
     return sameFamily.replace(
         /\]\((?:\.\.\/)+(?:(v\d+\.\d+\.\d+)|(workbench|session)(?:\/\d+\.\d+\.\d+)?)\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
@@ -193,7 +229,7 @@ const buildFrontmatter = ( { filename, title, description, order, section, norma
 }
 
 
-const generateFile = async ( { filename, sourceDir, targetDir, section, versionField, versionValue, sourceRelBase, sourceCommit, now } ) => {
+const generateFile = async ( { filename, sourceDir, targetDir, section, routeBase, versionField, versionValue, sourceRelBase, sourceCommit, now } ) => {
     const sourcePath = join( sourceDir, filename )
     const content = await readFile( sourcePath, 'utf-8' )
 
@@ -208,7 +244,7 @@ const generateFile = async ( { filename, sourceDir, targetDir, section, versionF
     // the page title from the frontmatter, so the body H1 would be a duplicate),
     // then strip the top metadata table so the reading order is content-first
     // (Memo 002, Kap 1) — the bottom "## Related" footer keeps the metadata.
-    const bodyRewritten = rewriteSpecLinks( { content } )
+    const bodyRewritten = rewriteSpecLinks( { content, routeBase } )
     const bodyNoH1 = bodyRewritten.replace( /^#\s+.+?\n+/, '' )
     const body = stripTopMetadataTable( { content: bodyNoH1 } )
 
@@ -244,18 +280,56 @@ const cleanTargetDir = async ( { targetDir } ) => {
 }
 
 
-const generatePass = async ( { label, sourceDir, targetDir, section, versionField, versionValue, sourceRelBase, sourceCommit, now } ) => {
+const generatePass = async ( { label, sourceDir, targetDir, section, routeBase, versionField, versionValue, sourceRelBase, sourceCommit, now } ) => {
     await mkdir( targetDir, { recursive: true } )
     await cleanTargetDir( { targetDir } )
     const chapters = await collectChapters( { sourceDir } )
 
-    console.log( `Generating ${ label } payload from ${ chapters.length } files (${ versionField }=${ versionValue }, source_commit=${ sourceCommit })...` )
+    console.log( `Generating ${ label } payload from ${ chapters.length } files (${ versionField }=${ versionValue }, route=${ routeBase }, source_commit=${ sourceCommit })...` )
     const results = await Promise.all( chapters.map( async ( filename ) => {
-        const result = await generateFile( { filename, sourceDir, targetDir, section, versionField, versionValue, sourceRelBase, sourceCommit, now } )
+        const result = await generateFile( { filename, sourceDir, targetDir, section, routeBase, versionField, versionValue, sourceRelBase, sourceCommit, now } )
         console.log( `  ✓ ${ filename } → ${ result.title }` )
         return result
     } ) )
     return results
+}
+
+
+// Route gate (WI-023 / SPEC-REQ-002): after generation, VERIFY — never assume — that every
+// same-family link resolved to the AUTHORING family's own route, not a foreign family's route.
+// For each family it re-reads the source, collects the same-family `./NN-name.md` links, derives
+// the family's own route base independently from its head, and asserts the generated payload
+// publishes each such link under that own route. A hardcoded-route regression (e.g. a spec-family
+// link emitted under the memo route) makes the own-route form ABSENT from the payload and fails
+// the build here, so the fix is checked structurally rather than trusted.
+const assertSameFamilyRoutes = async ( { families } ) => {
+    const failures = []
+    await Promise.all( families.map( async ( family ) => {
+        const routeBase = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: family.family } ).docEntry } )
+        const chapters = await collectChapters( { sourceDir: family.sourceDir } )
+        await Promise.all( chapters.map( async ( filename ) => {
+            const source = await readFile( join( family.sourceDir, filename ), 'utf-8' )
+            const output = await readFile( join( family.targetDir, filename ), 'utf-8' )
+            // The top metadata table (Depends on / Related rows) is stripped from the published
+            // body, so its same-family links never reach the output. Collect only the links that
+            // SURVIVE — mirror the generator's transform (strip H1, strip the metadata table) and
+            // then read the surviving same-family links from the body.
+            const survivingBody = stripTopMetadataTable( { content: source.replace( /^#\s+.+?\n+/, '' ) } )
+            const sameFamily = [ ...survivingBody.matchAll( /\]\(\.\/(\d{2}-[a-z0-9-]+)\.md(?:#[^)]*)?\)/g ) ]
+            sameFamily.forEach( ( m ) => {
+                const slug = m[ 1 ].replace( /^\d+-/, '' )
+                const expected = `${ routeBase }${ slug }/`
+                if( output.includes( expected ) === false ) {
+                    failures.push( `${ family.label }/${ filename }: same-family link ./${ m[ 1 ] }.md did not publish under own route ${ expected }` )
+                }
+            } )
+        } ) )
+    } ) )
+
+    if( failures.length > 0 ) {
+        throw new Error( `[generate-docs-payload] route gate FAILED — same-family links resolved into a foreign family's route:\n  ${ failures.join( '\n  ' ) }` )
+    }
+    console.log( `\nRoute gate PASSED: every same-family link publishes under its own family route.` )
 }
 
 
@@ -274,6 +348,7 @@ const main = async () => {
         sourceDir: SPEC_DIR,
         targetDir: PAYLOAD_DIR,
         section: 'Specification',
+        routeBase: MEMO_ROUTE,
         versionField: 'spec_version',
         versionValue: SPEC_VERSION,
         sourceRelBase: REFS_MANUAL.memo.specDir,
@@ -287,6 +362,7 @@ const main = async () => {
         sourceDir: WORKBENCH_DIR,
         targetDir: WORKBENCH_PAYLOAD_DIR,
         section: 'Workbench',
+        routeBase: WORKBENCH_ROUTE,
         versionField: 'workbench_version',
         versionValue: WORKBENCH_VERSION,
         sourceRelBase: REFS_MANUAL.workbench.specDir,
@@ -300,6 +376,7 @@ const main = async () => {
         sourceDir: SESSION_DIR,
         targetDir: SESSION_PAYLOAD_DIR,
         section: 'Session',
+        routeBase: SESSION_ROUTE,
         versionField: 'session_version',
         versionValue: SESSION_VERSION,
         sourceRelBase: REFS_MANUAL.session.specDir,
@@ -316,6 +393,7 @@ const main = async () => {
         sourceDir: SPEC_META_DIR,
         targetDir: SPEC_META_PAYLOAD_DIR,
         section: 'Meta-Spec',
+        routeBase: SPEC_META_ROUTE,
         versionField: 'spec_meta_version',
         versionValue: SPEC_META_VERSION,
         sourceRelBase: REFS_MANUAL.spec.specDir,
@@ -323,6 +401,16 @@ const main = async () => {
         now
     } )
     reportPass( { label: 'spec', results: specMetaResults, targetDir: SPEC_META_PAYLOAD_DIR } )
+
+    // WI-023: verify the same-family rewrite landed in each family's OWN route (route gate).
+    await assertSameFamilyRoutes( {
+        families: [
+            { family: 'memo', label: 'memo', sourceDir: SPEC_DIR, targetDir: PAYLOAD_DIR },
+            { family: 'workbench', label: 'workbench', sourceDir: WORKBENCH_DIR, targetDir: WORKBENCH_PAYLOAD_DIR },
+            { family: 'session', label: 'session', sourceDir: SESSION_DIR, targetDir: SESSION_PAYLOAD_DIR },
+            { family: 'spec', label: 'spec', sourceDir: SPEC_META_DIR, targetDir: SPEC_META_PAYLOAD_DIR }
+        ]
+    } )
 }
 
 

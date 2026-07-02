@@ -108,6 +108,44 @@ const checkRequiresEdges = ( { skills } ) => {
 }
 
 
+// SPEC-REQ-006 leak assertion (WI-024): the gaps roll-up and the per-record provenance hash are
+// internal interpretation and MUST NOT reach any PUBLISHED artifact — checked on BOTH surfaces,
+// the machine-readable inverted-map.json AND every rendered bridge page. The authored
+// 04-bridge-standard chapter (which legitimately explains the rule in prose) is NOT a bridge
+// artifact and is not scanned.
+const assertNoInternalLeak = async ( { families, inverted } ) => {
+    const leaks = []
+
+    // (a) inverted-map.json: no page entry carries a provenance or gaps field.
+    ;( inverted.pages ?? [] ).forEach( ( page ) => {
+        if( 'provenance' in page ) leaks.push( `inverted-map.json: page ${ page.id } carries a provenance field (internal — MUST NOT publish)` )
+        if( 'gaps' in page ) leaks.push( `inverted-map.json: page ${ page.id } carries a gaps field (internal — MUST NOT publish)` )
+    } )
+
+    // (b) rendered bridge artifacts: per-page bridges + backlinks (dist/<fam>/<ver>/bridge/) and
+    // the spec-hub (dist/<fam>/<ver>/spec/<nn>-bridge.md) must render no provenance hash and no
+    // gaps roll-up.
+    await Promise.all( families.map( async ( family ) => {
+        const bridgeDir = bridgeDirFor( { name: family.key, version: family.version } )
+        const specDir = join( REPO, 'dist', family.key, family.version, 'spec' )
+        const bridgeFiles = ( await readdir( bridgeDir ).catch( () => [] ) )
+            .filter( ( name ) => name.endsWith( '.md' ) )
+            .map( ( name ) => join( bridgeDir, name ) )
+        const hubFiles = ( await readdir( specDir ).catch( () => [] ) )
+            .filter( ( name ) => /-bridge\.md$/.test( name ) === true )
+            .map( ( name ) => join( specDir, name ) )
+
+        await Promise.all( [ ...bridgeFiles, ...hubFiles ].map( async ( path ) => {
+            const text = await readFile( path, 'utf-8' )
+            if( /provenance/i.test( text ) === true ) leaks.push( `${ path }: rendered bridge artifact leaks the word "provenance" (internal hash)` )
+            if( /^#{2,4}\s.*\bgaps\b/im.test( text ) === true || /gaps roll-?up/i.test( text ) === true ) leaks.push( `${ path }: rendered bridge artifact leaks a gaps roll-up (internal)` )
+        } ) )
+    } ) )
+
+    return leaks
+}
+
+
 const main = async () => {
     if( existsSync( SENTINEL_MAP ) === false ) {
         console.warn( `check-bridge-inverse: skipped the cross-repo assertion — per-family skill-spec-map.json not found at ${ SENTINEL_MAP } (the split maps live in the spec repo draft/ tree; absent in an isolated CI checkout). The full map-vs-bridge gate runs locally / pre-push.` )
@@ -178,6 +216,10 @@ const main = async () => {
 
         return stems.length
     } ) )
+
+    // WI-024: internal-field leak assertion over both published surfaces (page + inverted map).
+    const leaks = await assertNoInternalLeak( { families: FAMILIES, inverted } )
+    leaks.forEach( ( leak ) => violations.push( leak ) )
 
     const totalPages = perFamily.reduce( ( sum, n ) => sum + n, 0 )
 

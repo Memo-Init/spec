@@ -125,7 +125,7 @@ The payload step prepends discovery frontmatter (title, one-line description, or
 
 ### Family Discovery
 
-A family is not discovered by guessing directory names. The repository carries a single manual registration point — `data/refs.manual.json` — that lists every family, its namespace key, and its authoritative version number; version numbers live there and **MUST NOT** be hardcoded in prose (the build stamps each chapter with its family's version from this registry). The build reads the registry to enumerate the families it processes, following the scanner principle established in Memo 058. Adding a family is therefore two moves: drop its tree under `draft/<family>/` and register it in `refs.manual.json`. A family present on disk but absent from the registry is not built — an unregistered tree surfaces in review rather than publishing silently.
+A family is not discovered by guessing directory names. The repository carries a single manual registration point — `data/refs.manual.json` — that lists every family, its namespace key, and its authoritative version number; version numbers live there and **MUST NOT** be hardcoded in prose (the build stamps each chapter with its family's version from this registry). The build reads the registry to enumerate the families it processes, following the family-scanner principle. Adding a family is therefore two moves: drop its tree under `draft/<family>/` and register it in `refs.manual.json`. A family present on disk but absent from the registry is not built — an unregistered tree surfaces in review rather than publishing silently.
 
 ---
 

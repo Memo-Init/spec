@@ -145,5 +145,5 @@ This page maps each specification chapter to the skills that implement it — so
 
 ## Related
 
-- [./43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md)
-- [./00-overview.md](./00-overview.md)
+- [./43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md) — family entry point
+- [./00-overview.md](./00-overview.md) — family entry point

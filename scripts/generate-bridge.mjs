@@ -2,23 +2,23 @@
 // generate-bridge.mjs — per-page "Bridge" projection generator (one read-projection of the
 // single skill->spec edge — split per family in repos/spec/draft/*/0.1.0/data/ — no second data store).
 //
-// Emits, across all three spec families, ONE per-page bridge for every non-bridge chapter
-// (the three NN-bridge.md hub pages are excluded — they are the in-nav output hubs). The
-// derived record carries eight fields; the PUBLIC per-page bridge renders the reader-facing
-// subset (Memo 059, PRD-001/PRD-003, Kap 1):
-//   (1) SOP anchor              the family's canonical SOP entry chapter
-//   (2) public entry points     skills marked roleHint:public-entry (else inferred: primary owners)
-//   (3) required detail pages    the chapter's own Depends-on / Related links
-//   (4) skill enumeration        100% named implementers, primary vs contributing, one-line purpose
-//   (5) grading assignment       the grader skill (roleHint:grader, else inferred heuristic)
-// The (7) internal-tooling classification (visibility:"internal" split-off) is retained on the
-// internal inverted map, but is NOT rendered on any public bridge surface — per-page, hub, or
-// coverage table. Publishing our public-vs-internal skill classification is itself an internal
-// interpretation (Memo 059, Kap 1/Kap 6): the skill NAMES are publishable, our verdict about
-// them is not. The (6) gaps roll-up (skill-ahead-of-spec, internal reification delta) and the
-// (8) provenance hash are likewise computed on the record but NOT published on the public page
-// or the inverted map. An empty implementer list is rendered as an honest "nothing built yet"
-// — never hidden.
+// Emits, across all four spec families, ONE per-page bridge for every non-bridge chapter
+// (the NN-bridge.md hub pages are excluded — they are the in-nav output hubs). The PUBLIC
+// bridge renders the reader-facing projection — these SIX fields (Meta-Spec 04-bridge-standard,
+// Memo 060 P1; the field count is now explicit and enforced):
+//   (1) SOP anchor                     the family's canonical SOP entry chapter
+//   (2) public entry points            skills marked roleHint:public-entry (else inferred owners)
+//   (3) required detail pages          the chapter's own Depends-on / Related links
+//   (4) implementing skills            100% named implementers, primary vs contributing, purpose
+//   (5) grading assignment             the grader skill (roleHint:grader, else inferred heuristic)
+//   (6) acknowledged internal tooling  skills that touch the chapter but are internal (out of
+//                                      public scope) — listed OPENLY, never silently dropped
+//                                      (Memo 060 P1 reverses the earlier Memo 059 suppression).
+// Only two internal fields are withheld from every published artifact (page AND inverted map):
+// the gaps roll-up (skill-ahead-of-spec delta) and the provenance hash — both are internal
+// interpretation, not public fact ([05-publishing-principle], SPEC-REQ-006). They are still
+// computed on the record (idempotency, internal inverted map) but never rendered. An empty
+// implementer list is rendered as an honest "nothing built yet" — never hidden.
 //
 // Side projections, all generated and idempotent:
 //   - a per-page "## Implemented by" backlink written into EACH non-bridge source chapter
@@ -81,6 +81,22 @@ const PLACEHOLDER = '<!-- IMPLEMENTED-BY — rendered backlink lives in the dist
 // `sopAnchor` is the SOP entry chapter; `docEntry` is the canonical public documentation
 // entry; `relatedRefs` seed the hub footer. Falls back to hardcoded values when spec.json absent.
 const FAMILIES = discoverSpecs( { repoRoot: REPO } )
+
+// WI-027: the sibling repo whose SKILL.md files feed the Purpose column. A partial checkout
+// (spec repo present, core absent) would otherwise silently drop every purpose and shift the
+// provenance hash, emitting a divergent dist. Its presence is gated in main().
+const CORE_ROOT = resolve( PROJECT_ROOT, 'repos', 'core' )
+
+
+// Derive a family's own published route base from its head docEntry (WI-023). docEntry may be an
+// absolute path or a full URL; the FIRST path segment is the family route (/specification/,
+// /workbench/, /session/, /spec/). Same seam as generate-docs-payload.mjs.
+const routeBaseFromDocEntry = ( { docEntry } ) => {
+    const pathPart = ( docEntry ?? '' ).replace( /^https?:\/\/[^/]+/, '' )
+    const first = pathPart.split( '/' ).filter( ( seg ) => seg.length > 0 )[ 0 ] ?? ''
+
+    return `/${ first }/`
+}
 
 
 const numberFromName = ( { name } ) => {
@@ -290,14 +306,15 @@ const buildRecord = ( { family, stem, id, content, skills, purposes } ) => {
 const relLink = ( { stem } ) => `[${ stem }](./${ stem }.md)`
 
 
-// One per-page bridge page rendered with its public projection fields, leak-safe and generated.
-// PRD-001/PRD-003 (Memo 059, Kap 1): the internal-only gaps roll-up, the provenance hash, and
-// the internal-tooling (out-of-scope) classification are no longer rendered on this public-facing
-// page — publishing our public-vs-internal verdict is itself internal interpretation. The
-// provenance hash and the out-of-scope set are still computed on the record for idempotency and
-// the internal inverted map; they are simply not displayed here.
+// One per-page bridge page rendered with its SIX public projection fields, leak-safe and
+// generated (Meta-Spec 04-bridge-standard, Memo 060 P1). Field (6) "Acknowledged internal
+// tooling" is now rendered openly — the internal skills that touch the chapter are listed, never
+// silently dropped (this reverses the Memo 059 suppression of the classification). Only the
+// internal-only gaps roll-up and the provenance hash stay unrendered: they are computed on the
+// record for idempotency and the internal inverted map, but are internal interpretation
+// (SPEC-REQ-006) and never displayed.
 const renderBridgePage = ( { record } ) => {
-    const { stem, family, sopAnchor, publicEntries, detailPages, implementers, grader } = record
+    const { stem, family, sopAnchor, publicEntries, detailPages, implementers, grader, outOfScope } = record
 
     const entryLine = publicEntries.skills.length === 0
         ? `Canonical docs entry: \`${ publicEntries.doc }\`. No entry-point skill flagged yet.`
@@ -316,6 +333,10 @@ const renderBridgePage = ( { record } ) => {
     const gradingLine = grader === null
         ? 'No grader assigned yet.'
         : `Grading handled by \`${ grader.skill }\`${ grader.inferred === true ? ' _(inferred)_' : '' }.`
+
+    const internalToolingLine = ( outOfScope ?? [] ).length === 0
+        ? '— none —'
+        : outOfScope.map( ( o ) => `\`${ o.skill }\`` ).join( ', ' )
 
     return [
         `# Bridge — ${ stem }`,
@@ -350,12 +371,19 @@ const renderBridgePage = ( { record } ) => {
         '## 5. Grading assignment',
         '',
         gradingLine,
+        '',
+        '## 6. Acknowledged internal tooling',
+        '',
+        internalToolingLine,
         ''
     ].join( '\n' )
 }
 
 
-// The marker-bounded "## Implemented by" backlink for a source chapter (idempotent block).
+// The marker-bounded "## Implemented by" backlink for a source chapter (idempotent block) —
+// the single-chapter gestalt of the bridge, aligned with the family hub page. The bullet list
+// is EXACTLY the public implementer set (the inverse gate parses these lines), and the note
+// points at the full per-page bridge carrying all six public projection fields.
 const renderBacklink = ( { implementers } ) => {
     const body = implementers.length === 0
         ? '- — none yet (nothing built against this chapter) —'
@@ -365,7 +393,7 @@ const renderBacklink = ( { implementers } ) => {
         BACKLINK_START,
         '## Implemented by',
         '',
-        'The skills below implement this chapter (primary owner first). The full per-page bridge with all eight projection fields is published under `dist/<family>/<version>/bridge/`.',
+        'The skills below implement this chapter (primary owner first). The full per-page bridge with all six public projection fields is published under `dist/<family>/<version>/bridge/`.',
         '',
         body,
         '',
@@ -471,7 +499,8 @@ const renderOverviewAndViews = ( { records } ) => {
 const renderHubPage = ( { nn, family, records, relatedRefs } ) => {
     const overviewAndViews = renderOverviewAndViews( { records } )
     const relatedRow = relatedRefs.map( ( ref ) => `[./${ ref }.md](./${ ref }.md)` ).join( ', ' )
-    const relatedList = relatedRefs.map( ( ref ) => `- [./${ ref }.md](./${ ref }.md)` ).join( '\n' )
+    // L8 (Memo 060 P1): each Related entry carries a one-line note on why to follow it.
+    const relatedList = relatedRefs.map( ( ref ) => `- [./${ ref }.md](./${ ref }.md) — family entry point` ).join( '\n' )
 
     return [
         `# ${ nn }. Bridge`,
@@ -739,14 +768,14 @@ const escapeYaml = ( { value } ) => {
 }
 
 
-// PRD-014: Rewrite same-family intra-spec links (./NN-name.md) to site-routed slugs
-// (/specification/name/). sync-spec.mjs then re-routes /specification/ to /workbench/
-// or /session/ for sibling families, so using /specification/ as the target is correct
-// for all three families (mirrors what generate-docs-payload.mjs does).
-const rewriteLinks = ( { content } ) => {
+// WI-023: Rewrite same-family intra-spec links (./NN-name.md) to the AUTHORING family's OWN
+// published route, derived from its head docEntry (never hardcoded to /specification/). The
+// generated spec-hub thus carries the correct per-family route directly (mirrors
+// generate-docs-payload.mjs), so sync-spec.mjs no longer re-routes an intermediate token.
+const rewriteLinks = ( { content, routeBase } ) => {
     return content.replace(
         /\]\(\.\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
-        ( match, fname, anchor ) => `](/specification/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
+        ( match, fname, anchor ) => `](${ routeBase }${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
     )
 }
 
@@ -820,6 +849,18 @@ const main = async () => {
     }
     const map = await loadSkillMap( { repoRoot: REPO } )
     const skills = Array.isArray( map.skills ) === true ? map.skills : []
+
+    // WI-027: the map is present (it lives in THIS repo's draft/ tree), but the Purpose column is
+    // read from the sibling core repo's SKILL.md files. In a partial checkout (spec present, core
+    // absent) loadPurposes would silently return empty purposes for every skill and shift the
+    // provenance hash — a divergent dist emitted without a word. Gate on it: when the map has
+    // skills but core is not checked out, warn LOUDLY and skip regeneration (keep the committed
+    // artifacts), rather than publishing a degraded bridge. Full regen runs locally / pre-push.
+    if( skills.length > 0 && existsSync( CORE_ROOT ) === false ) {
+        console.warn( `generate-bridge: skipped — the map has ${ skills.length } skill(s) but the sibling core repo is absent at ${ CORE_ROOT }. Regenerating now would drop every Purpose cell and shift the provenance hash, emitting a divergent dist. The committed bridge artifacts are kept as-is; full regeneration + the inverse gate run locally / pre-push (partial-checkout guard).` )
+        return
+    }
+
     const purposes = await loadPurposes( { skills } )
 
     const families = await Promise.all( FAMILIES.map( async ( family ) => {
@@ -868,7 +909,7 @@ const main = async () => {
         await mkdir( specOutDir, { recursive: true } )
         const specHubFrontmatter = buildHubFrontmatter( { nn, family: family.name } )
         const specHubBodyNoH1 = distHubContent.replace( /^#[^\n]+\n+/, '' )
-        const specHubBodyRewritten = rewriteLinks( { content: specHubBodyNoH1 } )
+        const specHubBodyRewritten = rewriteLinks( { content: specHubBodyNoH1, routeBase: routeBaseFromDocEntry( { docEntry: family.docEntry } ) } )
         const specHubContent = specHubFrontmatter + '\n' + specHubBodyRewritten
         const specHubPath = join( specOutDir, `${ nn }-bridge.md` )
         const prevSpecHub = await readFile( specHubPath, 'utf-8' ).catch( () => null )
@@ -902,7 +943,7 @@ const main = async () => {
     // publish the inverted map → dist/inverted-map.json
     const mapHash = createHash( 'sha256' ).update( JSON.stringify( map ) ).digest( 'hex' ).slice( 0, 12 )
     const inverted = {
-        note: 'Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its public implementer skills with role + the public projection fields. Generated from skill-spec-map.json. The internal-only gaps roll-up is not published here (Memo 059, PRD-003).',
+        note: 'Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its public implementer skills with role + the public projection fields. Generated from skill-spec-map.json. Two internal fields are NEVER published here: the gaps roll-up and the per-record provenance hash (SPEC-REQ-006, [05-publishing-principle]).',
         generator: GENERATOR,
         mapHash,
         pages: families.flatMap( ( family ) => family.records ).map( ( r ) => ( {
@@ -918,8 +959,7 @@ const main = async () => {
             outOfScope: r.outOfScope.map( ( o ) => o.skill ),
             clusters: r.clusters,
             requirementCount: r.requirementCount,
-            internalCount: r.internalCount,
-            provenance: r.provenance
+            internalCount: r.internalCount
         } ) )
     }
     await mkdir( dirname( INVERTED_MAP_PATH ), { recursive: true } )
