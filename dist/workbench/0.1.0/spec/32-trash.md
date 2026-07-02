@@ -6,7 +6,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-07-02T14:21:00.024Z"
+generated_at: "2026-07-02T15:15:37.997Z"
 generated_from: "draft/workbench/0.1.0/spec/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/32-trash.md."

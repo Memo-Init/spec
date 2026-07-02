@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-07-02T14:21:01.301Z",
+    "generated_at": "2026-07-02T15:15:38.377Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -467,7 +467,7 @@
             "filename": "46-bridge.md",
             "slug": "bridge",
             "title": "Bridge",
-            "description": "Bridge hub for the memo specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.",
+            "description": "This page maps each specification chapter to the skills that implement it — so you can see which parts of the workflow are covered and where to look next.",
             "order": 46,
             "section": "Specification",
             "normative": false,
@@ -711,7 +711,7 @@
                 "filename": "42-bridge.md",
                 "slug": "bridge",
                 "title": "Bridge",
-                "description": "Bridge hub for the workbench specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.",
+                "description": "This page maps each specification chapter to the skills that implement it — so you can see which parts of the workflow are covered and where to look next.",
                 "order": 42,
                 "section": "Workbench",
                 "normative": false,
@@ -886,7 +886,7 @@
                 "filename": "16-bridge.md",
                 "slug": "bridge",
                 "title": "Bridge",
-                "description": "Bridge hub for the session specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.",
+                "description": "This page maps each specification chapter to the skills that implement it — so you can see which parts of the workflow are covered and where to look next.",
                 "order": 16,
                 "section": "Session",
                 "normative": false,
@@ -911,7 +911,7 @@
                 "filename": "01-bridge.md",
                 "slug": "bridge",
                 "title": "Bridge",
-                "description": "Bridge hub for the spec specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.",
+                "description": "This page maps each specification chapter to the skills that implement it — so you can see which parts of the workflow are covered and where to look next.",
                 "order": 1,
                 "section": "Meta-Spec",
                 "normative": false,
