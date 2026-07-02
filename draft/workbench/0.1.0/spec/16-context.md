@@ -65,7 +65,7 @@ Content **MUST** be organized under a **per-topic sub-folder** of `context/` rat
 
 ## Conformity Requirements
 
-The `context/` organization rules are checkable against the folder's own shape. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how content is filed, and each `check` faces the structure audit and the write-time lint binding. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The `context/` organization rules are checkable against the folder's own shape. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how content is filed, and each `check` faces the structure audit and the write-time lint binding. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 Per-topic organization is a structural fact about where content sits:
 

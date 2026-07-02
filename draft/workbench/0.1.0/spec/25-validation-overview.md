@@ -6,7 +6,7 @@
 | Depends on | [23-hooks-contract.md](./23-hooks-contract.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 | Related | [22-config.md](./22-config.md), [20-cli.md](./20-cli.md), [21-environment-scripts.md](./21-environment-scripts.md), [32-trash.md](./32-trash.md) |
 
-> **Informative.** This chapter is a **wayfinder and code index**: it gathers the workbench's validation families *and* the session-tier `REQ-SS-*` codes in one place and points at the chapter where each is specified. It introduces no new rule of its own — every entry below is normative *there*, not here.
+This chapter is a **wayfinder and code index**: it gathers the workbench's validation families *and* the session-tier `REQ-SS-*` codes in one place and points at the chapter where each is specified. It introduces no new *domain* rule of its own — every entry below is normative in its home chapter, not here; the requirement blocks at the foot encode only this index's own upkeep discipline, which stays binding.
 
 The workbench's checks are deliberately spread across the chapters they belong to — the hook contract, the configuration, the trash policy, the scripts. That keeps each rule next to the thing it governs, but it makes the *set* of rules hard to see. This page is the index that makes the set visible: a reader who asks "what does the workbench actually validate, and where is it defined?" starts here and follows the link. The pattern mirrors a published rule-registry — a stable family name on the left, the defining chapter on the right.
 
@@ -142,7 +142,7 @@ flowchart TD
 
 ## Conformity Requirements
 
-This page is the wayfinder, and it introduces no new *domain* rule — those stay normative in their home chapters. The blocks below encode only the wayfinder's **own upkeep discipline**, already stated above: that the set of validation families and codes never grows silently past what this index lists, and that severity stays distinct. As the workbench family's requirements anchor, this section is the entry point into the per-chapter blocks the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+This page is the wayfinder, and it introduces no new *domain* rule — those stay normative in their home chapters. The blocks below encode only the wayfinder's **own upkeep discipline**, already stated above: that the set of validation families and codes never grows silently past what this index lists, and that severity stays distinct. As the workbench family's requirements anchor, this section is the entry point into the per-chapter blocks the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 Every listed validation family must point at a chapter that actually specifies it — a hard yes/no over the index:
 

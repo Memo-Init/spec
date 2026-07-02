@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md), [41-project-architecture.md](./41-project-architecture.md) |
-| Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [20-cli.md](./20-cli.md), [../../v0.1.0/24-tools-registry.md](../../v0.1.0/24-tools-registry.md), [../../v0.1.0/26-memo-history.md](../../v0.1.0/26-memo-history.md) |
+| Related | [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [20-cli.md](./20-cli.md), [../../v0.1.0/24-tools-registry.md](/specification/tools-registry/), [../../v0.1.0/26-memo-history.md](/specification/memo-history/) |
 
 The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; the **storage formats** it reads through — OKF and `design.md` — are listed below.
 
@@ -38,13 +38,13 @@ The user does not care which form a piece of knowledge is in — the wiki finds 
 
 ## Indexes the Architecture, Does Not Copy It
 
-The architecture is one of the things the wiki knows about, but the wiki **points at it, it does not duplicate it**. The wiki's index carries an entry that refers to the architecture bundle (`context/architecture-okf/`); the bundle stays the single source of truth, and the wiki never holds a second, drifting copy of the repo graph. This is the same no-copy rule the tools registry follows ([../../v0.1.0/24-tools-registry.md](../../v0.1.0/24-tools-registry.md)): a reference whose target owns the content, so an update changes one place. A deterministic consumer that needs the architecture follows the pointer to `memo architecture locate`; a human or agent browsing the wiki follows the same pointer by hand.
+The architecture is one of the things the wiki knows about, but the wiki **points at it, it does not duplicate it**. The wiki's index carries an entry that refers to the architecture bundle (`context/architecture-okf/`); the bundle stays the single source of truth, and the wiki never holds a second, drifting copy of the repo graph. This is the same no-copy rule the tools registry follows ([../../v0.1.0/24-tools-registry.md](/specification/tools-registry/)): a reference whose target owns the content, so an update changes one place. A deterministic consumer that needs the architecture follows the pointer to `memo architecture locate`; a human or agent browsing the wiki follows the same pointer by hand.
 
 ---
 
 ## Present Tense, Not Chronology
 
-The wiki answers in the **present tense**: a wiki page states what is understood to be true *now*, and a query returns the current consolidated understanding, optimized for fast answers. What the wiki is **not** is the timeline of how that understanding was reached — that is the chronicle ([../../v0.1.0/26-memo-history.md](../../v0.1.0/26-memo-history.md)). The wiki gives the current answer; the chronicle gives the provenance and the order of change. A memo that asks "what does the project know about X right now?" reaches for the wiki; one that asks "does a conclusion from an earlier memo still hold?" reaches for the chronicle. Keeping the two distinct stops the wiki's convenience from being mistaken for an audit trail.
+The wiki answers in the **present tense**: a wiki page states what is understood to be true *now*, and a query returns the current consolidated understanding, optimized for fast answers. What the wiki is **not** is the timeline of how that understanding was reached — that is the chronicle ([../../v0.1.0/26-memo-history.md](/specification/memo-history/)). The wiki gives the current answer; the chronicle gives the provenance and the order of change. A memo that asks "what does the project know about X right now?" reaches for the wiki; one that asks "does a conclusion from an earlier memo still hold?" reaches for the chronicle. Keeping the two distinct stops the wiki's convenience from being mistaken for an audit trail.
 
 ---
 
@@ -64,7 +64,7 @@ So "the wiki finds everything" holds for all projects; "the project has a struct
 The wiki is kept current by **two complementary triggers**, one at write time and one periodic:
 
 - **Ingest at landing.** When a memo lands, its new knowledge is folded into the wiki (the ingest step of landing). This keeps the wiki current as the project produces knowledge, at the moment the knowledge is finalized.
-- **Stale flag on the maintenance board.** Periodically, the maintenance discipline ([../../v0.1.0/26-memo-history.md](../../v0.1.0/26-memo-history.md) and the maintenance chapter) flags wiki pages that have drifted from their sources, so staleness that accrues between landings is still caught.
+- **Stale flag on the maintenance board.** Periodically, the maintenance discipline ([../../v0.1.0/26-memo-history.md](/specification/memo-history/) and the maintenance chapter) flags wiki pages that have drifted from their sources, so staleness that accrues between landings is still caught.
 
 Write-time freshness keeps the wiki growing correctly; periodic staleness detection catches the decay that write-time cannot see. Together they keep the entry point trustworthy.
 
@@ -80,7 +80,7 @@ The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](./2
 
 ## Conformity Requirements
 
-The wiki's no-copy and ingest rules are checkable against its index. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how the wiki indexes and ingests, each `check` faces the built index. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The wiki's no-copy and ingest rules are checkable against its index. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how the wiki indexes and ingests, each `check` faces the built index. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 That the wiki points at the architecture rather than copying it is the no-copy rule, judged against the index:
 
@@ -132,5 +132,5 @@ That a scripts subfolder's `About` is ingested into the wiki is a structural fac
 - [41-project-architecture.md](./41-project-architecture.md) — the structured layer the wiki indexes and points at.
 - [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) — OKF, a storage format under the wiki: the on-disk format of both the wiki's pages and the architecture bundle.
 - [18-design.md](./18-design.md) — `design.md`, the design format; a storage format the wiki reads through.
-- [../../v0.1.0/24-tools-registry.md](../../v0.1.0/24-tools-registry.md) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
-- [../../v0.1.0/26-memo-history.md](../../v0.1.0/26-memo-history.md) — the chronicle, the present-tense wiki's chronological counterpart.
+- [../../v0.1.0/24-tools-registry.md](/specification/tools-registry/) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
+- [../../v0.1.0/26-memo-history.md](/specification/memo-history/) — the chronicle, the present-tense wiki's chronological counterpart.

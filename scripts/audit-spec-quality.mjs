@@ -10,16 +10,19 @@
 //     (PLACEHOLDER) a non-bridge chapter carries the implemented-by placeholder and NOT a
 //                   hand-written "## Implemented by" backlink (the authored-vs-derived split)
 //     (CATEGORY)    one category per chapter — no stem appears in two of the manifest's groups
+//     (TOKEN)       a family's spec.json namespaceToken matches its spec-manifest.json token
+//                   (F3 / Z2-02, Z3-04 — the short manifest token MC/SE/WB is canonical)
 //     (MARKER)      a top-of-page `Informative` marker uses the exact `**Informative.**` lead
+//     (LINK-FORM)   cross-family links are absolute routes, never relative `../…` (SPEC-REQ-002).
+//                   Phase 3 migrated the 55 legacy links; now BLOCKING so a reintroduced relative
+//                   cross-family link fails the gate (WI-119 / Z7-07)
 //     (INTRO/REL)   intro prose before the first `##` and a bottom `## Related` — for the memo
 //                   family these stay BLOCKING (unchanged); for the sibling families they are
 //                   reported as P3-handoff (Phase 3 owns the content backfill)
 //     (LEAK)        no internal references (REQ-056) in outward-facing text — over the numbered
 //                   pages AND the chapter-index README of every family
 //
-//   P3-HANDOFF (exit 0, reported ⚠) — content debts Phase 3 owns, surfaced but non-blocking:
-//     (LINK-FORM)   a cross-family link authored in relative `../…` form instead of the target
-//                   family's absolute route (the ~55 legacy link migrations)
+//   P3-HANDOFF (exit 0, reported ⚠) — content debts surfaced but non-blocking:
 //     (INTRO/REL)   missing intro/Related on a sibling (non-memo) family page
 //
 // README (repo-level) is exempt from the structural rules; the chapter-index README is leak-scanned.
@@ -168,6 +171,23 @@ const crossFamilyRelativeLinks = ( { content } ) => {
 }
 
 
+// Head-token consistency (F3 / Z2-02, Z3-04): a family's spec.json namespaceToken MUST match its
+// spec-manifest.json namespaceToken. The short manifest token (MC / SE / WB) is canonical; a
+// diverging spec.json token (the legacy long form MEMO / SESSION) is a defect, because GR-codes and
+// the coverage board qualify a family by exactly one token and two forms would collide silently.
+const tokenConsistency = ( { familyName, specDirAbs } ) => {
+    const specJsonPath = join( REPO, 'draft', familyName, 'spec.json' )
+    const manifestPath = join( specDirAbs, 'spec-manifest.json' )
+    if( existsSync( specJsonPath ) === false || existsSync( manifestPath ) === false ) return []
+    const specToken = JSON.parse( readFileSync( specJsonPath, 'utf-8' ) ).namespaceToken
+    const manifestToken = JSON.parse( readFileSync( manifestPath, 'utf-8' ) ).namespaceToken
+    if( specToken === undefined || manifestToken === undefined ) return []
+    if( specToken !== manifestToken ) return [ `TOKEN_MISMATCH:spec.json=${ specToken } manifest=${ manifestToken }` ]
+
+    return []
+}
+
+
 // One-category-per-chapter (SPEC-REQ-005): a stem listed in two of the manifest's groups is a
 // conflict. Read once per family from its spec-manifest.json.
 const categoryConflicts = ( { specDirAbs } ) => {
@@ -211,9 +231,11 @@ const auditPage = async ( { specDirAbs, filename, family, leakOnly = false } ) =
         if( !hasIntroProse( { content } ) ) ( isMemo ? blocking : handoff ).push( 'MISSING_INTRO' )
         if( !hasRelatedSection( { content } ) ) ( isMemo ? blocking : handoff ).push( 'MISSING_RELATED' )
 
-        // Link form — the cross-family relative links Phase 3 migrates.
+        // Link form — cross-family links MUST be absolute routes (SPEC-REQ-002). Phase 3 migrated
+        // the 55 legacy relative links; this is now BLOCKING so a reintroduced relative cross-family
+        // link fails the gate (WI-119 / Z7-07 — mirrors the generator's fail-loud assertion).
         const crossRel = crossFamilyRelativeLinks( { content } )
-        if( crossRel > 0 ) handoff.push( `LINK_FORM:${ crossRel } cross-family relative link(s)` )
+        if( crossRel > 0 ) blocking.push( `LINK_FORM:${ crossRel } cross-family relative link(s)` )
     }
 
     const internalRefs = findInternalRefs( { content } )
@@ -264,8 +286,10 @@ const auditFamily = async ( { family } ) => {
         : []
     // One-category-per-chapter is a family-level (manifest) invariant.
     const catViolations = categoryConflicts( { specDirAbs } )
+    // Head-token consistency is a family-level (spec.json ↔ manifest) invariant.
+    const headViolations = tokenConsistency( { familyName: family.name, specDirAbs } )
 
-    return { family: family.name, results: [ ...numbered, ...readmeResult ], catViolations, pageCount: pages.length }
+    return { family: family.name, results: [ ...numbered, ...readmeResult ], catViolations, headViolations, pageCount: pages.length }
 }
 
 
@@ -276,7 +300,7 @@ const main = async () => {
     const allResults = families.flatMap( ( f ) => f.results )
     const blockingCount = families.reduce( ( sum, f ) => {
         const pageBlockers = f.results.reduce( ( n, r ) => n + r.blocking.length, 0 )
-        return sum + pageBlockers + f.catViolations.length
+        return sum + pageBlockers + f.catViolations.length + f.headViolations.length
     }, 0 )
     const handoffs = allResults.flatMap( ( r ) => r.handoff.map( ( v ) => `${ r.family }/${ r.filename }: ${ v }` ) )
     const leakCount = allResults.reduce( ( sum, r ) => sum + r.internalRefs.length, 0 )
@@ -284,6 +308,7 @@ const main = async () => {
     families.forEach( ( f ) => {
         console.log( `\n== ${ f.family } (${ f.pageCount } pages) ==` )
         f.catViolations.forEach( ( v ) => console.log( `  ✗ [manifest] ${ v }` ) )
+        f.headViolations.forEach( ( v ) => console.log( `  ✗ [head] ${ v }` ) )
         f.results.forEach( ( r ) => {
             const marks = [ ...r.blocking, ...r.handoff.map( ( v ) => `⚠${ v }` ) ]
             const status = marks.length === 0 ? 'ok' : marks.join( ', ' )

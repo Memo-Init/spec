@@ -184,27 +184,24 @@ const detectNormative = ( { content } ) => {
 
 // Rewrite spec links to published routes; an optional #anchor is preserved.
 //
-// (1) Same-family intra-spec links "./NN-name.md" → "<routeBase><slug>/" where routeBase is the
-//     AUTHORING family's OWN route, derived from its head docEntry (WI-023). The generator now
-//     emits the correct per-family route directly (memo → /specification/, workbench → /workbench/,
-//     session → /session/, spec → /spec/), so the site no longer re-routes an intermediate token.
-// (2) Cross-family links "../[../]<family>[/<version>]/NN-name.md" → the absolute route
-//     of the TARGET family: core "v<x.y.z>" → /specification/, workbench → /workbench/,
-//     session → /session/. The final route is emitted directly because a relative path across
-//     families is ambiguous (this is why such links previously survived unrewritten and 404'd on
-//     the site). Any depth of "../" and an optional version subdir are tolerated, so the rewrite
-//     is robust to where the source file sits.
-const rewriteSpecLinks = ( { content, routeBase } ) => {
-    const sameFamily = content.replace(
+// Same-family intra-spec links "./NN-name.md" → "<routeBase><slug>/" where routeBase is the
+// AUTHORING family's OWN route, derived from its head docEntry (WI-023). The generator emits the
+// correct per-family route directly (memo → /specification/, workbench → /workbench/,
+// session → /session/, spec → /spec/), so the site no longer re-routes an intermediate token.
+//
+// Cross-family links MUST be authored as absolute routes in the source. The former legacy special
+// case that rewrote relative "../[../]<family>/NN-name.md" links was REMOVED (WI-119 / Z7-07): it
+// silently rescued the forbidden relative form and masked dead on-disk links. A surviving relative
+// cross-family link is now a defect that fails the build loudly here rather than being papered over.
+const rewriteSpecLinks = ( { content, routeBase, filename } ) => {
+    const crossFamily = content.match( /\]\(\.\.\/[^)]+\.md[^)]*\)/ )
+    if( crossFamily !== null ) {
+        throw new Error( `${ filename ?? 'spec page' }: forbidden relative cross-family link "${ crossFamily[ 0 ] }" — author it as the target family's absolute route (/specification/, /workbench/, /session/, /spec/).` )
+    }
+
+    return content.replace(
         /\]\(\.\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
         ( match, fname, anchor ) => `](${ routeBase }${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
-    )
-    return sameFamily.replace(
-        /\]\((?:\.\.\/)+(?:(v\d+\.\d+\.\d+)|(workbench|session)(?:\/\d+\.\d+\.\d+)?)\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g,
-        ( match, coreVersion, family, fname, anchor ) => {
-            const route = coreVersion ? 'specification' : family
-            return `](/${ route }/${ fname.replace( /^\d+-/, '' ) }/${ anchor ?? '' })`
-        }
     )
 }
 
@@ -244,7 +241,7 @@ const generateFile = async ( { filename, sourceDir, targetDir, section, routeBas
     // the page title from the frontmatter, so the body H1 would be a duplicate),
     // then strip the top metadata table so the reading order is content-first
     // (Memo 002, Kap 1) — the bottom "## Related" footer keeps the metadata.
-    const bodyRewritten = rewriteSpecLinks( { content, routeBase } )
+    const bodyRewritten = rewriteSpecLinks( { content, routeBase, filename } )
     const bodyNoH1 = bodyRewritten.replace( /^#\s+.+?\n+/, '' )
     const body = stripTopMetadataTable( { content: bodyNoH1 } )
 

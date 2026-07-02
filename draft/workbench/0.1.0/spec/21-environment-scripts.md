@@ -64,7 +64,7 @@ Because both checks are deterministic (pass / fail / report), Workbench-Health i
 
 ## Direction — Self-Healing Workbench (Informative)
 
-> **Informative / forward-looking.** This subsection records a **direction only**. The mechanism is **deferred** to a later revision / rollout and is **not** specified or built here.
+> **Informative.** This subsection records a **direction only** and is forward-looking. The mechanism is **deferred** to a later revision / rollout and is **not** specified or built here.
 
 The deterministic Health method above *detects* that the workbench is out of order; the longer-term direction is for the workbench to also *act* on what it detects — to **self-heal** and, eventually, **self-evolve**. The motivating case is capability rather than structure: when a need surfaces at the **workbench level** — for instance during *Landing the Plane*, where a recurring gap in the tooling becomes visible — the workbench should be able to **add the missing capability (a skill) on demand**, rather than the operator hand-rolling it every time. The aim is to step out of the manual "rat race" in which the same gap is patched by hand session after session.
 
@@ -74,7 +74,7 @@ This is named as an aspiration so the spec is honest about where it points, **wi
 
 ## Conformity Requirements
 
-The script-folder rules are checkable, and the boot contract is judged against the declared-and-scripted path. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how scripts are laid out and how a project is booted, each `check` faces the structure audit and the boot path. The Workbench-Health folder-placement and repo-status tests are not restated here — they are owned as conformity rules on their home pages ([12-folders.md](./12-folders.md), [15-repos.md](./15-repos.md)). These blocks are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The script-folder rules are checkable, and the boot contract is judged against the declared-and-scripted path. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how scripts are laid out and how a project is booted, each `check` faces the structure audit and the boot path. The Workbench-Health folder-placement and repo-status tests are not restated here — they are owned as conformity rules on their home pages ([12-folders.md](./12-folders.md), [15-repos.md](./15-repos.md)). These blocks are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 That scripts live in meaningful subfolders is a structural fact:
 

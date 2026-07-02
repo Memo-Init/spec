@@ -143,7 +143,7 @@ The result envelope is the SAME contract the core CLI standard authors once (REQ
 {
   "id": "REQ-988",
   "title": "Every memo session leaf binds to the core result envelope (REQ-701)",
-  "statement": "Every `memo session` leaf MUST return the shared CLI result envelope as defined ONCE by the core CLI standard (REQ-701, [22-tree-cli-recommended-way.md](../../v0.1.0/22-tree-cli-recommended-way.md): boolean `status`; `error` plus a separate `fix` on `status:false`; payload spread on `status:true`). The envelope shape is referenced here, NOT re-authored — this rule binds the session leaves to the single core contract so the same shape is never specified twice.",
+  "statement": "Every `memo session` leaf MUST return the shared CLI result envelope as defined ONCE by the core CLI standard (REQ-701, [22-tree-cli-recommended-way.md](/specification/tree-cli-recommended-way/): boolean `status`; `error` plus a separate `fix` on `status:false`; payload spread on `status:true`). The envelope shape is referenced here, NOT re-authored — this rule binds the session leaves to the single core contract so the same shape is never specified twice.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "cli-conformance"] },
   "severity": "blocker",
   "check": {
@@ -164,7 +164,7 @@ The `--describe` contract is likewise the core standard's (REQ-702); the session
 {
   "id": "REQ-989",
   "title": "--describe exposes the session branch, per the core contract (REQ-702)",
-  "statement": "The `memo` command tree MUST expose the `session` branch through the machine-readable `--describe` contract defined ONCE by the core CLI standard (REQ-702, [22-tree-cli-recommended-way.md](../../v0.1.0/22-tree-cli-recommended-way.md)): each session leaf entry carrying a `description`, the rendered `input` and `output` shapes, and a call `example`, so the session CLI is discovered from the tool itself. Referenced, not re-authored — this rule binds the session branch to the single core `--describe` contract.",
+  "statement": "The `memo` command tree MUST expose the `session` branch through the machine-readable `--describe` contract defined ONCE by the core CLI standard (REQ-702, [22-tree-cli-recommended-way.md](/specification/tree-cli-recommended-way/)): each session leaf entry carrying a `description`, the rendered `input` and `output` shapes, and a call `example`, so the session CLI is discovered from the tool itself. Referenced, not re-authored — this rule binds the session branch to the single core `--describe` contract.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "cli-conformance"] },
   "severity": "blocker",
   "check": {

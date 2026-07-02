@@ -49,7 +49,7 @@ The declared status is not taken on trust. The workbench **health-check** and **
 
 ## Conformity Requirements
 
-The `repos/` rules are structural and verified rather than trusted. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a project's code is partitioned, and each `check` faces the workbench health-check and git-security. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The `repos/` rules are structural and verified rather than trusted. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a project's code is partitioned, and each `check` faces the workbench health-check and git-security. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 That `repos/` holds only single-domain repositories and is the only git location is a structural fact:
 

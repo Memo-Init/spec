@@ -6,7 +6,7 @@
 | Depends on | [10-sop.md](./10-sop.md), [11-common-denominator.md](./11-common-denominator.md) |
 | Related | [The Workbench-SOP](/workbench/sop-entrypoint/), [The memo-init SOP entry point](/specification/memo-sop-entrypoint/) |
 
-> **Informative.** This chapter records how the existing SOPs relate to the common denominator. It names instances; it does not restate their content, which lives in their own specs.
+This chapter records how the existing SOPs relate to the common denominator. It names instances; it does not restate their content, which lives in their own specs. It is normative where it states the inheritance declaration below; the surrounding description is context.
 
 The SOP area defines a shape; the concrete SOPs **are** that shape, filled in for their scope. This chapter records the existing instances and the lightweight reference model that ties them back to the standard.
 

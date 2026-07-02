@@ -6,7 +6,7 @@
 | Depends on | [10-sop.md](./10-sop.md) |
 | Related | [11-common-denominator.md](./11-common-denominator.md), [12-instances.md](./12-instances.md) |
 
-> **Informative.** This chapter records the cross-cutting conventions the system already follows in practice — how registered units are named, how the words *folder* and *folders* are kept apart, how the writing stays brief, and the fixed shape a per-folder page opens with — so that they are documented once rather than re-derived per scope. Where a convention is a real rule rather than a habit, it is stated with the conformance key words.
+This chapter records the cross-cutting conventions the system already follows in practice — how registered units are named, how the words *folder* and *folders* are kept apart, how the writing stays brief, and the fixed shape a per-folder page opens with — so that they are documented once rather than re-derived per scope. Where a convention is a real rule rather than a habit, it is stated with the conformance key words and is normative; the descriptive framing around it is context.
 
 The conventions below are not specific to any one SOP. They apply wherever skills, CLIs, and SOP prose appear, which is why they live in the connecting mechanism rather than in a single instance.
 

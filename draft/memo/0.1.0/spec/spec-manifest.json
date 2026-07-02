@@ -1,5 +1,5 @@
 {
-    "namespace": "core",
+    "namespace": "memo",
     "version": "0.1.0",
     "namespaceToken": "MC",
     "hasRequirements": true,

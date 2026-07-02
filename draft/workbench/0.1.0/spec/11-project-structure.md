@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Depends on | [00-overview.md](./00-overview.md), [10-root-and-projects.md](./10-root-and-projects.md) |
-| Related | [12-folders.md](./12-folders.md), [23-requirements.md](../../v0.1.0/23-requirements.md), [32-trash.md](./32-trash.md) |
+| Related | [12-folders.md](./12-folders.md), [23-requirements.md](/specification/requirements/), [32-trash.md](./32-trash.md) |
 
 Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. The mandatory and optional folders are specified in [12-folders.md](./12-folders.md); the split between the workbench root and the projects beneath it in [10-root-and-projects.md](./10-root-and-projects.md). This chapter specifies the property those layouts exist to protect: the **local guarantee**.
 
@@ -44,7 +44,7 @@ A project **MUST** preserve all three. The guarantee is the precondition for wor
 
 ## Conformity Requirements
 
-The local guarantee above is structural, so its rules are checkable. The blocks below are the prose-first, machine-readable form of this chapter's binding `MUST`s — each `statement` faces generation (it shapes how a project is laid out) and each `check` faces the structure audit and the push gate. They are the source the workbench requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The local guarantee above is structural, so its rules are checkable. The blocks below are the prose-first, machine-readable form of this chapter's binding `MUST`s — each `statement` faces generation (it shapes how a project is laid out) and each `check` faces the structure audit and the push gate. They are the source the workbench requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 The root-is-local guarantee is a hard yes/no fact — there is either an enclosing repository or there is not — so its `check` is the whole story and its `grade` is `binary`:
 

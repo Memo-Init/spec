@@ -2,7 +2,7 @@
     "schemaVersion": "spec/1.0.0",
     "slug": "memo",
     "title": "Memo-Init Specification",
-    "namespaceToken": "MEMO",
+    "namespaceToken": "MC",
     "currentVersion": "0.1.0",
     "specDir": "draft/memo/0.1.0/spec",
     "prefix": "memo/",

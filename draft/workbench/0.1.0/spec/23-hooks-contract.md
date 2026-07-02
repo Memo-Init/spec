@@ -186,7 +186,7 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ## Conformity Requirements
 
-This chapter is normative about the contract surface; its `MUST`s are the rules a hook satisfies. The blocks below encode them prose-first — each `statement` faces the building of a gate, and each `check` faces a built hook's behaviour. Because the hook *implementation* belongs to the deferred machine-tier spec, several blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+This chapter is normative about the contract surface; its `MUST`s are the rules a hook satisfies. The blocks below encode them prose-first — each `statement` faces the building of a gate, and each `check` faces a built hook's behaviour. Because the hook *implementation* belongs to the deferred machine-tier spec, several blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 The five-step precondition chain is a deterministic mechanism whose completeness a reviewer judges against the contract:
 

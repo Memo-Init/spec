@@ -2,7 +2,7 @@
     "note": "Deterministic skill->spec map (source of truth for write-skill-specs.mjs). Generated from the Memo-039 research dataset; out-of-process skills (node-*/domain/external) carry primary:null + a scope marker by design. node-* code-pattern skills are decoupled and out-of-process: node house-style is governed by personal-brand/user-preferences, not the org spec (Memo 057 F5; ch47-node-standards removed).",
     "totals": {
         "skills": 83,
-        "register": 12,
+        "register": 14,
         "withGaps": 65,
         "withPrimary": 69
     },

@@ -8,7 +8,7 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 
 ---
 
-## Core Chapters (00–44)
+## Memo Chapters (00–46)
 
 | Document | Title | Mode | Cluster |
 |----------|-------|------|---------|
@@ -53,11 +53,14 @@ The entry point is [00-overview.md](./00-overview.md), which also carries the no
 | [38-stage-model.md](./38-stage-model.md) | Stage Model | Normative | git, memo |
 | [39-release-and-pinning.md](./39-release-and-pinning.md) | Release and Pinning | Normative | git, memo |
 | [40-diagrams.md](./40-diagrams.md) | Diagrams | Informative | memo |
+| [41-mental-model.md](./41-mental-model.md) | User Mental Model | Normative | memo |
 | [42-plans.md](./42-plans.md) | Plans | Normative | code-patterns, memo |
 | [43-skill-authoring-and-quality.md](./43-skill-authoring-and-quality.md) | Skill Authoring & Quality | Normative | skill |
 | [44-repository-and-outward-docs.md](./44-repository-and-outward-docs.md) | Repository Scaffolding & Outward Documentation | Normative | — |
+| [45-implementation-fidelity-audit.md](./45-implementation-fidelity-audit.md) | Implementation-Fidelity Audit | Normative | memo |
+| [46-bridge.md](./46-bridge.md) | Bridge | Informative | — |
 
-> Chapters 09–40 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer. Chapter 30 is the cross-cutting substrate page: it defines the ten primitives, the central glossary, and the concept map; new readers MAY read it first as a vocabulary, and authors return to it as the single source of truth for terms. Chapter 33 is the cross-cutting maintenance roof: it measures freshness and blast-radius across the primitives without adding an eleventh.
+> Chapters 09–46 are authored alongside chapters 00–08; they are listed here by their canonical filenames so the index is complete. Each chapter carries the same header table (Status / Depends on / Related) and a `## Related` footer. Chapter 30 is the cross-cutting substrate page: it defines the ten primitives, the central glossary, and the concept map; new readers MAY read it first as a vocabulary, and authors return to it as the single source of truth for terms. Chapter 33 is the cross-cutting maintenance roof: it measures freshness and blast-radius across the primitives without adding an eleventh. Chapter 46 is the generated Bridge hub (per-chapter skill coverage and graph views).
 
 ---
 

@@ -27,7 +27,7 @@ session-sop  (this family — the Genesis Root + SOP entry-point mechanism)
   ↑ memo-init / flowmcp / …  (domain entry points)
 ```
 
-The same chain reads as an **inheritance** relationship — each tier *extends* the one below it and inherits the identity and security it establishes. An inheritance diagram is the type that states "extends" natively (the diagram map in [the Diagrams chapter](../../v0.1.0/40-diagrams.md) maps a tier model to exactly this type):
+The same chain reads as an **inheritance** relationship — each tier *extends* the one below it and inherits the identity and security it establishes. An inheritance diagram is the type that states "extends" natively (the diagram map in [the Diagrams chapter](/specification/diagrams/) maps a tier model to exactly this type):
 
 ```mermaid
 classDiagram

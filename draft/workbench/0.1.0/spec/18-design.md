@@ -67,7 +67,7 @@ The **spec comes first**: the folder and convention are defined here before any 
 
 ## Conformity Requirements
 
-`design/` is governed, not inert, so the design.md convention and the folder's organization are checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how a design surface is authored and laid out, each `check` faces the write-time lint and the structure audit. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+`design/` is governed, not inert, so the design.md convention and the folder's organization are checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how a design surface is authored and laid out, each `check` faces the write-time lint and the structure audit. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 Whether a design.md satisfies its convention is a content check delegated to the write-time lint:
 

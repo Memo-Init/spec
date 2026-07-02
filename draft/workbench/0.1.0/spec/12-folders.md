@@ -216,7 +216,7 @@ Folders without a dedicated page (for example `scripts/`, `proofs/`, `snapshots/
 
 ## Conformity Requirements
 
-The folder contract is a registry, and a registry is checkable. The blocks below encode this chapter's binding rules prose-first: each `statement` faces generation (it shapes how a project is constituted and how a structure tool reads the contract) and each `check` faces the structure audit. They are the machine-readable source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The folder contract is a registry, and a registry is checkable. The blocks below encode this chapter's binding rules prose-first: each `statement` faces generation (it shapes how a project is constituted and how a structure tool reads the contract) and each `check` faces the structure audit. They are the machine-readable source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 Presence of the mandatory folders is a hard yes/no fact, so this rule's `grade` is `binary`:
 

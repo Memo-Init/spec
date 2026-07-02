@@ -176,7 +176,7 @@ So it is **one registry, one signal scan, two timings**. The seed first edge is 
 
 ## Conformity Requirements
 
-This chapter records the workbench-scoped CLI rules; the eight universal principles stay in the session doctrine and are not restated. The blocks below encode the workbench-specific `MUST`s prose-first — each `statement` faces how a CLI and its discovery source are built, each `check` faces the built tool. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+This chapter records the workbench-scoped CLI rules; the eight universal principles stay in the session doctrine and are not restated. The blocks below encode the workbench-specific `MUST`s prose-first — each `statement` faces how a CLI and its discovery source are built, each `check` faces the built tool. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 That the registry is the single, declared discovery source is a structural fact about the file:
 
@@ -205,7 +205,7 @@ Whether a CLI's command tree is genuinely self-describing is a quality spectrum 
 {
   "id": "REQ-965",
   "title": "A workbench CLI follows the core Branch/Leaf contract (REQ-703)",
-  "statement": "A workbench CLI SHOULD follow the Branch/Leaf command-tree contract defined ONCE by the core CLI standard (REQ-703, [22-tree-cli-recommended-way.md](../../v0.1.0/22-tree-cli-recommended-way.md)): branches group without behaviour, and each leaf is re-implementable from its typed `input`/`output` alone. This is referenced, not re-authored — the workbench convention is one scoped instance of that single core contract. (Making a CLI globally callable, e.g. via `npm link`, is only a registration mechanism and MUST NOT be conflated with this design contract or registry discoverability.)",
+  "statement": "A workbench CLI SHOULD follow the Branch/Leaf command-tree contract defined ONCE by the core CLI standard (REQ-703, [22-tree-cli-recommended-way.md](/specification/tree-cli-recommended-way/)): branches group without behaviour, and each leaf is re-implementable from its typed `input`/`output` alone. This is referenced, not re-authored — the workbench convention is one scoped instance of that single core contract. (Making a CLI globally callable, e.g. via `npm link`, is only a registration mechanism and MUST NOT be conflated with this design contract or registry discoverability.)",
   "scope": { "repos": [], "categories": ["workbench"], "tags": ["cli", "branch-leaf", "self-describing"] },
   "severity": "warning",
   "check": {

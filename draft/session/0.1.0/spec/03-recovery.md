@@ -36,7 +36,7 @@ On **any** drift from those expected outcomes the canary MUST (a) shout to stder
 
 ---
 
-## Config Protection (REQ-SS-EDGEVALID)
+## Config Protection (REQ-SS-NOWRITE, REQ-SS-EDGEVALID)
 
 The session config is a **privilege file**: a silent rewrite could disable the gate or forge a precondition edge. Two safeguards keep it honest:
 
@@ -59,13 +59,13 @@ The recovery primitives above are fixed as named requirements so the recovery co
 |-------------|-----------|
 | **REQ-SS-DISABLE** | Two equivalent disable switches — the `SESSION_SOP_DISABLE` environment variable and the `~/.claude/session/DISABLED` sentinel file — short-circuit the gate to ALLOW as the hook's first action, before any parse. Removing both re-arms the gate. |
 | **REQ-SS-CANARY** | A SessionStart canary re-verifies the live gate against a known-ALLOW and a known-DENY fixture; on any drift it shouts to stderr and auto-engages the disable switch by writing the sentinel. It never blocks the session (always exit 0). |
-| **REQ-SS-EDGEVALID** | The session config is guarded against silent rewrite (reviewed diff, never auto-write), and `registry-validate` refuses a dangling edge. A dangling edge degrades the runtime gate to fail-open ALLOW, never a lockout. |
+| **REQ-SS-EDGEVALID** | `registry-validate` refuses a dangling `when:pre` edge (both endpoints installed); the config's no-auto-write guard is REQ-SS-NOWRITE ([02-enforcement.md](./02-enforcement.md)), not restated here. A dangling edge degrades the runtime gate to fail-open ALLOW, never a lockout. |
 
 ---
 
 ## The Recovery Runbook
 
-The operational steps — how to disable, diagnose, and re-arm the gate — live in the project's recovery runbook (`context/session-sop-recovery-runbook.md`). Its essence:
+The operational steps — how to disable, diagnose, and re-arm the gate — live in the project's recovery runbook. Its essence:
 
 1. **Disable now:** `export SESSION_SOP_DISABLE=1` (this shell) or `touch ~/.claude/session/DISABLED` (persistent).
 2. **Diagnose:** run the gate against a known-good fixture; check `~/.claude/session/fetch-gate.log` and the canary's stderr.

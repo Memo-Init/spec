@@ -6,7 +6,7 @@
 | Depends on | [10-sop.md](./10-sop.md) |
 | Related | [12-instances.md](./12-instances.md) |
 
-> **Mostly informative; the Page Contract below is normative.** This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which govern their own scope — but the **SOP Page Contract** is **normative (MUST)** and lint-enforced, because it is the single shape the memo-SOP and Workbench-SOP reference rather than restate.
+This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which govern their own scope — but the **SOP Page Contract** is **normative (MUST)** and lint-enforced, because it is the single shape the memo-SOP and Workbench-SOP reference rather than restate.
 
 Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP entry-point mechanism](./10-sop.md) rests.
 

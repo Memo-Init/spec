@@ -4,7 +4,7 @@
 |-------|-------|
 | Status | Draft |
 | Depends on | — (sibling-spec entry point) |
-| Related | [01-philosophy.md](./01-philosophy.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md), [11-project-structure.md](./11-project-structure.md), [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [32-trash.md](./32-trash.md), [Requirements](../../v0.1.0/23-requirements.md), [Tools Registry](../../v0.1.0/24-tools-registry.md) |
+| Related | [01-philosophy.md](./01-philosophy.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md), [11-project-structure.md](./11-project-structure.md), [13-knowledge-format-okf.md](./13-knowledge-format-okf.md), [32-trash.md](./32-trash.md), [Requirements](/specification/requirements/), [Tools Registry](/specification/tools-registry/) |
 
 > **Informative.** This document introduces the Workbench spec, its scope, and its place among the sibling specifications. It is written in prose and does not itself carry normative requirements. The chapters it indexes use normative language as marked.
 
@@ -16,13 +16,14 @@ The core message: the workbench is **a connecting layer, not a container**. It c
 
 ## A Sibling Spec, Not a Sub-Spec
 
-The Workbench spec is a **standalone sibling** of the core specification, not a subordinate set of chapters under it. The memo-init repository hosts **three sibling spec families** side by side in one repository, each with its own version line:
+The Workbench spec is a **standalone sibling** of the core specification, not a subordinate set of chapters under it. The memo-init repository hosts **four sibling spec families** side by side in one repository, each with its own version line:
 
 | Family | Directory | Concern |
 |--------|-----------|---------|
-| **Core specification** | `spec/v0.1.0/` | A single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. Reasons about *one memo at a time*. |
-| **Workbench** (this spec) | `spec/workbench/0.1.0/` | The environment in which memos live — project layout, CLIs and scripts, configuration, the wiki, trash. Reasons about *the project and the workbench around the memo*. |
-| **Session** | `spec/session/0.1.0/` | The session genesis layer; it also carries the **SOP area** — the thin connecting layer that makes the various SOPs predictable (what a SOP contains and where to find it). The SOP, once framed as its own family, now lives here as that area. |
+| **Core specification** (memo) | `draft/memo/0.1.0/spec/` | A single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. Reasons about *one memo at a time*. |
+| **Workbench** (this spec) | `draft/workbench/0.1.0/spec/` | The environment in which memos live — project layout, CLIs and scripts, configuration, the wiki, trash. Reasons about *the project and the workbench around the memo*. |
+| **Session** | `draft/session/0.1.0/spec/` | The session genesis layer; it also carries the **SOP area** — the thin connecting layer that makes the various SOPs predictable (what a SOP contains and where to find it). The SOP, once framed as its own family, now lives here as that area. |
+| **Meta-spec** | `draft/spec/0.1.0/spec/` | The specification-of-specifications: the per-chapter format, categories, and publishing rules every family follows, so a new family is added by following a document rather than reverse-engineering the build. |
 
 This mirrors the established multi-family pattern (a single spec repository hosting parallel, independently versioned spec families as sibling directories). Keeping these concerns in separate, peer documents lets each evolve at its own pace.
 
@@ -40,8 +41,8 @@ Within that shared vocabulary, the Workbench spec is otherwise self-contained: i
 
 This spec is **versioned independently** from the core specification. A change to the workbench's project structure or its CLI conventions does not force a core-spec version bump, and a core-spec version bump does not retroactively re-version the Workbench spec.
 
-- The core specification lives under `spec/v0.1.0/`; the Workbench spec lives under `spec/workbench/0.1.0/` and carries its own version line.
-- The authoritative, machine-readable version numbers for every family are recorded in `data/refs.manual.json` — the core spec under the `spec` key, this spec under the `workbench` key, and the Session spec under the `session` key. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data, and the build stamps each chapter with its family's version (`workbench_version`).
+- The core specification lives under `draft/memo/0.1.0/spec/`; the Workbench spec lives under `draft/workbench/0.1.0/spec/` and carries its own version line.
+- The authoritative, machine-readable version numbers for every family are recorded in `data/refs.manual.json` — the core spec under the `memo` key, this spec under the `workbench` key, the Session spec under the `session` key, and the meta-spec under the `spec` key. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data, and the build stamps each chapter with its family's version (`workbench_version`).
 
 ---
 
@@ -103,7 +104,7 @@ This spec covers the workbench's **specification text and conventions**. Two thi
 
 ## Navigation Categories
 
-The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Folders**, **CLI & Scripts**, **Core**, **Wiki**, and **Tools**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
+The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Root**, **Projects**, **Folders**, **CLI & Scripts**, **Tools**, **Wiki**, **Core**, and **Bridge**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
 
 Three categories carry a meaning worth stating here:
 
@@ -111,4 +112,14 @@ Three categories carry a meaning worth stating here:
 - **Folders** holds the registered-folder pages and the things that attach to folders: the folder contract, the per-folder pages, the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
 - **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `design.md` (the design format); both therefore sit conceptually under the wiki rather than standing alone.
 
+---
+
+
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
+## Related
+
+- [01-philosophy.md](./01-philosophy.md) — the guardrail philosophy and interaction model this overview sits on.
+- [02-sop-entrypoint.md](./02-sop-entrypoint.md) — the SOP entry point and the declare-vs-enforce split between the workbench and the machine tier.
+- [10-root-and-projects.md](./10-root-and-projects.md) — the separation of the workbench root from the projects beneath it.
+- [11-project-structure.md](./11-project-structure.md) — the mandatory per-project layout this overview points at.
+- [12-folders.md](./12-folders.md) — the core-vs-custom registered-folder split the navigation categories reflect.

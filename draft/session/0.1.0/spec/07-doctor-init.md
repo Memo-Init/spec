@@ -81,7 +81,7 @@ Check 3 makes the doctor the **runtime superset** of the build-time `registry-va
 
 ### It Reports — It Never Blocks
 
-`session doctor` **MAY exit non-zero** in the foreground so a rollout script or CI can gate on it, but it **MUST NEVER block the session**. This is the `flutter doctor` / `brew doctor` contract: surface every problem with its fix, then get out of the way. A doctor that fail-closed would re-introduce the very lockout hazard the genesis tier is built to avoid (REQ-SS-EDGEVALID, [01-genesis-root.md](./01-genesis-root.md)).
+`session doctor` **MAY exit non-zero** in the foreground so a rollout script or CI can gate on it, but it **MUST NEVER block the session**. This is the `flutter doctor` / `brew doctor` contract: surface every problem with its fix, then get out of the way. A doctor that fail-closed would re-introduce the very lockout hazard the genesis tier is built to avoid (REQ-SS-EDGEVALID, [02-enforcement.md](./02-enforcement.md)).
 
 The per-item trichotomy mirrors the gate's three-state contract — **pass / warn / fail** maps onto **ALLOW / ERROR / DENY** — so the doctor speaks the same language as the gate it front-runs. The top-level `status` rolls up: any `fail` ⇒ `not-ready`; only `warn` ⇒ `degraded`; all `pass` ⇒ `ready`. The exit code mirrors it: `0` when no `fail` (warnings allowed), non-zero on any `fail`.
 

@@ -71,7 +71,7 @@ The principle is the division of responsibility introduced in [02-sop-entrypoint
 
 ## Conformity Requirements
 
-The configuration is the contract surface enforcement reads, so its shape and its manual discipline are both checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how the configuration is authored, and each `check` faces the structure audit and the no-auto-write discipline. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](../../v0.1.0/23-requirements.md)).
+The configuration is the contract surface enforcement reads, so its shape and its manual discipline are both checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how the configuration is authored, and each `check` faces the structure audit and the no-auto-write discipline. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 That a status record carries all three axes is a structural fact about the file's shape:
 
