@@ -25,10 +25,14 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `wiki-init` | contributing | — |
-| `workbench-audit` | primary | — |
-| `workbench-project-setup` | primary | — |
+| `wiki-init` | contributing | Initialize a project wiki (.wiki/) with index, log, page directories and local git |
+| `workbench-audit` | primary | Full 9-phase project audit for One-Pizza workbench projects |
+| `workbench-project-setup` | primary | Project setup and installation pattern for the One-Pizza workbench |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+`repo-init`

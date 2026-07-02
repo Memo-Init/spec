@@ -17,12 +17,13 @@ _(no skill dependencies declared in this family)_
 | Chapter | Covered | Implementers | Reqs |
 |---|---|---|---|
 | [00-overview](./00-overview.md) | — | 0 | — |
-| [02-per-chapter-format](./02-per-chapter-format.md) | — | 0 | — |
-| [03-categories](./03-categories.md) | — | 0 | — |
-| [04-bridge-standard](./04-bridge-standard.md) | — | 0 | — |
+| [02-per-chapter-format](./02-per-chapter-format.md) | — | 0 | 4 |
+| [03-categories](./03-categories.md) | — | 0 | 1 |
+| [04-bridge-standard](./04-bridge-standard.md) | — | 0 | 1 |
 | [05-publishing-principle](./05-publishing-principle.md) | — | 0 | — |
 | [06-conventions-writing](./06-conventions-writing.md) | — | 0 | — |
-| **Summary** | **0 / 6** | — | — |
+| [07-versioning](./07-versioning.md) | — | 0 | — |
+| **Summary** | **0 / 7** | — | 6 |
 
 ## Skills by namespace
 
@@ -43,6 +44,10 @@ _(no skill dependencies declared in this family)_
 ### Publication
 
 - [05-publishing-principle](./05-publishing-principle.md) — _— no implementer skill yet —_
+
+### Versioning
+
+- [07-versioning](./07-versioning.md) — _— no implementer skill yet —_
 
 ### Conventions
 

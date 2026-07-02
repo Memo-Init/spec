@@ -6,28 +6,28 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/23-hooks-contract.md."
 ---
 
 
-Deterministic enforcement of workbench policy is delegated to Claude Code hooks. This chapter specifies the **contract** between the workbench and a hook: what the workbench provides for a hook to read, and what a hook is expected to consume and decide. It deliberately specifies **only the contract** — the hook *implementation* belongs to the future machine-tier spec (see [02-sop-entrypoint.md](/specification/sop-entrypoint/)).
+Deterministic enforcement of workbench policy is delegated to Claude Code hooks. This chapter specifies the **contract** between the workbench and a hook: what the workbench provides for a hook to read, and what a hook is expected to consume and decide. It deliberately specifies **only the contract** — the hook *implementation* belongs to the future machine-tier spec (see [02-sop-entrypoint.md](/workbench/sop-entrypoint/)).
 
-This chapter and [22-config.md](/specification/config/) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](/specification/overview/).
+This chapter and [22-config.md](/workbench/config/) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](/workbench/overview/).
 
 ---
 
 ## Scope — Contract, Not Implementation
 
-This chapter is normative about the **contract surface** and silent about the **mechanism**. The reason is the level boundary from [02-sop-entrypoint.md](/specification/sop-entrypoint/): policy declaration is a workbench concern (specified here), while enforcement runs at the machine tier (`~/.claude/`), which is out of scope for this spec. A future machine-tier spec will specify the hook scripts, their settings, and their lifecycle; this chapter only fixes what those scripts may rely on.
+This chapter is normative about the **contract surface** and silent about the **mechanism**. The reason is the level boundary from [02-sop-entrypoint.md](/workbench/sop-entrypoint/): policy declaration is a workbench concern (specified here), while enforcement runs at the machine tier (`~/.claude/`), which is out of scope for this spec. A future machine-tier spec will specify the hook scripts, their settings, and their lifecycle; this chapter only fixes what those scripts may rely on.
 
 ---
 
 ## The Producing Side — What the Workbench Provides
 
-The workbench provides a hook with a **single, manual source of policy**: the `.workbench/` configuration ([22-config.md](/specification/config/)). A hook reading that configuration can answer policy questions deterministically — for example, "is this repository inward-facing?" — without inferring intent. The contract guarantee is that policy is **declared, not guessed**: if a decision depends on project-specific policy, that policy is in the configuration for a hook to read.
+The workbench provides a hook with a **single, manual source of policy**: the `.workbench/` configuration ([22-config.md](/workbench/config/)). A hook reading that configuration can answer policy questions deterministically — for example, "is this repository inward-facing?" — without inferring intent. The contract guarantee is that policy is **declared, not guessed**: if a decision depends on project-specific policy, that policy is in the configuration for a hook to read.
 
 ---
 
@@ -58,7 +58,7 @@ The contract above gates a tool by *policy decision* — "may this run?". A seco
 
 - **Matcher.** `Write|Edit` — the hook fires before a file is created or modified.
 - **Input.** The hook reads `tool_input` — for a `Write`, the full `tool_input.content` and the target path; for an `Edit`, the diff being applied.
-- **Policy is project-local, the mechanism is global.** The *what-to-check* lives in the project under `.workbench/` as a `folder-lints.json` map ([22-config.md](/specification/config/)); the *how-to-check* is one global hook that reads that map. Each entry binds a folder to a linter:
+- **Policy is project-local, the mechanism is global.** The *what-to-check* lives in the project under `.workbench/` as a `folder-lints.json` map ([22-config.md](/workbench/config/)); the *how-to-check* is one global hook that reads that map. Each entry binds a folder to a linter:
 
 ```jsonc
 // .workbench/folder-lints.json — project-local policy; one global hook consumes it
@@ -88,7 +88,7 @@ These limits are why the write-lint is a *first-line* gate paired with after-the
 
 An **entry point** — a public skill such as `memo-init`, `memo-finalize`, or `memo-plan` — is where work *enters* the system, and it is exactly where a pre-condition should be checked: a `PreToolUse` hook with a `Skill` matcher fires **before** the entry point runs and can refuse it when its pre-conditions are not met. Because every skill is invoked through one generic `Skill` tool, a single matcher form (`Skill(<name>)`) can gate any named entry point.
 
-This is the **"before" half** of checkability: the gate runs *before* the action. Its "after" counterpart — measuring, from the transcript, which skills actually ran — is the runtime call-validation specified in [20-cli.md](/specification/cli/).
+This is the **"before" half** of checkability: the gate runs *before* the action. Its "after" counterpart — measuring, from the transcript, which skills actually ran — is the runtime call-validation specified in [20-cli.md](/workbench/cli/).
 
 **Two equivalent ways for a hook to block**, both already part of the consuming-side contract:
 
@@ -115,7 +115,7 @@ This is the **"before" half** of checkability: the gate runs *before* the action
 | `memo-finalize` | the quality gates have run; the trigger is the user, not an autonomous step | ask |
 | `memo-plan` | a finalized memo exists; plan integrity holds | deny when no memo |
 
-A pre-condition belongs at the entry point because an entry point is a **public method** of the system — the surface through which input, and therefore contamination, enters. Validating there is what keeps the interior clean; the principle is developed in [24-skills-scope.md](/specification/skills-scope/).
+A pre-condition belongs at the entry point because an entry point is a **public method** of the system — the surface through which input, and therefore contamination, enters. Validating there is what keeps the interior clean; the principle is developed in [24-skills-scope.md](/workbench/skills-scope/).
 
 ---
 
@@ -124,8 +124,8 @@ A pre-condition belongs at the entry point because an entry point is a **public 
 The pre-condition catalog above is loose by design — it states *what* could be checked. This section makes the mechanism **normative and deterministic**: a `PreToolUse` precondition hook that gates an orchestrator entry point **MUST** perform these **five steps**, in order:
 
 1. **Intercept** the skill call at an orchestrator entry point — a `PreToolUse` hook bound by a `Skill(<name>)` matcher fires before the entry point runs.
-2. **Look up the dependency table** — read `.workbench/registry.json` `requirements[]` filtered to `when: "pre"`: the declared `entrypoint → requires` edges that apply to this entry point (cross-ref [20-cli.md](/specification/cli/)).
-3. **Read the session transcript** — the JSONL at `transcript_path` (resolved via `session_id`): the **same** signal scan the runtime call-validation runs post-hoc in [20-cli.md](/specification/cli/), now applied **before** the call.
+2. **Look up the dependency table** — read `.workbench/registry.json` `requirements[]` filtered to `when: "pre"`: the declared `entrypoint → requires` edges that apply to this entry point (cross-ref [20-cli.md](/workbench/cli/)).
+3. **Read the session transcript** — the JSONL at `transcript_path` (resolved via `session_id`): the **same** signal scan the runtime call-validation runs post-hoc in [20-cli.md](/workbench/cli/), now applied **before** the call.
 4. **Check the predecessor actually ran** this session — for each required skill/SOP, look for the registry's signals (`skill:<id>`, `path:/skills/<id>`, `attributionSkill:<id>`) in the transcript.
 5. **Allow OR hard-block** — if every precondition is met, allow the call; on any unmet precondition, **deny** (exit code `2`, or `permissionDecision: "deny"`) and **return an instruction** naming exactly what must be read or run first.
 
@@ -137,7 +137,7 @@ Requirements **compose transitively**. The edges chain: `memo-init` requires `me
 preconditions not met: memo-init requires memo-sop, memo-sop requires workbench-sop
 ```
 
-There is **no bypass**. This is **absolute for security**: no git command runs without a verified repo status, the same way no entry point runs without its SOP chain (the facing/egress policy a git gate reads lives in [22-config.md](/specification/config/); the gate is repo-facing). A transitive precondition cannot be satisfied by skipping an intermediate link.
+There is **no bypass**. This is **absolute for security**: no git command runs without a verified repo status, the same way no entry point runs without its SOP chain (the facing/egress policy a git gate reads lives in [22-config.md](/workbench/config/); the gate is repo-facing). A transitive precondition cannot be satisfied by skipping an intermediate link.
 
 ### Hard-Block, Not Ask
 
@@ -145,7 +145,7 @@ The SOP-chain and security preconditions return **`deny`** — a **hard-block**,
 
 ### Enforcement Level — Orchestrator Entry Points Only
 
-Preconditions attach **only at orchestrator entry points**. The public entry points **are** orchestrator skills, never components (consistent with [24-skills-scope.md](/specification/skills-scope/)) — so gating the orchestrators gates exactly the public surface through which work enters. **Components** are reached only *through* their orchestrator and are **not** gated individually: the orchestrator's precondition has already run before any component is invoked. **Sub-agent depth is out of scope** — the chain is enforced at the entry point, not recursively down every sub-agent. This covers the critical entry points fully without the sub-agent problems that per-component or recursive gating would introduce.
+Preconditions attach **only at orchestrator entry points**. The public entry points **are** orchestrator skills, never components (consistent with [24-skills-scope.md](/workbench/skills-scope/)) — so gating the orchestrators gates exactly the public surface through which work enters. **Components** are reached only *through* their orchestrator and are **not** gated individually: the orchestrator's precondition has already run before any component is invoked. **Sub-agent depth is out of scope** — the chain is enforced at the entry point, not recursively down every sub-agent. This covers the critical entry points fully without the sub-agent problems that per-component or recursive gating would introduce.
 
 ### REQ-061 — The First Concrete Edge
 
@@ -155,9 +155,9 @@ Preconditions attach **only at orchestrator entry points**. The public entry poi
 
 ## The Inward-Push Gate
 
-The same `PreToolUse` surface that gates a skill call also gates a **push**. A `Bash(git push …)`-class hook **MUST** read the declared per-repository status from `.workbench/` ([22-config.md](/specification/config/)) and **block the push** when the target repository is declared `inward`, **or** when the target lacks a declared `outward` status at all. The decision is **deterministic**: the hook resolves the target repository, reads its declared status record, and allows the push only when that record says `facing: "outward"` — it **never infers** facing from the repository's git state or remote.
+The same `PreToolUse` surface that gates a skill call also gates a **push**. A `Bash(git push …)`-class hook **MUST** read the declared per-repository status from `.workbench/` ([22-config.md](/workbench/config/)) and **block the push** when the target repository is declared `inward`, **or** when the target lacks a declared `outward` status at all. The decision is **deterministic**: the hook resolves the target repository, reads its declared status record, and allows the push only when that record says `facing: "outward"` — it **never infers** facing from the repository's git state or remote.
 
-This is the producing/consuming contract applied to egress: the workbench **declares** each repository's status (the three axes in [22-config.md](/specification/config/)), and the machine-tier git gate **enforces** it. The gate consumes the declared record; it does not decide policy of its own.
+This is the producing/consuming contract applied to egress: the workbench **declares** each repository's status (the three axes in [22-config.md](/workbench/config/)), and the machine-tier git gate **enforces** it. The gate consumes the declared record; it does not decide policy of its own.
 
 The gate is the operational form of the absolute stated above (the Precondition Dependency Chain): **no git command runs without a verified repo status** — a push is refused outright until a declared `outward` status is present, the same hard-block discipline as an unmet SOP-chain link. Default-deny: an undeclared repository is treated as not-pushable, not as outward by omission.
 
@@ -185,7 +185,7 @@ The contract therefore assumes a **three-layer stack**, not hooks alone:
 The load-bearing rule of this contract: **the workbench declares policy, the machine tier enforces it.**
 
 - **Policy / declaration** is a workbench concern — the `.workbench/` configuration, specified in this spec.
-- **Enforcement** is a machine-tier concern — the hook scripts under `~/.claude/hooks/`, their `settings.json` wiring, and their lifecycle, specified by the future machine-tier spec (out of scope here, see [02-sop-entrypoint.md](/specification/sop-entrypoint/)).
+- **Enforcement** is a machine-tier concern — the hook scripts under `~/.claude/hooks/`, their `settings.json` wiring, and their lifecycle, specified by the future machine-tier spec (out of scope here, see [02-sop-entrypoint.md](/workbench/sop-entrypoint/)).
 
 Locating enforcement at the machine tier lets it apply where it must apply globally, while the workbench's declaration stays portable inside the project. The contract is the seam between the two, and this chapter fixes that seam without building either end of it beyond the workbench's declaration.
 
@@ -264,9 +264,9 @@ The write-time content lint is bound by a project-local map and its honest limit
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [25-validation-overview.md](/specification/validation-overview/) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.
-- [22-config.md](/specification/config/) — the `.workbench/` configuration a hook reads, including `folder-lints.json`.
-- [18-design.md](/specification/design/) — a folder whose content (`design.md`) the write-lint can check.
-- [20-cli.md](/specification/cli/) — the runtime call-validation, the "after" counterpart of the entry-point pre-condition; same registry, same signal scan, pulled forward to the pre-gate.
-- [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the level boundary and the deferred machine-tier spec.
-- [21-environment-scripts.md](/specification/environment-scripts/) — health checks, the other deterministic workbench verification.
+- [25-validation-overview.md](/workbench/validation-overview/) — the wayfinder over all of the workbench's validation rules, with this contract as the hub for the hook-based ones.
+- [22-config.md](/workbench/config/) — the `.workbench/` configuration a hook reads, including `folder-lints.json`.
+- [18-design.md](/workbench/design/) — a folder whose content (`design.md`) the write-lint can check.
+- [20-cli.md](/workbench/cli/) — the runtime call-validation, the "after" counterpart of the entry-point pre-condition; same registry, same signal scan, pulled forward to the pre-gate.
+- [02-sop-entrypoint.md](/workbench/sop-entrypoint/) — the level boundary and the deferred machine-tier spec.
+- [21-environment-scripts.md](/workbench/environment-scripts/) — health checks, the other deterministic workbench verification.

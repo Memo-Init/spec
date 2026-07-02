@@ -15,7 +15,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 ## 2. Public entry points
 
-`session-migration` _(inferred from primary owners)_ · docs entry `https://memo-init.github.io/session/overview/`
+`session-migration` _(inferred from primary owners)_ · docs entry `/session/overview/`
 
 ## 3. Required detail pages
 
@@ -25,8 +25,12 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-migration` | primary | — |
+| `session-migration` | primary | Execute the fold of the former published SOP spec family into the session family without breaking any live URL |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

@@ -1,9 +1,9 @@
-# Bridge — 04-bridge-standard
+# Bridge — 07-versioning
 
 | Field | Value |
 |---|---|
 | Family | spec |
-| Chapter | [04-bridge-standard](./04-bridge-standard.md) |
+| Chapter | [07-versioning](./07-versioning.md) |
 
 > **Informative · generated.** One read-projection of the skill-to-spec edge. Do not edit by hand.
 
@@ -19,7 +19,7 @@ Canonical docs entry: `/spec/overview/`. No entry-point skill flagged yet.
 
 ## 3. Required detail pages
 
-[01-bridge](./01-bridge.md), [02-per-chapter-format](./02-per-chapter-format.md), [03-categories](./03-categories.md), [05-publishing-principle](./05-publishing-principle.md)
+[00-overview](./00-overview.md), [02-per-chapter-format](./02-per-chapter-format.md), [05-publishing-principle](./05-publishing-principle.md)
 
 ## 4. Implementing skills
 

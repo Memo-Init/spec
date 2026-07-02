@@ -6,7 +6,7 @@ spec_file: "04-cli.md"
 order: 4
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/04-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/04-cli.md."
@@ -19,7 +19,7 @@ This chapter owns the **universal CLI doctrine**: the general way *every* CLI in
 
 ## Why the Doctrine Lives at the Session Tier
 
-The session is the genesis root ([00-overview.md](/specification/overview/)): the one scope that exists before any workbench convention. Because the workbench is *itself* a session-SOP application layered on the genesis root, the lowest tier is the right home for the rules that bind *all* CLIs. A CLI is a tool that any tier may ship, so its doctrine belongs to the tier every other tier inherits from. The session tier already lives by one of these rules — session identity resolves `flag > env > null` ([01-genesis-root.md](/specification/genesis-root/)) — and this chapter lifts that single rule into the general config precedence the whole system shares.
+The session is the genesis root ([00-overview.md](/session/overview/)): the one scope that exists before any workbench convention. Because the workbench is *itself* a session-SOP application layered on the genesis root, the lowest tier is the right home for the rules that bind *all* CLIs. A CLI is a tool that any tier may ship, so its doctrine belongs to the tier every other tier inherits from. The session tier already lives by one of these rules — session identity resolves `flag > env > null` ([01-genesis-root.md](/session/genesis-root/)) — and this chapter lifts that single rule into the general config precedence the whole system shares.
 
 ---
 
@@ -46,7 +46,7 @@ The data model — branches as bags of tools, leaves with typed `input`/`output`
 
 ## The Result Envelope and Exit Codes
 
-Every leaf returns `{status, error, fix}`, where `fix` is a separate machine-readable repair step a hook or agent reads and resends rather than re-deriving from free text (core [Tree CLI chapter](/specification/tree-cli-recommended-way/)). The session tier **adds** the missing half: a **process exit code that mirrors the envelope**, so a shell or CI step — or the PreToolUse gate's own scripts ([02-enforcement.md](/specification/enforcement/)) — can gate on a CLI without parsing JSON.
+Every leaf returns `{status, error, fix}`, where `fix` is a separate machine-readable repair step a hook or agent reads and resends rather than re-deriving from free text (core [Tree CLI chapter](/specification/tree-cli-recommended-way/)). The session tier **adds** the missing half: a **process exit code that mirrors the envelope**, so a shell or CI step — or the PreToolUse gate's own scripts ([02-enforcement.md](/session/enforcement/)) — can gate on a CLI without parsing JSON.
 
 | Exit | Meaning |
 |------|---------|
@@ -88,23 +88,23 @@ Every CLI family **SHOULD** expose a small reserved verb set so an agent can rel
 | `init` | Explicit, additive scaffold-once — never overwrites. | yes, recorded |
 | `migrate` | Idempotent state/schema migration, safe to re-run. | yes, idempotent |
 
-`doctor` diagnoses (never mutates, never blocks) and `init` scaffolds additively; their full contract for the session-readiness instance is [07-doctor-init.md](/specification/doctor-init/). This chapter only reserves the verb names and their contracts.
+`doctor` diagnoses (never mutates, never blocks) and `init` scaffolds additively; their full contract for the session-readiness instance is [07-doctor-init.md](/session/doctor-init/). This chapter only reserves the verb names and their contracts.
 
-These verbs are the **executable form of the SOP common denominator** ([11-common-denominator.md](/specification/common-denominator/)) — not a second concept beside Setup / Health / Update / Extras, but the same four parts made runnable: **`init` is Setup**, **`doctor` is Health**, **`update` is Update**, and a family's own scope leaves are its **Extras** (the optional, scope-specific commands). The canonical Update verb is **`update`**; **`migrate`** is its narrower schema/state special-case — the idempotent migration reserved in the table above — so `update` is the general "bring the scope to the current expected state", and `migrate` is the schema-only instance of it. Read this way, a scope's SOP and its CLI are the same common denominator seen twice: one as a procedure a reader follows, one as commands an agent runs.
+These verbs are the **executable form of the SOP common denominator** ([11-common-denominator.md](/session/common-denominator/)) — not a second concept beside Setup / Health / Update / Extras, but the same four parts made runnable: **`init` is Setup**, **`doctor` is Health**, **`update` is Update**, and a family's own scope leaves are its **Extras** (the optional, scope-specific commands). The canonical Update verb is **`update`**; **`migrate`** is its narrower schema/state special-case — the idempotent migration reserved in the table above — so `update` is the general "bring the scope to the current expected state", and `migrate` is the schema-only instance of it. Read this way, a scope's SOP and its CLI are the same common denominator seen twice: one as a procedure a reader follows, one as commands an agent runs.
 
 ---
 
 ## Enforcement, Doctor, and Init Sit Under the CLI
 
-Three of the family's mechanisms are not separate systems beside the CLI — they are **shapes of it**, and they sit conceptually **under this doctrine**. The PreToolUse **enforcement** gate ([02-enforcement.md](/specification/enforcement/)) is a CLI-shaped script that obeys the result envelope and the exit-code mirror above; **`doctor`** and **`init`** are two of the reserved standard verbs ([07-doctor-init.md](/specification/doctor-init/)). Reading them as CLI is what lets one envelope and one exit-code map serve the gate, the readiness preflight, and the scaffold alike.
+Three of the family's mechanisms are not separate systems beside the CLI — they are **shapes of it**, and they sit conceptually **under this doctrine**. The PreToolUse **enforcement** gate ([02-enforcement.md](/session/enforcement/)) is a CLI-shaped script that obeys the result envelope and the exit-code mirror above; **`doctor`** and **`init`** are two of the reserved standard verbs ([07-doctor-init.md](/session/doctor-init/)). Reading them as CLI is what lets one envelope and one exit-code map serve the gate, the readiness preflight, and the scaffold alike.
 
-The **Hook-Contract** these mechanisms share has a **single source in this session family** — [02-enforcement.md](/specification/enforcement/) — and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) **references up** to it rather than redefining the contract. Session owns the contract; the workbench states only its scoped view of the same PreToolUse shape.
+The **Hook-Contract** these mechanisms share has a **single source in this session family** — [02-enforcement.md](/session/enforcement/) — and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) **references up** to it rather than redefining the contract. Session owns the contract; the workbench states only its scoped view of the same PreToolUse shape.
 
 ---
 
 ## Discovery and Registration
 
-A CLI is **discovered from a declared inventory, not from a filesystem walk or from prose**. The registry (`registry.json`) is the workbench-tier discovery source ([workbench/20-cli.md](/workbench/cli/)) — the direct analogue of a static command manifest. At the session tier the same pattern generalizes one level up: the `.session/config.json` ([05-config-cascade.md](/specification/config-cascade/)) is the session-level manifest of registered SOPs, their CLIs, and their reserved namespaces. So "how to build a CLI" at session level includes one act of registration — **a CLI registers its skills and its namespace into the session config**, exactly as Branch/Leaf CLIs register into `registry.json`. The reserved namespace is the family's branch prefix lifted to the session tier — the `prefix-hyphen-name` discovery handle one level up. `npm link` is treated as registration only; it grants no discovery. The shared `cli/` root folder is a legitimate home for cross-project tools ([workbench/12-folders.md](/workbench/folders/)).
+A CLI is **discovered from a declared inventory, not from a filesystem walk or from prose**. The registry (`registry.json`) is the workbench-tier discovery source ([workbench/20-cli.md](/workbench/cli/)) — the direct analogue of a static command manifest. At the session tier the same pattern generalizes one level up: the `.session/config.json` ([05-config-cascade.md](/session/config-cascade/)) is the session-level manifest of registered SOPs, their CLIs, and their reserved namespaces. So "how to build a CLI" at session level includes one act of registration — **a CLI registers its skills and its namespace into the session config**, exactly as Branch/Leaf CLIs register into `registry.json`. The reserved namespace is the family's branch prefix lifted to the session tier — the `prefix-hyphen-name` discovery handle one level up. `npm link` is treated as registration only; it grants no discovery. The shared `cli/` root folder is a legitimate home for cross-project tools ([workbench/12-folders.md](/workbench/folders/)).
 
 ---
 
@@ -116,7 +116,7 @@ Re-running a leaf **MUST** be safe. Mutating leaves are **additive, existence-ch
 
 ## Conventions (reference)
 
-Names follow the lowercase **`prefix-hyphen-name`** scheme; the prefix is the discovery handle. That naming convention and the trailing-slash folder brevity are defined once in the SOP area's [conventions chapter](/specification/conventions/) and **MUST NOT** be restated here. One convention this chapter does settle: subcommands are **space-separated** (`memo session resolve`, `memo maintenance verify`), matching the project's existing CLIs and the dominant convention (git, Docker, kubectl, Cobra) — **not** the colon form (`heroku domains:add`). This is stated explicitly so it is not re-litigated per family.
+Names follow the lowercase **`prefix-hyphen-name`** scheme; the prefix is the discovery handle. That naming convention and the trailing-slash folder brevity are defined once in the SOP area's [conventions chapter](/session/conventions/) and **MUST NOT** be restated here. One convention this chapter does settle: subcommands are **space-separated** (`memo session resolve`, `memo maintenance verify`), matching the project's existing CLIs and the dominant convention (git, Docker, kubectl, Cobra) — **not** the colon form (`heroku domains:add`). This is stated explicitly so it is not re-litigated per family.
 
 ---
 
@@ -194,7 +194,7 @@ The `--describe` contract is likewise the core standard's (REQ-702); the session
 ## Related
 
 - [workbench/20-cli.md](/workbench/cli/) — the workbench CLI convention and the registry as the single discovery source.
-- [05-config-cascade.md](/specification/config-cascade/) — the `.session/config.json` cascade and the `flag > env > config > default` precedence this chapter relies on.
-- [07-doctor-init.md](/specification/doctor-init/) — the `doctor` / `init` verb contracts whose names this chapter reserves.
+- [05-config-cascade.md](/session/config-cascade/) — the `.session/config.json` cascade and the `flag > env > config > default` precedence this chapter relies on.
+- [07-doctor-init.md](/session/doctor-init/) — the `doctor` / `init` verb contracts whose names this chapter reserves.
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf data model and `{status, error, fix}` envelope.
-- [13-conventions.md](/specification/conventions/) — the `prefix-hyphen-name` naming convention this chapter references.
+- [13-conventions.md](/session/conventions/) — the `prefix-hyphen-name` naming convention this chapter references.

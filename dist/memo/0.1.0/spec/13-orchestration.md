@@ -6,7 +6,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/memo/0.1.0/spec/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/13-orchestration.md."
@@ -85,7 +85,7 @@ The parallelism dials above describe *how many* units run concurrently once para
 
 > **Terminology.** This section's mechanism is a **model-driven research fan-out**, *not* a "dynamic workflow". The platform reserves **Dynamic Workflow** for a different, script-driven primitive — a JavaScript script that holds the loop/branching/intermediate results and scales to dozens or hundreds of agents (the third agent-execution primitive, defined in [14-agents-skills-tasks.md](/specification/agents-skills-tasks/)). To avoid a permanent collision with the platform term, this spec calls its own model-driven mechanism a *research fan-out* and uses *Dynamic Workflow* only for the script primitive.
 
-- **Model-driven research fan-out is research-only.** A research fan-out — the Lead spawning parallel sub-agents that each gather information and report back — is permitted **only** for genuine **research**. The Default is **2-4 parallel sub-agents**. This is the *single* place a model-driven fan-out is allowed; it is documented in [research-workflow](../../../core/skills/research/research-workflow/SKILL.md).
+- **Model-driven research fan-out is research-only.** A research fan-out — the Lead spawning parallel sub-agents that each gather information and report back — is permitted **only** for genuine **research**. The Default is **2-4 parallel sub-agents**. This is the *single* place a model-driven fan-out is allowed; it is documented in the `research-workflow` skill.
 - **Everything else uses agents.** All non-research orchestration — phase execution above all — uses the **agent team** (Lead/Worker/Evaluator/Phase Evaluator), because agents are native to Claude Code and integrate better than a generic runner. Phase execution (`memo-phase-execute`) is therefore **agent-based** and **MUST NOT** run as a script-driven Dynamic Workflow.
 - **Added parallelism in phase execution requires evidence.** The "in parallel where dependencies allow" rule (above) stays the dependency-gated Default for the agent phase. Increasing that parallelism — for example wiring the Parallelism Dials into `memo-phase-execute` — is **NOT** done on the strength of the spec dials alone; it requires real, measured **evidence** first.
 

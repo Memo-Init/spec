@@ -25,10 +25,14 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-merge-strategy` | contributing | — |
-| `git-push` | contributing | — |
-| `memo-plan-add` | contributing | — |
+| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
+| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
+| `memo-plan-add` | contributing | Fuegt ein finalisiertes Memo zu einem bestehenden Plan hinzu |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

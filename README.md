@@ -4,18 +4,19 @@
 # memo-init / spec
 
 The **memo-init specification** — an inductive, RFC-style description of the
-memo-system (memo-driven, agentic software engineering) plus the **workbench**
-and **SOP** sibling specs.
+memo-system (memo-driven, agentic software engineering) as four sibling families:
+**memo**, **workbench**, **session**, and the **meta-specification** (`spec`, the
+family that specifies spec structure itself).
 
 The spec is not invented top-down: it is **induced** from the live memo-toolkit,
 so it documents the real, verified system rather than an idealized model. It uses
-RFC 2119 / BCP 14 conformance language and is versioned per directory.
+RFC 2119 / BCP 14 conformance language and is versioned per family and version.
 
 | | |
 |---|---|
 | **Status** | v0.1.0 Draft |
-| **Conformance** | RFC 2119 / BCP 14 (see `spec/v0.1.0/00-overview.md`) |
-| **Versioning** | per directory: `spec/v0.1.0/` — active version in `data/refs.manual.json` (never hardcoded) |
+| **Conformance** | RFC 2119 / BCP 14 (each family's `00-overview` carries its conformance anchor) |
+| **Versioning** | per family + version: `draft/<family>/<version>/spec/` — active version in `data/refs.manual.json` (never hardcoded) |
 
 ## Quickstart
 
@@ -26,8 +27,8 @@ git clone https://github.com/memo-init/spec.git
 cd spec
 ```
 
-Begin with `spec/v0.1.0/00-overview.md`, then read the numbered chapters in
-order. Generated artifacts under `generated/` are produced by the build:
+Begin with `draft/memo/0.1.0/spec/00-overview.md`, then read the numbered chapters
+in order. Generated artifacts under `dist/` are produced by the build:
 
 ```bash
 npm i
@@ -36,30 +37,31 @@ npm run build
 
 ## Features
 
-The repository is organized into a hand-written core spec, two sibling specs
-(workbench and SOP), and a generated machine-readable layer:
+The repository is organized into four hand-written sibling spec families under
+`draft/`, and a generated machine-readable layer under `dist/`:
 
 ```
-spec/v0.1.0/        Core spec chapters (hand-written) — a single memo's lifecycle
-spec/workbench/     Workbench sibling spec: project structure, folders, CLI & scripts, config, wiki, trash
-spec/sop/           SOP sibling spec: the thin SOP standard (common denominator, instances, conventions)
-data/               refs.manual.json (source of truth) + refs.schema.json (AJV)
-generated/          DO NOT EDIT — llms.txt, refs.resolved.json, docs-payload/ + manifest.json
-scripts/            generate-refs / -docs-payload / -manifest / -llms-txt (.mjs)
-personas/           3-5 audience personas + entry-points + tone-guide
-.github/workflows/  generate + cross-repo dispatch (spec-updated / refs-updated)
+draft/<family>/<version>/spec/   Hand-written chapters (memo, workbench, session, spec)
+draft/<family>/<version>/data/   skill-spec-map.json (the bridge source edge)
+draft/<family>/spec.json         Per-family head: identity, route, sidebar metadata
+data/                            refs.manual.json (source of truth) + refs.schema.json (AJV)
+dist/                            DO NOT EDIT — rendered payload, bridges, manifest, inverted-map
+scripts/                         generate-refs / -docs-payload / -bridge / -manifest + gates (.mjs)
+personas/                        audience personas + entry-points + tone-guide
+.github/workflows/               generate + cross-repo dispatch (spec-updated / refs-updated)
 ```
 
-- **Core spec:** the numbered chapters under `spec/v0.1.0/`, hand-written.
-- **Workbench sibling spec:** project structure, folders, CLI & scripts, config,
-  wiki, trash under `spec/workbench/`.
-- **SOP sibling spec:** the thin SOP standard — common denominator, instances,
-  conventions — under `spec/sop/`.
+- **Four families:** `memo` (a single memo's lifecycle), `workbench` (project
+  structure, folders, CLI, config, wiki), `session` (the session genesis layer
+  and SOP area), and `spec` — the **meta-specification** that specifies spec
+  structure itself. Each is authored under `draft/<family>/<version>/spec/` and
+  published to `dist/<family>/<version>/`.
 - **References:** `data/refs.manual.json` is the source of truth (validated by
-  `data/refs.schema.json`); the active version is resolved there, never
-  hardcoded.
-- **Generated layer:** `generated/` holds `llms.txt`, `refs.resolved.json` and
-  the docs-payload — do not edit by hand.
+  `data/refs.schema.json`); the active version per family is resolved there,
+  never hardcoded.
+- **Generated layer:** `dist/` holds the rendered chapter payload, the per-page
+  bridges + backlinks, `manifest.json`, and `inverted-map.json` — do not edit by
+  hand; run `npm run build` instead.
 - **Personas:** `personas/` holds the audience personas, entry-points and a
   tone-guide.
 

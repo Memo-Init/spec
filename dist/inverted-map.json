@@ -1,5 +1,5 @@
 {
-    "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its public implementer skills with role + the public projection fields. Generated from skill-spec-map.json. The internal-only gaps roll-up is not published here (Memo 059, PRD-003).",
+    "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its public implementer skills with role + the public projection fields. Generated from skill-spec-map.json. Two internal fields are NEVER published here: the gaps roll-up and the per-record provenance hash (SPEC-REQ-006, [05-publishing-principle]).",
     "generator": "scripts/generate-bridge.mjs",
     "mapHash": "4b848637a1d5",
     "pages": [
@@ -30,8 +30,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "50988e91eeca"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -79,8 +78,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "263174cf287e"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -173,8 +171,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "ab16b87b1ed2"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -205,8 +202,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "56aee77cef11"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -239,8 +235,7 @@
                 "memo"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "71bab6dce297"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -273,8 +268,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "6cec7dec7a8f"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -324,8 +318,7 @@
                 "workbench"
             ],
             "requirementCount": 4,
-            "internalCount": 0,
-            "provenance": "235b5bb915e2"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -398,8 +391,7 @@
                 "memo"
             ],
             "requirementCount": 5,
-            "internalCount": 0,
-            "provenance": "e73a503b0e43"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -506,8 +498,7 @@
                 "workbench"
             ],
             "requirementCount": 6,
-            "internalCount": 0,
-            "provenance": "0e13871f2c8d"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -639,8 +630,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "3dd3b6ae494f"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -705,8 +695,7 @@
                 "wiki"
             ],
             "requirementCount": 8,
-            "internalCount": 0,
-            "provenance": "90fe7a68710b"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -806,8 +795,7 @@
                 "workbench"
             ],
             "requirementCount": 5,
-            "internalCount": 1,
-            "provenance": "c843f979c7b5"
+            "internalCount": 1
         },
         {
             "family": "memo",
@@ -868,8 +856,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 1,
-            "provenance": "f8c2979ec7f9"
+            "internalCount": 1
         },
         {
             "family": "memo",
@@ -976,8 +963,7 @@
                 "research"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "6c7713a5fd24"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1025,8 +1011,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 2,
-            "provenance": "5a5a38087457"
+            "internalCount": 2
         },
         {
             "family": "memo",
@@ -1071,8 +1056,7 @@
                 "prd"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "9ec67918ae84"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1179,8 +1163,7 @@
                 "workbench"
             ],
             "requirementCount": 8,
-            "internalCount": 4,
-            "provenance": "c8782d78831d"
+            "internalCount": 4
         },
         {
             "family": "memo",
@@ -1251,8 +1234,7 @@
                 "workbench"
             ],
             "requirementCount": 6,
-            "internalCount": 1,
-            "provenance": "e918465fd425"
+            "internalCount": 1
         },
         {
             "family": "memo",
@@ -1289,8 +1271,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "060edb5c8f83"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1348,8 +1329,7 @@
                 "workbench"
             ],
             "requirementCount": 1,
-            "internalCount": 6,
-            "provenance": "a90bfa77968f"
+            "internalCount": 6
         },
         {
             "family": "memo",
@@ -1391,8 +1371,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "cc4c1e61f9b0"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1448,8 +1427,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "fb0532ab370a"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1490,8 +1468,7 @@
                 "memo"
             ],
             "requirementCount": 4,
-            "internalCount": 0,
-            "provenance": "d14e232fa8c5"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1595,8 +1572,7 @@
                 "wiki"
             ],
             "requirementCount": 6,
-            "internalCount": 3,
-            "provenance": "a6c9411ca150"
+            "internalCount": 3
         },
         {
             "family": "memo",
@@ -1644,8 +1620,7 @@
                 "workbench"
             ],
             "requirementCount": 5,
-            "internalCount": 0,
-            "provenance": "cd77ce076785"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1679,8 +1654,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "60d063ed3718"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1724,8 +1698,7 @@
                 "wiki"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "fc4ab4edca2c"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1774,8 +1747,7 @@
                 "workbench"
             ],
             "requirementCount": 1,
-            "internalCount": 0,
-            "provenance": "39cba80ecc5f"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1818,8 +1790,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "116568184b06"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1868,8 +1839,7 @@
                 "workbench"
             ],
             "requirementCount": 1,
-            "internalCount": 1,
-            "provenance": "2cafe5419028"
+            "internalCount": 1
         },
         {
             "family": "memo",
@@ -1918,8 +1888,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "e23795e40615"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -1975,8 +1944,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "caa57bd407ba"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2018,8 +1986,7 @@
                 "prd"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "543c8471dd75"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2075,8 +2042,7 @@
                 "memo"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "da7fd3eeb117"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2123,8 +2089,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "c8f4ae5654d2"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2169,8 +2134,7 @@
                 "memo"
             ],
             "requirementCount": 7,
-            "internalCount": 1,
-            "provenance": "8a7cfc40044d"
+            "internalCount": 1
         },
         {
             "family": "memo",
@@ -2248,8 +2212,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "2237801d49e0"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2277,8 +2240,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "3f5b3908084d"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2373,8 +2335,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "1dd65fecd015"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2419,8 +2380,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "3aa7480e5683"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2452,8 +2412,7 @@
                 "memo"
             ],
             "requirementCount": 4,
-            "internalCount": 2,
-            "provenance": "161e2b508a70"
+            "internalCount": 2
         },
         {
             "family": "memo",
@@ -2493,8 +2452,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "fb4cf89fd981"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2570,8 +2528,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "7a8b87ba62a8"
+            "internalCount": 0
         },
         {
             "family": "memo",
@@ -2609,8 +2566,7 @@
                 "skill"
             ],
             "requirementCount": 8,
-            "internalCount": 1,
-            "provenance": "b4af4ee4a739"
+            "internalCount": 1
         },
         {
             "family": "memo",
@@ -2639,8 +2595,7 @@
             ],
             "clusters": [],
             "requirementCount": 22,
-            "internalCount": 6,
-            "provenance": "edf9fc2ab691"
+            "internalCount": 6
         },
         {
             "family": "memo",
@@ -2675,8 +2630,7 @@
                 "memo"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "c71119e7208a"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -2708,8 +2662,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "ded22c49bc42"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -2738,8 +2691,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "c9b0328f2a4a"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -2785,8 +2737,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "b74a5c9783f7"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -2816,8 +2767,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "229fa1febede"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -2858,8 +2808,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 1,
-            "provenance": "f4828dda93c4"
+            "internalCount": 1
         },
         {
             "family": "workbench",
@@ -2898,8 +2847,7 @@
                 "workbench"
             ],
             "requirementCount": 3,
-            "internalCount": 0,
-            "provenance": "eabdaa11e7ea"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -2945,8 +2893,7 @@
                 "wiki"
             ],
             "requirementCount": 4,
-            "internalCount": 0,
-            "provenance": "d252b7d07aa2"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -2975,8 +2922,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "cf724d9e235c"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3011,8 +2957,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "67aa91f351f5"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3040,8 +2985,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "36f2e0595695"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3070,8 +3014,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "5f00aacf15fb"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3099,8 +3042,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "555332a00436"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3152,8 +3094,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "034b95773087"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3196,8 +3137,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "74483b390bb3"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3242,8 +3182,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "1c36b5c92615"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3291,8 +3230,7 @@
                 "workbench"
             ],
             "requirementCount": 3,
-            "internalCount": 0,
-            "provenance": "882eb55559cb"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3328,8 +3266,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "acdd9fd49779"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3372,8 +3309,7 @@
                 "workbench"
             ],
             "requirementCount": 3,
-            "internalCount": 0,
-            "provenance": "8f339eedb5e5"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3407,8 +3343,7 @@
                 "workbench"
             ],
             "requirementCount": 1,
-            "internalCount": 0,
-            "provenance": "f3a891af7ed1"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3461,8 +3396,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "46590de3eb39"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3504,8 +3438,7 @@
                 "research"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "87b84a6985e1"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3547,8 +3480,7 @@
                 "workbench"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "7c853651a280"
+            "internalCount": 0
         },
         {
             "family": "workbench",
@@ -3602,8 +3534,7 @@
                 "workbench"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "720d66b10c0b"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3632,8 +3563,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "ae693241c02b"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3662,8 +3592,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "f6d199b81367"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3690,8 +3619,7 @@
                 "session"
             ],
             "requirementCount": 6,
-            "internalCount": 0,
-            "provenance": "7cd70a70452a"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3718,8 +3646,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "836c44c75b89"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3747,8 +3674,7 @@
                 "session"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "9d11d9f4fd47"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3777,8 +3703,7 @@
                 "session"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "755db48bd4b3"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3807,8 +3732,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "5c4670876ed0"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3837,8 +3761,7 @@
                 "session"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "2bac5dfc91ba"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3867,8 +3790,7 @@
                 "session"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "507916a1e83c"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3897,8 +3819,7 @@
                 "session"
             ],
             "requirementCount": 2,
-            "internalCount": 0,
-            "provenance": "5b9eedf04d9a"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3929,8 +3850,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "5818e1301c0e"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3957,8 +3877,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "346578d4ab34"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -3985,8 +3904,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "c830538a295a"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -4014,8 +3932,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "a93525c79d2c"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -4044,8 +3961,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "1d8bc524910c"
+            "internalCount": 0
         },
         {
             "family": "session",
@@ -4073,8 +3989,7 @@
                 "session"
             ],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "18b45d3c1797"
+            "internalCount": 0
         },
         {
             "family": "spec",
@@ -4092,8 +4007,7 @@
             "outOfScope": [],
             "clusters": [],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "a76ae9e52279"
+            "internalCount": 0
         },
         {
             "family": "spec",
@@ -4111,9 +4025,8 @@
             "grader": null,
             "outOfScope": [],
             "clusters": [],
-            "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "7c40bdde4aed"
+            "requirementCount": 4,
+            "internalCount": 0
         },
         {
             "family": "spec",
@@ -4131,9 +4044,8 @@
             "grader": null,
             "outOfScope": [],
             "clusters": [],
-            "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "9cd7f29dccc9"
+            "requirementCount": 1,
+            "internalCount": 0
         },
         {
             "family": "spec",
@@ -4152,9 +4064,8 @@
             "grader": null,
             "outOfScope": [],
             "clusters": [],
-            "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "6a0428fee81e"
+            "requirementCount": 1,
+            "internalCount": 0
         },
         {
             "family": "spec",
@@ -4173,8 +4084,7 @@
             "outOfScope": [],
             "clusters": [],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "feefd7cf0c5d"
+            "internalCount": 0
         },
         {
             "family": "spec",
@@ -4193,8 +4103,26 @@
             "outOfScope": [],
             "clusters": [],
             "requirementCount": 0,
-            "internalCount": 0,
-            "provenance": "ac85505b617f"
+            "internalCount": 0
+        },
+        {
+            "family": "spec",
+            "id": "spec/07-versioning",
+            "stem": "07-versioning",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-per-chapter-format",
+                "05-publishing-principle"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
         }
     ]
 }

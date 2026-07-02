@@ -6,7 +6,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/21-environment-scripts.md."
@@ -28,7 +28,7 @@ A project's environment is operated through a small, named family of scripts. Th
 | `cleanup.sh` | Tear the environment down and remove transient state. |
 | `health-check.sh` | Verify that the environment is in working order. |
 
-Scripts **MUST** live in **meaningful subfolders** of `scripts/`, not as a flat pile at the top level. A bare `dev.sh` says too little about *which* environment it starts; the **subfolder name carries the meaning** (for example `scripts/rails/dev.sh`). This is the same convention the CLI chapter applies to commands — meaning lives in the name, not in a comment (see [20-cli.md](/specification/cli/)), and it connects to the About convention that documents what a scripts subfolder does.
+Scripts **MUST** live in **meaningful subfolders** of `scripts/`, not as a flat pile at the top level. A bare `dev.sh` says too little about *which* environment it starts; the **subfolder name carries the meaning** (for example `scripts/rails/dev.sh`). This is the same convention the CLI chapter applies to commands — meaning lives in the name, not in a comment (see [20-cli.md](/workbench/cli/)), and it connects to the About convention that documents what a scripts subfolder does.
 
 ---
 
@@ -49,7 +49,7 @@ Beyond a single project's `health-check.sh`, the **workbench level** has its own
 
 - Does every repository under each project's `repos/` have a `.git`?
 - Does every repository have a configured remote?
-- Does each project carry the mandatory folders (see [12-folders.md](/specification/folders/))?
+- Does each project carry the mandatory folders (see [12-folders.md](/workbench/folders/))?
 
 These checks **categorize** the workbench state rather than building anything. They are the workbench's realization of the **Health** part of the common SOP denominator (see [the SOP common denominator](/session/common-denominator/)): a definite, observable answer to "is this scope in order?". The workbench-SOP's Health step is exactly this family of checks.
 
@@ -57,21 +57,21 @@ These checks **categorize** the workbench state rather than building anything. T
 
 ## Workbench-Health as a Deterministic SOP Method
 
-Workbench-Health is **the Health method** of the workbench-SOP made concrete: the checks above are not advisory inspections but **deterministic tests** that produce a definite answer — **pass**, **fail**, or **report** — over the workbench scope. Determinism is the point: the same workbench in the same state always yields the same verdict, so "is this scope in order?" is answered the same way by a human, an agent, or a CI step. The check family is the workbench's realization of the common SOP standard's Health part ([the SOP common denominator](/session/common-denominator/)) and is what [24-skills-scope.md](/specification/skills-scope/) routes the workbench's Health responsibility to.
+Workbench-Health is **the Health method** of the workbench-SOP made concrete: the checks above are not advisory inspections but **deterministic tests** that produce a definite answer — **pass**, **fail**, or **report** — over the workbench scope. Determinism is the point: the same workbench in the same state always yields the same verdict, so "is this scope in order?" is answered the same way by a human, an agent, or a CI step. The check family is the workbench's realization of the common SOP standard's Health part ([the SOP common denominator](/session/common-denominator/)) and is what [24-skills-scope.md](/workbench/skills-scope/) routes the workbench's Health responsibility to.
 
 Two deterministic checks carry the method:
 
-- **Folder placement.** Every **mandatory registered folder** **MUST** be present and at the **right level** — a root-level folder at the root, a per-project folder under its project (the level split is drawn in [10-root-and-projects.md](/specification/root-and-projects/); the per-project layout is the authoritative contract in [12-folders.md](/specification/folders/)). The check is two-directional: a missing mandatory folder is a **fail**, and an **unexpected top-level entry** — something present that the registered layout does not account for — is **flagged** in the report. The structure is verified against the declared layout, not against a guess.
+- **Folder placement.** Every **mandatory registered folder** **MUST** be present and at the **right level** — a root-level folder at the root, a per-project folder under its project (the level split is drawn in [10-root-and-projects.md](/workbench/root-and-projects/); the per-project layout is the authoritative contract in [12-folders.md](/workbench/folders/)). The check is two-directional: a missing mandatory folder is a **fail**, and an **unexpected top-level entry** — something present that the registered layout does not account for — is **flagged** in the report. The structure is verified against the declared layout, not against a guess.
 
-- **Repo-status correctness.** Each repository's **declared status** — the three axes `visibility` / `remote` / `facing` ([22-config.md](/specification/config/)) — **MUST match reality**. A repository declared `outward` **MUST** actually have its named remote; one declared `inward` **MUST** have no remote (or `none`). A declaration that contradicts the repository's real git state is a **fail**. This is the **verification side** of the declared-status work: [22-config.md](/specification/config/) is where the status is *declared*, and the inward-push gate ([23-hooks-contract.md](/specification/hooks-contract/)) *reads* the declaration to decide a push — Workbench-Health (together with **git-security**) is what keeps that declaration **honest**, so the gate consumes a record that has been checked against reality rather than trusted.
+- **Repo-status correctness.** Each repository's **declared status** — the three axes `visibility` / `remote` / `facing` ([22-config.md](/workbench/config/)) — **MUST match reality**. A repository declared `outward` **MUST** actually have its named remote; one declared `inward` **MUST** have no remote (or `none`). A declaration that contradicts the repository's real git state is a **fail**. This is the **verification side** of the declared-status work: [22-config.md](/workbench/config/) is where the status is *declared*, and the inward-push gate ([23-hooks-contract.md](/workbench/hooks-contract/)) *reads* the declaration to decide a push — Workbench-Health (together with **git-security**) is what keeps that declaration **honest**, so the gate consumes a record that has been checked against reality rather than trusted.
 
-Because both checks are deterministic (pass / fail / report), Workbench-Health is the structural verification half of the workbench's two deterministic mechanisms — paired with the hook-based gating of [23-hooks-contract.md](/specification/hooks-contract/). It builds nothing and decides nothing about content quality; it answers, definitively, whether the workbench's structure and its declared repo statuses are in order.
+Because both checks are deterministic (pass / fail / report), Workbench-Health is the structural verification half of the workbench's two deterministic mechanisms — paired with the hook-based gating of [23-hooks-contract.md](/workbench/hooks-contract/). It builds nothing and decides nothing about content quality; it answers, definitively, whether the workbench's structure and its declared repo statuses are in order.
 
 ---
 
 ## Direction — Self-Healing Workbench (Informative)
 
-> **Informative / forward-looking.** This subsection records a **direction only**. The mechanism is **deferred** to a later revision / rollout and is **not** specified or built here.
+> **Informative.** This subsection records a **direction only** and is forward-looking. The mechanism is **deferred** to a later revision / rollout and is **not** specified or built here.
 
 The deterministic Health method above *detects* that the workbench is out of order; the longer-term direction is for the workbench to also *act* on what it detects — to **self-heal** and, eventually, **self-evolve**. The motivating case is capability rather than structure: when a need surfaces at the **workbench level** — for instance during *Landing the Plane*, where a recurring gap in the tooling becomes visible — the workbench should be able to **add the missing capability (a skill) on demand**, rather than the operator hand-rolling it every time. The aim is to step out of the manual "rat race" in which the same gap is patched by hand session after session.
 
@@ -81,7 +81,7 @@ This is named as an aspiration so the spec is honest about where it points, **wi
 
 ## Conformity Requirements
 
-The script-folder rules are checkable, and the boot contract is judged against the declared-and-scripted path. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how scripts are laid out and how a project is booted, each `check` faces the structure audit and the boot path. The Workbench-Health folder-placement and repo-status tests are not restated here — they are owned as conformity rules on their home pages ([12-folders.md](/specification/folders/), [15-repos.md](/specification/repos/)). These blocks are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+The script-folder rules are checkable, and the boot contract is judged against the declared-and-scripted path. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how scripts are laid out and how a project is booted, each `check` faces the structure audit and the boot path. The Workbench-Health folder-placement and repo-status tests are not restated here — they are owned as conformity rules on their home pages ([12-folders.md](/workbench/folders/), [15-repos.md](/workbench/repos/)). These blocks are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
 That scripts live in meaningful subfolders is a structural fact:
 
@@ -130,10 +130,10 @@ Whether a project boots through its declared script rather than an inline sequen
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [20-cli.md](/specification/cli/) — the meaningful-subfolder convention, shared with the CLI.
-- [12-folders.md](/specification/folders/) — the `scripts/` folder and the mandatory per-project layout the folder-placement check verifies.
-- [10-root-and-projects.md](/specification/root-and-projects/) — the root-vs-project level split the folder-placement check tests against.
-- [22-config.md](/specification/config/) — where each repository's three-axis status is *declared*; Workbench-Health verifies the declaration matches reality.
-- [23-hooks-contract.md](/specification/hooks-contract/) — the inward-push gate that *reads* the declared status; Workbench-Health and git-security keep that declaration honest.
-- [24-skills-scope.md](/specification/skills-scope/) — the workbench-SOP's Health responsibility that routes to this chapter's deterministic checks.
+- [20-cli.md](/workbench/cli/) — the meaningful-subfolder convention, shared with the CLI.
+- [12-folders.md](/workbench/folders/) — the `scripts/` folder and the mandatory per-project layout the folder-placement check verifies.
+- [10-root-and-projects.md](/workbench/root-and-projects/) — the root-vs-project level split the folder-placement check tests against.
+- [22-config.md](/workbench/config/) — where each repository's three-axis status is *declared*; Workbench-Health verifies the declaration matches reality.
+- [23-hooks-contract.md](/workbench/hooks-contract/) — the inward-push gate that *reads* the declared status; Workbench-Health and git-security keep that declaration honest.
+- [24-skills-scope.md](/workbench/skills-scope/) — the workbench-SOP's Health responsibility that routes to this chapter's deterministic checks.
 - [The SOP common denominator](/session/common-denominator/) — Setup, Health, Update; the health scripts realize Health.

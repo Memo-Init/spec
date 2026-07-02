@@ -15,7 +15,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 ## 2. Public entry points
 
-`session-common-denominator` _(inferred from primary owners)_ · docs entry `https://memo-init.github.io/session/overview/`
+`session-common-denominator` _(inferred from primary owners)_ · docs entry `/session/overview/`
 
 ## 3. Required detail pages
 
@@ -25,8 +25,12 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-common-denominator` | primary | — |
+| `session-common-denominator` | primary | Author and lint-check a single SOP entry-point page against the normative SOP Page Contract — every SOP instance page MUST carr… |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

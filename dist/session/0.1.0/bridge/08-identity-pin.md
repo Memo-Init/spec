@@ -15,7 +15,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 ## 2. Public entry points
 
-`session-identity-pin` _(inferred from primary owners)_ · docs entry `https://memo-init.github.io/session/overview/`
+`session-identity-pin` _(inferred from primary owners)_ · docs entry `/session/overview/`
 
 ## 3. Required detail pages
 
@@ -25,8 +25,12 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-identity-pin` | primary | — |
+| `session-identity-pin` | primary | Pin the session identity once at SessionStart and keep it stable for the whole session |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

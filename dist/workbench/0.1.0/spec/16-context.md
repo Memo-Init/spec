@@ -6,7 +6,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/16-context.md."
@@ -30,21 +30,21 @@ edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/1
 | Goes in | Processed, derived documents, organized under a per-topic sub-folder. |
 | Does not | Raw, unprocessed feeds (those go to `data/`); a generated artifact treated as the source it presents. |
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/specification/folders/)).
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 
 ## Processed, Not Raw
 
-`context/` holds **processed** material; raw feeds and dumps live in the optional `data/` folder. The split is by state of processing — `data/` is the input side, `context/` is the worked result produced from it (and from elsewhere). Keeping them apart stops raw dumps from polluting the readable research store; the full distinction is in [12-folders.md](/specification/folders/).
+`context/` holds **processed** material; raw feeds and dumps live in the optional `data/` folder. The split is by state of processing — `data/` is the input side, `context/` is the worked result produced from it (and from elsewhere). Keeping them apart stops raw dumps from polluting the readable research store; the full distinction is in [12-folders.md](/workbench/folders/).
 
 ---
 
 ## The Primary, Immutable Source
 
-`context/` is a project's **primary, immutable source**: the durable ground that memos and generated bundles are distilled *from*, never a derivative that can be regenerated. Because the project root is local ([11-project-structure.md](/specification/project-structure/)), the contents of `context/` stay on the machine by construction — which is exactly why sensitive, half-formed research can live here safely. A generated artifact (a wiki page, an architecture bundle) is a *presentation* of this source and never a replacement for it.
+`context/` is a project's **primary, immutable source**: the durable ground that memos and generated bundles are distilled *from*, never a derivative that can be regenerated. Because the project root is local ([11-project-structure.md](/workbench/project-structure/)), the contents of `context/` stay on the machine by construction — which is exactly why sensitive, half-formed research can live here safely. A generated artifact (a wiki page, an architecture bundle) is a *presentation* of this source and never a replacement for it.
 
-`context/` also exists at two scopes: the **global** `context/` at the workbench root holds cross-project standards, while a project's `context/` holds documents specific to it. A document must sit at the level at which it applies (see [10-root-and-projects.md](/specification/root-and-projects/)).
+`context/` also exists at two scopes: the **global** `context/` at the workbench root holds cross-project standards, while a project's `context/` holds documents specific to it. A document must sit at the level at which it applies (see [10-root-and-projects.md](/workbench/root-and-projects/)).
 
 ---
 
@@ -52,15 +52,15 @@ edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/1
 
 Raw, in-progress research and "wild" downloaded data do not land in this `context/` by default — they live **memo-scoped**, in the owning memo's own `context/` folder (the memo specification routes proactive research there). Half-finished material accumulates with the memo that produced it, without polluting the project's curated store. This is a **positive convention, not a prohibition**: each kind of material has a home, and a memo's working research stays with that memo.
 
-Promoting a document **up** into the project (or global) `context/` is therefore a **deliberate, curatorial act**, not a default landing spot. A piece of research earns its place here once it is processed and worth drawing on **across** the project — the move from memo-scoped working material to shared, authored knowledge is a decision made on purpose, not the path of least resistance. The split keeps this `context/` the worked, readable side it is meant to be ([Processed, Not Raw](#processed-not-raw)): raw bulk inputs belong in `data/` and throwaway scratch in `.tmp/` ([12-folders.md](/specification/folders/), [19-tmp.md](/specification/tmp/)).
+Promoting a document **up** into the project (or global) `context/` is therefore a **deliberate, curatorial act**, not a default landing spot. A piece of research earns its place here once it is processed and worth drawing on **across** the project — the move from memo-scoped working material to shared, authored knowledge is a decision made on purpose, not the path of least resistance. The split keeps this `context/` the worked, readable side it is meant to be ([Processed, Not Raw](#processed-not-raw)): raw bulk inputs belong in `data/` and throwaway scratch in `.tmp/` ([12-folders.md](/workbench/folders/), [19-tmp.md](/workbench/tmp/)).
 
 ---
 
 ## A Folder Speaks Its Own Domain Language
 
-Different folders carry different **domain languages**, and `context/` is where several of them live as sub-folders rather than being merged into one format. The project architecture is stored under `context/architecture-okf/` in OKF ([41-project-architecture.md](/specification/project-architecture/), [13-knowledge-format-okf.md](/specification/knowledge-format-okf/)); other distilled research sits alongside it as plain Markdown. The workbench does not force one universal schema onto everything — it **separates by folder** and lets each sub-domain keep the convention that fits it. The layer that unifies these separated domains for retrieval is the wiki, which indexes across them as the project's search entry point ([30-wiki.md](/specification/wiki/)).
+Different folders carry different **domain languages**, and `context/` is where several of them live as sub-folders rather than being merged into one format. The project architecture is stored under `context/architecture-okf/` in OKF ([41-project-architecture.md](/workbench/project-architecture/), [13-knowledge-format-okf.md](/workbench/knowledge-format-okf/)); other distilled research sits alongside it as plain Markdown. The workbench does not force one universal schema onto everything — it **separates by folder** and lets each sub-domain keep the convention that fits it. The layer that unifies these separated domains for retrieval is the wiki, which indexes across them as the project's search entry point ([30-wiki.md](/workbench/wiki/)).
 
-**OKF is opt-in per sub-folder; the default for a folder is plain Markdown.** OKF is **not** a `context/`-wide mandate — only `context/architecture-okf/` (and `.wiki/`) adopt it, and any other `context/` sub-folder is plain Markdown by default. The opt-in is made concrete in configuration: the per-folder OKF convention is bound through `.workbench/folder-lints.json` ([22-config.md](/specification/config/)), **scoped to `architecture-okf/` and `.wiki/` only**. The convention is binding exactly where that binding is present and nowhere else — its absence everywhere else is what keeps OKF from spreading across `context/`.
+**OKF is opt-in per sub-folder; the default for a folder is plain Markdown.** OKF is **not** a `context/`-wide mandate — only `context/architecture-okf/` (and `.wiki/`) adopt it, and any other `context/` sub-folder is plain Markdown by default. The opt-in is made concrete in configuration: the per-folder OKF convention is bound through `.workbench/folder-lints.json` ([22-config.md](/workbench/config/)), **scoped to `architecture-okf/` and `.wiki/` only**. The convention is binding exactly where that binding is present and nowhere else — its absence everywhere else is what keeps OKF from spreading across `context/`.
 
 ---
 
@@ -121,9 +121,9 @@ The opt-in scoping of OKF is the presence-or-absence of a binding, a hard yes/no
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [12-folders.md](/specification/folders/) — `data/` (raw) vs. `context/` (processed), and the folder contract this page is the registered entry for.
-- [11-project-structure.md](/specification/project-structure/) — `context/` as the primary immutable source kept local.
-- [10-root-and-projects.md](/specification/root-and-projects/) — the global vs. project `context/` distinction.
-- [30-wiki.md](/specification/wiki/) — the wiki as the search layer that indexes across `context/`.
-- [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, the opt-in convention used by the architecture bundle under `context/`.
-- [22-config.md](/specification/config/) — `.workbench/folder-lints.json`, where the per-folder OKF convention is bound, scoped to `architecture-okf/` and `.wiki/`.
+- [12-folders.md](/workbench/folders/) — `data/` (raw) vs. `context/` (processed), and the folder contract this page is the registered entry for.
+- [11-project-structure.md](/workbench/project-structure/) — `context/` as the primary immutable source kept local.
+- [10-root-and-projects.md](/workbench/root-and-projects/) — the global vs. project `context/` distinction.
+- [30-wiki.md](/workbench/wiki/) — the wiki as the search layer that indexes across `context/`.
+- [13-knowledge-format-okf.md](/workbench/knowledge-format-okf/) — OKF, the opt-in convention used by the architecture bundle under `context/`.
+- [22-config.md](/workbench/config/) — `.workbench/folder-lints.json`, where the per-folder OKF convention is bound, scoped to `architecture-okf/` and `.wiki/`.

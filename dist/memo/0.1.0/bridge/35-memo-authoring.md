@@ -25,11 +25,15 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-balance` | contributing | — |
-| `memo-coherence` | contributing | — |
-| `memo-init` | contributing | — |
-| `memo-revision-execute` | contributing | — |
+| `memo-balance` | contributing | Check memo chapters for over-engineering and under-engineering |
+| `memo-coherence` | contributing | Provide honest, critical feedback on a memo — find gaps, contradictions, redundancies, and logical issues |
+| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
+| `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+`image-diagram-excalidraw`

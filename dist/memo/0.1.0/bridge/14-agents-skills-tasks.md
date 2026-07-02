@@ -25,11 +25,15 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-plan-evaluate` | contributing | — |
-| `memo-prd-evaluate` | contributing | — |
-| `skill-testing` | contributing | — |
-| `workbench-persona-audit` | primary | — |
+| `memo-plan-evaluate` | contributing | Bidirektionale Konformitaetspruefung Plan vs Memos |
+| `memo-prd-evaluate` | contributing | Validate PRDs against the source memo |
+| `skill-testing` | contributing | Systematic testing strategy for Claude Code skills |
+| `workbench-persona-audit` | primary | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+`repo-docs-writing`, `repo-readme`

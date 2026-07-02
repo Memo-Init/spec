@@ -6,20 +6,20 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/06-namespace-registry.md."
 ---
 
 
-The flat `skills[]` array of [02-enforcement.md](/specification/enforcement/) records *what* skills exist but not *who owns them* or *which family they belong to*. This chapter replaces it with an `sops[]` array of **registrant blocks** — one per **Tool** (a registered namespace, [00-overview.md](/specification/overview/)): each block reserves a `namespace`, names its `owner`, declares the `cli` it ships and the `folders[]` it owns, and lists the `skills[]` it contributes. The model is VS Code's `publisher` + `contributes` — a reserved owner identity on the left, a declarative capability block on the right.
+The flat `skills[]` array of [02-enforcement.md](/session/enforcement/) records *what* skills exist but not *who owns them* or *which family they belong to*. This chapter replaces it with an `sops[]` array of **registrant blocks** — one per **Tool** (a registered namespace, [00-overview.md](/session/overview/)): each block reserves a `namespace`, names its `owner`, declares the `cli` it ships and the `folders[]` it owns, and lists the `skills[]` it contributes. The model is VS Code's `publisher` + `contributes` — a reserved owner identity on the left, a declarative capability block on the right.
 
 ---
 
 ## From Flat `skills[]` to Owned `sops[]` Blocks
 
-The `prefix-hyphen-name` convention ([13-conventions.md](/specification/conventions/)) already *is* a namespace mechanism: `memo-init`, `memo-sop`, `memo-revision-*` all share the `memo` prefix that names their family. This chapter promotes that implicit prefix to a **first-class, owned, reserved `namespace` field**. Each block in `sops[]` carries:
+The `prefix-hyphen-name` convention ([13-conventions.md](/session/conventions/)) already *is* a namespace mechanism: `memo-init`, `memo-sop`, `memo-revision-*` all share the `memo` prefix that names their family. This chapter promotes that implicit prefix to a **first-class, owned, reserved `namespace` field**. Each block in `sops[]` carries:
 
 | Field | Role |
 |-------|------|
@@ -62,9 +62,9 @@ A **catalog** block reserves a namespace and contributes skills like any block, 
   "skills": [ { "id": "flowmcp-usage", "signals": ["attributionSkill:flowmcp-usage"] } ] }
 ```
 
-A **policy** block also reserves a namespace and contributes skills, and like a catalog it is **never a chain predecessor** — its `requires[]` is always empty and it feeds **no** `requirements[]` edge. What sets it apart is a third, separate gate axis: a policy block MAY feed the top-level `assertions[]` collection ([05-config-cascade.md](/specification/config-cascade/)), through which a *sub-set* of its skills must be read by the time a named **checkpoint** skill fires — enforced only as a `redirect`, never as a hard block. The development standards are one such policy block, reserved under the `node` namespace (see [The `node` Policy Block](#the-node-policy-block) below).
+A **policy** block also reserves a namespace and contributes skills, and like a catalog it is **never a chain predecessor** — its `requires[]` is always empty and it feeds **no** `requirements[]` edge. What sets it apart is a third, separate gate axis: a policy block MAY feed the top-level `assertions[]` collection ([05-config-cascade.md](/session/config-cascade/)), through which a *sub-set* of its skills must be read by the time a named **checkpoint** skill fires — enforced only as a `redirect`, never as a hard block. The development standards are one such policy block, reserved under the `node` namespace (see [The `node` Policy Block](#the-node-policy-block) below).
 
-The three kinds coexisting in one array is deliberate: the registry is the single union of everything registered, and a reader distinguishes them by inspecting `requires[]`, the top-level `requirements[]`, and the top-level `assertions[]` — not by reading three separate files. The SOP-instance-vs-catalog framing is elaborated in [10-sop.md](/specification/sop/).
+The three kinds coexisting in one array is deliberate: the registry is the single union of everything registered, and a reader distinguishes them by inspecting `requires[]`, the top-level `requirements[]`, and the top-level `assertions[]` — not by reading three separate files. The SOP-instance-vs-catalog framing is elaborated in [10-sop.md](/session/sop/).
 
 The three kinds are a classification over one base registrant — same reservation fields, three distinct gate behaviours:
 
@@ -110,7 +110,7 @@ With three kinds, the rule that *being registered does not make a block a gate* 
 
 ## The `node` Policy Block
 
-The development standards register as **one** policy block under the `node` namespace. The seven `node-*` skills are already named under that prefix, so the namespace is reserved with **no renames** — N-2 already holds. The block reserves `namespace` + `owner` + `tier` and contributes its `skills[]`; `requires[]` is empty (a policy block is never a chain predecessor); it feeds **no** `requirements[]` edge (the gate axis is left untouched, byte for byte); it MAY feed `assertions[]` (the separate policy gate axis, [05-config-cascade.md](/specification/config-cascade/)). Its canonical declaration:
+The development standards register as **one** policy block under the `node` namespace. The seven `node-*` skills are already named under that prefix, so the namespace is reserved with **no renames** — N-2 already holds. The block reserves `namespace` + `owner` + `tier` and contributes its `skills[]`; `requires[]` is empty (a policy block is never a chain predecessor); it feeds **no** `requirements[]` edge (the gate axis is left untouched, byte for byte); it MAY feed `assertions[]` (the separate policy gate axis, [05-config-cascade.md](/session/config-cascade/)). Its canonical declaration:
 
 ```jsonc
 { "namespace": "node", "owner": "node-formatting", "tier": 2,
@@ -134,7 +134,7 @@ Beyond its `id`, each policy-block member carries up to three facets:
 
 | Facet | Holds | Required? |
 |-------|-------|-----------|
-| `signals` | the read-receipt — `attributionSkill:<id>`, the harness-authored, structured signal that proves the skill was read ([02-enforcement.md](/specification/enforcement/), REQ-SS-SIGNAL) | yes |
+| `signals` | the read-receipt — `attributionSkill:<id>`, the harness-authored, structured signal that proves the skill was read ([02-enforcement.md](/session/enforcement/), REQ-SS-SIGNAL) | yes |
 | `mode` | the activation mode: `always` \| `contextual` \| `checkpoint` | **yes — mandatory, no silent default** |
 | `groups` | the checkpoint groups the member belongs to (e.g. `security`, `verification`); resolved cross-namespace ([Cross-Namespace Groups](#cross-namespace-groups)) | only for `checkpoint` members |
 
@@ -152,7 +152,7 @@ For the seven `node-*` skills this resolves to: `node-formatting` and `node-clas
 
 ### Read-Tracking Reuses the Harness Signal
 
-"Has the agent read skill X" is answered from the **same** structured `attributionSkill` signal the enforcement gate already trusts: the receipt is present iff `attributionSkill:node-X` appears, read jq-structured from the harness-authored transcript field, never as a substring (REQ-SS-SIGNAL, [02-enforcement.md](/specification/enforcement/)). No new sensor is introduced — read-tracking is a *view* over a signal the harness already writes. The read-only board that renders this view per-skill and per-group is `session prefs-status` ([07-doctor-init.md](/specification/doctor-init/)).
+"Has the agent read skill X" is answered from the **same** structured `attributionSkill` signal the enforcement gate already trusts: the receipt is present iff `attributionSkill:node-X` appears, read jq-structured from the harness-authored transcript field, never as a substring (REQ-SS-SIGNAL, [02-enforcement.md](/session/enforcement/)). No new sensor is introduced — read-tracking is a *view* over a signal the harness already writes. The read-only board that renders this view per-skill and per-group is `session prefs-status` ([07-doctor-init.md](/session/doctor-init/)).
 
 ### Cross-Namespace Groups
 
@@ -163,7 +163,7 @@ A `group` resolves over the **union of all blocks**, not within a single namespa
 | `security` | `node-validation`, `node-environment-manager`, `node-server-design` (node) **+ `git-security`** (git) **+ `npm-security`** (the supply-chain standard) | cross-namespace |
 | `verification` | `node-testing` (node) | single namespace |
 
-`git-security` and `npm-security` join `security` from their own namespaces, each declaring `groups:["security"]` in **its own** fragment — declare-don't-register, the marketplace firewall holds (no block reaches into another's). A group **resolves** only when every member is installed and ships its signal. A standard that is documented but **not yet registered as a core skill** is a **pending member**: the foreground doctor reports that the `requiresGroup` does not fully resolve, and the runtime gate degrades that to fail-open ALLOW (best-effort), never a redirect (see [07-doctor-init.md](/specification/doctor-init/)) — this is the safety net for any group whose membership outruns its registration. The checkpoint rows that consume these groups live in `assertions[]` ([05-config-cascade.md](/specification/config-cascade/)); the gate that evaluates them is in [02-enforcement.md](/specification/enforcement/).
+`git-security` and `npm-security` join `security` from their own namespaces, each declaring `groups:["security"]` in **its own** fragment — declare-don't-register, the marketplace firewall holds (no block reaches into another's). A group **resolves** only when every member is installed and ships its signal. A standard that is documented but **not yet registered as a core skill** is a **pending member**: the foreground doctor reports that the `requiresGroup` does not fully resolve, and the runtime gate degrades that to fail-open ALLOW (best-effort), never a redirect (see [07-doctor-init.md](/session/doctor-init/)) — this is the safety net for any group whose membership outruns its registration. The checkpoint rows that consume these groups live in `assertions[]` ([05-config-cascade.md](/session/config-cascade/)); the gate that evaluates them is in [02-enforcement.md](/session/enforcement/).
 
 ### Linking the Standards, Not Re-Describing Them
 
@@ -206,7 +206,7 @@ A registrant carries dependency information at **two granularities**, and both a
 | **Coarse** | `sops[].requires[]` | per-SOP, namespace → namespace ("memo presupposes workbench") | `session doctor` / `registry-validate` readiness preflight |
 | **Fine** | top-level `requirements[]` | entry point → skill, with `when:pre/post` (e.g. REQ-061 `memo-init → memo-sop`) | the PreToolUse enforcement gate |
 
-`requires[]` is the documentation of which families must be present; `requirements[]` is the exact runtime pre-gate edge the hook evaluates. They are **not** redundant: one declares a dependency between namespaces, the other declares the precise activation edge. `requirements[]` stays a **top-level** array (not nested per block) because a precondition edge crosses namespaces, and keeping it top level preserves the existing REQ-061 shape and the three-state enforcement contract of [02-enforcement.md](/specification/enforcement/) verbatim.
+`requires[]` is the documentation of which families must be present; `requirements[]` is the exact runtime pre-gate edge the hook evaluates. They are **not** redundant: one declares a dependency between namespaces, the other declares the precise activation edge. `requirements[]` stays a **top-level** array (not nested per block) because a precondition edge crosses namespaces, and keeping it top level preserves the existing REQ-061 shape and the three-state enforcement contract of [02-enforcement.md](/session/enforcement/) verbatim.
 
 ---
 
@@ -221,7 +221,7 @@ Two rules keep the registry sound. Both are stated normatively:
 
 N-2 makes the prefix convention a checkable invariant and, as a consequence, the **same leaf name MAY safely recur across namespaces** (`memo`/`init` and a future `workbench`/`init` are distinct) — the namespace's only job is to bound where a name must be unique.
 
-**Where they are caught is load-bearing.** Both rules are enforced **only at the foreground** `session doctor` / `session registry-validate` ([07-doctor-init.md](/specification/doctor-init/)) — the same place dangling edges are already caught. The PreToolUse hook MUST NEVER evaluate the collision rules: a colliding or malformed registry is **"registry malformed" → ERROR → fail-open ALLOW** per the three-state table of [02-enforcement.md](/specification/enforcement/). A namespace clash must never lock the machine out of its own tools.
+**Where they are caught is load-bearing.** Both rules are enforced **only at the foreground** `session doctor` / `session registry-validate` ([07-doctor-init.md](/session/doctor-init/)) — the same place dangling edges are already caught. The PreToolUse hook MUST NEVER evaluate the collision rules: a colliding or malformed registry is **"registry malformed" → ERROR → fail-open ALLOW** per the three-state table of [02-enforcement.md](/session/enforcement/). A namespace clash must never lock the machine out of its own tools.
 
 | Requirement | Statement |
 |-------------|-----------|
@@ -231,7 +231,7 @@ N-2 makes the prefix convention a checkable invariant and, as a consequence, the
 
 ## Declare, Don't Imperatively Register
 
-A tool MUST NOT imperatively mutate the central config. Instead each registrant **declares** its own block as a drop-in fragment — `config.d/<ns>.json`, one owner per file — and `session init` / `session doctor` **collects** the fragments into the resolved `.session/config.json` ([05-config-cascade.md](/specification/config-cascade/)). The collection step runs N-1/N-2 at merge time and **proposes** the result for the developer to accept; it never silently clobbers an existing config.
+A tool MUST NOT imperatively mutate the central config. Instead each registrant **declares** its own block as a drop-in fragment — `config.d/<ns>.json`, one owner per file — and `session init` / `session doctor` **collects** the fragments into the resolved `.session/config.json` ([05-config-cascade.md](/session/config-cascade/)). The collection step runs N-1/N-2 at merge time and **proposes** the result for the developer to accept; it never silently clobbers an existing config.
 
 This is how three independent registrants coexist sustainably: `memo`, `workbench`, and `flowmcp` each own a **disjoint** namespace and each contributes **only its own** `config.d/` fragment. The central config is their union, and any overlap is an N-1 collision caught at merge — the namespaces are the firewall between the plug-ins, exactly as a marketplace lets many publishers coexist.
 
@@ -241,8 +241,8 @@ This is how three independent registrants coexist sustainably: `memo`, `workbenc
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [05-config-cascade.md](/specification/config-cascade/) — the `.session/config.json` schema and `config.d/` cascade the `sops[]` array lives in.
-- [07-doctor-init.md](/specification/doctor-init/) — where N-1/N-2 are enforced: the foreground readiness preflight and additive scaffold.
-- [02-enforcement.md](/specification/enforcement/) — the three-state gate and why a collision degrades to fail-open ALLOW, never block.
-- [10-sop.md](/specification/sop/) — the SOP-instance-vs-catalog framing in full.
+- [05-config-cascade.md](/session/config-cascade/) — the `.session/config.json` schema and `config.d/` cascade the `sops[]` array lives in.
+- [07-doctor-init.md](/session/doctor-init/) — where N-1/N-2 are enforced: the foreground readiness preflight and additive scaffold.
+- [02-enforcement.md](/session/enforcement/) — the three-state gate and why a collision degrades to fail-open ALLOW, never block.
+- [10-sop.md](/session/sop/) — the SOP-instance-vs-catalog framing in full.
 - [/spec/conventions-writing/](/spec/conventions-writing/) — how a convention is written and why it registers as a policy block, not a new primitive.

@@ -1,12 +1,12 @@
 ---
 title: "Browser Automation & Research Method"
-description: "The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and..."
+description: "The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how..."
 workbench_version: "0.1.0"
 spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/31-browser-automation.md."
@@ -15,11 +15,11 @@ edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/3
 
 The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how that research feeds the revision lifecycle. This document defines the research *method* — the concrete tooling a project uses to gather external information, and the cost discipline that governs which tool is chosen. The two are complementary: the core chapter says *what must be researched and when*, this chapter says *how the gathering is done*.
 
-Browser automation lives at the project level. Each project that uses it carries its own `.browser/` folder (an optional folder — see [12-folders.md](/specification/folders/)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
+Browser automation lives at the project level. Each project that uses it carries its own `.browser/` folder (an optional folder — see [12-folders.md](/workbench/folders/)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
 
 > **What belongs here, what belongs to the core spec.** The **method** — tool selection, the cost discipline, the `.browser/` structure, the scrape queue, and `auth.json` handling — is the **workbench's** concern and is specified here. The research **duty** — when a memo must verify its assumptions, and the inward trust boundary as a *behavioral guardrail* — belongs to the memo/core spec ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) and is **referenced, not restated**. This chapter is the *how*; the core chapter is the *what* and the *when*. The one place the two meet is the **trust dimension** of tool selection (see "The Trust Axis" below): the core chapter owns the guardrail, this chapter carries its mechanism in the tool-choice itself.
 
-> **Folder name — `.browser/`, alias `.playwright/`.** The folder is named `.browser/`: the dot marks it as local machinery (see [12-folders.md](/specification/folders/)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is an accepted **alias** of the same folder — a project that still uses that name remains conformant, and the physical migration of existing projects to `.browser/` is deliberately **deferred**, to be done at each project's own pace.
+> **Folder name — `.browser/`, alias `.playwright/`.** The folder is named `.browser/`: the dot marks it as local machinery (see [12-folders.md](/workbench/folders/)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is an accepted **alias** of the same folder — a project that still uses that name remains conformant, and the physical migration of existing projects to `.browser/` is deliberately **deferred**, to be done at each project's own pace.
 
 ---
 
@@ -38,7 +38,7 @@ Browser automation lives at the project level. Each project that uses it carries
 | Goes in | The captured session `auth.json`, reusable automation under `scripts/`, and produced `output/`. |
 | Does not | Committed material — `auth.json` and `output/` are local-only and never pushed; hardcoded credentials in scripts. |
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/specification/folders/)).
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 
@@ -100,7 +100,7 @@ Every project that uses browser automation **MUST** keep it inside a `.browser/`
 
 The captured session file `auth.json` carries live authentication state — cookies and tokens equivalent to being logged in. It **MUST** be treated as a secret:
 
-- `auth.json` **MUST NOT** be committed. It belongs in `.gitignore`, and because the project root is local-only (see [11-project-structure.md](/specification/project-structure/)) it cannot leave the machine through `repos/` either.
+- `auth.json` **MUST NOT** be committed. It belongs in `.gitignore`, and because the project root is local-only (see [11-project-structure.md](/workbench/project-structure/)) it cannot leave the machine through `repos/` either.
 - Credentials used to *produce* a session **MUST NOT** be hardcoded into scripts. They are read from the project runbook or environment, never embedded in committed code.
 - Scripts **MUST** check for an existing valid session before re-authenticating, so a stored session is reused rather than needlessly regenerated.
 
@@ -180,8 +180,8 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [00-overview.md](/specification/overview/) — the workbench spec framing and the global helpers it exposes.
-- [12-folders.md](/specification/folders/) — the optional `.browser/` folder in the project layout.
-- [11-project-structure.md](/specification/project-structure/) — the local guarantee that keeps `auth.json` and `output/` off the network.
+- [00-overview.md](/workbench/overview/) — the workbench spec framing and the global helpers it exposes.
+- [12-folders.md](/workbench/folders/) — the optional `.browser/` folder in the project layout.
+- [11-project-structure.md](/workbench/project-structure/) — the local guarantee that keeps `auth.json` and `output/` off the network.
 - [../../v0.1.0/10-proactive-research.md](/specification/proactive-research/) — the research *duty* this chapter's *method* serves; the normative inward trust boundary (the behavioral guardrail) on ingested web content; and the volume-based sub-agent trigger that this chapter's trust axis strengthens to a MUST for unevaluable sources.
-- [32-trash.md](/specification/trash/) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.
+- [32-trash.md](/workbench/trash/) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.

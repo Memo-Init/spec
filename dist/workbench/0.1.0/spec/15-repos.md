@@ -6,7 +6,7 @@ spec_file: "15-repos.md"
 order: 15
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/15-repos.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/15-repos.md."
@@ -30,27 +30,27 @@ edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/1
 | Goes in | Git repositories under `repos/<name>/`, one per domain. |
 | Does not | Non-repository material; any second git root (the project root and `.memo/` are never repositories). |
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/specification/folders/)).
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 
 ## One Domain Per Repository
 
-A repository under `repos/<name>/` is a **single-domain code unit**. A project is a coherent context that may hold several such repositories — one per domain — rather than a single repository carrying unrelated concerns. The project, not the repository, is the unit of organization (see [00-overview.md](/specification/overview/)); `repos/` is where that project's code is partitioned into domains, each its own git unit.
+A repository under `repos/<name>/` is a **single-domain code unit**. A project is a coherent context that may hold several such repositories — one per domain — rather than a single repository carrying unrelated concerns. The project, not the repository, is the unit of organization (see [00-overview.md](/workbench/overview/)); `repos/` is where that project's code is partitioned into domains, each its own git unit.
 
 ---
 
 ## The Only Git Units in the Project
 
-Every repository under `repos/` is its own git unit, and they are the **only** git units in the project. Neither the project root nor `.memo/` is a repository — that absence is the structural basis of the local guarantee ([11-project-structure.md](/specification/project-structure/)). The consequence is sharp: material that needs to be shared is placed in a repository under `repos/`, and material that must stay local is kept anywhere outside it. Pushing is therefore a deliberate act scoped to a single repository, never something that can sweep up the whole project.
+Every repository under `repos/` is its own git unit, and they are the **only** git units in the project. Neither the project root nor `.memo/` is a repository — that absence is the structural basis of the local guarantee ([11-project-structure.md](/workbench/project-structure/)). The consequence is sharp: material that needs to be shared is placed in a repository under `repos/`, and material that must stay local is kept anywhere outside it. Pushing is therefore a deliberate act scoped to a single repository, never something that can sweep up the whole project.
 
 ---
 
 ## Each Repository Declares Its Status
 
-A repository declares its **status** — three axes, all stated once in the project configuration ([22-config.md](/specification/config/)): **visibility** (`private` or `public`), **remote** (`none` or a named URL), and **facing** (`inward` or `outward`). The facing axis drives the coordination convention (rule C1): an **outward** repository routes coordination through public **Issues**; an **inward** repository routes it through the **memo ID**. Visibility and remote are declared the same way and read by the **same enforcement** — the push gate consumes all three rather than inferring exposure from git state. The `facing` attribute is also the one the project-architecture bundle records per repository ([41-project-architecture.md](/specification/project-architecture/)), so a repository's role is stated in one vocabulary and read consistently by both the configuration and the architecture graph.
+A repository declares its **status** — three axes, all stated once in the project configuration ([22-config.md](/workbench/config/)): **visibility** (`private` or `public`), **remote** (`none` or a named URL), and **facing** (`inward` or `outward`). The facing axis drives the coordination convention (rule C1): an **outward** repository routes coordination through public **Issues**; an **inward** repository routes it through the **memo ID**. Visibility and remote are declared the same way and read by the **same enforcement** — the push gate consumes all three rather than inferring exposure from git state. The `facing` attribute is also the one the project-architecture bundle records per repository ([41-project-architecture.md](/workbench/project-architecture/)), so a repository's role is stated in one vocabulary and read consistently by both the configuration and the architecture graph.
 
-The declared status is not taken on trust. The workbench **health-check** and **git-security** verify it — the declared visibility, remote, and facing **MUST** match the repository's actual state — and a push is **gated** by the declared status (a push to a repository declared `inward` is blocked; see [23-hooks-contract.md](/specification/hooks-contract/)).
+The declared status is not taken on trust. The workbench **health-check** and **git-security** verify it — the declared visibility, remote, and facing **MUST** match the repository's actual state — and a push is **gated** by the declared status (a push to a repository declared `inward` is blocked; see [23-hooks-contract.md](/workbench/hooks-contract/)).
 
 ---
 
@@ -106,7 +106,7 @@ A declared status that contradicts the repository's real git state is a hard fai
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [11-project-structure.md](/specification/project-structure/) — the local guarantee: `repos/` as the only sanctioned home for shareable code.
-- [12-folders.md](/specification/folders/) — the folder contract this page is the registered entry for.
-- [22-config.md](/specification/config/) — the per-repository status declaration (visibility, remote, facing) and rule C1.
-- [41-project-architecture.md](/specification/project-architecture/) — the repositories as nodes in the project's architecture graph.
+- [11-project-structure.md](/workbench/project-structure/) — the local guarantee: `repos/` as the only sanctioned home for shareable code.
+- [12-folders.md](/workbench/folders/) — the folder contract this page is the registered entry for.
+- [22-config.md](/workbench/config/) — the per-repository status declaration (visibility, remote, facing) and rule C1.
+- [41-project-architecture.md](/workbench/project-architecture/) — the repositories as nodes in the project's architecture graph.

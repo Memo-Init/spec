@@ -6,14 +6,14 @@ spec_file: "15-addons.md"
 order: 15
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/15-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/15-addons.md."
 ---
 
 
-**Add-on** is the session glossary's term ([00-overview.md](/specification/overview/)) for a custom-folder tool: a global extension that lives in its own folder and is **not** a reserved namespace. The Workbench spec calls these *custom folders*; both terms name the same thing. This chapter is the **canonical model** — what an Add-on is, where it may write, the SOP it follows, its standard entry points, and the relationship between its CLI and its skill. The Workbench spec page [workbench/26-addons.md](/workbench/addons/) is the **project-scoped application** of this model; it references here rather than duplicating the definition.
+**Add-on** is the session glossary's term ([00-overview.md](/session/overview/)) for a custom-folder tool: a global extension that lives in its own folder and is **not** a reserved namespace. The Workbench spec calls these *custom folders*; both terms name the same thing. This chapter is the **canonical model** — what an Add-on is, where it may write, the SOP it follows, its standard entry points, and the relationship between its CLI and its skill. The Workbench spec page [workbench/26-addons.md](/workbench/addons/) is the **project-scoped application** of this model; it references here rather than duplicating the definition.
 
 ---
 
@@ -53,7 +53,7 @@ A heavy Add-on earns a deep SOP with real Setup, Health, Update, and several Ext
 
 ## The Per-Add-on SOP
 
-Every Add-on follows the same four-part SOP — the common denominator every registered tool shares ([11-common-denominator.md](/specification/common-denominator/)):
+Every Add-on follows the same four-part SOP — the common denominator every registered tool shares ([11-common-denominator.md](/session/common-denominator/)):
 
 | Part | For an Add-on |
 |------|---------------|
@@ -92,8 +92,8 @@ An Add-on is reachable two ways, with a clear division of labor:
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [00-overview.md](/specification/overview/) — the session glossary that owns the term **Add-on**.
-- [11-common-denominator.md](/specification/common-denominator/) — the four-part SOP (Setup, Health, Update, Extras) every Add-on's procedure realizes.
+- [00-overview.md](/session/overview/) — the session glossary that owns the term **Add-on**.
+- [11-common-denominator.md](/session/common-denominator/) — the four-part SOP (Setup, Health, Update, Extras) every Add-on's procedure realizes.
 - [workbench/26-addons.md](/workbench/addons/) — the Workbench spec's project-scoped application of this model: folder-reservation rules and the custom-folder taxonomy.
 - [workbench/12-folders.md](/workbench/folders/) — the Convention-vs-Custom taxonomy, the core-vs-custom folder split, and the diagram of how registered folders, conventions, custom folders, and the wiki relate.
 - [workbench/24-skills-scope.md](/workbench/skills-scope/) — the Setup/Health/Update/Extras SOP an Add-on's skill realizes.

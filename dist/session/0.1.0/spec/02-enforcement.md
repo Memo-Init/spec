@@ -6,7 +6,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/02-enforcement.md."
@@ -19,7 +19,7 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ## The Session-Tier Config Is the Entry Point
 
-The machine-readable form of the SOP chain is a **registry**, and its entry point is the project-local **`.session/config.json`** — the session-tier home the hook reads ([05-config-cascade.md](/specification/config-cascade/)). The config carries the registrant blocks and the when:pre edges as two top-level structures (`sops[]` + `requirements[]`, [06-namespace-registry.md](/specification/namespace-registry/)). The pre-gate edge that is active in this version is the single project-scoped `memo-init → memo-sop`:
+The machine-readable form of the SOP chain is a **registry**, and its entry point is the project-local **`.session/config.json`** — the session-tier home the hook reads ([05-config-cascade.md](/session/config-cascade/)). The config carries the registrant blocks and the when:pre edges as two top-level structures (`sops[]` + `requirements[]`, [06-namespace-registry.md](/session/namespace-registry/)). The pre-gate edge that is active in this version is the single project-scoped `memo-init → memo-sop`:
 
 ```json
 { "sops": [ { "namespace": "memo", "owner": "memo-init", "tier": 2, "requires": ["workbench"],
@@ -29,9 +29,9 @@ The machine-readable form of the SOP chain is a **registry**, and its entry poin
                       "requires": "memo-sop", "when": "pre" } ] }
 ```
 
-The config moves the entry point **one tier down** from the former workbench home (`.workbench/registry.json`) to the session tier; the move is a **one-time migration** carried by `session init`, not a dual-read ([05-config-cascade.md](/specification/config-cascade/), [07-doctor-init.md](/specification/doctor-init/)). A machine-global registry at `~/.claude/session/registry.json` (the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is a follow-up. The config is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](/specification/recovery/)).
+The config moves the entry point **one tier down** from the former workbench home (`.workbench/registry.json`) to the session tier; the move is a **one-time migration** carried by `session init`, not a dual-read ([05-config-cascade.md](/session/config-cascade/), [07-doctor-init.md](/session/doctor-init/)). A machine-global registry at `~/.claude/session/registry.json` (the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is a follow-up. The config is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](/session/recovery/)).
 
-**Absence is fail-open and LOUD.** When `.session/config.json` is absent the gate MUST treat it as a configuration problem that **fails open** (ALLOW, exit 0) — never a lockout — while emitting a **loud SessionStart warning** so the missing config is noticed rather than silently tolerated (REQ-SS-CONFIG-LOUD). Enforcement deliberately starts **permissive**: warn first, tighten later. The strict, refusing posture lives in the foreground `session doctor` / `session init` ([07-doctor-init.md](/specification/doctor-init/)), not in the always-on hook.
+**Absence is fail-open and LOUD.** When `.session/config.json` is absent the gate MUST treat it as a configuration problem that **fails open** (ALLOW, exit 0) — never a lockout — while emitting a **loud SessionStart warning** so the missing config is noticed rather than silently tolerated (REQ-SS-CONFIG-LOUD). Enforcement deliberately starts **permissive**: warn first, tighten later. The strict, refusing posture lives in the foreground `session doctor` / `session init` ([07-doctor-init.md](/session/doctor-init/)), not in the always-on hook.
 
 ---
 
@@ -39,7 +39,7 @@ The config moves the entry point **one tier down** from the former workbench hom
 
 The predecessor signal MUST be read **jq-structured** from the harness-authored `attributionSkill` field of the session transcript. It MUST NOT be a raw substring match over transcript text: transcript content includes user- and model-influenced text, so a substring grep over it is a **forgeable gate**. Only the structured `attributionSkill` value — which the harness, not the model, writes — is trusted. The scan MUST be bounded and BSD-safe (`tail -r` + early-exit, never `tac`).
 
-The hook locates `.session/config.json` from the **pinned** project root, not from a live `cwd`: the root is resolved once at SessionStart and read from the pin thereafter, so a `cd` mid-session can never repoint the gate at a sister project's config ([08-identity-pin.md](/specification/identity-pin/), [09-root-detection.md](/specification/root-detection/)).
+The hook locates `.session/config.json` from the **pinned** project root, not from a live `cwd`: the root is resolved once at SessionStart and read from the pin thereafter, so a `cd` mid-session can never repoint the gate at a sister project's config ([08-identity-pin.md](/session/identity-pin/), [09-root-detection.md](/session/root-detection/)).
 
 ---
 
@@ -91,7 +91,7 @@ stateDiagram-v2
 
 ## Policy Checkpoints — The Landing Gate
 
-The `when:pre` branch gates an entry point behind a predecessor SOP. A **policy block** ([06-namespace-registry.md](/specification/namespace-registry/)) needs a different shape of gate: *"by the time work lands, a sub-set of standards must have been read."* That is expressed by the top-level **`assertions[]`** collection ([05-config-cascade.md](/specification/config-cascade/)) and evaluated by the **same** PreToolUse hook — there is no second hook.
+The `when:pre` branch gates an entry point behind a predecessor SOP. A **policy block** ([06-namespace-registry.md](/session/namespace-registry/)) needs a different shape of gate: *"by the time work lands, a sub-set of standards must have been read."* That is expressed by the top-level **`assertions[]`** collection ([05-config-cascade.md](/session/config-cascade/)) and evaluated by the **same** PreToolUse hook — there is no second hook.
 
 An `assertions[]` row names a **checkpoint** skill, a **`requiresGroup`**, and an `onMissing` policy:
 
@@ -107,7 +107,7 @@ Three invariants bound the checkpoint branch, all inherited from the three-state
 
 - **Never a hard lock.** `onMissing` is `redirect` only; a checkpoint group may never produce a terminal block.
 - **Never blocks the workflow** (REQ-SS-WORKFLOW). Checkpoints sit on `memo-finalize` / `git-push`; `memo-init` / `memo-plan` / `memo-revision-*` are never checkpoints and run unimpeded.
-- **A non-resolving member fails open.** If a `requiresGroup` member is not installed (e.g. a standard documented but not yet registered as a skill), the gate cannot honestly assert "all read", so it degrades to fail-open ALLOW (best-effort, **no** hard guarantee) and the foreground doctor reports the unresolved member ([07-doctor-init.md](/specification/doctor-init/)). An `assertions[]` id collision is likewise a fail-open ALLOW at the hook, never a redirect; it is rejected strictly only in the foreground doctor.
+- **A non-resolving member fails open.** If a `requiresGroup` member is not installed (e.g. a standard documented but not yet registered as a skill), the gate cannot honestly assert "all read", so it degrades to fail-open ALLOW (best-effort, **no** hard guarantee) and the foreground doctor reports the unresolved member ([07-doctor-init.md](/session/doctor-init/)). An `assertions[]` id collision is likewise a fail-open ALLOW at the hook, never a redirect; it is rejected strictly only in the foreground doctor.
 
 The landing gate as a top-down flow:
 
@@ -139,7 +139,7 @@ flowchart TD
 | **REQ-SS-CANARY** | A SessionStart canary re-verifies the gate against known fixtures and auto-disables on drift. |
 | **REQ-SS-NOWRITE** | Live `~/.claude/` config (settings.json, CLAUDE.md) is changed only additively via a reviewed diff, never auto-written. |
 | **REQ-SS-WORKFLOW** | The gate MUST NOT block the memo workflow: `memo-init` / `memo-plan` / `memo-revision-*` run under the active gate (a DENY only redirects through the predecessor SOP). |
-| **REQ-SS-POLICY** | A policy block gates only via `assertions[]` checkpoint rows, only as `onMissing:"redirect"`, never as a `when:pre` predecessor. A non-resolving `requiresGroup` member fails open (best-effort); an `assertions[]` id collision fails open at the hook and is rejected only in the foreground doctor. Defined in [06-namespace-registry.md](/specification/namespace-registry/). |
+| **REQ-SS-POLICY** | A policy block gates only via `assertions[]` checkpoint rows, only as `onMissing:"redirect"`, never as a `when:pre` predecessor. A non-resolving `requiresGroup` member fails open (best-effort); an `assertions[]` id collision fails open at the hook and is rejected only in the foreground doctor. Defined in [06-namespace-registry.md](/session/namespace-registry/). |
 
 ---
 
@@ -285,9 +285,9 @@ Whether the policy-checkpoint branch only ever redirects (never hard-locks, neve
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [03-recovery.md](/specification/recovery/) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
-- [05-config-cascade.md](/specification/config-cascade/) — the `.session/config.json` entry point the gate reads, and the migration that puts it there.
-- [07-doctor-init.md](/specification/doctor-init/) — the foreground `session doctor` / `session init` that carry the strict checks the hook deliberately omits.
-- [08-identity-pin.md](/specification/identity-pin/) — the SessionStart-Pin the gate reads instead of a live `cwd`.
+- [03-recovery.md](/session/recovery/) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
+- [05-config-cascade.md](/session/config-cascade/) — the `.session/config.json` entry point the gate reads, and the migration that puts it there.
+- [07-doctor-init.md](/session/doctor-init/) — the foreground `session doctor` / `session init` that carry the strict checks the hook deliberately omits.
+- [08-identity-pin.md](/session/identity-pin/) — the SessionStart-Pin the gate reads instead of a live `cwd`.
 - [workbench/23-hooks-contract.md](/workbench/hooks-contract/) — the workbench-side statement of the same PreToolUse contract.
 - [workbench/20-cli.md](/workbench/cli/) — `memo session resolve` and `memo session registry-validate`.

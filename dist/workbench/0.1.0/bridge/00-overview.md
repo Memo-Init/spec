@@ -25,9 +25,13 @@ Canonical docs entry: `/workbench/overview/`. No entry-point skill flagged yet.
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-audit` | contributing | — |
-| `workbench-project-setup` | contributing | — |
+| `workbench-audit` | contributing | Full 9-phase project audit for One-Pizza workbench projects |
+| `workbench-project-setup` | contributing | Project setup and installation pattern for the One-Pizza workbench |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

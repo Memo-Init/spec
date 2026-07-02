@@ -6,7 +6,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/20-cli.md."
@@ -40,7 +40,7 @@ Making a CLI globally callable — for example via `npm link` — is **only a re
 
 An agent **MUST** discover the workbench's available CLIs, skills, and custom folders **deterministically by reading `.workbench/registry.json`**. It **MUST NOT** discover them by reading a `CLAUDE.md` or by inferring them from the shape of the filesystem. The registry is the **single discovery source**: one declared file answers "what is part of this workbench?", so discovery does not depend on prose that can drift or on a tree walk that can guess wrong.
 
-Discovery and preconditions are **unified in one file**. The same `registry.json` that lists `skills[]` and `addons[]` (discovery) also carries `requirements[]` — the precondition dependency table ([23-hooks-contract.md](/specification/hooks-contract/)). One source therefore answers both questions at once:
+Discovery and preconditions are **unified in one file**. The same `registry.json` that lists `skills[]` and `addons[]` (discovery) also carries `requirements[]` — the precondition dependency table ([23-hooks-contract.md](/workbench/hooks-contract/)). One source therefore answers both questions at once:
 
 - **"What exists?"** — the `skills[]` and `addons[]` arrays.
 - **"What must run first?"** — the `requirements[]` array, with its `when: "pre" | "post"` timing.
@@ -57,13 +57,13 @@ The **naming convention** for the discovery handle (the prefix-plus-hyphen schem
 
 The same self-describing principle applies to a project's `scripts/` folder. Scripts **MUST** live in **meaningful subfolders**, not as a flat collection at the top level. The reason is identical to the Branch/Leaf rule: a bare `dev.sh` says too little about *which* environment it operates on, while a subfolder name (for example `scripts/rails/`) carries that meaning.
 
-The **folder name is the unit of meaning**. This connects to the About convention (see [30-wiki.md](/specification/wiki/)): a scripts subfolder carries an `About` describing what it is for, and that description is ingested into the wiki — so the meaning a reader infers from the folder name is also recorded where the wiki can answer for it. The script families themselves are specified in [21-environment-scripts.md](/specification/environment-scripts/).
+The **folder name is the unit of meaning**. This connects to the About convention (see [30-wiki.md](/workbench/wiki/)): a scripts subfolder carries an `About` describing what it is for, and that description is ingested into the wiki — so the meaning a reader infers from the folder name is also recorded where the wiki can answer for it. The script families themselves are specified in [21-environment-scripts.md](/workbench/environment-scripts/).
 
 ---
 
 ## Runtime Call-Validation — the "After" Measurement
 
-Beyond defining the command convention, the workbench CLI provides one capability that is itself a leaf of the command tree: **runtime call-validation**. It is the **"after" half** of checkability — the runtime counterpart to the "before" pre-hook. The before/after split itself is specified once in [25-validation-overview.md](/specification/validation-overview/); this chapter owns only the "after" **mechanism**. Once a session has run, the CLI inspects what was recorded and measures **which skills and tools were actually invoked**, answering questions a pre-hook cannot answer in advance — most importantly, **"was the SOP actually read this session?"**.
+Beyond defining the command convention, the workbench CLI provides one capability that is itself a leaf of the command tree: **runtime call-validation**. It is the **"after" half** of checkability — the runtime counterpart to the "before" pre-hook. The before/after split itself is specified once in [25-validation-overview.md](/workbench/validation-overview/); this chapter owns only the "after" **mechanism**. Once a session has run, the CLI inspects what was recorded and measures **which skills and tools were actually invoked**, answering questions a pre-hook cannot answer in advance — most importantly, **"was the SOP actually read this session?"**.
 
 ### Where Sessions Live
 
@@ -86,7 +86,7 @@ Any one signal is evidence the skill ran; their absence across a session is evid
 
 ### The Workbench Registry — the "What to Search"
 
-The CLI does not hardcode what to look for; it reads a project's **`.workbench/registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/specification/sop-entrypoint/)). The registry lists the SOPs, skills, and custom folders that *could* be used, each with the signals that prove it was:
+The CLI does not hardcode what to look for; it reads a project's **`.workbench/registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/workbench/sop-entrypoint/)). The registry lists the SOPs, skills, and custom folders that *could* be used, each with the signals that prove it was:
 
 ```jsonc
 // .workbench/registry.json — the single structural definition of the workbench registry.
@@ -166,13 +166,13 @@ flowchart TD
 
 ### Requirements on Top
 
-Because the matrix is a structured fact, **post-hoc requirements** can be expressed against it — for example, "the init entry point may run only if the SOP was read this session". This is the after-the-fact counterpart of the entry-point pre-condition ([23-hooks-contract.md](/specification/hooks-contract/)) and is registered like any other validation family ([25-validation-overview.md](/specification/validation-overview/)).
+Because the matrix is a structured fact, **post-hoc requirements** can be expressed against it — for example, "the init entry point may run only if the SOP was read this session". This is the after-the-fact counterpart of the entry-point pre-condition ([23-hooks-contract.md](/workbench/hooks-contract/)) and is registered like any other validation family ([25-validation-overview.md](/workbench/validation-overview/)).
 
 ### Pre and Post Share One Registry
 
 The post-hoc matrix above and the new pre-gate read the **same** `.workbench/registry.json` and the **same** transcript signals — they differ only in *when* they read. The `requirements[]` entries split by their `when` field:
 
-- **`when: "pre"`** entries are consumed by the **`PreToolUse` precondition hook** ([23-hooks-contract.md](/specification/hooks-contract/)). This **pulls the session-JSONL signal scan from post-hoc to a pre-gate**: the same three signals that prove a skill ran are checked *before* the entry point runs, so an unmet predecessor blocks the call instead of being reported after the fact.
+- **`when: "pre"`** entries are consumed by the **`PreToolUse` precondition hook** ([23-hooks-contract.md](/workbench/hooks-contract/)). This **pulls the session-JSONL signal scan from post-hoc to a pre-gate**: the same three signals that prove a skill ran are checked *before* the entry point runs, so an unmet predecessor blocks the call instead of being reported after the fact.
 - **`when: "post"`** entries feed the after-the-fact matrix described above.
 
 So it is **one registry, one signal scan, two timings**. The seed first edge is **REQ-061** — `{ entrypoint: "memo-init", requires: "memo-sop", when: "pre" }` — the `memo-init → memo-sop` precondition that the pre-gate resolves deterministically.
@@ -236,8 +236,8 @@ Whether a CLI's command tree is genuinely self-describing is a quality spectrum 
 - [Tree CLI — the recommended way](/specification/tree-cli-recommended-way/) — the normative Branch/Leaf treatment in the core spec.
 - [/session/cli/](/session/cli/) — the universal CLI doctrine (the eight principles, exit-code mirror, standard verbs, conformance checklist) that this workbench convention is one scoped instance of.
 - [/session/conventions/](/session/conventions/) — the SOP standard's conventions chapter that defines the naming convention (the discovery handle).
-- [23-hooks-contract.md](/specification/hooks-contract/) — the entry-point pre-condition, the "before" half this measurement complements.
-- [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
-- [25-validation-overview.md](/specification/validation-overview/) — the validation wayfinder and code index, and the single source of the before/after split where runtime call-validation is registered.
-- [21-environment-scripts.md](/specification/environment-scripts/) — the script families that follow the subfolder rule.
-- [30-wiki.md](/specification/wiki/) — the About convention that records what a scripts subfolder is for.
+- [23-hooks-contract.md](/workbench/hooks-contract/) — the entry-point pre-condition, the "before" half this measurement complements.
+- [02-sop-entrypoint.md](/workbench/sop-entrypoint/) — the SOP signpost that `.workbench/registry.json` is the machine-readable form of.
+- [25-validation-overview.md](/workbench/validation-overview/) — the validation wayfinder and code index, and the single source of the before/after split where runtime call-validation is registered.
+- [21-environment-scripts.md](/workbench/environment-scripts/) — the script families that follow the subfolder rule.
+- [30-wiki.md](/workbench/wiki/) — the About convention that records what a scripts subfolder is for.

@@ -6,7 +6,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/30-wiki.md."
@@ -23,8 +23,8 @@ The wiki is the entry point that reads the project's knowledge **regardless of t
 
 | Storage format | What it stores | Reference |
 |----------------|----------------|-----------|
-| **OKF** (Open Knowledge Format) | the structured knowledge bundles — the wiki's own pages and the project architecture graph (nodes + untyped links) | [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) |
-| **design.md** | the design format — a project's design intent and decisions in prose | [18-design.md](/specification/design/) |
+| **OKF** (Open Knowledge Format) | the structured knowledge bundles — the wiki's own pages and the project architecture graph (nodes + untyped links) | [13-knowledge-format-okf.md](/workbench/knowledge-format-okf/) |
+| **design.md** | the design format — a project's design intent and decisions in prose | [18-design.md](/workbench/design/) |
 
 These formats sit **under** the wiki: they are the on-disk encodings the wiki reads, not separate discovery systems of their own. A reader reaches them *through* the wiki — ask the wiki, and it returns the current answer whether that answer was distilled from an OKF bundle or a `design.md`. New storage formats can be added under the same entry point without changing how a memo asks its question.
 
@@ -36,7 +36,7 @@ Two kinds of knowledge sit beneath the wiki, and the wiki is the entry point ove
 
 | Layer | What | Form |
 |-------|------|------|
-| **Structured** | the project architecture — which repos exist, how they connect ([41-project-architecture.md](/specification/project-architecture/)) | OKF nodes + edges |
+| **Structured** | the project architecture — which repos exist, how they connect ([41-project-architecture.md](/workbench/project-architecture/)) | OKF nodes + edges |
 | **Unstructured** | research piles, `context/` files, distilled decisions — everything else the project holds | any form; the wiki categorizes and files it |
 
 The user does not care which form a piece of knowledge is in — the wiki finds it. That is the whole point of a single entry point: knowledge is reached *through the wiki*, not by knowing in advance where each kind of thing lives.
@@ -60,7 +60,7 @@ The wiki answers in the **present tense**: a wiki page states what is understood
 The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required:
 
 - **Every project** — internal or foreign — gets a wiki, because every project has unstructured knowledge worth categorizing and querying. The wiki is the entry point for all of them.
-- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([41-project-architecture.md](/specification/project-architecture/)).
+- **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([41-project-architecture.md](/workbench/project-architecture/)).
 
 So "the wiki finds everything" holds for all projects; "the project has a structured architecture" holds for the internal ones.
 
@@ -81,7 +81,7 @@ Write-time freshness keeps the wiki growing correctly; periodic staleness detect
 
 The wiki's discovery reach extends to the project's **scripts**. When something is written into a `scripts/` subfolder, that subfolder **SHOULD** carry an **`About`** — a short description of what the folder is for — and that `About` is **ingested into the wiki**. This is the third ingest source, alongside landing-time ingest and periodic staleness detection.
 
-The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](/specification/cli/)): a scripts subfolder already carries its meaning in its name; the `About` records that meaning in prose, and ingesting it means the wiki can **answer** for what a scripts folder does rather than leaving a reader to infer it from the name alone. The effect is that the discovery system reaches the project's operational scripts the same way it reaches its research and architecture — ask the wiki, and the answer is there.
+The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](/workbench/cli/)): a scripts subfolder already carries its meaning in its name; the `About` records that meaning in prose, and ingesting it means the wiki can **answer** for what a scripts folder does rather than leaving a reader to infer it from the name alone. The effect is that the discovery system reaches the project's operational scripts the same way it reaches its research and architecture — ask the wiki, and the answer is there.
 
 ---
 
@@ -136,8 +136,8 @@ That a scripts subfolder's `About` is ingested into the wiki is a structural fac
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [41-project-architecture.md](/specification/project-architecture/) — the structured layer the wiki indexes and points at.
-- [13-knowledge-format-okf.md](/specification/knowledge-format-okf/) — OKF, a storage format under the wiki: the on-disk format of both the wiki's pages and the architecture bundle.
-- [18-design.md](/specification/design/) — `design.md`, the design format; a storage format the wiki reads through.
+- [41-project-architecture.md](/workbench/project-architecture/) — the structured layer the wiki indexes and points at.
+- [13-knowledge-format-okf.md](/workbench/knowledge-format-okf/) — OKF, a storage format under the wiki: the on-disk format of both the wiki's pages and the architecture bundle.
+- [18-design.md](/workbench/design/) — `design.md`, the design format; a storage format the wiki reads through.
 - [../../v0.1.0/24-tools-registry.md](/specification/tools-registry/) — the registry where the wiki is recorded as a tool with a `location` pointer, never a copy.
 - [../../v0.1.0/26-memo-history.md](/specification/memo-history/) — the chronicle, the present-tense wiki's chronological counterpart.

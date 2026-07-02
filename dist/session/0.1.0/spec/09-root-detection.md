@@ -6,7 +6,7 @@ spec_file: "09-root-detection.md"
 order: 9
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/09-root-detection.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/09-root-detection.md."
@@ -21,7 +21,7 @@ The genesis tier owns the **session identity**; this chapter specifies how a ses
 
 The session root is the **nearest ancestor directory containing a `.session/` directory**. The marker is a directory-name reservation — the same shape that `pnpm-workspace.yaml`, a virtual `Cargo.toml [workspace]`, or `go.work` give their tools. It cannot piggyback on `.git`: the workbench deliberately has **no git at the workbench-root or project levels**, so a dedicated marker is required rather than inferred from a VCS root.
 
-Resolution is a **pure function** of the filesystem and one anchor cwd — no guess, no ambient global. It mirrors the workbench's own rule that *the level an agent operates at is decided by its location*, and it reuses the genesis tier's `flag > env > null` precedence discipline ([01-genesis-root.md](/specification/genesis-root/)): explicit beats ambient, ambient beats nothing, nothing is ever a guess.
+Resolution is a **pure function** of the filesystem and one anchor cwd — no guess, no ambient global. It mirrors the workbench's own rule that *the level an agent operates at is decided by its location*, and it reuses the genesis tier's `flag > env > null` precedence discipline ([01-genesis-root.md](/session/genesis-root/)): explicit beats ambient, ambient beats nothing, nothing is ever a guess.
 
 ---
 
@@ -29,12 +29,12 @@ Resolution is a **pure function** of the filesystem and one anchor cwd — no gu
 
 | Step | Action |
 |------|--------|
-| 1 | Anchor at the session's **pinned start cwd** (the SessionStart-Pin, [08-identity-pin.md](/specification/identity-pin/)) — resolution runs once, never from a later cd-mutated cwd. |
+| 1 | Anchor at the session's **pinned start cwd** (the SessionStart-Pin, [08-identity-pin.md](/session/identity-pin/)) — resolution runs once, never from a later cd-mutated cwd. |
 | 2 | Walk up to the nearest ancestor that contains a `.session/` directory. That marker is the **active session scope**. |
 | 3 | If that scope's `.session/config.json` declares a `workbenchRoot` pointer, resolve it (relative) and take its target as the root — this **overrides** the remaining walk-up. |
 | 4 | Otherwise continue walking up, stopping at the first `.session/` whose config declares `root: true`. That directory is the **anchoring root**. |
 | 5 | The innermost collected `.session/` governs the active scope; the outermost `root: true` is the workbench root that anchors the SOP chain. Both are found in **one** pass. |
-| 6 | If no `.session/` is found above the anchor cwd, the root resolves to `null` with source `"none"` (no-silent-default) and the gate **fails open** ([01-genesis-root.md](/specification/genesis-root/)). |
+| 6 | If no `.session/` is found above the anchor cwd, the root resolves to `null` with source `"none"` (no-silent-default) and the gate **fails open** ([01-genesis-root.md](/session/genesis-root/)). |
 
 The walk-up **MUST** stop at the first `root: true` marker — it never escapes above the declared root.
 
@@ -42,7 +42,7 @@ The walk-up **MUST** stop at the first `root: true` marker — it never escapes 
 
 ## Marker Fields
 
-A `.session/config.json` carries three fields relevant to root detection. Their cascade semantics are owned by [05-config-cascade.md](/specification/config-cascade/); their role in *locating* the root is below.
+A `.session/config.json` carries three fields relevant to root detection. Their cascade semantics are owned by [05-config-cascade.md](/session/config-cascade/); their role in *locating* the root is below.
 
 | Field | Type | Meaning | Default |
 |-------|------|---------|---------|
@@ -69,7 +69,7 @@ A project **MAY** name where its root is, for the genuinely ambiguous case (a re
 
 - An optional `workbenchRoot` field in the project's `.session/config.json`, holding a **relative** path (e.g. `"../.."`). Absolute paths are forbidden by house rule.
 - Semantics mirror Cargo's `package.workspace`: **if present it overrides the walk-up**; if absent, the walk-up plus `root: true` stop-flag decides.
-- **Validation:** `session doctor` / `session init` ([07-doctor-init.md](/specification/doctor-init/)) MUST verify the pointer resolves to a directory that actually carries a `root: true` `.session/`. A dangling pointer is a deterministic doctor finding, caught before work begins — the same spirit as a registry edge to an absent skill being refused at build time.
+- **Validation:** `session doctor` / `session init` ([07-doctor-init.md](/session/doctor-init/)) MUST verify the pointer resolves to a directory that actually carries a `root: true` `.session/`. A dangling pointer is a deterministic doctor finding, caught before work begins — the same spirit as a registry edge to an absent skill being refused at build time.
 
 ---
 
@@ -83,19 +83,19 @@ A global pin is the precise opposite of the genesis tier's **per-session, no-sil
 
 ## Pinned Once, Never Recomputed
 
-Root detection runs **once**, at SessionStart, and the resolved root is pinned alongside the session identity ([08-identity-pin.md](/specification/identity-pin/)). Every hook reads the **pinned** root, never a value recomputed from the current cwd: a `cd` deeper into the tree (which the cd-soft-guard already warns about) MUST NOT silently re-anchor the session to a nested `.session/`. The SessionStart-Pin is the stable anchor that keeps the root — like the session id — from drifting over the session lifetime.
+Root detection runs **once**, at SessionStart, and the resolved root is pinned alongside the session identity ([08-identity-pin.md](/session/identity-pin/)). Every hook reads the **pinned** root, never a value recomputed from the current cwd: a `cd` deeper into the tree (which the cd-soft-guard already warns about) MUST NOT silently re-anchor the session to a nested `.session/`. The SessionStart-Pin is the stable anchor that keeps the root — like the session id — from drifting over the session lifetime.
 
 ---
 
 ## The `memo session root` Leaf
 
-The resolved root is reported by a **read** CLI leaf, `memo session root`, under the CLI doctrine ([04-cli.md](/specification/cli/)). It is the reference resolver — the walk-up is implemented once and reported, not reimplemented per hook — and it surfaces both the resolved path and its source (`root:true` marker / `workbenchRoot` pointer / `none`), so the resolution is deterministic and testable. As a read leaf it is side-effect-free: it observes and reports, it never writes a marker or pins a root.
+The resolved root is reported by a **read** CLI leaf, `memo session root`, under the CLI doctrine ([04-cli.md](/session/cli/)). It is the reference resolver — the walk-up is implemented once and reported, not reimplemented per hook — and it surfaces both the resolved path and its source (`root:true` marker / `workbenchRoot` pointer / `none`), so the resolution is deterministic and testable. As a read leaf it is side-effect-free: it observes and reports, it never writes a marker or pins a root.
 
 ---
 
 ## Three Tiers, No Fourth
 
-Root detection adds **fields and a marker**, not a tier. The three-tier config cascade ([05-config-cascade.md](/specification/config-cascade/)) is unchanged: `root` and `workbenchRoot` are fields *within* the existing `.session/config.json` tiers, and the walk-up merely chooses *which* `.session/` anchors that cascade. No fourth tier is introduced.
+Root detection adds **fields and a marker**, not a tier. The three-tier config cascade ([05-config-cascade.md](/session/config-cascade/)) is unchanged: `root` and `workbenchRoot` are fields *within* the existing `.session/config.json` tiers, and the walk-up merely chooses *which* `.session/` anchors that cascade. No fourth tier is introduced.
 
 ---
 
@@ -152,7 +152,7 @@ The resolved root is reported by a single side-effect-free read leaf; that leaf 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [08-identity-pin.md](/specification/identity-pin/) — the SessionStart-Pin that anchors resolution; the root is pinned once, never recomputed from a mutated cwd.
-- [05-config-cascade.md](/specification/config-cascade/) — the `.session/config.json` schema and three-tier cascade; the project tier carries the optional `workbenchRoot` pointer.
-- [01-genesis-root.md](/specification/genesis-root/) — the genesis tier, `flag > env > null` precedence, and the fail-open contract on an unresolved root.
-- [04-cli.md](/specification/cli/) — the CLI doctrine under which `memo session root` is a read leaf.
+- [08-identity-pin.md](/session/identity-pin/) — the SessionStart-Pin that anchors resolution; the root is pinned once, never recomputed from a mutated cwd.
+- [05-config-cascade.md](/session/config-cascade/) — the `.session/config.json` schema and three-tier cascade; the project tier carries the optional `workbenchRoot` pointer.
+- [01-genesis-root.md](/session/genesis-root/) — the genesis tier, `flag > env > null` precedence, and the fail-open contract on an unresolved root.
+- [04-cli.md](/session/cli/) — the CLI doctrine under which `memo session root` is a read leaf.

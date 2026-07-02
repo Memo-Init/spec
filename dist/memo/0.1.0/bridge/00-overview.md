@@ -25,8 +25,12 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-sop` | contributing | — |
+| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Workbench"
 normative: false
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/01-philosophy.md."
@@ -23,7 +23,7 @@ The workbench is the layer that holds many projects and the shared machinery the
 
 The workbench provides its CLIs, standards, and conventions **once**, at the workbench level; an individual project carries only what is specific to it. The reasoning is operational rather than aesthetic: configuration that is copied into every project drifts. Each copy is edited independently, and the copies diverge.
 
-Defining shared capability once means there is a single place to read it, a single place to change it, and no second copy to fall out of step. A project that needs a shared tool relies on the workbench-level definition rather than re-stating it. Where a project genuinely differs, that difference is declared explicitly (see the project configuration in [22-config.md](/specification/config/)) rather than expressed as a silent fork of a shared default.
+Defining shared capability once means there is a single place to read it, a single place to change it, and no second copy to fall out of step. A project that needs a shared tool relies on the workbench-level definition rather than re-stating it. Where a project genuinely differs, that difference is declared explicitly (see the project configuration in [22-config.md](/workbench/config/)) rather than expressed as a silent fork of a shared default.
 
 ---
 
@@ -37,7 +37,7 @@ This is what makes the single-source rule pay off over time. The expensive work 
 
 ## Several Parallel, Standalone Specifications
 
-The workbench's own documentation follows the same conviction at the level of the specification itself: it is **several parallel, standalone specs**, not one document with ever more chapters. The memo-init repository hosts the core specification, this Workbench spec, and the Session spec — which carries the thin SOP area, once a family of its own — as sibling families, each with its own version line (see [00-overview.md](/specification/overview/)).
+The workbench's own documentation follows the same conviction at the level of the specification itself: it is **several parallel, standalone specs**, not one document with ever more chapters. The memo-init repository hosts the core specification, this Workbench spec, and the Session spec — which carries the thin SOP area, once a family of its own — as sibling families, each with its own version line (see [00-overview.md](/workbench/overview/)).
 
 Splitting the specification this way lets each family evolve at its own pace and keeps each one readable on its own terms. A reader who needs the workbench conventions does not have to navigate the memo lifecycle to find them; a change to the workbench does not force a version bump on the core spec. The parallel-spec structure is the documentation expressing the same single-source-plus-updatability principle the workbench applies to its tooling.
 
@@ -47,6 +47,6 @@ Splitting the specification this way lets each family evolve at its own pace and
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [00-overview.md](/specification/overview/) — the sibling-spec framing and the workbench's place among the families.
-- [02-sop-entrypoint.md](/specification/sop-entrypoint/) — the two-level model that the single-source principle is organized around.
-- [22-config.md](/specification/config/) — how a project declares what is specific to it instead of forking a shared default.
+- [00-overview.md](/workbench/overview/) — the sibling-spec framing and the workbench's place among the families.
+- [02-sop-entrypoint.md](/workbench/sop-entrypoint/) — the two-level model that the single-source principle is organized around.
+- [22-config.md](/workbench/config/) — how a project declares what is specific to it instead of forking a shared default.

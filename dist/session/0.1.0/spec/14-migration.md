@@ -6,7 +6,7 @@ spec_file: "14-migration.md"
 order: 14
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/14-migration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/14-migration.md."
@@ -50,7 +50,7 @@ The fold is mechanical across the spec and site build, and every touch-point is 
 
 ## Requirement-Record Rewrite
 
-The config migration ([05-config-cascade.md](/specification/config-cascade/)) also reaches the requirements store. REQ-061's stored definition names the former config home (`.workbench/registry.json`) in its **advisory** clause; that reference is updated to name the session-tier home (`.session/config.json`) as the specified target, while remaining accurate that the live wiring is migrated by `session init` rather than rewritten in place. The `REQ-SS-*` identifiers are spec-internal (defined in [02-enforcement.md](/specification/enforcement/)); they carry no separate store records and need no rewrite.
+The config migration ([05-config-cascade.md](/session/config-cascade/)) also reaches the requirements store. REQ-061's stored definition names the former config home (`.workbench/registry.json`) in its **advisory** clause; that reference is updated to name the session-tier home (`.session/config.json`) as the specified target, while remaining accurate that the live wiring is migrated by `session init` rather than rewritten in place. The `REQ-SS-*` identifiers are spec-internal (defined in [02-enforcement.md](/session/enforcement/)); they carry no separate store records and need no rewrite.
 
 ---
 
@@ -58,6 +58,6 @@ The config migration ([05-config-cascade.md](/specification/config-cascade/)) al
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [00-overview.md](/specification/overview/) — the absorbed SOP area whose URLs this fold preserves.
-- [05-config-cascade.md](/specification/config-cascade/) — the config migration whose requirement record this chapter rewrites.
-- [03-recovery.md](/specification/recovery/) — the fail-safe posture the migration must not weaken.
+- [00-overview.md](/session/overview/) — the absorbed SOP area whose URLs this fold preserves.
+- [05-config-cascade.md](/session/config-cascade/) — the config migration whose requirement record this chapter rewrites.
+- [03-recovery.md](/session/recovery/) — the fail-safe posture the migration must not weaken.

@@ -1,21 +1,21 @@
 ---
 title: "Standard Commands"
-description: "Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on..."
+description: "This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which..."
 session_version: "0.1.0"
 spec_file: "11-common-denominator.md"
 order: 11
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/11-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/11-common-denominator.md."
 ---
 
 
-> **Mostly informative; the Page Contract below is normative.** This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which govern their own scope — but the **SOP Page Contract** is **normative (MUST)** and lint-enforced, because it is the single shape the memo-SOP and Workbench-SOP reference rather than restate.
+This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which govern their own scope — but the **SOP Page Contract** is **normative (MUST)** and lint-enforced, because it is the single shape the memo-SOP and Workbench-SOP reference rather than restate.
 
-Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP entry-point mechanism](/specification/sop/) rests.
+Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP entry-point mechanism](/session/sop/) rests.
 
 ---
 
@@ -50,7 +50,7 @@ Extras are the parts that belong to one scope and not to SOPs in general. An SOP
 
 Setup, Health, and Update are the connecting core because they are the questions every scope faces regardless of what it is: how do I create it, how do I know it is well, and how do I keep it current. Health is the part the workbench's health-check scripts implement (see the Workbench-SOP). Keeping these three to a single shape across all SOPs is what makes an unfamiliar SOP navigable.
 
-The same three parts have an **executable form** in the CLI doctrine's standard verbs ([04-cli.md](/specification/cli/)): **`init` realizes Setup, `doctor` realizes Health, `update` realizes Update**, and a family's own scope leaves are its Extras. The four parts and the standard verbs are not two systems but one common denominator seen twice — a procedure a reader follows and the commands an agent runs.
+The same three parts have an **executable form** in the CLI doctrine's standard verbs ([04-cli.md](/session/cli/)): **`init` realizes Setup, `doctor` realizes Health, `update` realizes Update**, and a family's own scope leaves are its Extras. The four parts and the standard verbs are not two systems but one common denominator seen twice — a procedure a reader follows and the commands an agent runs.
 
 ---
 
@@ -71,9 +71,9 @@ The four parts are not only a description; they fix the **required shape of a si
 ## Extras           — OPTIONAL: zero or more scope-specific parts
 ```
 
-The contract is three things together: the opening **inheritance declaration** (the canonical first sentence in [12-instances.md](/specification/instances/)), the **entry points named explicitly**, and the three core parts — **Setup**, **Health**, **Update** — each present as a named section. **Extras** are optional and scope-specific (zero or more).
+The contract is three things together: the opening **inheritance declaration** (the canonical first sentence in [12-instances.md](/session/instances/)), the **entry points named explicitly**, and the three core parts — **Setup**, **Health**, **Update** — each present as a named section. **Extras** are optional and scope-specific (zero or more).
 
-**Lint-Gate.** A lint checks every registered SOP page against this contract: a page missing a core part, the inheritance declaration, or its named entry points **fails** the lint. The lint reads the SOP registrants from the namespace registry ([06-namespace-registry.md](/specification/namespace-registry/)) and verifies each instance's page satisfies the shape above. This page is the **single source** of the contract — the memo-SOP and the Workbench-SOP **reference** it and declare only how they realize each part, never restating the shape.
+**Lint-Gate.** A lint checks every registered SOP page against this contract: a page missing a core part, the inheritance declaration, or its named entry points **fails** the lint. The lint reads the SOP registrants from the namespace registry ([06-namespace-registry.md](/session/namespace-registry/)) and verifies each instance's page satisfies the shape above. This page is the **single source** of the contract — the memo-SOP and the Workbench-SOP **reference** it and declare only how they realize each part, never restating the shape.
 
 ---
 
@@ -81,6 +81,6 @@ The contract is three things together: the opening **inheritance declaration** (
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [10-sop.md](/specification/sop/) — why a thin connecting mechanism exists inside the session standard.
-- [12-instances.md](/specification/instances/) — the existing SOPs as instances of this shape.
-- [13-conventions.md](/specification/conventions/) — the naming and brevity conventions shared across SOPs.
+- [10-sop.md](/session/sop/) — why a thin connecting mechanism exists inside the session standard.
+- [12-instances.md](/session/instances/) — the existing SOPs as instances of this shape.
+- [13-conventions.md](/session/conventions/) — the naming and brevity conventions shared across SOPs.

@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/00-overview.md."
@@ -23,13 +23,14 @@ The core message: the workbench is **a connecting layer, not a container**. It c
 
 ## A Sibling Spec, Not a Sub-Spec
 
-The Workbench spec is a **standalone sibling** of the core specification, not a subordinate set of chapters under it. The memo-init repository hosts **three sibling spec families** side by side in one repository, each with its own version line:
+The Workbench spec is a **standalone sibling** of the core specification, not a subordinate set of chapters under it. The memo-init repository hosts **four sibling spec families** side by side in one repository, each with its own version line:
 
 | Family | Directory | Concern |
 |--------|-----------|---------|
-| **Core specification** | `spec/v0.1.0/` | A single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. Reasons about *one memo at a time*. |
-| **Workbench** (this spec) | `spec/workbench/0.1.0/` | The environment in which memos live — project layout, CLIs and scripts, configuration, the wiki, trash. Reasons about *the project and the workbench around the memo*. |
-| **Session** | `spec/session/0.1.0/` | The session genesis layer; it also carries the **SOP area** — the thin connecting layer that makes the various SOPs predictable (what a SOP contains and where to find it). The SOP, once framed as its own family, now lives here as that area. |
+| **Core specification** (memo) | `draft/memo/0.1.0/spec/` | A single memo's lifecycle — input, revisions, questions, phases, PRDs, rollout, git flow. Reasons about *one memo at a time*. |
+| **Workbench** (this spec) | `draft/workbench/0.1.0/spec/` | The environment in which memos live — project layout, CLIs and scripts, configuration, the wiki, trash. Reasons about *the project and the workbench around the memo*. |
+| **Session** | `draft/session/0.1.0/spec/` | The session genesis layer; it also carries the **SOP area** — the thin connecting layer that makes the various SOPs predictable (what a SOP contains and where to find it). The SOP, once framed as its own family, now lives here as that area. |
+| **Meta-spec** | `draft/spec/0.1.0/spec/` | The specification-of-specifications: the per-chapter format, categories, and publishing rules every family follows, so a new family is added by following a document rather than reverse-engineering the build. |
 
 This mirrors the established multi-family pattern (a single spec repository hosting parallel, independently versioned spec families as sibling directories). Keeping these concerns in separate, peer documents lets each evolve at its own pace.
 
@@ -47,14 +48,14 @@ Within that shared vocabulary, the Workbench spec is otherwise self-contained: i
 
 This spec is **versioned independently** from the core specification. A change to the workbench's project structure or its CLI conventions does not force a core-spec version bump, and a core-spec version bump does not retroactively re-version the Workbench spec.
 
-- The core specification lives under `spec/v0.1.0/`; the Workbench spec lives under `spec/workbench/0.1.0/` and carries its own version line.
-- The authoritative, machine-readable version numbers for every family are recorded in `data/refs.manual.json` — the core spec under the `spec` key, this spec under the `workbench` key, and the Session spec under the `session` key. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data, and the build stamps each chapter with its family's version (`workbench_version`).
+- The core specification lives under `draft/memo/0.1.0/spec/`; the Workbench spec lives under `draft/workbench/0.1.0/spec/` and carries its own version line.
+- The authoritative, machine-readable version numbers for every family are recorded in `data/refs.manual.json` — the core spec under the `memo` key, this spec under the `workbench` key, the Session spec under the `session` key, and the meta-spec under the `spec` key. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data, and the build stamps each chapter with its family's version (`workbench_version`).
 
 ---
 
 ## Two Levels: Workbench and Project
 
-The Workbench spec describes **two levels** of operation, Workbench and Project. The machine tier — global, deterministic enforcement of policy via Claude Code hooks — is deliberately **out of scope** for this spec and is left to a future, separate machine-tier specification. The division of responsibility is recorded in [02-sop-entrypoint.md](/specification/sop-entrypoint/): the workbench *declares* policy, the machine tier *enforces* it.
+The Workbench spec describes **two levels** of operation, Workbench and Project. The machine tier — global, deterministic enforcement of policy via Claude Code hooks — is deliberately **out of scope** for this spec and is left to a future, separate machine-tier specification. The division of responsibility is recorded in [02-sop-entrypoint.md](/workbench/sop-entrypoint/): the workbench *declares* policy, the machine tier *enforces* it.
 
 ---
 
@@ -66,9 +67,9 @@ The defining mental shift of the workbench is that the unit of organization is t
 - A memo lives inside a project and coordinates the project's repositories. The project is therefore the boundary of a sharp, coherent context.
 - The workbench level does **not** develop code. It organizes, plans, and structures. Code development happens inside `projects/{name}/repos/`.
 
-This distinction is what [11-project-structure.md](/specification/project-structure/) makes concrete, and the separation of the workbench root from the projects beneath it is drawn in [10-root-and-projects.md](/specification/root-and-projects/).
+This distinction is what [11-project-structure.md](/workbench/project-structure/) makes concrete, and the separation of the workbench root from the projects beneath it is drawn in [10-root-and-projects.md](/workbench/root-and-projects/).
 
-The workbench **core** — its folders, CLIs, and conventions — is independent of the memo system: a project can use the layout without any memo ever being written, even though the memo system is the recommended custom folder that normally drives it. The core-vs-custom folder split among the registered folders is drawn in [12-folders.md](/specification/folders/).
+The workbench **core** — its folders, CLIs, and conventions — is independent of the memo system: a project can use the layout without any memo ever being written, even though the memo system is the recommended custom folder that normally drives it. The core-vs-custom folder split among the registered folders is drawn in [12-folders.md](/workbench/folders/).
 
 ---
 
@@ -79,7 +80,7 @@ The workbench level has two recurring verification concerns, both about *the env
 1. **Folder structures.** Each project under `projects/` is expected to follow the mandatory layout. The workbench audit walks the structure and reports missing or unexpected folders and files.
 2. **Tool reachability.** Globally linked command-line tools must resolve and respond. The workbench checks that the helpers it relies on are installed and reachable before a memo assumes them.
 
-These checks are descriptive of the real audit performed at the workbench level; the normative details of the structure being checked live in [11-project-structure.md](/specification/project-structure/), and the health-check scripts that perform them in [21-environment-scripts.md](/specification/environment-scripts/).
+These checks are descriptive of the real audit performed at the workbench level; the normative details of the structure being checked live in [11-project-structure.md](/workbench/project-structure/), and the health-check scripts that perform them in [21-environment-scripts.md](/workbench/environment-scripts/).
 
 ---
 
@@ -95,7 +96,7 @@ The workbench exposes a small set of **global** command-line helpers that are av
 
 The helpers are listed here by **role**, not by name: the concrete tool set is the developer's private inventory, declared per project rather than enumerated in this published spec.
 
-These helpers are global because they serve cross-project concerns (data ingestion, dependency safety) rather than the logic of any single project. A project **MAY** rely on a global helper being reachable; the workbench tool-reachability check exists precisely so that reliance is verified rather than assumed. The CLI convention these helpers follow is described in [20-cli.md](/specification/cli/).
+These helpers are global because they serve cross-project concerns (data ingestion, dependency safety) rather than the logic of any single project. A project **MAY** rely on a global helper being reachable; the workbench tool-reachability check exists precisely so that reliance is verified rather than assumed. The CLI convention these helpers follow is described in [20-cli.md](/workbench/cli/).
 
 ---
 
@@ -103,14 +104,14 @@ These helpers are global because they serve cross-project concerns (data ingesti
 
 This spec covers the workbench's **specification text and conventions**. Two things are deliberately out of scope and deferred:
 
-- **The machine tier** (hook-based enforcement) — a separate future spec (see above and [02-sop-entrypoint.md](/specification/sop-entrypoint/)).
+- **The machine tier** (hook-based enforcement) — a separate future spec (see above and [02-sop-entrypoint.md](/workbench/sop-entrypoint/)).
 - **Simplification of the operative `CLAUDE.md` files** — a backlog research concern, not part of this spec.
 
 ---
 
 ## Navigation Categories
 
-The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Folders**, **CLI & Scripts**, **Core**, **Wiki**, and **Tools**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
+The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Root**, **Projects**, **Folders**, **CLI & Scripts**, **Tools**, **Wiki**, **Core**, and **Bridge**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
 
 Three categories carry a meaning worth stating here:
 
@@ -118,4 +119,14 @@ Three categories carry a meaning worth stating here:
 - **Folders** holds the registered-folder pages and the things that attach to folders: the folder contract, the per-folder pages, the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
 - **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `design.md` (the design format); both therefore sit conceptually under the wiki rather than standing alone.
 
+---
+
+
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
+## Related
+
+- [01-philosophy.md](/workbench/philosophy/) — the guardrail philosophy and interaction model this overview sits on.
+- [02-sop-entrypoint.md](/workbench/sop-entrypoint/) — the SOP entry point and the declare-vs-enforce split between the workbench and the machine tier.
+- [10-root-and-projects.md](/workbench/root-and-projects/) — the separation of the workbench root from the projects beneath it.
+- [11-project-structure.md](/workbench/project-structure/) — the mandatory per-project layout this overview points at.
+- [12-folders.md](/workbench/folders/) — the core-vs-custom registered-folder split the navigation categories reflect.

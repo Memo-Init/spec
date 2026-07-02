@@ -25,10 +25,14 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-addons` | contributing | — |
-| `workbench-hooks-contract` | contributing | — |
-| `workbench-skills-scope` | primary | — |
+| `workbench-addons` | contributing | Integrate an Add-on — a custom-folder tool that reserves a small declared area inside a project's `.workbench/` descriptor and… |
+| `workbench-hooks-contract` | contributing | Author and reason about the workbench hooks contract — the policy the workbench DECLARES for deterministic PreToolUse enforceme… |
+| `workbench-skills-scope` | primary | Author workbench- and custom-folder skills under the common SOP standard (Setup / Health / Update / Extras), assign the orchest… |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

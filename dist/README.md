@@ -20,7 +20,7 @@ dist/
   README.md                 — this file
 ```
 
-Families: `memo`, `workbench`, `session`. Current version for each: `0.1.0`.
+Families: `memo`, `workbench`, `session`, `spec` (the meta-specification). Current version for each: `0.1.0`.
 
 ## Artifacts and their generators
 
@@ -39,9 +39,11 @@ Families: `memo`, `workbench`, `session`. Current version for each: `0.1.0`.
 npm run build
 ```
 
-Runs the generators in sequence: `generate-refs` → `generate-bridge` → `generate-docs-payload`
-→ `generate-manifest` → `check-bridge-inverse`. The build aborts with a non-zero
-exit code if the refs manual fails schema validation or the bridge inverse check detects drift.
+Runs the generators in sequence: `generate-refs` → `generate-docs-payload` → `generate-bridge`
+→ `generate-manifest` → `check-bridge-inverse`. This order is mandatory (docs-payload before
+bridge, both before manifest). The build aborts with a non-zero exit code if the refs manual
+fails schema validation, a same-family link resolves into a foreign family's route, or the
+bridge inverse check detects drift.
 
 ## Payload format
 
@@ -51,4 +53,4 @@ Each `dist/<name>/<version>/spec/*.md` file is its source chapter with:
   `spec_file`, `order`, `section`, `normative`, `generated_at`,
   `generated_from`, `generator`, `edit_warning`).
 - The leading H1 stripped (the docs site renders the title from frontmatter).
-- Intra-spec links `./NN-name.md` rewritten to `/specification/<slug>/` routes.
+- Same-family links `./NN-name.md` rewritten to the family's own published route (`/specification/`, `/workbench/`, `/session/`, `/spec/`), derived from the family head.

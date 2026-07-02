@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/00-overview.md."
@@ -15,9 +15,9 @@ edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/00-
 
 > **Informative.** This document introduces the Session spec, its scope, and its place among the sibling specifications. It does not itself carry normative requirements beyond those defined in the chapters it links.
 
-This is the entry point for the **Session spec** — a standalone sibling of the memo-init core specification and the Workbench spec. It specifies the **Session Genesis Root** (`session-sop`): the lowest tier of the system, the thing that is global **per session** rather than per workbench or per project. It is the **outermost published** family a reader meets, and it is the lowest **runtime** tier the upper layers inherit from — but it is **not** the highest authority (the Core spec owns the conformance vocabulary). Those three "top" axes are kept distinct in [10-sop.md](/specification/sop/).
+This is the entry point for the **Session spec** — a standalone sibling of the memo-init core specification and the Workbench spec. It specifies the **Session Genesis Root** (`session-sop`): the lowest tier of the system, the thing that is global **per session** rather than per workbench or per project. It is the **outermost published** family a reader meets, and it is the lowest **runtime** tier the upper layers inherit from — but it is **not** the highest authority (the Core spec owns the conformance vocabulary). Those three "top" axes are kept distinct in [10-sop.md](/session/sop/).
 
-This family also **absorbs the SOP area**. There is no separate SOP standard: the connecting layer that makes every Standard Operating Procedure predictable — and the mechanism through which tools register, attach to the session, and become findable — is an **integral entry-point area of the session standard** ([10-sop.md](/specification/sop/)–[13-conventions.md](/specification/conventions/)), not a sibling spec of its own.
+This family also **absorbs the SOP area**. There is no separate SOP standard: the connecting layer that makes every Standard Operating Procedure predictable — and the mechanism through which tools register, attach to the session, and become findable — is an **integral entry-point area of the session standard** ([10-sop.md](/session/sop/)–[13-conventions.md](/session/conventions/)), not a sibling spec of its own.
 
 The Workbench spec's entry point ([workbench/02-sop-entrypoint.md](/workbench/sop-entrypoint/)) records that the machine tier was once left out of scope. This family fills the **enforcement slice** of that gap: the session identity, the per-session security/trust level, and the deterministic PreToolUse enforcement that guarantees the correct SOP is loaded before a tool runs. The broader host-wide machine spec (the security-hook system, the env-file guard, the OS arrangement) remains future work; this family covers only the **genesis root** that the upper layers depend on, plus the SOP entry-point mechanism layered on it.
 
@@ -68,13 +68,13 @@ The session is **not** a static block of `CLAUDE.md` text that is always fully p
 
 This is why the session is the right tier to be **minimal**. The always-present surface is small — `.session/` plus its `config.json` — and everything above it is a **superset** that the lower tier never has to carry. **Session = minimal, Workbench = superset**: the genesis root stays lean, and breadth is disclosed by intent rather than pre-loaded.
 
-Progressive Disclosure (when a capability becomes *visible*) must not be conflated with the **Precondition-Gate** (whether a capability is *allowed to run*). The driver's-licence rule — `memo-init` may run only once `memo-sop` has been read — is a Precondition-Gate: the deterministic SessionStart / PreToolUse chain (`REQ-SS-*`) specified in [02-enforcement.md](/specification/enforcement/). The two are complementary: disclosure decides *when* a door appears; the gate decides *whether* you may walk through it. Someone who never intends to drive needs no licence — pure disclosure; the licence itself is the gate laid over the disclosure.
+Progressive Disclosure (when a capability becomes *visible*) must not be conflated with the **Precondition-Gate** (whether a capability is *allowed to run*). The driver's-licence rule — `memo-init` may run only once `memo-sop` has been read — is a Precondition-Gate: the deterministic SessionStart / PreToolUse chain (`REQ-SS-*`) specified in [02-enforcement.md](/session/enforcement/). The two are complementary: disclosure decides *when* a door appears; the gate decides *whether* you may walk through it. Someone who never intends to drive needs no licence — pure disclosure; the licence itself is the gate laid over the disclosure.
 
 ---
 
 ## The Push-Down Principle
 
-The family's organizing leitmotif is **push-down**: a concept shared across tiers is explained **once**, at the lowest tier that owns it — the session — and the tiers above (`workbench-sop`, `memo-sop`, and the Workbench folder pages) **reference down** into it rather than restating it. A reader meets the canonical definition here and finds pointers, not copies, higher up. The PreToolUse **Hook-Contract** is the worked example: its single source is this family's enforcement page ([02-enforcement.md](/specification/enforcement/)), and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) references up to it rather than redefining the contract.
+The family's organizing leitmotif is **push-down**: a concept shared across tiers is explained **once**, at the lowest tier that owns it — the session — and the tiers above (`workbench-sop`, `memo-sop`, and the Workbench folder pages) **reference down** into it rather than restating it. A reader meets the canonical definition here and finds pointers, not copies, higher up. The PreToolUse **Hook-Contract** is the worked example: its single source is this family's enforcement page ([02-enforcement.md](/session/enforcement/)), and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) references up to it rather than redefining the contract.
 
 Three companion rules keep the push-down honest:
 
@@ -91,7 +91,7 @@ The vocabulary the whole chain shares is defined once here, at the lowest tier (
 - **Tool** — a registered **namespace**: an SOP application that reserves a namespace and registers its skills, so the session can find it. The built-in tools are `memo`, `workbench`, and `flowmcp`. A registered namespace is a *Tool* — not a *Component*, which is reserved for a skill subtype.
 - **Add-on** — a **custom-folder** tool: a local extension that lives in its own folder and is **not** a reserved namespace. The Workbench spec calls these *custom folders*; `.memo/`, generated by `memo-init`, is one example. "Children" is used only informally for the things a tool carries, deliberately avoiding the formal *Component*.
 - **namespace** — the reserved prefix a Tool owns (e.g. `memo`), under which its skills and dependency edges are declared. Namespaces are unique; a collision is an error, never a silent merge.
-- **SOP** — Standard Operating Procedure: the connecting layer that makes a procedure predictable, and the entry-point mechanism through which a Tool registers, attaches to the session, and becomes findable ([10-sop.md](/specification/sop/)). Not every Tool is an SOP — a catalog tool carries skills but defines no procedure.
+- **SOP** — Standard Operating Procedure: the connecting layer that makes a procedure predictable, and the entry-point mechanism through which a Tool registers, attaches to the session, and becomes findable ([10-sop.md](/session/sop/)). Not every Tool is an SOP — a catalog tool carries skills but defines no procedure.
 - **phase** — a unit of a memo rollout that groups several PRDs and is ordered by `depends-on` edges.
 - **strand** — the dependency closure over phases: the chain that *emerges* when the `depends-on` edges are followed, computed rather than authored.
 - **plan** — a multi-phase execution record that references a memo and tracks which phase runs next.
@@ -126,6 +126,6 @@ The family is read in six nav groups; the sidebar lists the individual chapters,
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [10-sop.md](/specification/sop/) — the SOP entry-point mechanism this family absorbs, and the common SOP standard `session-sop` is an instance of.
+- [10-sop.md](/session/sop/) — the SOP entry-point mechanism this family absorbs, and the common SOP standard `session-sop` is an instance of.
 - [The Workbench spec](/workbench/overview/) — the convention layered above the genesis root; its [SOP entry point](/workbench/sop-entrypoint/) routes through this tier.
 - [workbench/23-hooks-contract.md](/workbench/hooks-contract/) — the PreToolUse contract this family's enforcement realizes.

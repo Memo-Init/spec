@@ -25,8 +25,12 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-input-processing` | contributing | — |
+| `memo-input-processing` | contributing | Strict 5-step input processing pipeline for voice memos, text, and linked files |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

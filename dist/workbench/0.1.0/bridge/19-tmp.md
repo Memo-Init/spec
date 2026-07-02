@@ -25,8 +25,12 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `workbench-tmp` | primary | — |
+| `workbench-tmp` | primary | Operate a project's `.tmp/` ephemeral scratch folder — the dot-prefixed, machine-local, gitignored area for throwaway working f… |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

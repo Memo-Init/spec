@@ -1,19 +1,19 @@
 ---
 title: "SOP Instances"
-description: "The SOP area defines a shape; the concrete SOPs **are** that shape, filled in for their scope. This chapter records the existing instances and the lightweight reference model that ties them back to..."
+description: "This chapter records how the existing SOPs relate to the common denominator. It names instances; it does not restate their content, which lives in their own specs. It is normative where it states the..."
 session_version: "0.1.0"
 spec_file: "12-instances.md"
 order: 12
 section: "Session"
-normative: false
-generated_at: "2026-07-01T20:10:10.023Z"
+normative: true
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/12-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/12-instances.md."
 ---
 
 
-> **Informative.** This chapter records how the existing SOPs relate to the common denominator. It names instances; it does not restate their content, which lives in their own specs.
+This chapter records how the existing SOPs relate to the common denominator. It names instances; it does not restate their content, which lives in their own specs. It is normative where it states the inheritance declaration below; the surrounding description is context.
 
 The SOP area defines a shape; the concrete SOPs **are** that shape, filled in for their scope. This chapter records the existing instances and the lightweight reference model that ties them back to the standard.
 
@@ -48,7 +48,7 @@ The result is a connecting mechanism with no duplication: the standard is stated
 
 For the reference model to hold, the tie must be **stated** by the instance, not merely implied. An SOP instance **MUST** declare, as one of its first sentences, that it is an instance of the SOP standard and that it extends it; it then states how it realizes Setup, Health, and Update for its scope, plus its extras. The canonical first-sentence form opens an instance like this:
 
-> "This is the «X»-SOP, an instance of the SOP standard ([SOP](/specification/sop/)) that it extends; below is how it realizes Setup, Health, and Update for «scope», plus its extras."
+> "This is the «X»-SOP, an instance of the SOP standard ([SOP](/session/sop/)) that it extends; below is how it realizes Setup, Health, and Update for «scope», plus its extras."
 
 This declaration is what lets a reader navigate an unfamiliar SOP by the standard: having read the common denominator once, the reader knows that the four parts are present and where each is realized, without reading the SOP end to end.
 
@@ -60,8 +60,8 @@ Each instance **SHOULD** also name its **entry points** — the holistic "what t
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [10-sop.md](/specification/sop/) — the purpose of the SOP entry-point mechanism.
-- [11-common-denominator.md](/specification/common-denominator/) — the four parts each instance fills in.
+- [10-sop.md](/session/sop/) — the purpose of the SOP entry-point mechanism.
+- [11-common-denominator.md](/session/common-denominator/) — the four parts each instance fills in.
 - [Root and Projects](/workbench/root-and-projects/) — the two workbench instances (Root-SOP, Projects-SOP) and the routing between them, specified in the Workbench spec.
 - [The Workbench-SOP entry point](/workbench/sop-entrypoint/) — the signpost that routes to the two workbench instances.
 - [The memo-init SOP entry point](/specification/memo-sop-entrypoint/) — the memo-lifecycle instance.

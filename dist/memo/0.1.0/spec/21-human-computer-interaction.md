@@ -6,7 +6,7 @@ spec_file: "21-human-computer-interaction.md"
 order: 21
 section: "Specification"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/memo/0.1.0/spec/21-human-computer-interaction.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/21-human-computer-interaction.md."

@@ -6,14 +6,14 @@ spec_file: "08-identity-pin.md"
 order: 8
 section: "Session"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/session/0.1.0/spec/08-identity-pin.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/08-identity-pin.md."
 ---
 
 
-The session identity established by the genesis root ([01-genesis-root.md](/specification/genesis-root/)) is global **per session**, which only holds if it is also **stable for the whole session**. This chapter owns that stability guarantee: the **SessionStart-Pin** invariant and the **cd-soft-guard**. It is the canonical home of the pin — [02-enforcement.md](/specification/enforcement/), [05-config-cascade.md](/specification/config-cascade/) and [09-root-detection.md](/specification/root-detection/) reference the pinned value defined here rather than re-resolving it.
+The session identity established by the genesis root ([01-genesis-root.md](/session/genesis-root/)) is global **per session**, which only holds if it is also **stable for the whole session**. This chapter owns that stability guarantee: the **SessionStart-Pin** invariant and the **cd-soft-guard**. It is the canonical home of the pin — [02-enforcement.md](/session/enforcement/), [05-config-cascade.md](/session/config-cascade/) and [09-root-detection.md](/session/root-detection/) reference the pinned value defined here rather than re-resolving it.
 
 ---
 
@@ -31,14 +31,14 @@ A live re-resolution from `cwd` makes this failure invisible, because `cwd` is e
 
 ## The SessionStart-Pin
 
-Identity and root are resolved **once, at SessionStart**, and cached in a **session-stable source**. The reference resolver is `memo session resolve` ([04-cli.md](/specification/cli/)); its result is pinned by the SessionStart hook for the rest of the session.
+Identity and root are resolved **once, at SessionStart**, and cached in a **session-stable source**. The reference resolver is `memo session resolve` ([04-cli.md](/session/cli/)); its result is pinned by the SessionStart hook for the rest of the session.
 
 The pinned record:
 
 | Field | Meaning | Resolved at |
 |-------|---------|-------------|
-| `sessionId` | the ambient session identity, **global and namespace-neutral** ([01-genesis-root.md](/specification/genesis-root/), precedence flag > env > null) | SessionStart |
-| `resolvedRoot` | the nearest-ancestor `.session/` root ([09-root-detection.md](/specification/root-detection/)) | SessionStart |
+| `sessionId` | the ambient session identity, **global and namespace-neutral** ([01-genesis-root.md](/session/genesis-root/), precedence flag > env > null) | SessionStart |
+| `resolvedRoot` | the nearest-ancestor `.session/` root ([09-root-detection.md](/session/root-detection/)) | SessionStart |
 | `options` | per-namespace pinned ids, one sub-object per namespace — e.g. `options.memo.memoId` is the optional memo id (MAY be absent or `null`). Only namespace-scoped ids live here; `sessionId` stays top-level | SessionStart |
 | `source` | where the pin was read from — the SessionStart record / `transcript_path`-derived cache, **never the live `cwd`** | SessionStart |
 
@@ -53,7 +53,7 @@ How the pinned record looks — `sessionId` stays a top-level global id; each na
   } }
 ```
 
-The pin's `source` MUST be the SessionStart resolution (a SessionStart cache, keyed off the harness-authored `transcript_path`), **not** the live `cwd` at the moment a later hook runs. Resolving `resolvedRoot` from a walk-up of the current `cwd` on every call is exactly the drift hazard above; the walk-up in [09-root-detection.md](/specification/root-detection/) runs **once to populate the pin**, then the pinned value stands.
+The pin's `source` MUST be the SessionStart resolution (a SessionStart cache, keyed off the harness-authored `transcript_path`), **not** the live `cwd` at the moment a later hook runs. Resolving `resolvedRoot` from a walk-up of the current `cwd` on every call is exactly the drift hazard above; the walk-up in [09-root-detection.md](/session/root-detection/) runs **once to populate the pin**, then the pinned value stands.
 
 Pinning is consistent with the family's no-silent-default rule: an unresolved field is pinned as `null` with an explicit source, never guessed.
 
@@ -61,7 +61,7 @@ Pinning is consistent with the family's no-silent-default rule: an unresolved fi
 
 ## Every Hook Reads the Pin, Never a cd-Mutated cwd
 
-Each PreToolUse hook ([02-enforcement.md](/specification/enforcement/)) MUST read the **pinned** identity for its registry lookup and edge resolution. It MUST NOT re-derive identity or root from the live `cwd`. The pin is the single anchor; because it is fixed at SessionStart, an agent that wanders into a sister directory still gates against the **original** session — identity cannot drift even when the working directory does.
+Each PreToolUse hook ([02-enforcement.md](/session/enforcement/)) MUST read the **pinned** identity for its registry lookup and edge resolution. It MUST NOT re-derive identity or root from the live `cwd`. The pin is the single anchor; because it is fixed at SessionStart, an agent that wanders into a sister directory still gates against the **original** session — identity cannot drift even when the working directory does.
 
 | Requirement | Statement |
 |-------------|-----------|
@@ -72,7 +72,7 @@ Each PreToolUse hook ([02-enforcement.md](/specification/enforcement/)) MUST rea
 
 ## The cd-Soft-Guard
 
-The pin already keeps identity stable when the agent leaves the root — but leaving it silently is still worth surfacing. A **soft-guard** sits on the `Bash` PreToolUse path, the same place as `security-check.sh` ([02-enforcement.md](/specification/enforcement/)), and inspects `cd` targets relative to the pinned `resolvedRoot`.
+The pin already keeps identity stable when the agent leaves the root — but leaving it silently is still worth surfacing. A **soft-guard** sits on the `Bash` PreToolUse path, the same place as `security-check.sh` ([02-enforcement.md](/session/enforcement/)), and inspects `cd` targets relative to the pinned `resolvedRoot`.
 
 The guard **WARNS — it does not block** (the F9=A decision). This is consistent with the family's permissive-first posture and the warn-not-block line: detect a `cd` that would leave the pinned project/workbench root, emit one note, and continue.
 
@@ -143,7 +143,7 @@ The cd-soft-guard WARNs but never blocks and never re-pins (REQ-SS-CDGUARD); the
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [01-genesis-root.md](/specification/genesis-root/) — the genesis root that establishes the identity this chapter pins.
-- [02-enforcement.md](/specification/enforcement/) — the PreToolUse hook that reads the pinned identity, never the live `cwd`.
-- [09-root-detection.md](/specification/root-detection/) — the nearest-ancestor `.session/` walk-up; its result is resolved once to populate the pin.
-- [03-recovery.md](/specification/recovery/) — the disable switch, sentinel, and canary that keep the gate (and the pin) recoverable.
+- [01-genesis-root.md](/session/genesis-root/) — the genesis root that establishes the identity this chapter pins.
+- [02-enforcement.md](/session/enforcement/) — the PreToolUse hook that reads the pinned identity, never the live `cwd`.
+- [09-root-detection.md](/session/root-detection/) — the nearest-ancestor `.session/` walk-up; its result is resolved once to populate the pin.
+- [03-recovery.md](/session/recovery/) — the disable switch, sentinel, and canary that keep the gate (and the pin) recoverable.

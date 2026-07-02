@@ -30,3 +30,7 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+`repo-docs-writing`, `repo-github-org`, `repo-init`, `repo-issue`, `repo-quality`, `repo-readme`

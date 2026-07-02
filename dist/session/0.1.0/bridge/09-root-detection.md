@@ -15,7 +15,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 ## 2. Public entry points
 
-`session-root-detection` _(inferred from primary owners)_ · docs entry `https://memo-init.github.io/session/overview/`
+`session-root-detection` _(inferred from primary owners)_ · docs entry `/session/overview/`
 
 ## 3. Required detail pages
 
@@ -25,8 +25,12 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-root-detection` | primary | — |
+| `session-root-detection` | primary | Locate the session/workbench root by a nearest-ancestor.session/ walk-up bounded by a root:true stop-flag, with an opt-in relat… |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

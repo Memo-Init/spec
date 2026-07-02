@@ -25,23 +25,27 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `drift-resolution` | contributing | — |
-| `git-commit` | contributing | — |
-| `git-push` | contributing | — |
-| `git-security` | contributing | — |
-| `memo-balance` | primary | — |
-| `memo-coherence` | primary | — |
-| `memo-evidence` | primary | — |
-| `memo-fidelity-audit` | contributing | — |
-| `memo-finalize` | primary | — |
-| `memo-prds-validate` | contributing | — |
-| `memo-references` | primary | — |
-| `memo-research-agent` | contributing | — |
-| `memo-revision-consolidate` | contributing | — |
-| `memo-rollout` | contributing | — |
-| `memo-rollout-generate` | contributing | — |
-| `workbench-persona-audit` | contributing | — |
+| `drift-resolution` | contributing | Detect and resolve DRIFT — a knowledge-unit (a statement, command, number, or convention) replicated across many artifacts that… |
+| `git-commit` | contributing | Structured commit workflow — security check, MANDATORY issue creation, staging, commit message with issue reference |
+| `git-push` | contributing | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
+| `git-security` | contributing | Standalone security check for Git repositories |
+| `memo-balance` | primary | Check memo chapters for over-engineering and under-engineering |
+| `memo-coherence` | primary | Provide honest, critical feedback on a memo — find gaps, contradictions, redundancies, and logical issues |
+| `memo-evidence` | primary | Tag all statements in a memo by evidence level (FAKT/ANNAHME/VERMUTUNG) |
+| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
+| `memo-finalize` | primary | Final readiness gate check before PRD creation |
+| `memo-prds-validate` | contributing | Bidirectional validation of Memo vs |
+| `memo-references` | primary | Verify all code references in a memo (file paths, line numbers, code snippets) |
+| `memo-research-agent` | contributing | Research agent with a fixed output format and a fixed storage location |
+| `memo-revision-consolidate` | contributing | Merges the last Full revision plus all subsequent Update revisions into a new Full revision |
+| `memo-rollout` | contributing | Orchestrator fuer den kompletten Rollout |
+| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
+| `workbench-persona-audit` | contributing | Persona-basierter Audit fuer Projekte (Webseiten, Repos, Doku) |
 
 ## 5. Grading assignment
 
 Grading handled by `memo-fidelity-audit`.
+
+## 6. Acknowledged internal tooling
+
+`repo-quality`

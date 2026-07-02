@@ -6,7 +6,7 @@ spec_file: "05-publishing-principle.md"
 order: 5
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/spec/0.1.0/spec/05-publishing-principle.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/05-publishing-principle.md."
@@ -37,12 +37,25 @@ Two consequences follow directly, and each **MUST** be honored:
 
 ## Why Gaps Are Removed From the Public Bridge
 
-The bridge computes a per-chapter **gaps roll-up** — where a skill's capability runs ahead of what a chapter specifies — and does **not** publish it ([The Bridge Standard](/specification/bridge-standard/)). This principle is the reason, and stating the reason correctly matters:
+The bridge computes a per-chapter **gaps roll-up** — where a skill's capability runs ahead of what a chapter specifies — and does **not** publish it ([The Bridge Standard](/spec/bridge-standard/)). This principle is the reason, and stating the reason correctly matters:
 
 - A gap entry is **internal interpretation** of the delta between a skill and the spec. It offers no value to an outside reader of the specification, and it exposes the project's own inward assessment of its coverage.
 - The gaps are therefore removed **because they are internal interpretation** — *not* because "names are secret". The skills, and their names, remain publishable; what is withheld is our classification of the spec's coverage. Conflating the two ("hide the gaps because the skills are secret") is the imprecise version this chapter corrects: the skills' *names* are public, their *implementation* is private, and our *interpretation* of the spec is private.
 
-The same reasoning governs the provenance hash and any coverage-percentage figure: each is inward calibration, so each stays inward, while the honest public facts — that a chapter has or has not got an implementer, and which named skills those are — are published.
+The same reasoning governs the provenance hash and any coverage **percentage or classification**: each is inward calibration, so each stays inward. The honest public facts — that a chapter has or has not got an implementer, which named skills those are, and the raw `n of m` count of how many chapters are covered — are published. The raw count is a *fact about* coverage, not an *interpretation of* it, so it stays public; a percentage, or a "well covered / poorly covered" judgment, is interpretation and does not.
+
+---
+
+## Repo Source Versus Published Artifact
+
+The principle governs what is **published**, and publication has a precise boundary: the rendered `dist/` artifacts and the site served from them. It does **not** reach every file in the repository. The repository is the **build-plan**, and the build-plan is itself a published thing — but a build-plan legitimately contains authoring inputs that are not part of what is served.
+
+This resolves an apparent tension. The bridge's source map (`draft/<family>/<version>/data/skill-spec-map.json`) carries internal fields — the `gaps` notes and a `visibility` marker — and it lives in a repository that is public. That is **allowed**: the map is build-plan source, and internal interpretation in the *source* is not a leak. The rule bites at the render boundary, not at the storage location:
+
+- **Source is build-plan.** The authored map, including its `gaps` and `visibility` fields, MAY live in the repository. It is not relocated to a private repo; the source stays where the build reads it.
+- **Only rendered `dist/` artifacts are the publication.** The gaps roll-up and the provenance hash MUST be stripped from every rendered artifact ([The Bridge Standard](/spec/bridge-standard/)) — the public bridge page and the published inverted map. What is served carries only the public projection.
+
+So the line is: internal interpretation MUST NOT reach a **rendered** artifact, but it MAY sit in the **source** the render is built from. Publication is defined by what is served, not by which repository a file happens to live in.
 
 ---
 
@@ -50,6 +63,6 @@ The same reasoning governs the provenance hash and any coverage-percentage figur
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [./04-bridge-standard.md](/specification/bridge-standard/) — the bridge withholds its gaps roll-up and provenance on the strength of this principle.
-- [./06-conventions-writing.md](/specification/conventions-writing/) — how the organization's conventions are written and registered.
+- [./04-bridge-standard.md](/spec/bridge-standard/) — the bridge withholds its gaps roll-up and provenance on the strength of this principle.
+- [./06-conventions-writing.md](/spec/conventions-writing/) — how the organization's conventions are written and registered.
 - [/specification/internal-vs-external-communication/](/specification/internal-vs-external-communication/) — the inward/outward direction model this principle is a special case of.

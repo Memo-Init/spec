@@ -25,14 +25,18 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-finalize` | contributing | — |
-| `memo-goal-score-all` | contributing | — |
-| `memo-maintenance-score-all` | contributing | — |
-| `memo-mental-model-derive` | contributing | — |
-| `memo-plan-execute` | contributing | — |
-| `memo-reset-recommend` | contributing | — |
-| `memo-sop` | contributing | — |
+| `memo-finalize` | contributing | Final readiness gate check before PRD creation |
+| `memo-goal-score-all` | contributing | Score EVERY goal in a fresh context and render the goal board — the standard output of the goal-scoring system |
+| `memo-maintenance-score-all` | contributing | Score EVERY repo card in a fresh context and render the maintenance board — the standard output of the maintenance system |
+| `memo-mental-model-derive` | contributing | Derive the project-global User Mental Model in a FRESH context (never the working session) by walking the finalized memos chron… |
+| `memo-plan-execute` | contributing | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
+| `memo-reset-recommend` | contributing | Evaluates whether a /clear reset should be recommended after a phase boundary |
+| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
 
 ## 5. Grading assignment
 
 Grading handled by `memo-goal-score-all`.
+
+## 6. Acknowledged internal tooling
+
+— none —

@@ -6,14 +6,14 @@ spec_file: "11-project-structure.md"
 order: 11
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/11-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/11-project-structure.md."
 ---
 
 
-Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. The mandatory and optional folders are specified in [12-folders.md](/specification/folders/); the split between the workbench root and the projects beneath it in [10-root-and-projects.md](/specification/root-and-projects/). This chapter specifies the property those layouts exist to protect: the **local guarantee**.
+Every project lives under `projects/{name}/` and **MUST** follow a single, predictable layout. The mandatory and optional folders are specified in [12-folders.md](/workbench/folders/); the split between the workbench root and the projects beneath it in [10-root-and-projects.md](/workbench/root-and-projects/). This chapter specifies the property those layouts exist to protect: the **local guarantee**.
 
 ---
 
@@ -103,6 +103,6 @@ The egress rule is a content judgement on what may leave the local context, so i
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [10-root-and-projects.md](/specification/root-and-projects/) — the workbench-root vs. project split that this guarantee spans.
-- [12-folders.md](/specification/folders/) — the mandatory and optional folders of a project.
-- [32-trash.md](/specification/trash/) — why deletion routes through `.trash/`.
+- [10-root-and-projects.md](/workbench/root-and-projects/) — the workbench-root vs. project split that this guarantee spans.
+- [12-folders.md](/workbench/folders/) — the mandatory and optional folders of a project.
+- [32-trash.md](/workbench/trash/) — why deletion routes through `.trash/`.

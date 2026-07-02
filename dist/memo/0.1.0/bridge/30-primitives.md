@@ -25,11 +25,15 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-req-registry` | contributing | — |
-| `memo-req-runner` | contributing | — |
-| `memo-req-store` | contributing | — |
-| `memo-sop` | contributing | — |
+| `memo-req-registry` | contributing | Catalog of tools usable as requirements (Pencil, Playwright, get-sheet, getui, FlowMCP) with named validation tactics, plus a d… |
+| `memo-req-runner` | contributing | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
+| `memo-req-store` | contributing | Storage convention and entry schema for the requirements/eval calibration layer, plus the three-axis scoping/matching engine |
+| `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
 
 ## 5. Grading assignment
 
 Grading handled by `memo-req-registry` _(inferred)_.
+
+## 6. Acknowledged internal tooling
+
+— none —

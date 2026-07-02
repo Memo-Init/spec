@@ -15,7 +15,7 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 ## 2. Public entry points
 
-`session-namespace-registry` _(inferred from primary owners)_ · docs entry `https://memo-init.github.io/session/overview/`
+`session-namespace-registry` _(inferred from primary owners)_ · docs entry `/session/overview/`
 
 ## 3. Required detail pages
 
@@ -25,8 +25,12 @@ This chapter is entered through the session SOP: [10-sop](./10-sop.md).
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `session-namespace-registry` | primary | — |
+| `session-namespace-registry` | primary | Author and validate the sops[] namespace registry — the registrant blocks that replace the flat skills[] list |
 
 ## 5. Grading assignment
 
 No grader assigned yet.
+
+## 6. Acknowledged internal tooling
+
+— none —

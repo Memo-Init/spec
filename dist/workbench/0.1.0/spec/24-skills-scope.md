@@ -6,7 +6,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-07-01T20:10:10.023Z"
+generated_at: "2026-07-02T13:49:37.873Z"
 generated_from: "draft/workbench/0.1.0/spec/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/24-skills-scope.md."
@@ -24,13 +24,13 @@ A workbench skill is an instance of the common SOP denominator ([the SOP common 
 | Part | At the workbench scope |
 |------|------------------------|
 | **Setup** | Bring a project or the workbench into its expected, structured state. |
-| **Health** | Verify the workbench setup — do the projects and repositories satisfy the structural checks (see [21-environment-scripts.md](/specification/environment-scripts/)). |
+| **Health** | Verify the workbench setup — do the projects and repositories satisfy the structural checks (see [21-environment-scripts.md](/workbench/environment-scripts/)). |
 | **Update** | Roll central improvements out into the projects that consume them. |
 | **Extras** | Scope-specific capabilities — notably the wiki and the project conventions. |
 
 Organizing workbench skills this way means a reader who knows the SOP standard already knows the shape of the workbench skill set: it is Setup/Health/Update plus the workbench's own extras, not an ad-hoc collection.
 
-The same four-part frame generalizes beyond workbench skills to **every custom folder**: each custom folder's SOP is Setup/Health/Update plus its own tool-specific Extras, scaled to the custom folder's weight ([26-addons.md](/specification/addons/)).
+The same four-part frame generalizes beyond workbench skills to **every custom folder**: each custom folder's SOP is Setup/Health/Update plus its own tool-specific Extras, scaled to the custom folder's weight ([26-addons.md](/workbench/addons/)).
 
 ---
 
@@ -38,10 +38,10 @@ The same four-part frame generalizes beyond workbench skills to **every custom f
 
 | Capability | Placement |
 |------------|-----------|
-| Project audit (structure/health) | A **workbench skill** — it realizes the **Health** part (the structural checks of [21-environment-scripts.md](/specification/environment-scripts/)). |
+| Project audit (structure/health) | A **workbench skill** — it realizes the **Health** part (the structural checks of [21-environment-scripts.md](/workbench/environment-scripts/)). |
 | Documentation scraping | A **borderline** case — closer to user/memo work than to workbench Setup/Health/Update; not a core workbench skill. |
 | Phase execution | **Not** a workbench skill — it belongs to the memo-SOP (the core specification's lifecycle), not to the workbench scope. |
-| Browser automation | Already covered by [31-browser-automation.md](/specification/browser-automation/) as a project-level method. |
+| Browser automation | Already covered by [31-browser-automation.md](/workbench/browser-automation/) as a project-level method. |
 
 The memo-toolkit capabilities are loaded **dynamically** (progressive disclosure): a skill is brought into context when it is relevant rather than all at once, so the workbench scope stays small at rest and expands only to the task at hand.
 
@@ -66,7 +66,7 @@ role: component      # a reusable building block, not in the user-callable catal
 
 A skill marked `role: component` is **taken out of the user-callable catalog**: it is private by default, the same posture as a class method that is private unless deliberately exposed. The default is private; an orchestrator is the deliberate exception that is made public.
 
-The two roles sit beneath the custom folder SOPs the workbench-SOP points at ([02-sop-entrypoint.md](/specification/sop-entrypoint/)): each custom folder's orchestrators are its public entry points, and components are the reusable building blocks they call.
+The two roles sit beneath the custom folder SOPs the workbench-SOP points at ([02-sop-entrypoint.md](/workbench/sop-entrypoint/)): each custom folder's orchestrators are its public entry points, and components are the reusable building blocks they call.
 
 ```mermaid
 flowchart TD
@@ -90,7 +90,7 @@ The consequences are concrete:
 - The check is on **content, not only types** — not just "is this the right shape?" but "**does this make sense?**". Type-checking the input is necessary and not sufficient.
 - **The stricter the public methods, the calmer the interior.** Rigor at the boundary is what lets the inside of the system relax; a lax boundary pushes defensive checks into every internal step.
 
-This is the same public-entry boundary the two checkability mechanisms act on — a **before** pre-hook and an **after** runtime measurement. That before/after split is specified once in [25-validation-overview.md](/specification/validation-overview/); this chapter does not restate the rule, it only places the orchestrator at the boundary. The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
+This is the same public-entry boundary the two checkability mechanisms act on — a **before** pre-hook and an **after** runtime measurement. That before/after split is specified once in [25-validation-overview.md](/workbench/validation-overview/); this chapter does not restate the rule, it only places the orchestrator at the boundary. The orchestrators are where the workbench's essential validation layer lives. Enforcing the `role` split with a pre-hook is a later step; the convention is fixed here first — **spec before mechanism**.
 
 One call through the boundary is an ordered exchange, so a sequence diagram traces it best — the pre-hook gates *before* the orchestrator runs, and the runtime check measures *after*, from the transcript the run left behind:
 
@@ -128,7 +128,7 @@ TranscriptPrompt:
 
 The typed contract is the **type half** of the [Public-Method Validation Boundary](#the-public-method-validation-boundary) above. That boundary states that "type-checking the input is necessary and not sufficient": the typed contract makes the boundary **machine-checkable** — a call can be checked against the declared shape automatically — while the **content** check ("does this make sense?") still sits on top. Types are the floor, not the ceiling.
 
-The typed contract **lives in the shared SOP-JSON layer** — alongside the dependency table and the registry ([20-cli.md](/specification/cli/), [23-hooks-contract.md](/specification/hooks-contract/)). One machine-readable layer then carries all three of: **discovery** (what skills and custom folders exist), **preconditions** (what must run first), **and skill I/O types** (the typed contract). They are not three separate stores.
+The typed contract **lives in the shared SOP-JSON layer** — alongside the dependency table and the registry ([20-cli.md](/workbench/cli/), [23-hooks-contract.md](/workbench/hooks-contract/)). One machine-readable layer then carries all three of: **discovery** (what skills and custom folders exist), **preconditions** (what must run first), **and skill I/O types** (the typed contract). They are not three separate stores.
 
 The same typed contract has a **dual use**:
 
@@ -143,10 +143,10 @@ This chapter fixes the typed contract **spec-side now**; the implementation is *
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [26-addons.md](/specification/addons/) — the custom folder model the Setup/Health/Update/Extras frame generalizes to.
-- [23-hooks-contract.md](/specification/hooks-contract/) — the entry-point pre-condition that guards a public method *before* the call.
-- [20-cli.md](/specification/cli/) — the runtime call-validation that measures the boundary *after* the call.
-- [25-validation-overview.md](/specification/validation-overview/) — the single source of the before/after validation split, and the validation-code index.
+- [26-addons.md](/workbench/addons/) — the custom folder model the Setup/Health/Update/Extras frame generalizes to.
+- [23-hooks-contract.md](/workbench/hooks-contract/) — the entry-point pre-condition that guards a public method *before* the call.
+- [20-cli.md](/workbench/cli/) — the runtime call-validation that measures the boundary *after* the call.
+- [25-validation-overview.md](/workbench/validation-overview/) — the single source of the before/after validation split, and the validation-code index.
 - [The SOP common denominator](/session/common-denominator/) — the Setup/Health/Update standard these skills realize.
-- [21-environment-scripts.md](/specification/environment-scripts/) — the health checks the audit skill performs.
-- [31-browser-automation.md](/specification/browser-automation/) — the project-level browser-automation method.
+- [21-environment-scripts.md](/workbench/environment-scripts/) — the health checks the audit skill performs.
+- [31-browser-automation.md](/workbench/browser-automation/) — the project-level browser-automation method.

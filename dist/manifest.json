@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-07-01T20:10:10.439Z",
+    "generated_at": "2026-07-02T13:49:39.064Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -410,7 +410,7 @@
             "description": "A diagram is one of the cheapest ways to turn a paragraph of reasoning into something a reader grasps at a glance, and the viewer renders a wide range of diagram types with no extra work. Yet in...",
             "order": 40,
             "section": "Specification",
-            "normative": false,
+            "normative": true,
             "sidebar_group": "revision"
         },
         {
@@ -504,7 +504,7 @@
                 "description": "This is the **Workbench-SOP**, the entry-point signpost for the workbench scope and an instance of the common SOP standard ([the Session spec's SOP area](/session/sop/)) that it **extends** — below...",
                 "order": 2,
                 "section": "Workbench",
-                "normative": false,
+                "normative": true,
                 "sidebar_group": "introduction"
             },
             {
@@ -651,10 +651,10 @@
                 "filename": "25-validation-overview.md",
                 "slug": "validation-overview",
                 "title": "Validation Overview",
-                "description": "The workbench's checks are deliberately spread across the chapters they belong to — the hook contract, the configuration, the trash policy, the scripts. That keeps each rule next to the thing it...",
+                "description": "This chapter is a **wayfinder and code index**: it gathers the workbench's validation families *and* the session-tier `REQ-SS-*` codes in one place and points at the chapter where each is specified....",
                 "order": 25,
                 "section": "Workbench",
-                "normative": false,
+                "normative": true,
                 "sidebar_group": "core"
             },
             {
@@ -681,7 +681,7 @@
                 "filename": "31-browser-automation.md",
                 "slug": "browser-automation",
                 "title": "Browser Automation & Research Method",
-                "description": "The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](../../v0.1.0/10-proactive-research.md)) defines the research *duty* — when a memo must verify its assumptions and...",
+                "description": "The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how...",
                 "order": 31,
                 "section": "Workbench",
                 "normative": true,
@@ -701,7 +701,7 @@
                 "filename": "41-project-architecture.md",
                 "slug": "project-architecture",
                 "title": "Architecture",
-                "description": "This chapter holds the workbench's architecture at two scales: the **core diagram** that summarizes the system's overall structure — the two-level model and the three sibling spec families — and the...",
+                "description": "This chapter holds the workbench's architecture at two scales: the **core diagram** that summarizes the system's overall structure — the two-level model and the four sibling spec families — and the...",
                 "order": 41,
                 "section": "Workbench",
                 "normative": true,
@@ -836,7 +836,7 @@
                 "filename": "11-common-denominator.md",
                 "slug": "common-denominator",
                 "title": "Standard Commands",
-                "description": "Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on...",
+                "description": "This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which...",
                 "order": 11,
                 "section": "Session",
                 "normative": true,
@@ -846,20 +846,20 @@
                 "filename": "12-instances.md",
                 "slug": "instances",
                 "title": "SOP Instances",
-                "description": "The SOP area defines a shape; the concrete SOPs **are** that shape, filled in for their scope. This chapter records the existing instances and the lightweight reference model that ties them back to...",
+                "description": "This chapter records how the existing SOPs relate to the common denominator. It names instances; it does not restate their content, which lives in their own specs. It is normative where it states the...",
                 "order": 12,
                 "section": "Session",
-                "normative": false,
+                "normative": true,
                 "sidebar_group": "sop"
             },
             {
                 "filename": "13-conventions.md",
                 "slug": "conventions",
                 "title": "Conventions",
-                "description": "The conventions below are not specific to any one SOP. They apply wherever skills, CLIs, and SOP prose appear, which is why they live in the connecting mechanism rather than in a single instance.",
+                "description": "This chapter records the cross-cutting conventions the system already follows in practice — how registered units are named, how the words *folder* and *folders* are kept apart, how the writing stays...",
                 "order": 13,
                 "section": "Session",
-                "normative": false,
+                "normative": true,
                 "sidebar_group": "sop"
             },
             {
@@ -904,7 +904,7 @@
                 "description": "This is the entry point for the memo-init **Meta-Specification**, version `v0.1.0` (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes...",
                 "order": 0,
                 "section": "Meta-Spec",
-                "normative": false,
+                "normative": true,
                 "sidebar_group": "introduction"
             },
             {
@@ -966,16 +966,26 @@
                 "section": "Meta-Spec",
                 "normative": true,
                 "sidebar_group": "conventions"
+            },
+            {
+                "filename": "07-versioning.md",
+                "slug": "versioning",
+                "title": "Versioning",
+                "description": "Every family is versioned independently, and more than one version of a family can be published at once. This chapter specifies the parts of versioning that are structural — how a version directory...",
+                "order": 7,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "versioning"
             }
         ]
     },
     "stats": {
-        "total_files": 95,
+        "total_files": 96,
         "core_files": 47,
         "workbench_files": 24,
         "session_files": 17,
-        "spec_files": 7,
-        "normative_files": 79,
-        "informative_files": 16
+        "spec_files": 8,
+        "normative_files": 86,
+        "informative_files": 10
     }
 }
