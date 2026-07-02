@@ -25,7 +25,7 @@ This page maps each specification chapter to the skills that implement it — so
 | Chapter | Reqs | Implementers | Depends on |
 |---|---|---|---|
 | [00-overview](./00-overview.md) | — | — none — | [02-per-chapter-format](./02-per-chapter-format.md), [04-bridge-standard](./04-bridge-standard.md) |
-| [02-per-chapter-format](./02-per-chapter-format.md) | 4 | — none — | [00-overview](./00-overview.md), [03-categories](./03-categories.md), [04-bridge-standard](./04-bridge-standard.md) |
+| [02-per-chapter-format](./02-per-chapter-format.md) | 5 | — none — | [00-overview](./00-overview.md), [03-categories](./03-categories.md), [04-bridge-standard](./04-bridge-standard.md) |
 | [03-categories](./03-categories.md) | 1 | — none — | [00-overview](./00-overview.md), [02-per-chapter-format](./02-per-chapter-format.md), [04-bridge-standard](./04-bridge-standard.md) |
 | [04-bridge-standard](./04-bridge-standard.md) | 1 | — none — | [01-bridge](./01-bridge.md), [02-per-chapter-format](./02-per-chapter-format.md), [03-categories](./03-categories.md), [05-publishing-principle](./05-publishing-principle.md) |
 | [05-publishing-principle](./05-publishing-principle.md) | — | — none — | [00-overview](./00-overview.md), [04-bridge-standard](./04-bridge-standard.md), [06-conventions-writing](./06-conventions-writing.md) |

@@ -6,7 +6,7 @@ spec_file: "02-per-chapter-format.md"
 order: 2
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-02T13:49:37.873Z"
+generated_at: "2026-07-02T14:21:00.024Z"
 generated_from: "draft/spec/0.1.0/spec/02-per-chapter-format.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/02-per-chapter-format.md."
@@ -48,6 +48,24 @@ Each non-bridge chapter also carries a single generated marker — the implement
 ```
 
 The rendered "Implemented by" backlink (which skills implement the chapter) is a derived artifact that lives only in the dist; the source chapter carries this placeholder and never the full block. This authored-versus-derived split is described in [The Bridge Standard](/spec/bridge-standard/); a chapter author leaves the placeholder line in place verbatim and does not hand-edit the backlink.
+
+### The Related Section Rules
+
+The bottom `## Related` section is an annotated map, not a bare link list, and its shape is fixed by nine rules so a build gate can enforce the machine-checkable ones and a reader always gets a reason rather than a bare pointer. These rules are family-agnostic and hold for every chapter in every family:
+
+- **R1 — Two locations, two jobs.** The header metadata `Related` row is a *teaser* — a short comma-separated inline list of the two-to-four closest siblings, links only. The bottom `## Related` footer is the *annotated map*. Both are mandatory.
+- **R2 — Every entry is link + reason.** The exact form is `- [NN. Title](./NN-name.md) — one-line reason.`, never a bare link; the em-dash ` — ` separates the link from the reason.
+- **R3 — The reason describes the relationship, not the target.** Say how this chapter connects to the target, not a paraphrase of the target's title.
+- **R4 — `Depends on` and `Related` stay distinct.** A `Related` entry **MUST NOT** duplicate a `Depends on` entry.
+- **R5 — The teaser is a subset of the footer.** Everything in the header `Related` cell appears in the bottom footer with its reason added; the footer **MAY** add a few more (the overview, the index). The two never contradict.
+- **R6 — Every chapter opens with intro prose** before the first `##` heading — also machine-enforced (see SPEC-REQ-001).
+- **R7 — Order entries for reading flow,** not alphabetically: foundation first, then siblings in chapter order, then the index last if included.
+- **R8 — No internal leaks in reasons.** A reason carries no internal record id, internal tool or CLI name, or absolute path ([The Publishing Principle](/spec/publishing-principle/)).
+- **R9 — Reasons are short** — roughly fifteen words or fewer, ending with a period, and in one language.
+
+### The Load-Art Marker
+
+A chapter **MAY** declare a **load-art** — when it applies during a session — surfaced as a column on the family's chapter-index and, where useful, in the chapter's own metadata. There are two kinds: **always-on**, a chapter that applies to every interaction and is part of the permanent baseline, and **conditional**, a chapter that applies only when its trigger context is present (files of a given kind are in play, error codes are being defined, push time). A chapter **MAY** be mixed — a discipline part always-on, a setup part conditional — and states which part is which in its intro. The load-art is a reading aid projected onto the chapter index; it does not change the RFC-2119 conformance of a chapter's rules, which is governed by the normative/informative marking above.
 
 ---
 
@@ -209,6 +227,25 @@ The structural invariants above are authored **prose-first** and carry a machine
     "assertions": [
       "For each family, spec.json.namespaceToken equals spec-manifest.json.namespaceToken",
       "A shared-field divergence fails the build"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+```requirement
+{
+  "id": "SPEC-REQ-007",
+  "title": "The Related footer is annotated, not bare links",
+  "statement": "Every bottom `## Related` entry MUST be a link followed by an em-dash and a one-line reason (`- [text](link) — reason`), never a bare link (R2). The header `Related` teaser MUST be a subset of the bottom footer (R5) and MUST NOT duplicate a `Depends on` entry (R4). A build gate MUST reject a bottom-`## Related` bullet that is a bare link.",
+  "scope": { "repos": [], "categories": ["spec"], "tags": ["spec-format", "spec-related"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Each bottom `## Related` bullet matches `- [text](link) — reason`",
+      "No bottom `## Related` bullet is a bare link",
+      "Every header Related teaser entry also appears in the bottom footer"
     ]
   },
   "grade": "binary"
