@@ -1,4 +1,23 @@
-name: Generate spec artifacts
+name: Verify spec artifacts parity
+
+# F5 + F6 (Memo 061). This workflow used to REGENERATE dist/ and commit+push it as
+# github-actions[bot]. That bot won the last write on the shared dist/ target and — because it ran
+# WITHOUT the sibling ../core repo (core-absent → the generate-bridge partial-checkout guard skips
+# the NEU overwrite) — reverted the live bridge hub to the ALT format on every source push
+# (Memo 060 defect, bot commit 2f2109c).
+#
+# It is now a READ-ONLY parity gate:
+#   * F5 — the bot no longer regenerates or commits dist/. committed-dist is the single source of
+#     truth; the author maintains dist/ on commit via a local build (with ../core present → NEU).
+#   * F6 — this job checks out spec AND ../core, builds the canonical reference dist/, and asserts
+#     (check-dist-parity.mjs) that the COMMITTED dist/ equals it, modulo volatile timestamps. On
+#     divergence it FAILS the build (blocking) — the only remaining path by which stale/ALT dist
+#     could reach the site. Deliberately hard: the Memo-060 WI-027 guard only warned, which was the
+#     root cause.
+#
+# The site deploy still fires: notify-docs-site.yml triggers on the `dist/**` push made by the
+# author (a human push triggers workflows; the former bot needed a PAT only because a
+# GITHUB_TOKEN-made push does not).
 
 on:
   push:
@@ -8,20 +27,37 @@ on:
       - 'data/refs.manual.json'
       - 'data/refs.schema.json'
       - 'scripts/**'
+      - 'dist/**'
+  pull_request:
+    paths:
+      - 'draft/**'
+      - 'data/refs.manual.json'
+      - 'data/refs.schema.json'
+      - 'scripts/**'
+      - 'dist/**'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  generate:
+  parity:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout spec
         uses: actions/checkout@v5
         with:
-          # PAT so the artifact push re-triggers the notify-* workflows
-          # (a push made with the default GITHUB_TOKEN does not trigger other workflows).
+          path: repos/spec
+
+      # The bridge Purpose column is read from the sibling core repo's SKILL.md files. Checked out
+      # next to spec so generate-bridge resolves CORE_ROOT = <workspace>/repos/core (mirrors the
+      # local repos/spec + repos/core layout). Token: the existing org PAT guarantees read access
+      # whether core is public or private.
+      - name: Checkout core (sibling repo — bridge skill purposes)
+        uses: actions/checkout@v5
+        with:
+          repository: Memo-Init/core
+          path: repos/core
           token: ${{ secrets.PUBLISH_SPEC_CHANGES }}
 
       - name: Use Node.js
@@ -31,18 +67,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: repos/spec
 
-      - name: Run generators
+      - name: Build reference artifacts (../core present → canonical NEU dist)
         run: npm run build
+        working-directory: repos/spec
 
-      - name: Commit regenerated artifacts
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add dist/
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: regenerate spec artifacts"
-            git push
-          else
-            echo "no artifact changes"
-          fi
+      - name: Parity gate — committed dist/ must equal the reference build (F6, blocking)
+        run: node scripts/check-dist-parity.mjs
+        working-directory: repos/spec
