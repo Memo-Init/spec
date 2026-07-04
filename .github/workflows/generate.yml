@@ -2,18 +2,20 @@ name: Verify spec artifacts parity
 
 # F5 + F6 (Memo 061). This workflow used to REGENERATE dist/ and commit+push it as
 # github-actions[bot]. That bot won the last write on the shared dist/ target and — because it ran
-# WITHOUT the sibling ../core repo (core-absent → the generate-bridge partial-checkout guard skips
-# the NEU overwrite) — reverted the live bridge hub to the ALT format on every source push
-# (Memo 060 defect, bot commit 2f2109c).
+# WITHOUT the sibling ../core repo — reverted the live bridge hub to the ALT format on every source
+# push (Memo 060 defect, bot commit 2f2109c).
 #
 # It is now a READ-ONLY parity gate:
 #   * F5 — the bot no longer regenerates or commits dist/. committed-dist is the single source of
 #     truth; the author maintains dist/ on commit via a local build (with ../core present → NEU).
-#   * F6 — this job checks out spec AND ../core, builds the canonical reference dist/, and asserts
-#     (check-dist-parity.mjs) that the COMMITTED dist/ equals it, modulo volatile timestamps. On
-#     divergence it FAILS the build (blocking) — the only remaining path by which stale/ALT dist
-#     could reach the site. Deliberately hard: the Memo-060 WI-027 guard only warned, which was the
-#     root cause.
+#   * F6 — check-dist-parity.mjs asserts (blocking) that no committed dist bridge hub carries the ALT
+#     format. This structural gate is core-INDEPENDENT on purpose: the sibling core repo is PRIVATE
+#     and cannot be checked out here (the only repo secret has no access to it), so a full
+#     ../core reference-build parity is infeasible in CI. The full reference-build parity is the
+#     LOCAL / pre-push layer of check-dist-parity.mjs (Layer 2, runs when ../core is present); the CI
+#     job runs Layer 1, which directly catches the exact defect (ALT hub reaching the site) without
+#     core or a rebuild. Deliberately hard (exit != 0): the Memo-060 WI-027 guard only warned, which
+#     was the root cause.
 #
 # The site deploy still fires: notify-docs-site.yml triggers on the `dist/**` push made by the
 # author (a human push triggers workflows; the former bot needed a PAT only because a
@@ -46,33 +48,11 @@ jobs:
     steps:
       - name: Checkout spec
         uses: actions/checkout@v5
-        with:
-          path: repos/spec
-
-      # The bridge Purpose column is read from the sibling core repo's SKILL.md files. Checked out
-      # next to spec so generate-bridge resolves CORE_ROOT = <workspace>/repos/core (mirrors the
-      # local repos/spec + repos/core layout). Token: the existing org PAT guarantees read access
-      # whether core is public or private.
-      - name: Checkout core (sibling repo — bridge skill purposes)
-        uses: actions/checkout@v5
-        with:
-          repository: Memo-Init/core
-          path: repos/core
-          token: ${{ secrets.PUBLISH_SPEC_CHANGES }}
 
       - name: Use Node.js
         uses: actions/setup-node@v5
         with:
           node-version: 22
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: repos/spec
-
-      - name: Build reference artifacts (../core present → canonical NEU dist)
-        run: npm run build
-        working-directory: repos/spec
-
-      - name: Parity gate — committed dist/ must equal the reference build (F6, blocking)
+      - name: Parity gate — no committed dist bridge hub may carry the ALT format (F6, blocking)
         run: node scripts/check-dist-parity.mjs
-        working-directory: repos/spec
