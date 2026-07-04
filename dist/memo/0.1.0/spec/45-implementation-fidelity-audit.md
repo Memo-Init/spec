@@ -6,7 +6,7 @@ spec_file: "45-implementation-fidelity-audit.md"
 order: 45
 section: "Specification"
 normative: true
-generated_at: "2026-07-02T15:15:37.997Z"
+generated_at: "2026-07-04T21:50:08.496Z"
 generated_from: "draft/memo/0.1.0/spec/45-implementation-fidelity-audit.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/45-implementation-fidelity-audit.md."
