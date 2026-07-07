@@ -6,7 +6,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-07-07T19:18:16.831Z"
+generated_at: "2026-07-07T21:34:26.628Z"
 generated_from: "draft/workbench/0.1.0/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/23-hooks-contract.md."
@@ -15,7 +15,7 @@ edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/2
 
 Deterministic enforcement of workbench policy is delegated to Claude Code hooks. The **PreToolUse enforcement contract** those hooks satisfy — the gate mechanism, its three-state decision, the signal scan, and the precondition-chain resolution — has its **single source in the Session spec's [enforcement chapter](/session/enforcement/)**. This chapter is the **workbench-side reference** to that contract: it records what the **workbench declares** for a hook to read (the `.workbench/` policy inputs) and its scoped view of the same PreToolUse shape, and it **references the mechanism up** rather than redefining it. The hook *implementation* belongs to the future machine-tier spec (see [02-sop-entrypoint.md](/workbench/sop-entrypoint/)).
 
-> **Normative status — reference, not single source.** The enforcement mechanism is owned once by [session · enforcement](/session/enforcement/) (`REQ-982`…`REQ-987`); [session/04-cli.md](/session/cli/) records that this chapter "references up to it rather than redefining the contract." What stays workbench-owned here is only the **declaration side** — the policy a hook consumes (`.workbench/` facing status, `folder-lints.json`) specified in [22-config.md](/workbench/config/).
+> **Normative status — reference, not single source.** The enforcement mechanism is owned once by [session · enforcement](/session/enforcement/); [session/04-cli.md](/session/cli/) records that this chapter "references up to it rather than redefining the contract." What stays workbench-owned here is only the **declaration side** — the policy a hook consumes (`.workbench/` facing status, `folder-lints.json`) specified in [22-config.md](/workbench/config/).
 
 This chapter and [22-config.md](/workbench/config/) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](/workbench/overview/).
 
@@ -191,9 +191,9 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ## Conformity Requirements
 
-The enforcement **mechanism** is not re-normalized here — its binding rules are single-sourced to [session · enforcement](/session/enforcement/) (`REQ-982`…`REQ-987`: the hard-block on a missing predecessor, the jq-structured signal, fail-open, the kill-switch, and the policy checkpoints). The workbench-scoped blocks below bind only the **declaration side** — the policy a hook *reads* (the declared per-repository facing status and the `folder-lints.json` map, both specified in [22-config.md](/workbench/config/)). Each `statement` faces how that policy is declared, and each `check` faces the built gate's behaviour against it. Because the hook *implementation* belongs to the deferred machine-tier spec, these blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+The enforcement **mechanism** is not re-normalized here — its binding rules are single-sourced to [session · enforcement](/session/enforcement/) (the hard-block on a missing predecessor, the jq-structured signal, fail-open, the kill-switch, and the policy checkpoints). The workbench-scoped blocks below bind only the **declaration side** — the policy a hook *reads* (the declared per-repository facing status and the `folder-lints.json` map, both specified in [22-config.md](/workbench/config/)). Each `statement` faces how that policy is declared, and each `check` faces the built gate's behaviour against it. Because the hook *implementation* belongs to the deferred machine-tier spec, these blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
-The five-step precondition-chain mechanism — intercept, look up the `when: "pre"` edges, scan the transcript, check each predecessor, and allow or hard-block the whole transitive chain — is the **enforcement mechanism**, and its binding rule is single-sourced to [session · enforcement](/session/enforcement/) (`REQ-982` hard-blocks a missing predecessor SOP; `REQ-983` reads the signal jq-structured). This chapter does **not** carry a competing requirement block for it — it references the session contract rather than re-harvesting the same rule under a workbench id.
+The five-step precondition-chain mechanism — intercept, look up the `when: "pre"` edges, scan the transcript, check each predecessor, and allow or hard-block the whole transitive chain — is the **enforcement mechanism**, and its binding rule is single-sourced to [session · enforcement](/session/enforcement/) (the gate hard-blocks a missing predecessor SOP; the signal is read jq-structured). This chapter does **not** carry a competing requirement block for it — it references the session contract rather than re-harvesting the same rule under a workbench id.
 
 The inward-push gate is a deterministic, default-deny decision over the **workbench-declared** facing status ([22-config.md](/workbench/config/)); the gate mechanism is the session enforcement contract's, and the block below binds only the declaration it reads:
 

@@ -6,7 +6,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-07-07T19:18:16.831Z"
+generated_at: "2026-07-07T21:34:26.628Z"
 generated_from: "draft/session/0.1.0/spec/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/02-enforcement.md."
@@ -160,7 +160,7 @@ This chapter is the session family's **`requirementsRef`** — the anchor the fa
 - **`REQ-SS-*`** are the **prose-facing, spec-internal anchors** of the *Required Properties* table above — short handles the narrative cites inline (`REQ-SS-FAILOPEN`, `REQ-SS-SIGNAL`, …). They carry **no** separate store record and are defined only here (as [14-migration.md](/session/migration/) records).
 - **`REQ-9xx`** are the **harvested store records** — the machine-readable blocks below (and their siblings across the family) from which the per-entry requirement store is built.
 
-Where a `REQ-9xx` block restates a contract a `REQ-SS-*` names in prose — e.g. REQ-985 ⇄ REQ-SS-EDGEVALID, REQ-983 ⇄ REQ-SS-SIGNAL, REQ-984 ⇄ REQ-SS-FAILOPEN/CONFIG-LOUD, REQ-987 ⇄ REQ-SS-POLICY/WORKFLOW — the two are the **same contract seen twice** (readable anchor + harvested store id), never two independent requirements. A reader resolves a `REQ-SS-*` to its `REQ-9xx` store form through this mapping, not by treating them as separate obligations.
+Where a harvested store block restates a contract a `REQ-SS-*` names in prose, the two are the **same contract seen twice** (readable anchor + harvested store id), never two independent requirements. The `REQ-SS-*` prose anchor is the stable form to cite; a reader resolves it to its harvested store entry through the requirements store, not by treating the two as separate obligations.
 
 The gate's central safety property is a hard-block when the predecessor SOP is genuinely absent. The hook is not yet armed live, so the grade is the honest `todo`:
 
