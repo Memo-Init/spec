@@ -22,12 +22,14 @@ The session is the one scope that exists **before** any workbench convention. A 
 
 ```
 session-sop  (this family — the Genesis Root + SOP entry-point mechanism)
-  ↑ workbench-sop   (one session-SOP application above the genesis root)
-  ↑ memo-sop        (memo process)
-  ↑ memo-init / flowmcp / …  (domain entry points)
+  ├─ workbench-sop   (sibling session-SOP application — structures the workspace)
+  └─ memo-sop        (sibling session-SOP application — the memo process)
+        ↑ memo-init / flowmcp / …  (domain entry points, gated behind memo-sop)
 ```
 
-The same chain reads as an **inheritance** relationship — each tier *extends* the one below it and inherits the identity and security it establishes. An inheritance diagram is the type that states "extends" natively (the diagram map in [the Diagrams chapter](/specification/diagrams/) maps a tier model to exactly this type):
+Under the flat topology (F2=A), `workbench-sop` and `memo-sop` are **siblings** — each extends the session directly; `workbench-sop` is **not** a link between the session and `memo-sop`.
+
+The same relationships read as **inheritance** — each tier *extends* the tier below it and inherits the identity and security it establishes; under F2=A `workbench-sop` and `memo-sop` both extend the session as siblings. An inheritance diagram is the type that states "extends" natively (the diagram map in [the Diagrams chapter](/specification/diagrams/) maps a tier model to exactly this type):
 
 ```mermaid
 classDiagram
@@ -47,7 +49,7 @@ classDiagram
         +Entry point
     }
     SessionSOP <|-- WorkbenchSOP : extends
-    WorkbenchSOP <|-- MemoSOP : extends
+    SessionSOP <|-- MemoSOP : extends
     MemoSOP <|-- MemoInit : entry point
 ```
 
@@ -104,14 +106,15 @@ The word *session* is overloaded; this family means exactly one of three things,
 
 ## The Chapters
 
-The family is read in six nav groups; the sidebar lists the individual chapters, so they are not re-tabulated here (the push-down rule on nav-mirror tables, above). Each group is summarised by what it owns:
+The family is read in seven nav groups; the sidebar lists the individual chapters, so they are not re-tabulated here (the push-down rule on nav-mirror tables, above). Each group is summarised by what it owns:
 
 - **Introduction** — this overview: scope, the genesis-root rationale, Progressive Disclosure, the push-down principle, and the shared glossary.
-- **Genesis Root** — what the session tier owns: the tier model and identity, the `.session/config.json` cascade, the namespace registry, and root detection.
 - **SOP** — the entry-point mechanism: SOP as the layer tools register through, the four-part common denominator every SOP shares, the existing instances, the naming conventions, and the Add-on model.
+- **Genesis Root** — what the session tier owns: the tier model and identity, the `.session/config.json` cascade, the namespace registry, and root detection.
 - **Enforcement** — the deterministic PreToolUse gate: the three-state fail-safe contract, `session doctor` / `session init`, and the SessionStart identity pin.
 - **CLI** — the command-line doctrine: the standard verbs and flags and the exit-code mirror.
 - **Recovery** — the fail-safe guarantees (disable switch, sentinel, SessionStart canary) and the publication-fold migration.
+- **Bridge** — the generated coverage view mapping each chapter to the skills that implement it.
 
 ---
 
