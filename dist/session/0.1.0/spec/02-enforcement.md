@@ -6,7 +6,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/session/0.1.0/spec/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/02-enforcement.md."
@@ -22,7 +22,7 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 The machine-readable form of the SOP chain is a **registry**, and its entry point is the project-local **`.session/config.json`** — the session-tier home the hook reads ([05-config-cascade.md](/session/config-cascade/)). The config carries the registrant blocks and the when:pre edges as two top-level structures (`sops[]` + `requirements[]`, [06-namespace-registry.md](/session/namespace-registry/)). The pre-gate edge that is active in this version is the single project-scoped `memo-init → memo-sop`:
 
 ```json
-{ "sops": [ { "namespace": "memo", "owner": "memo-init", "tier": 2, "requires": ["workbench"],
+{ "sops": [ { "namespace": "memo", "owner": "memo-init", "tier": 2, "requires": [],
               "skills": [ { "id": "memo-init", "signals": ["attributionSkill:memo-init"] },
                           { "id": "memo-sop",  "signals": ["attributionSkill:memo-sop"]  } ] } ],
   "requirements": [ { "id": "REQ-061", "entrypoint": "memo-init",
@@ -30,6 +30,8 @@ The machine-readable form of the SOP chain is a **registry**, and its entry poin
 ```
 
 The config moves the entry point **one tier down** from the former workbench home (`.workbench/registry.json`) to the session tier; the move is a **one-time migration** carried by `session init`, not a dual-read ([05-config-cascade.md](/session/config-cascade/), [07-doctor-init.md](/session/doctor-init/)). A machine-global registry at `~/.claude/session/registry.json` (the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is a follow-up. The config is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](/session/recovery/)).
+
+**The SOP read-chain is normative.** The chain a memo entry point sits behind is `session-sop → memo-sop → memo-init`: the session genesis root is the parent every layer reads first, `memo-sop` extends it, and `memo-init` is gated behind `memo-sop`. Under the flat topology (F2=A) `workbench-sop` is a **sibling** extension of the session — **not** a link between session and memo — so it is deliberately absent from this chain ([06-namespace-registry.md](/session/namespace-registry/)). Only the `memo-init → memo-sop` edge (REQ-061) is armed in this version; the `session-sop → memo-sop` parent edge is *declared now, enforced when present* ([01-genesis-root.md](/session/genesis-root/)). The chain is worth gating because reading `memo-sop` first measurably improves the work — on the order of a ~20 % lift ([ANNAHME] — a working estimate, not yet a measured figure).
 
 **Absence is fail-open and LOUD.** When `.session/config.json` is absent the gate MUST treat it as a configuration problem that **fails open** (ALLOW, exit 0) — never a lockout — while emitting a **loud SessionStart warning** so the missing config is noticed rather than silently tolerated (REQ-SS-CONFIG-LOUD). Enforcement deliberately starts **permissive**: warn first, tighten later. The strict, refusing posture lives in the foreground `session doctor` / `session init` ([07-doctor-init.md](/session/doctor-init/)), not in the always-on hook.
 
@@ -152,6 +154,13 @@ The gate is wired into `~/.claude/settings.json` as a PreToolUse hook on the `Sk
 ## Conformity Requirements
 
 This chapter is the session family's **`requirementsRef`** — the anchor the family manifest points at for its requirement standard ([23-requirements.md](/specification/requirements/)) — so it carries the family's **richest** inline set. The binding `MUST`s above are authored here **prose-first**: each block's `statement` faces generation (it shapes how a gate, a config, or a CLI leaf is built) and its `check` faces the finalization gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The structured blocks below are the machine-readable source the per-entry requirement store is **harvested** from. Several rules below describe the always-on PreToolUse hook, which is **spec'd-but-not-yet-armed-live**: those carry an honest `grade: todo` (the score belongs there but the target is not yet shipped), while the rules already enforced by a shipped CLI leaf carry a hard `binary` grade.
+
+**Two id families, one contract set — not a duplication.** The chapter cites requirement ids in two forms, and they are deliberately distinct roles rather than two competing records:
+
+- **`REQ-SS-*`** are the **prose-facing, spec-internal anchors** of the *Required Properties* table above — short handles the narrative cites inline (`REQ-SS-FAILOPEN`, `REQ-SS-SIGNAL`, …). They carry **no** separate store record and are defined only here (as [14-migration.md](/session/migration/) records).
+- **`REQ-9xx`** are the **harvested store records** — the machine-readable blocks below (and their siblings across the family) from which the per-entry requirement store is built.
+
+Where a `REQ-9xx` block restates a contract a `REQ-SS-*` names in prose — e.g. REQ-985 ⇄ REQ-SS-EDGEVALID, REQ-983 ⇄ REQ-SS-SIGNAL, REQ-984 ⇄ REQ-SS-FAILOPEN/CONFIG-LOUD, REQ-987 ⇄ REQ-SS-POLICY/WORKFLOW — the two are the **same contract seen twice** (readable anchor + harvested store id), never two independent requirements. A reader resolves a `REQ-SS-*` to its `REQ-9xx` store form through this mapping, not by treating them as separate obligations.
 
 The gate's central safety property is a hard-block when the predecessor SOP is genuinely absent. The hook is not yet armed live, so the grade is the honest `todo`:
 

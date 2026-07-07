@@ -6,7 +6,7 @@ spec_file: "10-sop.md"
 order: 10
 section: "Session"
 normative: false
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/session/0.1.0/spec/10-sop.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/10-sop.md."
@@ -57,7 +57,7 @@ Not every tool that registers is an SOP. The session registry holds three kinds 
 
 | Block kind | Carries | Is a gate? | Example |
 |------------|---------|------------|---------|
-| **SOP-instance block** | `skills[]` **and** `requires[]`, and it feeds `requirements[]` pre-gate edges | yes — it can require a predecessor SOP (`when:pre`) | `memo-init` → `memo-sop` (REQ-061); `workbench` |
+| **SOP-instance block** | `skills[]` **and** `requires[]`, and it feeds `requirements[]` pre-gate edges | yes — it can require a predecessor SOP (`when:pre`) | `memo-init` → `memo-sop` (REQ-061). `workbench` extends the session as a **sibling** (F2=A), not a predecessor of `memo` |
 | **Catalog block** | `skills[]` only — empty `requires[]`, **no** `requirements[]` edge | never | **FlowMCP** (reserves `flowmcp`, contributes `flowmcp-usage`) |
 | **Policy block** | `skills[]` with per-member `mode`/`groups` — empty `requires[]`, feeds `assertions[]` checkpoint rows | only as a checkpoint `redirect`, never a `when:pre` predecessor | the development standards (reserves `node`) |
 

@@ -6,7 +6,7 @@ spec_file: "15-addons.md"
 order: 15
 section: "Session"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/session/0.1.0/spec/15-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/15-addons.md."
@@ -84,7 +84,7 @@ An Add-on is reachable two ways, with a clear division of labor:
 - The **CLI** (`<tool> health`, `<tool> migrate`) is the **standard entry point** — deterministic, machine-checkable, and **greppable**. Because the call is a plain command, an after-the-fact validator can detect from the transcript that it ran ([workbench/20-cli.md](/workbench/cli/), [workbench/25-validation-overview.md](/workbench/validation-overview/)).
 - The **skill** is the **orchestrator** above it — the AI-facing entry point that sequences steps, asks the right questions, and calls the CLI to do the deterministic work.
 
-**Standardization happens at the CLI level**, because that is the layer a validator can verify mechanically. The skill provides judgment; the CLI provides the checkable, repeatable action. This is the same split the session spec applies to its own CLI doctrine ([workbench/24-skills-scope.md](/workbench/skills-scope/)) and the seam the runtime call-validation measures against.
+**Standardization happens at the CLI level**, because that is the layer a validator can verify mechanically. The skill provides judgment; the CLI provides the checkable, repeatable action. This is the same split the session's own **CLI doctrine** draws ([04-cli.md](/session/cli/), its single source); the workbench states its scoped view of it in [workbench/24-skills-scope.md](/workbench/skills-scope/), and it is the seam the runtime call-validation measures against.
 
 ---
 

@@ -1,19 +1,19 @@
 ---
 title: "CLI Convention — Branch/Leaf"
-description: "The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This convention is settled at the specification and website level — it is..."
+description: "The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This CLI-authoring convention is **single-sourced to the Session spec's..."
 workbench_version: "0.1.0"
 spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/workbench/0.1.0/spec/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/20-cli.md."
 ---
 
 
-The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This convention is settled at the specification and website level — it is a stated rule of the workbench, not an implicit habit of any one tool. This chapter records the convention and the matching rule for the script folders that sit beside it.
+The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This CLI-authoring convention is **single-sourced to the Session spec's [CLI doctrine chapter](/session/cli/)** — the session tier owns the doctrine every family's CLI inherits, and the workbench convention is **one scoped instance** of it, not a second specification. This chapter records only the workbench-scoped specifics — the registry as the discovery source, the script-subfolder rule, and runtime call-validation — and references the doctrine rather than restating it.
 
 The **universal CLI doctrine** — the eight principles every CLI in the system shares (one result envelope, the exit-code mirror, the standard verbs, config precedence, additive evolution) — is stated once at the lowest tier, in the Session spec's [CLI doctrine chapter](/session/cli/), and is **not** restated here. This chapter records only what is specific to the **workbench** scope: the Branch/Leaf convention, the `registry.json` discovery source, the script-subfolder rule, and runtime call-validation. For the eight principles and the conformance checklist, reference down to [/session/cli/](/session/cli/).
 

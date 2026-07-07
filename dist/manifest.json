@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-07-04T21:50:09.513Z",
+    "generated_at": "2026-07-07T19:18:18.441Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -87,7 +87,7 @@
             "filename": "08-phases-and-prds.md",
             "slug": "phases-and-prds",
             "title": "Phases & PRDs",
-            "description": "A finalized memo becomes executable work through a chain of decompositions: topics become PRDs, PRDs are bundled and sequenced into phases, and a phase carries an orchestration role. This chapter...",
+            "description": "A finalized memo becomes executable work through a chain of decompositions: topics are captured in blocks, PRDs are derived from those blocks, PRDs are bundled and sequenced into phases, and a phase...",
             "order": 8,
             "section": "Specification",
             "normative": true,
@@ -601,7 +601,7 @@
                 "filename": "20-cli.md",
                 "slug": "cli",
                 "title": "CLI Convention — Branch/Leaf",
-                "description": "The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This convention is settled at the specification and website level — it is...",
+                "description": "The workbench's command-line tools follow one convention: a **self-describing command tree** built from branches and leaves. This CLI-authoring convention is **single-sourced to the Session spec's...",
                 "order": 20,
                 "section": "Workbench",
                 "normative": true,
@@ -631,7 +631,7 @@
                 "filename": "23-hooks-contract.md",
                 "slug": "hooks-contract",
                 "title": "Hooks Contract",
-                "description": "Deterministic enforcement of workbench policy is delegated to Claude Code hooks. This chapter specifies the **contract** between the workbench and a hook: what the workbench provides for a hook to...",
+                "description": "Deterministic enforcement of workbench policy is delegated to Claude Code hooks. The **PreToolUse enforcement contract** those hooks satisfy — the gate mechanism, its three-state decision, the signal...",
                 "order": 23,
                 "section": "Workbench",
                 "normative": true,

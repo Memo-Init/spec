@@ -6,7 +6,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/workbench/0.1.0/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/31-browser-automation.md."
@@ -172,7 +172,7 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 
 ---
 
-> **Research note (parked).** A project-level **user-preferences** area — a place to record a user's standing tool-choice preferences, so the cost and trust defaults above could be tuned per user — is **possible future work**, noted here only so the idea is not lost. It is **not** introduced by this chapter: no preferences mechanism, folder, or configuration field is defined, and the defaults above stand on their own.
+> **Research note (parked).** A project-level **tool-choice-preferences** area — a place to record a user's standing tool-choice preferences, so the cost and trust defaults above could be tuned per user — is **possible future work**, noted here only so the idea is not lost. This is a hypothetical workbench-local idea and is **distinct from the personal-brand `user-preferences` spec family** — the two must not be conflated by the shared word "preferences". It is **not** introduced by this chapter: no preferences mechanism, folder, or configuration field is defined, and the defaults above stand on their own.
 
 ---
 

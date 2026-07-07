@@ -6,7 +6,7 @@ spec_file: "04-bridge-standard.md"
 order: 4
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/spec/0.1.0/spec/04-bridge-standard.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/04-bridge-standard.md."

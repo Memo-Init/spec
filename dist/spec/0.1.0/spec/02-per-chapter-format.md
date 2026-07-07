@@ -6,7 +6,7 @@ spec_file: "02-per-chapter-format.md"
 order: 2
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/spec/0.1.0/spec/02-per-chapter-format.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/02-per-chapter-format.md."
@@ -62,6 +62,8 @@ The bottom `## Related` section is an annotated map, not a bare link list, and i
 - **R7 — Order entries for reading flow,** not alphabetically: foundation first, then siblings in chapter order, then the index last if included.
 - **R8 — No internal leaks in reasons.** A reason carries no internal record id, internal tool or CLI name, or absolute path ([The Publishing Principle](/spec/publishing-principle/)).
 - **R9 — Reasons are short** — roughly fifteen words or fewer, ending with a period, and in one language.
+
+> **Canonical single source.** These nine rules R1–R9 are this organization's canonical definition of the chapter and Related-section format. The personal-brand `user-preferences` spec, chapter 14 ("How to Write a Spec"), mirrors R1–R9 for its own workshop and follows this chapter as its source — it is a copy, not a second definition.
 
 ### The Load-Art Marker
 

@@ -31,7 +31,7 @@ _(no skill dependencies declared in this family)_
 | [20-cli](./20-cli.md) | ✓ | 7 | 2 |
 | [21-environment-scripts](./21-environment-scripts.md) | ✓ | 4 | 2 |
 | [22-config](./22-config.md) | ✓ | 5 | 2 |
-| [23-hooks-contract](./23-hooks-contract.md) | ✓ | 6 | 3 |
+| [23-hooks-contract](./23-hooks-contract.md) | ✓ | 6 | 2 |
 | [24-skills-scope](./24-skills-scope.md) | ✓ | 3 | — |
 | [25-validation-overview](./25-validation-overview.md) | ✓ | 4 | 3 |
 | [26-addons](./26-addons.md) | ✓ | 2 | 1 |
@@ -39,7 +39,7 @@ _(no skill dependencies declared in this family)_
 | [31-browser-automation](./31-browser-automation.md) | ✓ | 4 | — |
 | [32-trash](./32-trash.md) | ✓ | 5 | — |
 | [41-project-architecture](./41-project-architecture.md) | ✓ | 6 | 2 |
-| **Summary** | **23 / 23** | — | 32 |
+| **Summary** | **23 / 23** | — | 31 |
 
 ## Skills by namespace
 

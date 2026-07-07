@@ -6,7 +6,7 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/session/0.1.0/spec/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/06-namespace-registry.md."
@@ -29,13 +29,16 @@ The `prefix-hyphen-name` convention ([13-conventions.md](/session/conventions/))
 | `cli` | the binary / CLI namespace the Tool ships (e.g. `memo`) — the command surface the namespace exposes |
 | `folders[]` | the folders the namespace owns (e.g. `.memo/`) — the directories reserved to this Tool |
 | `skills[]` | the declarative `contributes` block — what the namespace provides, each with detection `signals` |
-| `requires[]` | optional, coarse inter-namespace dependency (which namespace this one presupposes) |
+| `requires[]` | optional, coarse inter-namespace dependency (which namespace this one genuinely presupposes). A *sibling* relationship — e.g. memo↔workbench under the flat topology (F2=A) — is a documented **convention**, **not** encoded as a `requires[]` entry. |
 
 The reserved memo block:
 
 ```jsonc
 { "namespace": "memo", "owner": "memo-init", "tier": 2,
-  "cli": "memo", "folders": [".memo/"], "requires": ["workbench"],
+  "cli": "memo", "folders": [".memo/"], "requires": [],
+  // convention (F2=A): memo is a *sibling* extension of workbench — both extend the
+  // session — NOT a coarse prerequisite; the memo->workbench edge is a documented
+  // convention, never a hard requires[] entry.
   "skills": [ { "id": "memo-init", "signals": ["attributionSkill:memo-init"] },
               { "id": "memo-sop",  "signals": ["attributionSkill:memo-sop"]  } ] }
 ```
@@ -203,7 +206,7 @@ A registrant carries dependency information at **two granularities**, and both a
 
 | Granularity | Field | Scope | Read by |
 |-------------|-------|-------|---------|
-| **Coarse** | `sops[].requires[]` | per-SOP, namespace → namespace ("memo presupposes workbench") | `session doctor` / `registry-validate` readiness preflight |
+| **Coarse** | `sops[].requires[]` | per-SOP, namespace → namespace, for a namespace that genuinely presupposes another; a *sibling* convention such as memo↔workbench is **not** encoded here (F2=A) | `session doctor` / `registry-validate` readiness preflight |
 | **Fine** | top-level `requirements[]` | entry point → skill, with `when:pre/post` (e.g. REQ-061 `memo-init → memo-sop`) | the PreToolUse enforcement gate |
 
 `requires[]` is the documentation of which families must be present; `requirements[]` is the exact runtime pre-gate edge the hook evaluates. They are **not** redundant: one declares a dependency between namespaces, the other declares the precise activation edge. `requirements[]` stays a **top-level** array (not nested per block) because a precondition edge crosses namespaces, and keeping it top level preserves the existing REQ-061 shape and the three-state enforcement contract of [02-enforcement.md](/session/enforcement/) verbatim.

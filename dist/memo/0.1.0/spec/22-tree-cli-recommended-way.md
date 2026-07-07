@@ -6,7 +6,7 @@ spec_file: "22-tree-cli-recommended-way.md"
 order: 22
 section: "Specification"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/memo/0.1.0/spec/22-tree-cli-recommended-way.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/22-tree-cli-recommended-way.md."
@@ -14,6 +14,8 @@ edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/22-tre
 
 
 The recommended way to expose tools to an agent is a **self-describing command tree**: a small tree of **branches** ("bags of tools") and **leaves** (tools that do something). Each leaf carries strongly typed input and output whose field descriptions **encode behavior**, not just types. The tree compiles to a CLI, and a `describe()` rendering produces the help an agent reads. The design goal is that the help alone is a sufficient specification — robust enough that the code could be re-implemented from it. Code snippets follow the project Node style (4-space indentation, no semicolons, single quotes).
+
+> **Ownership split.** This chapter defines the memo family's Branch/Leaf **data model** — the two node kinds and the self-describing tree. The universal CLI **authoring doctrine** built on top of it (the `noun verb` naming, fail-loud leaves, the eight principles, and the standard verbs) is owned by the **Session family** ([/session/cli/](/session/cli/)); the `memo` command *follows* that doctrine, it does not re-define it.
 
 ---
 
@@ -128,6 +130,8 @@ The agent is kept grounded in the help by **re-injecting** it — and this is **
 
 - **Hook re-injection** — a `PreToolUse` hook **intercepts** the tool call, **cancels** the full request, and **resends** it with the re-injected help (the ancestor path) added to the context.
 - **Token-usage timer** — a timer measures tokens since the last use of a tool; on inactivity it forces re-injection of the **whole ancestor path** for that tool (not just the leaf's own help).
+
+> This `PreToolUse` re-injection hook is the tree-CLI's own grounding mechanism. It is **distinct from** the session-owned **enforcement Hook-Contract** — the `PreToolUse` gate that reads `.session/config.json` and applies the ALLOW / DENY / fail-open decision — which is normed by the **Session family** (session/02-enforcement), not here.
 
 The corrected understanding (versus the first reconstruction) is summarized below.
 

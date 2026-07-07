@@ -794,7 +794,7 @@
                 "research",
                 "workbench"
             ],
-            "requirementCount": 5,
+            "requirementCount": 6,
             "internalCount": 1
         },
         {
@@ -3229,7 +3229,7 @@
             "clusters": [
                 "workbench"
             ],
-            "requirementCount": 3,
+            "requirementCount": 2,
             "internalCount": 0
         },
         {

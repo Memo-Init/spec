@@ -6,7 +6,7 @@ spec_file: "33-maintenance.md"
 order: 33
 section: "Specification"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/memo/0.1.0/spec/33-maintenance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/33-maintenance.md."
@@ -40,11 +40,11 @@ Maintenance has to watch two independent kinds of movement:
 
 A maintenance discipline that only watches the first direction misses half the decay. This chapter names the second direction so it can be measured rather than merely felt.
 
-## The Maintenance Category — a Roof, Not an Eleventh Primitive
+## The Maintenance Category — a Roof, Not a Twelfth Primitive
 
 Maintenance is a **cross-cutting concern** that sits above several existing chapters rather than beside them: Landing ([27](/specification/landing-the-plane/)), Drift ([28](/specification/drift/)), internal-vs-external communication ([19](/specification/internal-vs-external-communication/)), Goals ([31](/specification/goals/)), and Prompt Governance ([32](/specification/prompt-governance/)). What it adds is a **measuring organ** — a scorecard of freshness and blast-radius per unit, plus a maintainer role that reads change and reports decay.
 
-It is a cross-cutting **score**, not a new primitive. The primitives remain **exactly ten** ([30](/specification/primitives/)); maintenance measures across them rather than joining them. Treating maintenance as an eleventh primitive would be a category error — it has no standalone artifact of its own, only a reading taken over the artifacts the primitives already define. This is the one place the maintenance mirror deliberately *breaks* symmetry with goals: a goal is a primitive, maintenance is a roof.
+It is a cross-cutting **score**, not a new primitive. The primitives remain **exactly eleven** ([30](/specification/primitives/)); maintenance measures across them rather than joining them. Treating maintenance as a twelfth primitive would be a category error — it has no standalone artifact of its own, only a reading taken over the artifacts the primitives already define. This is the one place the maintenance mirror deliberately *breaks* symmetry with goals: a goal is a primitive, maintenance is a roof.
 
 ## The Card-Store and Lifecycle
 
@@ -163,6 +163,6 @@ Without a provenance pin staleness is a guess rather than a count, so the pin is
 - [27-landing-the-plane.md](/specification/landing-the-plane/) — reduction and graceful completion; the deletion question this chapter builds on.
 - [28-drift.md](/specification/drift/) — the outward drift direction, the idempotent lint/CI gate, and the single-source-of-truth rule that keeps the gating threshold uncopied.
 - [19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/) — the inward/outward axis that separates the two drift directions.
-- [30-primitives.md](/specification/primitives/) — the ten primitives this chapter measures across but does not extend.
+- [30-primitives.md](/specification/primitives/) — the eleven primitives this chapter measures across but does not extend.
 - [31-goals.md](/specification/goals/) — the goal-scoring chapter this one mirrors: store, lifecycle, score object, second deterministic axis, board, gated acting path.
 - [32-prompt-governance.md](/specification/prompt-governance/) — the governed-default discipline maintenance also relies on.

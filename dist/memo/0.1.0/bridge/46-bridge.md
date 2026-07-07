@@ -43,7 +43,7 @@ flowchart TD
 | [08-phases-and-prds](./08-phases-and-prds.md) | ✓ | 19 | 6 |
 | [09-contamination-context-handover](./09-contamination-context-handover.md) | ✓ | 25 | — |
 | [10-proactive-research](./10-proactive-research.md) | ✓ | 9 | 8 |
-| [11-quality-and-finalization](./11-quality-and-finalization.md) | ✓ | 16 | 5 |
+| [11-quality-and-finalization](./11-quality-and-finalization.md) | ✓ | 16 | 6 |
 | [12-rollout](./12-rollout.md) | ✓ | 7 | — |
 | [13-orchestration](./13-orchestration.md) | ✓ | 19 | — |
 | [14-agents-skills-tasks](./14-agents-skills-tasks.md) | ✓ | 4 | — |
@@ -78,7 +78,7 @@ flowchart TD
 | [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md) | ✓ | 2 | 8 |
 | [44-repository-and-outward-docs](./44-repository-and-outward-docs.md) | — | 0 | 22 |
 | [45-implementation-fidelity-audit](./45-implementation-fidelity-audit.md) | ✓ | 1 | — |
-| **Summary** | **45 / 46** | — | 107 |
+| **Summary** | **45 / 46** | — | 108 |
 
 ## Skills by namespace
 

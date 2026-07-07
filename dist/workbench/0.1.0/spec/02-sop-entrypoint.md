@@ -6,7 +6,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/workbench/0.1.0/spec/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/02-sop-entrypoint.md."
@@ -36,18 +36,18 @@ A third, lower level — the **machine** (the host, the global `~/.claude/` conf
 
 The genesis tier owns what is global per **session** rather than per workbench: the session identity, the per-session security/trust level, and the **deterministic PreToolUse enforcement** that guarantees the right SOP is loaded before a tool runs. The workbench is a **convention layered above** this genesis root; `CLAUDE.md` loads `session-sop` first, and the upper layers inherit the session identity and security level it establishes.
 
-### The Full SOP Chain (declared; enforced once the skills exist)
+### Sibling Extensions of the Genesis Root (declared; enforced once the skills exist)
 
-The entry-point chain is, bottom-up:
+The workbench-SOP and the memo-SOP are **equal-ranking sibling extensions** of the session genesis root — each **extends** `session-sop` directly, and **neither presupposes the other**. The workbench is a sibling extension of the session, **not** a chain-predecessor the memo process must pass through. The domain entry points (`memo-init`, `flowmcp`, …) build on the memo-SOP:
 
 ```
 session-sop  (Genesis Root — session identity, security level, PreToolUse enforcement)
-  ↑ workbench-sop   (workbench convention)
-  ↑ memo-sop        (memo process)
-  ↑ memo-init / flowmcp / …  (domain entry points)
+  ├─ ↑ workbench-sop   (sibling extension — workbench convention)
+  └─ ↑ memo-sop        (sibling extension — memo process)
+          ↑ memo-init / flowmcp / …  (domain entry points; each requires memo-sop)
 ```
 
-The chain is **normatively declared in full**, but each edge is **enforced only once both of its endpoint skills exist**. Declaring an edge whose target skill is not yet built (e.g. `workbench-sop` before it is implemented) MUST NOT create an unsatisfiable precondition: the enforcement gate treats an edge to an absent skill as a configuration error and **fails open** (see [23-hooks-contract.md](/workbench/hooks-contract/)). This "declared now, enforced when present" rule is what lets the full chain be written down before every link is built, without ever locking the machine out of its own tools.
+The one hard read-chain the runtime enforces is `session-sop → memo-sop → memo-init` (the active `when: "pre"` edge is `memo-init → memo-sop`); the workbench's relationship to the memo family is a documented **sibling convention**, not a coarse `requires` edge. Each edge is **enforced only once both of its endpoint skills exist**: declaring an edge whose target skill is not yet built (e.g. `workbench-sop` before it is implemented) MUST NOT create an unsatisfiable precondition — the enforcement gate treats an edge to an absent skill as a configuration error and **fails open**. The enforcement mechanism itself is single-sourced to [session · enforcement](/session/enforcement/) and referenced here (see [23-hooks-contract.md](/workbench/hooks-contract/)). This "declared now, enforced when present" rule lets the relationships be written down before every link is built, without ever locking the machine out of its own tools.
 
 ---
 

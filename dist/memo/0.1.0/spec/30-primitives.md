@@ -6,7 +6,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/memo/0.1.0/spec/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/30-primitives.md."
@@ -21,7 +21,7 @@ There are exactly **eleven** primitives: **Memo, Revision, Topic, Goal, Block, P
 
 ## Concept Map
 
-The diagram below shows how the primitives relate. It is the corrected model: a memo holds topics; topics are realized as work-packages, which are bundled into sequential phases; phases carry PRDs. A **strand** is not a structural sibling of these — it is the *emergent* dependency closure over phases (it is computed by walking the `depends-on` edges, never authored). A **requirement** is likewise cross-cutting: it is a check that applies to work through the PRDs. A **block** is a structure node inside the memo, carrying its own `B\d{3}` id, from which PRDs are derived. A **goal** sits *above* a single memo, spanning the memo sequence. A **plan** also sits above the single memo, but on the execution side: it spans one or more finalized memos and sequences their phases into a single ordered run.
+The diagram below shows how the primitives relate. It is the corrected model: a memo holds topics; topics are **captured in blocks** (a block references one or more topics), and **PRDs are derived from those blocks**; the PRDs are then sequenced into phases. The single canonical decomposition chain is therefore **Topic → Block → PRD** — phase and strand are the ordering/emergence layer over the PRDs, not extra links in the derivation. A **strand** is not a structural sibling of these — it is the *emergent* dependency closure over phases (it is computed by walking the `depends-on` edges, never authored). A **requirement** is likewise cross-cutting: it is a check that applies to work through the PRDs. A **block** is a structure node inside the memo, carrying its own `B\d{3}` id, that gathers the topics and from which PRDs are derived. A **goal** sits *above* a single memo, spanning the memo sequence. A **plan** also sits above the single memo, but on the execution side: it spans one or more finalized memos and sequences their phases into a single ordered run.
 
 ```mermaid
 flowchart TD
@@ -30,7 +30,6 @@ flowchart TD
     REV["Revision<br/>(REV-XX.md)"]
     TOPIC["Topic<br/>(memo-scoped)"]
     BLOCK["Block<br/>(structure node, id B###)"]
-    WP["work-package"]
     PHASE["Phase<br/>(sequential, depends-on)"]
     PRD["PRD<br/>(one context, one thread)"]
     STRAND["Strand<br/>(emergent dependency closure)"]
@@ -44,17 +43,16 @@ flowchart TD
     MEMO -->|iterates through| REV
     MEMO -->|holds| TOPIC
     MEMO -->|structured by| BLOCK
-    TOPIC -->|realized as| WP
-    WP -->|bundled into| PHASE
-    PHASE -->|carries| PRD
+    TOPIC -->|captured in| BLOCK
     BLOCK -->|PRDs derived from| PRD
+    PRD -->|sequenced into| PHASE
     PHASE -. depends-on closure .-> STRAND
     STRAND -. carries via PRDs .-> PRD
     PRD -->|pulls| REQ
     PRD -->|pulls| TOOL
 ```
 
-> The chain is **Topic → work-package → Phase → PRD** (see [08-phases-and-prds.md](/specification/phases-and-prds/)). Strand and Requirement are **cross-cutting**, not links in that chain: a strand is the emergent dependency closure over phases ([25-strands.md](/specification/strands/)), and a requirement is a check that reaches work through its PRDs ([23-requirements.md](/specification/requirements/)). A block is a structure node identified by `B\d{3}`, not a synonym for a context block.
+> The canonical decomposition chain is **Topic → Block → PRD** (see [08-phases-and-prds.md](/specification/phases-and-prds/)): a block gathers one or more topics, and PRDs are derived from it. Phase and Strand are the **ordering/emergence layer** over the derived PRDs — PRDs are sequenced into phases, and a strand is the emergent dependency closure over phases ([25-strands.md](/specification/strands/)) — not extra links in the derivation. A requirement is likewise **cross-cutting**: a check that reaches work through its PRDs ([23-requirements.md](/specification/requirements/)). A block is a structure node identified by `B\d{3}`, not a synonym for a context block.
 
 ---
 
@@ -72,9 +70,9 @@ Related: [07-revisions-and-questions.md](/specification/revisions-and-questions/
 
 ## Topic
 
-A **topic** is an atomic point extracted from the input during the five-step input pipeline. Topic extraction MUST produce a **complete** list of every point in the input — nothing is too small to omit — and that list then serves as a checklist during writing. Topics are **memo-scoped**: they belong to one memo and are tracked in that memo's topic store (`<memoDir>/_topics/`), with a finalization coverage gate that distinguishes initial topics from those added in later revisions. A topic is the unit that is realized as a **work-package** when the finalized memo is decomposed; it is the head of the executable chain **Topic → work-package → Phase → PRD**.
+A **topic** is an atomic point extracted from the input during the five-step input pipeline. Topic extraction MUST produce a **complete** list of every point in the input — nothing is too small to omit — and that list then serves as a checklist during writing. Topics are **memo-scoped**: they belong to one memo and are tracked in that memo's topic store (`<memoDir>/_topics/`), with a finalization coverage gate that distinguishes initial topics from those added in later revisions and a HARD-FAIL block-coverage gate that binds every registered topic to at least one block ([11-quality-and-finalization.md](/specification/quality-and-finalization/)). A topic is **captured in a block** when the finalized memo is decomposed, and PRDs are derived from that block; it is the head of the canonical decomposition chain **Topic → Block → PRD**.
 
-Related: [04-input-pipeline.md](/specification/input-pipeline/) (Step 3 topic extraction), [08-phases-and-prds.md](/specification/phases-and-prds/) (topics → work-packages → phases); related primitives: [Block](#block), [Phase](#phase), [PRD](#prd), [Goal](#goal).
+Related: [04-input-pipeline.md](/specification/input-pipeline/) (Step 3 topic extraction), [08-phases-and-prds.md](/specification/phases-and-prds/) (topics → blocks → PRDs → phases); related primitives: [Block](#block), [Phase](#phase), [PRD](#prd), [Goal](#goal).
 
 ## Goal
 
@@ -90,13 +88,13 @@ Related: [06-memo-structure.md](/specification/memo-structure/) (memo structure)
 
 ## PRD
 
-A **PRD** (Product Requirements Document) is a chunk of work-packages sized so that **one PRD fits into one context**. A PRD MUST be self-contained and implementable by **one** agent in **one** thread with a fresh, empty context; if work would need more than one thread, that is the signal to chunk it into more PRDs, not to span one PRD across threads. A PRD's declared context plus working headroom MUST stay within **one third (1/3)** of the context window (the hard cap, measured per PRD), and SHOULD aim to sit inside the **smart zone** of roughly **one quarter (1/4)**. A PRD MUST declare its Required-Context as a `| source | path |` table and reference shared material in `context/` rather than copying it. PRDs are derived from blocks, ordered by their phase, and pull their requirements and tools from the registries.
+A **PRD** (Product Requirements Document) is a **block-derived** chunk of work sized so that **one PRD fits into one context**. A PRD MUST be self-contained and implementable by **one** agent in **one** thread with a fresh, empty context; if work would need more than one thread, that is the signal to chunk it into more PRDs, not to span one PRD across threads. A PRD's declared context plus working headroom MUST stay within **one third (1/3)** of the context window (the hard cap, measured per PRD), and SHOULD aim to sit inside the **smart zone** of roughly **one quarter (1/4)**. A PRD MUST declare its Required-Context as a `| source | path |` table and reference shared material in `context/` rather than copying it. PRDs are derived from blocks, ordered by their phase, and pull their requirements and tools from the registries.
 
 Related: [08-phases-and-prds.md](/specification/phases-and-prds/) (PRD definition, cap, smart-zone, required-context), [15-prompt-generator.md](/specification/prompt-generator/) (the PRD's first prompt); related primitives: [Phase](#phase), [Block](#block), [Requirement](#requirement), [Tool](#tool).
 
 ## Phase
 
-A **phase** is a **sequential, mandatory** unit of the rollout that bundles PRDs which MUST be executed together and in order, and it carries an orchestration role (Lead / Worker / Evaluator). A phase MUST declare its dependencies: `depends-on` is a **mandatory characteristic**, not optional decoration — a phase that depends on another MUST NOT start until that other has completed. The `## Phase-Hints` section is the dependency tree of the rollout, declaring each phase's `depends-on` and (symmetric) `can-parallel-with` relations with a `rationale`. A phase is the node from which the chain **Topic → work-package → Phase → PRD** carries work; following the `depends-on` edges across phases is what makes strands emerge.
+A **phase** is a **sequential, mandatory** unit of the rollout that bundles PRDs which MUST be executed together and in order, and it carries an orchestration role (Lead / Worker / Evaluator). A phase MUST declare its dependencies: `depends-on` is a **mandatory characteristic**, not optional decoration — a phase that depends on another MUST NOT start until that other has completed. The `## Phase-Hints` section is the dependency tree of the rollout, declaring each phase's `depends-on` and (symmetric) `can-parallel-with` relations with a `rationale`. A phase **sequences** the PRDs derived from blocks (the canonical chain **Topic → Block → PRD**); it is the ordering layer over those PRDs, and following the `depends-on` edges across phases is what makes strands emerge.
 
 Related: [08-phases-and-prds.md](/specification/phases-and-prds/) (phases, `## Phase-Hints`, phase-planning lenses), [12-rollout.md](/specification/rollout/) (phase execution), [13-orchestration.md](/specification/orchestration/) (state model); related primitives: [PRD](#prd), [Strand](#strand), [Topic](#topic).
 
@@ -120,9 +118,26 @@ Related: [23-requirements.md](/specification/requirements/) (two-sided model, sc
 
 ## Tool
 
-A **tool** is an external capability a phase or work-package depends on (browser automation, a spreadsheet reader, the project wiki, and so on), recorded as a short descriptor in the per-project **tools registry** under `.memo/tools/`. The registry is **descriptive**, not a runtime: an entry records *that* a tool exists, *what* it is for, and *where* it lives (the single source of truth), and MUST NOT embed copies of skills or source. The registry is a **RECOMMENDATION**: a project SHOULD maintain it because it makes tool reachability a planning-time concern, but a memo MUST NOT be blocked solely because no registry is present — this is the deliberate difference from the enforced requirements registry. A `check.kind: tool` requirement points into this registry for the tool and tactic that verify it.
+A **tool** is an external capability a phase or PRD depends on (browser automation, a spreadsheet reader, the project wiki, and so on), recorded as a short descriptor in the per-project **tools registry** under `.memo/tools/`. The registry is **descriptive**, not a runtime: an entry records *that* a tool exists, *what* it is for, and *where* it lives (the single source of truth), and MUST NOT embed copies of skills or source. The registry is a **RECOMMENDATION**: a project SHOULD maintain it because it makes tool reachability a planning-time concern, but a memo MUST NOT be blocked solely because no registry is present — this is the deliberate difference from the enforced requirements registry. A `check.kind: tool` requirement points into this registry for the tool and tactic that verify it.
 
 Related: [24-tools-registry.md](/specification/tools-registry/) (registry entries, checklist mechanic, wiki-as-a-tool), [23-requirements.md](/specification/requirements/) (tool-kind checks); related primitives: [Requirement](#requirement), [PRD](#prd), [Strand](#strand).
+
+---
+
+## Work Items — a Finer Granularity Below the Block (not a primitive)
+
+A **work item** is **not a twelfth primitive**. It is a **finer granularity** *below* the topic, inside the block model: where a **block** gathers one or more **topics** (the areas the user wants improved), a work item is one **finding-level unit of the internal work** needed to resolve them. Topics are the user's view; work items are the factory's finding-level work units beneath them.
+
+The model has four parts:
+
+- **Topics compute into work items.** The user dictates a transcript; topics are extracted from it; internally each topic is broken down into the concrete work items that resolving it requires. Work items reference the same topics a block gathers — they are not a parallel store.
+- **Deterministically stored, auto-rendered.** Work items are written to a deterministic store and **auto-rendered into the revisions** so the agent does as little hand-formatting as possible; the topic a work item belongs to MAY still **grow** while the work is in progress.
+- **Individually checkable in the rollout.** Each work item is **individually verifiable** during the rollout, so hundreds-to-thousands of findings can be worked through systematically rather than held in context.
+- **The evaluator judges the topic, not the item count.** When every work item a topic spawned is closed, an **evaluator** still checks whether the **topic itself** is solved — because **work-item completion ≠ topic resolution**. *Workshop example:* the topic is "the car won't start"; the agent finds a dead spark plug (work item "replace spark plug") and a weak battery (work item "replace battery"); both are closed, yet the car still won't start because a marten chewed through a cable. Both work items were factually correct, but the topic is unsolved. The topic is what the user actually had as a problem, so the topic — not the tally of closed items — is what the evaluator judges.
+
+This is an **extension of the built block model**, not a new structural node: work items bind to the topics the blocks already reference. It closes the gap where an earlier work-item system ran *separate* from the block/topic store (the block model did not carry the finding-level work).
+
+**Reference implementation.** The pattern was first grown by the agent in project **defi** (memo M004) on a fresh start with the memo principle: a `work-items.json` whose entries carry `id / severity / cluster / area / action / status / files`, five status values (`offen · in-arbeit · verifizieren · erledigt · kein-defekt`), rendered deterministically by a `render-workitems.mjs`, each item carrying `file:line` provenance and each cluster mapping to a topic. That implementation is the documented reference for this extension; the rollout single-checkability side is specified with the decomposition chain ([08-phases-and-prds.md](/specification/phases-and-prds/)).
 
 ---
 
@@ -182,6 +197,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 | Topic | Atomic, memo-scoped point extracted by the input pipeline; head of the chain. | [04-input-pipeline.md](/specification/input-pipeline/) |
 | Goal | Cross-memo intent that spans several memos and outlives any one; scored fresh-context against real state. | [31-goals.md](/specification/goals/) |
 | Block | Structure node with id `B\d{3}`; tags feed auto-requirements; no `strand` field. | [06-memo-structure.md](/specification/memo-structure/) |
+| Work item | Finding-level unit of internal work below a topic, bound to the block that gathers it; deterministically stored, auto-rendered, individually rollout-checkable. A granularity, not a primitive. | [08-phases-and-prds.md](/specification/phases-and-prds/) |
 | PRD | Self-contained work-chunk fitting one context (cap 1/3, smart-zone 1/4), one thread. | [08-phases-and-prds.md](/specification/phases-and-prds/) |
 | Phase | Sequential, mandatory, dependency-bearing unit with an orchestration role. | [08-phases-and-prds.md](/specification/phases-and-prds/) |
 | Strand | Emergent dependency closure over phases; a tag, not part of the memo ID. | [25-strands.md](/specification/strands/) |
@@ -202,7 +218,7 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [08-phases-and-prds.md](/specification/phases-and-prds/) — the executable chain Topic → work-package → Phase → PRD that this page summarizes.
+- [08-phases-and-prds.md](/specification/phases-and-prds/) — the canonical decomposition chain Topic → Block → PRD (sequenced into phases) that this page summarizes.
 - [23-requirements.md](/specification/requirements/) — the cross-cutting requirement primitive in full.
 - [25-strands.md](/specification/strands/) — the emergent strand primitive and the strand-finalize Tracer-Bullet decision.
 - [12-rollout.md](/specification/rollout/) — the vertical-slice-first (tracer-bullet) rollout strategy, the same-named but distinct rollout-execution concept.

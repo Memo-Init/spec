@@ -6,7 +6,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/memo/0.1.0/spec/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/17-git-workflow-and-ids.md."
@@ -100,6 +100,8 @@ All PRs for a memo are merged together as the final step of the rollout — the 
 ---
 
 ## Branch Naming
+
+This chapter — in the memo family's git workflow — is the **single authoritative home** for branch naming across the whole specification landscape. The branch name is rooted on the **memo-ID** and derived by the `memo git branch-name` leaf, both of which are memo-family anchors; so any other specification that touches branch naming (for example the Workbench family) **references this chapter rather than re-normalizing it**. There is no second "authoritative home".
 
 There is exactly **one** canonical branch-naming schema, and it is rooted on the full prefixed memo-ID — the same `{CTX}` prefix and `{NNN}` memo number defined above. Earlier drafts carried a second, unprefixed `memo-{NNN}-{slug}` shape; that shape is **RETRACTED**. Two competing schemas that both interpolate `{NNN}` are exactly how a branch ends up carrying the wrong number, so only one schema is permitted.
 

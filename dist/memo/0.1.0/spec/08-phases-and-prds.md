@@ -1,36 +1,40 @@
 ---
 title: "Phases & PRDs"
-description: "A finalized memo becomes executable work through a chain of decompositions: topics become PRDs, PRDs are bundled and sequenced into phases, and a phase carries an orchestration role. This chapter..."
+description: "A finalized memo becomes executable work through a chain of decompositions: topics are captured in blocks, PRDs are derived from those blocks, PRDs are bundled and sequenced into phases, and a phase..."
 spec_version: "0.1.0"
 spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/memo/0.1.0/spec/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/08-phases-and-prds.md."
 ---
 
 
-A finalized memo becomes executable work through a chain of decompositions: topics become PRDs, PRDs are bundled and sequenced into phases, and a phase carries an orchestration role. This chapter defines that chain, the standard a PRD must meet to be implementable in a fresh context, the dependency tree that orders phases, and the lenses for cutting a memo into phases.
+A finalized memo becomes executable work through a chain of decompositions: topics are captured in blocks, PRDs are derived from those blocks, PRDs are bundled and sequenced into phases, and a phase carries an orchestration role. This chapter defines that chain, the standard a PRD must meet to be implementable in a fresh context, the dependency tree that orders phases, and the lenses for cutting a memo into phases.
 
 ---
 
-## Topics → PRDs → Phases
+## Topics → Blocks → PRDs → Phases
 
 A finalized memo is decomposed in two steps.
 
-1. **Topics → PRDs.** The memo's topics become **PRDs** (product requirement documents). The governing constraint is that **one PRD fits into one context**: a PRD MUST be self-contained and sized so that a single agent working in a fresh, empty context can implement it without needing to hold the rest of the memo in mind.
+1. **Topics → Blocks → PRDs.** The memo's topics are **captured in blocks** — each block references one or more topics — and **PRDs are derived from those blocks** (product requirement documents). The governing constraint is that **one PRD fits into one context**: a PRD MUST be self-contained and sized so that a single agent working in a fresh, empty context can implement it without needing to hold the rest of the memo in mind.
 2. **PRDs → Phases.** PRDs are grouped into **phases**. A phase is a **sequential, mandatory unit** of the rollout: it bundles PRDs that **MUST** be executed together and in order, and it **MUST** declare its dependencies on other phases. The `depends-on` relation is not optional decoration — it is a **mandatory characteristic** of a phase, because a phase that depends on another may not start until that other has completed (the `## Phase-Hints` dependency tree below). A phase is therefore not merely a "batch": it is a sequenced, dependency-bearing unit.
 
 This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the sequential, dependency-bearing execution units. Following the `depends-on` edges across phases traces out the **strands** of the memo — a strand is the **dependency closure over phases**, the chain that *emerges* when the `## Phase-Hints` edges are walked transitively (see [25-strands.md](/specification/strands/)). Strands are derived from these phase dependencies, never assigned thematically; many phases typically resolve into one or two large strands.
+
+### Work items — the finding-level granularity below a block
+
+Below the topic-and-block level, a finalized memo's internal work is tracked as **work items**: finding-level units, deterministically stored and auto-rendered into the revisions, and — the reason they matter to execution — **individually verifiable during the rollout**, so a memo carrying hundreds-to-thousands of findings can be worked through one checkable unit at a time. Work items are an **extension of the block model**, not a parallel primitive: each binds to a topic a block already gathers (the full model, the evaluator principle, and the defi reference implementation are specified in [30-primitives.md](/specification/primitives/)). At rollout close the evaluator judges the **topic**, not the count of closed work items — closing every work item a topic spawned does not by itself prove the topic is solved.
 
 ---
 
 ## What a PRD is (the corrected definition)
 
-"PRD" stands for **Product Requirements Document**, but in this spec the term carries a sharper, working meaning: a PRD is a **chunk of work-packages** sized to fit one context. We **chunk work-packages** so each fits into a single fresh, empty context; a work-package too large to fit one context is **split (chunked)** into several PRDs.
+"PRD" stands for **Product Requirements Document**, but in this spec the term carries a sharper, working meaning: a PRD is a **block-derived chunk of work** sized to fit one context. We **chunk a block's work** so each PRD fits into a single fresh, empty context; work too large to fit one context is **split (chunked)** into several PRDs.
 
 This yields three rules that govern how PRDs map onto features and threads:
 
@@ -124,9 +128,9 @@ Here P2, P3, and P4 each depend only on the foundation phase P1 and declare each
 
 How a memo is cut into phases determines how well it executes — a poorly cut plan is a common cause of weak rollouts, especially on large problems. Phase-planning is therefore a first-class spec concept, not an incidental step.
 
-### The chain — Topics → work-packages → Phases
+### The chain — Topics → Blocks → PRDs, sequenced into Phases
 
-A memo's **topics** are realized as **work-packages**, which are bundled into **phases**. A phase is not merely a list of work-packages: it carries an **orchestration role**. It bundles and sequences its work-packages, declares the phase's `depends-on` and `can-parallel-with` relations (the dependency tree above), and governs execution (the Lead / Worker / Evaluator roles of the rollout). The phase is the orchestration node of the plan.
+A memo's **topics** are captured in **blocks**, and **PRDs are derived from those blocks**; the PRDs are then bundled and sequenced into **phases**. A phase is not merely a list of PRDs: it carries an **orchestration role**. It bundles and sequences its PRDs, declares the phase's `depends-on` and `can-parallel-with` relations (the dependency tree above), and governs execution (the Lead / Worker / Evaluator roles of the rollout). The phase is the orchestration node of the plan.
 
 ### The three lenses for cutting phases
 
@@ -152,7 +156,7 @@ A rollout produces only what its memo's scope declares. A phase MUST deliver exa
 
 Stating this in the phase chapter keeps the dependency tree honest — `depends-on` and `can-parallel-with` are only meaningful if each phase's actual output matches its declared output.
 
-Scope discipline governs *which* work-packages a phase delivers; the discipline for *each unit a work-package produces* — that every required unit ends as **set**, **justified-omit**, or **blocked** and is never guessed — is the three-exit Worker-output rule defined in [13-orchestration.md](/specification/orchestration/).
+Scope discipline governs *which* PRDs a phase delivers; the discipline for *each unit a PRD produces* — that every required unit ends as **set**, **justified-omit**, or **blocked** and is never guessed — is the three-exit Worker-output rule defined in [13-orchestration.md](/specification/orchestration/).
 
 ## Post-Phase Drift Elimination
 
@@ -315,4 +319,4 @@ Integration coverage is delegated to the same validator skill:
 - [18-multidimensionality.md](/specification/multidimensionality/) — phases that span multiple repositories.
 - [28-drift.md](/specification/drift/) — the drift error-class whose escalation rule defers to the post-phase elimination step this chapter owns.
 - [25-strands.md](/specification/strands/) — a strand is the dependency closure over the phases defined here; it emerges from the `## Phase-Hints` edges.
-- [30-primitives.md](/specification/primitives/) — central glossary and concept map; the Topic → work-package → Phase → PRD chain in one place.
+- [30-primitives.md](/specification/primitives/) — central glossary and concept map; the Topic → Block → PRD chain (sequenced into phases) and the work-item granularity in one place.

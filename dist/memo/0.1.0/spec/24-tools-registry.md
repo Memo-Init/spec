@@ -6,14 +6,14 @@ spec_file: "24-tools-registry.md"
 order: 24
 section: "Specification"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/memo/0.1.0/spec/24-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/24-tools-registry.md."
 ---
 
 
-A memo lists the phases and PRDs it will execute, but the tools those phases assume are easy to leave implicit. They live in the author's memory and in the wider skill catalog, never written down beside the work that depends on them. When a rollout begins, a missing or unreachable tool then surfaces late — mid-execution — rather than at planning time when it is cheap to address. The tools registry closes that gap: it is a per-project record of which tools each phase or work-package needs, so tool reachability becomes a planning-time concern instead of a runtime surprise.
+A memo lists the phases and PRDs it will execute, but the tools those phases assume are easy to leave implicit. They live in the author's memory and in the wider skill catalog, never written down beside the work that depends on them. When a rollout begins, a missing or unreachable tool then surfaces late — mid-execution — rather than at planning time when it is cheap to address. The tools registry closes that gap: it is a per-project record of which tools each phase or PRD needs, so tool reachability becomes a planning-time concern instead of a runtime surprise.
 
 A project **MAY** maintain a tools registry under `.memo/tools/`. The registry describes the available tools — their names, what they do, and what a memo needs to know to decide whether a phase depends on them. It is a descriptive index, not a runtime: it records *that* a tool exists and *what* it is for, so an author can consult it while planning. The registry sits as data under `.memo/`, a sibling of the memos themselves.
 
@@ -180,7 +180,7 @@ Tactic selection must be reproducible and refuse to guess, so determinism and th
 ## Related
 
 - [23-requirements.md](/specification/requirements/) — the parallel data folder; `check.kind: tool` requirements point into this registry for the tool and tactic that verify them.
-- [08-phases-and-prds.md](/specification/phases-and-prds/) — the phases and work-packages whose tool dependencies the registry records.
+- [08-phases-and-prds.md](/specification/phases-and-prds/) — the phases and PRDs whose tool dependencies the registry records.
 - [22-tree-cli-recommended-way.md](/specification/tree-cli-recommended-way/) — the self-describing command tree, the capability counterpart registered here by reference.
 - [26-memo-history.md](/specification/memo-history/) — the chronicle, the chronological counterpart to the wiki's present-tense answer.
 - [30-primitives.md](/specification/primitives/) — central glossary and concept map; the tool primitive summarized.

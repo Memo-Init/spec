@@ -6,7 +6,7 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/session/0.1.0/spec/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/07-doctor-init.md."
@@ -209,7 +209,7 @@ The `doctor` / `init` contract's binding `MUST`s are authored here **prose-first
 {
   "id": "REQ-993",
   "title": "session doctor reports a read-only health envelope with the resolved root",
-  "statement": "`session doctor` MUST emit a read-only health envelope reporting the resolved project root and per-check rows (the `.session/` scope, its `config.json` entry point, the store, and CLI discoverability) plus an overall `healthy` boolean. It MAY exit non-zero so a script can gate on it, but it MUST NEVER mutate state and MUST NEVER block the session.",
+  "statement": "`session doctor` MUST emit a read-only health envelope reporting the resolved project root and per-check rows (the `.session/` scope, its `config.json` entry point, registered-skill and edge presence, and CLI discoverability) plus an overall `healthy` boolean. It MAY exit non-zero so a script can gate on it, but it MUST NEVER mutate state and MUST NEVER block the session.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-cli", "doctor-init", "readiness"] },
   "severity": "blocker",
   "check": {

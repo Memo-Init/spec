@@ -6,7 +6,7 @@ spec_file: "14-migration.md"
 order: 14
 section: "Session"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/session/0.1.0/spec/14-migration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/14-migration.md."
@@ -40,7 +40,7 @@ The fold is mechanical across the spec and site build, and every touch-point is 
 |------|--------|
 | `repos/spec/data/refs.manual.json` | remove the `sop` family key (version + url) |
 | `repos/spec/scripts/generate-docs-payload.mjs` | stop generating the `sop/` payload; the `session/` payload now carries the SOP-area chapters |
-| `repos/spec/scripts/generate-manifest.mjs` | drop the `sop` block; give the `session` family its grouped nav map (Introduction · SOP · Genesis Root · Enforcement · CLI · Recovery) |
+| `repos/spec/scripts/generate-manifest.mjs` | drop the `sop` block; give the `session` family its grouped nav map (Introduction · SOP · Genesis Root · Enforcement · CLI · Recovery · Bridge) |
 | `repos/memo-init.github.io/scripts/sync-spec.mjs` | drop the `sop` family sync |
 | `repos/memo-init.github.io/src/data/sidebar.mjs` | drop `sopItems`; give the `session` family its group labels and order |
 | `repos/memo-init.github.io/astro.config.mjs` | drop the SOP sidebar section and badge; add the `redirects` for the old `/sop/…` URLs |

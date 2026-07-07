@@ -6,7 +6,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-07-04T21:50:08.496Z"
+generated_at: "2026-07-07T19:18:16.831Z"
 generated_from: "draft/session/0.1.0/spec/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/05-config-cascade.md."
@@ -60,7 +60,7 @@ The block below is an **illustrative** `.session/config.json` (placeholders, not
       "tier": 2,                       // 0 = genesis root, ascending
       "cli": "memo",                   // the binary / CLI namespace this Tool ships
       "folders": [ ".memo/" ],        // the folders this namespace owns
-      "requires": [ "workbench" ],    // coarse namespace -> namespace dependency
+      "requires": [],                 // empty: memo↔workbench is a sibling convention, not a coarse requires[] edge (F2=A, see 06-namespace-registry.md)
       "skills": [                      // the declarative "contributes" block
         { "id": "memo-init", "signals": [ "attributionSkill:memo-init" ] },
         { "id": "memo-sop",  "signals": [ "attributionSkill:memo-sop"  ] }
@@ -126,6 +126,8 @@ The config holds **two separate top-level structures with different merge semant
 | repo facing/visibility/remote | workbench (`.workbench/`) | override per repo |
 
 The collection concerns (`sops[]`, `requirements[]`) **merge** as list-unions so each tier and each registrant contributes its own entries. The scalar concerns (identity, security/trust level) are **resolved, not cascaded**: they live only in the session tier and the cascade deliberately does not apply to them, so a more-specific tier can never raise its own trust level. This is the one place the cascade differs from git/XDG, and it preserves the monotonicity property of [01-genesis-root.md](/session/genesis-root/).
+
+**Visibility is a tier assignment today; its machine-readable marker is follow-up.** The `visibility` concern in the table above is currently only an **ownership assignment** — it belongs to the workbench tier (`.workbench/`). Its **machine-readable public/private marker** — the field that stamps each namespace or repo as an outward *Orchestrator* (public / entry point) vs. an internal *Component* (private / reusable) — is **follow-up work**: it is **not** part of this version's config shape and is specified in a later phase of this landscape work.
 
 ---
 
