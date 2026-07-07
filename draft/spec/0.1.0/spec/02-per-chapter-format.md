@@ -56,6 +56,8 @@ The bottom `## Related` section is an annotated map, not a bare link list, and i
 - **R8 — No internal leaks in reasons.** A reason carries no internal record id, internal tool or CLI name, or absolute path ([The Publishing Principle](./05-publishing-principle.md)).
 - **R9 — Reasons are short** — roughly fifteen words or fewer, ending with a period, and in one language.
 
+> **Canonical single source.** These nine rules R1–R9 are this organization's canonical definition of the chapter and Related-section format. The personal-brand `user-preferences` spec, chapter 14 ("How to Write a Spec"), mirrors R1–R9 for its own workshop and follows this chapter as its source — it is a copy, not a second definition.
+
 ### The Load-Art Marker
 
 A chapter **MAY** declare a **load-art** — when it applies during a session — surfaced as a column on the family's chapter-index and, where useful, in the chapter's own metadata. There are two kinds: **always-on**, a chapter that applies to every interaction and is part of the permanent baseline, and **conditional**, a chapter that applies only when its trigger context is present (files of a given kind are in play, error codes are being defined, push time). A chapter **MAY** be mixed — a discipline part always-on, a setup part conditional — and states which part is which in its intro. The load-art is a reading aid projected onto the chapter index; it does not change the RFC-2119 conformance of a chapter's rules, which is governed by the normative/informative marking above.

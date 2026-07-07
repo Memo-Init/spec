@@ -36,6 +36,20 @@ This overview establishes the family; the normative chapters that define the con
 
 ---
 
+## Declaring Family Responsibility
+
+Beside its structural head ([02-per-chapter-format.md](./02-per-chapter-format.md)), each specification family declares its **responsibility** in one normative shape, so that a reader — and a review — sees without inference what a family owns, what it hands off, and what it leans on. The shape has three fields:
+
+- **`provides`** — the family's mandate: the subjects it normatively owns. A subject **MUST** have exactly one owning family; two families **MUST NOT** both claim the same subject in their `provides`.
+- **`delegates`** — the subjects a family deliberately does *not* own, each naming the owning family. A delegated subject is **referenced, never restated**: the delegating family points at the owner rather than re-norming the rule.
+- **`requires`** — the families this one leans on as a hard precondition. A convenience pointer that is not a precondition is a *reference* edge, **not** a `requires`.
+
+The declaration expresses the family topology directly and keeps it flat. The **session** family is the genesis root: it `requires` nothing and provides the session baseline. The **workbench** and **memo** families are equal siblings that each `require` session and extend it — neither is the other's parent, and a convenience edge between two siblings (memo pointing at a workbench folder convention) is a *reference* edge, not a `requires`, so the sibling layer stays flat. This meta family `provides` only spec form; it `requires` nothing, and every other family `requires` it for the shape of its own declaration.
+
+Because each subject is single-owned, a subject that appears in more than one family's `provides` is a defect: it is resolved to one owner and demoted to a `delegates` pointer everywhere else, so no two families claim the same responsibility.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
