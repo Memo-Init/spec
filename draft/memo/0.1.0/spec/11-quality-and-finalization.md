@@ -70,6 +70,7 @@ The four memo-* quality skills run **autonomously** — they MUST NOT ask follow
 | Third-party software veto (token-tracking) | PASS / WARN | Forbidden token-tracking packages appear only in an anti-pattern context, never as a positive recommendation. |
 | Rollout entry points | PASS / WARN / FAIL | The `## Rollout Entry Points` section exists with at least one concrete (non-placeholder) numbered path entry; filesystem existence is a WARN, not a FAIL, because some paths are created by the rollout itself. |
 | Completeness across revisions | PASS / FAIL | Every information item and topic present in any preceding revision (Rev 1..N) is preserved in the finalized revision; no topic is silently lost during the revision-to-finalization transition. See [The Completeness Gate](#the-completeness-gate). |
+| Topic-to-block coverage (`memo block coverage`) | PASS / FAIL | Every registered topic is bound to at least one block via that block's `topicIds`; the union of all blocks' `topicIds` leaves no registered topic uncovered. An uncovered topic is a **HARD-FAIL**, not a warning. See [The Block-Coverage Gate](#the-block-coverage-gate). |
 | `git-security` | PASS / FAIL | Real run over the memo body and the planned artifacts; secrets, absolute paths, mock credentials, `.env` files, or personal data make it FAIL. |
 | `repo-readme` (advisory) | PASS / WARN | Affected repos carry a README; missing README is a WARN here (hard enforcement lives in the git-push gate). |
 
@@ -113,6 +114,16 @@ A memo grows across revisions (Rev 1..N). Each revision may add, sharpen, or reo
 The completeness gate (gate 10) guards this transition. It treats the union of all information items and topics across every preceding revision as the required set, and verifies that the finalized revision preserves each of them. A topic counts as preserved when it is still present, or when it has been explicitly resolved, merged, or marked as deliberately dropped with a reason. A topic that is simply absent — present in some Rev 1..N but missing from the finalized revision with no decision recorded — makes the gate FAIL.
 
 The gate therefore enforces a property, not a word-for-word match: revisions may rewrite and condense freely, but no topic crosses the revision-to-finalization boundary into oblivion by accident.
+
+---
+
+## The Block-Coverage Gate
+
+The topic store is the head of the executable chain, and the block model is where topics are captured (see [06-memo-structure.md](./06-memo-structure.md) and [30-primitives.md](./30-primitives.md)). This gate closes the loop between them: **every registered topic MUST be bound to at least one block.**
+
+The check is deterministic. It takes the union of every block's `topicIds` across the memo and compares it, as a set difference, against the registered topics in the topic store. If any registered topic is absent from that union, the topic is **uncovered** and the gate **FAILs** — this is a **HARD-FAIL, not a warning**, because a captured topic that no block references is a topic the factory can never turn into a PRD (the canonical chain Topic → Block → PRD has no entry point for it, so nothing downstream can pick it up). The deterministic form is the `memo block coverage` CLI leaf, which reports the uncovered topic ids rather than passing silently.
+
+This gate is the read/verify counterpart of the topic-store write side ([06-memo-structure.md](./06-memo-structure.md)): the write side guarantees every extracted topic is *registered*, and this gate guarantees every registered topic is *captured in a block*. It is distinct from the memo↔PRD coverage check ([08-phases-and-prds.md](./08-phases-and-prds.md), REQ-762), which verifies the later block→PRD→phase stage rather than the topic→block one.
 
 ---
 
@@ -310,6 +321,29 @@ The completeness gate is judged by a fresh-context reviewer against the union of
     "assertions": [
       "A sub-memo whose latest revision was produced autonomously with no user revision on top does not finalize",
       "The finalize step returns a HARD-STOP without running the gate set in that condition"
+    ]
+  },
+  "grade": "binary"
+}
+```
+
+The block-coverage gate is a deterministic set comparison — every registered topic must be captured in a block — so it is a HARD-FAIL check with a `binary` grade:
+
+```requirement
+{
+  "id": "REQ-835",
+  "title": "Every registered topic is covered by at least one block",
+  "statement": "At finalization the union of every block's `topicIds` across the memo MUST cover the registered topic set with no gap: each topic registered in the memo's topic store MUST be bound to at least one block. A topic that no block references is uncovered, and an uncovered topic is a HARD-FAIL — never a warning — because the canonical Topic -> Block -> PRD chain has no entry point for it, so nothing downstream can turn it into a PRD. The gate reports the uncovered topic ids rather than passing silently.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["finalization-gates", "block-coverage"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "tool",
+    "tool": "memo",
+    "tactic": "block-coverage",
+    "verify": [
+      "Run `memo block coverage` for the memo",
+      "Assert the union of all blocks' topicIds covers every registered topic in the topic store",
+      "Fail hard (not warn) and list the uncovered topic ids when any registered topic is left uncovered"
     ]
   },
   "grade": "binary"

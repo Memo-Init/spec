@@ -33,11 +33,11 @@ Maintenance has to watch two independent kinds of movement:
 
 A maintenance discipline that only watches the first direction misses half the decay. This chapter names the second direction so it can be measured rather than merely felt.
 
-## The Maintenance Category — a Roof, Not an Eleventh Primitive
+## The Maintenance Category — a Roof, Not a Twelfth Primitive
 
 Maintenance is a **cross-cutting concern** that sits above several existing chapters rather than beside them: Landing ([27](./27-landing-the-plane.md)), Drift ([28](./28-drift.md)), internal-vs-external communication ([19](./19-internal-vs-external-communication.md)), Goals ([31](./31-goals.md)), and Prompt Governance ([32](./32-prompt-governance.md)). What it adds is a **measuring organ** — a scorecard of freshness and blast-radius per unit, plus a maintainer role that reads change and reports decay.
 
-It is a cross-cutting **score**, not a new primitive. The primitives remain **exactly ten** ([30](./30-primitives.md)); maintenance measures across them rather than joining them. Treating maintenance as an eleventh primitive would be a category error — it has no standalone artifact of its own, only a reading taken over the artifacts the primitives already define. This is the one place the maintenance mirror deliberately *breaks* symmetry with goals: a goal is a primitive, maintenance is a roof.
+It is a cross-cutting **score**, not a new primitive. The primitives remain **exactly eleven** ([30](./30-primitives.md)); maintenance measures across them rather than joining them. Treating maintenance as a twelfth primitive would be a category error — it has no standalone artifact of its own, only a reading taken over the artifacts the primitives already define. This is the one place the maintenance mirror deliberately *breaks* symmetry with goals: a goal is a primitive, maintenance is a roof.
 
 ## The Card-Store and Lifecycle
 
@@ -156,6 +156,6 @@ Without a provenance pin staleness is a guess rather than a count, so the pin is
 - [27-landing-the-plane.md](./27-landing-the-plane.md) — reduction and graceful completion; the deletion question this chapter builds on.
 - [28-drift.md](./28-drift.md) — the outward drift direction, the idempotent lint/CI gate, and the single-source-of-truth rule that keeps the gating threshold uncopied.
 - [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md) — the inward/outward axis that separates the two drift directions.
-- [30-primitives.md](./30-primitives.md) — the ten primitives this chapter measures across but does not extend.
+- [30-primitives.md](./30-primitives.md) — the eleven primitives this chapter measures across but does not extend.
 - [31-goals.md](./31-goals.md) — the goal-scoring chapter this one mirrors: store, lifecycle, score object, second deterministic axis, board, gated acting path.
 - [32-prompt-governance.md](./32-prompt-governance.md) — the governed-default discipline maintenance also relies on.

@@ -5,7 +5,7 @@
 | Status | Draft |
 | Related | [23-requirements.md](./23-requirements.md), [08-phases-and-prds.md](./08-phases-and-prds.md), [00-overview.md](./00-overview.md) |
 
-A memo lists the phases and PRDs it will execute, but the tools those phases assume are easy to leave implicit. They live in the author's memory and in the wider skill catalog, never written down beside the work that depends on them. When a rollout begins, a missing or unreachable tool then surfaces late — mid-execution — rather than at planning time when it is cheap to address. The tools registry closes that gap: it is a per-project record of which tools each phase or work-package needs, so tool reachability becomes a planning-time concern instead of a runtime surprise.
+A memo lists the phases and PRDs it will execute, but the tools those phases assume are easy to leave implicit. They live in the author's memory and in the wider skill catalog, never written down beside the work that depends on them. When a rollout begins, a missing or unreachable tool then surfaces late — mid-execution — rather than at planning time when it is cheap to address. The tools registry closes that gap: it is a per-project record of which tools each phase or PRD needs, so tool reachability becomes a planning-time concern instead of a runtime surprise.
 
 A project **MAY** maintain a tools registry under `.memo/tools/`. The registry describes the available tools — their names, what they do, and what a memo needs to know to decide whether a phase depends on them. It is a descriptive index, not a runtime: it records *that* a tool exists and *what* it is for, so an author can consult it while planning. The registry sits as data under `.memo/`, a sibling of the memos themselves.
 
@@ -172,7 +172,7 @@ Tactic selection must be reproducible and refuse to guess, so determinism and th
 ## Related
 
 - [23-requirements.md](./23-requirements.md) — the parallel data folder; `check.kind: tool` requirements point into this registry for the tool and tactic that verify them.
-- [08-phases-and-prds.md](./08-phases-and-prds.md) — the phases and work-packages whose tool dependencies the registry records.
+- [08-phases-and-prds.md](./08-phases-and-prds.md) — the phases and PRDs whose tool dependencies the registry records.
 - [22-tree-cli-recommended-way.md](./22-tree-cli-recommended-way.md) — the self-describing command tree, the capability counterpart registered here by reference.
 - [26-memo-history.md](./26-memo-history.md) — the chronicle, the chronological counterpart to the wiki's present-tense answer.
 - [30-primitives.md](./30-primitives.md) — central glossary and concept map; the tool primitive summarized.
