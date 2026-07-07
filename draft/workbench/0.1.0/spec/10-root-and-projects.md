@@ -74,13 +74,13 @@ Workbench-level policy — the conventions both levels obey — belongs in **thi
 
 The motivating problem is duplication. Today three `CLAUDE.md` files — a global one, the workbench-root one, and each project's — carry overlapping and workbench-specific policy: the four-stage process appears in all three, the "no follow-up memos" rule in two, and folder conventions, the `.memo/` internal layout, branch-naming, and inward/outward repo routing are scattered across them. Three independent copies of one rule drift apart and contradict each other. The remedy is to keep each policy in **one** authoritative place and let `CLAUDE.md` point there.
 
-The following categories of content **MUST** move out of `CLAUDE.md` into this spec or the `.workbench/` configuration, and `CLAUDE.md` **MUST** reference them rather than restate them:
+The following categories of content **MUST** move out of `CLAUDE.md` into their authoritative home — this spec, the `.workbench/` configuration, or the relevant sibling spec — and `CLAUDE.md` **MUST** reference them rather than restate them:
 
 | Content | Authoritative home |
 |---------|--------------------|
 | Folder conventions (which folders exist, mandatory vs optional, at which level) | this spec ([12-folders.md](./12-folders.md)) |
 | The `.memo/` internal layout | this spec ([11-project-structure.md](./11-project-structure.md), [17-memo-store.md](./17-memo-store.md)) |
-| Branch-naming | this spec |
+| Branch-naming | the memo spec — [git workflow and memo IDs](/specification/git-workflow-and-ids/): the canonical `<PREFIX>-<NNN>-<slug>` schema is rooted on the memo ID and derived by the `memo git branch-name` leaf. The workbench references it and does **not** define it. |
 | Inward/outward repo routing (rule C1) | the `.workbench/` configuration ([22-config.md](./22-config.md)) |
 
 Once a convention lives in its authoritative home, a `CLAUDE.md` adds value only as a **signpost** to it — never as a second, divergent copy. This keeps a single source for each rule and confines `CLAUDE.md` to orientation.

@@ -6,7 +6,9 @@
 | Depends on | [22-config.md](./22-config.md), [02-sop-entrypoint.md](./02-sop-entrypoint.md) |
 | Related | [21-environment-scripts.md](./21-environment-scripts.md) |
 
-Deterministic enforcement of workbench policy is delegated to Claude Code hooks. This chapter specifies the **contract** between the workbench and a hook: what the workbench provides for a hook to read, and what a hook is expected to consume and decide. It deliberately specifies **only the contract** — the hook *implementation* belongs to the future machine-tier spec (see [02-sop-entrypoint.md](./02-sop-entrypoint.md)).
+Deterministic enforcement of workbench policy is delegated to Claude Code hooks. The **PreToolUse enforcement contract** those hooks satisfy — the gate mechanism, its three-state decision, the signal scan, and the precondition-chain resolution — has its **single source in the Session spec's [enforcement chapter](/session/enforcement/)**. This chapter is the **workbench-side reference** to that contract: it records what the **workbench declares** for a hook to read (the `.workbench/` policy inputs) and its scoped view of the same PreToolUse shape, and it **references the mechanism up** rather than redefining it. The hook *implementation* belongs to the future machine-tier spec (see [02-sop-entrypoint.md](./02-sop-entrypoint.md)).
+
+> **Normative status — reference, not single source.** The enforcement mechanism is owned once by [session · enforcement](/session/enforcement/) (`REQ-982`…`REQ-987`); [session/04-cli.md](/session/cli/) records that this chapter "references up to it rather than redefining the contract." What stays workbench-owned here is only the **declaration side** — the policy a hook consumes (`.workbench/` facing status, `folder-lints.json`) specified in [22-config.md](./22-config.md).
 
 This chapter and [22-config.md](./22-config.md) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](./00-overview.md).
 
@@ -124,11 +126,7 @@ The pre-condition catalog above is loose by design — it states *what* could be
 
 ### The Multi-Stage Chain — No Escape
 
-Requirements **compose transitively**. The edges chain: `memo-init` requires `memo-sop`, and `memo-sop` requires `workbench-sop`. The precondition hook resolves the *whole* chain, not just the nearest edge — if **any** link is unmet, the call is denied with a message that lists the entire chain, for example:
-
-```
-preconditions not met: memo-init requires memo-sop, memo-sop requires workbench-sop
-```
+Requirements **compose transitively**, and the precondition hook resolves the *whole* chain, not just the nearest edge — if **any** link is unmet, the call is denied with a message that lists every unmet link. The one hard read-chain in this version is `session-sop → memo-sop → memo-init` (the active edge is `memo-init → memo-sop`); the workbench is a **sibling extension** of the session, not an intermediate link the memo chain passes through (see [02-sop-entrypoint.md](./02-sop-entrypoint.md)). The transitive-resolution mechanism — how the gate walks a multi-link chain and denies with the full unmet list — is single-sourced to [session · enforcement](/session/enforcement/); it is referenced here, not redefined.
 
 There is **no bypass**. This is **absolute for security**: no git command runs without a verified repo status, the same way no entry point runs without its SOP chain (the facing/egress policy a git gate reads lives in [22-config.md](./22-config.md); the gate is repo-facing). A transitive precondition cannot be satisfied by skipping an intermediate link.
 
@@ -186,30 +184,11 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ## Conformity Requirements
 
-This chapter is normative about the contract surface; its `MUST`s are the rules a hook satisfies. The blocks below encode them prose-first — each `statement` faces the building of a gate, and each `check` faces a built hook's behaviour. Because the hook *implementation* belongs to the deferred machine-tier spec, several blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
+The enforcement **mechanism** is not re-normalized here — its binding rules are single-sourced to [session · enforcement](/session/enforcement/) (`REQ-982`…`REQ-987`: the hard-block on a missing predecessor, the jq-structured signal, fail-open, the kill-switch, and the policy checkpoints). The workbench-scoped blocks below bind only the **declaration side** — the policy a hook *reads* (the declared per-repository facing status and the `folder-lints.json` map, both specified in [22-config.md](./22-config.md)). Each `statement` faces how that policy is declared, and each `check` faces the built gate's behaviour against it. Because the hook *implementation* belongs to the deferred machine-tier spec, these blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([../../v0.1.0/23-requirements.md](/specification/requirements/)).
 
-The five-step precondition chain is a deterministic mechanism whose completeness a reviewer judges against the contract:
+The five-step precondition-chain mechanism — intercept, look up the `when: "pre"` edges, scan the transcript, check each predecessor, and allow or hard-block the whole transitive chain — is the **enforcement mechanism**, and its binding rule is single-sourced to [session · enforcement](/session/enforcement/) (`REQ-982` hard-blocks a missing predecessor SOP; `REQ-983` reads the signal jq-structured). This chapter does **not** carry a competing requirement block for it — it references the session contract rather than re-harvesting the same rule under a workbench id.
 
-```requirement
-{
-  "id": "REQ-961",
-  "title": "The precondition hook resolves the whole dependency chain with no bypass",
-  "statement": "A PreToolUse precondition hook gating an orchestrator entry point MUST perform the five steps in order — intercept the `Skill(<name>)` call, look up the `requirements[]` `when: \"pre\"` edges, read the session transcript, check each required predecessor actually ran via the registry signals, and allow OR hard-block — and MUST resolve the whole transitive chain, denying with a message that lists every unmet link. A transitive precondition cannot be satisfied by skipping an intermediate link.",
-  "scope": { "repos": [], "categories": ["workbench"], "tags": ["hooks", "precondition", "enforcement"] },
-  "severity": "blocker",
-  "check": {
-    "kind": "evaluator",
-    "rubric": "A reviewer drives the gate with a multi-link chain where an intermediate predecessor is absent. PASS when the call is denied with a message naming the entire unmet chain; BLOCKED when the gate allows the call or names only the nearest edge; INCONCLUSIVE when no gate is wired to evaluate.",
-    "verify": [
-      "Construct a chain where an intermediate predecessor did not run",
-      "Confirm a hard-block whose message lists the whole chain"
-    ]
-  },
-  "grade": "todo"
-}
-```
-
-The inward-push gate is a deterministic, default-deny decision over the declared status; its behaviour is judged against the contract:
+The inward-push gate is a deterministic, default-deny decision over the **workbench-declared** facing status ([22-config.md](./22-config.md)); the gate mechanism is the session enforcement contract's, and the block below binds only the declaration it reads:
 
 ```requirement
 {
