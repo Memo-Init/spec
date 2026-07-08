@@ -137,6 +137,30 @@ A `group` is `ok` only when every resolved member's receipt is present (the same
 
 ---
 
+## The env-File Naming Check — Reports, Never Renames
+
+`session doctor` also carries a **read-only** check for the stage env-file naming schema
+`<name>.<stage>.env` ([05-config-cascade.md](./05-config-cascade.md)): a stage env file that
+deviates from `.<stage>.env` (for example `.development.env`, `.staging.env`) is reported as a
+`warn` with the exact `mv` in the fix column. Two hard bounds make it safe to run automatically:
+
+- It **MUST NEVER auto-rename** a file — like every doctor row it only *prints* the fix command;
+  the rename is the developer's deliberate action.
+- It **MUST NEVER touch `.env`** — the check reads filenames only, never the file's values, and
+  `.env` is never read, written, or renamed (the no-auto-write / no-overwrite discipline,
+  REQ-SS-NOWRITE). Real `.env` files live in the parent directory; only a dummy `.example.env` is
+  committed, so the check never surfaces a secret.
+
+The row obeys the same trichotomy as every other: a schema deviation is a `warn` in the report
+with its fix, never a block — exactly the read-only, reports-never-blocks contract below.
+
+```
+  Check             Status  Detail                              Fix
+  env-naming        warn    dev.env deviates from `.<stage>.env`  mv dev.env .development.env
+```
+
+---
+
 ## The Strict Namespace Checks Run HERE
 
 The **N-1 / N-2 namespace-collision checks** defined in [06-namespace-registry.md](./06-namespace-registry.md) run in the **foreground**, inside `session doctor` / `session init` — **never at the fail-open hook**. This is the deliberate division of labour: the PreToolUse gate stays permissive and cheap (it must, to never block); the expensive, strict, potentially-rejecting verification is a deliberate developer action. A colliding registration is a `fail` in the doctor's report, surfaced loudly with its fix — it is not a runtime block, and the gate never fail-closes on it.
