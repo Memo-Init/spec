@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-07-07T21:34:28.553Z",
+    "generated_at": "2026-07-08T12:09:12.271Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -698,6 +698,16 @@
                 "sidebar_group": "folders"
             },
             {
+                "filename": "33-flowmcp.md",
+                "slug": "flowmcp",
+                "title": "flowmcp/",
+                "description": "`flowmcp/` is the on-disk footprint of the **FlowMCP** custom folder — a globally-installed tool (the FlowMCP CLI) whose authored content and produced output live in a declared per-project area, in...",
+                "order": 33,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
                 "filename": "41-project-architecture.md",
                 "slug": "project-architecture",
                 "title": "Architecture",
@@ -980,12 +990,12 @@
         ]
     },
     "stats": {
-        "total_files": 96,
+        "total_files": 97,
         "core_files": 47,
-        "workbench_files": 24,
+        "workbench_files": 25,
         "session_files": 17,
         "spec_files": 8,
-        "normative_files": 86,
+        "normative_files": 87,
         "informative_files": 10
     }
 }

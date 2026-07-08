@@ -6,7 +6,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-07-07T21:34:26.628Z"
+generated_at: "2026-07-08T12:09:11.029Z"
 generated_from: "draft/memo/0.1.0/spec/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/memo/0.1.0/spec/09-contamination-context-handover.md."
@@ -111,6 +111,24 @@ The re-entry into a new session reads `HANDOVER.md` as **hypotheses, not state**
 
 ---
 
+
+## Handover verify-before-use (`[RE-VERIFY]` / Zone-3)
+
+> Trigger: in M062 a `_grading` list was taken at face value (the `for-bare-Münze` anti-pattern) and propagated as truth. This section makes that a normative failure and gives the spec→skill lint (Kap 10) a stable anchor to key on.
+
+Handed-over context — memo→memo, session→session, and **Cross-Memo lists** — is a **hypothesis, not truth**. It MUST be verified before it is used as a basis for work. Two norms follow, each with a stable, greppable anchor.
+
+### Norm A — handed-over context = hypothesis → verify-before-use
+
+Every fact or list carried over from another memo or session carries the marker **`[RE-VERIFY]`** and MUST be checked against its **primary source** (file:line / commit) before it serves as a basis. This is the same discipline as Zone-3 of `HANDOVER.md` (primary-source references), now extended explicitly to **Cross-Memo lists**: a list handed from one memo into another is re-verified against its source, not trusted because a prior memo stated it. `[RE-VERIFY]` is a literal, greppable token (not prose), so the lint can key on it deterministically — that is the "runs / deployed" criterion, not merely "text written".
+
+### Norm B — deterministic lists → derived tables
+
+When a list is deterministically derivable from a source (git-truth, a registry, the filesystem), it MUST be **derived** — a **derived table** (lint anchors: `derived table` / `abgeleitete Tabelle`) — not transcribed. A transcribed list drifts from its source and invites the `for-bare-Münze` failure; a derived table cannot drift, because it is regenerated from the source of truth.
+
+**Trigger example (anti-pattern).** In M062 a `_grading` list was copied from a handover and treated as authoritative without checking the filesystem it claimed to describe. Under this norm the list carries `[RE-VERIFY]` and is regenerated as a `derived table` from the actual `_grading` directory before use.
+
+---
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

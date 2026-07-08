@@ -15,7 +15,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 
 ## 2. Public entry points
 
-`workbench-sop-entry` _(inferred from primary owners)_ · docs entry `/workbench/overview/`
+`workbench-sop` _(inferred from primary owners)_ · docs entry `/workbench/overview/`
 
 ## 3. Required detail pages
 
@@ -29,7 +29,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 | `workbench-cli` | contributing | Apply the workbench CLI convention — a self-describing Branch/Leaf command tree, `.workbench/registry.json` as the single deter… |
 | `workbench-config` | contributing | Declare and maintain a project's `.workbench/` configuration — the MANUAL, never-auto-generated single source of policy |
 | `workbench-hooks-contract` | contributing | Author and reason about the workbench hooks contract — the policy the workbench DECLARES for deterministic PreToolUse enforceme… |
-| `workbench-sop-entry` | primary | The Workbench-SOP entry-point signpost — read first on every fresh start to learn where you are and what you may do |
+| `workbench-sop` | primary | The Workbench-SOP entry-point signpost — read first on every fresh start to learn where you are and what you may do |
 
 ## 5. Grading assignment
 

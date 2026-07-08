@@ -1,7 +1,7 @@
 {
     "note": "Inverted skill->spec projection (read-only): one entry per non-bridge spec page, listing its public implementer skills with role + the public projection fields. Generated from skill-spec-map.json. Two internal fields are NEVER published here: the gaps roll-up and the per-record provenance hash (SPEC-REQ-006, [05-publishing-principle]).",
     "generator": "scripts/generate-bridge.mjs",
-    "mapHash": "4b848637a1d5",
+    "mapHash": "b18e96e7c64b",
     "pages": [
         {
             "family": "memo",
@@ -2699,7 +2699,7 @@
             "stem": "02-sop-entrypoint",
             "sopAnchor": "02-sop-entrypoint",
             "publicEntries": [
-                "workbench-sop-entry"
+                "workbench-sop"
             ],
             "publicEntriesInferred": true,
             "detailPages": [
@@ -2727,7 +2727,7 @@
                     "role": "contributing"
                 },
                 {
-                    "skill": "workbench-sop-entry",
+                    "skill": "workbench-sop",
                     "role": "primary"
                 }
             ],
@@ -3484,6 +3484,26 @@
         },
         {
             "family": "workbench",
+            "id": "workbench/33-flowmcp",
+            "stem": "33-flowmcp",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "11-project-structure",
+                "12-folders",
+                "26-addons",
+                "31-browser-automation"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "workbench",
             "id": "workbench/41-project-architecture",
             "stem": "41-project-architecture",
             "sopAnchor": "02-sop-entrypoint",
@@ -3702,7 +3722,7 @@
             "clusters": [
                 "session"
             ],
-            "requirementCount": 2,
+            "requirementCount": 3,
             "internalCount": 0
         },
         {

@@ -38,8 +38,9 @@ _(no skill dependencies declared in this family)_
 | [30-wiki](./30-wiki.md) | ✓ | 6 | 2 |
 | [31-browser-automation](./31-browser-automation.md) | ✓ | 4 | — |
 | [32-trash](./32-trash.md) | ✓ | 5 | — |
+| [33-flowmcp](./33-flowmcp.md) | — | 0 | — |
 | [41-project-architecture](./41-project-architecture.md) | ✓ | 6 | 2 |
-| **Summary** | **23 / 23** | — | 31 |
+| **Summary** | **23 / 24** | — | 31 |
 
 ## Skills by namespace
 
@@ -89,7 +90,7 @@ _(no skill dependencies declared in this family)_
 | `workbench-repos` | [15-repos](./15-repos.md) (primary) |
 | `workbench-root-projects` | [10-root-and-projects](./10-root-and-projects.md) (primary) |
 | `workbench-skills-scope` | [24-skills-scope](./24-skills-scope.md) (primary), [20-cli](./20-cli.md), [21-environment-scripts](./21-environment-scripts.md), [23-hooks-contract](./23-hooks-contract.md), [25-validation-overview](./25-validation-overview.md), [26-addons](./26-addons.md) |
-| `workbench-sop-entry` | [02-sop-entrypoint](./02-sop-entrypoint.md) (primary) |
+| `workbench-sop` | [02-sop-entrypoint](./02-sop-entrypoint.md) (primary) |
 | `workbench-tmp` | [19-tmp](./19-tmp.md) (primary), [12-folders](./12-folders.md), [16-context](./16-context.md), [32-trash](./32-trash.md) |
 | `workbench-validation` | [25-validation-overview](./25-validation-overview.md) (primary), [20-cli](./20-cli.md), [21-environment-scripts](./21-environment-scripts.md), [22-config](./22-config.md), [23-hooks-contract](./23-hooks-contract.md), [32-trash](./32-trash.md) |
 
@@ -101,7 +102,7 @@ _(no skill dependencies declared in this family)_
 
 - [00-overview](./00-overview.md) — `workbench-audit`, `workbench-project-setup`
 - [01-philosophy](./01-philosophy.md) — `workbench-philosophy`
-- [02-sop-entrypoint](./02-sop-entrypoint.md) — `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-hooks-contract`, `workbench-sop-entry`
+- [02-sop-entrypoint](./02-sop-entrypoint.md) — `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-hooks-contract`, `workbench-sop`
 
 ### Root
 
@@ -121,6 +122,7 @@ _(no skill dependencies declared in this family)_
 - [32-trash](./32-trash.md) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
 - [17-memo-store](./17-memo-store.md) — `workbench-memo-store`
 - [26-addons](./26-addons.md) — `workbench-addons`, `workbench-skills-scope`
+- [33-flowmcp](./33-flowmcp.md) — _— no implementer skill yet —_
 
 ### CLI & Scripts
 

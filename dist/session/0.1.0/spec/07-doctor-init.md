@@ -6,7 +6,7 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-07-07T21:34:26.628Z"
+generated_at: "2026-07-08T12:09:11.029Z"
 generated_from: "draft/session/0.1.0/spec/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/07-doctor-init.md."
@@ -141,6 +141,30 @@ session prefs-status — security: incomplete · verification: ok
 ```
 
 A `group` is `ok` only when every resolved member's receipt is present (the same AND the gate takes). An unresolved member (a pending, not-yet-registered standard) is surfaced here exactly as `doctor` check 7 surfaces it, so the board never silently reports a group `ok` while a member is missing.
+
+---
+
+## The env-File Naming Check — Reports, Never Renames
+
+`session doctor` also carries a **read-only** check for the stage env-file naming schema
+`<name>.<stage>.env` ([05-config-cascade.md](/session/config-cascade/)): a stage env file that
+deviates from `.<stage>.env` (for example `.development.env`, `.staging.env`) is reported as a
+`warn` with the exact `mv` in the fix column. Two hard bounds make it safe to run automatically:
+
+- It **MUST NEVER auto-rename** a file — like every doctor row it only *prints* the fix command;
+  the rename is the developer's deliberate action.
+- It **MUST NEVER touch `.env`** — the check reads filenames only, never the file's values, and
+  `.env` is never read, written, or renamed (the no-auto-write / no-overwrite discipline,
+  REQ-SS-NOWRITE). Real `.env` files live in the parent directory; only a dummy `.example.env` is
+  committed, so the check never surfaces a secret.
+
+The row obeys the same trichotomy as every other: a schema deviation is a `warn` in the report
+with its fix, never a block — exactly the read-only, reports-never-blocks contract below.
+
+```
+  Check             Status  Detail                              Fix
+  env-naming        warn    dev.env deviates from `.<stage>.env`  mv dev.env .development.env
+```
 
 ---
 

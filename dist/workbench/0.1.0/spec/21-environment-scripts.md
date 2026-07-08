@@ -6,7 +6,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-07-07T21:34:26.628Z"
+generated_at: "2026-07-08T12:09:11.029Z"
 generated_from: "draft/workbench/0.1.0/spec/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/21-environment-scripts.md."
@@ -27,8 +27,34 @@ A project's environment is operated through a small, named family of scripts. Th
 | `staging.sh` | Bring the project up in a staging configuration. |
 | `cleanup.sh` | Tear the environment down and remove transient state. |
 | `health-check.sh` | Verify that the environment is in working order. |
+| `start-the-plane` | The **session-start ritual** — bring the workspace to a known-good baseline at the start of work. |
+| `land-the-plane` | The **Landing-the-Plane ritual** — the end-of-work close-down (tidy, chronicle, handover) before a session is put down. |
+
+The last two are the **session-lifecycle** members of the family: `start-the-plane` opens a
+session and `land-the-plane` closes it (the Landing-the-Plane SOP,
+[27-landing-the-plane.md](/session/landing-the-plane/)). They live in the same `scripts/` storage
+and follow the same subfolder convention as the rest of the family.
 
 Scripts **MUST** live in **meaningful subfolders** of `scripts/`, not as a flat pile at the top level. A bare `dev.sh` says too little about *which* environment it starts; the **subfolder name carries the meaning** (for example `scripts/rails/dev.sh`). This is the same convention the CLI chapter applies to commands — meaning lives in the name, not in a comment (see [20-cli.md](/workbench/cli/)), and it connects to the About convention that documents what a scripts subfolder does.
+
+### The Storage Location — `scripts/`
+
+`scripts/` is the **defined storage location** for the whole lifecycle family — the bring-up
+(`dev.sh` / `staging.sh`), the tear-down (`cleanup.sh`), the health check (`health-check.sh`), and
+the session-lifecycle pair (`start-the-plane` / `land-the-plane`). All of them live under
+`scripts/`, each in a meaningful subfolder (REQ-966), so there is **one** answer to "where do this
+project's lifecycle scripts live?". Because the location is defined here once, a project's SOP
+**references** `scripts/` rather than re-listing the scripts inline — a runbook or project-SOP skill
+points at `scripts/` for the start / stop / `start-the-plane` / `land-the-plane` scripts instead of
+duplicating them.
+
+### Stage Scripts Pair With Stage env Files
+
+A stage's bring-up script and its environment file share the **same stage word**: `dev.sh` pairs
+with `.development.env`, `staging.sh` with `.staging.env`. The env-file naming schema
+`<name>.<stage>.env` is *defined* in the session config cascade
+([05-config-cascade.md](/session/config-cascade/)) — this is only the cross-reference from the
+script side; the schema and its read-only doctor check are not duplicated here.
 
 ---
 
