@@ -12,7 +12,7 @@ Browser automation lives at the project level. Each project that uses it carries
 
 > **What belongs here, what belongs to the core spec.** The **method** — tool selection, the cost discipline, the `.browser/` structure, the scrape queue, and `auth.json` handling — is the **workbench's** concern and is specified here. The research **duty** — when a memo must verify its assumptions, and the inward trust boundary as a *behavioral guardrail* — belongs to the memo/core spec ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) and is **referenced, not restated**. This chapter is the *how*; the core chapter is the *what* and the *when*. The one place the two meet is the **trust dimension** of tool selection (see "The Trust Axis" below): the core chapter owns the guardrail, this chapter carries its mechanism in the tool-choice itself.
 
-> **Folder name — `.browser/`, alias `.playwright/`.** The folder is named `.browser/`: the dot marks it as local machinery (see [12-folders.md](./12-folders.md)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is an accepted **alias** of the same folder — a project that still uses that name remains conformant, and the physical migration of existing projects to `.browser/` is deliberately **deferred**, to be done at each project's own pace.
+> **Folder name — `.browser/` is canonical, `.playwright/` is a deprecated alias.** The **canonical, required** name is `.browser/`: the dot marks it as local machinery (see [12-folders.md](./12-folders.md)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is a **deprecated** alias of the same folder — a project that still uses that name remains conformant (no hard break), but the name is on a defined migration path: existing projects rename to `.browser/` at their own pace, and `.browser/` is the migration **target** the workbench cleanup points every project at. New projects **MUST** use `.browser/`.
 
 ---
 
@@ -25,7 +25,7 @@ Browser automation lives at the project level. Each project that uses it carries
 | Name | `.browser/` |
 | Status | Optional |
 | Level | Project |
-| Entry-point | `scripts/` (legacy alias `.playwright/`) |
+| Entry-point | `scripts/` (deprecated alias `.playwright/`) |
 | Convention | — |
 | Purpose | Browser-automation session, scripts, and output — present only when the project performs browser automation. |
 | Goes in | The captured session `auth.json`, reusable automation under `scripts/`, and produced `output/`. |

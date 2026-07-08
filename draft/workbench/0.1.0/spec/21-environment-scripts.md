@@ -20,8 +20,34 @@ A project's environment is operated through a small, named family of scripts. Th
 | `staging.sh` | Bring the project up in a staging configuration. |
 | `cleanup.sh` | Tear the environment down and remove transient state. |
 | `health-check.sh` | Verify that the environment is in working order. |
+| `start-the-plane` | The **session-start ritual** — bring the workspace to a known-good baseline at the start of work. |
+| `land-the-plane` | The **Landing-the-Plane ritual** — the end-of-work close-down (tidy, chronicle, handover) before a session is put down. |
+
+The last two are the **session-lifecycle** members of the family: `start-the-plane` opens a
+session and `land-the-plane` closes it (the Landing-the-Plane SOP,
+[27-landing-the-plane.md](/session/landing-the-plane/)). They live in the same `scripts/` storage
+and follow the same subfolder convention as the rest of the family.
 
 Scripts **MUST** live in **meaningful subfolders** of `scripts/`, not as a flat pile at the top level. A bare `dev.sh` says too little about *which* environment it starts; the **subfolder name carries the meaning** (for example `scripts/rails/dev.sh`). This is the same convention the CLI chapter applies to commands — meaning lives in the name, not in a comment (see [20-cli.md](./20-cli.md)), and it connects to the About convention that documents what a scripts subfolder does.
+
+### The Storage Location — `scripts/`
+
+`scripts/` is the **defined storage location** for the whole lifecycle family — the bring-up
+(`dev.sh` / `staging.sh`), the tear-down (`cleanup.sh`), the health check (`health-check.sh`), and
+the session-lifecycle pair (`start-the-plane` / `land-the-plane`). All of them live under
+`scripts/`, each in a meaningful subfolder (REQ-966), so there is **one** answer to "where do this
+project's lifecycle scripts live?". Because the location is defined here once, a project's SOP
+**references** `scripts/` rather than re-listing the scripts inline — a runbook or project-SOP skill
+points at `scripts/` for the start / stop / `start-the-plane` / `land-the-plane` scripts instead of
+duplicating them.
+
+### Stage Scripts Pair With Stage env Files
+
+A stage's bring-up script and its environment file share the **same stage word**: `dev.sh` pairs
+with `.development.env`, `staging.sh` with `.staging.env`. The env-file naming schema
+`<name>.<stage>.env` is *defined* in the session config cascade
+([05-config-cascade.md](/session/config-cascade/)) — this is only the cross-reference from the
+script side; the schema and its read-only doctor check are not duplicated here.
 
 ---
 

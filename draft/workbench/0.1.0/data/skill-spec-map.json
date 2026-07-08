@@ -315,9 +315,9 @@
             "visibility": "public"
         },
         {
-            "skill": "workbench-sop-entry",
+            "skill": "workbench-sop",
             "category": "workbench",
-            "path": "repos/core/skills/workbench/workbench-sop-entry/SKILL.md",
+            "path": "repos/core/skills/workbench/workbench-sop/SKILL.md",
             "primary": "workbench/02-sop-entrypoint",
             "all": [
                 "workbench/02-sop-entrypoint"

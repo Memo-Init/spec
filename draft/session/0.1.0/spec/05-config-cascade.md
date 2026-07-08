@@ -157,6 +157,47 @@ This chapter is spec-first: it **describes** the migration as the intended one-t
 
 ---
 
+## The env File Naming Schema — `<name>.<stage>.env`
+
+Beside the resolved `config.json`, a location's **environment files** carry the stage-specific
+values a project boots against. Their filenames follow one declared schema so a stage's env file
+is discoverable by name, the same "meaning lives in the name" principle the script family uses:
+
+- **Schema:** `<name>.<stage>.env`, with the `<stage>` drawn from the operating stages
+  `development` / `staging`. The dotfile form drops the `<name>` to a leading dot — `.<stage>.env`
+  — so the two canonical files are **`.development.env`** and **`.staging.env`**.
+- **Stage-paired with the script family.** Each stage names *one* script and *one* env file that
+  share the same stage word: `dev.sh` ↔ `.development.env`, `staging.sh` ↔ `.staging.env` (the
+  script family lives in [21-environment-scripts.md](/workbench/environment-scripts/)). The pairing
+  is what makes "which env does this stage boot?" answerable from the filename alone.
+
+### The Schema Is Reported, Never Auto-Applied
+
+A deviation from the schema is **surfaced, not silently corrected**. `session doctor`
+([07-doctor-init.md](./07-doctor-init.md)) reports a mis-named stage env file with the fix command,
+and it obeys two hard bounds:
+
+- It **MUST NEVER auto-rename** a stage env file — it prints the `mv` the developer may run, it
+  does not run it.
+- It **MUST NEVER touch `.env`** — the schema check is read-only over filenames; `.env` is
+  diagnose-only and is never read for values, never written, and never renamed. This is the
+  no-auto-write / no-overwrite discipline (REQ-SS-NOWRITE) applied to env files, and it matches the
+  doctor's read-only contract ([07-doctor-init.md](./07-doctor-init.md): *"never — read-only, prints
+  the fix command per failing item"*).
+
+### Secrets Stay Out of the Repo and Out of the Spec
+
+The schema governs **names, not values**. No real secret ever appears in a spec page or in the
+repository:
+
+- The **real** `.env` (and the stage files) live in the **parent directory**, outside the repo.
+- At the repo root, only a **`.example.env`** with **dummy** placeholders is committed — never real
+  keys.
+- The CLI doctrine already forbids reading secrets from flags or env ([04-cli.md](./04-cli.md),
+  rule 7 — *"no secrets read from flags or env"*), so the schema check inspects filenames only.
+
+---
+
 ## Conformity Requirements
 
 The cascade's binding `MUST`s are authored here **prose-first**: each block's `statement` faces generation (it shapes how the config and its loader are built) and its `check` faces the finalization gate with a ternary verdict. Today only the `flag > env > null` identity resolution ships (`memo session resolve`); the `.session/config.json` file tier and the `config.d/*` merge loader are the spec'd **target**, so both rules below carry the honest `grade: todo`.
@@ -200,6 +241,27 @@ The two-structures-two-merge-rules contract guards the classic cascade bug (conf
     ]
   },
   "grade": "todo"
+}
+```
+
+The env-file naming schema is a deterministic name check the doctor reports on; the reported-never-mutated rule is the load-bearing half, so this block carries a hard `binary` grade:
+
+```requirement
+{
+  "id": "REQ-998",
+  "title": "Stage env files follow `<name>.<stage>.env`, reported never renamed",
+  "statement": "A location's stage environment files MUST follow the naming schema `<name>.<stage>.env` — the dotfile form `.<stage>.env`, so a `development`/`staging` stage pairs its script and env file under the same stage word (`.development.env`, `.staging.env`). A deviation MUST be reported by `session doctor` with its fix command, and the check MUST NEVER auto-rename a file and MUST NEVER touch `.env` (read-only over filenames; real `.env` lives in the parent directory, only a dummy `.example.env` is committed).",
+  "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "config-cascade", "env-naming"] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A stage env file named `.<stage>.env` (e.g. `.development.env`) passes; a deviating name is reported with a fix command",
+      "The check never renames a file and never reads, writes, or renames `.env`",
+      "No real secret appears in the spec or repo; only a dummy `.example.env` is committed, the real files live in the parent directory"
+    ]
+  },
+  "grade": "binary"
 }
 ```
 
