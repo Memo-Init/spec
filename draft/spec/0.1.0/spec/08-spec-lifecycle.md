@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Depends on | [./00-overview.md](./00-overview.md) |
-| Related | [./05-publishing-principle.md](./05-publishing-principle.md), [./07-versioning.md](./07-versioning.md) |
+| Related | [./05-publishing-principle.md](./05-publishing-principle.md), [./07-versioning.md](./07-versioning.md), [./09-current-state.md](./09-current-state.md) |
 
 This chapter holds the whole organization-wide **spec lifecycle** in one place: from an authored `draft`, through the built `dist/` and its `generated/` bundle, to the served website — across both drift boundaries, with the private-first front (Part A) and the docs-serve-only back (Part B). Until now this workflow existed only as tribal knowledge scattered across the generators and the memos, so it was neither reviewable nor versionable. The specification is the family that owns spec structure, so the lifecycle of a spec has its home here.
 
