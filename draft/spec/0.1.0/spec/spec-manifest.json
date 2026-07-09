@@ -56,6 +56,15 @@
             "pages": [
                 "01-bridge"
             ]
+        },
+        {
+            "id": "lifecycle",
+            "label": "Lifecycle",
+            "order": 7,
+            "pages": [
+                "08-spec-lifecycle",
+                "09-current-state"
+            ]
         }
     ],
     "fallback": "append-by-NN"
