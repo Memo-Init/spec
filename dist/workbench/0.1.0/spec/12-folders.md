@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-07-08T12:09:11.029Z"
+generated_at: "2026-07-09T23:39:39.821Z"
 generated_from: "draft/workbench/0.1.0/spec/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/workbench/0.1.0/spec/12-folders.md."
@@ -58,6 +58,7 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `proofs/` | Optional | Project | — | — | Proofs captured when a view changes (see "Specialized folders" below). |
 | `research/` | Optional | Project | — | — | Cloned foreign / research repositories that are **not** the project's own domain repos (for example `dune`, spellbook) — distinct from `repos/` (own repos) and `data/` (raw inputs). |
 | `snapshots/` | Optional | Project | — | — | Application snapshots (see "Specialized folders" below). |
+| `spec/` | Optional | Project | `<namespace>/<version>/{draft,dist,skills}/` | namespace-first spec container | The project-local, private-first **plural container** for authored specs, structured `spec/<namespace>/<version>/{draft,dist,skills}/` (see "`spec/` Is the Namespace-First Spec Container" below). |
 
 A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it. `.memo/` carries a third status — **reserved (custom folder, default-on)**: it is the on-disk footprint of the memo system, the recommended, default-on custom folder, so it is present in every real project but is a *reservation of that custom folder* rather than a requirement of the bare workbench core ([26-addons.md](/workbench/addons/)). The `.wiki/` entry point is the OKF-reserved `index.md`, **published under the label "overview"** — a published navigation label, not a file rename (renaming `index.md` would break OKF).
 
@@ -91,6 +92,7 @@ mindmap
       proofs/
       research/
       snapshots/
+      spec/
 ```
 
 ---
@@ -100,7 +102,7 @@ mindmap
 Whether a registered folder's name begins with a dot is **not arbitrary** — it encodes what kind of thing the folder holds:
 
 - A name **begins with `.`** when the folder is **generated or local machinery**: tooling configuration and local-only artifacts that are not authored by hand and, in several cases, never leave the machine (`.claude/`, `.memo/`, `.trash/`, `.workbench/`, `.wiki/`, `.browser/`, `.tmp/`, `.flowmcp/`, `.worktrees/`).
-- A name **carries no prefix** when the folder holds **authored, user-facing content** — the substantive material a person creates and reads (`context/`, `repos/`, `scripts/`, `proofs/`, `snapshots/`, `data/`, `design/`, `flowmcp/`, `research/`).
+- A name **carries no prefix** when the folder holds **authored, user-facing content** — the substantive material a person creates and reads (`context/`, `repos/`, `scripts/`, `proofs/`, `snapshots/`, `data/`, `design/`, `flowmcp/`, `research/`, `spec/`).
 
 The dot carries two reinforcing meanings — *hidden from casual view* and, for the local-only stores, *never pushed* — and it gives the machine a cheap, structural signal: a folder-aware tool can tell generated machinery from authored content by the leading character alone. `scripts/` is the deliberate edge case — it holds tooling, but it is authored and run by people, so it follows the no-dot, content rule.
 
@@ -219,6 +221,18 @@ The optional `.workbench/` folder is where a project's **manual** configuration 
 
 ---
 
+## `spec/` Is the Namespace-First Spec Container
+
+A project that authors its own specifications carries a `spec/` folder — the **plural container** for one or more specs, structured **namespace-first**. It is optional and authored content (no dot): a project that writes no specs of its own does not have it.
+
+- **Namespace-first level ordering.** A spec lives at `spec/<namespace>/<version>/{draft,dist,skills}/` — the container first, then the namespace, then the version, and only inside the version the `draft`, `dist`, and `skills` layout. The version sits *outside* that layout, one level in from the namespace, so a newer version is authored beside an existing one without disturbing it.
+- **Consistent with the `generated/` funnel.** The build output nests under the same hierarchy: `spec/<ns>/<version>/dist/generated/` — the exact placement the meta-spec lifecycle's `generated/` definition (**ORG-2**) declares. The `spec/` container and the `generated/` funnel are the *same* namespace-first hierarchy read from opposite ends.
+- **Private-first, promoted on publish.** The project-local `spec/` container is offline and private per se; a public spec is a separate, promoted `repos/<x>-spec` repository, and publication is an explicit opt-in — never automatic.
+
+This declares the `spec/` plural-container convention that the folder taxonomy previously left undeclared (decision F2/F3 = C, work-item **ORG-7**).
+
+---
+
 ## Worktree Placement
 
 Git worktrees need **one consistent location** in every project. Left unplaced, worktrees scatter — created next to a repository here, inside `.tmp/` there — and the disk fills with orphaned checkouts. The workbench registers a single, dot-prefixed home for them: `.worktrees/`.
@@ -283,7 +297,7 @@ The dot-prefix is a structural signal a tool can read from the leading character
 {
   "id": "REQ-953",
   "title": "A registered folder follows the dot-prefix convention",
-  "statement": "A registered folder's name MUST follow the dot-prefix convention: a leading dot for generated or local machinery (`.claude/`, `.memo/`, `.trash/`, `.workbench/`, `.wiki/`, `.browser/`, `.tmp/`, `.flowmcp/`, `.worktrees/`), and no dot for authored, user-facing content (`context/`, `repos/`, `scripts/`, `proofs/`, `snapshots/`, `data/`, `design/`, `flowmcp/`, `research/`). `scripts/` is the sanctioned edge case — it holds tooling but is authored and run by people, so it carries no dot.",
+  "statement": "A registered folder's name MUST follow the dot-prefix convention: a leading dot for generated or local machinery (`.claude/`, `.memo/`, `.trash/`, `.workbench/`, `.wiki/`, `.browser/`, `.tmp/`, `.flowmcp/`, `.worktrees/`), and no dot for authored, user-facing content (`context/`, `repos/`, `scripts/`, `proofs/`, `snapshots/`, `data/`, `design/`, `flowmcp/`, `research/`, `spec/`). `scripts/` is the sanctioned edge case — it holds tooling but is authored and run by people, so it carries no dot.",
   "scope": { "repos": [], "categories": ["workbench"], "tags": ["folders", "naming"] },
   "severity": "warning",
   "check": {

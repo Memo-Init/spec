@@ -23,7 +23,9 @@ _(no skill dependencies declared in this family)_
 | [05-publishing-principle](./05-publishing-principle.md) | — | 0 | — |
 | [06-conventions-writing](./06-conventions-writing.md) | — | 0 | — |
 | [07-versioning](./07-versioning.md) | — | 0 | — |
-| **Summary** | **0 / 7** | — | 7 |
+| [08-spec-lifecycle](./08-spec-lifecycle.md) | — | 0 | — |
+| [09-current-state](./09-current-state.md) | — | 0 | — |
+| **Summary** | **0 / 9** | — | 7 |
 
 ## Skills by namespace
 
@@ -52,3 +54,8 @@ _(no skill dependencies declared in this family)_
 ### Conventions
 
 - [06-conventions-writing](./06-conventions-writing.md) — _— no implementer skill yet —_
+
+### Lifecycle
+
+- [08-spec-lifecycle](./08-spec-lifecycle.md) — _— no implementer skill yet —_
+- [09-current-state](./09-current-state.md) — _— no implementer skill yet —_

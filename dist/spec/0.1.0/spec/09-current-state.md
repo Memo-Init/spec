@@ -1,10 +1,17 @@
-# 09. Current State of the 3 Spec Repos
+---
+title: "Current State of the 3 Spec Repos"
+description: "The state recorded here is **[FAKT]** — a verified fact, not an assumption. It was established by **11 empty-context agents** (7 research + 4 quality-gate), each checking the live repos with..."
+spec_meta_version: "0.1.0"
+spec_file: "09-current-state.md"
+order: 9
+section: "Meta-Spec"
+normative: false
+generated_at: "2026-07-09T23:39:39.821Z"
+generated_from: "draft/spec/0.1.0/spec/09-current-state.md"
+generator: "scripts/generate-docs-payload.mjs"
+edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/09-current-state.md."
+---
 
-| Field | Value |
-|---|---|
-| Status | Draft |
-| Depends on | [./00-overview.md](./00-overview.md) |
-| Related | [./08-spec-lifecycle.md](./08-spec-lifecycle.md), [./05-publishing-principle.md](./05-publishing-principle.md) |
 
 > **Informative.** This chapter is a verified snapshot, not a set of binding rules. It records the current state of the organization's three spec repos and sets it against the end-to-end target, so that the later build phases work from one grounded baseline instead of re-deriving the state each time.
 
@@ -74,6 +81,6 @@ This snapshot is drawn verbatim from the two ground-truth records the memo maint
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [./08-spec-lifecycle.md](./08-spec-lifecycle.md) — the Spec-Lifecycle meta-spec whose current-state baseline this chapter records.
-- [./05-publishing-principle.md](./05-publishing-principle.md) — the private-first publishing principle the lifecycle generalizes org-wide.
-- [./00-overview.md](./00-overview.md) — the Meta-Specification entry point this family belongs to.
+- [./08-spec-lifecycle.md](/spec/spec-lifecycle/) — the Spec-Lifecycle meta-spec whose current-state baseline this chapter records.
+- [./05-publishing-principle.md](/spec/publishing-principle/) — the private-first publishing principle the lifecycle generalizes org-wide.
+- [./00-overview.md](/spec/overview/) — the Meta-Specification entry point this family belongs to.

@@ -4143,6 +4143,45 @@
             "clusters": [],
             "requirementCount": 0,
             "internalCount": 0
+        },
+        {
+            "family": "spec",
+            "id": "spec/08-spec-lifecycle",
+            "stem": "08-spec-lifecycle",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "05-publishing-principle",
+                "07-versioning",
+                "09-current-state"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "spec",
+            "id": "spec/09-current-state",
+            "stem": "09-current-state",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "05-publishing-principle",
+                "08-spec-lifecycle"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
         }
     ]
 }

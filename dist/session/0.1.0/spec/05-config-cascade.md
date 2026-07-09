@@ -6,7 +6,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-07-08T12:09:11.029Z"
+generated_at: "2026-07-09T23:39:39.821Z"
 generated_from: "draft/session/0.1.0/spec/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: draft/session/0.1.0/spec/05-config-cascade.md."

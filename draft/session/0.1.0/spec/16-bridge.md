@@ -27,7 +27,7 @@ _(no skill dependencies declared in this family)_
 | [02-enforcement](./02-enforcement.md) | ✓ | 1 | 6 |
 | [03-recovery](./03-recovery.md) | ✓ | 1 | — |
 | [04-cli](./04-cli.md) | ✓ | 1 | 2 |
-| [05-config-cascade](./05-config-cascade.md) | ✓ | 1 | 2 |
+| [05-config-cascade](./05-config-cascade.md) | ✓ | 1 | 3 |
 | [06-namespace-registry](./06-namespace-registry.md) | ✓ | 1 | — |
 | [07-doctor-init](./07-doctor-init.md) | ✓ | 1 | 2 |
 | [08-identity-pin](./08-identity-pin.md) | ✓ | 1 | 2 |
@@ -38,7 +38,7 @@ _(no skill dependencies declared in this family)_
 | [13-conventions](./13-conventions.md) | ✓ | 1 | — |
 | [14-migration](./14-migration.md) | ✓ | 1 | — |
 | [15-addons](./15-addons.md) | ✓ | 1 | — |
-| **Summary** | **16 / 16** | — | 16 |
+| **Summary** | **16 / 16** | — | 17 |
 
 ## Skills by namespace
 

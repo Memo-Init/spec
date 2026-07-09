@@ -49,8 +49,8 @@
         ]
     },
     "generated": {
-        "at": "2026-07-08T12:09:10.569Z",
-        "fromCommit": "bfb0ac1",
+        "at": "2026-07-09T23:39:39.405Z",
+        "fromCommit": "62394be",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {
@@ -68,7 +68,7 @@
             },
             {
                 "field": "memo.specDir",
-                "regex": "^draft/memo/\\d+\\.\\d+\\.\\d+/spec$",
+                "regex": "^(draft/memo/\\d+\\.\\d+\\.\\d+/spec|spec/memo/\\d+\\.\\d+\\.\\d+/draft/spec)$",
                 "ok": true
             }
         ]

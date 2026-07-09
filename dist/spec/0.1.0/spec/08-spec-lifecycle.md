@@ -1,14 +1,21 @@
-# 08. The Spec Lifecycle (org-wide)
+---
+title: "The Spec Lifecycle (org-wide)"
+description: "This chapter holds the whole organization-wide **spec lifecycle** in one place: from an authored `draft`, through the built `dist/` and its `generated/` bundle, to the served website — across both..."
+spec_meta_version: "0.1.0"
+spec_file: "08-spec-lifecycle.md"
+order: 8
+section: "Meta-Spec"
+normative: true
+generated_at: "2026-07-09T23:39:39.821Z"
+generated_from: "draft/spec/0.1.0/spec/08-spec-lifecycle.md"
+generator: "scripts/generate-docs-payload.mjs"
+edit_warning: "This file is auto-generated. Source: draft/spec/0.1.0/spec/08-spec-lifecycle.md."
+---
 
-| Field | Value |
-|---|---|
-| Status | Draft |
-| Depends on | [./00-overview.md](./00-overview.md) |
-| Related | [./05-publishing-principle.md](./05-publishing-principle.md), [./07-versioning.md](./07-versioning.md), [./09-current-state.md](./09-current-state.md) |
 
 This chapter holds the whole organization-wide **spec lifecycle** in one place: from an authored `draft`, through the built `dist/` and its `generated/` bundle, to the served website — across both drift boundaries, with the private-first front (Part A) and the docs-serve-only back (Part B). Until now this workflow existed only as tribal knowledge scattered across the generators and the memos, so it was neither reviewable nor versionable. The specification is the family that owns spec structure, so the lifecycle of a spec has its home here.
 
-It is a normative chapter of the Meta-Specification family and is read under the RFC-2119 conformance interpretation this family establishes in its overview ([./00-overview.md](./00-overview.md)). It describes the lifecycle at overview height and points at the neighboring work-items that own each exact definition, rather than restating them.
+It is a normative chapter of the Meta-Specification family and is read under the RFC-2119 conformance interpretation this family establishes in its overview ([./00-overview.md](/spec/overview/)). It describes the lifecycle at overview height and points at the neighboring work-items that own each exact definition, rather than restating them.
 
 ---
 
@@ -121,6 +128,6 @@ flowchart TD
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
-- [./00-overview.md](./00-overview.md) — the family entry point and the RFC-2119 conformance anchor this chapter is read under.
-- [./05-publishing-principle.md](./05-publishing-principle.md) — what is published versus kept private, the principle the docs-serve-only back rests on.
-- [./07-versioning.md](./07-versioning.md) — how a version directory is named and kept URL-stable while a newer one is authored beside it.
+- [./00-overview.md](/spec/overview/) — the family entry point and the RFC-2119 conformance anchor this chapter is read under.
+- [./05-publishing-principle.md](/spec/publishing-principle/) — what is published versus kept private, the principle the docs-serve-only back rests on.
+- [./07-versioning.md](/spec/versioning/) — how a version directory is named and kept URL-stable while a newer one is authored beside it.

@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-07-08T12:09:12.271Z",
+    "generated_at": "2026-07-09T23:39:41.452Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -986,16 +986,36 @@
                 "section": "Meta-Spec",
                 "normative": true,
                 "sidebar_group": "versioning"
+            },
+            {
+                "filename": "08-spec-lifecycle.md",
+                "slug": "spec-lifecycle",
+                "title": "The Spec Lifecycle (org-wide)",
+                "description": "This chapter holds the whole organization-wide **spec lifecycle** in one place: from an authored `draft`, through the built `dist/` and its `generated/` bundle, to the served website — across both...",
+                "order": 8,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "lifecycle"
+            },
+            {
+                "filename": "09-current-state.md",
+                "slug": "current-state",
+                "title": "Current State of the 3 Spec Repos",
+                "description": "The state recorded here is **[FAKT]** — a verified fact, not an assumption. It was established by **11 empty-context agents** (7 research + 4 quality-gate), each checking the live repos with...",
+                "order": 9,
+                "section": "Meta-Spec",
+                "normative": false,
+                "sidebar_group": "lifecycle"
             }
         ]
     },
     "stats": {
-        "total_files": 97,
+        "total_files": 99,
         "core_files": 47,
         "workbench_files": 25,
         "session_files": 17,
-        "spec_files": 8,
-        "normative_files": 87,
-        "informative_files": 10
+        "spec_files": 10,
+        "normative_files": 88,
+        "informative_files": 11
     }
 }

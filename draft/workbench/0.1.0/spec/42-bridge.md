@@ -44,8 +44,9 @@ _(no skill dependencies declared in this family)_
 | [30-wiki](./30-wiki.md) | ✓ | 6 | 2 |
 | [31-browser-automation](./31-browser-automation.md) | ✓ | 4 | — |
 | [32-trash](./32-trash.md) | ✓ | 5 | — |
+| [33-flowmcp](./33-flowmcp.md) | — | 0 | — |
 | [41-project-architecture](./41-project-architecture.md) | ✓ | 6 | 2 |
-| **Summary** | **23 / 23** | — | 31 |
+| **Summary** | **23 / 24** | — | 31 |
 
 ## Skills by namespace
 
@@ -127,6 +128,7 @@ _(no skill dependencies declared in this family)_
 - [32-trash](./32-trash.md) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
 - [17-memo-store](./17-memo-store.md) — `workbench-memo-store`
 - [26-addons](./26-addons.md) — `workbench-addons`, `workbench-skills-scope`
+- [33-flowmcp](./33-flowmcp.md) — _— no implementer skill yet —_
 
 ### CLI & Scripts
 
