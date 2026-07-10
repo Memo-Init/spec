@@ -12,6 +12,18 @@
     "relatedRefs": [
         "00-overview"
     ],
+    "edges": [
+        {
+            "target": "session",
+            "kind": "requires",
+            "pin": "0.1.0"
+        },
+        {
+            "target": "spec",
+            "kind": "requires",
+            "pin": "0.1.0"
+        }
+    ],
     "sidebarMeta": {
         "order": [
             "introduction",
