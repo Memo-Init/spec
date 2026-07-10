@@ -4,13 +4,25 @@
     "title": "Workbench Specification",
     "namespaceToken": "WB",
     "currentVersion": "0.1.0",
+    "version": "0.1.0",
     "specDir": "spec/workbench/0.1.0/draft/spec",
     "prefix": "workbench/",
     "sopAnchor": "02-sop-entrypoint",
     "docEntry": "/workbench/overview/",
-    "relatedRefs": [ "00-overview" ],
+    "relatedRefs": [
+        "00-overview"
+    ],
     "sidebarMeta": {
-        "order": [ "introduction", "root", "projects", "folders", "cli", "tools", "wiki", "core" ],
+        "order": [
+            "introduction",
+            "root",
+            "projects",
+            "folders",
+            "cli",
+            "tools",
+            "wiki",
+            "core"
+        ],
         "labels": {
             "introduction": "Introduction",
             "root": "Root",
@@ -21,5 +33,8 @@
             "wiki": "Wiki",
             "core": "Core"
         }
+    },
+    "generated": {
+        "specId": "workbench@0.1.0:82da1db"
     }
 }

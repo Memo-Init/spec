@@ -4,13 +4,22 @@
     "title": "Meta-Specification",
     "namespaceToken": "SPEC",
     "currentVersion": "0.1.0",
+    "version": "0.1.0",
     "specDir": "spec/spec/0.1.0/draft/spec",
     "prefix": "spec/",
     "sopAnchor": "00-overview",
     "docEntry": "/spec/overview/",
-    "relatedRefs": [ "00-overview" ],
+    "relatedRefs": [
+        "00-overview"
+    ],
     "sidebarMeta": {
-        "order": [ "introduction", "structure", "publication", "versioning", "conventions" ],
+        "order": [
+            "introduction",
+            "structure",
+            "publication",
+            "versioning",
+            "conventions"
+        ],
         "labels": {
             "introduction": "Introduction",
             "structure": "Structure",
@@ -18,5 +27,8 @@
             "versioning": "Versioning",
             "conventions": "Conventions"
         }
+    },
+    "generated": {
+        "specId": "spec@0.1.0:82da1db"
     }
 }
