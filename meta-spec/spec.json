@@ -1,0 +1,35 @@
+{
+    "schemaVersion": "spec/1.0.0",
+    "slug": "meta-spec",
+    "title": "Meta-Spec",
+    "namespaceToken": "META-SPEC",
+    "currentVersion": "0.1.0",
+    "version": "0.1.0",
+    "specDir": "meta-spec/0.1.0/draft/spec",
+    "prefix": "spec/",
+    "sopAnchor": "00-overview",
+    "docEntry": "/spec/overview/",
+    "relatedRefs": [
+        "00-overview"
+    ],
+    "edges": [],
+    "sidebarMeta": {
+        "order": [
+            "introduction",
+            "structure",
+            "publication",
+            "versioning",
+            "conventions"
+        ],
+        "labels": {
+            "introduction": "Introduction",
+            "structure": "Structure",
+            "publication": "Publication",
+            "versioning": "Versioning",
+            "conventions": "Conventions"
+        }
+    },
+    "generated": {
+        "specId": "meta-spec@0.1.0:7cb6c78"
+    }
+}

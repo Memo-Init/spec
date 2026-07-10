@@ -1,10 +1,11 @@
-// layout.mjs — namespace-first / medium-first path resolution (Memo 064 MI-S6).
+// layout.mjs — flat namespace-first path resolution (Memo 064 MI-S6 + flatten).
 //
-// The repo migrates from medium-first (top-level draft/ and dist/ as the outermost split) to
-// namespace-first (spec/<namespace>/<version>/{draft,dist,skills}/ — the namespace outermost).
-// These resolvers detect a family's layout PER FAMILY (by where its spec.json lives), so the
-// build stays green during a partial (tracer) migration and resolves to namespace-first once
-// every family has moved. Cross-namespace aggregates move to the container level (spec/).
+// The repo IS the spec container: each family (namespace) lives directly at the repo root as
+// <namespace>/<version>/{draft,dist,skills}/, and the cross-namespace aggregates
+// (manifest / inverted-map / refs.resolved) sit at the repo root next to them. There is no
+// intermediate spec/ container directory and no legacy medium-first (top-level draft/, dist/) tree —
+// both are gone. These resolvers are the single site that knows the on-disk shape, so consumers
+// derive their paths structurally and never drift from the tree.
 //
 // House style: 4-space, no semicolons, single quotes, object params, object returns.
 
@@ -12,67 +13,52 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 
 
-// A family is namespace-first when its head lives at spec/<name>/spec.json (the migrated
-// container layout). Otherwise it is still medium-first (legacy draft/<name>/spec.json).
+// A family exists when its head lives at <repoRoot>/<name>/spec.json (the flat namespace-first
+// layout). Kept as a real existence probe so consumers can skip a missing family gracefully.
 const isNamespaceFirst = ( { repoRoot, name } ) => {
-    return existsSync( join( repoRoot, 'spec', name, 'spec.json' ) ) === true
+    return existsSync( join( repoRoot, name, 'spec.json' ) ) === true
 }
 
 
-// Relative specDir on the draft (authored) side, per detected layout.
-const draftSpecDirRel = ( { repoRoot, name, version } ) => {
-    return isNamespaceFirst( { repoRoot, name } ) === true
-        ? join( 'spec', name, version, 'draft', 'spec' )
-        : join( 'draft', name, version, 'spec' )
+// Relative specDir on the draft (authored) side.
+const draftSpecDirRel = ( { name, version } ) => {
+    return join( name, version, 'draft', 'spec' )
 }
 
 
-// Relative dataDir on the draft (authored) side, per detected layout.
-const draftDataDirRel = ( { repoRoot, name, version } ) => {
-    return isNamespaceFirst( { repoRoot, name } ) === true
-        ? join( 'spec', name, version, 'draft', 'data' )
-        : join( 'draft', name, version, 'data' )
+// Relative dataDir on the draft (authored) side.
+const draftDataDirRel = ( { name, version } ) => {
+    return join( name, version, 'draft', 'data' )
 }
 
 
-// Absolute dist (generated) spec directory, per detected layout.
+// Absolute dist (generated) spec directory.
 const distSpecDir = ( { repoRoot, name, version } ) => {
-    return isNamespaceFirst( { repoRoot, name } ) === true
-        ? join( repoRoot, 'spec', name, version, 'dist', 'spec' )
-        : join( repoRoot, 'dist', name, version, 'spec' )
+    return join( repoRoot, name, version, 'dist', 'spec' )
 }
 
 
-// Absolute dist (generated) bridge directory, per detected layout.
+// Absolute dist (generated) bridge directory.
 const distBridgeDir = ( { repoRoot, name, version } ) => {
-    return isNamespaceFirst( { repoRoot, name } ) === true
-        ? join( repoRoot, 'spec', name, version, 'dist', 'bridge' )
-        : join( repoRoot, 'dist', name, version, 'bridge' )
+    return join( repoRoot, name, version, 'dist', 'bridge' )
 }
 
 
-// Absolute dist (generated) data directory, per detected layout.
+// Absolute dist (generated) data directory.
 const distDataDir = ( { repoRoot, name, version } ) => {
-    return isNamespaceFirst( { repoRoot, name } ) === true
-        ? join( repoRoot, 'spec', name, version, 'dist', 'data' )
-        : join( repoRoot, 'dist', name, version, 'data' )
+    return join( repoRoot, name, version, 'dist', 'data' )
 }
 
 
-// Absolute path to a family head (spec.json), per detected layout.
+// Absolute path to a family head (spec.json).
 const familyHeadPath = ( { repoRoot, name } ) => {
-    return isNamespaceFirst( { repoRoot, name } ) === true
-        ? join( repoRoot, 'spec', name, 'spec.json' )
-        : join( repoRoot, 'draft', name, 'spec.json' )
+    return join( repoRoot, name, 'spec.json' )
 }
 
 
-// Cross-namespace aggregates (manifest / inverted-map / refs.resolved / README) live at the
-// container level (spec/) once the namespace-first container exists, else at legacy top-level dist/.
+// Cross-namespace aggregates (manifest / inverted-map / refs.resolved) live at the repo root.
 const aggregatePath = ( { repoRoot, file } ) => {
-    return existsSync( join( repoRoot, 'spec' ) ) === true
-        ? join( repoRoot, 'spec', file )
-        : join( repoRoot, 'dist', file )
+    return join( repoRoot, file )
 }
 
 

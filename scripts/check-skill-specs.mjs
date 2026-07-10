@@ -7,7 +7,7 @@
 //
 // Reads skills cross-repo from ../core/skills (gracefully skips when that repo is absent,
 // mirroring how the old core-side gate skipped when the spec repo was absent).
-// Reads spec chapters locally from draft/<family>/<ver>/spec.
+// Reads spec chapters locally from <family>/<ver>/draft/spec.
 //
 //   (c) COVERAGE [hard]   every SKILL.md carries a metadata.memo.specs block.
 //   (w) WELL-FORMED [hard] primary (if non-null) is the first entry of `all`;
@@ -24,7 +24,6 @@ import { readdir, readFile } from 'node:fs/promises'
 import { existsSync, readdirSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { isNamespaceFirst } from './lib/layout.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
@@ -33,21 +32,15 @@ const REPO = resolve( __dirname, '..' )
 const SKILLS_DIR = resolve( __dirname, '..', '..', 'core', 'skills' )
 
 
-// Family root that holds the <version> dirs, per detected layout (Memo 064 MI-S6):
-// namespace-first spec/<name>/ or legacy medium-first draft/<name>/.
+// Family root that holds the <version> dirs (flat namespace-first: <repo>/<name>/).
 const familyRootFor = ( { name } ) => {
-    return isNamespaceFirst( { repoRoot: REPO, name } ) === true
-        ? join( REPO, 'spec', name )
-        : join( REPO, 'draft', name )
+    return join( REPO, name )
 }
 
 
-// Spec chapter dir inside a family <version> dir, per layout: namespace-first .../<ver>/draft/spec
-// or legacy .../<ver>/spec.
-const specSubdirFor = ( { name, versionDirAbs } ) => {
-    return isNamespaceFirst( { repoRoot: REPO, name } ) === true
-        ? join( versionDirAbs, 'draft', 'spec' )
-        : join( versionDirAbs, 'spec' )
+// Spec chapter dir inside a family <version> dir (flat namespace-first: .../<ver>/draft/spec).
+const specSubdirFor = ( { versionDirAbs } ) => {
+    return join( versionDirAbs, 'draft', 'spec' )
 }
 
 

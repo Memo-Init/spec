@@ -17,28 +17,36 @@ name: Verify spec artifacts parity
 #     core or a rebuild. Deliberately hard (exit != 0): the Memo-060 WI-027 guard only warned, which
 #     was the root cause.
 #
-# The site deploy still fires: notify-docs-site.yml triggers on the `dist/**` push made by the
-# author (a human push triggers workflows; the former bot needed a PAT only because a
-# GITHUB_TOKEN-made push does not).
+# The site deploy still fires: notify-docs-site.yml triggers on the generated-artifact push
+# (`**/dist/**` + the root aggregates) made by the author (a human push triggers workflows; the
+# former bot needed a PAT only because a GITHUB_TOKEN-made push does not).
 
 on:
   push:
     branches: [main]
     paths:
-      - 'draft/**'
-      - 'spec/**'
+      - 'memo/**'
+      - 'workbench/**'
+      - 'session/**'
+      - 'meta-spec/**'
+      - 'manifest.json'
+      - 'inverted-map.json'
+      - 'refs.resolved.json'
       - 'data/refs.manual.json'
       - 'data/refs.schema.json'
       - 'scripts/**'
-      - 'dist/**'
   pull_request:
     paths:
-      - 'draft/**'
-      - 'spec/**'
+      - 'memo/**'
+      - 'workbench/**'
+      - 'session/**'
+      - 'meta-spec/**'
+      - 'manifest.json'
+      - 'inverted-map.json'
+      - 'refs.resolved.json'
       - 'data/refs.manual.json'
       - 'data/refs.schema.json'
       - 'scripts/**'
-      - 'dist/**'
   workflow_dispatch:
 
 permissions:

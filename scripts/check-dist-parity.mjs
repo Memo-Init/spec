@@ -31,21 +31,22 @@ import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
-const DIST = join( REPO, 'dist' )
-// Namespace-first container (Memo 064 MI-S6): per-namespace dist lives at spec/<ns>/<ver>/dist/ and
-// the cross-namespace aggregates at the container root spec/. Both the legacy top-level dist/ and the
-// container are scanned so the gate works during and after the migration.
-const SPEC_CONTAINER = join( REPO, 'spec' )
+// Flat namespace-first container (Memo 064 MI-S6 + flatten): the repo IS the container. Per-namespace
+// dist lives at <ns>/<ver>/dist/ and the cross-namespace aggregates at the repo root. The whole repo
+// root is scanned for dist bridge hubs (non-content dirs are skipped in collectBridgeHubs).
 const CORE_ROOT = resolve( REPO, '..', '..', 'repos', 'core' )
 const BRIDGE_HUB_RE = /\d{2}-bridge\.md$/
-// A bridge hub is a GENERATED artifact only when it sits under a `dist` path segment — true for both
-// layouts (legacy dist/**, namespace-first spec/<ns>/<ver>/dist/**). Authored hubs (draft/) are
-// excluded so an authored source hub is never flagged by the structural scan.
+// Directories at the repo root that never hold generated dist artifacts — skipped when walking the
+// tree so the scan stays fast and never recurses into node_modules or git internals.
+const SKIP_DIRS = new Set( [ 'node_modules', '.git', '.trash' ] )
+// A bridge hub is a GENERATED artifact only when it sits under a `dist` path segment
+// (namespace-first <ns>/<ver>/dist/**). Authored hubs (draft/) are excluded so an authored source
+// hub is never flagged by the structural scan.
 const underDist = ( { path } ) => relative( REPO, path ).split( sep ).includes( 'dist' ) === true
-// Container-level cross-namespace aggregates (generator output — checked for parity alongside the
+// Root-level cross-namespace aggregates (generator output — checked for parity alongside the
 // per-namespace dist). README.md is intentionally NOT here: it is a hand-maintained doc, not
 // generator output, so parity must not police it.
-const AGGREGATE_RE = /^(dist|spec)\/(manifest|inverted-map|refs\.resolved)\.json$/
+const AGGREGATE_RE = /^(manifest|inverted-map|refs\.resolved)\.json$/
 
 // The distinctive ALT-hub signatures (renderOverviewAndViews, removed in F2). Either one present in
 // a bridge hub means the old format leaked back into dist/.
@@ -57,31 +58,41 @@ const ALT_SIGNATURES = [
 // divergence (neither ALT nor a well-formed NEU hub).
 const NEU_SIGNATURE = /^##\s+Coverage summary/m
 
-// Volatile fields that differ every build by design (stripped before the Layer-2 comparison).
-const VOLATILE = /^\s*"?(generated_at|generatedAt|at|fromCommit|source_commit)"?\s*[:=]/
+// Volatile fields that differ every build by design (stripped before the Layer-2 comparison). The
+// provenance commit SHA lives in two serializations that BOTH churn on every commit and carry no
+// content: `fromCommit` (the full SHA in refs.resolved.json) and `specId` (the composeSpecId short-SHA
+// token stamped into refs.resolved.json and each family head). A committed dist is always stamped
+// with the PARENT commit (dist is committed together with the sources that reference the pre-commit
+// HEAD), so a fresh reference build necessarily bumps this SHA — normalizing it keeps Layer 2 a
+// CONTENT gate, not a per-commit-SHA gate. The ALT-format defect is caught structurally by Layer 1
+// and by the chapter/hub BODY comparison here, neither of which this strip touches.
+const VOLATILE = /^\s*"?(generated_at|generatedAt|at|fromCommit|source_commit|specId)"?\s*[:=]/
+// The same provenance short-SHA is stamped into each llms bundle header as `Source: <ns>@<ver>:<sha>`
+// (the composeSpecId token). Tightly matched to that exact header shape so a prose line that merely
+// starts with "Source:" is never stripped; the bundle BODY (the concatenated chapters) is still compared.
+const SOURCE_STAMP = /^Source:\s+[a-z0-9-]+@\d+\.\d+\.\d+:([0-9a-f]{7}|unknown)$/
 
 
-// Recursively collect every dist bridge hub file (dist/<family>/<version>/{spec,bridge}/NN-bridge.md).
+// Recursively collect every dist bridge hub file (<family>/<version>/{spec,bridge}/NN-bridge.md).
+// Non-content root dirs (node_modules, .git, .trash) are skipped so the walk stays fast.
 const collectBridgeHubs = async ( { dir } ) => {
     const entries = await readdir( dir, { withFileTypes: true } ).catch( () => [] )
     const nested = await Promise.all( entries.map( async ( entry ) => {
-        const full = join( dir, entry.name )
-        if( entry.isDirectory() === true ) return collectBridgeHubs( { dir: full } )
-        return BRIDGE_HUB_RE.test( entry.name ) === true ? [ full ] : []
+        if( entry.isDirectory() === true ) {
+            if( SKIP_DIRS.has( entry.name ) === true ) return []
+            return collectBridgeHubs( { dir: join( dir, entry.name ) } )
+        }
+        return BRIDGE_HUB_RE.test( entry.name ) === true ? [ join( dir, entry.name ) ] : []
     } ) )
 
     return nested.flat()
 }
 
 
-// Layer 1: structural ALT-format assertion over the committed dist bridge hubs (both layouts).
+// Layer 1: structural ALT-format assertion over the committed dist bridge hubs (flat namespace-first).
 const structuralAssertion = async () => {
-    const roots = [ DIST, SPEC_CONTAINER ].filter( ( dir ) => existsSync( dir ) === true )
-    if( roots.length === 0 ) {
-        return { checked: 0, violations: [ { path: 'dist/', reason: 'no dist/ or spec/ container present' } ] }
-    }
-    const collected = await Promise.all( roots.map( ( dir ) => collectBridgeHubs( { dir } ) ) )
-    const hubs = collected.flat().filter( ( path ) => underDist( { path } ) === true )
+    const collected = await collectBridgeHubs( { dir: REPO } )
+    const hubs = collected.filter( ( path ) => underDist( { path } ) === true )
     const results = await Promise.all( hubs.map( async ( path ) => {
         const content = await readFile( path, 'utf-8' )
         const rel = relative( REPO, path )
@@ -99,7 +110,7 @@ const structuralAssertion = async () => {
 const normalize = ( { text } ) => {
     return text
         .split( '\n' )
-        .filter( ( line ) => VOLATILE.test( line ) === false )
+        .filter( ( line ) => VOLATILE.test( line ) === false && SOURCE_STAMP.test( line ) === false )
         .join( '\n' )
 }
 
@@ -135,14 +146,15 @@ const isGenerated = ( { path } ) => /(^|\/)README\.md$/.test( path ) === false
 
 
 // Layer 2: full reference-build parity (core present). Assumes the caller ran `npm run build`.
-// Scopes both the legacy dist/ and the namespace-first container spec/. Rename entries (git mv, the
-// MI-S6 migration) are parsed so a moved-then-rebuilt file compares its OLD committed blob against
-// its NEW working blob (timestamp-normalized) — a content-stable move is not a divergence, while a
-// genuinely stale committed artifact at a stable path is still caught.
+// Scans the whole working tree; isGenerated() filters to per-namespace dist artifacts and the
+// root-level aggregates. Rename entries (git mv, the MI-S6 flatten) are parsed so a moved-then-rebuilt
+// file compares its OLD committed blob against its NEW working blob (timestamp-normalized) — a
+// content-stable move is not a divergence, while a genuinely stale committed artifact at a stable
+// path is still caught.
 const referenceBuildParity = async () => {
-    // A high rename limit keeps git detecting the MI-S6 migration moves as renames even across the
-    // ~400-file layout shift (below-limit rename pairs would otherwise split into delete+add).
-    const status = execSync( 'git -c diff.renameLimit=20000 status --porcelain -- dist spec', { cwd: REPO } ).toString().trim()
+    // A high rename limit keeps git detecting the flatten moves as renames even across the ~400-file
+    // layout shift (below-limit rename pairs would otherwise split into delete+add).
+    const status = execSync( 'git -c diff.renameLimit=20000 status --porcelain', { cwd: REPO } ).toString().trim()
     const lines = status === '' ? [] : status.split( '\n' )
     const entries = lines.map( ( line ) => {
         const body = line.slice( 3 )

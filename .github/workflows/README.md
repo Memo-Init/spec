@@ -1,21 +1,24 @@
 # spec — CI workflows & cross-repo fan-out
 
-The `spec` repo is the source of truth. On change it regenerates the `dist/` mirror
-(authored source lives under `draft/`, Memo 058) and fans out to the two consuming
-repos via `repository_dispatch`.
+The `spec` repo is the source of truth and is the flat namespace-first container: each family
+lives at `<ns>/<version>/{draft,dist,skills}/` and the cross-family aggregates
+(`manifest.json`, `inverted-map.json`, `refs.resolved.json`) sit at the repo root (Memo 064
+flatten). Authored source is under each family's `draft/`; the committed `dist/` mirror is
+maintained by the author on commit. On change the repo verifies parity and fans out to the two
+consuming repos via `repository_dispatch`.
 
 ```
-spec (push to draft/** or data/refs.*)
-  ├─ generate.yml ........ runs npm run build → commits dist/*
+spec (push under <ns>/**, data/refs.* or scripts/**)
+  ├─ generate.yml ........ read-only dist-parity gate (Memo 061 F6; the bot no longer commits)
   ├─ notify-docs-site.yml  → dispatch "spec-updated"  → Memo-Init/memo-init.github.io (deploy.yml)
   └─ notify-org-profile.yml→ dispatch "refs-updated"  → Memo-Init/.github (update-readme.yaml)
 ```
 
 | Workflow | Trigger | Effect |
 |----------|---------|--------|
-| `generate.yml` | push to `draft/**`, `data/refs.*`, `scripts/**` | regenerate + commit `dist/` |
-| `notify-docs-site.yml` | push to `dist/**` | `repository_dispatch: spec-updated` → website rebuild |
-| `notify-org-profile.yml` | push to `data/refs.manual.json`, `dist/refs.resolved.json` | `repository_dispatch: refs-updated` → org profile regen |
+| `generate.yml` | push under `<ns>/**` (memo, workbench, session, meta-spec), root aggregates, `data/refs.*`, `scripts/**` | read-only dist-parity gate (no ALT hub reaches the site) |
+| `notify-docs-site.yml` | push under `**/dist/**`, `manifest.json`, `inverted-map.json`, `refs.resolved.json` | `repository_dispatch: spec-updated` → website rebuild |
+| `notify-org-profile.yml` | push to `data/refs.manual.json`, `refs.resolved.json` | `repository_dispatch: refs-updated` → org profile regen |
 
 ## Required secret: `PUBLISH_SPEC_CHANGES`
 

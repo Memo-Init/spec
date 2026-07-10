@@ -1,0 +1,80 @@
+{
+    "schemaVersion": "refs/1.0.0",
+    "memo": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "v0.1.0",
+        "historicalVersions": [
+            "0.1.0"
+        ],
+        "specDir": "memo/0.1.0/draft/spec",
+        "specId": "memo@0.1.0:7cb6c78"
+    },
+    "workbench": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "workbench/0.1.0/draft/spec",
+        "url": "https://memo-init.github.io/workbench/overview/",
+        "specId": "workbench@0.1.0:7cb6c78"
+    },
+    "session": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "session/0.1.0/draft/spec",
+        "url": "https://memo-init.github.io/session/overview/",
+        "specId": "session@0.1.0:7cb6c78"
+    },
+    "meta-spec": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "meta-spec/0.1.0/draft/spec",
+        "url": "https://memo-init.github.io/spec/overview/",
+        "specId": "meta-spec@0.1.0:7cb6c78"
+    },
+    "docs": {
+        "canonical": "https://memo-init.github.io",
+        "entryPoints": {
+            "memoAuthor": "/specification/overview/",
+            "toolMaintainer": "/workbench/overview/",
+            "decisionMaker": "/about/"
+        }
+    },
+    "github": {
+        "organization": "https://github.com/Memo-Init",
+        "specRepo": "https://github.com/Memo-Init/spec"
+    },
+    "llmsFiles": {
+        "indexUrl": "https://memo-init.github.io/llms.txt",
+        "fullUrl": "https://memo-init.github.io/llms-full.txt"
+    },
+    "robotsTxt": {
+        "publishedLlmsFiles": [
+            "/llms.txt",
+            "/llms-full.txt"
+        ]
+    },
+    "generated": {
+        "at": "2026-07-10T11:08:28.949Z",
+        "fromCommit": "7cb6c78ccbf3de0afbef1b2549afdc1df8d7e61e",
+        "generator": "scripts/generate-refs.mjs"
+    },
+    "validation": {
+        "passed": true,
+        "checks": [
+            {
+                "field": "schemaVersion",
+                "regex": "^refs/\\d+\\.\\d+\\.\\d+$",
+                "ok": true
+            },
+            {
+                "field": "memo.currentVersion",
+                "regex": "^\\d+\\.\\d+\\.\\d+$",
+                "ok": true
+            },
+            {
+                "field": "memo.specDir",
+                "regex": "^memo/\\d+\\.\\d+\\.\\d+/draft/spec$",
+                "ok": true
+            }
+        ]
+    }
+}

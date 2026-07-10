@@ -21,7 +21,7 @@
                     "minItems": 1,
                     "items": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
                 },
-                "specDir": { "type": "string", "pattern": "^(draft/memo/\\d+\\.\\d+\\.\\d+/spec|spec/memo/\\d+\\.\\d+\\.\\d+/draft/spec)$" }
+                "specDir": { "type": "string", "pattern": "^memo/\\d+\\.\\d+\\.\\d+/draft/spec$" }
             }
         },
         "workbench": {
@@ -31,7 +31,7 @@
             "properties": {
                 "currentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
                 "recommendedRelease": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-                "specDir": { "type": "string", "pattern": "^(draft/workbench/\\d+\\.\\d+\\.\\d+/spec|spec/workbench/\\d+\\.\\d+\\.\\d+/draft/spec)$" },
+                "specDir": { "type": "string", "pattern": "^workbench/\\d+\\.\\d+\\.\\d+/draft/spec$" },
                 "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
             }
         },
@@ -42,7 +42,7 @@
             "properties": {
                 "currentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
                 "recommendedRelease": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-                "specDir": { "type": "string", "pattern": "^(draft/session/\\d+\\.\\d+\\.\\d+/spec|spec/session/\\d+\\.\\d+\\.\\d+/draft/spec)$" },
+                "specDir": { "type": "string", "pattern": "^session/\\d+\\.\\d+\\.\\d+/draft/spec$" },
                 "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
             }
         },
@@ -53,7 +53,7 @@
             "properties": {
                 "currentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
                 "recommendedRelease": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-                "specDir": { "type": "string", "pattern": "^(draft/meta-spec/\\d+\\.\\d+\\.\\d+/spec|spec/meta-spec/\\d+\\.\\d+\\.\\d+/draft/spec)$" },
+                "specDir": { "type": "string", "pattern": "^meta-spec/\\d+\\.\\d+\\.\\d+/draft/spec$" },
                 "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+(/.*)?$" }
             }
         },

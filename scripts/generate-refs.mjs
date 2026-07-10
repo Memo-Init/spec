@@ -70,7 +70,7 @@ const main = async () => {
     const checks = [
         { field: 'schemaVersion', regex: '^refs/\\d+\\.\\d+\\.\\d+$', ok: /^refs\/\d+\.\d+\.\d+$/.test( manual.schemaVersion ) },
         { field: 'memo.currentVersion', regex: '^\\d+\\.\\d+\\.\\d+$', ok: /^\d+\.\d+\.\d+$/.test( manual.memo.currentVersion ) },
-        { field: 'memo.specDir', regex: '^(draft/memo/\\d+\\.\\d+\\.\\d+/spec|spec/memo/\\d+\\.\\d+\\.\\d+/draft/spec)$', ok: /^(draft\/memo\/\d+\.\d+\.\d+\/spec|spec\/memo\/\d+\.\d+\.\d+\/draft\/spec)$/.test( manual.memo.specDir ) }
+        { field: 'memo.specDir', regex: '^memo/\\d+\\.\\d+\\.\\d+/draft/spec$', ok: /^memo\/\d+\.\d+\.\d+\/draft\/spec$/.test( manual.memo.specDir ) }
     ]
 
     const violations = checks.filter( ( c ) => !c.ok )

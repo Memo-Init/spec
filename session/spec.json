@@ -1,0 +1,37 @@
+{
+    "schemaVersion": "spec/1.0.0",
+    "slug": "session",
+    "title": "Session Specification",
+    "namespaceToken": "SE",
+    "currentVersion": "0.1.0",
+    "version": "0.1.0",
+    "specDir": "session/0.1.0/draft/spec",
+    "prefix": "session/",
+    "sopAnchor": "10-sop",
+    "docEntry": "/session/overview/",
+    "relatedRefs": [
+        "00-overview"
+    ],
+    "edges": [],
+    "sidebarMeta": {
+        "order": [
+            "introduction",
+            "sop",
+            "genesis-root",
+            "enforcement",
+            "cli",
+            "recovery"
+        ],
+        "labels": {
+            "introduction": "Introduction",
+            "sop": "SOP",
+            "genesis-root": "Genesis Root",
+            "enforcement": "Enforcement",
+            "cli": "CLI",
+            "recovery": "Recovery"
+        }
+    },
+    "generated": {
+        "specId": "session@0.1.0:7cb6c78"
+    }
+}

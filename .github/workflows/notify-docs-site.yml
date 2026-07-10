@@ -3,20 +3,23 @@ name: Notify docs site
 # Fan-out: when the spec's generated artifacts change, tell the website
 # (Memo-Init/memo-init.github.io) to rebuild via a repository_dispatch event.
 #
-# Memo 053 (Kap 1, Fix A.2 — race eliminieren): this fires ONLY on `dist/**`,
-# never on `draft/**` directly. A source push first triggers generate.yml, which
-# regenerates `dist/` and commits it (with the PAT, so this workflow re-triggers);
-# only that bot commit fires the notify -> exactly ONE site deploy, from the POST-regen
-# state. Firing on `draft/**` too caused a second, earlier deploy that built from the
-# PRE-regen tree (the stale "first deploy" race). The site build reads the rendered
-# chapters from `dist/`, and every source edit changes a dist artifact, so a
-# `dist/**`-only trigger still covers all content changes (Memo 058: generated/ -> dist/).
+# Memo 053 (Kap 1, Fix A.2 — race eliminieren): this fires ONLY on generated artifacts
+# (`**/dist/**` and the root-level aggregates), never on the authored `**/draft/**` sources
+# directly. A source edit is committed together with its regenerated dist, so exactly ONE
+# site deploy runs from the POST-build state. Firing on the authored draft too caused a second,
+# earlier deploy that built from the PRE-build tree (the stale "first deploy" race). The site
+# build reads the rendered chapters from each family's `dist/` and the root aggregates, and every
+# source edit changes a dist artifact, so a generated-only trigger still covers all content changes
+# (Memo 064 flatten: per-namespace <ns>/<ver>/dist/ + root manifest/inverted-map/refs.resolved).
 
 on:
   push:
     branches: [main]
     paths:
-      - 'dist/**'
+      - '**/dist/**'
+      - 'manifest.json'
+      - 'inverted-map.json'
+      - 'refs.resolved.json'
   workflow_dispatch:
 
 jobs:

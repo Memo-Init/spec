@@ -1,0 +1,52 @@
+{
+    "schemaVersion": "spec/1.0.0",
+    "slug": "workbench",
+    "title": "Workbench Specification",
+    "namespaceToken": "WB",
+    "currentVersion": "0.1.0",
+    "version": "0.1.0",
+    "specDir": "workbench/0.1.0/draft/spec",
+    "prefix": "workbench/",
+    "sopAnchor": "02-sop-entrypoint",
+    "docEntry": "/workbench/overview/",
+    "relatedRefs": [
+        "00-overview"
+    ],
+    "edges": [
+        {
+            "target": "session",
+            "kind": "requires",
+            "pin": "0.1.0"
+        },
+        {
+            "target": "meta-spec",
+            "kind": "requires",
+            "pin": "0.1.0"
+        }
+    ],
+    "sidebarMeta": {
+        "order": [
+            "introduction",
+            "root",
+            "projects",
+            "folders",
+            "cli",
+            "tools",
+            "wiki",
+            "core"
+        ],
+        "labels": {
+            "introduction": "Introduction",
+            "root": "Root",
+            "projects": "Projects",
+            "folders": "Folders",
+            "cli": "CLI & Scripts",
+            "tools": "Tools",
+            "wiki": "Wiki",
+            "core": "Core"
+        }
+    },
+    "generated": {
+        "specId": "workbench@0.1.0:7cb6c78"
+    }
+}
