@@ -12,11 +12,12 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { discoverSpecs } from './lib/discover-specs.mjs'
+import { aggregatePath } from './lib/layout.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
-const MANIFEST = JSON.parse( readFileSync( join( REPO, 'dist/manifest.json' ), 'utf-8' ) )
+const MANIFEST = JSON.parse( readFileSync( aggregatePath( { repoRoot: REPO, file: 'manifest.json' } ), 'utf-8' ) )
 
 
 // Group display metadata is now sourced from each family's spec.json sidebarMeta field via

@@ -18,16 +18,17 @@ import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadSkillMap } from './lib/load-skill-map.mjs'
+import { distBridgeDir, distSpecDir, draftDataDirRel, aggregatePath } from './lib/layout.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 // Sentinel file: presence confirms the split map is available (replaces the old MAP_PATH check).
-const SENTINEL_MAP = resolve( REPO, 'draft', 'memo', '0.1.0', 'data', 'skill-spec-map.json' )
+const SENTINEL_MAP = join( REPO, draftDataDirRel( { repoRoot: REPO, name: 'memo', version: '0.1.0' } ), 'skill-spec-map.json' )
 const REFS = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
-const INVERTED_PATH = join( REPO, 'dist', 'inverted-map.json' )
-// Per-family bridge dir: dist/<name>/<version>/bridge/
-const bridgeDirFor = ( { name, version } ) => join( REPO, 'dist', name, version, 'bridge' )
+const INVERTED_PATH = aggregatePath( { repoRoot: REPO, file: 'inverted-map.json' } )
+// Per-family dist bridge dir (layout-resolved).
+const bridgeDirFor = ( { name, version } ) => distBridgeDir( { repoRoot: REPO, name, version } )
 
 const NN_RE = /^\d{2}-.*\.md$/
 const BACKLINK_START = '<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->'
@@ -127,7 +128,7 @@ const assertNoInternalLeak = async ( { families, inverted } ) => {
     // gaps roll-up.
     await Promise.all( families.map( async ( family ) => {
         const bridgeDir = bridgeDirFor( { name: family.key, version: family.version } )
-        const specDir = join( REPO, 'dist', family.key, family.version, 'spec' )
+        const specDir = distSpecDir( { repoRoot: REPO, name: family.key, version: family.version } )
         const bridgeFiles = ( await readdir( bridgeDir ).catch( () => [] ) )
             .filter( ( name ) => name.endsWith( '.md' ) )
             .map( ( name ) => join( bridgeDir, name ) )

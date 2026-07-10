@@ -24,34 +24,41 @@ import { readdir, readFile } from 'node:fs/promises'
 import { existsSync, readdirSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isNamespaceFirst } from './lib/layout.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
+const REPO = resolve( __dirname, '..' )
 // Skills live cross-repo: repos/spec/scripts → repos/spec → repos → repos/core/skills
 const SKILLS_DIR = resolve( __dirname, '..', '..', 'core', 'skills' )
 
 
-// findSpecDir — locate the memo family spec chapter directory (local: draft/memo/<ver>/spec).
-// Returns null when the draft tree is absent. Env override MEMO_SPEC_DIR still honoured for CI.
-const findSpecDir = () => {
-    const fromEnv = process.env.MEMO_SPEC_DIR
-    if( fromEnv !== undefined && existsSync( fromEnv ) === true ) return fromEnv
-    // Spec is local: repos/spec/scripts → repos/spec → draft/memo
-    const memoFamilyRoot = resolve( __dirname, '..', 'draft', 'memo' )
-    if( existsSync( memoFamilyRoot ) === false ) return null
-    const versions = readdirSync( memoFamilyRoot, { withFileTypes: true } )
-        .filter( ( e ) => e.isDirectory() === true && /^\d/.test( e.name ) )
-        .map( ( e ) => e.name )
-        .sort()
-    if( versions.length === 0 ) return null
-
-    return join( memoFamilyRoot, versions[ versions.length - 1 ], 'spec' )
+// Family root that holds the <version> dirs, per detected layout (Memo 064 MI-S6):
+// namespace-first spec/<name>/ or legacy medium-first draft/<name>/.
+const familyRootFor = ( { name } ) => {
+    return isNamespaceFirst( { repoRoot: REPO, name } ) === true
+        ? join( REPO, 'spec', name )
+        : join( REPO, 'draft', name )
 }
 
 
-// Resolve a sibling family (workbench, session) to its LATEST spec/ dir under the local draft tree.
-// The families live at draft/<family>/<ver>/spec (same repo). Returns null when family is absent.
-const latestFamilyDir = ( { familyRoot } ) => {
+// Spec chapter dir inside a family <version> dir, per layout: namespace-first .../<ver>/draft/spec
+// or legacy .../<ver>/spec.
+const specSubdirFor = ( { name, versionDirAbs } ) => {
+    return isNamespaceFirst( { repoRoot: REPO, name } ) === true
+        ? join( versionDirAbs, 'draft', 'spec' )
+        : join( versionDirAbs, 'spec' )
+}
+
+
+// latestSpecDir — locate a family's LATEST spec chapter directory. Returns null when the family
+// tree is absent. Env override MEMO_SPEC_DIR (memo only) still honoured for CI.
+const latestSpecDir = ( { name } ) => {
+    if( name === 'memo' ) {
+        const fromEnv = process.env.MEMO_SPEC_DIR
+        if( fromEnv !== undefined && existsSync( fromEnv ) === true ) return fromEnv
+    }
+    const familyRoot = familyRootFor( { name } )
     if( existsSync( familyRoot ) === false ) return null
     const versions = readdirSync( familyRoot, { withFileTypes: true } )
         .filter( ( e ) => e.isDirectory() === true && /^v?\d/.test( e.name ) )
@@ -59,7 +66,7 @@ const latestFamilyDir = ( { familyRoot } ) => {
         .sort()
     if( versions.length === 0 ) return null
 
-    return join( familyRoot, versions[ versions.length - 1 ], 'spec' )
+    return specSubdirFor( { name, versionDirAbs: join( familyRoot, versions[ versions.length - 1 ] ) } )
 }
 
 
@@ -133,7 +140,7 @@ const main = async () => {
         all.forEach( ( id ) => referenced.add( id ) )
     } )
 
-    const specDir = findSpecDir()
+    const specDir = latestSpecDir( { name: 'memo' } )
     let orphans = []
     if( specDir === null ) {
         console.log( 'check-skill-specs: spec draft tree not found — spec-existence + orphan checks skipped.' )
@@ -143,12 +150,11 @@ const main = async () => {
         const specChapters = ( await readdir( specDir ) )
             .filter( ( f ) => /^\d{2}-.*\.md$/.test( f ) )
             .map( ( f ) => `memo/${ f }` )
-        // Sibling families (workbench, session, spec) live at draft/<family>/<ver>/spec (local).
-        // specDir = draft/memo/<ver>/spec → go up 3 levels to reach draft/. The spec meta-family
-        // has no implementer skills, so its chapters only surface in the (non-blocking) orphan report.
-        const specRoot = resolve( specDir, '..', '..', '..' )
+        // Sibling families (workbench, session, spec) resolve via the same layout-aware helper. The
+        // spec meta-family has no implementer skills, so its chapters only surface in the
+        // (non-blocking) orphan report.
         const families = [ 'workbench', 'session', 'spec' ]
-            .map( ( prefix ) => ( { prefix, dir: latestFamilyDir( { familyRoot: join( specRoot, prefix ) } ) } ) )
+            .map( ( prefix ) => ( { prefix, dir: latestSpecDir( { name: prefix } ) } ) )
         const familyChapters = ( await Promise.all( families.map( async ( { prefix, dir } ) => {
             if( dir === null ) return []
             const files = ( await readdir( dir ) ).filter( ( f ) => /^\d{2}-.*\.md$/.test( f ) )

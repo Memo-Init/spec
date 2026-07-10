@@ -26,6 +26,7 @@ on:
     branches: [main]
     paths:
       - 'draft/**'
+      - 'spec/**'
       - 'data/refs.manual.json'
       - 'data/refs.schema.json'
       - 'scripts/**'
@@ -33,6 +34,7 @@ on:
   pull_request:
     paths:
       - 'draft/**'
+      - 'spec/**'
       - 'data/refs.manual.json'
       - 'data/refs.schema.json'
       - 'scripts/**'

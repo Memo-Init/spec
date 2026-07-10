@@ -14,12 +14,14 @@ import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'
 import Ajv from 'ajv'
 
+import { aggregatePath } from './lib/layout.mjs'
+
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO_ROOT = join( __dirname, '..' )
 const MANUAL_PATH = join( REPO_ROOT, 'data/refs.manual.json' )
 const SCHEMA_PATH = join( REPO_ROOT, 'data/refs.schema.json' )
-const RESOLVED_PATH = join( REPO_ROOT, 'dist/refs.resolved.json' )
+const RESOLVED_PATH = aggregatePath( { repoRoot: REPO_ROOT, file: 'refs.resolved.json' } )
 const GENERATOR = 'scripts/generate-refs.mjs'
 
 
@@ -58,7 +60,7 @@ const main = async () => {
     const checks = [
         { field: 'schemaVersion', regex: '^refs/\\d+\\.\\d+\\.\\d+$', ok: /^refs\/\d+\.\d+\.\d+$/.test( manual.schemaVersion ) },
         { field: 'memo.currentVersion', regex: '^\\d+\\.\\d+\\.\\d+$', ok: /^\d+\.\d+\.\d+$/.test( manual.memo.currentVersion ) },
-        { field: 'memo.specDir', regex: '^draft/memo/\\d+\\.\\d+\\.\\d+/spec$', ok: /^draft\/memo\/\d+\.\d+\.\d+\/spec$/.test( manual.memo.specDir ) }
+        { field: 'memo.specDir', regex: '^(draft/memo/\\d+\\.\\d+\\.\\d+/spec|spec/memo/\\d+\\.\\d+\\.\\d+/draft/spec)$', ok: /^(draft\/memo\/\d+\.\d+\.\d+\/spec|spec\/memo\/\d+\.\d+\.\d+\/draft\/spec)$/.test( manual.memo.specDir ) }
     ]
 
     const violations = checks.filter( ( c ) => !c.ok )

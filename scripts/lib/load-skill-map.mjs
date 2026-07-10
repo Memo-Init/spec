@@ -11,6 +11,8 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
+import { draftDataDirRel } from './layout.mjs'
+
 
 const FAMILIES = [ 'memo', 'workbench', 'session', 'spec' ]
 
@@ -28,7 +30,7 @@ const computeTotals = ( { skills } ) => ( {
 export const loadSkillMap = async ( { repoRoot } ) => {
     const parts = await Promise.all(
         FAMILIES.map( async ( family ) => {
-            const path = join( repoRoot, 'draft', family, '0.1.0', 'data', 'skill-spec-map.json' )
+            const path = join( repoRoot, draftDataDirRel( { repoRoot, name: family, version: '0.1.0' } ), 'skill-spec-map.json' )
             const raw = await readFile( path, 'utf-8' )
 
             return JSON.parse( raw )

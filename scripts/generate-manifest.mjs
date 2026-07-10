@@ -21,6 +21,7 @@ import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { readSpecManifest, groupForFile } from './lib/spec-manifest.mjs'
+import { distSpecDir, distDataDir, aggregatePath } from './lib/layout.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
@@ -32,11 +33,11 @@ const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
 const SESSION_VERSION = REFS_MANUAL.session.currentVersion
 const SPEC_META_VERSION = REFS_MANUAL.spec.currentVersion
 
-const PAYLOAD_DIR = join( REPO, 'dist', 'memo', SPEC_VERSION, 'spec' )
-const WORKBENCH_PAYLOAD_DIR = join( REPO, 'dist', 'workbench', WORKBENCH_VERSION, 'spec' )
-const SESSION_PAYLOAD_DIR = join( REPO, 'dist', 'session', SESSION_VERSION, 'spec' )
-const SPEC_META_PAYLOAD_DIR = join( REPO, 'dist', 'spec', SPEC_META_VERSION, 'spec' )
-const MANIFEST_PATH = join( REPO, 'dist', 'manifest.json' )
+const PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'memo', version: SPEC_VERSION } )
+const WORKBENCH_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'workbench', version: WORKBENCH_VERSION } )
+const SESSION_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'session', version: SESSION_VERSION } )
+const SPEC_META_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'spec', version: SPEC_META_VERSION } )
+const MANIFEST_PATH = aggregatePath( { repoRoot: REPO, file: 'manifest.json' } )
 const GENERATOR = 'scripts/generate-manifest.mjs'
 
 
@@ -205,7 +206,7 @@ const copySpecManifestsToPayload = async () => {
             console.warn( `  ! ${ family.name }: no spec-manifest.json at ${ src } — site sidebar will fall back` )
             return
         }
-        const dataDir = join( REPO, 'dist', family.name, family.version, 'data' )
+        const dataDir = distDataDir( { repoRoot: REPO, name: family.name, version: family.version } )
         await mkdir( dataDir, { recursive: true } )
         const dst = join( dataDir, 'spec-manifest.json' )
         await copyFile( src, dst )

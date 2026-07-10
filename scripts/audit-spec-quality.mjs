@@ -34,6 +34,7 @@ import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { discoverSpecs } from './lib/discover-specs.mjs'
+import { familyHeadPath } from './lib/layout.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
@@ -176,7 +177,7 @@ const crossFamilyRelativeLinks = ( { content } ) => {
 // diverging spec.json token (the legacy long form MEMO / SESSION) is a defect, because GR-codes and
 // the coverage board qualify a family by exactly one token and two forms would collide silently.
 const tokenConsistency = ( { familyName, specDirAbs } ) => {
-    const specJsonPath = join( REPO, 'draft', familyName, 'spec.json' )
+    const specJsonPath = familyHeadPath( { repoRoot: REPO, name: familyName } )
     const manifestPath = join( specDirAbs, 'spec-manifest.json' )
     if( existsSync( specJsonPath ) === false || existsSync( manifestPath ) === false ) return []
     const specToken = JSON.parse( readFileSync( specJsonPath, 'utf-8' ) ).namespaceToken

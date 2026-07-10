@@ -4,24 +4,24 @@
         "currentVersion": "0.1.0",
         "recommendedRelease": "v0.1.0",
         "historicalVersions": [ "0.1.0" ],
-        "specDir": "draft/memo/0.1.0/spec"
+        "specDir": "spec/memo/0.1.0/draft/spec"
     },
     "workbench": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
-        "specDir": "draft/workbench/0.1.0/spec",
+        "specDir": "spec/workbench/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/workbench/overview/"
     },
     "session": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
-        "specDir": "draft/session/0.1.0/spec",
+        "specDir": "spec/session/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/session/overview/"
     },
     "spec": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
-        "specDir": "draft/spec/0.1.0/spec",
+        "specDir": "spec/spec/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/spec/overview/"
     },
     "docs": {

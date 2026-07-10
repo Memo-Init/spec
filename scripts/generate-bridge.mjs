@@ -40,19 +40,20 @@ import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 import { discoverSpecs } from './lib/discover-specs.mjs'
 import { loadSkillMap } from './lib/load-skill-map.mjs'
+import { distBridgeDir, distSpecDir, draftDataDirRel, aggregatePath } from './lib/layout.mjs'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 const PROJECT_ROOT = resolve( REPO, '..', '..' )
 // Sentinel file: presence of any family map confirms the split map is available.
-const SENTINEL_MAP = resolve( REPO, 'draft', 'memo', '0.1.0', 'data', 'skill-spec-map.json' )
+const SENTINEL_MAP = join( REPO, draftDataDirRel( { repoRoot: REPO, name: 'memo', version: '0.1.0' } ), 'skill-spec-map.json' )
 
 const GENERATOR = 'scripts/generate-bridge.mjs'
 const NN_RE = /^\d{2}-.*\.md$/
 const BRIDGE_RE = /^\d{2}-bridge\.md$/
-const INVERTED_MAP_PATH = join( REPO, 'dist', 'inverted-map.json' )
-const bridgeDirFor = ( { name, version } ) => join( REPO, 'dist', name, version, 'bridge' )
+const INVERTED_MAP_PATH = aggregatePath( { repoRoot: REPO, file: 'inverted-map.json' } )
+const bridgeDirFor = ( { name, version } ) => distBridgeDir( { repoRoot: REPO, name, version } )
 
 const BACKLINK_START = '<!-- BRIDGE:IMPLEMENTED-BY START — generated, do not edit -->'
 const BACKLINK_END = '<!-- BRIDGE:IMPLEMENTED-BY END -->'
@@ -66,8 +67,8 @@ const FAMILY_META = {
     spec: { versionField: 'spec_meta_version', section: 'Meta-Spec' }
 }
 
-// dist/<name>/<version>/spec/ — the directory sync-spec.mjs reads to serve site content.
-const specPayloadDirFor = ( { name, version } ) => join( REPO, 'dist', name, version, 'spec' )
+// dist spec dir — the directory sync-spec.mjs reads to serve site content (layout-resolved).
+const specPayloadDirFor = ( { name, version } ) => distSpecDir( { repoRoot: REPO, name, version } )
 
 // F2 Dist-Split (Memo 057): the source chapter is authored-only and carries ONLY this
 // placeholder; the rendered "## Implemented by" block is a derived artifact written to the

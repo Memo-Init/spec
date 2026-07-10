@@ -26,6 +26,8 @@ import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'
 
+import { distSpecDir, familyHeadPath } from './lib/layout.mjs'
+
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
@@ -51,15 +53,15 @@ const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
 const WORKBENCH_DIR = join( REPO, REFS_MANUAL.workbench.specDir )
 const SESSION_DIR = join( REPO, REFS_MANUAL.session.specDir )
 const SPEC_META_DIR = join( REPO, REFS_MANUAL.spec.specDir )
-const PAYLOAD_DIR = join( REPO, 'dist', 'memo', SPEC_VERSION, 'spec' )
-const WORKBENCH_PAYLOAD_DIR = join( REPO, 'dist', 'workbench', WORKBENCH_VERSION, 'spec' )
-const SESSION_PAYLOAD_DIR = join( REPO, 'dist', 'session', SESSION_VERSION, 'spec' )
-const SPEC_META_PAYLOAD_DIR = join( REPO, 'dist', 'spec', SPEC_META_VERSION, 'spec' )
+const PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'memo', version: SPEC_VERSION } )
+const WORKBENCH_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'workbench', version: WORKBENCH_VERSION } )
+const SESSION_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'session', version: SESSION_VERSION } )
+const SPEC_META_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'spec', version: SPEC_META_VERSION } )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 
-// The per-family head (draft/<family>/spec.json) carries the family's identity and route.
-const readFamilyHead = ( { family } ) => JSON.parse( readFileSync( join( REPO, 'draft', family, 'spec.json' ), 'utf-8' ) )
+// The per-family head (spec.json) carries the family's identity and route (layout-resolved).
+const readFamilyHead = ( { family } ) => JSON.parse( readFileSync( familyHeadPath( { repoRoot: REPO, name: family } ), 'utf-8' ) )
 
 
 // Derive a family's own published route base from its head docEntry — never a route

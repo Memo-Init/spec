@@ -25,15 +25,27 @@
 import { execSync } from 'node:child_process'
 import { readFile, readdir } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
-import { join, dirname, resolve, relative } from 'node:path'
+import { join, dirname, resolve, relative, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 const DIST = join( REPO, 'dist' )
+// Namespace-first container (Memo 064 MI-S6): per-namespace dist lives at spec/<ns>/<ver>/dist/ and
+// the cross-namespace aggregates at the container root spec/. Both the legacy top-level dist/ and the
+// container are scanned so the gate works during and after the migration.
+const SPEC_CONTAINER = join( REPO, 'spec' )
 const CORE_ROOT = resolve( REPO, '..', '..', 'repos', 'core' )
 const BRIDGE_HUB_RE = /\d{2}-bridge\.md$/
+// A bridge hub is a GENERATED artifact only when it sits under a `dist` path segment — true for both
+// layouts (legacy dist/**, namespace-first spec/<ns>/<ver>/dist/**). Authored hubs (draft/) are
+// excluded so an authored source hub is never flagged by the structural scan.
+const underDist = ( { path } ) => relative( REPO, path ).split( sep ).includes( 'dist' ) === true
+// Container-level cross-namespace aggregates (generator output — checked for parity alongside the
+// per-namespace dist). README.md is intentionally NOT here: it is a hand-maintained doc, not
+// generator output, so parity must not police it.
+const AGGREGATE_RE = /^(dist|spec)\/(manifest|inverted-map|refs\.resolved)\.json$/
 
 // The distinctive ALT-hub signatures (renderOverviewAndViews, removed in F2). Either one present in
 // a bridge hub means the old format leaked back into dist/.
@@ -62,12 +74,14 @@ const collectBridgeHubs = async ( { dir } ) => {
 }
 
 
-// Layer 1: structural ALT-format assertion over the committed dist bridge hubs.
+// Layer 1: structural ALT-format assertion over the committed dist bridge hubs (both layouts).
 const structuralAssertion = async () => {
-    if( existsSync( DIST ) === false ) {
-        return { checked: 0, violations: [ { path: 'dist/', reason: 'dist/ directory missing' } ] }
+    const roots = [ DIST, SPEC_CONTAINER ].filter( ( dir ) => existsSync( dir ) === true )
+    if( roots.length === 0 ) {
+        return { checked: 0, violations: [ { path: 'dist/', reason: 'no dist/ or spec/ container present' } ] }
     }
-    const hubs = await collectBridgeHubs( { dir: DIST } )
+    const collected = await Promise.all( roots.map( ( dir ) => collectBridgeHubs( { dir } ) ) )
+    const hubs = collected.flat().filter( ( path ) => underDist( { path } ) === true )
     const results = await Promise.all( hubs.map( async ( path ) => {
         const content = await readFile( path, 'utf-8' )
         const rel = relative( REPO, path )
@@ -90,6 +104,21 @@ const normalize = ( { text } ) => {
 }
 
 
+// Source-path provenance (generated_from / edit_warning frontmatter, specDir in refs) legitimately
+// changes when a file is MOVED (the MI-S6 layout migration). For a rename these are neutralized on
+// top of the timestamp strip, so a content-stable move is not a divergence — the chapter BODY is
+// still compared, so genuine spec drift in a moved file is still caught. Applied ONLY to renames,
+// so normal (non-migration) builds keep the strict timestamp-only comparison unchanged.
+const PROVENANCE = /^\s*"?(generated_from|edit_warning|specDir)"?\s*[:=]/
+
+const normalizeMoved = ( { text } ) => {
+    return normalize( { text } )
+        .split( '\n' )
+        .filter( ( line ) => PROVENANCE.test( line ) === false )
+        .join( '\n' )
+}
+
+
 const gitShow = ( { ref } ) => {
     try {
         return execSync( `git show ${ ref }`, { cwd: REPO, maxBuffer: 128 * 1024 * 1024 } ).toString()
@@ -99,26 +128,50 @@ const gitShow = ( { ref } ) => {
 }
 
 
+// Is a repo-relative path a generated artifact (per-namespace dist, or a container-level aggregate)?
+// README.md (any layer) is a hand-maintained doc, not generator output, so it is never in scope.
+const isGenerated = ( { path } ) => /(^|\/)README\.md$/.test( path ) === false
+    && ( path.split( '/' ).includes( 'dist' ) === true || AGGREGATE_RE.test( path ) === true )
+
+
 // Layer 2: full reference-build parity (core present). Assumes the caller ran `npm run build`.
+// Scopes both the legacy dist/ and the namespace-first container spec/. Rename entries (git mv, the
+// MI-S6 migration) are parsed so a moved-then-rebuilt file compares its OLD committed blob against
+// its NEW working blob (timestamp-normalized) — a content-stable move is not a divergence, while a
+// genuinely stale committed artifact at a stable path is still caught.
 const referenceBuildParity = async () => {
-    const status = execSync( 'git status --porcelain -- dist', { cwd: REPO } ).toString().trim()
-    const entries = ( status === '' ? [] : status.split( '\n' ) )
-        .map( ( line ) => ( { code: line.slice( 0, 2 ).trim(), path: line.slice( 3 ).trim() } ) )
-        .filter( ( entry ) => entry.path.startsWith( 'dist/' ) )
+    // A high rename limit keeps git detecting the MI-S6 migration moves as renames even across the
+    // ~400-file layout shift (below-limit rename pairs would otherwise split into delete+add).
+    const status = execSync( 'git -c diff.renameLimit=20000 status --porcelain -- dist spec', { cwd: REPO } ).toString().trim()
+    const lines = status === '' ? [] : status.split( '\n' )
+    const entries = lines.map( ( line ) => {
+        const body = line.slice( 3 )
+        if( body.includes( ' -> ' ) === true ) {
+            const parts = body.split( ' -> ' )
 
-    const results = await Promise.all( entries.map( async ( entry ) => {
-        const committed = gitShow( { ref: `HEAD:${ entry.path }` } )
-        const workingPath = join( REPO, entry.path )
+            return { committedPath: parts[ 0 ].trim(), workingPath: parts[ 1 ].trim() }
+        }
+        const path = body.trim()
+
+        return { committedPath: path, workingPath: path }
+    } )
+    const generated = entries
+        .filter( ( entry ) => isGenerated( { path: entry.workingPath } ) === true || isGenerated( { path: entry.committedPath } ) === true )
+
+    const results = await Promise.all( generated.map( async ( entry ) => {
+        const committed = gitShow( { ref: `HEAD:${ entry.committedPath }` } )
+        const workingPath = join( REPO, entry.workingPath )
         const workingExists = existsSync( workingPath )
-        if( committed === null ) return { path: entry.path, reason: 'present in reference build but absent from committed dist', divergent: true }
-        if( workingExists === false ) return { path: entry.path, reason: 'committed in dist but absent from reference build', divergent: true }
+        if( committed === null ) return { path: entry.workingPath, reason: 'present in reference build but absent from committed dist', divergent: true }
+        if( workingExists === false ) return { path: entry.committedPath, reason: 'committed in dist but absent from reference build', divergent: true }
         const working = await readFile( workingPath, 'utf-8' )
-        const divergent = normalize( { text: committed } ) !== normalize( { text: working } )
+        const norm = entry.committedPath !== entry.workingPath ? normalizeMoved : normalize
+        const divergent = norm( { text: committed } ) !== norm( { text: working } )
 
-        return { path: entry.path, reason: 'content differs from reference build (non-timestamp)', divergent }
+        return { path: entry.workingPath, reason: 'content differs from reference build (non-timestamp)', divergent }
     } ) )
 
-    return { checked: entries.length, violations: results.filter( ( r ) => r.divergent === true ) }
+    return { checked: generated.length, violations: results.filter( ( r ) => r.divergent === true ) }
 }
 
 

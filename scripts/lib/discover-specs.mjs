@@ -1,32 +1,33 @@
 // discover-specs.mjs — central family discovery helper (M058 PRD-005 scanner).
 //
-// Real directory scanner: reads draft/*/spec.json (glob the draft dir), derives
-// a full family record for each family found. The spec.json is the single source of
-// family identity; specDir and dataDir are structurally derived from the slug and
-// currentVersion so the record shape never drifts from the on-disk layout.
+// Real directory scanner: reads each family's spec.json and derives a full family record. The
+// spec.json is the single source of family identity; specDir and dataDir are structurally derived
+// from the slug, currentVersion AND the detected layout (Memo 064 MI-S6) so the record shape never
+// drifts from the on-disk tree. A family is discovered from the namespace-first container
+// (spec/<name>/spec.json) OR the legacy medium-first tree (draft/<name>/spec.json).
 //
 // Record shape:
 //   { name, namespace, prefix, version, specDir, dataDir, sopAnchor, docEntry, relatedRefs, manifestMeta }
-// where:
-//   specDir  = 'draft/<name>/<version>/spec'
-//   dataDir  = 'draft/<name>/<version>/data'
-//   manifestMeta = { order:[...], labels:{...} } (sidebar group meta from sidebarMeta)
+// where specDir/dataDir are namespace-first (spec/<name>/<version>/draft/{spec,data}) for a migrated
+// family, else medium-first (draft/<name>/<version>/{spec,data}) — resolved via ./layout.mjs.
 //
 // Family ORDER is canonical: memo → workbench → session → spec (the meta-spec last).
 // Unknown families are appended after the known ones (alphabetically), so new parallel
 // specs slot in deterministically.
-// Callers MUST NOT re-implement the family list — add a spec.json under draft/<name>/
-// and extend refs.manual.json; discoverSpecs picks it up automatically.
+// Callers MUST NOT re-implement the family list — add a spec.json under the container and
+// extend refs.manual.json; discoverSpecs picks it up automatically.
 
 import { readdirSync, readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+
+import { draftSpecDirRel, draftDataDirRel } from './layout.mjs'
 
 
 // Canonical family order for sorting. Unknown families sort after the known ones.
 const FAMILY_ORDER = [ 'memo', 'workbench', 'session', 'spec' ]
 
 
-// Read a spec.json from a draft family directory. Returns null when absent or unreadable.
+// Read a spec.json from a family directory. Returns null when absent or unreadable.
 const readSpecJson = ( { familyDirAbs } ) => {
     const path = join( familyDirAbs, 'spec.json' )
     if ( existsSync( path ) === false ) return null
@@ -38,13 +39,12 @@ const readSpecJson = ( { familyDirAbs } ) => {
 }
 
 
-// Build a full family record from a spec.json manifest at draft/<name>/spec.json.
-// specDir and dataDir are structurally derived (never read from spec.json) so the layout
-// is always consistent: draft/<name>/<version>/spec and draft/<name>/<version>/data.
-const buildFamilyRecord = ( { name, specJson } ) => {
+// Build a full family record from a spec.json manifest. specDir and dataDir are structurally
+// derived per detected layout (never read from spec.json) so the on-disk tree is always consistent.
+const buildFamilyRecord = ( { repoRoot, name, specJson } ) => {
     const version = specJson.currentVersion
-    const specDir = `draft/${ name }/${ version }/spec`
-    const dataDir = `draft/${ name }/${ version }/data`
+    const specDir = draftSpecDirRel( { repoRoot, name, version } )
+    const dataDir = draftDataDirRel( { repoRoot, name, version } )
 
     return {
         name,
@@ -61,24 +61,35 @@ const buildFamilyRecord = ( { name, specJson } ) => {
 }
 
 
-// Discover all spec families from draft/*/spec.json in canonical order:
-// memo → workbench → session → spec, then any additional families alphabetically.
-// Falls back gracefully (returns empty array) when the draft dir does not exist yet.
-export const discoverSpecs = ( { repoRoot } ) => {
-    const draftDir = join( repoRoot, 'draft' )
-    if ( existsSync( draftDir ) === false ) return []
+// Scan a container dir (namespace-first spec/ OR legacy draft/) for family subdirs holding a
+// spec.json. `seen` dedups so a migrated family (found in spec/) is never re-added from draft/.
+const scanContainer = ( { repoRoot, containerRel, seen } ) => {
+    const containerAbs = join( repoRoot, containerRel )
+    if ( existsSync( containerAbs ) === false ) return []
 
-    const entries = readdirSync( draftDir, { withFileTypes: true } )
-    const records = entries
+    return readdirSync( containerAbs, { withFileTypes: true } )
         .filter( ( e ) => e.isDirectory() === true )
         .map( ( e ) => {
-            const name = e.name
-            const specJson = readSpecJson( { familyDirAbs: join( draftDir, name ) } )
+            if ( seen.has( e.name ) === true ) return null
+            const specJson = readSpecJson( { familyDirAbs: join( containerAbs, e.name ) } )
             if ( specJson === null ) return null
+            seen.add( e.name )
 
-            return buildFamilyRecord( { name, specJson } )
+            return buildFamilyRecord( { repoRoot, name: e.name, specJson } )
         } )
         .filter( ( r ) => r !== null )
+}
+
+
+// Discover all spec families in canonical order: memo → workbench → session → spec, then any
+// additional families alphabetically. Scans the namespace-first container (spec/) first so a
+// migrated family wins, then the legacy draft/ tree. Empty when neither container exists.
+export const discoverSpecs = ( { repoRoot } ) => {
+    const seen = new Set()
+    const records = [
+        ...scanContainer( { repoRoot, containerRel: 'spec', seen } ),
+        ...scanContainer( { repoRoot, containerRel: 'draft', seen } )
+    ]
 
     // Sort in canonical order: known families first (by FAMILY_ORDER index), then unknown
     // families alphabetically so new specs appear in a stable, predictable position.
