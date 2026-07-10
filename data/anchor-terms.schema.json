@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "memo-init Anchor-Term Register Schema",
+    "description": "Org register of anchor terms — a policy-block adjunct per meta-spec 06-conventions-writing.md, NOT a new registry primitive. Mechanics from OASF (stable id, SemVer, known mis-labels); entry fields from SKOS (canonical label, definition, negative delimitation). No URIs, no triples, no reasoner.",
+    "type": "object",
+    "required": [ "schemaVersion", "policyBlock", "terms" ],
+    "additionalProperties": false,
+    "properties": {
+        "schemaVersion": {
+            "type": "string",
+            "pattern": "^anchor-terms/\\d+\\.\\d+\\.\\d+$"
+        },
+        "policyBlock": {
+            "type": "string",
+            "description": "The kind:policy block this register registers under — the register is an adjunct of that block, never a parallel machine.",
+            "pattern": "^/session/namespace-registry/$"
+        },
+        "terms": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/definitions/anchorTerm" }
+        }
+    },
+    "definitions": {
+        "anchorTerm": {
+            "type": "object",
+            "required": [ "id", "label", "definition", "negativeDelimitation", "misLabels", "version", "owningFamily", "owningChapter" ],
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^AT-[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable identifier (OASF) — outlives a re-labelling, never reused, never renumbered."
+                },
+                "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Canonical preferred label (SKOS prefLabel) — exactly one per term (AT1)."
+                },
+                "definition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "In-document definition (SKOS definition), owned by exactly one chapter (AT2)."
+                },
+                "negativeDelimitation": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "What the term is NOT (SKOS scopeNote, sharpened) — the neighbouring meaning a reader's prior would supply (AT3). Required and non-empty: a term without a negative delimitation is not an anchor term."
+                },
+                "misLabels": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Known wrong wordings — a warning signal for the usage lint (OASF). Empty array means 'none known', stated explicitly."
+                },
+                "version": {
+                    "type": "string",
+                    "pattern": "^\\d+\\.\\d+\\.\\d+$",
+                    "description": "SemVer of the entry — a meaning change is a version bump; the id stays fixed."
+                },
+                "owningFamily": {
+                    "type": "string",
+                    "enum": [ "memo", "meta-spec", "session", "workbench" ],
+                    "description": "The family whose chapter owns the in-document definition (AT2)."
+                },
+                "owningChapter": {
+                    "type": "string",
+                    "pattern": "^[0-9]{2}-[a-z0-9-]+$",
+                    "description": "The chapter stem carrying the definition; the full path is resolved via the family head, never hardcoded."
+                },
+                "namespaceToken": {
+                    "type": "string",
+                    "description": "Optional cross-family qualifier for the same label used in different namespaces."
+                }
+            }
+        }
+    }
+}

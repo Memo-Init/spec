@@ -6,7 +6,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "memo/0.1.0/draft/spec/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/30-primitives.md."
@@ -214,11 +214,18 @@ A compact index of every primitive (and the retained maturity and cross-cutting 
 
 ---
 
+## Anchor-Term Registration
+
+The eleven primitives above are the first entries in the organization's **anchor-term register** — the controlled vocabulary the org grounds its core terms against, defined by [the anchor-term convention](/spec/conventions-writing/) in the Spec family. Registration makes the register, not this glossary, the single source for each primitive's stable id, canonical label, and — the part a plain glossary omits — its **negative delimitation**, the explicit statement of what the term is *not*: a `Block` is not a context block, a `Strand` is emergent rather than authored, a `Plan` does not replace the stage model. Each primitive's register entry names its owning **detail** chapter (the one this page points down to and stays consistent with), not this index. The page describes the primitives for a reader; the register records them for a tool, and the two do not restate each other — reference, not double-maintenance. A warning-only usage lint reads the register to flag drift — a primitive defined twice, a known mis-label surfacing in prose, a missing negative delimitation — without ever gating a build.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [08-phases-and-prds.md](/specification/phases-and-prds/) — the canonical decomposition chain Topic → Block → PRD (sequenced into phases) that this page summarizes.
+- [/spec/conventions-writing/](/spec/conventions-writing/) — the anchor-term convention these eleven primitives register under as the first anchor terms.
 - [23-requirements.md](/specification/requirements/) — the cross-cutting requirement primitive in full.
 - [25-strands.md](/specification/strands/) — the emergent strand primitive and the strand-finalize Tracer-Bullet decision.
 - [12-rollout.md](/specification/rollout/) — the vertical-slice-first (tracer-bullet) rollout strategy, the same-named but distinct rollout-execution concept.

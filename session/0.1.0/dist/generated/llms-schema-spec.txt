@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the session spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: session@0.1.0:41481d1
+Source: session@0.1.0:cf2f278
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/00-overview.md."
@@ -150,7 +150,7 @@ spec_file: "01-genesis-root.md"
 order: 1
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/01-genesis-root.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/01-genesis-root.md."
@@ -270,7 +270,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/02-enforcement.md."
@@ -575,7 +575,7 @@ spec_file: "03-recovery.md"
 order: 3
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/03-recovery.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/03-recovery.md."
@@ -666,7 +666,7 @@ spec_file: "04-cli.md"
 order: 4
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/04-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/04-cli.md."
@@ -869,7 +869,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/05-config-cascade.md."
@@ -1156,7 +1156,7 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/06-namespace-registry.md."
@@ -1410,7 +1410,7 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/07-doctor-init.md."
@@ -1674,7 +1674,7 @@ spec_file: "08-identity-pin.md"
 order: 8
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/08-identity-pin.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/08-identity-pin.md."
@@ -1826,7 +1826,7 @@ spec_file: "09-root-detection.md"
 order: 9
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/09-root-detection.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/09-root-detection.md."
@@ -1987,7 +1987,7 @@ spec_file: "10-sop.md"
 order: 10
 section: "Session"
 normative: false
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/10-sop.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/10-sop.md."
@@ -2077,7 +2077,7 @@ spec_file: "11-common-denominator.md"
 order: 11
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/11-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/11-common-denominator.md."
@@ -2166,7 +2166,7 @@ spec_file: "12-instances.md"
 order: 12
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/12-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/12-instances.md."
@@ -2236,7 +2236,7 @@ spec_file: "13-conventions.md"
 order: 13
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/13-conventions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/13-conventions.md."
@@ -2324,7 +2324,7 @@ spec_file: "14-migration.md"
 order: 14
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/14-migration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/14-migration.md."
@@ -2390,7 +2390,7 @@ spec_file: "15-addons.md"
 order: 15
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "session/0.1.0/draft/spec/15-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/15-addons.md."
@@ -2495,7 +2495,7 @@ spec_file: "16-bridge.md"
 order: 16
 section: "Session"
 normative: false
-generated_at: "2026-07-10T11:55:00.508Z"
+generated_at: "2026-07-10T16:43:47.284Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."

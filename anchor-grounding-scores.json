@@ -1,0 +1,13 @@
+{ "terms": [
+  { "id": "AT-memo", "label": "Memo", "meaningRecovered": 2, "negationRecovered": 2, "note": "not-uploadable + not-cross-memo both hit" },
+  { "id": "AT-revision", "label": "Revision", "meaningRecovered": 2, "negationRecovered": 2, "note": "excludes in-place edit" },
+  { "id": "AT-topic", "label": "Topic", "meaningRecovered": 2, "negationRecovered": 2, "note": "exhaustive + memo-scoped" },
+  { "id": "AT-goal", "label": "Goal", "meaningRecovered": 2, "negationRecovered": 2, "note": "not-surface + not-single-memo" },
+  { "id": "AT-block", "label": "Block", "meaningRecovered": 2, "negationRecovered": 2, "note": "matches not-a-context-block" },
+  { "id": "AT-prd", "label": "PRD", "meaningRecovered": 2, "negationRecovered": 2, "note": "second-thread=chunk signal" },
+  { "id": "AT-phase", "label": "Phase", "meaningRecovered": 2, "negationRecovered": 2, "note": "not-optional + not-parallel" },
+  { "id": "AT-strand", "label": "Strand", "meaningRecovered": 2, "negationRecovered": 2, "note": "not-authored, tag-not-ID" },
+  { "id": "AT-requirement", "label": "Requirement", "meaningRecovered": 2, "negationRecovered": 1, "note": "misses not-self-graded / doer-not-grader boundary" },
+  { "id": "AT-tool", "label": "Tool", "meaningRecovered": 2, "negationRecovered": 2, "note": "not-runtime, RECOMMENDATION" },
+  { "id": "AT-plan", "label": "Plan", "meaningRecovered": 2, "negationRecovered": 2, "note": "nests-not-replaces stage model" }
+] }

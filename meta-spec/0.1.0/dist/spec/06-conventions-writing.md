@@ -6,7 +6,7 @@ spec_file: "06-conventions-writing.md"
 order: 6
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "meta-spec/0.1.0/draft/spec/06-conventions-writing.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.1.0/draft/spec/06-conventions-writing.md."
@@ -44,6 +44,30 @@ Because the mechanism already exists, registering a new convention set is a matt
 A convention has one normative home. When a convention set is registered as a policy block, the readable table in its owning chapter remains the human-facing source, and the policy block holds the activation-and-tracking registration — the two do not both assert the rule. A reader who wants to *understand* a convention reads the owning chapter; a tool that must *enforce* it reads the policy block. Keeping the description and the registration in separate places, each single-source, is what prevents the two copies from drifting.
 
 The communication conventions `J1`–`J12` are the worked example: their readable table lives in the communication chapter ([/specification/internal-vs-external-communication/](/specification/internal-vs-external-communication/)), and their registration lives in the session policy block ([/session/namespace-registry/](/session/namespace-registry/)). The table describes; the policy block registers; neither restates the other.
+
+---
+
+## The Anchor-Term Convention
+
+An **anchor term** is a term whose meaning the organization fixes once and then reuses everywhere, so that a reader — human or model — recovers the same meaning from the word wherever it appears. The anchor-term convention is the org-wide, smallest-common-denominator rule for grounding such terms: every family and every project applies it identically, and a family that does not fit the rule does not fork a local variant — it sharpens this meta-spec convention and works forward from there. The convention is itself a convention, authored and registered exactly as this chapter prescribes: its readable rules live here, and the set of grounded terms is registered as a policy-block adjunct — **not** as a new registry primitive.
+
+A term qualifies as an anchor term only when it carries all of the following **four-plus-one** mandatory properties:
+
+| Rule | Property | What it requires |
+|---|---|---|
+| **AT1** | **One canonical label** | The term has exactly one preferred label; alternative wordings are recorded as known mis-labels, never used as the term. |
+| **AT2** | **One owning chapter** | Exactly one chapter carries the in-document definition; no other chapter restates it (No Double Normativity, above). |
+| **AT3** | **Explicit negative delimitation** | The owning chapter states what the term is **not** — the neighbouring meanings a reader's prior would otherwise supply. |
+| **AT4** | **Usage obligation** | The term is used *functionally* in the chapters that need it, not merely declared once in a glossary. Grounding comes from consistent use, not from the definition alone. |
+| **+AT5** | **Lived congruence** | The process the term describes actually behaves as the term says. A definition the guardrails contradict is not grounded; text and behaviour are corrected together. |
+
+`AT1`–`AT4` fix the term on the page; `AT5` is the "plus one" that binds the page to the running process — the meaning is anchored only when the system lives it.
+
+**Registration by reference, not repetition.** The set of anchor terms is held once, in an org register, and referenced from wherever a term is used — the meaning is fixed in one place and pointed at, never copied. The register borrows its *mechanics* from the OASF tag standard (a stable identifier that outlives a re-labelling, a versioned immutable record, known mis-labels as a warning signal) and its *entry fields* from SKOS (canonical label, definition, and negative delimitation as a sharpened scope note). It borrows neither URIs, triples, nor a reasoner: this is a controlled vocabulary carried by the existing store-and-generator pipeline, not a semantic-web stack. Each entry carries a stable `id`, the canonical `label`, the `definition`, the `negativeDelimitation`, the known `misLabels`, a `version` (SemVer), the `owningChapter`, and an optional `namespaceToken` for cross-family qualification.
+
+**The register is an adjunct, never a new primitive.** Consistent with this chapter's opening rule, grounding a term **MUST** register through the existing `kind:"policy"` block; it **MUST NOT** spawn a parallel registry machine. The register store is rendered deterministically from its authored source by the shared generation-script line, and a warning-only usage lint reports drift — a term defined twice, a term never used, a missing negative delimitation, a known mis-label appearing in prose. Enforcement is warn-not-block: the convention guides authoring, it never gates a build.
+
+**Deliberately out of scope.** The convention grounds *terms*; it does **not** add a glyph or sigil notation for marking them in prose (the words carry the grounding, not a decoration), and it does not import the single-token framing, the consciousness reading, or the triple-store machinery from the research that motivated it.
 
 ---
 

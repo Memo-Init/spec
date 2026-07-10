@@ -1,0 +1,172 @@
+{
+    "schemaVersion": "anchor-terms/1.0.0",
+    "policyBlock": "/session/namespace-registry/",
+    "terms": [
+        {
+            "id": "AT-memo",
+            "label": "Memo",
+            "definition": "A versioned strategy document and the single highest authority over its own rollout; its content is local and MUST NOT be uploaded.",
+            "negativeDelimitation": "NOT a shareable or uploadable document, and NOT a cross-memo container — a memo has authority over its OWN rollout; the cross-memo span belongs to a goal or a plan.",
+            "misLabels": [
+                "document",
+                "spec doc",
+                "note"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "06-memo-structure"
+        },
+        {
+            "id": "AT-revision",
+            "label": "Revision",
+            "definition": "One immutable snapshot of a memo's content, stored as REV-XX.md; each change produces a new file, so the history is forward-only.",
+            "negativeDelimitation": "NOT an in-place edit — a revision is never mutated; a change is always a new REV-XX file.",
+            "misLabels": [
+                "version",
+                "edit",
+                "draft"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "07-revisions-and-questions"
+        },
+        {
+            "id": "AT-topic",
+            "label": "Topic",
+            "definition": "An atomic point extracted from the input during the five-step input pipeline; the complete topic list serves as a writing checklist and is the head of the Topic to Block to PRD chain.",
+            "negativeDelimitation": "NOT too small to omit and NOT cross-memo — extraction is exhaustive and topics are memo-scoped.",
+            "misLabels": [
+                "point",
+                "item",
+                "note"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "04-input-pipeline"
+        },
+        {
+            "id": "AT-goal",
+            "label": "Goal",
+            "definition": "A cross-memo intent (id G###) that spans several memos and outlives any one; defined by intent not surface, and scored in a fresh context against real state.",
+            "negativeDelimitation": "NOT scoped inside one memo and NOT surface-defined — a goal spans the memo sequence and is never scored in the session that did the work.",
+            "misLabels": [
+                "milestone",
+                "task",
+                "objective"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "31-goals"
+        },
+        {
+            "id": "AT-block",
+            "label": "Block",
+            "definition": "A structure node inside a memo carrying its own B### identifier; it references one or more topics and is the unit PRDs are derived from.",
+            "negativeDelimitation": "NOT a synonym for a context block — it is an addressable structure node with a B### id, not a chunk of prose context.",
+            "misLabels": [
+                "context block",
+                "section",
+                "chunk"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "08-phases-and-prds"
+        },
+        {
+            "id": "AT-prd",
+            "label": "PRD",
+            "definition": "A block-derived chunk of work sized so one PRD fits into one context (hard cap one third, smart-zone one quarter) and is implementable by one agent in one thread.",
+            "negativeDelimitation": "NOT a multi-thread or multi-context unit — if work needs a second thread, that is the signal to chunk into more PRDs, not to span one PRD across threads.",
+            "misLabels": [
+                "task",
+                "ticket",
+                "story"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "08-phases-and-prds"
+        },
+        {
+            "id": "AT-phase",
+            "label": "Phase",
+            "definition": "A sequential, mandatory unit of the rollout that bundles PRDs executed together and in order, carrying an orchestration role and a mandatory depends-on.",
+            "negativeDelimitation": "NOT optional and NOT parallel by default — a phase is mandatory and sequential; depends-on is a required characteristic, not decoration.",
+            "misLabels": [
+                "stage",
+                "step",
+                "milestone"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "08-phases-and-prds"
+        },
+        {
+            "id": "AT-strand",
+            "label": "Strand",
+            "definition": "The emergent dependency closure over phases — the transitive closure of the depends-on edges, derived by walking the graph, never authored.",
+            "negativeDelimitation": "NOT authored and NOT a thematic bundle — a strand is emergent, and it is a tag, never part of the numeric memo ID.",
+            "misLabels": [
+                "thread",
+                "track",
+                "theme"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "25-strands"
+        },
+        {
+            "id": "AT-requirement",
+            "label": "Requirement",
+            "definition": "A single addressable statement that must, should, or may hold; two-sided (statement faces generation, check faces the gate) with an optional grade axis, resolving to a ternary status.",
+            "negativeDelimitation": "NOT one-sided and NOT self-graded — a requirement faces both generation and the gate, a check that did not run MUST NOT report PASS, and the doer MUST NOT be the grader.",
+            "misLabels": [
+                "rule",
+                "constraint",
+                "spec"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "23-requirements"
+        },
+        {
+            "id": "AT-tool",
+            "label": "Tool",
+            "definition": "An external capability a phase or PRD depends on, recorded as a descriptor in the per-project tools registry that says that a tool exists, what it is for, and where it lives.",
+            "negativeDelimitation": "NOT a runtime and NOT an enforced gate — the registry is descriptive and a RECOMMENDATION; a memo MUST NOT be blocked solely because no registry is present.",
+            "misLabels": [
+                "service",
+                "dependency",
+                "integration"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "24-tools-registry"
+        },
+        {
+            "id": "AT-plan",
+            "label": "Plan",
+            "definition": "The execution-side primitive above the single memo: it spans one or more finalized memos and sequences their phases into a single ordered run (id PLAN-###-slug).",
+            "negativeDelimitation": "NOT a replacement for the per-memo stage model — a plan nests the four stages per carried memo; and phase order stays the memo's to decide (memo authority).",
+            "misLabels": [
+                "roadmap",
+                "project",
+                "backlog"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "42-plans"
+        }
+    ],
+    "generated": {
+        "at": "2026-07-10T16:43:44.878Z",
+        "fromCommit": "cf2f2785fe33e4b994c4e16d2e044655d136764c",
+        "generator": "scripts/generate-anchor-register.mjs",
+        "termCount": 11
+    },
+    "validation": {
+        "passed": true,
+        "ajv": true,
+        "uniqueLabels": true,
+        "owningChaptersResolve": true
+    }
+}

@@ -6,7 +6,7 @@ spec_file: "08-spec-lifecycle.md"
 order: 8
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-10T11:54:59.268Z"
+generated_at: "2026-07-10T16:43:46.421Z"
 generated_from: "meta-spec/0.1.0/draft/spec/08-spec-lifecycle.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.1.0/draft/spec/08-spec-lifecycle.md."

@@ -1,0 +1,92 @@
+{
+    "terms": [
+        {
+            "id": "AT-memo",
+            "label": "Memo",
+            "owningFamily": "memo",
+            "owningChapter": "06-memo-structure",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Memo\" as this specification uses it, and (2) an explicit statement of what \"Memo\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-revision",
+            "label": "Revision",
+            "owningFamily": "memo",
+            "owningChapter": "07-revisions-and-questions",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Revision\" as this specification uses it, and (2) an explicit statement of what \"Revision\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-topic",
+            "label": "Topic",
+            "owningFamily": "memo",
+            "owningChapter": "04-input-pipeline",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Topic\" as this specification uses it, and (2) an explicit statement of what \"Topic\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-goal",
+            "label": "Goal",
+            "owningFamily": "memo",
+            "owningChapter": "31-goals",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Goal\" as this specification uses it, and (2) an explicit statement of what \"Goal\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-block",
+            "label": "Block",
+            "owningFamily": "memo",
+            "owningChapter": "08-phases-and-prds",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Block\" as this specification uses it, and (2) an explicit statement of what \"Block\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-prd",
+            "label": "PRD",
+            "owningFamily": "memo",
+            "owningChapter": "08-phases-and-prds",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"PRD\" as this specification uses it, and (2) an explicit statement of what \"PRD\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-phase",
+            "label": "Phase",
+            "owningFamily": "memo",
+            "owningChapter": "08-phases-and-prds",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Phase\" as this specification uses it, and (2) an explicit statement of what \"Phase\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-strand",
+            "label": "Strand",
+            "owningFamily": "memo",
+            "owningChapter": "25-strands",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Strand\" as this specification uses it, and (2) an explicit statement of what \"Strand\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-requirement",
+            "label": "Requirement",
+            "owningFamily": "memo",
+            "owningChapter": "23-requirements",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Requirement\" as this specification uses it, and (2) an explicit statement of what \"Requirement\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-tool",
+            "label": "Tool",
+            "owningFamily": "memo",
+            "owningChapter": "24-tools-registry",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Tool\" as this specification uses it, and (2) an explicit statement of what \"Tool\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        },
+        {
+            "id": "AT-plan",
+            "label": "Plan",
+            "owningFamily": "memo",
+            "owningChapter": "42-plans",
+            "specDir": "memo/0.1.0/draft/spec",
+            "task": "Read ONLY the memo spec chapters under memo/0.1.0/draft/spec. Using nothing but that text, write (1) a one-sentence definition of \"Plan\" as this specification uses it, and (2) an explicit statement of what \"Plan\" is NOT (its nearest wrong meaning). Do not use any outside knowledge and do not read any file named anchor-terms*. If the spec does not make the meaning recoverable, say so."
+        }
+    ]
+}

@@ -1,0 +1,108 @@
+{
+    "measure": "anchor-grounding-baseline",
+    "termCount": 11,
+    "totalScore": 43,
+    "maxScore": 44,
+    "pct": 98,
+    "perTerm": [
+        {
+            "id": "AT-memo",
+            "label": "Memo",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "not-uploadable + not-cross-memo both hit"
+        },
+        {
+            "id": "AT-revision",
+            "label": "Revision",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "excludes in-place edit"
+        },
+        {
+            "id": "AT-topic",
+            "label": "Topic",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "exhaustive + memo-scoped"
+        },
+        {
+            "id": "AT-goal",
+            "label": "Goal",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "not-surface + not-single-memo"
+        },
+        {
+            "id": "AT-block",
+            "label": "Block",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "matches not-a-context-block"
+        },
+        {
+            "id": "AT-prd",
+            "label": "PRD",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "second-thread=chunk signal"
+        },
+        {
+            "id": "AT-phase",
+            "label": "Phase",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "not-optional + not-parallel"
+        },
+        {
+            "id": "AT-strand",
+            "label": "Strand",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "not-authored, tag-not-ID"
+        },
+        {
+            "id": "AT-requirement",
+            "label": "Requirement",
+            "meaning": 2,
+            "negation": 1,
+            "termScore": 3,
+            "max": 4,
+            "note": "misses not-self-graded / doer-not-grader boundary"
+        },
+        {
+            "id": "AT-tool",
+            "label": "Tool",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "not-runtime, RECOMMENDATION"
+        },
+        {
+            "id": "AT-plan",
+            "label": "Plan",
+            "meaning": 2,
+            "negation": 2,
+            "termScore": 4,
+            "max": 4,
+            "note": "nests-not-replaces stage model"
+        }
+    ]
+}
