@@ -6,7 +6,7 @@ spec_file: "15-addons.md"
 order: 15
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:48:09.931Z"
+generated_at: "2026-07-10T11:54:59.268Z"
 generated_from: "session/0.1.0/draft/spec/15-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/15-addons.md."

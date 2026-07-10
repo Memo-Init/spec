@@ -6,7 +6,7 @@ spec_file: "09-current-state.md"
 order: 9
 section: "Meta-Spec"
 normative: false
-generated_at: "2026-07-10T11:48:09.931Z"
+generated_at: "2026-07-10T11:54:59.268Z"
 generated_from: "meta-spec/0.1.0/draft/spec/09-current-state.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.1.0/draft/spec/09-current-state.md."
