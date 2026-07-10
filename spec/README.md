@@ -1,6 +1,6 @@
 # spec/ — Namespace-first Spec Container — Generated dist/ is DO NOT EDIT
 
-This is the namespace-first container (Memo 064 MI-S6). Each family lives at
+This is the namespace-first container. Each family lives at
 `spec/<name>/<version>/{draft,dist,skills}/`; the `dist/` subtree and the container-level aggregates
 below are **auto-generated** from the source spec under `draft/` and the `data/` refs. Do not edit
 the generated files by hand — they are overwritten on the next `npm run build`. Edit the sources instead:

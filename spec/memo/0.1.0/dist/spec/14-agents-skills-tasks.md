@@ -6,7 +6,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-07-10T05:31:42.764Z"
+generated_at: "2026-07-10T06:10:06.301Z"
 generated_from: "spec/memo/0.1.0/draft/spec/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/memo/0.1.0/draft/spec/14-agents-skills-tasks.md."

@@ -47,16 +47,16 @@ const readFamilyVersion = ( { family } ) => {
 const SPEC_VERSION = readFamilyVersion( { family: 'memo' } )
 const WORKBENCH_VERSION = readFamilyVersion( { family: 'workbench' } )
 const SESSION_VERSION = readFamilyVersion( { family: 'session' } )
-const SPEC_META_VERSION = readFamilyVersion( { family: 'spec' } )
+const SPEC_META_VERSION = readFamilyVersion( { family: 'meta-spec' } )
 
 const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
 const WORKBENCH_DIR = join( REPO, REFS_MANUAL.workbench.specDir )
 const SESSION_DIR = join( REPO, REFS_MANUAL.session.specDir )
-const SPEC_META_DIR = join( REPO, REFS_MANUAL.spec.specDir )
+const SPEC_META_DIR = join( REPO, REFS_MANUAL[ 'meta-spec' ].specDir )
 const PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'memo', version: SPEC_VERSION } )
 const WORKBENCH_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'workbench', version: WORKBENCH_VERSION } )
 const SESSION_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'session', version: SESSION_VERSION } )
-const SPEC_META_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'spec', version: SPEC_META_VERSION } )
+const SPEC_META_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'meta-spec', version: SPEC_META_VERSION } )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 
@@ -80,7 +80,7 @@ const routeBaseFromDocEntry = ( { docEntry } ) => {
 const MEMO_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'memo' } ).docEntry } )
 const WORKBENCH_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'workbench' } ).docEntry } )
 const SESSION_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'session' } ).docEntry } )
-const SPEC_META_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'spec' } ).docEntry } )
+const SPEC_META_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'meta-spec' } ).docEntry } )
 
 
 // Strip the top metadata table (Status / Depends on / Related) that each source
@@ -384,22 +384,22 @@ const main = async () => {
     } )
     reportPass( { label: 'session', results: sessionResults, targetDir: SESSION_PAYLOAD_DIR } )
 
-    // Fourth family: the Meta-Specification (spec). Its own version line rides in the
-    // spec_meta_version frontmatter field (distinct from memo's spec_version) so the two
-    // never collide even though both live under a "spec"-named path/route.
+    // Fourth family: the Meta-Spec. Its INTERNAL namespace/dir is `meta-spec` while its published
+    // route stays /spec/ (docEntry-derived). Its own version line rides in the spec_meta_version
+    // frontmatter field (distinct from memo's spec_version) so the two never collide.
     const specMetaResults = await generatePass( {
-        label: 'spec',
+        label: 'meta-spec',
         sourceDir: SPEC_META_DIR,
         targetDir: SPEC_META_PAYLOAD_DIR,
         section: 'Meta-Spec',
         routeBase: SPEC_META_ROUTE,
         versionField: 'spec_meta_version',
         versionValue: SPEC_META_VERSION,
-        sourceRelBase: REFS_MANUAL.spec.specDir,
+        sourceRelBase: REFS_MANUAL[ 'meta-spec' ].specDir,
         sourceCommit,
         now
     } )
-    reportPass( { label: 'spec', results: specMetaResults, targetDir: SPEC_META_PAYLOAD_DIR } )
+    reportPass( { label: 'meta-spec', results: specMetaResults, targetDir: SPEC_META_PAYLOAD_DIR } )
 
     // WI-023: verify the same-family rewrite landed in each family's OWN route (route gate).
     await assertSameFamilyRoutes( {
@@ -407,7 +407,7 @@ const main = async () => {
             { family: 'memo', label: 'memo', sourceDir: SPEC_DIR, targetDir: PAYLOAD_DIR },
             { family: 'workbench', label: 'workbench', sourceDir: WORKBENCH_DIR, targetDir: WORKBENCH_PAYLOAD_DIR },
             { family: 'session', label: 'session', sourceDir: SESSION_DIR, targetDir: SESSION_PAYLOAD_DIR },
-            { family: 'spec', label: 'spec', sourceDir: SPEC_META_DIR, targetDir: SPEC_META_PAYLOAD_DIR }
+            { family: 'meta-spec', label: 'meta-spec', sourceDir: SPEC_META_DIR, targetDir: SPEC_META_PAYLOAD_DIR }
         ]
     } )
 }

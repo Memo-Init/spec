@@ -6,7 +6,7 @@ spec_file: "33-flowmcp.md"
 order: 33
 section: "Workbench"
 normative: true
-generated_at: "2026-07-10T05:31:42.764Z"
+generated_at: "2026-07-10T06:10:06.301Z"
 generated_from: "spec/workbench/0.1.0/draft/spec/33-flowmcp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/draft/spec/33-flowmcp.md."

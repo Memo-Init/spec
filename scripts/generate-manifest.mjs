@@ -31,12 +31,15 @@ const REFS_MANUAL = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json
 const SPEC_VERSION = REFS_MANUAL.memo.currentVersion
 const WORKBENCH_VERSION = REFS_MANUAL.workbench.currentVersion
 const SESSION_VERSION = REFS_MANUAL.session.currentVersion
-const SPEC_META_VERSION = REFS_MANUAL.spec.currentVersion
+// The meta-family's INTERNAL identity is `meta-spec` (its namespace/dir), but its PUBLISHED-ROUTE
+// key in the aggregate manifest stays `spec` (the site reads `manifest.spec` and serves /spec/) — the
+// same name≠route decoupling the memo family already has (internal `memo`, aggregate `manifest.files`).
+const SPEC_META_VERSION = REFS_MANUAL[ 'meta-spec' ].currentVersion
 
 const PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'memo', version: SPEC_VERSION } )
 const WORKBENCH_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'workbench', version: WORKBENCH_VERSION } )
 const SESSION_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'session', version: SESSION_VERSION } )
-const SPEC_META_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'spec', version: SPEC_META_VERSION } )
+const SPEC_META_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'meta-spec', version: SPEC_META_VERSION } )
 const MANIFEST_PATH = aggregatePath( { repoRoot: REPO, file: 'manifest.json' } )
 const GENERATOR = 'scripts/generate-manifest.mjs'
 
@@ -91,7 +94,7 @@ const loadFamilyManifest = ( { specDir, label } ) => {
 const SPEC_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.memo.specDir, label: 'memo' } )
 const WORKBENCH_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.workbench.specDir, label: 'workbench' } )
 const SESSION_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.session.specDir, label: 'session' } )
-const SPEC_META_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL.spec.specDir, label: 'spec' } )
+const SPEC_META_MANIFEST = loadFamilyManifest( { specDir: REFS_MANUAL[ 'meta-spec' ].specDir, label: 'meta-spec' } )
 
 // Per-family grouping closure: spec-manifest lookup, fallback to the first group id.
 const makeGroupFn = ( { manifest } ) => {
@@ -157,7 +160,9 @@ const main = async () => {
     const coreFiles = await collectEntries( { dir: PAYLOAD_DIR, groupFn: sidebarGroupFromFilename, label: 'memo' } )
     const workbench = await buildFamilyBlock( { dir: WORKBENCH_PAYLOAD_DIR, groupFn: workbenchSidebarGroupFromFilename, label: 'workbench', version: WORKBENCH_VERSION } )
     const session = await buildFamilyBlock( { dir: SESSION_PAYLOAD_DIR, groupFn: sessionSidebarGroupFromFilename, label: 'session', version: SESSION_VERSION } )
-    const spec = await buildFamilyBlock( { dir: SPEC_META_PAYLOAD_DIR, groupFn: specMetaSidebarGroupFromFilename, label: 'spec', version: SPEC_META_VERSION } )
+    // Aggregate block key stays `spec` (published-route contract; the site's sync-spec/sidebar read
+    // `manifest.spec` → /spec/), sourced from the internally-renamed `meta-spec` family.
+    const spec = await buildFamilyBlock( { dir: SPEC_META_PAYLOAD_DIR, groupFn: specMetaSidebarGroupFromFilename, label: 'meta-spec', version: SPEC_META_VERSION } )
 
     const allFiles = [ ...coreFiles, ...workbench.files, ...session.files, ...spec.files ]
 
@@ -197,7 +202,7 @@ const copySpecManifestsToPayload = async () => {
         { specDir: REFS_MANUAL.memo.specDir, name: 'memo', version: SPEC_VERSION },
         { specDir: REFS_MANUAL.workbench.specDir, name: 'workbench', version: WORKBENCH_VERSION },
         { specDir: REFS_MANUAL.session.specDir, name: 'session', version: SESSION_VERSION },
-        { specDir: REFS_MANUAL.spec.specDir, name: 'spec', version: SPEC_META_VERSION }
+        { specDir: REFS_MANUAL[ 'meta-spec' ].specDir, name: 'meta-spec', version: SPEC_META_VERSION }
     ]
 
     await Promise.all( families.map( async ( family ) => {

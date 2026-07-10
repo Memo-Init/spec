@@ -19,7 +19,7 @@
             "pin": "0.1.0"
         },
         {
-            "target": "spec",
+            "target": "meta-spec",
             "kind": "requires",
             "pin": "0.1.0"
         }
@@ -47,6 +47,6 @@
         }
     },
     "generated": {
-        "specId": "workbench@0.1.0:5881315"
+        "specId": "workbench@0.1.0:32833d7"
     }
 }

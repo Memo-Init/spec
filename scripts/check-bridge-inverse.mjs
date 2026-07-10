@@ -41,7 +41,7 @@ const FAMILIES = [
     { key: 'memo', prefix: 'memo/', specDir: REFS.memo.specDir, version: REFS.memo.currentVersion },
     { key: 'workbench', prefix: 'workbench/', specDir: REFS.workbench.specDir, version: REFS.workbench.currentVersion },
     { key: 'session', prefix: 'session/', specDir: REFS.session.specDir, version: REFS.session.currentVersion },
-    { key: 'spec', prefix: 'spec/', specDir: REFS.spec.specDir, version: REFS.spec.currentVersion }
+    { key: 'meta-spec', prefix: 'spec/', specDir: REFS[ 'meta-spec' ].specDir, version: REFS[ 'meta-spec' ].currentVersion }
 ]
 
 

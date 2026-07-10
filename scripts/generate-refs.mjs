@@ -26,7 +26,7 @@ const RESOLVED_PATH = aggregatePath( { repoRoot: REPO_ROOT, file: 'refs.resolved
 const GENERATOR = 'scripts/generate-refs.mjs'
 // The families that carry a head + a refs block. Same list as the skill-map merge — the container's
 // spec.json heads ARE the source of family identity, so it stays in lockstep with them.
-const FAMILIES = [ 'memo', 'workbench', 'session', 'spec' ]
+const FAMILIES = [ 'memo', 'workbench', 'session', 'meta-spec' ]
 // The one spec-id format (Kap 4 / Kap 17). The token is the lowercase namespace name, so the build
 // fails loud if any composed id drifts out of the shared format.
 const SPEC_ID_RE = /^[a-z0-9][a-z0-9-]*@\d+\.\d+\.\d+:([0-9a-f]{7}|unknown)$/

@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-07-10T05:31:43.938Z",
+    "generated_at": "2026-07-10T06:10:07.718Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -921,7 +921,7 @@
                 "filename": "01-bridge.md",
                 "slug": "bridge",
                 "title": "Bridge",
-                "description": "Bridge hub for the spec specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.",
+                "description": "Bridge hub for the meta-spec specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.",
                 "order": 1,
                 "section": "Meta-Spec",
                 "normative": false,

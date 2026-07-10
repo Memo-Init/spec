@@ -150,10 +150,10 @@ const main = async () => {
         const specChapters = ( await readdir( specDir ) )
             .filter( ( f ) => /^\d{2}-.*\.md$/.test( f ) )
             .map( ( f ) => `memo/${ f }` )
-        // Sibling families (workbench, session, spec) resolve via the same layout-aware helper. The
-        // spec meta-family has no implementer skills, so its chapters only surface in the
+        // Sibling families (workbench, session, meta-spec) resolve via the same layout-aware helper.
+        // The meta-spec family has no implementer skills, so its chapters only surface in the
         // (non-blocking) orphan report.
-        const families = [ 'workbench', 'session', 'spec' ]
+        const families = [ 'workbench', 'session', 'meta-spec' ]
             .map( ( prefix ) => ( { prefix, dir: latestSpecDir( { name: prefix } ) } ) )
         const familyChapters = ( await Promise.all( families.map( async ( { prefix, dir } ) => {
             if( dir === null ) return []

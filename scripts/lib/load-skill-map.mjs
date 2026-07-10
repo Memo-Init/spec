@@ -14,7 +14,7 @@ import { join } from 'node:path'
 import { draftDataDirRel } from './layout.mjs'
 
 
-const FAMILIES = [ 'memo', 'workbench', 'session', 'spec' ]
+const FAMILIES = [ 'memo', 'workbench', 'session', 'meta-spec' ]
 
 
 const computeTotals = ( { skills } ) => ( {

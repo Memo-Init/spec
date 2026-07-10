@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-07-10T05:31:42.764Z"
+generated_at: "2026-07-10T06:10:06.301Z"
 generated_from: "spec/workbench/0.1.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/workbench/0.1.0/draft/spec/00-overview.md."
@@ -49,7 +49,7 @@ Within that shared vocabulary, the Workbench spec is otherwise self-contained: i
 This spec is **versioned independently** from the core specification. A change to the workbench's project structure or its CLI conventions does not force a core-spec version bump, and a core-spec version bump does not retroactively re-version the Workbench spec.
 
 - The core specification lives under `draft/memo/0.1.0/spec/`; the Workbench spec lives under `draft/workbench/0.1.0/spec/` and carries its own version line.
-- The authoritative, machine-readable version numbers for every family are recorded in `data/refs.manual.json` — the core spec under the `memo` key, this spec under the `workbench` key, the Session spec under the `session` key, and the meta-spec under the `spec` key. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data, and the build stamps each chapter with its family's version (`workbench_version`).
+- The authoritative, machine-readable version numbers for every family are recorded in `data/refs.manual.json` — the core spec under the `memo` key, this spec under the `workbench` key, the Session spec under the `session` key, and the meta-spec under the `meta-spec` key. Version numbers **MUST NOT** be hardcoded in prose; consumers read them from the refs data, and the build stamps each chapter with its family's version (`workbench_version`).
 
 ---
 

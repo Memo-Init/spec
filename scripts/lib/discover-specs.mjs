@@ -24,7 +24,7 @@ import { draftSpecDirRel, draftDataDirRel } from './layout.mjs'
 
 
 // Canonical family order for sorting. Unknown families sort after the known ones.
-const FAMILY_ORDER = [ 'memo', 'workbench', 'session', 'spec' ]
+const FAMILY_ORDER = [ 'memo', 'workbench', 'session', 'meta-spec' ]
 
 
 // Read a spec.json from a family directory. Returns null when absent or unreadable.

@@ -18,10 +18,10 @@
         "specDir": "spec/session/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/session/overview/"
     },
-    "spec": {
+    "meta-spec": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
-        "specDir": "spec/spec/0.1.0/draft/spec",
+        "specDir": "spec/meta-spec/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/spec/overview/"
     },
     "docs": {
