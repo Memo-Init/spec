@@ -34,7 +34,10 @@ const SPEC_ID_RE = /^[a-z0-9][a-z0-9-]*@\d+\.\d+\.\d+:([0-9a-f]{7}|unknown)$/
 
 const resolveCommit = ( { cwd } ) => {
     try {
-        return execSync( 'git rev-parse --short HEAD', { cwd } )
+        // Full 40-char HEAD SHA (Memo 064 MI-S3): fromCommit carries the full SHA; the 7-char shortSha
+        // for specId / the llms stamp is derived downstream by composeSpecId (spec-id.mjs). The
+        // `unknown` sentinel (no git, Kap 9) is preserved unchanged.
+        return execSync( 'git rev-parse HEAD', { cwd } )
             .toString()
             .trim()
     } catch( err ) {

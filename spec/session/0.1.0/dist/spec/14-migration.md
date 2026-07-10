@@ -6,7 +6,7 @@ spec_file: "14-migration.md"
 order: 14
 section: "Session"
 normative: true
-generated_at: "2026-07-10T00:01:40.162Z"
+generated_at: "2026-07-10T01:26:47.441Z"
 generated_from: "spec/session/0.1.0/draft/spec/14-migration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: spec/session/0.1.0/draft/spec/14-migration.md."
