@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-07-10T11:08:29.606Z"
+generated_at: "2026-07-10T11:48:09.931Z"
 generated_from: "workbench/0.1.0/draft/spec/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.1.0/draft/spec/12-folders.md."

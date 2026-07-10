@@ -1,7 +1,7 @@
 {
     "schemaVersion": "spec/1.0.0",
     "slug": "memo",
-    "title": "Memo-Init Specification",
+    "title": "Memo Specification",
     "namespaceToken": "MC",
     "currentVersion": "0.1.0",
     "version": "0.1.0",
@@ -59,6 +59,6 @@
         }
     },
     "generated": {
-        "specId": "memo@0.1.0:7cb6c78"
+        "specId": "memo@0.1.0:483033e"
     }
 }

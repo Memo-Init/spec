@@ -6,7 +6,7 @@ spec_file: "08-spec-lifecycle.md"
 order: 8
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-10T11:08:29.606Z"
+generated_at: "2026-07-10T11:48:09.931Z"
 generated_from: "meta-spec/0.1.0/draft/spec/08-spec-lifecycle.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.1.0/draft/spec/08-spec-lifecycle.md."
@@ -67,7 +67,7 @@ The detection machinery is **not** newly built: the drift engine already exists 
 The front half is authored and **private-first**. At overview height it comprises:
 
 - **Namespace-first structure.** A spec lives at `spec/<namespace>/<version>/{draft,dist,skills}/` (the version sits *outside* the layout, one level in from the namespace). personal-brand is the reference model; memo-init migrates onto it reversibly, slug-based, and URL-stable. The `spec/` plural-container folder convention itself is declared in the workbench folders chapter (`workbench/…/12-folders.md`) by **ORG-7** — referenced here, not declared on this page.
-- **Spec reference ID.** A spec is identified by `<namespaceToken>@<version>:<shortSha>`, where `shortSha` is the **7-character prefix** of the full `fromCommit` SHA — the same provenance token that later stamps the llms.txt header (see Part B).
+- **Spec reference ID.** A spec is identified by `<namespaceToken>@<version>:<shortSha>`, where `shortSha` is the **7-character prefix** of the full `fromCommit` SHA — the same provenance token that later stamps the llms.txt header (see Part B). The `namespaceToken` here is the family's lowercase **slug** (e.g. `memo`, `meta-spec`) — not the uppercase manifest short-token field of the family head, which serves the manifest-consistency audit and stays untouched.
 - **Deterministic dependency graph.** The `requires` / `references` edges are lifted out of the prose into the family head as an OKF edge model `{target, kind, pin}`; the graph is resolved via `ArchitectureLocator.mjs`.
 - **Drift detection (WARN).** `DriftSensor.commitsSinceVerified` is reused on the spec edges, with a `verifiedAtSha` per `requires` edge; the dist build **WARNs** on drift rather than auto-blocking, and a boundary is re-blessed via `memo maintenance verify`.
 - **private-first.** Every spec is private per se; publishing is a separate, explicit opt-in step. personal-brand is the org-wide reference model for this: its workshop container carries `site.json` `publication.git: false` — a private-draft that is never itself a published git site — and every namespace stays `spec.json` `publish: false` until a deliberate promotion flips it. This front generalizes that model across memo-init, flowmcp, and personal-brand.

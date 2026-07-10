@@ -6,7 +6,7 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-07-10T11:08:29.606Z"
+generated_at: "2026-07-10T11:48:09.931Z"
 generated_from: "session/0.1.0/draft/spec/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/07-doctor-init.md."
