@@ -6,7 +6,7 @@ spec_file: "09-root-detection.md"
 order: 9
 section: "Session"
 normative: true
-generated_at: "2026-07-10T16:43:46.421Z"
+generated_at: "2026-07-11T22:16:29.883Z"
 generated_from: "session/0.1.0/draft/spec/09-root-detection.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/09-root-detection.md."

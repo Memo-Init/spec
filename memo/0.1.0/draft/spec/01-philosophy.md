@@ -122,6 +122,18 @@ The aim of all this is **moving forward** — innovation and shipped progress �
 
 ---
 
+## Determinism Before Probabilism
+
+The main cost and the main risk in the process live in its **probabilistic** parts, not its deterministic ones. A deterministic step is cheap and safe: it either ran or it did not, and its result does not vary with the weather of a context window. A probabilistic step — anything an agent reasons out rather than computes — is where quality decays, where drift enters, and where a rollout burns effort. The design response is **front-loading**: settle as much as can be settled deterministically *up front*, so that the probabilistic surface that remains is as small as it can honestly be made.
+
+Front-loading is a bias, not an absolute. Per single step the question is **binary** — the step is done or it is not. Across the whole process the answer is a **percentage** — the share of the work that is deterministically pinned. Raising that percentage is good, but **100 % determinism is the wrong target**. The interesting work begins exactly where things are *not* deterministically solvable; a process that could be fully mechanized would not have needed judgement in the first place. The probabilistic core is not a defect to be eliminated — it is the part that legitimately remains, and pretending otherwise hides risk rather than removing it.
+
+The concrete lever is the pairing of **data structures and rendered tables**. Generate the content probabilistically — an agent proposes the findings, the entries, the assessment — but store it as a structured record and **render** the human-readable artifact deterministically from that record. The rendered table then *cannot drift* from its source, because it is not authored twice: it is computed from the one store. This is how the system keeps a probabilistically-produced result trustworthy without demanding that the production itself be deterministic.
+
+This closes back onto the developer's authority. Because the rendered artifact is a neutral projection of its data, findings are **listed as they are** rather than pre-graded, ranked, or thresholded — and it stays the **developer**, not the tool, who decides what matters (see *Prioritization Is the Developer's Decision* above). Determinism is put to work on the *rendering* of the work order precisely so it is not smuggled into the *prioritizing* of it.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

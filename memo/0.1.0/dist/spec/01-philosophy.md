@@ -6,7 +6,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-07-10T16:43:46.421Z"
+generated_at: "2026-07-11T22:16:29.883Z"
 generated_from: "memo/0.1.0/draft/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/01-philosophy.md."
@@ -126,6 +126,18 @@ The packing has bounds, and they are firm:
 Within those bounds the topic count is **at least three, with no upper cap**. The optimization is explicitly for **large, multi-topic inputs**: a single-topic memo is possible but is not the target case. The system is tuned for a developer who has thought through many related things at once and wants them packed into one well-ordered departure.
 
 The aim of all this is **moving forward** — innovation and shipped progress — not automation for its own sake. Packing the train densely is in service of pushing more worked-through topics out into the world per departure. The economics of front-loading the expensive research once and reusing it across the packed topics — the distillation economy that makes a densely packed train affordable — is described in [10-proactive-research.md](/specification/proactive-research/) (Distillate-Fan-Out).
+
+---
+
+## Determinism Before Probabilism
+
+The main cost and the main risk in the process live in its **probabilistic** parts, not its deterministic ones. A deterministic step is cheap and safe: it either ran or it did not, and its result does not vary with the weather of a context window. A probabilistic step — anything an agent reasons out rather than computes — is where quality decays, where drift enters, and where a rollout burns effort. The design response is **front-loading**: settle as much as can be settled deterministically *up front*, so that the probabilistic surface that remains is as small as it can honestly be made.
+
+Front-loading is a bias, not an absolute. Per single step the question is **binary** — the step is done or it is not. Across the whole process the answer is a **percentage** — the share of the work that is deterministically pinned. Raising that percentage is good, but **100 % determinism is the wrong target**. The interesting work begins exactly where things are *not* deterministically solvable; a process that could be fully mechanized would not have needed judgement in the first place. The probabilistic core is not a defect to be eliminated — it is the part that legitimately remains, and pretending otherwise hides risk rather than removing it.
+
+The concrete lever is the pairing of **data structures and rendered tables**. Generate the content probabilistically — an agent proposes the findings, the entries, the assessment — but store it as a structured record and **render** the human-readable artifact deterministically from that record. The rendered table then *cannot drift* from its source, because it is not authored twice: it is computed from the one store. This is how the system keeps a probabilistically-produced result trustworthy without demanding that the production itself be deterministic.
+
+This closes back onto the developer's authority. Because the rendered artifact is a neutral projection of its data, findings are **listed as they are** rather than pre-graded, ranked, or thresholded — and it stays the **developer**, not the tool, who decides what matters (see *Prioritization Is the Developer's Decision* above). Determinism is put to work on the *rendering* of the work order precisely so it is not smuggled into the *prioritizing* of it.
 
 ---
 

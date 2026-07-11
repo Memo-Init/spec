@@ -6,7 +6,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-07-10T16:43:46.421Z"
+generated_at: "2026-07-11T22:16:29.883Z"
 generated_from: "memo/0.1.0/draft/spec/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/08-phases-and-prds.md."
@@ -28,7 +28,7 @@ This decomposition is what makes a long memo executable: the memo is the authori
 
 ### Work items — the finding-level granularity below a block
 
-Below the topic-and-block level, a finalized memo's internal work is tracked as **work items**: finding-level units, deterministically stored and auto-rendered into the revisions, and — the reason they matter to execution — **individually verifiable during the rollout**, so a memo carrying hundreds-to-thousands of findings can be worked through one checkable unit at a time. Work items are an **extension of the block model**, not a parallel primitive: each binds to a topic a block already gathers (the full model, the evaluator principle, and the defi reference implementation are specified in [30-primitives.md](/specification/primitives/)). At rollout close the evaluator judges the **topic**, not the count of closed work items — closing every work item a topic spawned does not by itself prove the topic is solved.
+Below the topic-and-block level, a finalized memo's internal work is tracked as **work items**: finding-level units, deterministically stored and auto-rendered into the revisions, and — the reason they matter to execution — **individually verifiable during the rollout**, so a memo carrying hundreds-to-thousands of findings can be worked through one checkable unit at a time. Work items are an **extension of the block model**, not a parallel primitive: each binds to a topic a block already gathers (the full model, the evaluator principle, and the defi reference implementation are specified in [30-primitives.md](/specification/primitives/)). At rollout close the evaluator judges the **topic**, not the count of closed work items — closing every work item a topic spawned does not by itself prove the topic is solved. A work item's `status` moves only through a deterministic write path (`memo work-item set-status`), so its checkability during the rollout is machine-backed rather than a note in prose, and each item carries structured `{ path, lines }` provenance that makes its acceptance grep-checkable at the exact file:line it claims.
 
 ---
 
