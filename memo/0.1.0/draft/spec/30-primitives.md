@@ -130,7 +130,7 @@ The model has four parts:
 
 This is an **extension of the built block model**, not a new structural node: work items bind to the topics the blocks already reference. It closes the gap where an earlier work-item system ran *separate* from the block/topic store (the block model did not carry the finding-level work).
 
-**Reference implementation.** The pattern was first grown by the agent in project **defi** (memo M004) on a fresh start with the memo principle: a `work-items.json` whose entries carry `id / severity / cluster / area / action / status / files`, five status values (`offen · in-arbeit · verifizieren · erledigt · kein-defekt`), rendered deterministically by a `render-workitems.mjs`, each item carrying `file:line` provenance and each cluster mapping to a topic. That implementation is the documented reference for this extension; the rollout single-checkability side is specified with the decomposition chain ([08-phases-and-prds.md](./08-phases-and-prds.md)).
+**Reference implementation.** The pattern was first grown by the agent in project **defi** on a fresh start with the memo principle: a `work-items.json` whose entries carry `id / severity / cluster / area / action / status / files`, five status values (`offen · in-arbeit · verifizieren · erledigt · kein-defekt`), rendered deterministically by a `render-workitems.mjs`, each item carrying `file:line` provenance and each cluster mapping to a topic. That implementation is the documented reference for this extension; the rollout single-checkability side is specified with the decomposition chain ([08-phases-and-prds.md](./08-phases-and-prds.md)).
 
 ### The canonical field set
 

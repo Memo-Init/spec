@@ -6,7 +6,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-07-11T22:16:29.883Z"
+generated_at: "2026-07-11T22:30:17.205Z"
 generated_from: "workbench/0.1.0/draft/spec/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.1.0/draft/spec/22-config.md."

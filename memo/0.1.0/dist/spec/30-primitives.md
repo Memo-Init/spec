@@ -6,7 +6,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:16:29.883Z"
+generated_at: "2026-07-11T22:30:17.205Z"
 generated_from: "memo/0.1.0/draft/spec/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/30-primitives.md."
@@ -137,7 +137,7 @@ The model has four parts:
 
 This is an **extension of the built block model**, not a new structural node: work items bind to the topics the blocks already reference. It closes the gap where an earlier work-item system ran *separate* from the block/topic store (the block model did not carry the finding-level work).
 
-**Reference implementation.** The pattern was first grown by the agent in project **defi** (memo M004) on a fresh start with the memo principle: a `work-items.json` whose entries carry `id / severity / cluster / area / action / status / files`, five status values (`offen · in-arbeit · verifizieren · erledigt · kein-defekt`), rendered deterministically by a `render-workitems.mjs`, each item carrying `file:line` provenance and each cluster mapping to a topic. That implementation is the documented reference for this extension; the rollout single-checkability side is specified with the decomposition chain ([08-phases-and-prds.md](/specification/phases-and-prds/)).
+**Reference implementation.** The pattern was first grown by the agent in project **defi** on a fresh start with the memo principle: a `work-items.json` whose entries carry `id / severity / cluster / area / action / status / files`, five status values (`offen · in-arbeit · verifizieren · erledigt · kein-defekt`), rendered deterministically by a `render-workitems.mjs`, each item carrying `file:line` provenance and each cluster mapping to a topic. That implementation is the documented reference for this extension; the rollout single-checkability side is specified with the decomposition chain ([08-phases-and-prds.md](/specification/phases-and-prds/)).
 
 ### The canonical field set
 
