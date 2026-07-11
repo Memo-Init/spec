@@ -6,7 +6,7 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "session/0.1.0/draft/spec/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/06-namespace-registry.md."

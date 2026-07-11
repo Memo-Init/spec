@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the memo spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: memo@0.1.0:a693d1f
+Source: memo@0.1.0:b87059b
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/00-overview.md."
@@ -123,7 +123,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/01-philosophy.md."
@@ -277,7 +277,7 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/02-memo-sop-entrypoint.md."
@@ -461,7 +461,7 @@ spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/03-input-paths.md."
@@ -542,7 +542,7 @@ spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/04-input-pipeline.md."
@@ -716,7 +716,7 @@ spec_file: "05-memo-strategies.md"
 order: 5
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/05-memo-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/05-memo-strategies.md."
@@ -787,7 +787,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/06-memo-structure.md."
@@ -986,7 +986,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/07-revisions-and-questions.md."
@@ -1293,7 +1293,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/08-phases-and-prds.md."
@@ -1316,6 +1316,51 @@ This decomposition is what makes a long memo executable: the memo is the authori
 ### Work items — the finding-level granularity below a block
 
 Below the topic-and-block level, a finalized memo's internal work is tracked as **work items**: finding-level units, deterministically stored and auto-rendered into the revisions, and — the reason they matter to execution — **individually verifiable during the rollout**, so a memo carrying hundreds-to-thousands of findings can be worked through one checkable unit at a time. Work items are an **extension of the block model**, not a parallel primitive: each binds to a topic a block already gathers (the full model, the evaluator principle, and the defi reference implementation are specified in [30-primitives.md](/specification/primitives/)). At rollout close the evaluator judges the **topic**, not the count of closed work items — closing every work item a topic spawned does not by itself prove the topic is solved. A work item's `status` moves only through a deterministic write path (`memo work-item set-status`), so its checkability during the rollout is machine-backed rather than a note in prose, and each item carries structured `{ path, lines }` provenance that makes its acceptance grep-checkable at the exact file:line it claims.
+
+### The canonical work-item field set
+
+A work item is stored **deterministically as one JSON file per item** under the memo's `_work-items/` folder (`WI-NNN.json`, ids running `WI-001+` per memo, versioned no-overwrite), and is **auto-rendered** into the revisions by a single shared renderer — `memo work-item render` — that reads the enum values *from the data* (it never re-declares them), escapes table pipes, and emits an autogenerated marker so a hand edit cannot silently diverge from the store. The field set has two levels: the **instance** carried by every item, and the **parent/group** whose shared fields are stored once and inherited at render time rather than duplicated on each item.
+
+**Instance level** — one entry per finding:
+
+| Field | Required | Meaning |
+|-------|----------|---------|
+| `id` | yes | `WI-NNN`, unique within the memo. |
+| `topicId` | yes | `T###` back-reference to an existing topic. The binding is **two-way**: the topic records the item under its own `workItemIds`, so a work item can never float free of a topic. |
+| `title` | yes | The finding text. |
+| `provenance` | yes | A **structured** array of `{ path, lines }` file:line evidence — never a flat string and never omitted, so every item's acceptance is grep-checkable at the exact location it claims. |
+| `status` | default `offen` | One of `offen` · `in-arbeit` · `erledigt`. Changed **only** through the deterministic write path (`set-status`), never by hand. |
+| `disposition` | optional | One of `verifizieren` · `kein-defekt` · `behalten` · `dokumentiert` · `auffaellig`. |
+| `dispositionNote` | conditional | The reason behind the disposition. **Mandatory** whenever `disposition` is one of the not-fixed values `auffaellig`, `kein-defekt`, or `behalten` — an anomaly, or an "not a defect" judgement, is never waved through silently: it is listed neutrally **and** carries its stated reason. |
+| `group` | optional | Pointer to the parent group whose shared fields this item inherits at render time. |
+
+**Parent/group level** — shared fields stored **once**, not repeated on each item:
+
+| Field | Meaning |
+|-------|---------|
+| `group` | The group name the instances point at. |
+| `action` | The shared fix instruction that applies to every item in the group. |
+| `changeType` | One of `neu` · `portieren` · `umverdrahten` · `stilllegen` · `migrieren` · `behalten`. |
+| `dependsOn` | A list of `WI-NNN` this group's work depends on. |
+| `effort` | One of `S` · `M` · `L`. |
+| `decisionRef` | A reference to the originating decision the group traces back to. |
+
+**No severity axis.** The core deliberately carries **no `severity` field**. Severity is a grading axis, and the model replaces it with the **neutral** axes `changeType`, `effort`, and `disposition`; where an ordering hint is ever genuinely needed it stays optional and ordering-only, never auto-graded by the agent — consistent with the guardrail that the developer, not the tool, sets priority.
+
+### The work-item CLI contract
+
+Work items are written and read through one CLI branch, `memo work-item`, whose leaves are:
+
+| Leaf | Purpose |
+|------|---------|
+| `register-group` | Create a parent group with its shared `action` / `changeType` / `effort` / `dependsOn` / `decisionRef`. |
+| `register` | Create an instance (requires `topicId` and structured `provenance`). |
+| `list` | List the work items of a memo. |
+| `set-status` | Move an item's `status` along `offen → in-arbeit → erledigt` — the sole deterministic status write path. |
+| `set-disposition` | Set `disposition`, with its mandatory `dispositionNote` for the not-fixed values. |
+| `attach-provenance` | Append `{ path, lines }` evidence to an item. |
+| `render` | Render the store into the revision table via the one shared renderer (enums read from the data, pipes escaped, autogenerated marker emitted). |
+| `topic-gate` | Apply the deterministic topic-solved gate to the evaluator's verdicts: closing every work item of a topic does not prove the topic is solved, so a fresh-context evaluator judges the topic and this leaf turns that judgement into a pass, a reported warning, or (in its hard mode) a block. |
 
 ---
 
@@ -1618,7 +1663,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/09-contamination-context-handover.md."
@@ -1761,7 +1806,7 @@ spec_file: "10-proactive-research.md"
 order: 10
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/10-proactive-research.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/10-proactive-research.md."
@@ -2064,7 +2109,7 @@ spec_file: "11-quality-and-finalization.md"
 order: 11
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/11-quality-and-finalization.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/11-quality-and-finalization.md."
@@ -2438,7 +2483,7 @@ spec_file: "12-rollout.md"
 order: 12
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/12-rollout.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/12-rollout.md."
@@ -2560,7 +2605,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/13-orchestration.md."
@@ -2845,7 +2890,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/14-agents-skills-tasks.md."
@@ -2962,7 +3007,7 @@ spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/15-prompt-generator.md."
@@ -3086,7 +3131,7 @@ spec_file: "16-git-security-versioning.md"
 order: 16
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/16-git-security-versioning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/16-git-security-versioning.md."
@@ -3369,7 +3414,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/17-git-workflow-and-ids.md."
@@ -3666,7 +3711,7 @@ spec_file: "18-multidimensionality.md"
 order: 18
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/18-multidimensionality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/18-multidimensionality.md."
@@ -3729,7 +3774,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/19-internal-vs-external-communication.md."
@@ -3911,7 +3956,7 @@ spec_file: "20-flow-full-vs-update-revisions.md"
 order: 20
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/20-flow-full-vs-update-revisions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/20-flow-full-vs-update-revisions.md."
@@ -3985,7 +4030,7 @@ spec_file: "21-human-computer-interaction.md"
 order: 21
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/21-human-computer-interaction.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/21-human-computer-interaction.md."
@@ -4158,7 +4203,7 @@ spec_file: "22-tree-cli-recommended-way.md"
 order: 22
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/22-tree-cli-recommended-way.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/22-tree-cli-recommended-way.md."
@@ -4429,7 +4474,7 @@ spec_file: "23-requirements.md"
 order: 23
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/23-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/23-requirements.md."
@@ -4802,7 +4847,7 @@ spec_file: "24-tools-registry.md"
 order: 24
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/24-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/24-tools-registry.md."
@@ -4992,7 +5037,7 @@ spec_file: "25-strands.md"
 order: 25
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/25-strands.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/25-strands.md."
@@ -5066,7 +5111,7 @@ spec_file: "26-memo-history.md"
 order: 26
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/26-memo-history.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/26-memo-history.md."
@@ -5169,7 +5214,7 @@ spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/27-landing-the-plane.md."
@@ -5269,7 +5314,7 @@ spec_file: "28-drift.md"
 order: 28
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/28-drift.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/28-drift.md."
@@ -5358,7 +5403,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/29-behavioral-guardrails.md."
@@ -5488,7 +5533,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/30-primitives.md."
@@ -5619,52 +5664,9 @@ The model has four parts:
 
 This is an **extension of the built block model**, not a new structural node: work items bind to the topics the blocks already reference. It closes the gap where an earlier work-item system ran *separate* from the block/topic store (the block model did not carry the finding-level work).
 
-**Reference implementation.** The pattern was first grown by the agent in project **defi** on a fresh start with the memo principle: a `work-items.json` whose entries carry `id / severity / cluster / area / action / status / files`, five status values (`offen · in-arbeit · verifizieren · erledigt · kein-defekt`), rendered deterministically by a `render-workitems.mjs`, each item carrying `file:line` provenance and each cluster mapping to a topic. That implementation is the documented reference for this extension; the rollout single-checkability side is specified with the decomposition chain ([08-phases-and-prds.md](/specification/phases-and-prds/)).
+**Reference implementation.** The pattern was first grown by the agent in project **defi** on a fresh start with the memo principle: a `work-items.json` whose entries carry `id / severity / cluster / area / action / status / files`, five status values (`offen · in-arbeit · verifizieren · erledigt · kein-defekt`), rendered deterministically by a `render-workitems.mjs`, each item carrying `file:line` provenance and each cluster mapping to a topic. That implementation is the documented reference for this extension.
 
-### The canonical field set
-
-A work item is stored **deterministically as one JSON file per item** under the memo's `_work-items/` folder (`WI-NNN.json`, ids running `WI-001+` per memo, versioned no-overwrite), and is **auto-rendered** into the revisions by a single shared renderer — `memo work-item render` — that reads the enum values *from the data* (it never re-declares them), escapes table pipes, and emits an autogenerated marker so a hand edit cannot silently diverge from the store. The field set has two levels: the **instance** carried by every item, and the **parent/group** whose shared fields are stored once and inherited at render time rather than duplicated on each item.
-
-**Instance level** — one entry per finding:
-
-| Field | Required | Meaning |
-|-------|----------|---------|
-| `id` | yes | `WI-NNN`, unique within the memo. |
-| `topicId` | yes | `T###` back-reference to an existing topic. The binding is **two-way**: the topic records the item under its own `workItemIds`, so a work item can never float free of a topic. |
-| `title` | yes | The finding text. |
-| `provenance` | yes | A **structured** array of `{ path, lines }` file:line evidence — never a flat string and never omitted, so every item's acceptance is grep-checkable at the exact location it claims. |
-| `status` | default `offen` | One of `offen` · `in-arbeit` · `erledigt`. Changed **only** through the deterministic write path (`set-status`), never by hand. |
-| `disposition` | optional | One of `verifizieren` · `kein-defekt` · `behalten` · `dokumentiert` · `auffaellig`. |
-| `dispositionNote` | conditional | The reason behind the disposition. **Mandatory** whenever `disposition` is one of the not-fixed values `auffaellig`, `kein-defekt`, or `behalten` — an anomaly, or an "not a defect" judgement, is never waved through silently: it is listed neutrally **and** carries its stated reason. |
-| `group` | optional | Pointer to the parent group whose shared fields this item inherits at render time. |
-
-**Parent/group level** — shared fields stored **once**, not repeated on each item:
-
-| Field | Meaning |
-|-------|---------|
-| `group` | The group name the instances point at. |
-| `action` | The shared fix instruction that applies to every item in the group. |
-| `changeType` | One of `neu` · `portieren` · `umverdrahten` · `stilllegen` · `migrieren` · `behalten`. |
-| `dependsOn` | A list of `WI-NNN` this group's work depends on. |
-| `effort` | One of `S` · `M` · `L`. |
-| `decisionRef` | A reference to the originating decision the group traces back to. |
-
-**No severity axis.** The core deliberately carries **no `severity` field**. Severity is a grading axis, and the model replaces it with the **neutral** axes `changeType`, `effort`, and `disposition`; where an ordering hint is ever genuinely needed it stays optional and ordering-only, never auto-graded by the agent — consistent with the guardrail that the developer, not the tool, sets priority.
-
-### The CLI contract
-
-Work items are written and read through one CLI branch, `memo work-item`, whose leaves are:
-
-| Leaf | Purpose |
-|------|---------|
-| `register-group` | Create a parent group with its shared `action` / `changeType` / `effort` / `dependsOn` / `decisionRef`. |
-| `register` | Create an instance (requires `topicId` and structured `provenance`). |
-| `list` | List the work items of a memo. |
-| `set-status` | Move an item's `status` along `offen → in-arbeit → erledigt` — the sole deterministic status write path. |
-| `set-disposition` | Set `disposition`, with its mandatory `dispositionNote` for the not-fixed values. |
-| `attach-provenance` | Append `{ path, lines }` evidence to an item. |
-| `render` | Render the store into the revision table via the one shared renderer (enums read from the data, pipes escaped, autogenerated marker emitted). |
-| `topic-gate` | Apply the deterministic topic-solved gate to the evaluator's verdicts: closing every work item of a topic does not prove the topic is solved, so a fresh-context evaluator judges the topic and this leaf turns that judgement into a pass, a reported warning, or (in its hard mode) a block. |
+Related: [08-phases-and-prds.md](/specification/phases-and-prds/) (the canonical field set, the CLI contract, and the rollout single-checkability side); related primitives: [Topic](#topic), [Block](#block).
 
 ---
 
@@ -5771,7 +5773,7 @@ spec_file: "31-goals.md"
 order: 31
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/31-goals.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/31-goals.md."
@@ -5880,7 +5882,7 @@ spec_file: "32-prompt-governance.md"
 order: 32
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/32-prompt-governance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/32-prompt-governance.md."
@@ -5979,7 +5981,7 @@ spec_file: "33-maintenance.md"
 order: 33
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/33-maintenance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/33-maintenance.md."
@@ -6150,7 +6152,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/34-question-interface.md."
@@ -6293,7 +6295,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/35-memo-authoring.md."
@@ -6552,7 +6554,7 @@ spec_file: "36-agent-strategies.md"
 order: 36
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/36-agent-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/36-agent-strategies.md."
@@ -6589,7 +6591,7 @@ spec_file: "37-transcript-reliability.md"
 order: 37
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/37-transcript-reliability.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/37-transcript-reliability.md."
@@ -6687,7 +6689,7 @@ spec_file: "38-stage-model.md"
 order: 38
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/38-stage-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/38-stage-model.md."
@@ -6776,7 +6778,7 @@ spec_file: "39-release-and-pinning.md"
 order: 39
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/39-release-and-pinning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/39-release-and-pinning.md."
@@ -6865,7 +6867,7 @@ spec_file: "40-diagrams.md"
 order: 40
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/40-diagrams.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/40-diagrams.md."
@@ -7072,7 +7074,7 @@ spec_file: "41-mental-model.md"
 order: 41
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/41-mental-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/41-mental-model.md."
@@ -7171,7 +7173,7 @@ spec_file: "42-plans.md"
 order: 42
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/42-plans.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/42-plans.md."
@@ -7316,7 +7318,7 @@ spec_file: "43-skill-authoring-and-quality.md"
 order: 43
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/43-skill-authoring-and-quality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/43-skill-authoring-and-quality.md."
@@ -7651,7 +7653,7 @@ spec_file: "44-repository-and-outward-docs.md"
 order: 44
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/44-repository-and-outward-docs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/44-repository-and-outward-docs.md."
@@ -8287,7 +8289,7 @@ spec_file: "45-implementation-fidelity-audit.md"
 order: 45
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "memo/0.1.0/draft/spec/45-implementation-fidelity-audit.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/45-implementation-fidelity-audit.md."
@@ -8384,7 +8386,7 @@ spec_file: "46-bridge.md"
 order: 46
 section: "Specification"
 normative: false
-generated_at: "2026-07-11T22:30:18.231Z"
+generated_at: "2026-07-11T22:48:54.882Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."

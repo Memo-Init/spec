@@ -6,7 +6,7 @@ spec_file: "06-conventions-writing.md"
 order: 6
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-11T22:30:17.205Z"
+generated_at: "2026-07-11T22:48:52.283Z"
 generated_from: "meta-spec/0.1.0/draft/spec/06-conventions-writing.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.1.0/draft/spec/06-conventions-writing.md."

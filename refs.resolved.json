@@ -7,7 +7,7 @@
             "0.1.0"
         ],
         "specDir": "memo/0.1.0/draft/spec",
-        "specId": "memo@0.1.0:a693d1f",
+        "specId": "memo@0.1.0:b87059b",
         "edges": [
             {
                 "target": "session",
@@ -31,7 +31,7 @@
         "recommendedRelease": "0.1.0",
         "specDir": "workbench/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/workbench/overview/",
-        "specId": "workbench@0.1.0:a693d1f",
+        "specId": "workbench@0.1.0:b87059b",
         "edges": [
             {
                 "target": "session",
@@ -50,7 +50,7 @@
         "recommendedRelease": "0.1.0",
         "specDir": "session/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/session/overview/",
-        "specId": "session@0.1.0:a693d1f",
+        "specId": "session@0.1.0:b87059b",
         "edges": []
     },
     "meta-spec": {
@@ -58,7 +58,7 @@
         "recommendedRelease": "0.1.0",
         "specDir": "meta-spec/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/spec/overview/",
-        "specId": "meta-spec@0.1.0:a693d1f",
+        "specId": "meta-spec@0.1.0:b87059b",
         "edges": []
     },
     "docs": {
@@ -84,8 +84,8 @@
         ]
     },
     "generated": {
-        "at": "2026-07-11T22:30:15.972Z",
-        "fromCommit": "a693d1fc001be65619b7d92b38b76f2f96bf9633",
+        "at": "2026-07-11T22:48:50.731Z",
+        "fromCommit": "b87059bc7256f443b49ae3a1191d04c5a3a10ddc",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {
