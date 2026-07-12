@@ -157,6 +157,18 @@ This chapter is spec-first: it **describes** the migration as the intended one-t
 
 ---
 
+## Carrier Harmonization (Memo 049) — One Carrier
+
+Memo 049 left an open tension: the SOP trägerschaft — *who is registered, what they own, and which edges gate* — appeared to have **two** carriers, `.workbench/registry.json` (`skills[]` / `addons[]` / `requirements[]`) at the workbench tier and the session `sops[]` blocks here. Two carriers for one fact is precisely the drift source the config-single-source rule exists to remove, so the tension resolves to **exactly one carrier**:
+
+- **The single authored carrier is the session `sops[]` set** in `.session/config.json`. It is the one source of truth for registration (namespaces, owners, tiers), the skills a namespace contributes, and the `requires[]` / `requirements[]` edges. The move-down migration above is what makes this true at the live gate: the registration fact lives at the session tier, not the workbench tier.
+- **`.workbench/registry.json` is not a parallel authored carrier.** After the one-time move it is either **removed** (its content having folded into the session config) or, where the workbench tier still needs a discovery surface, it is a **generated read-projection** over the session `sops[]` — filtered to the workbench-tier blocks — never a second hand-authored source. A projection is regenerated from the carrier; it is never edited to lead it.
+- **The file the workbench spec still names is described, not re-authored.** The workbench CLI chapter continues to name `.workbench/registry.json` as the workbench-tier *discovery view* ([20-cli.md](/workbench/cli/)); this section fixes its **status** — a projection of the one carrier, not a co-equal source. No live config is touched here; this is the normative decision the later carrier-migration code implements.
+
+The rule generalizes the no-dual-read guarantee from the single REQ-061 edge to the whole carrier: one authored source, and any second surface a generated projection of it.
+
+---
+
 ## The env File Naming Schema — `<name>.<stage>.env`
 
 Beside the resolved `config.json`, a location's **environment files** carry the stage-specific

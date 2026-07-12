@@ -6,7 +6,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "memo/0.1.0/draft/spec/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/14-agents-skills-tasks.md."
@@ -60,6 +60,21 @@ The word "subagent" carries two readings that MUST be kept apart so they do not 
 - **Technical meaning (precise).** Technically, "subagent" is **only type (a)** — the ephemeral, fresh-context, one-shot form. Types (b) and (c) are a persistent agent and a workflow, not subagents in the strict sense.
 
 When this spec says "subagent" in a mechanism context it means type (a); when it describes delegation from the user's perspective it means the broad, type-agnostic sense. The distinction is named here so the two never silently merge.
+
+---
+
+## Primitives, Roles, and the Outer Boundary
+
+The three execution primitives above are *mechanisms*; the harness registry's `roles{}` contract ([meta-spec/10-harness-registry.md](/spec/harness-registry/)) is the *tool surface* those mechanisms run under. The two compose: a running context is one primitive **and** one role at once.
+
+| Running context | Primitive | Harness role (`roles{}`) |
+|-----------------|-----------|--------------------------|
+| The interactive top-level loop the user drives | — (the host session) | `user` |
+| The Lead / rollout orchestrator coordinating a team | persistent agent (b), or the host | `orchestrator` |
+| A Worker / fresh-context Evaluator on one scoped unit | ephemeral sub-agent (a) | `worker` |
+| A Dynamic Workflow runner script fanning out agents | deterministic workflow (c) | `orchestrator` (the script coordinates; each spawned unit is a `worker`) |
+
+**The single real outer boundary.** Every one of these runs **inside one harness process** and shares its trust envelope — an in-process sub-agent, however deeply nested (depth ≤ 5, above), is still the same harness invocation. The **only** place a genuinely external, separately-bounded session begins is an **external `claude -p` / SDK invocation**: a new harness process with its own genesis root and its own bounded profile ([session/01-genesis-root.md](/session/genesis-root/)). That boundary — not the sub-agent tree — is where role assignment stops and a fresh, independently-bounded session starts. How a running context is classified into a role, and how such an external session is detected as a non-role, is specified normatively in [meta-spec/10-harness-registry.md](/spec/harness-registry/).
 
 ---
 

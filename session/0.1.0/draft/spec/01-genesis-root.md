@@ -68,6 +68,8 @@ A session is one of three **named types**, and the type — not a self-granted l
 
 Each type maps to **exactly one** security profile — privilege is not negotiated per call within a type. The three types obey the same **monotonicity** rule as the self-label above: a session may move to a *more* restricted profile, but it can never label or spawn itself into *more* privilege than it was started with.
 
+**Session type → harness role.** Each session type also maps to exactly one of the three harness-contract roles the harness registry defines (`roles{}` in [meta-spec/10-harness-registry.md](/spec/harness-registry/)): a **User session** runs as the `user` role (the interactive surface), an **Orchestrator session** as the `orchestrator` role (coordination), and a **Subagent-spawn session** as the `worker` role (scoped execution). This mapping is the seam between the two layers: the session *type* fixes the trust profile **here**, and the harness *role* fixes the tool surface **there** — the registry owns the per-role tool deltas, this tier owns the trust anchor, and neither restates the other. An **external `claude -p` / SDK invocation** is not one of these three internal types: it is a separate harness process that opens its own genesis root with its own bounded profile, and is detected as an outer-boundary session rather than mapped onto an in-process role (the boundary is specified in [meta-spec/10-harness-registry.md](/spec/harness-registry/) and named in [memo/14-agents-skills-tasks.md](/specification/agents-skills-tasks/)).
+
 ---
 
 ## The Per-Session Security Level

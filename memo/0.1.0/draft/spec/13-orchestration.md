@@ -41,6 +41,8 @@ The **Model capability** column expresses role requirements, not product names. 
 
 Phase execution is **agent-team based, not script-driven.** The default execution path is for the Lead to **spawn one Worker per PRD** in its own context — this is the wired default of an agent phase, not an optional "may use agents" suggestion. The model-driven fan-out (the Lead deciding per turn over a handful of parallel sub-agents) is reserved for **research only** (see *Research Fan-Out vs Agents* below); everything else, phase execution above all, runs as the Lead/Worker/Evaluator/Phase-Evaluator team.
 
+**The Tools column is a view, not the source.** The per-role tool lists in the table are a human-readable summary; the **normative** tool surface is the harness **`toolContract`** — one shared `core.required[]` plus per-role deltas (`roles{}`) — defined in the harness registry ([meta-spec/10-harness-registry.md](/spec/harness-registry/)). The team roles bind to its three contract roles: the **Lead** runs as the `orchestrator` role (which adds the coordination tools `Agent` / `SendMessage` / `Workflow`), each **Worker** as the `worker` role (adds `StructuredOutput`, removes the coordination tools), and the fresh-context **Evaluator** / **Phase Evaluator** as a read-scoped `worker`. When the contract changes, this column follows the descriptor; the descriptor is never edited to match the column.
+
 ---
 
 ## Agent-Naming Schema

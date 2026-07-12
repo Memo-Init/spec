@@ -10,9 +10,9 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ---
 
-## The Session-Tier Config Is the Entry Point
+## The Registry Is the Entry Point — Read from `.workbench/` Today, Migrating to the Session Tier
 
-The machine-readable form of the SOP chain is a **registry**, and its entry point is the project-local **`.session/config.json`** — the session-tier home the hook reads ([05-config-cascade.md](./05-config-cascade.md)). The config carries the registrant blocks and the when:pre edges as two top-level structures (`sops[]` + `requirements[]`, [06-namespace-registry.md](./06-namespace-registry.md)). The pre-gate edge that is active in this version is the single project-scoped `memo-init → memo-sop`:
+The machine-readable form of the SOP chain is a **registry** of registrant blocks and `when:pre` edges (`sops[]` + `requirements[]`, [06-namespace-registry.md](./06-namespace-registry.md)). **The armed gate reads that registry from the workbench tier — `.workbench/registry.json` — united with the machine-global genesis registry.** That union is the current Ist, and this chapter describes the hook as it actually behaves, never a home the code has not yet moved to. The pre-gate edge active in this version is the single project-scoped `memo-init → memo-sop`:
 
 ```json
 { "sops": [ { "namespace": "memo", "owner": "memo-init", "tier": 2, "requires": [],
@@ -22,11 +22,11 @@ The machine-readable form of the SOP chain is a **registry**, and its entry poin
                       "requires": "memo-sop", "when": "pre" } ] }
 ```
 
-The config moves the entry point **one tier down** from the former workbench home (`.workbench/registry.json`) to the session tier; the move is a **one-time migration** carried by `session init`, not a dual-read ([05-config-cascade.md](./05-config-cascade.md), [07-doctor-init.md](./07-doctor-init.md)). A machine-global registry at `~/.claude/session/registry.json` (the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is a follow-up. The config is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](./03-recovery.md)).
+**Migration, not dual-read, not a third home.** The registry's declared destination is **one tier down**, at the session-tier `.session/config.json` — a **one-time migration** carried by `session init` ([05-config-cascade.md](./05-config-cascade.md), [07-doctor-init.md](./07-doctor-init.md)), after which the hook reads the session home and the workbench copy is retired. **Until that migration has run, the hook reads `.workbench/registry.json`, and this spec MUST NOT claim `.session/config.json` is read while it is not** — the spec tracks the Ist hook, never a target the code has not yet reached. There is deliberately **no dual-read and no third registry home**: the read set is exactly {`.workbench/registry.json`} ∪ {the machine-global genesis registry}, and the session-tier file **replaces** — never adds to — the workbench home once the migration lands. A machine-global registry at `~/.claude/session/registry.json` (the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is the same follow-up migration, not a parallel source. The registry is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](./03-recovery.md)).
 
 **The SOP read-chain is normative.** The chain a memo entry point sits behind is `session-sop → memo-sop → memo-init`: the session genesis root is the parent every layer reads first, `memo-sop` extends it, and `memo-init` is gated behind `memo-sop`. Under the flat topology (F2=A) `workbench-sop` is a **sibling** extension of the session — **not** a link between session and memo — so it is deliberately absent from this chain ([06-namespace-registry.md](./06-namespace-registry.md)). Only the `memo-init → memo-sop` edge (REQ-061) is armed in this version; the `session-sop → memo-sop` parent edge is *declared now, enforced when present* ([01-genesis-root.md](./01-genesis-root.md)). The chain is worth gating because reading `memo-sop` first measurably improves the work — on the order of a ~20 % lift ([ANNAHME] — a working estimate, not yet a measured figure).
 
-**Absence is fail-open and LOUD.** When `.session/config.json` is absent the gate MUST treat it as a configuration problem that **fails open** (ALLOW, exit 0) — never a lockout — while emitting a **loud SessionStart warning** so the missing config is noticed rather than silently tolerated (REQ-SS-CONFIG-LOUD). Enforcement deliberately starts **permissive**: warn first, tighten later. The strict, refusing posture lives in the foreground `session doctor` / `session init` ([07-doctor-init.md](./07-doctor-init.md)), not in the always-on hook.
+**Absence is fail-open and LOUD.** When the registry the gate reads (`.workbench/registry.json` today; `.session/config.json` after the migration) is absent the gate MUST treat it as a configuration problem that **fails open** (ALLOW, exit 0) — never a lockout — while emitting a **loud SessionStart warning** so the missing config is noticed rather than silently tolerated (REQ-SS-CONFIG-LOUD). Enforcement deliberately starts **permissive**: warn first, tighten later. The strict, refusing posture lives in the foreground `session doctor` / `session init` ([07-doctor-init.md](./07-doctor-init.md)), not in the always-on hook.
 
 ---
 
@@ -54,7 +54,7 @@ The decision table the reference hook MUST implement:
 |-----------|--------|------|
 | disable switch set (`$SESSION_SOP_DISABLE` or the sentinel) | ALLOW | 0 |
 | tool ≠ `Skill` | ALLOW | 0 |
-| `.session/config.json` absent | ERROR (fail-open) + LOUD SessionStart warning | 0 |
+| the registry the hook reads (`.workbench/registry.json` today) absent | ERROR (fail-open) + LOUD SessionStart warning | 0 |
 | `jq` missing · `transcript_path` empty/unreadable · config malformed | ERROR (fail-open) | 0 |
 | `transcript_path` is a subagent transcript (`…/subagents/agent-*.jsonl`) | ALLOW (carve-out) | 0 |
 | the entry point is not gated by a when:pre edge | ALLOW | 0 |
@@ -125,7 +125,7 @@ flowchart TD
 | Requirement | Statement |
 |-------------|-----------|
 | **REQ-SS-FAILOPEN** | Any infra/config problem ⇒ ALLOW (exit 0) with a stderr note. Never deny on trouble. |
-| **REQ-SS-CONFIG-LOUD** | An absent `.session/config.json` ⇒ ALLOW (fail-open) **and** a loud SessionStart warning; enforcement starts permissive, strict checks live in `session doctor`. |
+| **REQ-SS-CONFIG-LOUD** | An absent registry (the `.workbench/registry.json` the hook reads today; `.session/config.json` after the `session init` migration) ⇒ ALLOW (fail-open) **and** a loud SessionStart warning; enforcement starts permissive, strict checks live in `session doctor`. |
 | **REQ-SS-SIGNAL** | The predecessor signal is matched jq-structured on `attributionSkill`, never as a substring. |
 | **REQ-SS-EDGEVALID** | An edge to a non-installed skill fails open; a build-time `registry-validate` MAY refuse it. |
 | **REQ-SS-SUBAGENT** | A subagent transcript is carved out (ALLOW) — it carries no parent attribution chain. |
@@ -203,14 +203,14 @@ The governing safety contract — never a lockout on trouble — is also a hard 
 {
   "id": "REQ-984",
   "title": "Infra and config faults fail open and LOUD, never a lockout",
-  "statement": "Any infrastructure or configuration problem — an absent or malformed `.session/config.json`, a missing `jq`, an empty or unreadable transcript path, or an edge to a not-installed skill — MUST fail OPEN (ALLOW, exit 0 with a stderr note) and MUST NEVER produce a lockout. An absent `.session/config.json` additionally emits a LOUD SessionStart warning so the missing entry point is noticed rather than silently tolerated.",
+  "statement": "Any infrastructure or configuration problem — an absent or malformed registry (the `.workbench/registry.json` the hook reads today, `.session/config.json` after the `session init` migration), a missing `jq`, an empty or unreadable transcript path, or an edge to a not-installed skill — MUST fail OPEN (ALLOW, exit 0 with a stderr note) and MUST NEVER produce a lockout. An absent registry file additionally emits a LOUD SessionStart warning so the missing entry point is noticed rather than silently tolerated.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "enforcement", "fail-open"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
     "assertions": [
       "Each infra/config fault (absent or malformed config, missing jq, unreadable transcript, dangling edge) resolves to ALLOW with exit 0 and a stderr note",
-      "An absent .session/config.json additionally surfaces a loud SessionStart warning",
+      "An absent registry file the hook reads additionally surfaces a loud SessionStart warning",
       "No infra/config fault path can reach a DENY"
     ]
   },
@@ -288,7 +288,7 @@ Whether the policy-checkpoint branch only ever redirects (never hard-locks, neve
 ## Related
 
 - [03-recovery.md](./03-recovery.md) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
-- [05-config-cascade.md](./05-config-cascade.md) — the `.session/config.json` entry point the gate reads, and the migration that puts it there.
+- [05-config-cascade.md](./05-config-cascade.md) — the registry entry point and the `session init` migration that will move it from `.workbench/registry.json` to the session-tier `.session/config.json`.
 - [07-doctor-init.md](./07-doctor-init.md) — the foreground `session doctor` / `session init` that carry the strict checks the hook deliberately omits.
 - [08-identity-pin.md](./08-identity-pin.md) — the SessionStart-Pin the gate reads instead of a live `cwd`.
 - [workbench/23-hooks-contract.md](/workbench/hooks-contract/) — the workbench-side statement of the same PreToolUse contract.

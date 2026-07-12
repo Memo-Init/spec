@@ -1,0 +1,60 @@
+{
+    "required": [
+        "Bash",
+        "Read",
+        "Write",
+        "Edit",
+        "Skill",
+        "ToolSearch"
+    ],
+    "roles": {
+        "orchestrator": {
+            "add": [
+                "Agent",
+                "SendMessage",
+                "Workflow"
+            ],
+            "remove": [],
+            "taskCrud": {
+                "mode": "gate-dependent",
+                "note": "Task-CRUD is time-variant (T038): present up to 2026-07-09, null from 2026-07-10. The pre-flight Probe decides per session, so it is a gate-dependent marker rather than a hard core/add entry."
+            }
+        },
+        "worker": {
+            "add": [
+                "StructuredOutput"
+            ],
+            "remove": [
+                "Agent",
+                "TaskCRUD"
+            ]
+        },
+        "user": {
+            "add": [
+                "AskUserQuestion"
+            ],
+            "remove": []
+        }
+    },
+    "generatedFrom": "claude-code@2.1.206@ac7a6434756d",
+    "reconcile": {
+        "inventoryCount": 42,
+        "requiredCount": 6,
+        "requiredMatched": [
+            "Bash",
+            "Edit",
+            "Read",
+            "Skill",
+            "ToolSearch",
+            "Write"
+        ],
+        "requiredMissing": [],
+        "roleMarkers": [
+            "StructuredOutput",
+            "TaskCRUD"
+        ],
+        "roleUnexpected": [],
+        "clean": true
+    },
+    "generatedAt": "2026-07-11T23:30:58.144Z"
+}

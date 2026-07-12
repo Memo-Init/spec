@@ -115,13 +115,13 @@ _(no skill dependencies declared in this family)_
 
 ### Folders
 
-- [16-context](./16-context.md) — `workbench-context`, `workbench-tmp`
 - [15-repos](./15-repos.md) — `workbench-repos`
-- [21-environment-scripts](./21-environment-scripts.md) — `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation`
-- [19-tmp](./19-tmp.md) — `workbench-tmp`
-- [32-trash](./32-trash.md) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
+- [16-context](./16-context.md) — `workbench-context`, `workbench-tmp`
 - [17-memo-store](./17-memo-store.md) — `workbench-memo-store`
+- [19-tmp](./19-tmp.md) — `workbench-tmp`
+- [21-environment-scripts](./21-environment-scripts.md) — `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation`
 - [26-addons](./26-addons.md) — `workbench-addons`, `workbench-skills-scope`
+- [32-trash](./32-trash.md) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
 - [33-flowmcp](./33-flowmcp.md) — _— no implementer skill yet —_
 
 ### CLI & Scripts
@@ -135,9 +135,9 @@ _(no skill dependencies declared in this family)_
 
 ### Wiki
 
-- [30-wiki](./30-wiki.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup`
 - [13-knowledge-format-okf](./13-knowledge-format-okf.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`
 - [18-design](./18-design.md) — `workbench-design`
+- [30-wiki](./30-wiki.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup`
 
 ### Core
 

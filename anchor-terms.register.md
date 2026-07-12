@@ -5,9 +5,9 @@
 > policy-block adjunct of the meta-spec anchor-term convention (`06-conventions-writing.md`),
 > not a new registry primitive.
 
-Provenance: generated from commit `cf2f2785fe33e4b994c4e16d2e044655d136764c`.
+Provenance: generated from commit `317b4e88b69f94e8f0dd62b9ce621d549cf03377`.
 
-**11** anchor terms, registered under `/session/namespace-registry/`.
+**14** anchor terms, registered under `/session/namespace-registry/`.
 
 | id | label | owning chapter | version |
 |----|-------|----------------|---------|
@@ -22,6 +22,9 @@ Provenance: generated from commit `cf2f2785fe33e4b994c4e16d2e044655d136764c`.
 | `AT-requirement` | **Requirement** | memo / 23-requirements | 1.0.0 |
 | `AT-tool` | **Tool** | memo / 24-tools-registry | 1.0.0 |
 | `AT-plan` | **Plan** | memo / 42-plans | 1.0.0 |
+| `AT-role-user` | **User Role** | meta-spec / 10-harness-registry | 1.0.0 |
+| `AT-role-orchestrator` | **Orchestrator Role** | meta-spec / 10-harness-registry | 1.0.0 |
+| `AT-role-worker` | **Worker Role** | meta-spec / 10-harness-registry | 1.0.0 |
 
 ---
 
@@ -111,4 +114,28 @@ Provenance: generated from commit `cf2f2785fe33e4b994c4e16d2e044655d136764c`.
 - **Not:** NOT a replacement for the per-memo stage model — a plan nests the four stages per carried memo; and phase order stays the memo's to decide (memo authority).
 - **Owning chapter:** memo / 42-plans (AT2)
 - **Known mis-labels:** `roadmap`, `project`, `backlog`
+- **Version:** 1.0.0
+
+### User Role — `AT-role-user`
+
+- **Definition:** The interactive role in the harness tool-contract roles{} (10-harness-registry): the surface a developer drives directly; it adds the interaction tool to core.required[] and is the top-level trust reference the other two roles are bounded under.
+- **Not:** NOT the same as a 'User session' type — the role is the tool-contract delta in roles.user, while the session type is the session-tier classification that anchors trust; and NOT a self-granted privilege.
+- **Owning chapter:** meta-spec / 10-harness-registry (AT2)
+- **Known mis-labels:** `interactive agent`, `human`, `operator`
+- **Version:** 1.0.0
+
+### Orchestrator Role — `AT-role-orchestrator`
+
+- **Definition:** The coordinating role in the harness tool-contract roles{} (10-harness-registry): it adds the coordination tools to core.required[] and carries the gate-dependent taskCrud marker; it runs work on the user's behalf and MUST NOT exceed the user's trust level.
+- **Not:** NOT a new authority — the orchestrator is the user's context continued into coordination, bounded by monotonicity, never a separate higher privilege; and NOT the same as the agent-team 'Lead' name (13-orchestration), which is one deployment of this role.
+- **Owning chapter:** meta-spec / 10-harness-registry (AT2)
+- **Known mis-labels:** `lead`, `coordinator`, `manager`
+- **Version:** 1.0.0
+
+### Worker Role — `AT-role-worker`
+
+- **Definition:** The scoped-execution role in the harness tool-contract roles{} (10-harness-registry): it adds structured-output and removes the coordination tools, executing one bounded unit of work in an isolated context.
+- **Not:** NOT an orchestrator — a worker cannot coordinate a team or spawn one; and NOT a persistent identity — a worker is a scoped, one-unit execution, bounded below the orchestrator that started it.
+- **Owning chapter:** meta-spec / 10-harness-registry (AT2)
+- **Known mis-labels:** `subagent`, `executor`, `agent`
 - **Version:** 1.0.0

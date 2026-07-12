@@ -6,7 +6,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "workbench/0.1.0/draft/spec/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.1.0/draft/spec/22-config.md."
@@ -62,7 +62,9 @@ The facing classification is the configuration's core, but `.workbench/` is the 
 - **`folder-lints.json`** — the project-local map that drives the write-time content lint: each entry binds a folder and filename pattern to a linter and a severity, and a single global hook consumes the map ([23-hooks-contract.md](/workbench/hooks-contract/)).
 - **`registry.json`** — the machine-readable form of the SOP signpost ([02-sop-entrypoint.md](/workbench/sop-entrypoint/)): the list of skills, custom folders, and requirements (with the signals that prove each ran) that the runtime call-validation searches against. Its **structure is defined once in [20-cli.md](/workbench/cli/)**, the single structural owner; this chapter only records that the file lives under `.workbench/`, is manual, and is one of the project's declared files. Its `requirements[]` with `when: "pre"` is the **manual dependency table** the precondition chain reads — the declared `entrypoint → requires` edges. This is what makes "no skill X without prerequisite Y, deterministically" expressible: the pre-gate hook resolves these edges before an entry point runs ([23-hooks-contract.md](/workbench/hooks-contract/)), while the `when: "post"` edges feed the after-the-fact matrix ([20-cli.md](/workbench/cli/)).
 
-Like the facing configuration, both are **manual** — never silently generated or overwritten.
+- **`command-sops.json`** — the **command→SOP matrix**: the declared edges that bind a shell **command class** to the **umbrella SOP** ([session · namespace-registry](/session/namespace-registry/)) that MUST have been read before a command of that class runs. Each entry is form-identical to a `folder-lints.json` entry — `{ class, pattern, requires }` — and one global command-class hook reads the map ([23-hooks-contract.md](/workbench/hooks-contract/)) rather than carrying the edges hardcoded as in-script matchers. It MAY equivalently live as a `commands[]` array inside `registry.json`; either way it is declared data the hook reads, never code.
+
+Like the facing configuration, all three are **manual** — never silently generated or overwritten.
 
 ---
 
@@ -107,7 +109,7 @@ Whether the configuration was authored by hand and never silently overwritten is
 {
   "id": "REQ-960",
   "title": "The project configuration is manual, never silently generated",
-  "statement": "The `.workbench/` configuration — the facing status, `folder-lints.json`, and `registry.json` — MUST be written and maintained by hand and MUST NOT be silently auto-generated or overwritten. Where tooling assists, it proposes a change for the developer to accept; a process records a repository's status, it does not infer it from the repository's current git state.",
+  "statement": "The `.workbench/` configuration — the facing status, `folder-lints.json`, `registry.json`, and the `command-sops.json` command→SOP matrix — MUST be written and maintained by hand and MUST NOT be silently auto-generated or overwritten. Where tooling assists, it proposes a change for the developer to accept; a process records a repository's status, it does not infer it from the repository's current git state.",
   "scope": { "repos": [], "categories": ["workbench"], "tags": ["config", "no-auto-write"] },
   "severity": "warning",
   "check": {

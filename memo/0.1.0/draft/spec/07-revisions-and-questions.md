@@ -111,6 +111,12 @@ The implementation MUST use Update-Revision mode when:
 
 In Update-Revision mode, the implementation appends or replaces only the affected items. Unchanged sections, answered questions, and prior preamble content are carried forward verbatim or referenced by revision number rather than re-emitted.
 
+### Open Questions Carry Forward in Full
+
+An Update-Revision appends or replaces *chapter* content, but it MUST NOT thin out the open-question set. Every revision — Full **and** Update — MUST carry the **complete set of still-open questions** in its `questions-json` block, not merely the questions that are new since the prior revision. An open question leaves the set by exactly one path: it is **answered** and moves to the `## Answered Questions` records. It MUST NOT leave the set by silent omission. Carrying only the delta breaks continuity — a downstream reader (and the viewer, which renders the current revision's block) sees a shrunken set and the earlier open questions become invisible even though no decision was recorded for them.
+
+Because the current block is thus always complete, the viewer keeps rendering "the newest block" and is correct. A **non-blocking viewer-lint (`WARN-010`)** guards the rule: when a revision's open-question set shrinks relative to its predecessor **without** a matching gain in answered questions, the shrink is unaccounted for and the viewer surfaces a warning. The lint never blocks; it makes a broken carry-forward visible rather than letting open questions vanish quietly.
+
 ### Decision Criteria Summary
 
 | Signal | Mode |

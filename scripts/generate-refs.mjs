@@ -103,20 +103,6 @@ const main = async () => {
         process.exit( 1 )
     }
 
-    // Memo 064 B3 (F9=A): every family head authors an `edges` array (its requires/references
-    // dependency graph, Kap "Declaring Family Responsibility"). Assert it is present as an array so a
-    // missing/malformed graph fails the build loud rather than being silently defaulted to empty —
-    // the aggregate then MIRRORS this authored array verbatim (below), so the site can thread and
-    // display the graph without re-deriving it.
-    const graphless = families.filter( ( f ) => Array.isArray( f.head.edges ) === false )
-    if( graphless.length > 0 ) {
-        graphless.forEach( ( f ) => {
-            console.error( `[ERROR] ${ f.family } head is missing an "edges" array — cannot mirror the dependency graph` )
-        } )
-        console.error( '[ERROR] Aborting refs.resolved.json generation. Manual review required.' )
-        process.exit( 1 )
-    }
-
     const resolved = {
         ...manual,
         generated: {
@@ -131,10 +117,8 @@ const main = async () => {
     }
 
     // Additive propagation into each family block (generated/validation blocks stay untouched).
-    // `edges` is a verbatim mirror of the authored family-head array (asserted above) — the aggregate
-    // becomes the single place the site's fetch-refs reads BOTH the identifier and the dependency graph.
     families.forEach( ( f ) => {
-        resolved[ f.family ] = { ...resolved[ f.family ], specId: f.specId, edges: f.head.edges }
+        resolved[ f.family ] = { ...resolved[ f.family ], specId: f.specId }
     } )
 
     await mkdir( dirname( RESOLVED_PATH ), { recursive: true } )

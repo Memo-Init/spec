@@ -67,10 +67,18 @@
         },
         {
             "id": "bridge",
-            "label": "Bridge",
+            "label": "bridge",
             "order": 7,
             "pages": [
                 "16-bridge"
+            ]
+        },
+        {
+            "id": "memory",
+            "label": "memory",
+            "order": 8,
+            "pages": [
+                "17-memory"
             ]
         }
     ],

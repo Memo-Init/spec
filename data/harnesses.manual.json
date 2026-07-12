@@ -1,0 +1,14 @@
+{
+    "schemaVersion": "harnesses/1.0.0",
+    "note": "Curated registry of harness descriptors. Vorbild: data/refs.manual.json. Not registered = not built — an on-disk data/harnesses/**/harness.json that no entry here points at is inert.",
+    "harnesses": {
+        "claude-code@2.1.206": {
+            "harnessId": "claude-code",
+            "version": "2.1.206",
+            "descriptor": "data/harnesses/claude-code/2.1.206/harness.json",
+            "pair": null,
+            "pairNote": "The (harness, config) pair claude-code@2.1.206:<configShortSha> is stamped once a config snapshot is stable (maintenance act), not at first registration.",
+            "registeredAt": "2026-07-10"
+        }
+    }
+}

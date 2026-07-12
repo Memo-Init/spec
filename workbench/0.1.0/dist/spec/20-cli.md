@@ -6,7 +6,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "workbench/0.1.0/draft/spec/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.1.0/draft/spec/20-cli.md."
@@ -46,6 +46,8 @@ Discovery and preconditions are **unified in one file**. The same `registry.json
 - **"What must run first?"** — the `requirements[]` array, with its `when: "pre" | "post"` timing.
 
 This is the same registry whose shape, signals, and pre/post split are specified below; here it is named as the *discovery* source, not only the *validation* source.
+
+**Discovery view vs the SOP carrier.** This "single discovery source" claim is scoped to the **workbench tier's discovery surface** — what CLIs, skills, and folders this workbench exposes. It is **not** the authoritative carrier of SOP trägerschaft (namespaces, owners, and gating edges): that single carrier is the session `sops[]` set in `.session/config.json` ([session/05-config-cascade.md](/session/config-cascade/), *Carrier Harmonization*, Memo 049). After the session-tier move-down, `.workbench/registry.json` is a **generated read-projection** of that carrier — the workbench-tier view over it — never a co-equal second source. Discovery reads the projection; registration lives in the one carrier.
 
 `npm link` and the registry play different roles and **MUST NOT** be conflated. Linking is **only the registration mechanism** (see [`npm link` Is Only a Registration Mechanism](#npm-link-is-only-a-registration-mechanism)) — it puts a CLI on the path. The registry is what makes that CLI **discoverable** as a declared part of the workbench. **Registration ≠ discovery:** a linked binary the registry does not list is on the path but is not part of the discoverable workbench surface.
 

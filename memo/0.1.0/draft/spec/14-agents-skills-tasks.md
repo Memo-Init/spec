@@ -56,6 +56,21 @@ When this spec says "subagent" in a mechanism context it means type (a); when it
 
 ---
 
+## Primitives, Roles, and the Outer Boundary
+
+The three execution primitives above are *mechanisms*; the harness registry's `roles{}` contract ([meta-spec/10-harness-registry.md](/spec/harness-registry/)) is the *tool surface* those mechanisms run under. The two compose: a running context is one primitive **and** one role at once.
+
+| Running context | Primitive | Harness role (`roles{}`) |
+|-----------------|-----------|--------------------------|
+| The interactive top-level loop the user drives | — (the host session) | `user` |
+| The Lead / rollout orchestrator coordinating a team | persistent agent (b), or the host | `orchestrator` |
+| A Worker / fresh-context Evaluator on one scoped unit | ephemeral sub-agent (a) | `worker` |
+| A Dynamic Workflow runner script fanning out agents | deterministic workflow (c) | `orchestrator` (the script coordinates; each spawned unit is a `worker`) |
+
+**The single real outer boundary.** Every one of these runs **inside one harness process** and shares its trust envelope — an in-process sub-agent, however deeply nested (depth ≤ 5, above), is still the same harness invocation. The **only** place a genuinely external, separately-bounded session begins is an **external `claude -p` / SDK invocation**: a new harness process with its own genesis root and its own bounded profile ([session/01-genesis-root.md](/session/genesis-root/)). That boundary — not the sub-agent tree — is where role assignment stops and a fresh, independently-bounded session starts. How a running context is classified into a role, and how such an external session is detected as a non-role, is specified normatively in [meta-spec/10-harness-registry.md](/spec/harness-registry/).
+
+---
+
 ## Migration Boundary
 
 Evaluators are the natural first candidates for agent form because the empty-context rule already requires them to run in a fresh, isolated context (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)) — they are agents in everything but form.

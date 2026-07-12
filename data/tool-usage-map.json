@@ -1,0 +1,113 @@
+{
+    "note": "usedBy line-evidence harvested by wordwise grep -rn over repos/core/skills/ (T026 part b, snapshot 2026-07-10). Every key is a member of tool-inventory.json (the 42-tool snapshot).",
+    "playwrightNote": "Playwright-MCP (browser_*) is used by memo-rollout (Werkzeug-Check), memo-rollout-evaluate:151/527 (UI-check, degrades to SKIPPED when absent), research-scrape-docs:88-89 and image-pencil-playwright-diff:46-47. It is CONDITIONAL (critical only for UI memos, when-axis memo-finalize:516-517). It is NOT keyed in tools[] because browser_* are MCP tools, not entries of the 42-tool harness inventory.",
+    "tools": {
+        "TaskCreate": {
+            "usedBy": [
+                { "skill": "memo/memo-rollout/SKILL.md", "line": 226 },
+                { "skill": "memo/memo-rollout-execute/SKILL.md", "line": 106 },
+                { "skill": "memo/memo-phase-execute/SKILL.md", "line": 64 },
+                { "skill": "memo/memo-finalize/SKILL.md", "line": 85 }
+            ],
+            "critical": true,
+            "criticalNote": "Task-hierarchy is a mandatory orchestrator step (14 skill files). Absence is degraded state-file-first (state.json carries recovery), so the probe treats it as gate-dependent, not a hard stop."
+        },
+        "TaskUpdate": {
+            "usedBy": [
+                { "skill": "memo/memo-rollout-execute/SKILL.md", "line": 115 },
+                { "skill": "memo/memo-phase-execute/SKILL.md", "line": 70 },
+                { "skill": "memo/memo-phase-evaluate/SKILL.md", "line": 48 },
+                { "skill": "memo/memo-rollout-evaluate/SKILL.md", "line": 56 }
+            ],
+            "critical": true,
+            "criticalNote": "The status machine of phases/PRDs (8 skill files). Same gate-dependent degradation as TaskCreate."
+        },
+        "Bash": {
+            "usedBy": [
+                { "skill": "memo/memo-rollout/SKILL.md", "line": 172 },
+                { "skill": "memo/memo-finalize/SKILL.md", "line": 506 },
+                { "skill": "memo/memo-phase-execute/SKILL.md", "line": 593 },
+                { "skill": "memo/memo-rollout-execute/SKILL.md", "line": 486 }
+            ],
+            "critical": true,
+            "criticalNote": "The whole execution — worktrees, gates, git. Layer-A deterministically checkable."
+        },
+        "Agent": {
+            "usedBy": [
+                { "skill": "memo/memo-rollout/SKILL.md", "line": 174 },
+                { "skill": "memo/memo-phase-execute/SKILL.md", "line": 35 },
+                { "skill": "memo/memo-rollout-execute/SKILL.md", "line": 134 },
+                { "skill": "memo/memo-input-processing/SKILL.md", "line": 207 }
+            ],
+            "critical": true,
+            "criticalNote": "The agent-team execution model (Lead/Workers/Evaluator)."
+        },
+        "SendMessage": {
+            "usedBy": [
+                { "skill": "memo/memo-phase-execute/SKILL.md", "line": 173 },
+                { "skill": "memo/memo-phase-execute/SKILL.md", "line": 480 }
+            ],
+            "critical": true,
+            "criticalNote": "Agent-team communication; the only resume path since v2.1.77."
+        },
+        "Skill": {
+            "usedBy": [
+                { "skill": "memo/memo-rollout/SKILL.md", "line": 239 },
+                { "skill": "memo/memo-finalize/SKILL.md", "line": 532 }
+            ],
+            "critical": true,
+            "criticalNote": "The skill chain IS the pipeline (Generate/Execute/Evaluate)."
+        },
+        "Read": {
+            "usedBy": [
+                { "skill": "memo/memo-rollout/SKILL.md", "line": 202 }
+            ],
+            "critical": true,
+            "criticalNote": "Implicit in every step (read memos, PRDs, revisions). ANNAHME — never named as a harness tool but factually required."
+        },
+        "Write": {
+            "usedBy": [
+                { "skill": "memo/memo-revision-execute/SKILL.md", "line": 1 }
+            ],
+            "critical": true,
+            "criticalNote": "Implicit in every step (write revisions/PRDs/reports). ANNAHME."
+        },
+        "Edit": {
+            "usedBy": [
+                { "skill": "memo/memo-finalize/SKILL.md", "line": 1 }
+            ],
+            "critical": true,
+            "criticalNote": "Implicit in every step (targeted edits). ANNAHME."
+        },
+        "WebFetch": {
+            "usedBy": [
+                { "skill": "research/research-workflow/SKILL.md", "line": 41 },
+                { "skill": "memo/memo-init/SKILL.md", "line": 769 }
+            ],
+            "critical": false,
+            "criticalNote": "Research/memo phase, not the rollout Stage 1."
+        },
+        "WebSearch": {
+            "usedBy": [
+                { "skill": "research/research-workflow/SKILL.md", "line": 40 },
+                { "skill": "memo/memo-init/SKILL.md", "line": 769 }
+            ],
+            "critical": false,
+            "criticalNote": "Research phase."
+        },
+        "ScheduleWakeup": {
+            "usedBy": [
+                { "skill": "memo/memo-finalize/SKILL.md", "line": 527 }
+            ],
+            "critical": false,
+            "criticalNote": "Advisory (budget-threshold suggestion)."
+        },
+        "ToolSearch": {
+            "usedBy": [
+                { "skill": "memo/memo-rollout/SKILL.md", "line": 173 }
+            ],
+            "critical": false,
+            "criticalNote": "0 hits in repos/core/skills/ before this memo; it becomes the carrier of the Layer-B pre-flight probe (PRD-009)."
+        }
+    }
+}

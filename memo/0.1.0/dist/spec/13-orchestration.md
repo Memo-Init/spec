@@ -6,7 +6,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "memo/0.1.0/draft/spec/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/13-orchestration.md."
@@ -47,6 +47,8 @@ The Lead starts Workers in parallel where PRD dependencies allow, runs an Evalua
 The **Model capability** column expresses role requirements, not product names. The Lead requires the strongest reasoning model because it holds the most context and makes coordination decisions. Workers default to a standard capable model; complex or highly interdependent PRDs warrant the strongest available. Evaluators and Phase Evaluators need a validated, capable model — a lighter option is permissible when the validation task is clearly bounded. Model selection is the operator's responsibility and is governed by resource budget; the harness does not enforce a specific product.
 
 Phase execution is **agent-team based, not script-driven.** The default execution path is for the Lead to **spawn one Worker per PRD** in its own context — this is the wired default of an agent phase, not an optional "may use agents" suggestion. The model-driven fan-out (the Lead deciding per turn over a handful of parallel sub-agents) is reserved for **research only** (see *Research Fan-Out vs Agents* below); everything else, phase execution above all, runs as the Lead/Worker/Evaluator/Phase-Evaluator team.
+
+**The Tools column is a view, not the source.** The per-role tool lists in the table are a human-readable summary; the **normative** tool surface is the harness **`toolContract`** — one shared `core.required[]` plus per-role deltas (`roles{}`) — defined in the harness registry ([meta-spec/10-harness-registry.md](/spec/harness-registry/)). The team roles bind to its three contract roles: the **Lead** runs as the `orchestrator` role (which adds the coordination tools `Agent` / `SendMessage` / `Workflow`), each **Worker** as the `worker` role (adds `StructuredOutput`, removes the coordination tools), and the fresh-context **Evaluator** / **Phase Evaluator** as a read-scoped `worker`. When the contract changes, this column follows the descriptor; the descriptor is never edited to match the column.
 
 ---
 

@@ -1,6 +1,6 @@
 {
     "spec_version": "0.1.0",
-    "generated_at": "2026-07-11T22:48:56.703Z",
+    "generated_at": "2026-07-12T00:58:36.470Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -901,6 +901,16 @@
                 "section": "Session",
                 "normative": false,
                 "sidebar_group": "bridge"
+            },
+            {
+                "filename": "17-memory.md",
+                "slug": "memory",
+                "title": "Memory",
+                "description": "The **memory store** is the per-project set of small Markdown files the harness carries across sessions — durable notes about what a project is, what was learned, and what to look up again. Each...",
+                "order": 17,
+                "section": "Session",
+                "normative": true,
+                "sidebar_group": "memory"
             }
         ]
     },
@@ -1006,16 +1016,26 @@
                 "section": "Meta-Spec",
                 "normative": false,
                 "sidebar_group": "lifecycle"
+            },
+            {
+                "filename": "10-harness-registry.md",
+                "slug": "harness-registry",
+                "title": "Harness Registry",
+                "description": "A spec is authored, built and served the same way regardless of which agent harness runs it, but the *tools* a harness exposes and the *config surface* it carries are not universal — they differ per...",
+                "order": 10,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "lifecycle"
             }
         ]
     },
     "stats": {
-        "total_files": 99,
+        "total_files": 101,
         "core_files": 47,
         "workbench_files": 25,
-        "session_files": 17,
-        "spec_files": 10,
-        "normative_files": 88,
+        "session_files": 18,
+        "spec_files": 11,
+        "normative_files": 90,
         "informative_files": 11
     }
 }

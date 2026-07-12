@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "memo-init Tool Usage Map (WI-2-05)",
+    "description": "Which harness tool is used by which pipeline skill, and whether its absence blocks a rollout. Keyed by tool name; every key MUST be a member of the 42-tool inventory (no orphan name). usedBy line-evidence is harvested deterministically by grep over repos/core/skills/ (T026 part b), never by prose-grep. critical:true means a missing tool is a rollout BLOCKER (RULE 3). MCP tools (Playwright browser_*) are NOT keyed here — they are not harness-inventory tools; their conditional need is carried in playwrightNote.",
+    "type": "object",
+    "required": [ "note", "playwrightNote", "tools" ],
+    "additionalProperties": false,
+    "properties": {
+        "note": {
+            "type": "string",
+            "description": "provenance of the usedBy evidence"
+        },
+        "playwrightNote": {
+            "type": "string",
+            "description": "the Playwright-MCP dependency (browser_*), conditional on UI memos — carried out-of-band because browser_* are MCP tools, not inventory entries"
+        },
+        "tools": {
+            "type": "object",
+            "description": "map of inventory tool name -> usage record",
+            "additionalProperties": {
+                "type": "object",
+                "required": [ "usedBy", "critical" ],
+                "additionalProperties": false,
+                "properties": {
+                    "usedBy": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                            "type": "object",
+                            "required": [ "skill", "line" ],
+                            "additionalProperties": false,
+                            "properties": {
+                                "skill": { "type": "string", "description": "SKILL.md path relative to repos/core/skills/" },
+                                "line": { "type": "integer", "minimum": 1, "description": "1-based line the reference sits on" }
+                            }
+                        }
+                    },
+                    "critical": {
+                        "type": "boolean",
+                        "description": "true = absence is a rollout BLOCKER (RULE 3); false = memo/research-phase or advisory tool"
+                    },
+                    "criticalNote": {
+                        "type": "string",
+                        "description": "why the tool is (or is not) rollout-critical, incl. conditional (when-axis) qualifiers"
+                    }
+                }
+            }
+        }
+    }
+}

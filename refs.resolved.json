@@ -7,59 +7,28 @@
             "0.1.0"
         ],
         "specDir": "memo/0.1.0/draft/spec",
-        "specId": "memo@0.1.0:b87059b",
-        "edges": [
-            {
-                "target": "session",
-                "kind": "requires",
-                "pin": "0.1.0"
-            },
-            {
-                "target": "meta-spec",
-                "kind": "requires",
-                "pin": "0.1.0"
-            },
-            {
-                "target": "workbench",
-                "kind": "references",
-                "pin": "0.1.0"
-            }
-        ]
+        "specId": "memo@0.1.0:ba77e13"
     },
     "workbench": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
         "specDir": "workbench/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/workbench/overview/",
-        "specId": "workbench@0.1.0:b87059b",
-        "edges": [
-            {
-                "target": "session",
-                "kind": "requires",
-                "pin": "0.1.0"
-            },
-            {
-                "target": "meta-spec",
-                "kind": "requires",
-                "pin": "0.1.0"
-            }
-        ]
+        "specId": "workbench@0.1.0:ba77e13"
     },
     "session": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
         "specDir": "session/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/session/overview/",
-        "specId": "session@0.1.0:b87059b",
-        "edges": []
+        "specId": "session@0.1.0:ba77e13"
     },
     "meta-spec": {
         "currentVersion": "0.1.0",
         "recommendedRelease": "0.1.0",
         "specDir": "meta-spec/0.1.0/draft/spec",
         "url": "https://memo-init.github.io/spec/overview/",
-        "specId": "meta-spec@0.1.0:b87059b",
-        "edges": []
+        "specId": "meta-spec@0.1.0:ba77e13"
     },
     "docs": {
         "canonical": "https://memo-init.github.io",
@@ -84,8 +53,8 @@
         ]
     },
     "generated": {
-        "at": "2026-07-11T22:48:50.731Z",
-        "fromCommit": "b87059bc7256f443b49ae3a1191d04c5a3a10ddc",
+        "at": "2026-07-12T00:58:33.579Z",
+        "fromCommit": "ba77e13337551bc52937f3d4c9deb2703686b94d",
         "generator": "scripts/generate-refs.mjs"
     },
     "validation": {

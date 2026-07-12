@@ -31,7 +31,8 @@ _(no skill dependencies declared in this family)_
 | [07-versioning](./07-versioning.md) | — | 0 | — |
 | [08-spec-lifecycle](./08-spec-lifecycle.md) | — | 0 | — |
 | [09-current-state](./09-current-state.md) | — | 0 | — |
-| **Summary** | **0 / 9** | — | 7 |
+| [10-harness-registry](./10-harness-registry.md) | — | 0 | — |
+| **Summary** | **0 / 10** | — | 7 |
 
 ## Skills by namespace
 
@@ -65,6 +66,7 @@ _(no skill dependencies declared in this family)_
 
 - [08-spec-lifecycle](./08-spec-lifecycle.md) — _— no implementer skill yet —_
 - [09-current-state](./09-current-state.md) — _— no implementer skill yet —_
+- [10-harness-registry](./10-harness-registry.md) — _— no implementer skill yet —_
 
 ## Related
 

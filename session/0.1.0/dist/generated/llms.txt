@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the session spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: session@0.1.0:b87059b
+Source: session@0.1.0:ba77e13
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/00-overview.md."
@@ -150,7 +150,7 @@ spec_file: "01-genesis-root.md"
 order: 1
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/01-genesis-root.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/01-genesis-root.md."
@@ -219,6 +219,8 @@ A session is one of three **named types**, and the type — not a self-granted l
 
 Each type maps to **exactly one** security profile — privilege is not negotiated per call within a type. The three types obey the same **monotonicity** rule as the self-label above: a session may move to a *more* restricted profile, but it can never label or spawn itself into *more* privilege than it was started with.
 
+**Session type → harness role.** Each session type also maps to exactly one of the three harness-contract roles the harness registry defines (`roles{}` in [meta-spec/10-harness-registry.md](/spec/harness-registry/)): a **User session** runs as the `user` role (the interactive surface), an **Orchestrator session** as the `orchestrator` role (coordination), and a **Subagent-spawn session** as the `worker` role (scoped execution). This mapping is the seam between the two layers: the session *type* fixes the trust profile **here**, and the harness *role* fixes the tool surface **there** — the registry owns the per-role tool deltas, this tier owns the trust anchor, and neither restates the other. An **external `claude -p` / SDK invocation** is not one of these three internal types: it is a separate harness process that opens its own genesis root with its own bounded profile, and is detected as an outer-boundary session rather than mapped onto an in-process role (the boundary is specified in [meta-spec/10-harness-registry.md](/spec/harness-registry/) and named in [memo/14-agents-skills-tasks.md](/specification/agents-skills-tasks/)).
+
 ---
 
 ## The Per-Session Security Level
@@ -270,7 +272,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/02-enforcement.md."
@@ -281,9 +283,9 @@ Self-discovery describes what an agent *should* do. Making it **deterministic** 
 
 ---
 
-## The Session-Tier Config Is the Entry Point
+## The Registry Is the Entry Point — Read from `.workbench/` Today, Migrating to the Session Tier
 
-The machine-readable form of the SOP chain is a **registry**, and its entry point is the project-local **`.session/config.json`** — the session-tier home the hook reads ([05-config-cascade.md](/session/config-cascade/)). The config carries the registrant blocks and the when:pre edges as two top-level structures (`sops[]` + `requirements[]`, [06-namespace-registry.md](/session/namespace-registry/)). The pre-gate edge that is active in this version is the single project-scoped `memo-init → memo-sop`:
+The machine-readable form of the SOP chain is a **registry** of registrant blocks and `when:pre` edges (`sops[]` + `requirements[]`, [06-namespace-registry.md](/session/namespace-registry/)). **The armed gate reads that registry from the workbench tier — `.workbench/registry.json` — united with the machine-global genesis registry.** That union is the current Ist, and this chapter describes the hook as it actually behaves, never a home the code has not yet moved to. The pre-gate edge active in this version is the single project-scoped `memo-init → memo-sop`:
 
 ```json
 { "sops": [ { "namespace": "memo", "owner": "memo-init", "tier": 2, "requires": [],
@@ -293,11 +295,11 @@ The machine-readable form of the SOP chain is a **registry**, and its entry poin
                       "requires": "memo-sop", "when": "pre" } ] }
 ```
 
-The config moves the entry point **one tier down** from the former workbench home (`.workbench/registry.json`) to the session tier; the move is a **one-time migration** carried by `session init`, not a dual-read ([05-config-cascade.md](/session/config-cascade/), [07-doctor-init.md](/session/doctor-init/)). A machine-global registry at `~/.claude/session/registry.json` (the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is a follow-up. The config is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](/session/recovery/)).
+**Migration, not dual-read, not a third home.** The registry's declared destination is **one tier down**, at the session-tier `.session/config.json` — a **one-time migration** carried by `session init` ([05-config-cascade.md](/session/config-cascade/), [07-doctor-init.md](/session/doctor-init/)), after which the hook reads the session home and the workbench copy is retired. **Until that migration has run, the hook reads `.workbench/registry.json`, and this spec MUST NOT claim `.session/config.json` is read while it is not** — the spec tracks the Ist hook, never a target the code has not yet reached. There is deliberately **no dual-read and no third registry home**: the read set is exactly {`.workbench/registry.json`} ∪ {the machine-global genesis registry}, and the session-tier file **replaces** — never adds to — the workbench home once the migration lands. A machine-global registry at `~/.claude/session/registry.json` (the **session** tier, not a workbench path) is the natural home for cross-project edges; activating it is the same follow-up migration, not a parallel source. The registry is a privilege artifact and MUST be protected from silent rewrite (a Write/Edit guard; see [03-recovery.md](/session/recovery/)).
 
 **The SOP read-chain is normative.** The chain a memo entry point sits behind is `session-sop → memo-sop → memo-init`: the session genesis root is the parent every layer reads first, `memo-sop` extends it, and `memo-init` is gated behind `memo-sop`. Under the flat topology (F2=A) `workbench-sop` is a **sibling** extension of the session — **not** a link between session and memo — so it is deliberately absent from this chain ([06-namespace-registry.md](/session/namespace-registry/)). Only the `memo-init → memo-sop` edge (REQ-061) is armed in this version; the `session-sop → memo-sop` parent edge is *declared now, enforced when present* ([01-genesis-root.md](/session/genesis-root/)). The chain is worth gating because reading `memo-sop` first measurably improves the work — on the order of a ~20 % lift ([ANNAHME] — a working estimate, not yet a measured figure).
 
-**Absence is fail-open and LOUD.** When `.session/config.json` is absent the gate MUST treat it as a configuration problem that **fails open** (ALLOW, exit 0) — never a lockout — while emitting a **loud SessionStart warning** so the missing config is noticed rather than silently tolerated (REQ-SS-CONFIG-LOUD). Enforcement deliberately starts **permissive**: warn first, tighten later. The strict, refusing posture lives in the foreground `session doctor` / `session init` ([07-doctor-init.md](/session/doctor-init/)), not in the always-on hook.
+**Absence is fail-open and LOUD.** When the registry the gate reads (`.workbench/registry.json` today; `.session/config.json` after the migration) is absent the gate MUST treat it as a configuration problem that **fails open** (ALLOW, exit 0) — never a lockout — while emitting a **loud SessionStart warning** so the missing config is noticed rather than silently tolerated (REQ-SS-CONFIG-LOUD). Enforcement deliberately starts **permissive**: warn first, tighten later. The strict, refusing posture lives in the foreground `session doctor` / `session init` ([07-doctor-init.md](/session/doctor-init/)), not in the always-on hook.
 
 ---
 
@@ -325,7 +327,7 @@ The decision table the reference hook MUST implement:
 |-----------|--------|------|
 | disable switch set (`$SESSION_SOP_DISABLE` or the sentinel) | ALLOW | 0 |
 | tool ≠ `Skill` | ALLOW | 0 |
-| `.session/config.json` absent | ERROR (fail-open) + LOUD SessionStart warning | 0 |
+| the registry the hook reads (`.workbench/registry.json` today) absent | ERROR (fail-open) + LOUD SessionStart warning | 0 |
 | `jq` missing · `transcript_path` empty/unreadable · config malformed | ERROR (fail-open) | 0 |
 | `transcript_path` is a subagent transcript (`…/subagents/agent-*.jsonl`) | ALLOW (carve-out) | 0 |
 | the entry point is not gated by a when:pre edge | ALLOW | 0 |
@@ -396,7 +398,7 @@ flowchart TD
 | Requirement | Statement |
 |-------------|-----------|
 | **REQ-SS-FAILOPEN** | Any infra/config problem ⇒ ALLOW (exit 0) with a stderr note. Never deny on trouble. |
-| **REQ-SS-CONFIG-LOUD** | An absent `.session/config.json` ⇒ ALLOW (fail-open) **and** a loud SessionStart warning; enforcement starts permissive, strict checks live in `session doctor`. |
+| **REQ-SS-CONFIG-LOUD** | An absent registry (the `.workbench/registry.json` the hook reads today; `.session/config.json` after the `session init` migration) ⇒ ALLOW (fail-open) **and** a loud SessionStart warning; enforcement starts permissive, strict checks live in `session doctor`. |
 | **REQ-SS-SIGNAL** | The predecessor signal is matched jq-structured on `attributionSkill`, never as a substring. |
 | **REQ-SS-EDGEVALID** | An edge to a non-installed skill fails open; a build-time `registry-validate` MAY refuse it. |
 | **REQ-SS-SUBAGENT** | A subagent transcript is carved out (ALLOW) — it carries no parent attribution chain. |
@@ -474,14 +476,14 @@ The governing safety contract — never a lockout on trouble — is also a hard 
 {
   "id": "REQ-984",
   "title": "Infra and config faults fail open and LOUD, never a lockout",
-  "statement": "Any infrastructure or configuration problem — an absent or malformed `.session/config.json`, a missing `jq`, an empty or unreadable transcript path, or an edge to a not-installed skill — MUST fail OPEN (ALLOW, exit 0 with a stderr note) and MUST NEVER produce a lockout. An absent `.session/config.json` additionally emits a LOUD SessionStart warning so the missing entry point is noticed rather than silently tolerated.",
+  "statement": "Any infrastructure or configuration problem — an absent or malformed registry (the `.workbench/registry.json` the hook reads today, `.session/config.json` after the `session init` migration), a missing `jq`, an empty or unreadable transcript path, or an edge to a not-installed skill — MUST fail OPEN (ALLOW, exit 0 with a stderr note) and MUST NEVER produce a lockout. An absent registry file additionally emits a LOUD SessionStart warning so the missing entry point is noticed rather than silently tolerated.",
   "scope": { "repos": [], "categories": ["session"], "tags": ["session-sop", "enforcement", "fail-open"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
     "assertions": [
       "Each infra/config fault (absent or malformed config, missing jq, unreadable transcript, dangling edge) resolves to ALLOW with exit 0 and a stderr note",
-      "An absent .session/config.json additionally surfaces a loud SessionStart warning",
+      "An absent registry file the hook reads additionally surfaces a loud SessionStart warning",
       "No infra/config fault path can reach a DENY"
     ]
   },
@@ -559,7 +561,7 @@ Whether the policy-checkpoint branch only ever redirects (never hard-locks, neve
 ## Related
 
 - [03-recovery.md](/session/recovery/) — the disable switch, sentinel, canary, and recovery runbook that make the gate always recoverable.
-- [05-config-cascade.md](/session/config-cascade/) — the `.session/config.json` entry point the gate reads, and the migration that puts it there.
+- [05-config-cascade.md](/session/config-cascade/) — the registry entry point and the `session init` migration that will move it from `.workbench/registry.json` to the session-tier `.session/config.json`.
 - [07-doctor-init.md](/session/doctor-init/) — the foreground `session doctor` / `session init` that carry the strict checks the hook deliberately omits.
 - [08-identity-pin.md](/session/identity-pin/) — the SessionStart-Pin the gate reads instead of a live `cwd`.
 - [workbench/23-hooks-contract.md](/workbench/hooks-contract/) — the workbench-side statement of the same PreToolUse contract.
@@ -575,7 +577,7 @@ spec_file: "03-recovery.md"
 order: 3
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/03-recovery.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/03-recovery.md."
@@ -666,7 +668,7 @@ spec_file: "04-cli.md"
 order: 4
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/04-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/04-cli.md."
@@ -869,7 +871,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/05-config-cascade.md."
@@ -1027,6 +1029,18 @@ This chapter is spec-first: it **describes** the migration as the intended one-t
 
 ---
 
+## Carrier Harmonization (Memo 049) — One Carrier
+
+Memo 049 left an open tension: the SOP trägerschaft — *who is registered, what they own, and which edges gate* — appeared to have **two** carriers, `.workbench/registry.json` (`skills[]` / `addons[]` / `requirements[]`) at the workbench tier and the session `sops[]` blocks here. Two carriers for one fact is precisely the drift source the config-single-source rule exists to remove, so the tension resolves to **exactly one carrier**:
+
+- **The single authored carrier is the session `sops[]` set** in `.session/config.json`. It is the one source of truth for registration (namespaces, owners, tiers), the skills a namespace contributes, and the `requires[]` / `requirements[]` edges. The move-down migration above is what makes this true at the live gate: the registration fact lives at the session tier, not the workbench tier.
+- **`.workbench/registry.json` is not a parallel authored carrier.** After the one-time move it is either **removed** (its content having folded into the session config) or, where the workbench tier still needs a discovery surface, it is a **generated read-projection** over the session `sops[]` — filtered to the workbench-tier blocks — never a second hand-authored source. A projection is regenerated from the carrier; it is never edited to lead it.
+- **The file the workbench spec still names is described, not re-authored.** The workbench CLI chapter continues to name `.workbench/registry.json` as the workbench-tier *discovery view* ([20-cli.md](/workbench/cli/)); this section fixes its **status** — a projection of the one carrier, not a co-equal source. No live config is touched here; this is the normative decision the later carrier-migration code implements.
+
+The rule generalizes the no-dual-read guarantee from the single REQ-061 edge to the whole carrier: one authored source, and any second surface a generated projection of it.
+
+---
+
 ## The env File Naming Schema — `<name>.<stage>.env`
 
 Beside the resolved `config.json`, a location's **environment files** carry the stage-specific
@@ -1156,7 +1170,7 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/06-namespace-registry.md."
@@ -1279,7 +1293,7 @@ The development standards register as **one** policy block under the `node` name
   ] }
 ```
 
-`owner` is a single unit (`node-formatting`); a policy block needs no team. The canonical description of *what* each standard is lives in the public user-preferences specification; the block links to it through each skill's `metadata.memo.specs` rather than restating the rule — single-source by ownership, no re-inventory (see [Linking the Standards, Not Re-Describing Them](#linking-the-standards-not-re-describing-them)).
+`owner` is a single unit (`node-formatting`); a policy block needs no team. The block's **umbrella entry** is `node-sop` — the owner-umbrella a `node`-write command class routes through to reach these seven standards ([Umbrella SOPs — `git-sop` and `node-sop`](#umbrella-sops--git-sop-and-node-sop)); it opens **no** second `node` block (N-1 holds — the `node` namespace is reserved once). The canonical description of *what* each standard is lives in the public user-preferences specification; the block links to it through each skill's `metadata.memo.specs` rather than restating the rule — single-source by ownership, no re-inventory (see [Linking the Standards, Not Re-Describing Them](#linking-the-standards-not-re-describing-them)).
 
 ### Per-Member Facets: `signals`, `mode`, `groups`
 
@@ -1321,6 +1335,34 @@ A `group` resolves over the **union of all blocks**, not within a single namespa
 ### Linking the Standards, Not Re-Describing Them
 
 The policy block registers *how* the standards are activated and tracked; it does not restate *what* each standard says. Each `node-*` skill's canonical description lives in the public user-preferences specification, and the skill points at it through `metadata.memo.specs`. Where this spec names a standard it links the owning chapter rather than duplicating its rule — the registry is single-source by ownership, the standards' text is single-source in their own specification, and the two never drift into two copies.
+
+---
+
+## Umbrella SOPs — `git-sop` and `node-sop`
+
+Two SOP skills are **umbrellas**: a single entry point a command class keys on, which **routes** to a family of child skills rather than carrying procedure of its own. They exist in the core skill set but were, until this version, **unanchored** — declared in no registrant block, built earlier and left unwired. This section anchors them normatively.
+
+| Umbrella | Namespace | Routes to | Keyed on |
+|----------|-----------|-----------|----------|
+| **`git-sop`** | `git` | `git-commit`, `git-push`, `git-security` — the commit / push-gate / secrets-scan children | a `git …` shell command class |
+| **`node-sop`** | `node` | the seven `node-*` standards of the [node policy block](#the-node-policy-block) | a `node`-write command class (a `.mjs` `Write`/`Edit`) |
+
+`git-sop` reserves an **SOP-instance** registrant block: `owner: "git-sop"`, contributing its three children under the `git` namespace (N-2 holds — `git-commit` / `git-push` / `git-security` all sit under `git`, as `git-security` already does when it joins the `security` group). `node-sop` does **not** open a second `node` block — the `node` namespace is reserved once by `node-formatting` (N-1) — it is the **owner-umbrella** *over* the existing node policy block, the entry the `node`-write command class routes through to reach the seven standards.
+
+```jsonc
+{ "namespace": "git", "owner": "git-sop", "tier": 2,
+  "cli": "git", "folders": [], "requires": [],
+  "skills": [ { "id": "git-sop",      "signals": ["attributionSkill:git-sop"] },
+              { "id": "git-commit",   "signals": ["attributionSkill:git-commit"] },
+              { "id": "git-push",     "signals": ["attributionSkill:git-push"],     "groups": ["security"] },
+              { "id": "git-security", "signals": ["attributionSkill:git-security"], "groups": ["security"] } ] }
+```
+
+**The command→SOP edges are declared, not hardcoded.** An umbrella is *reached* by a command class, and that binding — `git …` ⇒ `git-sop`, a `node`-write ⇒ `node-sop`, `memo …` ⇒ `memo-sop`, `flowmcp …` ⇒ `flowmcp-sop`, `npm …` ⇒ `npm-security`, `git worktree …` ⇒ `git-sop` — is the **command→SOP matrix**. Per the flat-tier separation it is **workbench-tier declared data** (a `{ class, pattern, requires }` map form-identical to `folder-lints.json`, [workbench · config](/workbench/config/)), consumed by one global command-class hook ([workbench · hooks-contract](/workbench/hooks-contract/)); it is **not** carried as hardcoded matchers in the hook. This chapter owns the umbrellas (the edge *targets*); the workbench config owns the *edges* — single-source by tier, no duplication.
+
+| Requirement | Statement |
+|-------------|-----------|
+| **REQ-SS-UMBRELLA** | An umbrella SOP (`git-sop`, `node-sop`) is a routing entry point reached by a **declared** command→SOP edge, never a hardcoded in-hook matcher. `git-sop` reserves the `git` namespace and routes to `git-commit` / `git-push` / `git-security`; `node-sop` is the owner-umbrella over the `node` policy block's seven standards and opens **no** second `node` block (N-1). The command→SOP edges are workbench-tier declared data ([workbench · config](/workbench/config/)), read by the command-class hook. |
 
 ---
 
@@ -1398,6 +1440,7 @@ This is how three independent registrants coexist sustainably: `memo`, `workbenc
 - [07-doctor-init.md](/session/doctor-init/) — where N-1/N-2 are enforced: the foreground readiness preflight and additive scaffold.
 - [02-enforcement.md](/session/enforcement/) — the three-state gate and why a collision degrades to fail-open ALLOW, never block.
 - [10-sop.md](/session/sop/) — the SOP-instance-vs-catalog framing in full.
+- [workbench · config](/workbench/config/) — the workbench-tier home of the command→SOP matrix (the edges these umbrella SOPs are the targets of), and [workbench · hooks-contract](/workbench/hooks-contract/), the command-class hook that reads it.
 - [/spec/conventions-writing/](/spec/conventions-writing/) — how a convention is written and why it registers as a policy block, not a new primitive.
 
 ---
@@ -1410,7 +1453,7 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/07-doctor-init.md."
@@ -1674,7 +1717,7 @@ spec_file: "08-identity-pin.md"
 order: 8
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/08-identity-pin.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/08-identity-pin.md."
@@ -1826,7 +1869,7 @@ spec_file: "09-root-detection.md"
 order: 9
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/09-root-detection.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/09-root-detection.md."
@@ -1987,7 +2030,7 @@ spec_file: "10-sop.md"
 order: 10
 section: "Session"
 normative: false
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/10-sop.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/10-sop.md."
@@ -2077,7 +2120,7 @@ spec_file: "11-common-denominator.md"
 order: 11
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/11-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/11-common-denominator.md."
@@ -2166,7 +2209,7 @@ spec_file: "12-instances.md"
 order: 12
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/12-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/12-instances.md."
@@ -2236,7 +2279,7 @@ spec_file: "13-conventions.md"
 order: 13
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/13-conventions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/13-conventions.md."
@@ -2324,7 +2367,7 @@ spec_file: "14-migration.md"
 order: 14
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/14-migration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/14-migration.md."
@@ -2390,7 +2433,7 @@ spec_file: "15-addons.md"
 order: 15
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/15-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/15-addons.md."
@@ -2495,7 +2538,7 @@ spec_file: "16-bridge.md"
 order: 16
 section: "Session"
 normative: false
-generated_at: "2026-07-11T22:48:54.883Z"
+generated_at: "2026-07-12T00:58:35.493Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."
@@ -2533,7 +2576,8 @@ _(no skill dependencies declared in this family)_
 | [13-conventions](/session/conventions/) | ✓ | 1 | — |
 | [14-migration](/session/migration/) | ✓ | 1 | — |
 | [15-addons](/session/addons/) | ✓ | 1 | — |
-| **Summary** | **16 / 16** | — | 17 |
+| [17-memory](/session/memory/) | — | 0 | — |
+| **Summary** | **16 / 17** | — | 17 |
 
 ## Skills by namespace
 
@@ -2595,3 +2639,117 @@ _(no skill dependencies declared in this family)_
 
 - [03-recovery](/session/recovery/) — `session-recovery`
 - [14-migration](/session/migration/) — `session-migration`
+
+### memory
+
+- [17-memory](/session/memory/) — _— no implementer skill yet —_
+
+---
+
+---
+title: "Memory"
+description: "The **memory store** is the per-project set of small Markdown files the harness carries across sessions — durable notes about what a project is, what was learned, and what to look up again. Each..."
+session_version: "0.1.0"
+spec_file: "17-memory.md"
+order: 17
+section: "Session"
+normative: true
+generated_at: "2026-07-12T00:58:34.150Z"
+generated_from: "session/0.1.0/draft/spec/17-memory.md"
+generator: "scripts/generate-docs-payload.mjs"
+edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/17-memory.md."
+---
+
+
+The **memory store** is the per-project set of small Markdown files the harness carries across sessions — durable notes about what a project is, what was learned, and what to look up again. Each project instance ([12-instances.md](/session/instances/)) has its own store, and the harness injects a project's memory into the session as operating context. The store has grown large and useful, yet until this chapter it had **no normative schema**: the file format lived only in the harness-injected memory directive, and the historical `# Memory` block once cited in the global config no longer exists. This chapter fixes the schema so that every consumer — the index, statistics, and any future lint — can rely on one shape rather than parse two.
+
+This chapter normalizes the **shape** of the store (frontmatter schema, type vocabulary, index consistency). It does **not** govern the memory *data* itself: writing, editing, and migrating memory files is a data operation, subject to the additive-and-reviewed discipline the enforcement chapter states for the live config ([02-enforcement.md](/session/enforcement/)), applied in spirit to a batch migration.
+
+---
+
+## The Store
+
+A memory store is a per-project folder of Markdown files plus a single human-readable index (`MEMORY.md`). The files are **data managed by the harness**, not source under the project's own version control; the memo system and other Add-ons ([15-addons.md](/session/addons/)) keep their data in project folders, whereas the memory store is the harness's own cross-session channel. Because the store is harness-managed, this specification governs the **contract** the files satisfy — their frontmatter and their index relationship — and leaves the storage location and injection mechanics to the harness.
+
+---
+
+## Frontmatter Schema
+
+Every memory file (other than the `MEMORY.md` index) **MUST** open with a YAML frontmatter block that carries:
+
+| Field | Requirement | Meaning |
+|---|---|---|
+| `name` | MUST | A short identifier for the entry; matches the file's slug. |
+| `description` | MUST | A one-line summary used by the index and by discovery. |
+| `metadata.node_type` | MUST equal `memory` | Marks the file as a memory node. |
+| `metadata.type` | MUST be one of the four types below | The entry's kind. |
+| `metadata.originSessionId` | SHOULD | The session that authored the entry (provenance). |
+
+The canonical form is the **nested** `metadata` block:
+
+```
+---
+name: <slug>
+description: "<one line>"
+metadata:
+  node_type: memory
+  type: <project|feedback|reference|user>
+  originSessionId: <uuid>
+---
+```
+
+The older scheme — a **top-level** `type:` field paired with a filename prefix such as `feedback_` or `project_` — is **DEPRECATED**. A file **MUST NOT** rely on the filename prefix to carry its type; the type **MUST** be declared in `metadata.type`. Existing top-level-`type` files SHOULD be migrated by lifting the value into `metadata.type` (a pure frontmatter transformation where a top-level `type` is already present).
+
+### Type Vocabulary
+
+`metadata.type` **MUST** be exactly one of:
+
+| Type | Purpose |
+|---|---|
+| `project` | Durable facts about the project — what it is, its architecture, its infrastructure. The default kind for orientation notes. |
+| `feedback` | A behavioral or process lesson — a rule the collaboration should follow, usually distilled from a correction. |
+| `reference` | Look-up material — a design reference, a codex, or a table consulted rather than acted on directly. |
+| `user` | Role, expertise, and preferences of the person (see below). |
+
+An implementation reading a memory file **MUST** treat an absent or out-of-vocabulary `metadata.type` as a schema violation, not silently coerce it.
+
+### Alignment With the Harness Memory Directive
+
+The four-type vocabulary — including `user` — is also the vocabulary defined by the harness-injected memory directive; this schema is authored to **agree** with that directive rather than diverge from it. The nested `metadata: { node_type: memory, type, originSessionId }` shape stated here is the shape the live stores already carry, cross-checked against the directive's definition before this chapter was written. Where the directive and this chapter both speak, they say the same thing; this chapter is the durable, citable record of the shape.
+
+---
+
+## The `user` Type
+
+The `user` type names **who the person is** — their role, expertise, and working preferences — as distinct from facts about the project (`project`) or lessons about the process (`feedback`). It is defined here even though it is not yet populated, so that a store which begins to record person-bound context has a normative slot for it.
+
+The **content** of those preferences is **not** authored in this Org specification. Person-bound coding and working-style preferences have their normative home in the personal-brand `user-preferences` specification — a public, normative declaration of collaboration preferences, authored in the personal-brand spec workshop and promoted to its public spec repo. A `user`-typed memory entry is therefore a **pointer** into those preferences, not a second copy of them: this chapter **references** that declaration and **MUST NOT** duplicate its preference text.
+
+The split is deliberate. The preference *content* is a published stance and lives in `user-preferences`; the store *mechanics* — this frontmatter schema, the index, the lifecycle — are **internal wiring** and stay in the Org specification (session). Keeping the two apart means the person's declared preferences have one authoritative source, while the machinery that records them is specified once, here.
+
+---
+
+## Index Consistency
+
+Each store carries a single `MEMORY.md` index that lists its entries. The index and the file set **MUST** stay consistent:
+
+- Every index link **MUST** resolve to a file that exists — a link to a missing file is a defect, not a style choice.
+- Every memory file **MUST** be either **referenced** by the index **or** explicitly **archived** — a file that is neither is an orphan and signals unmanaged decay.
+- Archiving follows the **Trash principle**: an entry is never deleted to remove it from the active set. It is retired — for example by an `archived` status the index and the harness loader both honor — so no content is lost.
+
+The lifecycle mechanism that realizes "archived" (a status flag, an archive folder, or an index omission) is a design choice recorded per project; this chapter fixes only the **invariant** — no dead links, and no file that is neither referenced nor archived.
+
+---
+
+## Provenance
+
+The location of this chapter (session slot 17) follows a finding-based recommendation: the store mechanics are harness-level wiring, which places them in the session family alongside the other cross-session contracts, rather than in the memo or workbench families. The recommendation is recorded as such; the store's *data* placement and any per-project index conventions remain outside this schema.
+
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
+## Related
+
+- [00-overview.md](/session/overview/) — the session glossary this chapter's terms join.
+- [02-enforcement.md](/session/enforcement/) — the additive-and-reviewed discipline (REQ-SS-NOWRITE) applied in spirit to a memory-data migration.
+- [12-instances.md](/session/instances/) — the per-project instance model each memory store belongs to.
+- [15-addons.md](/session/addons/) — the Add-on data model this contrasts with: Add-on data lives in project folders, the memory store is the harness's own cross-session channel.
+- [workbench/10-root-and-projects.md](/workbench/root-and-projects/) — the MUST-move-out table and signpost doctrine that governs where a rule's authoritative home is (the seam a redundant feedback memory is measured against).

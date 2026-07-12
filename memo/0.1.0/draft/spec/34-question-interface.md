@@ -89,6 +89,8 @@ The legacy markdown parser locates options by scanning for an inline marker (`([
 
 Questions MUST be authored as a **`questions-json` block** (the block's syntax and field schema are defined in [07-revisions-and-questions.md](./07-revisions-and-questions.md)). In that block, options are **JSON objects**, never recovered by an inline marker scan, so the phantom-trap is **structurally eliminated** rather than mitigated. When the block is present it is **authoritative** (07's authority rule); this chapter elevates that from "authoritative when present" to **required for questions** — the deterministic block is the canonical way to pose a question.
 
+Each revision's block MUST carry the **full open-question set**, never only the delta since the prior revision (the carry-forward-in-full rule, [07-revisions-and-questions.md](./07-revisions-and-questions.md)). This is what makes rendering "the newest block" correct: the newest block is complete by construction, so an open question can only disappear from the surface by being **answered**. The parser reads across every `questions-json` block a revision contains and merges by `id`, so a revision that still carries only a partial set does not silently hide the rest — and the viewer-lint `WARN-010` flags an unaccounted shrink.
+
 #### The Question-Object Fields
 
 Each question object in the block is authored with **English** field names. These are the canonical names docs and authors use:

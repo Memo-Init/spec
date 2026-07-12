@@ -6,7 +6,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "workbench/0.1.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.1.0/draft/spec/23-hooks-contract.md."
@@ -131,11 +131,11 @@ The pre-condition catalog above is loose by design — it states *what* could be
 4. **Check the predecessor actually ran** this session — for each required skill/SOP, look for the registry's signals (`skill:<id>`, `path:/skills/<id>`, `attributionSkill:<id>`) in the transcript.
 5. **Allow OR hard-block** — if every precondition is met, allow the call; on any unmet precondition, **deny** (exit code `2`, or `permissionDecision: "deny"`) and **return an instruction** naming exactly what must be read or run first.
 
-### The Multi-Stage Chain — No Escape
+### The Multi-Stage Chain — Direct Edges Today, Transitive by Design
 
-Requirements **compose transitively**, and the precondition hook resolves the *whole* chain, not just the nearest edge — if **any** link is unmet, the call is denied with a message that lists every unmet link. The one hard read-chain in this version is `session-sop → memo-sop → memo-init` (the active edge is `memo-init → memo-sop`); the workbench is a **sibling extension** of the session, not an intermediate link the memo chain passes through (see [02-sop-entrypoint.md](/workbench/sop-entrypoint/)). The transitive-resolution mechanism — how the gate walks a multi-link chain and denies with the full unmet list — is single-sourced to [session · enforcement](/session/enforcement/); it is referenced here, not redefined.
+Requirements **compose transitively** *by design*: the read-chain `session-sop → memo-sop → memo-init` is authored as a multi-link chain. **The armed hook, however, resolves only the DIRECT `when: "pre"` edges declared for the firing entry point — it does not yet walk the chain transitively.** In this version exactly one direct edge is armed, `memo-init → memo-sop`, so the distinction is not yet observable; the `session-sop → memo-sop` parent edge is *declared now, enforced when present* ([session · enforcement](/session/enforcement/)). Full transitive resolution — where an unmet *intermediate* link denies the call with the whole unmet list — is the **roadmap** target, not the current Ist. The workbench is a **sibling extension** of the session, not an intermediate link the memo chain passes through (see [02-sop-entrypoint.md](/workbench/sop-entrypoint/)). When transitive walking is armed, its mechanism is single-sourced to [session · enforcement](/session/enforcement/); it is referenced here, never redefined.
 
-There is **no bypass**. This is **absolute for security**: no git command runs without a verified repo status, the same way no entry point runs without its SOP chain (the facing/egress policy a git gate reads lives in [22-config.md](/workbench/config/); the gate is repo-facing). A transitive precondition cannot be satisfied by skipping an intermediate link.
+There is **no bypass** of an armed edge. This is **absolute for security**: no git command runs without a verified repo status, the same way no entry point runs without its armed SOP edge (the facing/egress policy a git gate reads lives in [22-config.md](/workbench/config/); the gate is repo-facing). Once the chain is walked transitively, a precondition cannot be satisfied by skipping an intermediate link; today, with direct edges only, each armed edge is enforced on its own.
 
 ### Hard-Block, Not Ask
 
@@ -160,6 +160,16 @@ This is the producing/consuming contract applied to egress: the workbench **decl
 The gate is the operational form of the absolute stated above (the Precondition Dependency Chain): **no git command runs without a verified repo status** — a push is refused outright until a declared `outward` status is present, the same hard-block discipline as an unmet SOP-chain link. Default-deny: an undeclared repository is treated as not-pushable, not as outward by omission.
 
 The declared status is itself **verified, not trusted**: the workbench **health-check** and **git-security** check that the declared status matches reality (a repository declared `outward` actually has its named remote; one declared `inward` has none or `none`). The gate reads the declaration; health-check and git-security keep the declaration honest. As elsewhere in this chapter, the contract fixes only what the gate may **read and decide**; the hook *implementation* belongs to the future machine-tier spec.
+
+---
+
+## The Command-Class SOP Matrix Is Registry-Driven
+
+The push gate above is one instance of a broader gate: a `Bash(<class> …)`-class hook that, before a command runs, requires the matching **umbrella SOP** to have been read this session — a `git …` command behind `git-sop`, a `memo …` command behind `memo-sop`, and so on ([session · namespace-registry](/session/namespace-registry/) defines those umbrella SOPs). The mapping from a command class to its required SOP — the **command→SOP matrix** — MUST be **declared data, not code**: the edges live in a project-local declarative file under `.workbench/` ([22-config.md](/workbench/config/)), and one global hook **reads** them, exactly as the write-lint reads `folder-lints.json` and the push gate reads the facing status. Adding or retiring an edge is a **data change** — never a hook-script edit.
+
+This is the same producing/consuming seam the rest of this contract rests on, and the same **registry-driven** discipline the meta-spec fixes for the harness surface, where a new capability "is a data change under the registry — never an edit to the [spec] prose" ([meta-spec · harness-registry](/specification/harness-registry/)). It also mirrors the **write-lint / folder-gate direction** ([Write-Time Content Linting](#write-time-content-linting) above): *what to check* is project-local data (`folder-lints.json`, the command→SOP matrix); *how to check* is one global hook. A hook that carries the matrix as **hardcoded** in-script matchers (a set of `grep` regexes) violates this contract — the matcher set is **derived from the declared matrix**, so the two can never drift and an edge is auditable in one JSON file rather than buried in shell.
+
+Each matrix entry is form-identical to a folder-lint entry — `{ class, pattern, requires }`: which command class it covers (`git`, `memo`, `npm`, `flowmcp`, `node-write`, `worktree`), the command pattern that arms it, and the umbrella SOP whose read-receipt is required. **Behaviour parity is the safety rail:** the registry-driven matrix MUST reproduce exactly the edges it replaces — the same command in ⇒ the same ALLOW/DENY out — before the hardcoded branch is retired.
 
 ---
 

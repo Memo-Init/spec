@@ -39,13 +39,13 @@
             "label": "Folders",
             "order": 4,
             "pages": [
-                "16-context",
                 "15-repos",
-                "21-environment-scripts",
-                "19-tmp",
-                "32-trash",
+                "16-context",
                 "17-memo-store",
+                "19-tmp",
+                "21-environment-scripts",
                 "26-addons",
+                "32-trash",
                 "33-flowmcp"
             ]
         },
@@ -71,9 +71,9 @@
             "label": "Wiki",
             "order": 7,
             "pages": [
-                "30-wiki",
                 "13-knowledge-format-okf",
-                "18-design"
+                "18-design",
+                "30-wiki"
             ]
         },
         {
@@ -89,7 +89,7 @@
         },
         {
             "id": "bridge",
-            "label": "Bridge",
+            "label": "bridge",
             "order": 9,
             "pages": [
                 "42-bridge"

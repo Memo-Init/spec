@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "memo-init Harness Tool Inventory (WI-2-05)",
+    "description": "The 42-tool snapshot of the official Claude Code tools reference (code.claude.com/docs/en/tools-reference.md, snapshot 2026-07-10, T026). One array entry per tool; the tool `name` is the exact contract string used by permission rules, subagent tool-lists and hook matchers. Deprecated/renamed history is carried on the affected entry (status + replacedBy/renamedFrom + note) because the array holds only the current 42 rows.",
+    "type": "array",
+    "minItems": 42,
+    "maxItems": 42,
+    "items": {
+        "type": "object",
+        "required": [ "name", "purpose", "permission", "status", "source" ],
+        "additionalProperties": false,
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+                "description": "the exact tool contract string (as used in permission rules / subagent tool-lists)"
+            },
+            "purpose": {
+                "type": "string",
+                "description": "one-line purpose of the tool"
+            },
+            "permission": {
+                "type": "string",
+                "enum": [ "yes", "no" ],
+                "description": "the tools-reference 'Permission required' column"
+            },
+            "status": {
+                "type": "string",
+                "enum": [ "active", "deprecated", "renamed" ],
+                "description": "active (in the current contract), deprecated (superseded, still listed), or renamed (the entry is the new name of a formerly differently-named tool)"
+            },
+            "replacedBy": {
+                "type": "string",
+                "description": "for a deprecated tool: the tool(s) that supersede it (comma-separated when several)"
+            },
+            "renamedFrom": {
+                "type": "string",
+                "description": "for a renamed tool: the historical name this entry replaced (e.g. Agent renamedFrom Task)"
+            },
+            "note": {
+                "type": "string",
+                "description": "additional provenance (version numbers, platform limits, removed sibling tools)"
+            },
+            "source": {
+                "type": "string",
+                "description": "the tools-reference (and CHANGELOG) line the row was captured from"
+            }
+        }
+    }
+}

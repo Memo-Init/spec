@@ -32,7 +32,8 @@ _(no skill dependencies declared in this family)_
 | [13-conventions](./13-conventions.md) | ✓ | 1 | — |
 | [14-migration](./14-migration.md) | ✓ | 1 | — |
 | [15-addons](./15-addons.md) | ✓ | 1 | — |
-| **Summary** | **16 / 16** | — | 17 |
+| [17-memory](./17-memory.md) | — | 0 | — |
+| **Summary** | **16 / 17** | — | 17 |
 
 ## Skills by namespace
 
@@ -94,3 +95,7 @@ _(no skill dependencies declared in this family)_
 
 - [03-recovery](./03-recovery.md) — `session-recovery`
 - [14-migration](./14-migration.md) — `session-migration`
+
+### memory
+
+- [17-memory](./17-memory.md) — _— no implementer skill yet —_

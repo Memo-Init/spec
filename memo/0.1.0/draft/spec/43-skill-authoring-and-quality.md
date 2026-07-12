@@ -94,6 +94,18 @@ The scaffold is bound by a hard **no-overwrite** rule: an eval file that already
 
 ---
 
+## Generated Manifests vs Authored Bodies
+
+The harness registry generates a **skills structure** beside the built spec — one `skills.manifest.json` per `(harnessId, harnessVersion, role)` ([meta-spec/10-harness-registry.md](/spec/harness-registry/)). That raises a sharp question against the scaffolding rule above: if a skill's machine layer can be *generated*, may the harness generator also write the skill's **body**? The answer fixes the boundary.
+
+- **Generated: the manifest and the machine layer.** The `skills.manifest.json` is machine-derived and hand-edit-forbidden — it lists *which* skills a role binds against a harness version, with the `compatibleRange` derived from the descriptor. This is the same mechanical layer the scaffolder stamps; generating it does **not** touch the AUTHOR-hard-rule.
+- **Authored: the skill body.** The **procedure a skill encodes stays authored** — the scaffolder "prepares scaffolding, never writes the procedure itself" (above), and the harness generator is bound by the same rule. A generated manifest may point at an authored `SKILL.md`; it does not synthesize the body.
+- **Provenance keeps them separable.** A generated manifest is marked generated and regenerated on every build; an authored body is not. A regeneration run **MUST NOT** overwrite an authored body — the no-overwrite discipline of the scaffolder extends to the harness generator.
+
+**Open by explicit deferral — ORG-5.** Whether a generator should ever *synthesize skill bodies* from the spec (the spec → `name` / `description` / body mapping, and how much of it is deterministic) is **not decided here**. That question is the deferred research **ORG-5**, held in `context/skills-generation-research.md` (Memo 064, no follow-up memo — the Offloading-Verbot). This chapter fixes only the boundary that is decidable now: **manifests are generated, bodies are authored.** Building a body-synthesizing generator remains ORG-5's scope, and this decision does not pre-empt it — it bounds it.
+
+---
+
 ## The Skill-to-Spec Coverage Gate
 
 The `specs` block is only as valuable as the discipline that keeps it true, so the link is made **measurable**, not merely documented. A deterministic lint proves three things and reports a fourth:

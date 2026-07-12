@@ -132,7 +132,7 @@
         },
         {
             "id": "bridge",
-            "label": "Bridge",
+            "label": "bridge",
             "order": 12,
             "pages": [
                 "46-bridge"

@@ -6,7 +6,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "workbench/0.1.0/draft/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.1.0/draft/spec/31-browser-automation.md."
@@ -15,22 +15,22 @@ edit_warning: "This file is auto-generated. Source: workbench/0.1.0/draft/spec/3
 
 The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how that research feeds the revision lifecycle. This document defines the research *method* — the concrete tooling a project uses to gather external information, and the cost discipline that governs which tool is chosen. The two are complementary: the core chapter says *what must be researched and when*, this chapter says *how the gathering is done*.
 
-Browser automation lives at the project level. Each project that uses it carries its own `.browser/` folder (an optional folder — see [12-folders.md](/workbench/folders/)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
+Browser automation lives at the project level. Each project that uses it carries its own `.browser/` folder (a conditional folder — required when a project does browser automation, see [12-folders.md](/workbench/folders/)), its own session, and its own scripts. The conventions below are normative for that folder and for the tool-selection decisions a project makes.
 
 > **What belongs here, what belongs to the core spec.** The **method** — tool selection, the cost discipline, the `.browser/` structure, the scrape queue, and `auth.json` handling — is the **workbench's** concern and is specified here. The research **duty** — when a memo must verify its assumptions, and the inward trust boundary as a *behavioral guardrail* — belongs to the memo/core spec ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) and is **referenced, not restated**. This chapter is the *how*; the core chapter is the *what* and the *when*. The one place the two meet is the **trust dimension** of tool selection (see "The Trust Axis" below): the core chapter owns the guardrail, this chapter carries its mechanism in the tool-choice itself.
 
-> **Folder name — `.browser/` is canonical, `.playwright/` is a deprecated alias.** The **canonical, required** name is `.browser/`: the dot marks it as local machinery (see [12-folders.md](/workbench/folders/)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is a **deprecated** alias of the same folder — a project that still uses that name remains conformant (no hard break), but the name is on a defined migration path: existing projects rename to `.browser/` at their own pace, and `.browser/` is the migration **target** the workbench cleanup points every project at. New projects **MUST** use `.browser/`.
+> **Folder name — `.browser/` is the required canonical name; `.playwright/` is a deprecated alias.** The **canonical, required** name is `.browser/`: the dot marks it as local machinery (see [12-folders.md](/workbench/folders/)) and the neutral name reflects that the concern is *browser automation*, not one tool. `.playwright/` is a **deprecated** alias of the same folder — a name projects **MUST** migrate to `.browser/`, not keep at their own pace; `.browser/` is the migration **target** the workbench cleanup points every project at. New projects **MUST** use `.browser/`, and existing projects **MUST** rename `.playwright/` to `.browser/`.
 
 ---
 
 ## Folder Contract
 
-`.browser/` is a registered (optional) folder, and this page is its per-folder entry:
+`.browser/` is a registered (conditional) folder — required when a project does browser automation — and this page is its per-folder entry:
 
 | Field | Value |
 |-------|-------|
 | Name | `.browser/` |
-| Status | Optional |
+| Status | Required (conditional) |
 | Level | Project |
 | Entry-point | `scripts/` (deprecated alias `.playwright/`) |
 | Convention | — |
@@ -95,6 +95,10 @@ Every project that uses browser automation **MUST** keep it inside a `.browser/`
 - **`scripts/`** holds the reusable automation. A script is written once and re-run at zero additional context cost; this reusability is the economic reason the CLI is the default.
 - **`output/`** holds produced artifacts — screenshots, extracted text, temporary files. Output is written here, **not** into the agent's context; the agent reads back only what it needs. Output is local-only and is never committed.
 - **`auth.json`** holds the captured browser session.
+
+### The Playwright MCP Output Path Is a Tool-Generated Special Name
+
+The Playwright **MCP server** writes its own captures — page snapshots and console logs — to a fixed `.playwright-mcp/` directory it creates at the working root. That default is the tool's own and is **not** reliably per-project configurable. `.playwright-mcp/` is therefore recognized as a **tool-generated special name**, not a second browser folder: it is regenerable local machinery, **gitignored**, and never committed. Where the MCP output path *can* be directed, a project **SHOULD** point it under `.browser/` (for example `.browser/mcp-output/`) so the canonical folder stays the single home for browser artifacts. The convention **acknowledges** the tool default rather than ignoring it — the canonical, authored folder remains `.browser/`; `.playwright-mcp/` is only the MCP server's non-renamable output sink.
 
 ### `auth.json` Is a Session Secret
 
@@ -181,7 +185,7 @@ The rule is to **default to the lowest-cost tool that can do the job** and to es
 ## Related
 
 - [00-overview.md](/workbench/overview/) — the workbench spec framing and the global helpers it exposes.
-- [12-folders.md](/workbench/folders/) — the optional `.browser/` folder in the project layout.
+- [12-folders.md](/workbench/folders/) — the conditional `.browser/` folder in the project layout.
 - [11-project-structure.md](/workbench/project-structure/) — the local guarantee that keeps `auth.json` and `output/` off the network.
 - [../../v0.1.0/10-proactive-research.md](/specification/proactive-research/) — the research *duty* this chapter's *method* serves; the normative inward trust boundary (the behavioral guardrail) on ingested web content; and the volume-based sub-agent trigger that this chapter's trust axis strengthens to a MUST for unevaluable sources.
 - [32-trash.md](/workbench/trash/) — why temporary scrape working material is removed through `.trash/` rather than hard-deleted.

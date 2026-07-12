@@ -6,7 +6,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "memo/0.1.0/draft/spec/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/34-question-interface.md."
@@ -95,6 +95,8 @@ The legacy markdown parser locates options by scanning for an inline marker (`([
 ### The questions-json Mandate
 
 Questions MUST be authored as a **`questions-json` block** (the block's syntax and field schema are defined in [07-revisions-and-questions.md](/specification/revisions-and-questions/)). In that block, options are **JSON objects**, never recovered by an inline marker scan, so the phantom-trap is **structurally eliminated** rather than mitigated. When the block is present it is **authoritative** (07's authority rule); this chapter elevates that from "authoritative when present" to **required for questions** — the deterministic block is the canonical way to pose a question.
+
+Each revision's block MUST carry the **full open-question set**, never only the delta since the prior revision (the carry-forward-in-full rule, [07-revisions-and-questions.md](/specification/revisions-and-questions/)). This is what makes rendering "the newest block" correct: the newest block is complete by construction, so an open question can only disappear from the surface by being **answered**. The parser reads across every `questions-json` block a revision contains and merges by `id`, so a revision that still carries only a partial set does not silently hide the rest — and the viewer-lint `WARN-010` flags an unaccounted shrink.
 
 #### The Question-Object Fields
 

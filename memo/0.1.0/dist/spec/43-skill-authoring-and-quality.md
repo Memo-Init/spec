@@ -6,7 +6,7 @@ spec_file: "43-skill-authoring-and-quality.md"
 order: 43
 section: "Specification"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "memo/0.1.0/draft/spec/43-skill-authoring-and-quality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.1.0/draft/spec/43-skill-authoring-and-quality.md."
@@ -98,6 +98,18 @@ A skill is graded against its evals, which presupposes the evals exist. The auth
 Scaffolding does two things and stops. First it **stamps the skill-to-spec link**, reusing the exact same injector the coverage stamper uses, so a skill's `metadata.memo.specs` block is written by one parser and cannot drift between the two paths. Second it **scaffolds the missing eval skeletons** — the classified trigger set and the execution/integration assertions — as empty-but-valid shapes that parse cleanly and carry a loud "to be authored" marker, so the not-yet state announces itself rather than hiding behind an absent file.
 
 The scaffold is bound by a hard **no-overwrite** rule: an eval file that already exists is never read and never rewritten, only reported as skipped. A skeleton is an instruction to the author, not a substitute for one — overwriting an authored fixture with an empty shape would destroy exactly the work the grader depends on. The leg is idempotent, so it can be re-run safely, and it writes nothing but the spec stamp and the missing skeletons: the body of the skill, the real cases inside those skeletons, and the judgement they encode all remain the author's to write.
+
+---
+
+## Generated Manifests vs Authored Bodies
+
+The harness registry generates a **skills structure** beside the built spec — one `skills.manifest.json` per `(harnessId, harnessVersion, role)` ([meta-spec/10-harness-registry.md](/spec/harness-registry/)). That raises a sharp question against the scaffolding rule above: if a skill's machine layer can be *generated*, may the harness generator also write the skill's **body**? The answer fixes the boundary.
+
+- **Generated: the manifest and the machine layer.** The `skills.manifest.json` is machine-derived and hand-edit-forbidden — it lists *which* skills a role binds against a harness version, with the `compatibleRange` derived from the descriptor. This is the same mechanical layer the scaffolder stamps; generating it does **not** touch the AUTHOR-hard-rule.
+- **Authored: the skill body.** The **procedure a skill encodes stays authored** — the scaffolder "prepares scaffolding, never writes the procedure itself" (above), and the harness generator is bound by the same rule. A generated manifest may point at an authored `SKILL.md`; it does not synthesize the body.
+- **Provenance keeps them separable.** A generated manifest is marked generated and regenerated on every build; an authored body is not. A regeneration run **MUST NOT** overwrite an authored body — the no-overwrite discipline of the scaffolder extends to the harness generator.
+
+**Open by explicit deferral — ORG-5.** Whether a generator should ever *synthesize skill bodies* from the spec (the spec → `name` / `description` / body mapping, and how much of it is deterministic) is **not decided here**. That question is the deferred research **ORG-5**, held in `context/skills-generation-research.md` (Memo 064, no follow-up memo — the Offloading-Verbot). This chapter fixes only the boundary that is decidable now: **manifests are generated, bodies are authored.** Building a body-synthesizing generator remains ORG-5's scope, and this decision does not pre-empt it — it bounds it.
 
 ---
 

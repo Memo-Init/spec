@@ -63,7 +63,8 @@
             "order": 7,
             "pages": [
                 "08-spec-lifecycle",
-                "09-current-state"
+                "09-current-state",
+                "10-harness-registry"
             ]
         }
     ],

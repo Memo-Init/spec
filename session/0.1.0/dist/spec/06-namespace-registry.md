@@ -6,7 +6,7 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-07-11T22:48:52.283Z"
+generated_at: "2026-07-12T00:58:34.150Z"
 generated_from: "session/0.1.0/draft/spec/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.1.0/draft/spec/06-namespace-registry.md."
@@ -129,7 +129,7 @@ The development standards register as **one** policy block under the `node` name
   ] }
 ```
 
-`owner` is a single unit (`node-formatting`); a policy block needs no team. The canonical description of *what* each standard is lives in the public user-preferences specification; the block links to it through each skill's `metadata.memo.specs` rather than restating the rule — single-source by ownership, no re-inventory (see [Linking the Standards, Not Re-Describing Them](#linking-the-standards-not-re-describing-them)).
+`owner` is a single unit (`node-formatting`); a policy block needs no team. The block's **umbrella entry** is `node-sop` — the owner-umbrella a `node`-write command class routes through to reach these seven standards ([Umbrella SOPs — `git-sop` and `node-sop`](#umbrella-sops--git-sop-and-node-sop)); it opens **no** second `node` block (N-1 holds — the `node` namespace is reserved once). The canonical description of *what* each standard is lives in the public user-preferences specification; the block links to it through each skill's `metadata.memo.specs` rather than restating the rule — single-source by ownership, no re-inventory (see [Linking the Standards, Not Re-Describing Them](#linking-the-standards-not-re-describing-them)).
 
 ### Per-Member Facets: `signals`, `mode`, `groups`
 
@@ -171,6 +171,34 @@ A `group` resolves over the **union of all blocks**, not within a single namespa
 ### Linking the Standards, Not Re-Describing Them
 
 The policy block registers *how* the standards are activated and tracked; it does not restate *what* each standard says. Each `node-*` skill's canonical description lives in the public user-preferences specification, and the skill points at it through `metadata.memo.specs`. Where this spec names a standard it links the owning chapter rather than duplicating its rule — the registry is single-source by ownership, the standards' text is single-source in their own specification, and the two never drift into two copies.
+
+---
+
+## Umbrella SOPs — `git-sop` and `node-sop`
+
+Two SOP skills are **umbrellas**: a single entry point a command class keys on, which **routes** to a family of child skills rather than carrying procedure of its own. They exist in the core skill set but were, until this version, **unanchored** — declared in no registrant block, built earlier and left unwired. This section anchors them normatively.
+
+| Umbrella | Namespace | Routes to | Keyed on |
+|----------|-----------|-----------|----------|
+| **`git-sop`** | `git` | `git-commit`, `git-push`, `git-security` — the commit / push-gate / secrets-scan children | a `git …` shell command class |
+| **`node-sop`** | `node` | the seven `node-*` standards of the [node policy block](#the-node-policy-block) | a `node`-write command class (a `.mjs` `Write`/`Edit`) |
+
+`git-sop` reserves an **SOP-instance** registrant block: `owner: "git-sop"`, contributing its three children under the `git` namespace (N-2 holds — `git-commit` / `git-push` / `git-security` all sit under `git`, as `git-security` already does when it joins the `security` group). `node-sop` does **not** open a second `node` block — the `node` namespace is reserved once by `node-formatting` (N-1) — it is the **owner-umbrella** *over* the existing node policy block, the entry the `node`-write command class routes through to reach the seven standards.
+
+```jsonc
+{ "namespace": "git", "owner": "git-sop", "tier": 2,
+  "cli": "git", "folders": [], "requires": [],
+  "skills": [ { "id": "git-sop",      "signals": ["attributionSkill:git-sop"] },
+              { "id": "git-commit",   "signals": ["attributionSkill:git-commit"] },
+              { "id": "git-push",     "signals": ["attributionSkill:git-push"],     "groups": ["security"] },
+              { "id": "git-security", "signals": ["attributionSkill:git-security"], "groups": ["security"] } ] }
+```
+
+**The command→SOP edges are declared, not hardcoded.** An umbrella is *reached* by a command class, and that binding — `git …` ⇒ `git-sop`, a `node`-write ⇒ `node-sop`, `memo …` ⇒ `memo-sop`, `flowmcp …` ⇒ `flowmcp-sop`, `npm …` ⇒ `npm-security`, `git worktree …` ⇒ `git-sop` — is the **command→SOP matrix**. Per the flat-tier separation it is **workbench-tier declared data** (a `{ class, pattern, requires }` map form-identical to `folder-lints.json`, [workbench · config](/workbench/config/)), consumed by one global command-class hook ([workbench · hooks-contract](/workbench/hooks-contract/)); it is **not** carried as hardcoded matchers in the hook. This chapter owns the umbrellas (the edge *targets*); the workbench config owns the *edges* — single-source by tier, no duplication.
+
+| Requirement | Statement |
+|-------------|-----------|
+| **REQ-SS-UMBRELLA** | An umbrella SOP (`git-sop`, `node-sop`) is a routing entry point reached by a **declared** command→SOP edge, never a hardcoded in-hook matcher. `git-sop` reserves the `git` namespace and routes to `git-commit` / `git-push` / `git-security`; `node-sop` is the owner-umbrella over the `node` policy block's seven standards and opens **no** second `node` block (N-1). The command→SOP edges are workbench-tier declared data ([workbench · config](/workbench/config/)), read by the command-class hook. |
 
 ---
 
@@ -248,4 +276,5 @@ This is how three independent registrants coexist sustainably: `memo`, `workbenc
 - [07-doctor-init.md](/session/doctor-init/) — where N-1/N-2 are enforced: the foreground readiness preflight and additive scaffold.
 - [02-enforcement.md](/session/enforcement/) — the three-state gate and why a collision degrades to fail-open ALLOW, never block.
 - [10-sop.md](/session/sop/) — the SOP-instance-vs-catalog framing in full.
+- [workbench · config](/workbench/config/) — the workbench-tier home of the command→SOP matrix (the edges these umbrella SOPs are the targets of), and [workbench · hooks-contract](/workbench/hooks-contract/), the command-class hook that reads it.
 - [/spec/conventions-writing/](/spec/conventions-writing/) — how a convention is written and why it registers as a policy block, not a new primitive.

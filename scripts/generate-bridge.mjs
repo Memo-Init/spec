@@ -45,7 +45,11 @@ import { distBridgeDir, distSpecDir, draftDataDirRel, aggregatePath } from './li
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
-const PROJECT_ROOT = resolve( REPO, '..', '..' )
+// Workshop location adaptation (Memo 064): this workshop container lives ONE level below the project
+// root (<project>/spec), whereas the public repo lives TWO levels down (<project>/repos/spec). The
+// project root — where the sibling repos/core skills live — is therefore resolve( REPO, '..' ) here,
+// not resolve( REPO, '..', '..' ). Logic is otherwise verbatim from repos/spec.
+const PROJECT_ROOT = resolve( REPO, '..' )
 // Sentinel file: presence of any family map confirms the split map is available.
 const SENTINEL_MAP = join( REPO, draftDataDirRel( { repoRoot: REPO, name: 'memo', version: '0.1.0' } ), 'skill-spec-map.json' )
 

@@ -1,0 +1,7 @@
+{
+    "specId": "meta-spec@0.1.0",
+    "harnessRef": "claude-code@2.1.206",
+    "role": "orchestrator",
+    "compatibleRange": "=2.1.206",
+    "skills": []
+}

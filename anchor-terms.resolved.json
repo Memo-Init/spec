@@ -155,13 +155,55 @@
             "version": "1.0.0",
             "owningFamily": "memo",
             "owningChapter": "42-plans"
+        },
+        {
+            "id": "AT-role-user",
+            "label": "User Role",
+            "definition": "The interactive role in the harness tool-contract roles{} (10-harness-registry): the surface a developer drives directly; it adds the interaction tool to core.required[] and is the top-level trust reference the other two roles are bounded under.",
+            "negativeDelimitation": "NOT the same as a 'User session' type — the role is the tool-contract delta in roles.user, while the session type is the session-tier classification that anchors trust; and NOT a self-granted privilege.",
+            "misLabels": [
+                "interactive agent",
+                "human",
+                "operator"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "meta-spec",
+            "owningChapter": "10-harness-registry"
+        },
+        {
+            "id": "AT-role-orchestrator",
+            "label": "Orchestrator Role",
+            "definition": "The coordinating role in the harness tool-contract roles{} (10-harness-registry): it adds the coordination tools to core.required[] and carries the gate-dependent taskCrud marker; it runs work on the user's behalf and MUST NOT exceed the user's trust level.",
+            "negativeDelimitation": "NOT a new authority — the orchestrator is the user's context continued into coordination, bounded by monotonicity, never a separate higher privilege; and NOT the same as the agent-team 'Lead' name (13-orchestration), which is one deployment of this role.",
+            "misLabels": [
+                "lead",
+                "coordinator",
+                "manager"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "meta-spec",
+            "owningChapter": "10-harness-registry"
+        },
+        {
+            "id": "AT-role-worker",
+            "label": "Worker Role",
+            "definition": "The scoped-execution role in the harness tool-contract roles{} (10-harness-registry): it adds structured-output and removes the coordination tools, executing one bounded unit of work in an isolated context.",
+            "negativeDelimitation": "NOT an orchestrator — a worker cannot coordinate a team or spawn one; and NOT a persistent identity — a worker is a scoped, one-unit execution, bounded below the orchestrator that started it.",
+            "misLabels": [
+                "subagent",
+                "executor",
+                "agent"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "meta-spec",
+            "owningChapter": "10-harness-registry"
         }
     ],
     "generated": {
-        "at": "2026-07-10T16:43:44.878Z",
-        "fromCommit": "cf2f2785fe33e4b994c4e16d2e044655d136764c",
+        "at": "2026-07-10T18:34:00.712Z",
+        "fromCommit": "317b4e88b69f94e8f0dd62b9ce621d549cf03377",
         "generator": "scripts/generate-anchor-register.mjs",
-        "termCount": 11
+        "termCount": 14
     },
     "validation": {
         "passed": true,
