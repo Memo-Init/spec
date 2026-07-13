@@ -6,7 +6,7 @@ spec_file: "03-categories.md"
 order: 3
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "meta-spec/0.2.0/draft/spec/03-categories.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.2.0/draft/spec/03-categories.md."

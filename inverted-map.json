@@ -1715,6 +1715,8 @@
                 "12-rollout",
                 "13-orchestration",
                 "16-git-security-versioning",
+                "31-goals",
+                "33-maintenance",
                 "38-stage-model"
             ],
             "implementers": [
@@ -1906,6 +1908,7 @@
                 "06-memo-structure",
                 "13-orchestration",
                 "26-memo-history",
+                "27-landing-the-plane",
                 "30-primitives",
                 "33-maintenance"
             ],

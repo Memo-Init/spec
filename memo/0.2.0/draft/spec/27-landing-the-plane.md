@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | Status | Draft |
-| Related | [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [38-stage-model.md](./38-stage-model.md), [00-overview.md](./00-overview.md) |
+| Related | [12-rollout.md](./12-rollout.md), [13-orchestration.md](./13-orchestration.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [31-goals.md](./31-goals.md), [33-maintenance.md](./33-maintenance.md), [38-stage-model.md](./38-stage-model.md), [00-overview.md](./00-overview.md) |
 
 Landing the plane is the second stage of the process end, the step that follows a green Evaluate. The rollout (Generate, Execute, Evaluate) is the first stage; landing is the second, and merge preparation and the push gate follow it (see [38-stage-model.md](./38-stage-model.md)). Where Evaluate decides whether the work is correct, landing decides whether the workspace is in a state someone can resume. It leaves the workspace better than it was found, in a condition a fresh context can pick up the next morning without questions. This is the precondition of the "interlocking brick" principle: a new memo only docks cleanly onto a workspace that the previous memo left correctly.
 
@@ -32,7 +32,7 @@ The landing produces a single document with a fixed, deterministic structure. Th
 
 ---
 
-## The Landing Checklist (L1–L7)
+## The Landing Checklist (L1–L8)
 
 Landing is complete when these items hold:
 
@@ -41,7 +41,20 @@ Landing is complete when these items hold:
 - **L3** — Commits are prepared and locally merged, but **never pushed**. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's.
 - **L4** — Open ends are named. Deferred items, blocker resolutions, and needs-review remnants appear in the OPEN ENDS section; nothing finished-but-unstated is left implicit.
 - **L5** — The end-state is machine-readable. The `landing-readiness.json` marker is written so the landing can be consumed without reading prose.
-- **L7** — Exactly one narrated chronicle entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The existing L1-L5 points are unchanged; the chronicle point is L7 and the former L6 slot is deliberately left unassigned.
+- **L6** — Goals and Maintenance are score-refreshed. In the fresh landing context both boards are re-scored — `memo goal score-all` and `memo maintenance score-all`, one agent per goal and per repo, never the working session — and this runs **before** L7 so the fresh boards are captured. The refreshed boards are written into the `landing-readiness.json` marker (the `L6_scores` block); a skipped refresh is recorded as `L6_scores.status: "skipped"`, never silently omitted. The reason landing is the right moment, and the cross-links to the two scored chapters, are in [Goals & Maintenance at Landing](#goals--maintenance-at-landing) below.
+- **L7** — Exactly one narrated chronicle entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The order is L1–L5 → L6 (scores) → L7 (chronicle) → L8 (snags); the former "L6 deliberately unassigned" reservation is superseded.
+- **L8** — Leftover snags are promoted into the store. After the chronicle, the run's deliberate set-asides are captured so they outlive the memo: the OPEN ENDS `needs-review` category and the genuinely-hard PILOT TASKS are each promoted into the cross-memo Snag-Store via `memo snag add` — one flat Markdown file per snag under `.memo/snags/{origin-NNN}-{slug}.md` (append-only, NO-OVERWRITE). Each promoted snag inherits `Origin-Memo` = the current memo, `Status: open`, and `Created` = the landing timestamp (an ISO string supplied by the caller — the core reads no clock), and it usually carries the `Erstellungs-Kontext: voll` note because it was born in a full end-of-rollout context. Snags age, but "Claude does not understand time", so staleness is a **deterministic flag only** (both timestamps caller-supplied, computed by `SnagStaleness`): `stale` marks a snag, it never deletes one — a snag is **never auto-deleted**, and closing it (`resolved`) is later the job of the verify sub-agent or the user, not of landing. This is where the set-aside items of the review report's "needs review" area (see below) become durable store entries the next `memo-init` can read.
+
+---
+
+## Goals & Maintenance at Landing
+
+Landing is the **canonical score-refresh point** for the two measured poles of the work: the forward **goal** (the bow, [31-goals.md](./31-goals.md)) and its backward twin **maintenance** (the stern, [33-maintenance.md](./33-maintenance.md)). This is the L6 step of the checklist above. Two reasons make the close of the run the right moment, not the start of the next rollout:
+
+- **The effect is real now.** Both poles measure *delivered* state, not intent. Only once the rollout's work has actually landed is there a true state to score — so the honest reading is taken here, at the process end, rather than deferred to whenever the next run happens to read it.
+- **The context is already fresh.** Scoring both poles carries a hard rule: it is **never** done in the working session, always in a fresh context (the *how*, specified in [31-goals.md](./31-goals.md) and [33-maintenance.md](./33-maintenance.md)). Landing already runs after a context reset (see "Why Landing Is Its Own Step" above), so the fresh reader the score requires is exactly the reader landing already is. The two constraints — *fresh context* and *at landing* — meet here.
+
+Mechanically, L6 spawns `memo goal score-all` and `memo maintenance score-all` (one agent per goal and per repo — the skills fan out per item themselves), captures the resulting boards into the `landing-readiness.json` marker under `L6_scores`, and runs before the L7 chronicle entry. The board mechanics — the strict score object, the second deterministic axis, and the `releaseReady` flag a pre-rollout health check later reads — are **not** restated here; they live in [31-goals.md](./31-goals.md) and [33-maintenance.md](./33-maintenance.md). This chapter fixes only the *when*: the refresh happens at landing.
 
 ---
 
@@ -50,6 +63,18 @@ Landing is complete when these items hold:
 The **user is the pilot**; the system prepares a landing the pilot can act on with as few questions as possible. The boundary is sharp and is a hard rule, but it falls at the push, not at the commit. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's. This replaces the older "never committed by the system" framing with "committed and locally merged, never pushed".
 
 Two distinctions sharpen this. A commit is not a push: the system writes the commits and folds the branches together locally, but the push that releases them is a further, separate act that is never automatic. And a clean, push-ready `main` is the system's ceiling — the work is committed, merged, and explained, but the decision to release it is the pilot's, taken at the next break. A `verdict: OPEN` is not a failure: honest landing names open ends rather than hiding them, and the system's job remains to leave the pilot a landing that needs as few questions as possible.
+
+---
+
+## The Review Report — Three Areas
+
+The REVIEW is the back bookend of the process (see [38-stage-model.md](./38-stage-model.md)): the named user touchpoint that gives shape to the interaction model's `U3` "review result" node ([21-human-computer-interaction.md](./21-human-computer-interaction.md)). It is not a new channel — it is the fully-formed expression of the fourth communication point, the bundled hand-back at landing. Where the front bookend is the memo-init question round the user answers *before* the autonomous span, the review report is what the user reads *after* it, and it is rendered on the reply channel (R1) as markdown in the reply, never as a raw command dump ([21-human-computer-interaction.md](./21-human-computer-interaction.md)). The report has exactly **three areas**:
+
+- **(a) The review folder table.** One row per folder or git repo, carried by four columns: `Folder/Git-Repo | inward/outward | fully checked? | anomalies`. The `inward/outward` column is the repository's **facing** — the same `facing` axis Rule C1 uses to decide issue-versus-memo-ID orientation ([17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md)) — recorded here so the review shows, per repo, its direction, whether it was checked in full, and any neutral findings. This table is the review lens over the same repositories the WHAT WAS DONE table records: WHAT WAS DONE says *what changed*, the review folder table says *whether it was checked and what stood out*.
+- **(b) A short neutral narrative — what ran, what ran well, anomalies.** A brief prose account of how the run actually went: what ran, what ran well, and what stood out as an anomaly. It is deliberately **neutral and un-graded** — the oil-level principle: a finding near the edge of an accepted range is listed as an anomaly to investigate and surface, never pre-triaged into a severity or silently waved through. Listing an anomaly is not the same as grading it.
+- **(c) Needs review — the set-aside items.** The items the run set aside rather than solved: each **Snag** deferred under guardrail C10 ([29-behavioral-guardrails.md](./29-behavioral-guardrails.md)) together with the needs-review remnants from the OPEN ENDS section. This is where the run's deliberate set-asides become visible to the user, who decides what happens to each — the point at which C7 ("deferring is the user's decision") becomes real.
+
+The naming is exact and must not drift: the set-aside **item** is a **Snag**; **anomaly** (Auffälligkeit) is the **column** in the folder table where a neutral finding is recorded, not a second name for the item. One item, one name. The four columns render deterministically from the `repos[]` block of the machine-readable `landing-readiness.json` marker (`name → Folder/Git-Repo`, `facing → inward/outward`, `checked → fully checked?`, `anomalies → anomalies`); the review report is a documented render mapping, not a new engine.
 
 ---
 
@@ -86,4 +111,9 @@ The landing is complete only when the working state is clean, so the check is a 
 - [38-stage-model.md](./38-stage-model.md) — the four-stage process end; landing is Stage 2, merge preparation (the local merge up to `main`) is Stage 3, and the push gate is Stage 4.
 - [13-orchestration.md](./13-orchestration.md) — the orchestrator, agent team, and state files that drive the rollout and feed the machine-readable marker.
 - [16-git-security-versioning.md](./16-git-security-versioning.md) — the deterministic git flow governing worktrees, branches, and the commits and local merge the landing and merge preparation prepare.
+- [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — Rule C1 and the `inward/outward` facing axis the review folder table records per repo.
+- [31-goals.md](./31-goals.md) — the forward goal pole re-scored at the L6 landing step (`memo goal score-all`, fresh context).
+- [33-maintenance.md](./33-maintenance.md) — the backward maintenance twin re-scored at the same L6 step (`memo maintenance score-all`, fresh context).
+- [21-human-computer-interaction.md](./21-human-computer-interaction.md) — the interaction model whose `U3` "review result" node the review report gives shape to, and the R1 reply-channel rule it renders on.
+- [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) — guardrail C10 (set a Snag aside), whose set-aside items appear in the review report's "needs review" area.
 - [00-overview.md](./00-overview.md) — conformance language.

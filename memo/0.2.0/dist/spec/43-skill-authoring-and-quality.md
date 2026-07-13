@@ -6,7 +6,7 @@ spec_file: "43-skill-authoring-and-quality.md"
 order: 43
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/43-skill-authoring-and-quality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/43-skill-authoring-and-quality.md."

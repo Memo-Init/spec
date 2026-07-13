@@ -4,7 +4,7 @@
 |-------|-------|
 | Status | Draft |
 | Depends on | [26-memo-history.md](./26-memo-history.md), [00-overview.md](./00-overview.md) |
-| Related | [30-primitives.md](./30-primitives.md), [13-orchestration.md](./13-orchestration.md), [06-memo-structure.md](./06-memo-structure.md), [26-memo-history.md](./26-memo-history.md), [33-maintenance.md](./33-maintenance.md) |
+| Related | [30-primitives.md](./30-primitives.md), [13-orchestration.md](./13-orchestration.md), [06-memo-structure.md](./06-memo-structure.md), [26-memo-history.md](./26-memo-history.md), [27-landing-the-plane.md](./27-landing-the-plane.md), [33-maintenance.md](./33-maintenance.md) |
 
 A **goal** is the triggering **intent** behind work — the feature or outcome that several memos serve — and it is the only primitive that sits *above* a single memo (see [30-primitives.md](./30-primitives.md)). Where a memo is the highest authority over its own rollout, a goal expresses an intent that persists across the memo sequence and outlives any one memo. A goal is defined by the intent it pursues, not by the surface it happens to touch: "a website" is a surface, "the project has a current public presence online" is the intent. Because the intent cross-cuts repos and memos, a goal is the natural unit at which to ask the honest question a single PASS-report cannot answer: *how far along is this, really?* A goal is the **forward** pole — the bow that splits the water; its backward twin is maintenance, the stern that trails delivered work (see [33-maintenance.md](./33-maintenance.md)). Both are derived from the same chronicle, sorted by the NEW/DRIFT triage.
 
@@ -36,7 +36,8 @@ A goal has a deliberately simple, **fluid** lifecycle: `offen` → `abgeschlosse
 
 The value of a goal is that it is **measured against real state**, not against a self-report.
 
-- **Never in the working session.** A goal is **never** scored in the same session that worked on it. A session that did the work will report "all done" and hide the gap (the lesson of an earlier episode where a working session declared a large requirement set complete and lost the real state). Scoring therefore runs in a **fresh context** — a separate, unbiased reader of the actual artifacts.
+- **Never in the working session.** A goal is **never** scored in the same session that worked on it. A session that did the work will report "all done" and hide the gap (the lesson of an earlier episode where a working session declared a large requirement set complete and lost the real state). Scoring therefore runs in a **fresh context** — a separate, unbiased reader of the actual artifacts. That is the *how*.
+- **Refreshed at landing — the *when*.** The canonical moment a goal is re-scored is **Landing the Plane**: the L6 step of the landing checklist, run at the process end once the rollout's work is real ([27-landing-the-plane.md](./27-landing-the-plane.md)). The *when* completes the *how* above — "never in the working session" says which session must *not* score, landing says which one *does*: landing already runs after a context reset, so the fresh reader the score requires is the reader landing already is. Reading the board at the next rollout's pre-rollout health check consumes a score that was refreshed at the previous landing, not one computed on the spot.
 - **Distrust PASS.** A green conformity report is not evidence. The fresh-context reader inspects the real artifacts — files, wiring, tests actually run, real usage — and measures how far the **intent** is met, not whether a report is green.
 - **A single score is a strict object.** One goal's score is `{ pct, readiness, done, missing, status, confidence, evidence }`: a percentage, the deterministic readiness axis (below), what is genuinely there, what real work is still open, the lifecycle status, the provenance of the judgement, and concrete evidence pointers. Only `pct` is the fresh-context LLM judgement; `readiness` is computed deterministically.
 
@@ -94,6 +95,7 @@ A goal and the chronicle ([26-memo-history.md](./26-memo-history.md)) are **comp
 
 - [30-primitives.md](./30-primitives.md) — the central glossary; the goal primitive is summarized there and specified in full here.
 - [26-memo-history.md](./26-memo-history.md) — the cross-memo timeline a goal is read against.
+- [27-landing-the-plane.md](./27-landing-the-plane.md) — the landing step (L6) at which a goal is score-refreshed in a fresh context: the *when* that pairs with this chapter's *how*.
 - [00-overview.md](./00-overview.md) — mission and authority model (the memo is the authority; the goal spans the sequence).
 - [13-orchestration.md](./13-orchestration.md) — where the chronicle lives, the complementary narrative to a goal's measurement.
 - [06-memo-structure.md](./06-memo-structure.md) — the `.memo/` tree the goal store and score reports live beside.

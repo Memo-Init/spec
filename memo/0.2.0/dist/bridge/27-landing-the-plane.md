@@ -19,7 +19,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 3. Required detail pages
 
-[00-overview](./00-overview.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [16-git-security-versioning](./16-git-security-versioning.md), [38-stage-model](./38-stage-model.md)
+[00-overview](./00-overview.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [16-git-security-versioning](./16-git-security-versioning.md), [31-goals](./31-goals.md), [33-maintenance](./33-maintenance.md), [38-stage-model](./38-stage-model.md)
 
 ## 4. Implementing skills
 

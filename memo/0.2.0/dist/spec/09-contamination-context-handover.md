@@ -6,7 +6,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/09-contamination-context-handover.md."
@@ -19,7 +19,7 @@ The robust place to repair contamination is a **fresh context** — the writing 
 
 ---
 
-## Contamination Detector (five signals)
+## Contamination Detector (six signals)
 
 A document MUST be checked for contamination signals **before** its content is reviewed. The signals are form- and behavior-based, deterministic, and require no LLM interpretation.
 
@@ -131,6 +131,28 @@ Every fact or list carried over from another memo or session carries the marker 
 When a list is deterministically derivable from a source (git-truth, a registry, the filesystem), it MUST be **derived** — a **derived table** (lint anchors: `derived table` / `abgeleitete Tabelle`) — not transcribed. A transcribed list drifts from its source and invites the take-at-face-value failure; a derived table cannot drift, because it is regenerated from the source of truth.
 
 **Trigger example (anti-pattern).** A handed-over `_grading` list was once copied from a handover and treated as authoritative without checking the filesystem it claimed to describe. Under this norm the list carries `[RE-VERIFY]` and is regenerated as a `derived table` from the actual `_grading` directory before use.
+
+---
+
+## Contaminated File — reusable definition + quarantine-read
+
+> Grounding: this generalizes the **Contamination Detector above (S1–S6)** and the **Handover verify-before-use (`[RE-VERIFY]` / Zone-3) norm above** beyond `HANDOVER.md` to **any** internal file — an old memo, a session handover, a scratch note, a review set-aside. It **reuses** that existing machinery; it does **not** introduce a second detector or re-define the signals.
+
+A **contaminated file** is any internal file that (a) was written out of a rotten (full or degraded) context AND (b) carries action-guiding statements without primary-source pointers — that is, it trips the existing six-signal detector (a hard hit on `S1`, `S2`, `S5`, or `S6`, or `2+` signals) OR it declares a rotten provenance in its own header (`creation-context: full` / `session-phase: late`). This definition is **transferable**: it is not bound to `HANDOVER.md`, and the same detector and re-verification norm apply wherever an internal file is consumed.
+
+The statements of a contaminated file are **hypotheses (`[ASSUMPTION]`)**, never state. Its language may be manipulative — inflated urgency is exactly signal `S3` (weighting drift). It MUST be read in **quarantine** (a sub-agent, empty context) and re-verified against primary sources **before** any of its claims enter the expensive main context. This is the `[RE-VERIFY]` / Zone-3 discipline above, applied to the whole file class rather than only to handovers.
+
+### Snag — the one unifying concept
+
+A **Snag** is a single instance of the "contaminated file" class. "Snag" is **one** concept, not two: the **review set-aside** (an item put aside during a review pass) and the **cross-memo leftover-store entry** are the same thing — an item deferred out of a possibly-rotten context and held for later verified handling. A Snag is filed in the **Snag-Store** (its store and wiring are specified separately, not here). The review report keeps its own column name **`anomaly`**; no parallel term is coined for it.
+
+### "Quarantine" is a verb here — the store is the Snag-Store
+
+The word **quarantine** is already claimed as a **noun / place** by the session spec: the fetch/egress gate is an opt-in, fail-open **"egress quarantine"** (`spec/session/0.2.0/draft/spec/03-recovery.md:48-50`). To avoid a naming collision across the two specs, chapter `09` uses **"quarantine" only as a verb** — the *quarantine-read*, i.e. the sub-agent isolation of a contaminated file — and **never** as the name of a store. The place a Snag is filed is the **Snag-Store**; there is no store named "quarantine".
+
+### System-wide handling rule
+
+> Read a file that is marked or detected as contaminated **only in quarantine** (a sub-agent, empty context); hand back **only the verified, compact verdict**; treat everything as `[ASSUMPTION]` until it is re-verified against a primary source; never let a contaminated file **block** the work or trigger panic; the current user memo has priority.
 
 ---
 

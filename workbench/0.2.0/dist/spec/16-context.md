@@ -6,7 +6,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "workbench/0.2.0/draft/spec/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/16-context.md."

@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/29-behavioral-guardrails.md."
@@ -91,6 +91,19 @@ This rule is deliberately bounded, and the boundary must be stated explicitly so
 
 The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in the memo's `context/`** (memo-scoped, not the project-wide store) — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
 
+## C10 — Set a Snag Aside Instead of Getting Entangled
+
+Pushing a run to its limit does not mean every small obstacle earns a halt. The failure this guards against is not stopping too early but getting *entangled*: sinking the run into a small, tangential problem that threatens the core memo work — either by chasing it down mid-run or by treating it as a hard stop. Both reactions cost the run; one derails it, the other kills it.
+
+The rule: a small problem that threatens to entangle the run and endanger the core memo work is set aside as a **Snag** — not solved on the spot, not raised as a `[NOTSTOPP]`, not raised as a `[BLOCKER]`, and never a reason to stop the run. The Snag is carried to the landing review and presented there ([27-landing-the-plane.md](/specification/landing-the-plane/)); the user decides what becomes of it. It is set aside, named, and shown — never silently dropped, and never allowed to derail the run.
+
+The naming is deliberate and must not drift. **Snag** is the item — the thing set aside. **Anomaly** (Auffälligkeit) is the *column* of the review folder table where a neutral finding is recorded, not a second name for the item. **Quarantine** is only a verb, used elsewhere for reading a set-aside file in isolation; it is not the item's name either. One item, one name: Snag. The Snag named here is a review set-aside; its systemic form — a store that persists set-aside items across memos — is defined separately, and this rule only names the behavior, it does not build the store.
+
+> **Reconciliation with C3, C7, C8.** C10 sits among three rules and contradicts none.
+> - **With C3 (full autonomy).** Setting a Snag aside is what keeps the run alive rather than stopping it. It is not a mid-run request for permission; it is how the agent *stays* autonomous when it meets a small obstacle — neither halting nor rat-holing, but setting the thing aside and continuing.
+> - **With C7 (deferring is the user's decision).** The Snag is not silently deferred: it is made **visible** at the review and handed to the user, which is exactly where C7 becomes real. Setting aside is not exporting — the item stays in the current memo's landing and is presented, not spun out into a follow-up.
+> - **With C8 (fix what you find, within YAGNI).** A *large* adjacent defect is still surfaced, and a small one is still fixed in place — C8 is untouched. C10 closes only the narrow gap it leaves open: a problem small enough to ignore mid-run yet real enough to present, which is neither a fix-in-place nor a stop but a set-aside.
+
 ---
 
 ## Conformity Requirements
@@ -125,3 +138,4 @@ Maintenance work is autonomous in reporting but gated in acting, so the check is
 - [01-philosophy.md](/specification/philosophy/) — the "Work It In Instead of Deferring" principle behind C7.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the developer-triggered finalize verb the guardrails defer to.
 - [23-requirements.md](/specification/requirements/) — the requirement-gate model that C6 ("no done without verification") is the behavioral root of.
+- [27-landing-the-plane.md](/specification/landing-the-plane/) — the landing review that receives the Snag set aside under C10, in its "needs review" area.

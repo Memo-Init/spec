@@ -6,7 +6,7 @@ spec_file: "31-goals.md"
 order: 31
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/31-goals.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/31-goals.md."
@@ -43,7 +43,8 @@ A goal has a deliberately simple, **fluid** lifecycle: `offen` → `abgeschlosse
 
 The value of a goal is that it is **measured against real state**, not against a self-report.
 
-- **Never in the working session.** A goal is **never** scored in the same session that worked on it. A session that did the work will report "all done" and hide the gap (the lesson of an earlier episode where a working session declared a large requirement set complete and lost the real state). Scoring therefore runs in a **fresh context** — a separate, unbiased reader of the actual artifacts.
+- **Never in the working session.** A goal is **never** scored in the same session that worked on it. A session that did the work will report "all done" and hide the gap (the lesson of an earlier episode where a working session declared a large requirement set complete and lost the real state). Scoring therefore runs in a **fresh context** — a separate, unbiased reader of the actual artifacts. That is the *how*.
+- **Refreshed at landing — the *when*.** The canonical moment a goal is re-scored is **Landing the Plane**: the L6 step of the landing checklist, run at the process end once the rollout's work is real ([27-landing-the-plane.md](/specification/landing-the-plane/)). The *when* completes the *how* above — "never in the working session" says which session must *not* score, landing says which one *does*: landing already runs after a context reset, so the fresh reader the score requires is the reader landing already is. Reading the board at the next rollout's pre-rollout health check consumes a score that was refreshed at the previous landing, not one computed on the spot.
 - **Distrust PASS.** A green conformity report is not evidence. The fresh-context reader inspects the real artifacts — files, wiring, tests actually run, real usage — and measures how far the **intent** is met, not whether a report is green.
 - **A single score is a strict object.** One goal's score is `{ pct, readiness, done, missing, status, confidence, evidence }`: a percentage, the deterministic readiness axis (below), what is genuinely there, what real work is still open, the lifecycle status, the provenance of the judgement, and concrete evidence pointers. Only `pct` is the fresh-context LLM judgement; `readiness` is computed deterministically.
 
@@ -101,6 +102,7 @@ A goal and the chronicle ([26-memo-history.md](/specification/memo-history/)) ar
 
 - [30-primitives.md](/specification/primitives/) — the central glossary; the goal primitive is summarized there and specified in full here.
 - [26-memo-history.md](/specification/memo-history/) — the cross-memo timeline a goal is read against.
+- [27-landing-the-plane.md](/specification/landing-the-plane/) — the landing step (L6) at which a goal is score-refreshed in a fresh context: the *when* that pairs with this chapter's *how*.
 - [00-overview.md](/specification/overview/) — mission and authority model (the memo is the authority; the goal spans the sequence).
 - [13-orchestration.md](/specification/orchestration/) — where the chronicle lives, the complementary narrative to a goal's measurement.
 - [06-memo-structure.md](/specification/memo-structure/) — the `.memo/` tree the goal store and score reports live beside.

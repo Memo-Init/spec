@@ -6,7 +6,7 @@ spec_file: "38-stage-model.md"
 order: 38
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/38-stage-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/38-stage-model.md."
@@ -35,6 +35,14 @@ The process end is a fixed, ordered sequence. Each stage has a single job and a 
 **Stage 3 — Merge Preparation.** With the workspace landed, the branches are named by their memo ID (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)), the system performs the **local merge up to `main`** deterministically, and the commits are prepared and presented. The stage ends when the result is clean and conflict-free — push-ready, with nothing left to resolve before release.
 
 **Stage 4 — Merge / Push Gate.** The final boundary is the user's. The user authorizes the push; the push is never automatic. The stage — and the thread — ends when the user pushes.
+
+---
+
+## The REVIEW Bookend
+
+The four stages are framed by two named user touchpoints, one at each end. At the **front**, before the rollout begins, stands the memo-init question round: the user answers the open questions and confirms finalization, and only then does the duty-of-care break hand control to the autonomous rollout (the `U2 → Q → G1 → B1` path of the interaction model, [21-human-computer-interaction.md](/specification/human-computer-interaction/)). At the **back**, once landing has rendered the end-state legible, stands the symmetric touchpoint: the **REVIEW**. It is the shape given to the interaction model's `U3` node — the bare "review result" step — which the review bookend raises from a vague hand-back into a named user review with three areas (specified in [27-landing-the-plane.md](/specification/landing-the-plane/)).
+
+The REVIEW is a **bookend, not a new channel.** It is the fully-formed expression of the fourth communication point of the autonomous rollout — the bundled hand-back at landing — not a fifth place where the run stops to ask permission mid-flight. Where the front bookend gathers the user's decisions *before* the autonomous span, the back bookend presents the run's outcome *after* it: a per-repo review-folder table (each repo by its `inward/outward` facing, whether it was fully checked, and any anomalies), a short neutral narrative of what ran, and the items set aside for the user to review — including any **Snag** deferred under guardrail C10 ([29-behavioral-guardrails.md](/specification/behavioral-guardrails/)). The user reads the REVIEW and decides; that decision is the same push gate the stage model already ends on, now reached through a named review rather than a bare hand-off.
 
 ---
 
@@ -83,4 +91,6 @@ The two gates are the checkable boundaries: the Evaluate gate closes stage one, 
 - [27-landing-the-plane.md](/specification/landing-the-plane/) — stage two, the always-mandatory landing that leaves the workspace next-morning startable.
 - [13-orchestration.md](/specification/orchestration/) — the orchestrator and state files that drive the stages and record their progress.
 - [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) — the ID-named branches and the deterministic git flow behind merge preparation and the push gate.
+- [21-human-computer-interaction.md](/specification/human-computer-interaction/) — the interaction model whose `U3` "review result" node the REVIEW bookend gives shape to.
+- [29-behavioral-guardrails.md](/specification/behavioral-guardrails/) — guardrail C10 (set a Snag aside), whose set-aside items surface at the REVIEW bookend.
 - [00-overview.md](/specification/overview/) — conformance language.

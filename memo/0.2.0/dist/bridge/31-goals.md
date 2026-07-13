@@ -19,7 +19,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 ## 3. Required detail pages
 
-[00-overview](./00-overview.md), [06-memo-structure](./06-memo-structure.md), [13-orchestration](./13-orchestration.md), [26-memo-history](./26-memo-history.md), [30-primitives](./30-primitives.md), [33-maintenance](./33-maintenance.md)
+[00-overview](./00-overview.md), [06-memo-structure](./06-memo-structure.md), [13-orchestration](./13-orchestration.md), [26-memo-history](./26-memo-history.md), [27-landing-the-plane](./27-landing-the-plane.md), [30-primitives](./30-primitives.md), [33-maintenance](./33-maintenance.md)
 
 ## 4. Implementing skills
 

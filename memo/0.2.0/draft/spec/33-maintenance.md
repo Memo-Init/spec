@@ -55,7 +55,8 @@ Unlike a goal, a maintenance card never "completes" — there is no `abgeschloss
 
 Like a goal, a maintenance card is **measured against real state**, never against a self-report.
 
-- **Never in the working session.** A card is **never** scored in the same session that did the work — a session that built the change will report it healthy and hide the drift. Scoring runs in a **fresh context**, one agent per repo, an unbiased reader of the real diff.
+- **Never in the working session.** A card is **never** scored in the same session that did the work — a session that built the change will report it healthy and hide the drift. Scoring runs in a **fresh context**, one agent per repo, an unbiased reader of the real diff. That is the *how*.
+- **Refreshed at landing — the *when*.** The canonical moment a card is re-scored is **Landing the Plane**: the L6 step of the landing checklist, run at the process end once the delivered change is real ([27-landing-the-plane.md](./27-landing-the-plane.md)). The refresh happens **at landing**, not first when the next rollout reads the board — the `releaseReady` flag a pre-rollout health check consumes (The Board, below) was computed at the previous landing, in the fresh context landing already provides. The *when* completes the fresh-context *how*: "never in the working session" names which session must not score, landing names which one does.
 - **Distrust PASS.** A green report is not evidence. The fresh-context reader inspects the actual commits since each edge's provenance pin, the real dependency graph, and the source heads — not a claim.
 - **A single score is a strict object.** One card's score is `{ pct, status, findings, signals, confidence, evidence }`: a freshness percentage, the `maintStatus`, the concrete drift findings, the machine signals behind them, the provenance of the judgement, and evidence pointers. `pct` is the fresh-context freshness reading; the blast-radius (below) is computed deterministically and auto-filled by the CLI.
 
@@ -72,7 +73,7 @@ The two are independent: a unit can be very stale with a narrow blast (rot it la
 
 ## The Board
 
-Scoring all cards produces a **board** — the standard output, exactly as for goals. It is a table of `Repo | Freshness % | Blast | maintStatus | Missing`, sorted worst-first, followed by a summary line of the form `N ok · M stale · K critical · Ø Freshness X %`, plus a `worstStatus` (the worst card's status) and a `releaseReady` flag (true only when no card is `critical`). This board, not a single number, is the deliverable, and the `releaseReady` flag is what a pre-rollout health check reads (see [./26-memo-history.md](./26-memo-history.md) and the project-health projection).
+Scoring all cards produces a **board** — the standard output, exactly as for goals. It is a table of `Repo | Freshness % | Blast | maintStatus | Missing`, sorted worst-first, followed by a summary line of the form `N ok · M stale · K critical · Ø Freshness X %`, plus a `worstStatus` (the worst card's status) and a `releaseReady` flag (true only when no card is `critical`). This board, not a single number, is the deliverable, and the `releaseReady` flag is what a pre-rollout health check reads (see [./26-memo-history.md](./26-memo-history.md) and the project-health projection). That flag is **refreshed at landing** — the L6 step of the landing checklist ([./27-landing-the-plane.md](./27-landing-the-plane.md)) re-scores every card in a fresh context, so a later pre-rollout read consumes a value computed at the previous landing rather than one invented on the spot.
 
 ## The Forced Dashboard
 

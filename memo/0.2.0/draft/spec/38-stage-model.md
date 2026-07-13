@@ -31,6 +31,14 @@ The process end is a fixed, ordered sequence. Each stage has a single job and a 
 
 ---
 
+## The REVIEW Bookend
+
+The four stages are framed by two named user touchpoints, one at each end. At the **front**, before the rollout begins, stands the memo-init question round: the user answers the open questions and confirms finalization, and only then does the duty-of-care break hand control to the autonomous rollout (the `U2 → Q → G1 → B1` path of the interaction model, [21-human-computer-interaction.md](./21-human-computer-interaction.md)). At the **back**, once landing has rendered the end-state legible, stands the symmetric touchpoint: the **REVIEW**. It is the shape given to the interaction model's `U3` node — the bare "review result" step — which the review bookend raises from a vague hand-back into a named user review with three areas (specified in [27-landing-the-plane.md](./27-landing-the-plane.md)).
+
+The REVIEW is a **bookend, not a new channel.** It is the fully-formed expression of the fourth communication point of the autonomous rollout — the bundled hand-back at landing — not a fifth place where the run stops to ask permission mid-flight. Where the front bookend gathers the user's decisions *before* the autonomous span, the back bookend presents the run's outcome *after* it: a per-repo review-folder table (each repo by its `inward/outward` facing, whether it was fully checked, and any anomalies), a short neutral narrative of what ran, and the items set aside for the user to review — including any **Snag** deferred under guardrail C10 ([29-behavioral-guardrails.md](./29-behavioral-guardrails.md)). The user reads the REVIEW and decides; that decision is the same push gate the stage model already ends on, now reached through a named review rather than a bare hand-off.
+
+---
+
 ## What "The System Merges, The User Releases" Means
 
 The boundary between stage three and stage four is precise, and a common over-statement gets it wrong. It is **not** true that "the user does the merge". The system performs the local merge up to `main` deterministically as part of merge preparation: it folds the ID-named branches together, resolves the integration locally, and presents a clean, conflict-free `main` ready to release. What the system does **not** do is push. The push is the one act of release that stays with the user, every time, and is never automatic.
@@ -76,4 +84,6 @@ The two gates are the checkable boundaries: the Evaluate gate closes stage one, 
 - [27-landing-the-plane.md](./27-landing-the-plane.md) — stage two, the always-mandatory landing that leaves the workspace next-morning startable.
 - [13-orchestration.md](./13-orchestration.md) — the orchestrator and state files that drive the stages and record their progress.
 - [17-git-workflow-and-ids.md](./17-git-workflow-and-ids.md) — the ID-named branches and the deterministic git flow behind merge preparation and the push gate.
+- [21-human-computer-interaction.md](./21-human-computer-interaction.md) — the interaction model whose `U3` "review result" node the REVIEW bookend gives shape to.
+- [29-behavioral-guardrails.md](./29-behavioral-guardrails.md) — guardrail C10 (set a Snag aside), whose set-aside items surface at the REVIEW bookend.
 - [00-overview.md](./00-overview.md) — conformance language.

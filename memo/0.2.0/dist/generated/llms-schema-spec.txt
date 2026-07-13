@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the memo spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: memo@0.2.0:00c2b92
+Source: memo@0.2.0:785604c
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/00-overview.md."
@@ -123,7 +123,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/01-philosophy.md."
@@ -277,7 +277,7 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/02-memo-sop-entrypoint.md."
@@ -463,7 +463,7 @@ spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/03-input-paths.md."
@@ -546,7 +546,7 @@ spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/04-input-pipeline.md."
@@ -720,7 +720,7 @@ spec_file: "05-memo-strategies.md"
 order: 5
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/05-memo-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/05-memo-strategies.md."
@@ -791,7 +791,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/06-memo-structure.md."
@@ -990,7 +990,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/07-revisions-and-questions.md."
@@ -1303,7 +1303,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/08-phases-and-prds.md."
@@ -1673,7 +1673,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/09-contamination-context-handover.md."
@@ -1686,7 +1686,7 @@ The robust place to repair contamination is a **fresh context** — the writing 
 
 ---
 
-## Contamination Detector (five signals)
+## Contamination Detector (six signals)
 
 A document MUST be checked for contamination signals **before** its content is reviewed. The signals are form- and behavior-based, deterministic, and require no LLM interpretation.
 
@@ -1801,6 +1801,28 @@ When a list is deterministically derivable from a source (git-truth, a registry,
 
 ---
 
+## Contaminated File — reusable definition + quarantine-read
+
+> Grounding: this generalizes the **Contamination Detector above (S1–S6)** and the **Handover verify-before-use (`[RE-VERIFY]` / Zone-3) norm above** beyond `HANDOVER.md` to **any** internal file — an old memo, a session handover, a scratch note, a review set-aside. It **reuses** that existing machinery; it does **not** introduce a second detector or re-define the signals.
+
+A **contaminated file** is any internal file that (a) was written out of a rotten (full or degraded) context AND (b) carries action-guiding statements without primary-source pointers — that is, it trips the existing six-signal detector (a hard hit on `S1`, `S2`, `S5`, or `S6`, or `2+` signals) OR it declares a rotten provenance in its own header (`creation-context: full` / `session-phase: late`). This definition is **transferable**: it is not bound to `HANDOVER.md`, and the same detector and re-verification norm apply wherever an internal file is consumed.
+
+The statements of a contaminated file are **hypotheses (`[ASSUMPTION]`)**, never state. Its language may be manipulative — inflated urgency is exactly signal `S3` (weighting drift). It MUST be read in **quarantine** (a sub-agent, empty context) and re-verified against primary sources **before** any of its claims enter the expensive main context. This is the `[RE-VERIFY]` / Zone-3 discipline above, applied to the whole file class rather than only to handovers.
+
+### Snag — the one unifying concept
+
+A **Snag** is a single instance of the "contaminated file" class. "Snag" is **one** concept, not two: the **review set-aside** (an item put aside during a review pass) and the **cross-memo leftover-store entry** are the same thing — an item deferred out of a possibly-rotten context and held for later verified handling. A Snag is filed in the **Snag-Store** (its store and wiring are specified separately, not here). The review report keeps its own column name **`anomaly`**; no parallel term is coined for it.
+
+### "Quarantine" is a verb here — the store is the Snag-Store
+
+The word **quarantine** is already claimed as a **noun / place** by the session spec: the fetch/egress gate is an opt-in, fail-open **"egress quarantine"** (`spec/session/0.2.0/draft/spec/03-recovery.md:48-50`). To avoid a naming collision across the two specs, chapter `09` uses **"quarantine" only as a verb** — the *quarantine-read*, i.e. the sub-agent isolation of a contaminated file — and **never** as the name of a store. The place a Snag is filed is the **Snag-Store**; there is no store named "quarantine".
+
+### System-wide handling rule
+
+> Read a file that is marked or detected as contaminated **only in quarantine** (a sub-agent, empty context); hand back **only the verified, compact verdict**; treat everything as `[ASSUMPTION]` until it is re-verified against a primary source; never let a contaminated file **block** the work or trigger panic; the current user memo has priority.
+
+---
+
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
@@ -1820,7 +1842,7 @@ spec_file: "10-proactive-research.md"
 order: 10
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/10-proactive-research.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/10-proactive-research.md."
@@ -2123,7 +2145,7 @@ spec_file: "11-quality-and-finalization.md"
 order: 11
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/11-quality-and-finalization.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/11-quality-and-finalization.md."
@@ -2509,7 +2531,7 @@ spec_file: "12-rollout.md"
 order: 12
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/12-rollout.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/12-rollout.md."
@@ -2661,7 +2683,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/13-orchestration.md."
@@ -2948,7 +2970,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/14-agents-skills-tasks.md."
@@ -3100,7 +3122,7 @@ spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/15-prompt-generator.md."
@@ -3224,7 +3246,7 @@ spec_file: "16-git-security-versioning.md"
 order: 16
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/16-git-security-versioning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/16-git-security-versioning.md."
@@ -3507,7 +3529,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/17-git-workflow-and-ids.md."
@@ -3816,7 +3838,7 @@ spec_file: "18-multidimensionality.md"
 order: 18
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/18-multidimensionality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/18-multidimensionality.md."
@@ -3879,7 +3901,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/19-internal-vs-external-communication.md."
@@ -4061,7 +4083,7 @@ spec_file: "20-flow-full-vs-update-revisions.md"
 order: 20
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/20-flow-full-vs-update-revisions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/20-flow-full-vs-update-revisions.md."
@@ -4135,7 +4157,7 @@ spec_file: "21-human-computer-interaction.md"
 order: 21
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/21-human-computer-interaction.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/21-human-computer-interaction.md."
@@ -4326,7 +4348,7 @@ spec_file: "22-tree-cli-recommended-way.md"
 order: 22
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/22-tree-cli-recommended-way.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/22-tree-cli-recommended-way.md."
@@ -4597,7 +4619,7 @@ spec_file: "23-requirements.md"
 order: 23
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/23-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/23-requirements.md."
@@ -4970,7 +4992,7 @@ spec_file: "24-tools-registry.md"
 order: 24
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/24-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/24-tools-registry.md."
@@ -5160,7 +5182,7 @@ spec_file: "25-strands.md"
 order: 25
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/25-strands.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/25-strands.md."
@@ -5234,7 +5256,7 @@ spec_file: "26-memo-history.md"
 order: 26
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/26-memo-history.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/26-memo-history.md."
@@ -5337,7 +5359,7 @@ spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/27-landing-the-plane.md."
@@ -5371,7 +5393,7 @@ The landing produces a single document with a fixed, deterministic structure. Th
 
 ---
 
-## The Landing Checklist (L1–L7)
+## The Landing Checklist (L1–L8)
 
 Landing is complete when these items hold:
 
@@ -5380,7 +5402,20 @@ Landing is complete when these items hold:
 - **L3** — Commits are prepared and locally merged, but **never pushed**. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's.
 - **L4** — Open ends are named. Deferred items, blocker resolutions, and needs-review remnants appear in the OPEN ENDS section; nothing finished-but-unstated is left implicit.
 - **L5** — The end-state is machine-readable. The `landing-readiness.json` marker is written so the landing can be consumed without reading prose.
-- **L7** — Exactly one narrated chronicle entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The existing L1-L5 points are unchanged; the chronicle point is L7 and the former L6 slot is deliberately left unassigned.
+- **L6** — Goals and Maintenance are score-refreshed. In the fresh landing context both boards are re-scored — `memo goal score-all` and `memo maintenance score-all`, one agent per goal and per repo, never the working session — and this runs **before** L7 so the fresh boards are captured. The refreshed boards are written into the `landing-readiness.json` marker (the `L6_scores` block); a skipped refresh is recorded as `L6_scores.status: "skipped"`, never silently omitted. The reason landing is the right moment, and the cross-links to the two scored chapters, are in [Goals & Maintenance at Landing](#goals--maintenance-at-landing) below.
+- **L7** — Exactly one narrated chronicle entry is appended. At the close of landing the system writes a single narrated chronicle entry for the memo via the canonical `memo chronic add` command (append-only, chaining N→N-1), naming the touched topic IDs and telling the real sequence of work — what was done, what was given up. This is what lets the next memo dock cleanly: the next `memo-init` reads the chronicle and lands on the right places (the interlocking-brick principle). The order is L1–L5 → L6 (scores) → L7 (chronicle) → L8 (snags); the former "L6 deliberately unassigned" reservation is superseded.
+- **L8** — Leftover snags are promoted into the store. After the chronicle, the run's deliberate set-asides are captured so they outlive the memo: the OPEN ENDS `needs-review` category and the genuinely-hard PILOT TASKS are each promoted into the cross-memo Snag-Store via `memo snag add` — one flat Markdown file per snag under `.memo/snags/{origin-NNN}-{slug}.md` (append-only, NO-OVERWRITE). Each promoted snag inherits `Origin-Memo` = the current memo, `Status: open`, and `Created` = the landing timestamp (an ISO string supplied by the caller — the core reads no clock), and it usually carries the `Erstellungs-Kontext: voll` note because it was born in a full end-of-rollout context. Snags age, but "Claude does not understand time", so staleness is a **deterministic flag only** (both timestamps caller-supplied, computed by `SnagStaleness`): `stale` marks a snag, it never deletes one — a snag is **never auto-deleted**, and closing it (`resolved`) is later the job of the verify sub-agent or the user, not of landing. This is where the set-aside items of the review report's "needs review" area (see below) become durable store entries the next `memo-init` can read.
+
+---
+
+## Goals & Maintenance at Landing
+
+Landing is the **canonical score-refresh point** for the two measured poles of the work: the forward **goal** (the bow, [31-goals.md](/specification/goals/)) and its backward twin **maintenance** (the stern, [33-maintenance.md](/specification/maintenance/)). This is the L6 step of the checklist above. Two reasons make the close of the run the right moment, not the start of the next rollout:
+
+- **The effect is real now.** Both poles measure *delivered* state, not intent. Only once the rollout's work has actually landed is there a true state to score — so the honest reading is taken here, at the process end, rather than deferred to whenever the next run happens to read it.
+- **The context is already fresh.** Scoring both poles carries a hard rule: it is **never** done in the working session, always in a fresh context (the *how*, specified in [31-goals.md](/specification/goals/) and [33-maintenance.md](/specification/maintenance/)). Landing already runs after a context reset (see "Why Landing Is Its Own Step" above), so the fresh reader the score requires is exactly the reader landing already is. The two constraints — *fresh context* and *at landing* — meet here.
+
+Mechanically, L6 spawns `memo goal score-all` and `memo maintenance score-all` (one agent per goal and per repo — the skills fan out per item themselves), captures the resulting boards into the `landing-readiness.json` marker under `L6_scores`, and runs before the L7 chronicle entry. The board mechanics — the strict score object, the second deterministic axis, and the `releaseReady` flag a pre-rollout health check later reads — are **not** restated here; they live in [31-goals.md](/specification/goals/) and [33-maintenance.md](/specification/maintenance/). This chapter fixes only the *when*: the refresh happens at landing.
 
 ---
 
@@ -5389,6 +5424,18 @@ Landing is complete when these items hold:
 The **user is the pilot**; the system prepares a landing the pilot can act on with as few questions as possible. The boundary is sharp and is a hard rule, but it falls at the push, not at the commit. The system commits the per-PRD changes and performs the deterministic local merge up to `main` during merge preparation; what stays with the pilot is the push. A commit is not a push, and a local merge is not a release: the system prepares commits and merges locally to a clean, push-ready `main`, but the push — the single act of release — is never automatic and is always the pilot's. This replaces the older "never committed by the system" framing with "committed and locally merged, never pushed".
 
 Two distinctions sharpen this. A commit is not a push: the system writes the commits and folds the branches together locally, but the push that releases them is a further, separate act that is never automatic. And a clean, push-ready `main` is the system's ceiling — the work is committed, merged, and explained, but the decision to release it is the pilot's, taken at the next break. A `verdict: OPEN` is not a failure: honest landing names open ends rather than hiding them, and the system's job remains to leave the pilot a landing that needs as few questions as possible.
+
+---
+
+## The Review Report — Three Areas
+
+The REVIEW is the back bookend of the process (see [38-stage-model.md](/specification/stage-model/)): the named user touchpoint that gives shape to the interaction model's `U3` "review result" node ([21-human-computer-interaction.md](/specification/human-computer-interaction/)). It is not a new channel — it is the fully-formed expression of the fourth communication point, the bundled hand-back at landing. Where the front bookend is the memo-init question round the user answers *before* the autonomous span, the review report is what the user reads *after* it, and it is rendered on the reply channel (R1) as markdown in the reply, never as a raw command dump ([21-human-computer-interaction.md](/specification/human-computer-interaction/)). The report has exactly **three areas**:
+
+- **(a) The review folder table.** One row per folder or git repo, carried by four columns: `Folder/Git-Repo | inward/outward | fully checked? | anomalies`. The `inward/outward` column is the repository's **facing** — the same `facing` axis Rule C1 uses to decide issue-versus-memo-ID orientation ([17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)) — recorded here so the review shows, per repo, its direction, whether it was checked in full, and any neutral findings. This table is the review lens over the same repositories the WHAT WAS DONE table records: WHAT WAS DONE says *what changed*, the review folder table says *whether it was checked and what stood out*.
+- **(b) A short neutral narrative — what ran, what ran well, anomalies.** A brief prose account of how the run actually went: what ran, what ran well, and what stood out as an anomaly. It is deliberately **neutral and un-graded** — the oil-level principle: a finding near the edge of an accepted range is listed as an anomaly to investigate and surface, never pre-triaged into a severity or silently waved through. Listing an anomaly is not the same as grading it.
+- **(c) Needs review — the set-aside items.** The items the run set aside rather than solved: each **Snag** deferred under guardrail C10 ([29-behavioral-guardrails.md](/specification/behavioral-guardrails/)) together with the needs-review remnants from the OPEN ENDS section. This is where the run's deliberate set-asides become visible to the user, who decides what happens to each — the point at which C7 ("deferring is the user's decision") becomes real.
+
+The naming is exact and must not drift: the set-aside **item** is a **Snag**; **anomaly** (Auffälligkeit) is the **column** in the folder table where a neutral finding is recorded, not a second name for the item. One item, one name. The four columns render deterministically from the `repos[]` block of the machine-readable `landing-readiness.json` marker (`name → Folder/Git-Repo`, `facing → inward/outward`, `checked → fully checked?`, `anomalies → anomalies`); the review report is a documented render mapping, not a new engine.
 
 ---
 
@@ -5425,6 +5472,11 @@ The landing is complete only when the working state is clean, so the check is a 
 - [38-stage-model.md](/specification/stage-model/) — the four-stage process end; landing is Stage 2, merge preparation (the local merge up to `main`) is Stage 3, and the push gate is Stage 4.
 - [13-orchestration.md](/specification/orchestration/) — the orchestrator, agent team, and state files that drive the rollout and feed the machine-readable marker.
 - [16-git-security-versioning.md](/specification/git-security-versioning/) — the deterministic git flow governing worktrees, branches, and the commits and local merge the landing and merge preparation prepare.
+- [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) — Rule C1 and the `inward/outward` facing axis the review folder table records per repo.
+- [31-goals.md](/specification/goals/) — the forward goal pole re-scored at the L6 landing step (`memo goal score-all`, fresh context).
+- [33-maintenance.md](/specification/maintenance/) — the backward maintenance twin re-scored at the same L6 step (`memo maintenance score-all`, fresh context).
+- [21-human-computer-interaction.md](/specification/human-computer-interaction/) — the interaction model whose `U3` "review result" node the review report gives shape to, and the R1 reply-channel rule it renders on.
+- [29-behavioral-guardrails.md](/specification/behavioral-guardrails/) — guardrail C10 (set a Snag aside), whose set-aside items appear in the review report's "needs review" area.
 - [00-overview.md](/specification/overview/) — conformance language.
 
 ---
@@ -5437,7 +5489,7 @@ spec_file: "28-drift.md"
 order: 28
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/28-drift.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/28-drift.md."
@@ -5526,7 +5578,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/29-behavioral-guardrails.md."
@@ -5611,6 +5663,19 @@ This rule is deliberately bounded, and the boundary must be stated explicitly so
 
 The same logic governs scope that genuinely must be deferred. Deferred scope is parked as a **research note in the memo's `context/`** (memo-scoped, not the project-wide store) — a brief, in-place record of the finding — not spun out as a follow-up memo. A follow-up memo pushes the problem onto a future, unplanned round; that is offloading by another name, and it carries the full cost of a fresh memo (redone research, extra revision rounds). A research note keeps the finding where it was discovered without bloating the current work: it neither hides the problem (the note is durable and visible) nor inflates the present scope (the note is not executed now). Applying "no offloading" to scope deferral therefore yields a research note, never a follow-up memo.
 
+## C10 — Set a Snag Aside Instead of Getting Entangled
+
+Pushing a run to its limit does not mean every small obstacle earns a halt. The failure this guards against is not stopping too early but getting *entangled*: sinking the run into a small, tangential problem that threatens the core memo work — either by chasing it down mid-run or by treating it as a hard stop. Both reactions cost the run; one derails it, the other kills it.
+
+The rule: a small problem that threatens to entangle the run and endanger the core memo work is set aside as a **Snag** — not solved on the spot, not raised as a `[NOTSTOPP]`, not raised as a `[BLOCKER]`, and never a reason to stop the run. The Snag is carried to the landing review and presented there ([27-landing-the-plane.md](/specification/landing-the-plane/)); the user decides what becomes of it. It is set aside, named, and shown — never silently dropped, and never allowed to derail the run.
+
+The naming is deliberate and must not drift. **Snag** is the item — the thing set aside. **Anomaly** (Auffälligkeit) is the *column* of the review folder table where a neutral finding is recorded, not a second name for the item. **Quarantine** is only a verb, used elsewhere for reading a set-aside file in isolation; it is not the item's name either. One item, one name: Snag. The Snag named here is a review set-aside; its systemic form — a store that persists set-aside items across memos — is defined separately, and this rule only names the behavior, it does not build the store.
+
+> **Reconciliation with C3, C7, C8.** C10 sits among three rules and contradicts none.
+> - **With C3 (full autonomy).** Setting a Snag aside is what keeps the run alive rather than stopping it. It is not a mid-run request for permission; it is how the agent *stays* autonomous when it meets a small obstacle — neither halting nor rat-holing, but setting the thing aside and continuing.
+> - **With C7 (deferring is the user's decision).** The Snag is not silently deferred: it is made **visible** at the review and handed to the user, which is exactly where C7 becomes real. Setting aside is not exporting — the item stays in the current memo's landing and is presented, not spun out into a follow-up.
+> - **With C8 (fix what you find, within YAGNI).** A *large* adjacent defect is still surfaced, and a small one is still fixed in place — C8 is untouched. C10 closes only the narrow gap it leaves open: a problem small enough to ignore mid-run yet real enough to present, which is neither a fix-in-place nor a stop but a set-aside.
+
 ---
 
 ## Conformity Requirements
@@ -5645,6 +5710,7 @@ Maintenance work is autonomous in reporting but gated in acting, so the check is
 - [01-philosophy.md](/specification/philosophy/) — the "Work It In Instead of Deferring" principle behind C7.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the developer-triggered finalize verb the guardrails defer to.
 - [23-requirements.md](/specification/requirements/) — the requirement-gate model that C6 ("no done without verification") is the behavioral root of.
+- [27-landing-the-plane.md](/specification/landing-the-plane/) — the landing review that receives the Snag set aside under C10, in its "needs review" area.
 
 ---
 
@@ -5656,7 +5722,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/30-primitives.md."
@@ -5877,7 +5943,7 @@ spec_file: "31-goals.md"
 order: 31
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/31-goals.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/31-goals.md."
@@ -5914,7 +5980,8 @@ A goal has a deliberately simple, **fluid** lifecycle: `offen` → `abgeschlosse
 
 The value of a goal is that it is **measured against real state**, not against a self-report.
 
-- **Never in the working session.** A goal is **never** scored in the same session that worked on it. A session that did the work will report "all done" and hide the gap (the lesson of an earlier episode where a working session declared a large requirement set complete and lost the real state). Scoring therefore runs in a **fresh context** — a separate, unbiased reader of the actual artifacts.
+- **Never in the working session.** A goal is **never** scored in the same session that worked on it. A session that did the work will report "all done" and hide the gap (the lesson of an earlier episode where a working session declared a large requirement set complete and lost the real state). Scoring therefore runs in a **fresh context** — a separate, unbiased reader of the actual artifacts. That is the *how*.
+- **Refreshed at landing — the *when*.** The canonical moment a goal is re-scored is **Landing the Plane**: the L6 step of the landing checklist, run at the process end once the rollout's work is real ([27-landing-the-plane.md](/specification/landing-the-plane/)). The *when* completes the *how* above — "never in the working session" says which session must *not* score, landing says which one *does*: landing already runs after a context reset, so the fresh reader the score requires is the reader landing already is. Reading the board at the next rollout's pre-rollout health check consumes a score that was refreshed at the previous landing, not one computed on the spot.
 - **Distrust PASS.** A green conformity report is not evidence. The fresh-context reader inspects the real artifacts — files, wiring, tests actually run, real usage — and measures how far the **intent** is met, not whether a report is green.
 - **A single score is a strict object.** One goal's score is `{ pct, readiness, done, missing, status, confidence, evidence }`: a percentage, the deterministic readiness axis (below), what is genuinely there, what real work is still open, the lifecycle status, the provenance of the judgement, and concrete evidence pointers. Only `pct` is the fresh-context LLM judgement; `readiness` is computed deterministically.
 
@@ -5972,6 +6039,7 @@ A goal and the chronicle ([26-memo-history.md](/specification/memo-history/)) ar
 
 - [30-primitives.md](/specification/primitives/) — the central glossary; the goal primitive is summarized there and specified in full here.
 - [26-memo-history.md](/specification/memo-history/) — the cross-memo timeline a goal is read against.
+- [27-landing-the-plane.md](/specification/landing-the-plane/) — the landing step (L6) at which a goal is score-refreshed in a fresh context: the *when* that pairs with this chapter's *how*.
 - [00-overview.md](/specification/overview/) — mission and authority model (the memo is the authority; the goal spans the sequence).
 - [13-orchestration.md](/specification/orchestration/) — where the chronicle lives, the complementary narrative to a goal's measurement.
 - [06-memo-structure.md](/specification/memo-structure/) — the `.memo/` tree the goal store and score reports live beside.
@@ -5986,7 +6054,7 @@ spec_file: "32-prompt-governance.md"
 order: 32
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/32-prompt-governance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/32-prompt-governance.md."
@@ -6085,7 +6153,7 @@ spec_file: "33-maintenance.md"
 order: 33
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/33-maintenance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/33-maintenance.md."
@@ -6141,7 +6209,8 @@ Unlike a goal, a maintenance card never "completes" — there is no `abgeschloss
 
 Like a goal, a maintenance card is **measured against real state**, never against a self-report.
 
-- **Never in the working session.** A card is **never** scored in the same session that did the work — a session that built the change will report it healthy and hide the drift. Scoring runs in a **fresh context**, one agent per repo, an unbiased reader of the real diff.
+- **Never in the working session.** A card is **never** scored in the same session that did the work — a session that built the change will report it healthy and hide the drift. Scoring runs in a **fresh context**, one agent per repo, an unbiased reader of the real diff. That is the *how*.
+- **Refreshed at landing — the *when*.** The canonical moment a card is re-scored is **Landing the Plane**: the L6 step of the landing checklist, run at the process end once the delivered change is real ([27-landing-the-plane.md](/specification/landing-the-plane/)). The refresh happens **at landing**, not first when the next rollout reads the board — the `releaseReady` flag a pre-rollout health check consumes (The Board, below) was computed at the previous landing, in the fresh context landing already provides. The *when* completes the fresh-context *how*: "never in the working session" names which session must not score, landing names which one does.
 - **Distrust PASS.** A green report is not evidence. The fresh-context reader inspects the actual commits since each edge's provenance pin, the real dependency graph, and the source heads — not a claim.
 - **A single score is a strict object.** One card's score is `{ pct, status, findings, signals, confidence, evidence }`: a freshness percentage, the `maintStatus`, the concrete drift findings, the machine signals behind them, the provenance of the judgement, and evidence pointers. `pct` is the fresh-context freshness reading; the blast-radius (below) is computed deterministically and auto-filled by the CLI.
 
@@ -6158,7 +6227,7 @@ The two are independent: a unit can be very stale with a narrow blast (rot it la
 
 ## The Board
 
-Scoring all cards produces a **board** — the standard output, exactly as for goals. It is a table of `Repo | Freshness % | Blast | maintStatus | Missing`, sorted worst-first, followed by a summary line of the form `N ok · M stale · K critical · Ø Freshness X %`, plus a `worstStatus` (the worst card's status) and a `releaseReady` flag (true only when no card is `critical`). This board, not a single number, is the deliverable, and the `releaseReady` flag is what a pre-rollout health check reads (see [./26-memo-history.md](/specification/memo-history/) and the project-health projection).
+Scoring all cards produces a **board** — the standard output, exactly as for goals. It is a table of `Repo | Freshness % | Blast | maintStatus | Missing`, sorted worst-first, followed by a summary line of the form `N ok · M stale · K critical · Ø Freshness X %`, plus a `worstStatus` (the worst card's status) and a `releaseReady` flag (true only when no card is `critical`). This board, not a single number, is the deliverable, and the `releaseReady` flag is what a pre-rollout health check reads (see [./26-memo-history.md](/specification/memo-history/) and the project-health projection). That flag is **refreshed at landing** — the L6 step of the landing checklist ([./27-landing-the-plane.md](/specification/landing-the-plane/)) re-scores every card in a fresh context, so a later pre-rollout read consumes a value computed at the previous landing rather than one invented on the spot.
 
 ## The Forced Dashboard
 
@@ -6278,7 +6347,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/34-question-interface.md."
@@ -6423,7 +6492,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/35-memo-authoring.md."
@@ -6682,7 +6751,7 @@ spec_file: "36-agent-strategies.md"
 order: 36
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/36-agent-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/36-agent-strategies.md."
@@ -6719,7 +6788,7 @@ spec_file: "37-transcript-reliability.md"
 order: 37
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/37-transcript-reliability.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/37-transcript-reliability.md."
@@ -6817,7 +6886,7 @@ spec_file: "38-stage-model.md"
 order: 38
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/38-stage-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/38-stage-model.md."
@@ -6846,6 +6915,14 @@ The process end is a fixed, ordered sequence. Each stage has a single job and a 
 **Stage 3 — Merge Preparation.** With the workspace landed, the branches are named by their memo ID (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)), the system performs the **local merge up to `main`** deterministically, and the commits are prepared and presented. The stage ends when the result is clean and conflict-free — push-ready, with nothing left to resolve before release.
 
 **Stage 4 — Merge / Push Gate.** The final boundary is the user's. The user authorizes the push; the push is never automatic. The stage — and the thread — ends when the user pushes.
+
+---
+
+## The REVIEW Bookend
+
+The four stages are framed by two named user touchpoints, one at each end. At the **front**, before the rollout begins, stands the memo-init question round: the user answers the open questions and confirms finalization, and only then does the duty-of-care break hand control to the autonomous rollout (the `U2 → Q → G1 → B1` path of the interaction model, [21-human-computer-interaction.md](/specification/human-computer-interaction/)). At the **back**, once landing has rendered the end-state legible, stands the symmetric touchpoint: the **REVIEW**. It is the shape given to the interaction model's `U3` node — the bare "review result" step — which the review bookend raises from a vague hand-back into a named user review with three areas (specified in [27-landing-the-plane.md](/specification/landing-the-plane/)).
+
+The REVIEW is a **bookend, not a new channel.** It is the fully-formed expression of the fourth communication point of the autonomous rollout — the bundled hand-back at landing — not a fifth place where the run stops to ask permission mid-flight. Where the front bookend gathers the user's decisions *before* the autonomous span, the back bookend presents the run's outcome *after* it: a per-repo review-folder table (each repo by its `inward/outward` facing, whether it was fully checked, and any anomalies), a short neutral narrative of what ran, and the items set aside for the user to review — including any **Snag** deferred under guardrail C10 ([29-behavioral-guardrails.md](/specification/behavioral-guardrails/)). The user reads the REVIEW and decides; that decision is the same push gate the stage model already ends on, now reached through a named review rather than a bare hand-off.
 
 ---
 
@@ -6894,6 +6971,8 @@ The two gates are the checkable boundaries: the Evaluate gate closes stage one, 
 - [27-landing-the-plane.md](/specification/landing-the-plane/) — stage two, the always-mandatory landing that leaves the workspace next-morning startable.
 - [13-orchestration.md](/specification/orchestration/) — the orchestrator and state files that drive the stages and record their progress.
 - [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/) — the ID-named branches and the deterministic git flow behind merge preparation and the push gate.
+- [21-human-computer-interaction.md](/specification/human-computer-interaction/) — the interaction model whose `U3` "review result" node the REVIEW bookend gives shape to.
+- [29-behavioral-guardrails.md](/specification/behavioral-guardrails/) — guardrail C10 (set a Snag aside), whose set-aside items surface at the REVIEW bookend.
 - [00-overview.md](/specification/overview/) — conformance language.
 
 ---
@@ -6906,7 +6985,7 @@ spec_file: "39-release-and-pinning.md"
 order: 39
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/39-release-and-pinning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/39-release-and-pinning.md."
@@ -6995,7 +7074,7 @@ spec_file: "40-diagrams.md"
 order: 40
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/40-diagrams.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/40-diagrams.md."
@@ -7202,7 +7281,7 @@ spec_file: "41-mental-model.md"
 order: 41
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/41-mental-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/41-mental-model.md."
@@ -7301,7 +7380,7 @@ spec_file: "42-plans.md"
 order: 42
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/42-plans.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/42-plans.md."
@@ -7450,7 +7529,7 @@ spec_file: "43-skill-authoring-and-quality.md"
 order: 43
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/43-skill-authoring-and-quality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/43-skill-authoring-and-quality.md."
@@ -7797,7 +7876,7 @@ spec_file: "44-repository-and-outward-docs.md"
 order: 44
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/44-repository-and-outward-docs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/44-repository-and-outward-docs.md."
@@ -8433,7 +8512,7 @@ spec_file: "45-implementation-fidelity-audit.md"
 order: 45
 section: "Specification"
 normative: true
-generated_at: "2026-07-13T19:05:19.052Z"
+generated_at: "2026-07-13T22:23:54.820Z"
 generated_from: "memo/0.2.0/draft/spec/45-implementation-fidelity-audit.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/45-implementation-fidelity-audit.md."
@@ -8530,7 +8609,7 @@ spec_file: "46-bridge.md"
 order: 46
 section: "Specification"
 normative: false
-generated_at: "2026-07-13T19:05:19.695Z"
+generated_at: "2026-07-13T22:23:55.734Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."
