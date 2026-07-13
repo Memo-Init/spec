@@ -3,9 +3,9 @@
     "slug": "workbench",
     "title": "Workbench Specification",
     "namespaceToken": "WB",
-    "currentVersion": "0.1.0",
-    "version": "0.1.0",
-    "specDir": "workbench/0.1.0/draft/spec",
+    "currentVersion": "0.2.0",
+    "version": "0.2.0",
+    "specDir": "workbench/0.2.0/draft/spec",
     "prefix": "workbench/",
     "sopAnchor": "02-sop-entrypoint",
     "docEntry": "/workbench/overview/",
@@ -16,12 +16,12 @@
         {
             "target": "session",
             "kind": "requires",
-            "pin": "0.1.0"
+            "pin": "0.2.0"
         },
         {
             "target": "meta-spec",
             "kind": "requires",
-            "pin": "0.1.0"
+            "pin": "0.2.0"
         }
     ],
     "sidebarMeta": {
@@ -47,6 +47,6 @@
         }
     },
     "generated": {
-        "specId": "workbench@0.1.0:ba77e13"
+        "specId": "workbench@0.2.0:00c2b92"
     }
 }

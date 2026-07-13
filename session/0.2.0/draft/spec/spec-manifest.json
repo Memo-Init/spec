@@ -1,0 +1,86 @@
+{
+    "namespace": "session",
+    "version": "0.2.0",
+    "namespaceToken": "SE",
+    "hasRequirements": true,
+    "hasGrading": false,
+    "requirementsRef": "02-enforcement",
+    "gradingRef": null,
+    "groups": [
+        {
+            "id": "introduction",
+            "label": "Introduction",
+            "order": 1,
+            "pages": [
+                "00-overview"
+            ]
+        },
+        {
+            "id": "sop",
+            "label": "SOP",
+            "order": 2,
+            "pages": [
+                "10-sop",
+                "11-common-denominator",
+                "12-instances",
+                "13-conventions",
+                "15-addons"
+            ]
+        },
+        {
+            "id": "genesis-root",
+            "label": "Genesis Root",
+            "order": 3,
+            "pages": [
+                "01-genesis-root",
+                "05-config-cascade",
+                "06-namespace-registry",
+                "09-root-detection"
+            ]
+        },
+        {
+            "id": "enforcement",
+            "label": "Enforcement",
+            "order": 4,
+            "pages": [
+                "02-enforcement",
+                "08-identity-pin"
+            ]
+        },
+        {
+            "id": "cli",
+            "label": "CLI",
+            "order": 5,
+            "pages": [
+                "04-cli",
+                "07-doctor-init"
+            ]
+        },
+        {
+            "id": "recovery",
+            "label": "Recovery",
+            "order": 6,
+            "pages": [
+                "03-recovery",
+                "14-migration"
+            ]
+        },
+        {
+            "id": "bridge",
+            "label": "bridge",
+            "order": 7,
+            "pages": [
+                "16-bridge"
+            ]
+        },
+        {
+            "id": "memory",
+            "label": "memory",
+            "order": 8,
+            "pages": [
+                "17-memory"
+            ]
+        }
+    ],
+    "fallback": "append-by-NN"
+}

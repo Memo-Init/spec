@@ -1,0 +1,88 @@
+# 11. Standard Commands
+
+| | |
+|---|---|
+| Status | Draft |
+| Depends on | [10-sop.md](./10-sop.md) |
+| Related | [12-instances.md](./12-instances.md) |
+
+This chapter describes the common shape every SOP is expected to take and names the parts and what each is for. The descriptive parts do not impose conformance levels on the individual SOPs, which govern their own scope — but the **SOP Page Contract** is **normative (MUST)** and lint-enforced, because it is the single shape the memo-SOP and Workbench-SOP reference rather than restate.
+
+Every SOP in the system provides the same four parts. This chapter describes them: three core parts that recur in every SOP, plus scope-specific extras. The four parts are the predictable shape on which the [SOP entry-point mechanism](./10-sop.md) rests.
+
+---
+
+## The Four Parts
+
+| Part | Question it answers | Role |
+|------|---------------------|------|
+| **Setup** | How is the scope or environment created? | core |
+| **Health** | Does the scope run correctly? | core |
+| **Update** | How is the scope brought up to date? | core |
+| **Extras** | What is specific to this scope and nothing else? | scope-specific |
+
+### Setup
+
+Setup describes how the scope comes into existence — what is created, in what order, and what the finished, ready state looks like. An SOP's Setup is what lets a fresh start reach a known-good baseline without guesswork.
+
+### Health
+
+Health is the check function: a way to ask "is this scope in order?" and get a definite answer. An SOP's Health check produces an observable result (a pass/fail signal, a report, or an equivalent), so that the state of the scope is verified rather than assumed.
+
+### Update
+
+Update describes how an existing scope is brought to the current expected state — how a change defined centrally reaches the scope. An SOP's Update path is what lets improvements propagate rather than being re-implemented per scope.
+
+### Extras
+
+Extras are the parts that belong to one scope and not to SOPs in general. An SOP may have any number of extras. For example, the Workbench-SOP adds the wiki and the project conventions as extras; another scope would add its own. Extras are specific to their SOP and are not part of the common denominator.
+
+---
+
+## Why These Three Are the Core
+
+Setup, Health, and Update are the connecting core because they are the questions every scope faces regardless of what it is: how do I create it, how do I know it is well, and how do I keep it current. Health is the part the workbench's health-check scripts implement (see the Workbench-SOP). Keeping these three to a single shape across all SOPs is what makes an unfamiliar SOP navigable.
+
+The same three parts have an **executable form** in the CLI doctrine's standard verbs ([04-cli.md](./04-cli.md)): **`init` realizes Setup, `doctor` realizes Health, `update` realizes Update**, and a family's own scope leaves are its Extras. The four parts and the standard verbs are not two systems but one common denominator seen twice — a procedure a reader follows and the commands an agent runs.
+
+---
+
+## One Facet of Progressive Disclosure
+
+Setup, Health, and Update are the common denominator **of SOP shape** — the structure every SOP instance repeats. They are **not** a second "one big idea" competing with the session family's unifying principle. That single unifying idea is **Progressive Disclosure** ([00-overview.md](./00-overview.md)): capability is drawn from a pool just-in-time, when its intent shows up, rather than held open all at once. The SOP common denominator is one **facet** of it — the predictable shape through which a tool's procedure is disclosed and made findable at the moment it is needed ([10-sop.md](./10-sop.md)). Progressive Disclosure is the umbrella; the four-part common denominator is what that umbrella looks like at the SOP layer.
+
+"Common denominator" in this chapter therefore always means this shared **SOP shape**, and never the family-wide principle — which is named only *Progressive Disclosure*. The two are one nested idea seen at two scopes, not two rival "one big ideas".
+
+---
+
+## The SOP Page Contract (normative)
+
+The four parts are not only a description; they fix the **required shape of a single SOP entry-point page**. Every SOP instance's entry-point page **MUST** realize this shape:
+
+```markdown
+# «X»-SOP
+
+> "This is the «X»-SOP, an instance of the SOP standard that it extends;
+>  below is how it realizes Setup, Health, and Update for «scope», plus its extras."
+
+## Entry points     — MUST name the doors into the scope, not imply them
+## Setup            — MUST: how the scope is created / reaches a known-good baseline
+## Health           — MUST: the check that answers "is this scope in order?"
+## Update           — MUST: how the scope is brought to the current expected state
+## Extras           — OPTIONAL: zero or more scope-specific parts
+```
+
+The contract is three things together: the opening **inheritance declaration** (the canonical first sentence in [12-instances.md](./12-instances.md)), the **entry points named explicitly**, and the three core parts — **Setup**, **Health**, **Update** — each present as a named section. **Extras** are optional and scope-specific (zero or more).
+
+**Lint-Gate.** A lint checks every registered SOP page against this contract: a page missing a core part, the inheritance declaration, or its named entry points **fails** the lint. The lint reads the SOP registrants from the namespace registry ([06-namespace-registry.md](./06-namespace-registry.md)) and verifies each instance's page satisfies the shape above. This page is the **single source** of the contract — the memo-SOP and the Workbench-SOP **reference** it and declare only how they realize each part, never restating the shape.
+
+---
+
+
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
+## Related
+
+- [00-overview.md](./00-overview.md) — Progressive Disclosure, the family's unifying principle; the SOP common denominator here is one facet of it.
+- [10-sop.md](./10-sop.md) — why a thin connecting mechanism exists inside the session standard.
+- [12-instances.md](./12-instances.md) — the existing SOPs as instances of this shape.
+- [13-conventions.md](./13-conventions.md) — the naming and brevity conventions shared across SOPs.

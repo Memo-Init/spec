@@ -2846,7 +2846,7 @@
             "clusters": [
                 "workbench"
             ],
-            "requirementCount": 3,
+            "requirementCount": 4,
             "internalCount": 0
         },
         {
@@ -3181,7 +3181,7 @@
             "clusters": [
                 "workbench"
             ],
-            "requirementCount": 2,
+            "requirementCount": 3,
             "internalCount": 0
         },
         {
@@ -3479,7 +3479,7 @@
                 "wiki",
                 "workbench"
             ],
-            "requirementCount": 0,
+            "requirementCount": 1,
             "internalCount": 0
         },
         {

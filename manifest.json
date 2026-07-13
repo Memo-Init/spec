@@ -1,13 +1,13 @@
 {
-    "spec_version": "0.1.0",
-    "generated_at": "2026-07-12T00:58:36.470Z",
+    "spec_version": "0.2.0",
+    "generated_at": "2026-07-13T19:05:20.336Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
             "filename": "00-overview.md",
             "slug": "overview",
             "title": "Overview",
-            "description": "This is the entry point for the memo-init specification, version `v0.1.0` (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the...",
+            "description": "This is the entry point for the memo-init specification, version `v0.2.0` (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the...",
             "order": 0,
             "section": "Specification",
             "normative": false,
@@ -427,7 +427,7 @@
             "filename": "42-plans.md",
             "slug": "plans",
             "title": "Plans",
-            "description": "A **plan** is the primitive that sits above the memo and sequences the work of one or more finalized memos into a single ordered run. A memo is the highest authority over its own rollout, but a...",
+            "description": "A **plan** was the primitive that sat above the memo and sequenced the work of one or more finalized memos into a single ordered run; it is now **deprecated** (see the banner above), and the...",
             "order": 42,
             "section": "Specification",
             "normative": true,
@@ -475,7 +475,7 @@
         }
     ],
     "workbench": {
-        "version": "0.1.0",
+        "version": "0.2.0",
         "files": [
             {
                 "filename": "00-overview.md",
@@ -551,7 +551,7 @@
                 "filename": "15-repos.md",
                 "slug": "repos",
                 "title": "repos/",
-                "description": "`repos/` is the one place in a project where git lives. It holds the project's repositories — and **only** the repositories — so that everything shareable is isolated behind an explicit boundary...",
+                "description": "`repos/` is the one place in a project where a git **remote** lives. It holds the project's repositories — and **only** the repositories — so that everything shareable is isolated behind an explicit...",
                 "order": 15,
                 "section": "Workbench",
                 "normative": true,
@@ -681,7 +681,7 @@
                 "filename": "31-browser-automation.md",
                 "slug": "browser-automation",
                 "title": "Browser Automation & Research Method",
-                "description": "The core specification's research chapter ([../../v0.1.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how...",
+                "description": "The core specification's research chapter ([../../v0.2.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how...",
                 "order": 31,
                 "section": "Workbench",
                 "normative": true,
@@ -730,7 +730,7 @@
         ]
     },
     "session": {
-        "version": "0.1.0",
+        "version": "0.2.0",
         "files": [
             {
                 "filename": "00-overview.md",
@@ -915,13 +915,13 @@
         ]
     },
     "spec": {
-        "version": "0.1.0",
+        "version": "0.2.0",
         "files": [
             {
                 "filename": "00-overview.md",
                 "slug": "overview",
                 "title": "Overview",
-                "description": "This is the entry point for the memo-init **Meta-Specification**, version `v0.1.0` (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes...",
+                "description": "This is the entry point for the memo-init **Meta-Specification**, version `v0.2.0` (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes...",
                 "order": 0,
                 "section": "Meta-Spec",
                 "normative": true,
@@ -1011,7 +1011,7 @@
                 "filename": "09-current-state.md",
                 "slug": "current-state",
                 "title": "Current State of the 3 Spec Repos",
-                "description": "The state recorded here is **[FAKT]** — a verified fact, not an assumption. It was established by **11 empty-context agents** (7 research + 4 quality-gate), each checking the live repos with...",
+                "description": "The state recorded here was read directly from the live repositories, at file:line / commit granularity, rather than inferred. It is deliberately kept apart from the design decisions of the rebuild:...",
                 "order": 9,
                 "section": "Meta-Spec",
                 "normative": false,

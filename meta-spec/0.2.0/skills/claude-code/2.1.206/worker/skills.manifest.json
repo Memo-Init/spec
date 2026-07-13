@@ -1,0 +1,7 @@
+{
+    "specId": "meta-spec@0.2.0",
+    "harnessRef": "claude-code@2.1.206",
+    "role": "worker",
+    "compatibleRange": "^2.1",
+    "skills": []
+}

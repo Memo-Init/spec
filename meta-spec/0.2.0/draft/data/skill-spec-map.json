@@ -1,0 +1,10 @@
+{
+    "note": "Per-family skill->spec map for the spec meta-family. The Meta-Specification documents how specs are authored and has no implementer skills by design, so this map is intentionally empty (0 implementers). It exists so the family is symmetric with memo/workbench/session in the map layer.",
+    "totals": {
+        "skills": 0,
+        "register": 0,
+        "withGaps": 0,
+        "withPrimary": 0
+    },
+    "skills": []
+}

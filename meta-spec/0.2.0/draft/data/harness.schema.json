@@ -1,0 +1,117 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "memo-init Harness Descriptor Schema",
+    "description": "One harness descriptor. A descriptor declares exactly three top-level fields: toolContract (the tool surface, a 6-tool core plus per-role deltas), config (config-surface NAMES only, never values or secrets), and adapter (how the harness is driven). Identity is the directory path data/harnesses/<harnessId>/<version>/harness.json plus the harnesses.manual.json registration, not a stored field.",
+    "type": "object",
+    "required": [ "toolContract", "config", "adapter" ],
+    "additionalProperties": false,
+    "definitions": {
+        "toolName": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "role": {
+            "type": "object",
+            "required": [ "add", "remove" ],
+            "additionalProperties": false,
+            "properties": {
+                "add": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/toolName" }
+                },
+                "remove": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/toolName" }
+                },
+                "taskCrud": {
+                    "type": "object",
+                    "required": [ "mode" ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "mode": { "type": "string", "enum": [ "gate-dependent", "on", "off" ] },
+                        "note": { "type": "string" }
+                    }
+                }
+            }
+        }
+    },
+    "properties": {
+        "toolContract": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [ "core", "roles" ],
+            "properties": {
+                "stub": {
+                    "type": "boolean",
+                    "description": "Marks a not-yet-filled descriptor whose core/roles await the WI-2-05 tool-inventory snapshot. A filled descriptor omits this or sets it false."
+                },
+                "note": { "type": "string" },
+                "core": {
+                    "type": "object",
+                    "required": [ "required" ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "required": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/toolName" }
+                        }
+                    }
+                },
+                "roles": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "orchestrator": { "$ref": "#/definitions/role" },
+                        "worker": { "$ref": "#/definitions/role" },
+                        "user": { "$ref": "#/definitions/role" }
+                    }
+                }
+            }
+        },
+        "config": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Config SURFACE names only — the identifiers of the env vars, hook events, permission rules and skill dirs a harness exposes. NEVER a value, secret, token or path. Each entry is a bare name string.",
+            "properties": {
+                "env": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Environment-variable NAMES (e.g. DISABLE_GROWTHBOOK) — never values."
+                },
+                "hooks": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Hook event NAMES (e.g. PreToolUse, SessionStart) — never scripts."
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Permission-rule NAMES / kinds (e.g. allow, deny) — never concrete rules."
+                },
+                "skills": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Skill config surface NAMES (e.g. skillDirs) — never skill bodies."
+                }
+            }
+        },
+        "adapter": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [ "kind" ],
+            "properties": {
+                "kind": { "type": "string", "enum": [ "cli", "sdk", "api", "ide" ] },
+                "entrypoint": { "type": "string" },
+                "notes": { "type": "string" },
+                "model": {
+                    "type": "string",
+                    "description": "The model id the harness runs under (e.g. claude-opus-4-8). Ground-truth for the SessionStart identity-pin's `model` field and the later init-validity check; a bare id, never a secret. Optional."
+                },
+                "effort": {
+                    "type": "string",
+                    "description": "The reasoning-effort tier the harness runs under (e.g. high). Pinned alongside `model` at SessionStart and ground-truth for the init-validity check. Optional."
+                }
+            }
+        }
+    }
+}

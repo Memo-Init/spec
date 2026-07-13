@@ -1,0 +1,1561 @@
+{
+  "note": "Deterministic skill->spec map (source of truth for write-skill-specs.mjs). Generated from the Memo-039 research dataset; out-of-process skills (node-*/domain/external) carry primary:null + a scope marker by design. node-* code-pattern skills are decoupled and out-of-process: node house-style is governed by personal-brand/user-preferences, not the org spec (Memo 057 F5; ch47-node-standards removed).",
+  "totals": {
+    "skills": 86,
+    "register": 14,
+    "withGaps": 68,
+    "withPrimary": 69
+  },
+  "skills": [
+    {
+      "skill": "domain-dunesql",
+      "category": "domain",
+      "path": "repos/core/skills/domain/domain-dunesql/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "domain-skill scope boundary"
+      ],
+      "scope": "domain",
+      "visibility": "internal"
+    },
+    {
+      "skill": "flowmcp-usage",
+      "category": "flowmcp",
+      "path": "repos/core/skills/flowmcp/flowmcp-usage/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "external-tool usage contract"
+      ],
+      "scope": "external",
+      "visibility": "internal"
+    },
+    {
+      "skill": "git-commit",
+      "category": "git",
+      "path": "repos/core/skills/git/git-commit/SKILL.md",
+      "primary": "memo/17-git-workflow-and-ids",
+      "all": [
+        "memo/17-git-workflow-and-ids",
+        "memo/16-git-security-versioning",
+        "memo/19-internal-vs-external-communication",
+        "memo/11-quality-and-finalization"
+      ],
+      "gaps": [
+        "Mandatory-issue-per-commit doctrine",
+        "Decision hierarchy on commit content"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "git-merge-strategy",
+      "category": "git",
+      "path": "repos/core/skills/git/git-merge-strategy/SKILL.md",
+      "primary": "memo/38-stage-model",
+      "all": [
+        "memo/38-stage-model",
+        "memo/27-landing-the-plane",
+        "memo/16-git-security-versioning",
+        "memo/17-git-workflow-and-ids",
+        "memo/18-multidimensionality",
+        "memo/13-orchestration"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "git-push",
+      "category": "git",
+      "path": "repos/core/skills/git/git-push/SKILL.md",
+      "primary": "memo/38-stage-model",
+      "all": [
+        "memo/38-stage-model",
+        "memo/16-git-security-versioning",
+        "memo/23-requirements",
+        "memo/19-internal-vs-external-communication",
+        "memo/18-multidimensionality",
+        "memo/39-release-and-pinning",
+        "memo/17-git-workflow-and-ids",
+        "memo/11-quality-and-finalization"
+      ],
+      "gaps": [
+        "Post-push CodeCov / coverage / overview-page conventions",
+        "Mandatory issue-close cycle after push"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "git-security",
+      "category": "git",
+      "path": "repos/core/skills/git/git-security/SKILL.md",
+      "primary": "memo/16-git-security-versioning",
+      "all": [
+        "memo/16-git-security-versioning",
+        "memo/19-internal-vs-external-communication",
+        "memo/11-quality-and-finalization",
+        "memo/23-requirements"
+      ],
+      "policy": {
+        "namespace": "git",
+        "owner": "git-security",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "contextual",
+        "signals": [
+          "attributionSkill:git-security"
+        ],
+        "groups": [
+          "security"
+        ]
+      },
+      "visibility": "public"
+    },
+    {
+      "skill": "grade-score-batch",
+      "category": "grade",
+      "path": "repos/core/skills/grade/grade-score-batch/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "FlowMCP schema grading domain (and its batch/crash-recovery state) has NO spec chapter (CONFIRMED)"
+      ],
+      "scope": "external",
+      "roleHint": "grader",
+      "visibility": "internal"
+    },
+    {
+      "skill": "grade-score-single",
+      "category": "grade",
+      "path": "repos/core/skills/grade/grade-score-single/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "FlowMCP schema grading domain has NO spec chapter (the predicted gap — CONFIRMED)"
+      ],
+      "scope": "external",
+      "roleHint": "grader",
+      "visibility": "internal"
+    },
+    {
+      "skill": "image-art-architecture",
+      "category": "visual",
+      "path": "repos/core/skills/visual/image-art-architecture/SKILL.md",
+      "primary": "memo/40-diagrams",
+      "all": [
+        "memo/40-diagrams",
+        "memo/19-internal-vs-external-communication",
+        "memo/43-skill-authoring-and-quality"
+      ],
+      "gaps": [
+        "Artistic image generation (9 art styles, branch-color palettes, image-generator prompts)",
+        "Skill metadata absence"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "image-diagram-excalidraw",
+      "category": "visual",
+      "path": "repos/core/skills/visual/image-diagram-excalidraw/SKILL.md",
+      "primary": "memo/40-diagrams",
+      "all": [
+        "memo/40-diagrams",
+        "memo/35-memo-authoring"
+      ],
+      "gaps": [
+        "Generated-image tooling (Nano Banana / Google ImageFX prompt pipeline)",
+        "Image asset storage location"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "image-mockup-pencil",
+      "category": "visual",
+      "path": "repos/core/skills/visual/image-mockup-pencil/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "UI mockup / wireframe authoring (Pencil tooling)",
+        "Pencil .pen asset storage + encrypted-file rule"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "image-pencil-playwright-diff",
+      "category": "visual",
+      "path": "repos/core/skills/visual/image-pencil-playwright-diff/SKILL.md",
+      "primary": "memo/23-requirements",
+      "all": [
+        "memo/23-requirements",
+        "memo/29-behavioral-guardrails",
+        "memo/12-rollout",
+        "memo/16-git-security-versioning"
+      ],
+      "gaps": [
+        "Pencil-Playwright target-vs-actual diff technique itself",
+        "Playwright CLI-vs-MCP cost policy linkage"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "memo-balance",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-balance/SKILL.md",
+      "primary": "memo/11-quality-and-finalization",
+      "all": [
+        "memo/11-quality-and-finalization",
+        "memo/35-memo-authoring",
+        "memo/07-revisions-and-questions"
+      ],
+      "gaps": [
+        "Calibration rating scale and indicator catalog",
+        "YAGNI / minimal-code overlap not referenced"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-budget-paste",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/memo-budget-paste/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans"
+      ],
+      "gaps": [
+        "token-budget awareness",
+        "plan-status.json budget block",
+        "skill code conventions"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-chronic-add",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-chronic-add/SKILL.md",
+      "primary": "memo/26-memo-history",
+      "all": [
+        "memo/26-memo-history",
+        "memo/09-contamination-context-handover",
+        "memo/31-goals"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-chronic-build",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-chronic-build/SKILL.md",
+      "primary": "memo/26-memo-history",
+      "all": [
+        "memo/26-memo-history",
+        "memo/36-agent-strategies",
+        "memo/13-orchestration",
+        "memo/09-contamination-context-handover"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-coherence",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-coherence/SKILL.md",
+      "primary": "memo/11-quality-and-finalization",
+      "all": [
+        "memo/11-quality-and-finalization",
+        "memo/29-behavioral-guardrails",
+        "memo/01-philosophy",
+        "memo/07-revisions-and-questions",
+        "memo/35-memo-authoring"
+      ],
+      "gaps": [
+        "Maturity rating taxonomy"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-evidence",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-evidence/SKILL.md",
+      "primary": "memo/11-quality-and-finalization",
+      "all": [
+        "memo/11-quality-and-finalization",
+        "memo/10-proactive-research",
+        "memo/07-revisions-and-questions"
+      ],
+      "gaps": [
+        "Inline tag insertion format",
+        "SKILL header drift vs the description's three-level shorthand"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-finalize",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-finalize/SKILL.md",
+      "primary": "memo/11-quality-and-finalization",
+      "all": [
+        "memo/11-quality-and-finalization",
+        "memo/02-memo-sop-entrypoint",
+        "memo/21-human-computer-interaction",
+        "memo/20-flow-full-vs-update-revisions",
+        "memo/23-requirements",
+        "memo/12-rollout",
+        "memo/08-phases-and-prds",
+        "memo/25-strands",
+        "memo/16-git-security-versioning",
+        "memo/09-contamination-context-handover"
+      ],
+      "gaps": [
+        "Sub-memo HARD-STOP at finalization",
+        "Budget snapshot as the single legitimate paste point",
+        "Third-party token-tracking veto",
+        "Ralph-Loop suitability gate",
+        "Dependency smoke-check at finalization",
+        "Rollout-Entry-Points section + filesystem check"
+      ],
+      "visibility": "public",
+      "requires": [
+        "memo-sop"
+      ],
+      "roleHint": "public-entry"
+    },
+    {
+      "skill": "memo-goal-optimize",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-goal-optimize/SKILL.md",
+      "primary": "memo/31-goals",
+      "all": [
+        "memo/31-goals",
+        "memo/09-contamination-context-handover",
+        "memo/03-input-paths",
+        "memo/04-input-pipeline",
+        "memo/34-question-interface"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-goal-score",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-goal-score/SKILL.md",
+      "primary": "memo/31-goals",
+      "all": [
+        "memo/31-goals",
+        "memo/36-agent-strategies",
+        "memo/09-contamination-context-handover",
+        "memo/22-tree-cli-recommended-way"
+      ],
+      "roleHint": "grader",
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-goal-score-all",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-goal-score-all/SKILL.md",
+      "primary": "memo/31-goals",
+      "all": [
+        "memo/31-goals",
+        "memo/36-agent-strategies",
+        "memo/33-maintenance",
+        "memo/21-human-computer-interaction",
+        "memo/09-contamination-context-handover"
+      ],
+      "gaps": [
+        "terminal output channel (R1)"
+      ],
+      "roleHint": "grader",
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-handover",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-handover/SKILL.md",
+      "primary": "memo/09-contamination-context-handover",
+      "all": [
+        "memo/09-contamination-context-handover",
+        "memo/27-landing-the-plane",
+        "memo/13-orchestration",
+        "memo/16-git-security-versioning",
+        "memo/42-plans"
+      ],
+      "gaps": [
+        "state-recovery state-file taxonomy",
+        "plan-stop / plan-handover facade and plan re-entry"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-init",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-init/SKILL.md",
+      "primary": "memo/06-memo-structure",
+      "all": [
+        "memo/06-memo-structure",
+        "memo/02-memo-sop-entrypoint",
+        "memo/05-memo-strategies",
+        "memo/07-revisions-and-questions",
+        "memo/34-question-interface",
+        "memo/35-memo-authoring",
+        "memo/29-behavioral-guardrails",
+        "memo/09-contamination-context-handover",
+        "memo/10-proactive-research",
+        "memo/08-phases-and-prds",
+        "memo/40-diagrams",
+        "memo/41-mental-model"
+      ],
+      "gaps": [
+        "Cross-memo status check / 'marked finalized but never built' trap",
+        "Mandatory finalization checklist + auto F1 question",
+        "Lessons-Learned / Ancillary Files mandatory sections",
+        "Memo-vs-Phase default decision + new-memo cost"
+      ],
+      "roleHint": "public-entry",
+      "visibility": "public",
+      "requires": [
+        "memo-sop"
+      ]
+    },
+    {
+      "skill": "memo-input-processing",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-input-processing/SKILL.md",
+      "primary": "memo/04-input-pipeline",
+      "all": [
+        "memo/04-input-pipeline",
+        "memo/03-input-paths",
+        "memo/37-transcript-reliability",
+        "memo/10-proactive-research",
+        "memo/36-agent-strategies"
+      ],
+      "gaps": [
+        "Topic-store write-side (register) mechanics",
+        "Prompt-injection data/instruction boundary for URL mode",
+        "URL-mode error codes + schema-version legacy handling",
+        "Interview mode (bundled question catalog)",
+        "Information-content (fact-vs-assumption) score gate"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-maintenance-score",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-maintenance-score/SKILL.md",
+      "primary": "memo/33-maintenance",
+      "all": [
+        "memo/33-maintenance",
+        "memo/28-drift",
+        "memo/36-agent-strategies",
+        "memo/09-contamination-context-handover",
+        "workbench/41-project-architecture",
+        "memo/22-tree-cli-recommended-way"
+      ],
+      "roleHint": "grader",
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-maintenance-score-all",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-maintenance-score-all/SKILL.md",
+      "primary": "memo/33-maintenance",
+      "all": [
+        "memo/33-maintenance",
+        "memo/28-drift",
+        "memo/36-agent-strategies",
+        "workbench/41-project-architecture",
+        "memo/39-release-and-pinning",
+        "memo/21-human-computer-interaction"
+      ],
+      "gaps": [
+        "terminal output channel (R1)"
+      ],
+      "roleHint": "grader",
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-fidelity-audit",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-fidelity-audit/SKILL.md",
+      "primary": "memo/45-implementation-fidelity-audit",
+      "all": [
+        "memo/45-implementation-fidelity-audit",
+        "memo/11-quality-and-finalization",
+        "memo/12-rollout",
+        "memo/07-revisions-and-questions",
+        "memo/38-stage-model",
+        "memo/31-goals"
+      ],
+      "roleHint": "grader",
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-maintenance-verify",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-maintenance-verify/SKILL.md",
+      "primary": "memo/33-maintenance",
+      "all": [
+        "memo/33-maintenance",
+        "memo/39-release-and-pinning",
+        "memo/09-contamination-context-handover",
+        "workbench/41-project-architecture",
+        "memo/16-git-security-versioning"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-mental-model-derive",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-mental-model-derive/SKILL.md",
+      "primary": "memo/41-mental-model",
+      "all": [
+        "memo/41-mental-model",
+        "memo/01-philosophy",
+        "memo/21-human-computer-interaction",
+        "memo/36-agent-strategies",
+        "memo/09-contamination-context-handover",
+        "memo/07-revisions-and-questions"
+      ],
+      "gaps": [
+        "answered-question pair format",
+        "User Mental Model store as a primitive"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-phase-evaluate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-phase-evaluate/SKILL.md",
+      "primary": "memo/13-orchestration",
+      "all": [
+        "memo/13-orchestration",
+        "memo/09-contamination-context-handover",
+        "memo/36-agent-strategies",
+        "memo/23-requirements",
+        "memo/08-phases-and-prds"
+      ],
+      "gaps": [
+        "UI baseline capture at phase-start",
+        "trivial-independent-PRDs verdict"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-phase-execute",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-phase-execute/SKILL.md",
+      "primary": "memo/13-orchestration",
+      "all": [
+        "memo/13-orchestration",
+        "memo/16-git-security-versioning",
+        "memo/17-git-workflow-and-ids",
+        "memo/15-prompt-generator",
+        "memo/23-requirements",
+        "memo/09-contamination-context-handover",
+        "memo/29-behavioral-guardrails",
+        "memo/08-phases-and-prds",
+        "memo/12-rollout"
+      ],
+      "gaps": [
+        "file-based contract negotiation protocol",
+        "follow-up-PRD escalation on stuck PRD",
+        "shared findings store",
+        "max iteration / phase-eval iteration limits"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-phase-generate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-phase-generate/SKILL.md",
+      "primary": "memo/08-phases-and-prds",
+      "all": [
+        "memo/08-phases-and-prds",
+        "memo/15-prompt-generator",
+        "memo/32-prompt-governance",
+        "memo/13-orchestration",
+        "memo/09-contamination-context-handover",
+        "memo/23-requirements",
+        "memo/16-git-security-versioning"
+      ],
+      "gaps": [
+        "max-PRDs-per-phase hard number",
+        "retry budget for PRD generation/evaluation"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-plan-add",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-plan-add/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans",
+        "memo/38-stage-model",
+        "memo/08-phases-and-prds",
+        "memo/18-multidimensionality",
+        "memo/02-memo-sop-entrypoint"
+      ],
+      "gaps": [
+        "cross-memo phaseRef translation",
+        "executionOrder mandate",
+        "plan integrity re-check",
+        "add gate on finalization"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-plan-evaluate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-plan-evaluate/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans",
+        "memo/38-stage-model",
+        "memo/09-contamination-context-handover",
+        "memo/14-agents-skills-tasks",
+        "memo/08-phases-and-prds"
+      ],
+      "gaps": [
+        "plan conformance model",
+        "mandatory 7 phase fields",
+        "conformance report location"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-plan-execute",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-plan-execute/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans",
+        "memo/38-stage-model",
+        "memo/02-memo-sop-entrypoint",
+        "memo/13-orchestration",
+        "memo/09-contamination-context-handover",
+        "memo/16-git-security-versioning",
+        "memo/17-git-workflow-and-ids",
+        "memo/21-human-computer-interaction"
+      ],
+      "gaps": [
+        "next-phase algorithm",
+        "budget / ScheduleWakeup",
+        "write-ahead / crash recovery",
+        "ICL cold-start gate",
+        "memo authority over phase order",
+        "coexistence gate (direct vs plan)"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-plan-finalize",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-plan-finalize/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans",
+        "memo/38-stage-model",
+        "memo/02-memo-sop-entrypoint"
+      ],
+      "gaps": [
+        "plan archival lifecycle",
+        "plan-done vs memo-done"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-plan-init",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-plan-init/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans",
+        "memo/38-stage-model",
+        "memo/02-memo-sop-entrypoint",
+        "memo/06-memo-structure",
+        "memo/08-phases-and-prds"
+      ],
+      "gaps": [
+        "plan folder structure",
+        "plan.md skeleton",
+        "plan-status.json schema",
+        "ICL cold-start / bitter lesson"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-plan-status",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-plan-status/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans",
+        "memo/38-stage-model",
+        "memo/02-memo-sop-entrypoint",
+        "memo/06-memo-structure",
+        "memo/22-tree-cli-recommended-way"
+      ],
+      "gaps": [
+        "plan status terminal format",
+        "unplanned-memos subroutine"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-plan-stop",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-plan-stop/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans",
+        "memo/09-contamination-context-handover",
+        "memo/02-memo-sop-entrypoint",
+        "memo/38-stage-model",
+        "memo/17-git-workflow-and-ids"
+      ],
+      "gaps": [
+        "phase-boundary stop discipline",
+        "plan-stop atomic three steps",
+        "write-ahead marker referenced-not-spec'd"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-plan-update-checkbox",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-plan-update-checkbox/SKILL.md",
+      "primary": "memo/42-plans",
+      "all": [
+        "memo/42-plans",
+        "memo/17-git-workflow-and-ids",
+        "memo/38-stage-model",
+        "memo/22-tree-cli-recommended-way",
+        "memo/02-memo-sop-entrypoint"
+      ],
+      "gaps": [
+        "checkbox-as-state mechanic",
+        "write-ahead finalization",
+        "[PHASE-DONE] output + reset auto-call"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-prd-evaluate",
+      "category": "prd",
+      "path": "repos/core/skills/prd/memo-prd-evaluate/SKILL.md",
+      "primary": "memo/08-phases-and-prds",
+      "all": [
+        "memo/08-phases-and-prds",
+        "memo/09-contamination-context-handover",
+        "memo/13-orchestration",
+        "memo/14-agents-skills-tasks",
+        "memo/23-requirements"
+      ],
+      "gaps": [
+        "validation report path/template + integration-PRD requirement"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-prd-generate",
+      "category": "prd",
+      "path": "repos/core/skills/prd/memo-prd-generate/SKILL.md",
+      "primary": "memo/08-phases-and-prds",
+      "all": [
+        "memo/08-phases-and-prds",
+        "memo/32-prompt-governance",
+        "memo/15-prompt-generator",
+        "memo/23-requirements",
+        "memo/17-git-workflow-and-ids"
+      ],
+      "gaps": [
+        "PRD on-disk layout, header sections, and Ralph-Loop config"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-prds-validate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-prds-validate/SKILL.md",
+      "primary": "memo/08-phases-and-prds",
+      "all": [
+        "memo/08-phases-and-prds",
+        "memo/13-orchestration",
+        "memo/09-contamination-context-handover",
+        "memo/23-requirements",
+        "memo/11-quality-and-finalization"
+      ],
+      "gaps": [
+        "assertion-layer / closed-set rule",
+        "coverage classification taxonomy"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-references",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-references/SKILL.md",
+      "primary": "memo/11-quality-and-finalization",
+      "all": [
+        "memo/11-quality-and-finalization",
+        "memo/28-drift",
+        "memo/08-phases-and-prds",
+        "memo/07-revisions-and-questions",
+        "memo/13-orchestration"
+      ],
+      "gaps": [
+        "Reference status taxonomy and auto-fix policy",
+        "Large-codebase sub-agent threshold"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "drift-resolution",
+      "category": "memo",
+      "path": "repos/core/skills/memo/drift-resolution/SKILL.md",
+      "primary": "memo/28-drift",
+      "all": [
+        "memo/28-drift",
+        "memo/13-orchestration",
+        "memo/08-phases-and-prds",
+        "memo/16-git-security-versioning",
+        "memo/11-quality-and-finalization"
+      ],
+      "gaps": [
+        "Enumeration of artifact-surface roots that the D1 grep must cover",
+        "Per-unit-class authoring of the idempotent gate (literal vs pattern)"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-req-registry",
+      "category": "evals",
+      "path": "repos/core/skills/evals/memo-req-registry/SKILL.md",
+      "primary": "memo/23-requirements",
+      "all": [
+        "memo/23-requirements",
+        "memo/24-tools-registry",
+        "memo/30-primitives"
+      ],
+      "gaps": [
+        "validation tactics catalog + signal->tactic selection map"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-req-runner",
+      "category": "evals",
+      "path": "repos/core/skills/evals/memo-req-runner/SKILL.md",
+      "primary": "memo/23-requirements",
+      "all": [
+        "memo/23-requirements",
+        "memo/16-git-security-versioning",
+        "memo/30-primitives",
+        "memo/19-internal-vs-external-communication"
+      ],
+      "gaps": [
+        "report storage path + producer/consumer evidence round-trip"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-req-store",
+      "category": "evals",
+      "path": "repos/core/skills/evals/memo-req-store/SKILL.md",
+      "primary": "memo/23-requirements",
+      "all": [
+        "memo/23-requirements",
+        "memo/30-primitives",
+        "memo/24-tools-registry"
+      ],
+      "gaps": [
+        "topic-as-MatchContext / topic-attach wrapper"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-req-template",
+      "category": "prd",
+      "path": "repos/core/skills/prd/memo-req-template/SKILL.md",
+      "primary": "memo/23-requirements",
+      "all": [
+        "memo/23-requirements",
+        "memo/15-prompt-generator",
+        "memo/32-prompt-governance",
+        "memo/24-tools-registry"
+      ],
+      "gaps": [
+        "tool/requirement entry FORMAT (YAML/object schema) and intake flow"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-research-agent",
+      "category": "research",
+      "path": "repos/core/skills/research/memo-research-agent/SKILL.md",
+      "primary": "memo/10-proactive-research",
+      "all": [
+        "memo/10-proactive-research",
+        "memo/36-agent-strategies",
+        "memo/13-orchestration",
+        "memo/11-quality-and-finalization",
+        "workbench/31-browser-automation"
+      ],
+      "gaps": [
+        "research-output-format",
+        "untrusted-web-content-as-data"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-reset-recommend",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-reset-recommend/SKILL.md",
+      "primary": "memo/08-phases-and-prds",
+      "all": [
+        "memo/08-phases-and-prds",
+        "memo/09-contamination-context-handover",
+        "memo/02-memo-sop-entrypoint",
+        "memo/21-human-computer-interaction"
+      ],
+      "gaps": [
+        "Reset-recommendation algorithm and thresholds",
+        "plan-status.json.reset-check state schema",
+        "AI cannot self-execute /clear"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-revision-consolidate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-revision-consolidate/SKILL.md",
+      "primary": "memo/20-flow-full-vs-update-revisions",
+      "all": [
+        "memo/20-flow-full-vs-update-revisions",
+        "memo/07-revisions-and-questions",
+        "memo/11-quality-and-finalization"
+      ],
+      "gaps": [
+        "Merge conflict resolution rule"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-revision-evaluate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-revision-evaluate/SKILL.md",
+      "primary": "memo/07-revisions-and-questions",
+      "all": [
+        "memo/07-revisions-and-questions",
+        "memo/13-orchestration",
+        "memo/09-contamination-context-handover",
+        "memo/34-question-interface"
+      ],
+      "gaps": [
+        "Feedback-coverage as a gate",
+        "Auto-iteration loop (max 2x then ask)",
+        "REV-02 detector trigger + risk-threshold lowering"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-revision-execute",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-revision-execute/SKILL.md",
+      "primary": "memo/07-revisions-and-questions",
+      "all": [
+        "memo/07-revisions-and-questions",
+        "memo/20-flow-full-vs-update-revisions",
+        "memo/06-memo-structure",
+        "memo/08-phases-and-prds",
+        "memo/35-memo-authoring",
+        "memo/34-question-interface"
+      ],
+      "gaps": [
+        "Preface section (placement + single-channel)",
+        "[Research open] tag / research-needed carry-over",
+        "Post-revision lint gate (!memo lint)",
+        "Meta-block memo identity fields (ICL)"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-revision-generate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-revision-generate/SKILL.md",
+      "primary": "memo/07-revisions-and-questions",
+      "all": [
+        "memo/07-revisions-and-questions",
+        "memo/02-memo-sop-entrypoint",
+        "memo/20-flow-full-vs-update-revisions",
+        "memo/34-question-interface",
+        "memo/10-proactive-research",
+        "memo/13-orchestration",
+        "memo/01-philosophy",
+        "memo/41-mental-model"
+      ],
+      "gaps": [
+        "Prepare file as a primary artifact",
+        "Sub-Memo HARD-STOP check",
+        "User Mental Model consult mechanism"
+      ],
+      "roleHint": "public-entry",
+      "visibility": "public",
+      "requires": [
+        "memo-sop"
+      ]
+    },
+    {
+      "skill": "memo-rollout",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-rollout/SKILL.md",
+      "primary": "memo/12-rollout",
+      "all": [
+        "memo/12-rollout",
+        "memo/38-stage-model",
+        "memo/13-orchestration",
+        "memo/11-quality-and-finalization",
+        "memo/33-maintenance",
+        "memo/16-git-security-versioning"
+      ],
+      "gaps": [
+        "duty-of-care contract exact 9 points",
+        "plan-context operating modes"
+      ],
+      "roleHint": "public-entry",
+      "visibility": "public",
+      "requires": [
+        "memo-sop"
+      ]
+    },
+    {
+      "skill": "memo-rollout-evaluate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-rollout-evaluate/SKILL.md",
+      "primary": "memo/12-rollout",
+      "all": [
+        "memo/12-rollout",
+        "memo/38-stage-model",
+        "memo/09-contamination-context-handover",
+        "memo/36-agent-strategies",
+        "memo/08-phases-and-prds",
+        "memo/23-requirements",
+        "memo/31-goals"
+      ],
+      "gaps": [
+        "utilization gate (built-but-unwired)",
+        "UI before/after diff + proofs evidence layout"
+      ],
+      "visibility": "public",
+      "requires": [
+        "memo-rollout-execute"
+      ]
+    },
+    {
+      "skill": "memo-rollout-execute",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-rollout-execute/SKILL.md",
+      "primary": "memo/12-rollout",
+      "all": [
+        "memo/12-rollout",
+        "memo/38-stage-model",
+        "memo/13-orchestration",
+        "memo/08-phases-and-prds",
+        "memo/27-landing-the-plane",
+        "memo/17-git-workflow-and-ids",
+        "memo/16-git-security-versioning",
+        "memo/26-memo-history",
+        "memo/09-contamination-context-handover"
+      ],
+      "gaps": [
+        "plan-context write-back delegation",
+        "between-phase integration follow-up policy",
+        "user-triggered landing as the only valid stop point"
+      ],
+      "visibility": "public",
+      "requires": [
+        "memo-rollout-generate"
+      ]
+    },
+    {
+      "skill": "memo-rollout-generate",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-rollout-generate/SKILL.md",
+      "primary": "memo/08-phases-and-prds",
+      "all": [
+        "memo/08-phases-and-prds",
+        "memo/13-orchestration",
+        "memo/15-prompt-generator",
+        "memo/32-prompt-governance",
+        "memo/23-requirements",
+        "memo/25-strands",
+        "memo/11-quality-and-finalization"
+      ],
+      "gaps": [
+        "category tag taxonomy",
+        "eval-set file as a generate output"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-sop",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-sop/SKILL.md",
+      "primary": "memo/02-memo-sop-entrypoint",
+      "all": [
+        "memo/02-memo-sop-entrypoint",
+        "memo/00-overview",
+        "memo/01-philosophy",
+        "memo/13-orchestration",
+        "memo/12-rollout",
+        "memo/38-stage-model",
+        "memo/27-landing-the-plane",
+        "memo/30-primitives",
+        "memo/21-human-computer-interaction"
+      ],
+      "gaps": [
+        "Reset / context-clear jumps",
+        "Third-party token-tracking veto",
+        "Success definition / measure-and-goal anti-pattern",
+        "Notification / acoustic-signal hook"
+      ],
+      "roleHint": "public-entry",
+      "visibility": "public"
+    },
+    {
+      "skill": "memo-sub-init",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-sub-init/SKILL.md",
+      "primary": "memo/06-memo-structure",
+      "all": [
+        "memo/06-memo-structure",
+        "memo/09-contamination-context-handover",
+        "memo/05-memo-strategies",
+        "memo/02-memo-sop-entrypoint"
+      ],
+      "gaps": [
+        "Sub-memo lifecycle HARD-STOP",
+        "Triage table -> sub-memo fan-out + parent index",
+        "Fact-briefing for autonomous memos"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "node-class-architecture",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/node-class-architecture/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [],
+      "scope": "coding-standard",
+      "policy": {
+        "namespace": "node",
+        "owner": "node-formatting",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "always",
+        "signals": [
+          "attributionSkill:node-class-architecture"
+        ],
+        "groups": []
+      },
+      "visibility": "public"
+    },
+    {
+      "skill": "node-environment-manager",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/node-environment-manager/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [],
+      "scope": "coding-standard",
+      "policy": {
+        "namespace": "node",
+        "owner": "node-formatting",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "contextual",
+        "signals": [
+          "attributionSkill:node-environment-manager"
+        ],
+        "groups": [
+          "security"
+        ]
+      },
+      "visibility": "public"
+    },
+    {
+      "skill": "node-error-codes",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/node-error-codes/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [],
+      "scope": "coding-standard",
+      "policy": {
+        "namespace": "node",
+        "owner": "node-formatting",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "contextual",
+        "signals": [
+          "attributionSkill:node-error-codes"
+        ],
+        "groups": []
+      },
+      "visibility": "public"
+    },
+    {
+      "skill": "node-formatting",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/node-formatting/SKILL.md",
+      "primary": null,
+      "all": [],
+      "policy": {
+        "namespace": "node",
+        "owner": "node-formatting",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "always",
+        "signals": [
+          "attributionSkill:node-formatting"
+        ],
+        "groups": []
+      },
+      "gaps": [],
+      "scope": "coding-standard",
+      "visibility": "public"
+    },
+    {
+      "skill": "node-server-design",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/node-server-design/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [],
+      "scope": "coding-standard",
+      "policy": {
+        "namespace": "node",
+        "owner": "node-formatting",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "contextual",
+        "signals": [
+          "attributionSkill:node-server-design"
+        ],
+        "groups": [
+          "security"
+        ]
+      },
+      "visibility": "public"
+    },
+    {
+      "skill": "node-testing",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/node-testing/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [],
+      "scope": "coding-standard",
+      "policy": {
+        "namespace": "node",
+        "owner": "node-formatting",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "checkpoint",
+        "signals": [
+          "attributionSkill:node-testing"
+        ],
+        "groups": [
+          "verification"
+        ]
+      },
+      "visibility": "public"
+    },
+    {
+      "skill": "node-validation",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/node-validation/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [],
+      "scope": "coding-standard",
+      "policy": {
+        "namespace": "node",
+        "owner": "node-formatting",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "contextual",
+        "signals": [
+          "attributionSkill:node-validation"
+        ],
+        "groups": [
+          "security"
+        ]
+      },
+      "visibility": "public"
+    },
+    {
+      "skill": "release",
+      "category": "git",
+      "path": "repos/core/skills/git/release/SKILL.md",
+      "primary": "memo/39-release-and-pinning",
+      "all": [
+        "memo/39-release-and-pinning",
+        "memo/33-maintenance",
+        "memo/38-stage-model",
+        "memo/29-behavioral-guardrails",
+        "memo/16-git-security-versioning"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "repo-docs-writing",
+      "category": "repository",
+      "path": "repos/core/skills/repository/repo-docs-writing/SKILL.md",
+      "primary": "memo/44-repository-and-outward-docs",
+      "all": [
+        "memo/44-repository-and-outward-docs",
+        "memo/19-internal-vs-external-communication",
+        "memo/14-agents-skills-tasks"
+      ],
+      "gaps": [
+        "Prose writing-style rules"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "repo-github-org",
+      "category": "repository",
+      "path": "repos/core/skills/repository/repo-github-org/SKILL.md",
+      "primary": "memo/44-repository-and-outward-docs",
+      "all": [
+        "memo/44-repository-and-outward-docs",
+        "memo/19-internal-vs-external-communication",
+        "memo/23-requirements"
+      ],
+      "gaps": [
+        "BadgeTable org-profile mechanism"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "repo-init",
+      "category": "repository",
+      "path": "repos/core/skills/repository/repo-init/SKILL.md",
+      "primary": "memo/44-repository-and-outward-docs",
+      "all": [
+        "memo/44-repository-and-outward-docs",
+        "memo/16-git-security-versioning",
+        "workbench/11-project-structure"
+      ],
+      "gaps": [
+        "Repo scaffolding / folder structure",
+        "License selection as a conscious decision",
+        "First-commits sequence + CI workflow"
+      ],
+      "roleHint": "public-entry",
+      "visibility": "internal"
+    },
+    {
+      "skill": "repo-issue",
+      "category": "repository",
+      "path": "repos/core/skills/repository/repo-issue/SKILL.md",
+      "primary": "memo/44-repository-and-outward-docs",
+      "all": [
+        "memo/44-repository-and-outward-docs",
+        "memo/17-git-workflow-and-ids",
+        "memo/16-git-security-versioning",
+        "memo/19-internal-vs-external-communication"
+      ],
+      "gaps": [
+        "Issue classification taxonomy",
+        "Proof policy for UI issues"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "repo-quality",
+      "category": "repository",
+      "path": "repos/core/skills/repository/repo-quality/SKILL.md",
+      "primary": "memo/16-git-security-versioning",
+      "all": [
+        "memo/16-git-security-versioning",
+        "memo/23-requirements",
+        "memo/19-internal-vs-external-communication",
+        "memo/11-quality-and-finalization",
+        "memo/44-repository-and-outward-docs"
+      ],
+      "gaps": [
+        "Repo structure + test-coverage + open-source compliance checklist"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "repo-readme",
+      "category": "repository",
+      "path": "repos/core/skills/repository/repo-readme/SKILL.md",
+      "primary": "memo/44-repository-and-outward-docs",
+      "all": [
+        "memo/44-repository-and-outward-docs",
+        "memo/19-internal-vs-external-communication",
+        "memo/14-agents-skills-tasks"
+      ],
+      "gaps": [
+        "README block structure and method-doc format",
+        "Mermaid diagram usage in READMEs"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "research-workflow",
+      "category": "research",
+      "path": "repos/core/skills/research/research-workflow/SKILL.md",
+      "primary": "memo/13-orchestration",
+      "all": [
+        "memo/13-orchestration",
+        "memo/10-proactive-research",
+        "memo/36-agent-strategies",
+        "workbench/31-browser-automation"
+      ],
+      "gaps": [
+        "tool-selection-decision-tree"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "skill-testing",
+      "category": "skill",
+      "path": "repos/core/skills/skill/skill-testing/SKILL.md",
+      "primary": "memo/43-skill-authoring-and-quality",
+      "all": [
+        "memo/43-skill-authoring-and-quality",
+        "memo/14-agents-skills-tasks",
+        "memo/02-memo-sop-entrypoint"
+      ],
+      "gaps": [
+        "skill quality / testing has no spec (Memo-039 core)",
+        "skill-authoring counterpart absent"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "specs-to-skills",
+      "category": "skill",
+      "path": "repos/core/skills/skill/specs-to-skills/SKILL.md",
+      "primary": "memo/43-skill-authoring-and-quality",
+      "all": [
+        "memo/43-skill-authoring-and-quality",
+        "memo/23-requirements"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "workbench-modes",
+      "category": "workbench",
+      "path": "repos/core/skills/workbench/workbench-modes/SKILL.md",
+      "primary": "memo/02-memo-sop-entrypoint",
+      "all": [
+        "memo/02-memo-sop-entrypoint",
+        "memo/01-philosophy",
+        "memo/08-phases-and-prds",
+        "memo/16-git-security-versioning",
+        "memo/17-git-workflow-and-ids",
+        "memo/27-landing-the-plane",
+        "memo/29-behavioral-guardrails"
+      ],
+      "gaps": [
+        "three-mode-taxonomy",
+        "issue-severity-classification-thresholds"
+      ],
+      "roleHint": "public-entry",
+      "visibility": "public"
+    },
+    {
+      "skill": "workbench-persona-audit",
+      "category": "workbench",
+      "path": "repos/core/skills/workbench/workbench-persona-audit/SKILL.md",
+      "primary": "memo/14-agents-skills-tasks",
+      "all": [
+        "memo/14-agents-skills-tasks",
+        "memo/09-contamination-context-handover",
+        "memo/36-agent-strategies",
+        "memo/19-internal-vs-external-communication",
+        "memo/11-quality-and-finalization"
+      ],
+      "gaps": [
+        "persona-audit-schemas",
+        "no-overwrite-and-output-location"
+      ],
+      "visibility": "public"
+    },
+    {
+      "skill": "workbench-remotion",
+      "category": "visual",
+      "path": "repos/core/skills/visual/workbench-remotion/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "Video / Remotion generation",
+        "[Video] memo category tag"
+      ],
+      "visibility": "internal"
+    },
+    {
+      "skill": "npm-security",
+      "category": "security",
+      "path": "repos/core/skills/security/npm-security/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "supply-chain / package-install security standard"
+      ],
+      "scope": "coding-standard",
+      "policy": {
+        "namespace": "npm",
+        "owner": "npm-security",
+        "kind": "policy",
+        "tier": 2,
+        "mode": "contextual",
+        "signals": [
+          "attributionSkill:npm-security"
+        ],
+        "groups": [
+          "security"
+        ]
+      },
+      "visibility": "public"
+    },
+    {
+      "skill": "git-sop",
+      "category": "git",
+      "path": "repos/core/skills/git/git-sop/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "git umbrella SOP + canonical ID-format rules"
+      ],
+      "scope": "umbrella-sop",
+      "visibility": "private"
+    },
+    {
+      "skill": "node-sop",
+      "category": "code-patterns",
+      "path": "repos/core/skills/code-patterns/node-sop/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "Node.js umbrella SOP"
+      ],
+      "scope": "umbrella-sop",
+      "visibility": "private"
+    },
+    {
+      "skill": "flowmcp-sop",
+      "category": "flowmcp",
+      "path": "repos/core/skills/flowmcp/flowmcp-sop/SKILL.md",
+      "primary": null,
+      "all": [],
+      "gaps": [
+        "FlowMCP umbrella SOP"
+      ],
+      "scope": "umbrella-sop",
+      "visibility": "private"
+    }
+  ]
+}

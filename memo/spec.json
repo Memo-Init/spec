@@ -3,9 +3,9 @@
     "slug": "memo",
     "title": "Memo-Init Specification",
     "namespaceToken": "MC",
-    "currentVersion": "0.1.0",
-    "version": "0.1.0",
-    "specDir": "memo/0.1.0/draft/spec",
+    "currentVersion": "0.2.0",
+    "version": "0.2.0",
+    "specDir": "memo/0.2.0/draft/spec",
     "prefix": "memo/",
     "sopAnchor": "02-memo-sop-entrypoint",
     "docEntry": "/specification/overview/",
@@ -17,17 +17,17 @@
         {
             "target": "session",
             "kind": "requires",
-            "pin": "0.1.0"
+            "pin": "0.2.0"
         },
         {
             "target": "meta-spec",
             "kind": "requires",
-            "pin": "0.1.0"
+            "pin": "0.2.0"
         },
         {
             "target": "workbench",
             "kind": "references",
-            "pin": "0.1.0"
+            "pin": "0.2.0"
         }
     ],
     "sidebarMeta": {
@@ -59,6 +59,6 @@
         }
     },
     "generated": {
-        "specId": "memo@0.1.0:ba77e13"
+        "specId": "memo@0.2.0:00c2b92"
     }
 }
