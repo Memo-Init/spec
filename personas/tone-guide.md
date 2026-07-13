@@ -1,7 +1,7 @@
 # memo-init Tone-Guide
 
 > **Internal calibration document.** A lens for every piece of content (Hero, Overview, Philosophy, Memo-SOP, Input, Strategies, Quality, Rollout, Orchestration, Agents, Prompt-Generator, Git & Security, Workbench, Spec chapters).
-> Derived from the memo's own evidence discipline (Memo 001: FAKT / ANNAHME / VERMUTUNG) and its honest framing of estimates and deviations. A prior project's tone-guide serves as the structural model.
+> Derived from the memo's own evidence discipline (FAKT / ANNAHME / VERMUTUNG) and its honest framing of estimates and deviations. A prior project's tone-guide serves as the structural model.
 
 ## Base tonality
 
@@ -99,4 +99,4 @@ site repo's `BLOG-CONVENTION.md`; this entry sets only the tone.
 
 ## Audit trail
 
-Source: Memo 001 REV-04 (evidence discipline, scope-separation rule, honest framing of estimates/deviations). Structural model: an earlier project's persona tone-guide. Blog section added by Memo 037 (release-communication blog).
+Source: the memo system's evidence discipline, scope-separation rule, and honest framing of estimates/deviations. Structural model: an earlier project's persona tone-guide. Blog section added later for release-communication.
