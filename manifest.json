@@ -1,13 +1,13 @@
 {
     "spec_version": "0.2.0",
-    "generated_at": "2026-07-14T14:39:16.186Z",
+    "generated_at": "2026-07-14T15:17:37.387Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
             "filename": "00-overview.md",
             "slug": "overview",
             "title": "Overview",
-            "description": "This is the entry point for the memo-init specification, version `v0.2.0` (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the...",
+            "description": "This is the entry point for the memo-init specification (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the chapters that make...",
             "order": 0,
             "section": "Specification",
             "normative": false,
@@ -921,7 +921,7 @@
                 "filename": "00-overview.md",
                 "slug": "overview",
                 "title": "Overview",
-                "description": "This is the entry point for the memo-init **Meta-Specification**, version `v0.2.0` (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes...",
+                "description": "This is the entry point for the memo-init **Meta-Specification** (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes the *specifications...",
                 "order": 0,
                 "section": "Meta-Spec",
                 "normative": true,

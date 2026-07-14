@@ -8,7 +8,7 @@
 
 > **Informative.** This document provides the conceptual foundation, mission, terminology, and document index. It is written in prose and does not itself carry normative requirements. The **Conformance** block below is normative for the whole specification.
 
-This is the entry point for the memo-init specification, version `v0.2.0` (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the chapters that make up the specification.
+This is the entry point for the memo-init specification (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the chapters that make up the specification.
 
 ---
 

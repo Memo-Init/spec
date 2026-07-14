@@ -1,12 +1,12 @@
 ---
 title: "Overview"
-description: "This is the entry point for the memo-init **Meta-Specification**, version `v0.2.0` (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes..."
+description: "This is the entry point for the memo-init **Meta-Specification** (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes the *specifications..."
 spec_meta_version: "0.2.0"
 spec_file: "00-overview.md"
 order: 0
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T15:16:00.355Z"
 generated_from: "meta-spec/0.2.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.2.0/draft/spec/00-overview.md."
@@ -15,7 +15,7 @@ edit_warning: "This file is auto-generated. Source: meta-spec/0.2.0/draft/spec/0
 
 > **Overview.** This document is the entry point of the Meta-Specification. It is written as prose, and its `## Conformance` section is normative: it establishes the RFC-2119 conformance interpretation that every chapter of this family assumes. The remainder describes *how* the specifications in this organization are authored, structured, and published.
 
-This is the entry point for the memo-init **Meta-Specification**, version `v0.2.0` (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes the *specifications themselves* — the shared conventions every family follows, the per-chapter document shape, the RFC-2119 conformance model, and the build pipeline that turns authored draft chapters into published documentation and the skill bridge.
+This is the entry point for the memo-init **Meta-Specification** (Draft). Where the memo, workbench, and session specifications describe the *system*, this fourth family describes the *specifications themselves* — the shared conventions every family follows, the per-chapter document shape, the RFC-2119 conformance model, and the build pipeline that turns authored draft chapters into published documentation and the skill bridge.
 
 It is a **meta-spec**: a specification about specifications. It exists so that the rules the other three families already obey implicitly become explicit, reviewable, and versionable in their own right.
 

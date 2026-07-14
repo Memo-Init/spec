@@ -1,12 +1,12 @@
 ---
 title: "Overview"
-description: "This is the entry point for the memo-init specification, version `v0.2.0` (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the..."
+description: "This is the entry point for the memo-init specification (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the chapters that make..."
 spec_version: "0.2.0"
 spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T15:16:00.355Z"
 generated_from: "memo/0.2.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/00-overview.md."
@@ -15,7 +15,7 @@ edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/00-ove
 
 > **Informative.** This document provides the conceptual foundation, mission, terminology, and document index. It is written in prose and does not itself carry normative requirements. The **Conformance** block below is normative for the whole specification.
 
-This is the entry point for the memo-init specification, version `v0.2.0` (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the chapters that make up the specification.
+This is the entry point for the memo-init specification (Draft). It defines what the memo system is, why it exists, the guardrail philosophy that underpins it, and an index of the chapters that make up the specification.
 
 ---
 
