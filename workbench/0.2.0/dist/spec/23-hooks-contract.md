@@ -6,7 +6,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T01:20:17.185Z"
+generated_at: "2026-07-14T13:29:52.598Z"
 generated_from: "workbench/0.2.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/23-hooks-contract.md."

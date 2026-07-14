@@ -1,6 +1,6 @@
 {
     "spec_version": "0.2.0",
-    "generated_at": "2026-07-14T01:20:18.456Z",
+    "generated_at": "2026-07-14T13:29:54.019Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -545,7 +545,7 @@
                 "order": 13,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "folders"
+                "sidebar_group": "conventions"
             },
             {
                 "filename": "15-repos.md",
@@ -665,7 +665,7 @@
                 "order": 26,
                 "section": "Workbench",
                 "normative": true,
-                "sidebar_group": "folders"
+                "sidebar_group": "conventions"
             },
             {
                 "filename": "30-wiki.md",
@@ -680,7 +680,7 @@
             {
                 "filename": "31-browser-automation.md",
                 "slug": "browser-automation",
-                "title": "Browser Automation & Research Method",
+                "title": ".browser/",
                 "description": "The core specification's research chapter ([../../v0.2.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how...",
                 "order": 31,
                 "section": "Workbench",

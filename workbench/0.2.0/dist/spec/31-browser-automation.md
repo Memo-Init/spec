@@ -1,12 +1,12 @@
 ---
-title: "Browser Automation & Research Method"
+title: ".browser/"
 description: "The core specification's research chapter ([../../v0.2.0/10-proactive-research.md](/specification/proactive-research/)) defines the research *duty* — when a memo must verify its assumptions and how..."
 workbench_version: "0.2.0"
 spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T01:20:17.185Z"
+generated_at: "2026-07-14T13:29:52.598Z"
 generated_from: "workbench/0.2.0/draft/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/31-browser-automation.md."

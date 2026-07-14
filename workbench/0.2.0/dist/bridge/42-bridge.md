@@ -115,7 +115,6 @@ _(no skill dependencies declared in this family)_
 
 ### Folders
 
-- [13-knowledge-format-okf](./13-knowledge-format-okf.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`
 - [15-repos](./15-repos.md) — `workbench-repos`
 - [16-context](./16-context.md) — `workbench-context`, `workbench-tmp`
 - [17-memo-store](./17-memo-store.md) — `workbench-memo-store`
@@ -123,11 +122,15 @@ _(no skill dependencies declared in this family)_
 - [19-tmp](./19-tmp.md) — `workbench-tmp`
 - [21-environment-scripts](./21-environment-scripts.md) — `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation`
 - [22-config](./22-config.md) — `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation`
-- [26-addons](./26-addons.md) — `workbench-addons`, `workbench-skills-scope`
 - [30-wiki](./30-wiki.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup`
 - [31-browser-automation](./31-browser-automation.md) — `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`
 - [32-trash](./32-trash.md) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
 - [33-flowmcp](./33-flowmcp.md) — _— no implementer skill yet —_
+
+### Conventions
+
+- [13-knowledge-format-okf](./13-knowledge-format-okf.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`
+- [26-addons](./26-addons.md) — `workbench-addons`, `workbench-skills-scope`
 
 ### CLI & Scripts
 

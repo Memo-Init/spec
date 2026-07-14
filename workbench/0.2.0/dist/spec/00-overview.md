@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-07-14T01:20:17.185Z"
+generated_at: "2026-07-14T13:29:52.598Z"
 generated_from: "workbench/0.2.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/00-overview.md."
@@ -111,12 +111,13 @@ This spec covers the workbench's **specification text and conventions**. Two thi
 
 ## Navigation Categories
 
-The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Root**, **Projects**, **Folders**, **CLI & Scripts**, **Core**, and **Bridge**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
+The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Root**, **Projects**, **Folders**, **Conventions**, **CLI & Scripts**, **Core**, and **Bridge**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
 
-Two categories carry a meaning worth stating here:
+Three categories carry a meaning worth stating here:
 
-- **Core** is the hooks contract (the consuming, enforcement side), the validation overview that indexes that enforcement, and the **Architecture** chapter (the two-level diagram together with the project repo-graph) — an enforcement/structure core, distinct from the general CLI/Scripts. The `.workbench/` **config** it reads is the producing side, now a registered **Folders** page ([12-folders.md](/workbench/folders/)) rather than a Core chapter: config is the folder, enforcement and structure are Core. There is no separate **Reference** category: the architecture chapters that once stood there are merged into one and moved here.
-- **Folders** holds **every** registered-folder page — including `.browser/`, `.workbench/`, `design/`, and `.wiki/`, now consolidated here so all per-folder pages sit together — together with the things that attach to folders: the folder contract, the per-folder pages, the **convention model** (OKF and `design.md`, the named content formats a folder follows), the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
+- **Folders** holds **only the per-folder pages** — one page per registered folder, each **titled with its folder name** (`.browser/`, `.memo/`, `.workbench/`, `.wiki/`, `context/`, `design/`, `repos/`, `scripts/`, …) and listed **alphabetically**. It is uniform by design: every entry is a folder, so the category reads as one clean, sorted folder index. The folder contract that governs these pages is defined in [12-folders.md](/workbench/folders/), and the trash policy ([32-trash.md](/workbench/trash/)) sits here as the deletion-target folder.
+- **Conventions** holds the pages about the **models that attach to folders** rather than folders themselves: **OKF** ([13-knowledge-format-okf.md](/workbench/knowledge-format-okf/)) — the knowledge/content format, the first instance of the convention model that [12-folders.md](/workbench/folders/) introduces — and the **custom folder model** ([26-addons.md](/workbench/addons/), the tools that reserve a folder, such as the memo system). These describe *how* folder content and tooling work, so they sit apart from the per-folder pages rather than among them.
+- **Core** is the hooks contract (the consuming, enforcement side), the validation overview that indexes that enforcement, and the **Architecture** chapter (the two-level diagram together with the project repo-graph) — an enforcement/structure core, distinct from the general CLI/Scripts. The `.workbench/` **config** it reads is the producing side, a registered **Folders** page ([12-folders.md](/workbench/folders/)) rather than a Core chapter: config is the folder, enforcement and structure are Core. There is no separate **Reference** category: the architecture chapters that once stood there are merged into one and moved here.
 
 ---
 

@@ -1,4 +1,4 @@
-# 31. Browser Automation & Research Method
+# 31. .browser/
 
 | | |
 |---|---|
