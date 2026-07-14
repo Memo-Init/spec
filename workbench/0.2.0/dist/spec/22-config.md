@@ -6,7 +6,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/22-config.md."
@@ -15,7 +15,26 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/2
 
 A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository's **status** — its visibility, its remote, and its facing — and it is the **single source** from which deterministic enforcement (notably hooks) is derived. This chapter specifies what the configuration holds and the principle by which other things are derived from it.
 
-This chapter and [23-hooks-contract.md](/workbench/hooks-contract/) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](/workbench/overview/).
+The `.workbench/` configuration is the **producing side** of the workbench's config/enforcement split: it is declared here as a registered **Folders** page ([12-folders.md](/workbench/folders/)), and the workbench **Core** — the hooks contract that consumes it ([23-hooks-contract.md](/workbench/hooks-contract/)), the validation overview that indexes that enforcement ([25-validation-overview.md](/workbench/validation-overview/)), and the project architecture it structures ([41-project-architecture.md](/workbench/project-architecture/)) — reads and enforces it. Config is the folder; enforcement and structure are Core (see the Core category in [00-overview.md](/workbench/overview/)).
+
+---
+
+## Folder Contract
+
+`.workbench/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `.workbench/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `config.json` · `registry.json` |
+| Convention | — |
+| Purpose | The manual project configuration the workbench core reads. |
+| Goes in | The hand-authored declared files — `config.json` (per-repository status), `folder-lints.json`, `registry.json`, and `command-sops.json`. |
+| Does not | Auto-generated or silently overwritten configuration; an `id` / `name` / `project-id` field (the folder name is the project id). |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 

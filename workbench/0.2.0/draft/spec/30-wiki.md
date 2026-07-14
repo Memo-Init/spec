@@ -10,6 +10,25 @@ The wiki is the project's **discovery system** — the **entry point**, the sing
 
 ---
 
+## Folder Contract
+
+`.wiki/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `.wiki/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `index.md` (published as "overview") |
+| Convention | OKF |
+| Purpose | LLM-generated project wiki, an OKF-conformant knowledge bundle. |
+| Goes in | The generated wiki pages (OKF nodes + untyped links), including the `index.md` entry point published as "overview". |
+| Does not | A second, drifting copy of the architecture graph (the wiki points at `context/architecture-okf/`, never copies it); the chronicle / timeline. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+
+---
+
 ## Storage Formats
 
 The wiki is the entry point that reads the project's knowledge **regardless of the form it is stored in**. It supports more than one storage format, and a query is answered the same way no matter which format holds the underlying knowledge:

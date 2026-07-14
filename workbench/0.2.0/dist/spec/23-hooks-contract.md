@@ -6,7 +6,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/23-hooks-contract.md."
@@ -17,7 +17,7 @@ Deterministic enforcement of workbench policy is delegated to Claude Code hooks.
 
 > **Normative status — reference, not single source.** The enforcement mechanism is owned once by [session · enforcement](/session/enforcement/); [session/04-cli.md](/session/cli/) records that this chapter "references up to it rather than redefining the contract." What stays workbench-owned here is only the **declaration side** — the policy a hook consumes (`.workbench/` facing status, `folder-lints.json`) specified in [22-config.md](/workbench/config/).
 
-This chapter and [22-config.md](/workbench/config/) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](/workbench/overview/).
+This chapter is the **enforcement (consuming) side** of the workbench **Core**, alongside the validation overview ([25-validation-overview.md](/workbench/validation-overview/)) and the project architecture ([41-project-architecture.md](/workbench/project-architecture/)). The `.workbench/` **config** it reads ([22-config.md](/workbench/config/)) is the producing side — now a registered **Folders** page rather than a Core chapter: config is the folder, enforcement and structure are Core (see the Core category in [00-overview.md](/workbench/overview/)).
 
 ---
 

@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/12-folders.md."
@@ -311,6 +311,7 @@ Several registered folders carry enough depth to have their own page; this chapt
 | `context/` | [16-context.md](/workbench/context/) |
 | `context/architecture-okf/` | [41-project-architecture.md](/workbench/project-architecture/) (concept) · [13-knowledge-format-okf.md](/workbench/knowledge-format-okf/) (format) |
 | `.memo/` | [17-memo-store.md](/workbench/memo-store/) |
+| `.workbench/` | [22-config.md](/workbench/config/) |
 | `design/` | [18-design.md](/workbench/design/) |
 | `.wiki/` | [30-wiki.md](/workbench/wiki/) |
 | `.browser/` | [31-browser-automation.md](/workbench/browser-automation/) |

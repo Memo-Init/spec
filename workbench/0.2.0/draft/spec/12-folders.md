@@ -304,6 +304,7 @@ Several registered folders carry enough depth to have their own page; this chapt
 | `context/` | [16-context.md](./16-context.md) |
 | `context/architecture-okf/` | [41-project-architecture.md](./41-project-architecture.md) (concept) · [13-knowledge-format-okf.md](./13-knowledge-format-okf.md) (format) |
 | `.memo/` | [17-memo-store.md](./17-memo-store.md) |
+| `.workbench/` | [22-config.md](./22-config.md) |
 | `design/` | [18-design.md](./18-design.md) |
 | `.wiki/` | [30-wiki.md](./30-wiki.md) |
 | `.browser/` | [31-browser-automation.md](./31-browser-automation.md) |

@@ -6,7 +6,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/30-wiki.md."
@@ -14,6 +14,25 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/3
 
 
 The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; the **storage formats** it reads through — OKF and `design.md` — are listed below.
+
+---
+
+## Folder Contract
+
+`.wiki/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `.wiki/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `index.md` (published as "overview") |
+| Convention | OKF |
+| Purpose | LLM-generated project wiki, an OKF-conformant knowledge bundle. |
+| Goes in | The generated wiki pages (OKF nodes + untyped links), including the `index.md` entry point published as "overview". |
+| Does not | A second, drifting copy of the architecture graph (the wiki points at `context/architecture-okf/`, never copies it); the chronicle / timeline. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 

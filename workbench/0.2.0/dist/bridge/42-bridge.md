@@ -115,12 +115,17 @@ _(no skill dependencies declared in this family)_
 
 ### Folders
 
+- [13-knowledge-format-okf](./13-knowledge-format-okf.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`
 - [15-repos](./15-repos.md) — `workbench-repos`
 - [16-context](./16-context.md) — `workbench-context`, `workbench-tmp`
 - [17-memo-store](./17-memo-store.md) — `workbench-memo-store`
+- [18-design](./18-design.md) — `workbench-design`
 - [19-tmp](./19-tmp.md) — `workbench-tmp`
 - [21-environment-scripts](./21-environment-scripts.md) — `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation`
+- [22-config](./22-config.md) — `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation`
 - [26-addons](./26-addons.md) — `workbench-addons`, `workbench-skills-scope`
+- [30-wiki](./30-wiki.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup`
+- [31-browser-automation](./31-browser-automation.md) — `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`
 - [32-trash](./32-trash.md) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
 - [33-flowmcp](./33-flowmcp.md) — _— no implementer skill yet —_
 
@@ -129,19 +134,8 @@ _(no skill dependencies declared in this family)_
 - [20-cli](./20-cli.md) — `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [24-skills-scope](./24-skills-scope.md) — `workbench-addons`, `workbench-hooks-contract`, `workbench-skills-scope`
 
-### Tools
-
-- [31-browser-automation](./31-browser-automation.md) — `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`
-
-### Wiki
-
-- [13-knowledge-format-okf](./13-knowledge-format-okf.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`
-- [18-design](./18-design.md) — `workbench-design`
-- [30-wiki](./30-wiki.md) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup`
-
 ### Core
 
-- [22-config](./22-config.md) — `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation`
 - [23-hooks-contract](./23-hooks-contract.md) — `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [25-validation-overview](./25-validation-overview.md) — `workbench-cli`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [41-project-architecture](./41-project-architecture.md) — `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `wiki-lint`, `workbench-audit`, `workbench-config`

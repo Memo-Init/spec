@@ -10,6 +10,25 @@ A project's `scripts/` folder holds the executable entry points that bring its e
 
 ---
 
+## Folder Contract
+
+`scripts/` is a registered (mandatory) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `scripts/` |
+| Status | Mandatory |
+| Level | Project |
+| Entry-point | meaningful sub-folders |
+| Convention | startup-script convention |
+| Purpose | Environment and health scripts — the project's bring-up, tear-down, health, and session-lifecycle entry points. |
+| Goes in | The lifecycle script family — `dev.sh` / `staging.sh` (bring-up), `cleanup.sh` (tear-down), `health-check.sh` (health), and the `start-the-plane` / `land-the-plane` session-lifecycle pair — each under a meaningful subfolder. |
+| Does not | A flat pile of scripts at the `scripts/` root; non-script material. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+
+---
+
 ## The Script Family
 
 A project's environment is operated through a small, named family of scripts. The names are conventional so that an agent or a developer knows what to run without reading each one:

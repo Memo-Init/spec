@@ -10,7 +10,7 @@ Deterministic enforcement of workbench policy is delegated to Claude Code hooks.
 
 > **Normative status — reference, not single source.** The enforcement mechanism is owned once by [session · enforcement](/session/enforcement/); [session/04-cli.md](/session/cli/) records that this chapter "references up to it rather than redefining the contract." What stays workbench-owned here is only the **declaration side** — the policy a hook consumes (`.workbench/` facing status, `folder-lints.json`) specified in [22-config.md](./22-config.md).
 
-This chapter and [22-config.md](./22-config.md) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](./00-overview.md).
+This chapter is the **enforcement (consuming) side** of the workbench **Core**, alongside the validation overview ([25-validation-overview.md](./25-validation-overview.md)) and the project architecture ([41-project-architecture.md](./41-project-architecture.md)). The `.workbench/` **config** it reads ([22-config.md](./22-config.md)) is the producing side — now a registered **Folders** page rather than a Core chapter: config is the folder, enforcement and structure are Core (see the Core category in [00-overview.md](./00-overview.md)).
 
 ---
 

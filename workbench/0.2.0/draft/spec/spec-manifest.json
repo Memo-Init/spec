@@ -39,12 +39,17 @@
             "label": "Folders",
             "order": 4,
             "pages": [
+                "13-knowledge-format-okf",
                 "15-repos",
                 "16-context",
                 "17-memo-store",
+                "18-design",
                 "19-tmp",
                 "21-environment-scripts",
+                "22-config",
                 "26-addons",
+                "30-wiki",
+                "31-browser-automation",
                 "32-trash",
                 "33-flowmcp"
             ]
@@ -59,29 +64,10 @@
             ]
         },
         {
-            "id": "tools",
-            "label": "Tools",
-            "order": 6,
-            "pages": [
-                "31-browser-automation"
-            ]
-        },
-        {
-            "id": "wiki",
-            "label": "Wiki",
-            "order": 7,
-            "pages": [
-                "13-knowledge-format-okf",
-                "18-design",
-                "30-wiki"
-            ]
-        },
-        {
             "id": "core",
             "label": "Core",
-            "order": 8,
+            "order": 6,
             "pages": [
-                "22-config",
                 "23-hooks-contract",
                 "25-validation-overview",
                 "41-project-architecture"
@@ -90,7 +76,7 @@
         {
             "id": "bridge",
             "label": "bridge",
-            "order": 9,
+            "order": 7,
             "pages": [
                 "42-bridge"
             ]

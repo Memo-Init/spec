@@ -8,7 +8,26 @@
 
 A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository's **status** — its visibility, its remote, and its facing — and it is the **single source** from which deterministic enforcement (notably hooks) is derived. This chapter specifies what the configuration holds and the principle by which other things are derived from it.
 
-This chapter and [23-hooks-contract.md](./23-hooks-contract.md) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](./00-overview.md).
+The `.workbench/` configuration is the **producing side** of the workbench's config/enforcement split: it is declared here as a registered **Folders** page ([12-folders.md](./12-folders.md)), and the workbench **Core** — the hooks contract that consumes it ([23-hooks-contract.md](./23-hooks-contract.md)), the validation overview that indexes that enforcement ([25-validation-overview.md](./25-validation-overview.md)), and the project architecture it structures ([41-project-architecture.md](./41-project-architecture.md)) — reads and enforces it. Config is the folder; enforcement and structure are Core (see the Core category in [00-overview.md](./00-overview.md)).
+
+---
+
+## Folder Contract
+
+`.workbench/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `.workbench/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `config.json` · `registry.json` |
+| Convention | — |
+| Purpose | The manual project configuration the workbench core reads. |
+| Goes in | The hand-authored declared files — `config.json` (per-repository status), `folder-lints.json`, `registry.json`, and `command-sops.json`. |
+| Does not | Auto-generated or silently overwritten configuration; an `id` / `name` / `project-id` field (the folder name is the project id). |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
 
 ---
 

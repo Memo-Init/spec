@@ -12,6 +12,25 @@ Like OKF, design.md is one of the **storage formats the wiki reads through** ([3
 
 ---
 
+## Folder Contract
+
+`design/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `design/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `design.md` |
+| Convention | design format |
+| Purpose | The project's design system and visual sources. |
+| Goes in | `design.md` (the active convention), design variants, and `.pen` / visual sources — organized under per-topic sub-folders once there is more than one surface. |
+| Does not | Captured view proofs (those live in `proofs/`); the project architecture, which is a separate concern. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+
+---
+
 ## What design.md Is
 
 design.md is a **design-system format**: a single Markdown file that captures the foundation a design rests on — its colors, typography, icons, elevation, shapes, and the do's and don'ts that govern their use — as YAML design tokens plus a set of canonical prose sections. It is deliberately Markdown rather than JSON, so the design system is readable and reviewable in the same medium as the rest of a project's authored knowledge, and so an agent can consume it as plain text. A small command-line surface (lint, diff, export, and a schema command) operates on the file; the export path emits to interchange targets rather than locking the tokens into one renderer.

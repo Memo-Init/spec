@@ -6,7 +6,7 @@ spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/18-design.md."
@@ -16,6 +16,25 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/1
 `design/` is the optional, project-level folder that holds a project's **design system** and its visual sources. Its content follows a named convention — **design.md** — in the same way the architecture folder's content follows OKF. This chapter specifies the folder and the convention together: `design/` is the registered home, and design.md is the standard its primary file is written to.
 
 Like OKF, design.md is one of the **storage formats the wiki reads through** ([30-wiki.md](/workbench/wiki/)): the design system is reached through the wiki — the project's single discovery entry point — exactly as the architecture bundle is, which is why this convention sits under the wiki rather than standing alone.
+
+---
+
+## Folder Contract
+
+`design/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `design/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `design.md` |
+| Convention | design format |
+| Purpose | The project's design system and visual sources. |
+| Goes in | `design.md` (the active convention), design variants, and `.pen` / visual sources — organized under per-topic sub-folders once there is more than one surface. |
+| Does not | Captured view proofs (those live in `proofs/`); the project architecture, which is a separate concern. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 

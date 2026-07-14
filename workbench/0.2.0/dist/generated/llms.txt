@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the workbench spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: workbench@0.2.0:785604c
+Source: workbench@0.2.0:c0533a1
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/00-overview.md."
@@ -118,13 +118,12 @@ This spec covers the workbench's **specification text and conventions**. Two thi
 
 ## Navigation Categories
 
-The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Root**, **Projects**, **Folders**, **CLI & Scripts**, **Tools**, **Wiki**, **Core**, and **Bridge**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
+The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Root**, **Projects**, **Folders**, **CLI & Scripts**, **Core**, and **Bridge**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
 
-Three categories carry a meaning worth stating here:
+Two categories carry a meaning worth stating here:
 
-- **Core** is the config (`.workbench/`, the producing side), the hooks contract (the consuming side), the validation overview that indexes that enforcement, and the **Architecture** chapter (the two-level diagram together with the project repo-graph) — a mutually-defining policy/enforcement/structure core, distinct from the general CLI/Scripts. There is no separate **Reference** category: the architecture chapters that once stood there are merged into one and moved here.
-- **Folders** holds the registered-folder pages and the things that attach to folders: the folder contract, the per-folder pages, the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
-- **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `design.md` (the design format); both therefore sit conceptually under the wiki rather than standing alone.
+- **Core** is the hooks contract (the consuming, enforcement side), the validation overview that indexes that enforcement, and the **Architecture** chapter (the two-level diagram together with the project repo-graph) — an enforcement/structure core, distinct from the general CLI/Scripts. The `.workbench/` **config** it reads is the producing side, now a registered **Folders** page ([12-folders.md](/workbench/folders/)) rather than a Core chapter: config is the folder, enforcement and structure are Core. There is no separate **Reference** category: the architecture chapters that once stood there are merged into one and moved here.
+- **Folders** holds **every** registered-folder page — including `.browser/`, `.workbench/`, `design/`, and `.wiki/`, now consolidated here so all per-folder pages sit together — together with the things that attach to folders: the folder contract, the per-folder pages, the **convention model** (OKF and `design.md`, the named content formats a folder follows), the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
 
 ---
 
@@ -148,7 +147,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Workbench"
 normative: false
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/01-philosophy.md."
@@ -203,7 +202,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/02-sop-entrypoint.md."
@@ -339,7 +338,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/10-root-and-projects.md."
@@ -448,7 +447,7 @@ spec_file: "11-project-structure.md"
 order: 11
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/11-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/11-project-structure.md."
@@ -561,7 +560,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/12-folders.md."
@@ -866,6 +865,7 @@ Several registered folders carry enough depth to have their own page; this chapt
 | `context/` | [16-context.md](/workbench/context/) |
 | `context/architecture-okf/` | [41-project-architecture.md](/workbench/project-architecture/) (concept) · [13-knowledge-format-okf.md](/workbench/knowledge-format-okf/) (format) |
 | `.memo/` | [17-memo-store.md](/workbench/memo-store/) |
+| `.workbench/` | [22-config.md](/workbench/config/) |
 | `design/` | [18-design.md](/workbench/design/) |
 | `.wiki/` | [30-wiki.md](/workbench/wiki/) |
 | `.browser/` | [31-browser-automation.md](/workbench/browser-automation/) |
@@ -991,7 +991,7 @@ spec_file: "13-knowledge-format-okf.md"
 order: 13
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/13-knowledge-format-okf.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/13-knowledge-format-okf.md."
@@ -1192,7 +1192,7 @@ spec_file: "15-repos.md"
 order: 15
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/15-repos.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/15-repos.md."
@@ -1314,7 +1314,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/16-context.md."
@@ -1446,7 +1446,7 @@ spec_file: "17-memo-store.md"
 order: 17
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/17-memo-store.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/17-memo-store.md."
@@ -1520,7 +1520,7 @@ spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/18-design.md."
@@ -1530,6 +1530,25 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/1
 `design/` is the optional, project-level folder that holds a project's **design system** and its visual sources. Its content follows a named convention — **design.md** — in the same way the architecture folder's content follows OKF. This chapter specifies the folder and the convention together: `design/` is the registered home, and design.md is the standard its primary file is written to.
 
 Like OKF, design.md is one of the **storage formats the wiki reads through** ([30-wiki.md](/workbench/wiki/)): the design system is reached through the wiki — the project's single discovery entry point — exactly as the architecture bundle is, which is why this convention sits under the wiki rather than standing alone.
+
+---
+
+## Folder Contract
+
+`design/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `design/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `design.md` |
+| Convention | design format |
+| Purpose | The project's design system and visual sources. |
+| Goes in | `design.md` (the active convention), design variants, and `.pen` / visual sources — organized under per-topic sub-folders once there is more than one surface. |
+| Does not | Captured view proofs (those live in `proofs/`); the project architecture, which is a separate concern. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 
@@ -1652,7 +1671,7 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/19-tmp.md."
@@ -1728,7 +1747,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/20-cli.md."
@@ -1976,7 +1995,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/21-environment-scripts.md."
@@ -1984,6 +2003,25 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/2
 
 
 A project's `scripts/` folder holds the executable entry points that bring its environment up, tear it down, and check that it is healthy. This chapter specifies the script family, the boot contract that keeps service startup declarative, and the workbench-level health scripts that verify the workbench setup itself.
+
+---
+
+## Folder Contract
+
+`scripts/` is a registered (mandatory) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `scripts/` |
+| Status | Mandatory |
+| Level | Project |
+| Entry-point | meaningful sub-folders |
+| Convention | startup-script convention |
+| Purpose | Environment and health scripts — the project's bring-up, tear-down, health, and session-lifecycle entry points. |
+| Goes in | The lifecycle script family — `dev.sh` / `staging.sh` (bring-up), `cleanup.sh` (tear-down), `health-check.sh` (health), and the `start-the-plane` / `land-the-plane` session-lifecycle pair — each under a meaningful subfolder. |
+| Does not | A flat pile of scripts at the `scripts/` root; non-script material. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 
@@ -2144,7 +2182,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/22-config.md."
@@ -2153,7 +2191,26 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/2
 
 A project declares what is specific to it in a **manual** configuration under `.workbench/`. The configuration describes each repository's **status** — its visibility, its remote, and its facing — and it is the **single source** from which deterministic enforcement (notably hooks) is derived. This chapter specifies what the configuration holds and the principle by which other things are derived from it.
 
-This chapter and [23-hooks-contract.md](/workbench/hooks-contract/) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](/workbench/overview/).
+The `.workbench/` configuration is the **producing side** of the workbench's config/enforcement split: it is declared here as a registered **Folders** page ([12-folders.md](/workbench/folders/)), and the workbench **Core** — the hooks contract that consumes it ([23-hooks-contract.md](/workbench/hooks-contract/)), the validation overview that indexes that enforcement ([25-validation-overview.md](/workbench/validation-overview/)), and the project architecture it structures ([41-project-architecture.md](/workbench/project-architecture/)) — reads and enforces it. Config is the folder; enforcement and structure are Core (see the Core category in [00-overview.md](/workbench/overview/)).
+
+---
+
+## Folder Contract
+
+`.workbench/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `.workbench/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `config.json` · `registry.json` |
+| Convention | — |
+| Purpose | The manual project configuration the workbench core reads. |
+| Goes in | The hand-authored declared files — `config.json` (per-repository status), `folder-lints.json`, `registry.json`, and `command-sops.json`. |
+| Does not | Auto-generated or silently overwritten configuration; an `id` / `name` / `project-id` field (the folder name is the project id). |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 
@@ -2344,7 +2401,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/23-hooks-contract.md."
@@ -2355,7 +2412,7 @@ Deterministic enforcement of workbench policy is delegated to Claude Code hooks.
 
 > **Normative status — reference, not single source.** The enforcement mechanism is owned once by [session · enforcement](/session/enforcement/); [session/04-cli.md](/session/cli/) records that this chapter "references up to it rather than redefining the contract." What stays workbench-owned here is only the **declaration side** — the policy a hook consumes (`.workbench/` facing status, `folder-lints.json`) specified in [22-config.md](/workbench/config/).
 
-This chapter and [22-config.md](/workbench/config/) form the workbench **Core** — the mutually-defining config/enforcement pair (config = producing side, hooks = consuming side); see the Core category in [00-overview.md](/workbench/overview/).
+This chapter is the **enforcement (consuming) side** of the workbench **Core**, alongside the validation overview ([25-validation-overview.md](/workbench/validation-overview/)) and the project architecture ([41-project-architecture.md](/workbench/project-architecture/)). The `.workbench/` **config** it reads ([22-config.md](/workbench/config/)) is the producing side — now a registered **Folders** page rather than a Core chapter: config is the folder, enforcement and structure are Core (see the Core category in [00-overview.md](/workbench/overview/)).
 
 ---
 
@@ -2655,7 +2712,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/24-skills-scope.md."
@@ -2810,7 +2867,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/25-validation-overview.md."
@@ -3042,7 +3099,7 @@ spec_file: "26-addons.md"
 order: 26
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/26-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/26-addons.md."
@@ -3113,7 +3170,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/30-wiki.md."
@@ -3121,6 +3178,25 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/3
 
 
 The wiki is the project's **discovery system** — the **entry point**, the single bottleneck through which a memo reaches everything the project knows. A project accumulates far more than any one memo holds: the structured project architecture, and a long tail of unstructured material — research piles, `context/` documents, finalized decisions, the present-tense understanding distilled from all of it. The wiki is how a memo asks the workbench *what it already knows* instead of rediscovering it, and it answers regardless of the form the underlying knowledge takes. This chapter frames the wiki as that entry point; the **storage formats** it reads through — OKF and `design.md` — are listed below.
+
+---
+
+## Folder Contract
+
+`.wiki/` is a registered (optional) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `.wiki/` |
+| Status | Optional |
+| Level | Project |
+| Entry-point | `index.md` (published as "overview") |
+| Convention | OKF |
+| Purpose | LLM-generated project wiki, an OKF-conformant knowledge bundle. |
+| Goes in | The generated wiki pages (OKF nodes + untyped links), including the `index.md` entry point published as "overview". |
+| Does not | A second, drifting copy of the architecture graph (the wiki points at `context/architecture-okf/`, never copies it); the chronicle / timeline. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 
@@ -3259,7 +3335,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/31-browser-automation.md."
@@ -3453,7 +3529,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/32-trash.md."
@@ -3579,7 +3655,7 @@ spec_file: "33-flowmcp.md"
 order: 33
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/33-flowmcp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/33-flowmcp.md."
@@ -3648,7 +3724,7 @@ spec_file: "41-project-architecture.md"
 order: 41
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/41-project-architecture.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/41-project-architecture.md."
@@ -3820,7 +3896,7 @@ spec_file: "42-bridge.md"
 order: 42
 section: "Workbench"
 normative: false
-generated_at: "2026-07-13T22:23:55.734Z"
+generated_at: "2026-07-14T01:20:17.983Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."
@@ -3941,12 +4017,17 @@ _(no skill dependencies declared in this family)_
 
 ### Folders
 
+- [13-knowledge-format-okf](/workbench/knowledge-format-okf/) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`
 - [15-repos](/workbench/repos/) — `workbench-repos`
 - [16-context](/workbench/context/) — `workbench-context`, `workbench-tmp`
 - [17-memo-store](/workbench/memo-store/) — `workbench-memo-store`
+- [18-design](/workbench/design/) — `workbench-design`
 - [19-tmp](/workbench/tmp/) — `workbench-tmp`
 - [21-environment-scripts](/workbench/environment-scripts/) — `workbench-cli`, `workbench-environment-scripts`, `workbench-skills-scope`, `workbench-validation`
+- [22-config](/workbench/config/) — `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation`
 - [26-addons](/workbench/addons/) — `workbench-addons`, `workbench-skills-scope`
+- [30-wiki](/workbench/wiki/) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup`
+- [31-browser-automation](/workbench/browser-automation/) — `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`
 - [32-trash](/workbench/trash/) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
 - [33-flowmcp](/workbench/flowmcp/) — _— no implementer skill yet —_
 
@@ -3955,19 +4036,8 @@ _(no skill dependencies declared in this family)_
 - [20-cli](/workbench/cli/) — `workbench-addons`, `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [24-skills-scope](/workbench/skills-scope/) — `workbench-addons`, `workbench-hooks-contract`, `workbench-skills-scope`
 
-### Tools
-
-- [31-browser-automation](/workbench/browser-automation/) — `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`
-
-### Wiki
-
-- [13-knowledge-format-okf](/workbench/knowledge-format-okf/) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`
-- [18-design](/workbench/design/) — `workbench-design`
-- [30-wiki](/workbench/wiki/) — `wiki-ingest`, `wiki-init`, `wiki-lint`, `wiki-query`, `wiki-update`, `workbench-project-setup`
-
 ### Core
 
-- [22-config](/workbench/config/) — `workbench-addons`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-validation`
 - [23-hooks-contract](/workbench/hooks-contract/) — `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [25-validation-overview](/workbench/validation-overview/) — `workbench-cli`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [41-project-architecture](/workbench/project-architecture/) — `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `wiki-lint`, `workbench-audit`, `workbench-config`

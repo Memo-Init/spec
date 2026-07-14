@@ -6,7 +6,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T01:20:17.185Z"
 generated_from: "workbench/0.2.0/draft/spec/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/21-environment-scripts.md."
@@ -14,6 +14,25 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/2
 
 
 A project's `scripts/` folder holds the executable entry points that bring its environment up, tear it down, and check that it is healthy. This chapter specifies the script family, the boot contract that keeps service startup declarative, and the workbench-level health scripts that verify the workbench setup itself.
+
+---
+
+## Folder Contract
+
+`scripts/` is a registered (mandatory) folder, and this page is its per-folder entry:
+
+| Field | Value |
+|-------|-------|
+| Name | `scripts/` |
+| Status | Mandatory |
+| Level | Project |
+| Entry-point | meaningful sub-folders |
+| Convention | startup-script convention |
+| Purpose | Environment and health scripts — the project's bring-up, tear-down, health, and session-lifecycle entry points. |
+| Goes in | The lifecycle script family — `dev.sh` / `staging.sh` (bring-up), `cleanup.sh` (tear-down), `health-check.sh` (health), and the `start-the-plane` / `land-the-plane` session-lifecycle pair — each under a meaningful subfolder. |
+| Does not | A flat pile of scripts at the `scripts/` root; non-script material. |
+
+> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
 
 ---
 

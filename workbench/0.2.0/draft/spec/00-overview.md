@@ -104,13 +104,12 @@ This spec covers the workbench's **specification text and conventions**. Two thi
 
 ## Navigation Categories
 
-The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Root**, **Projects**, **Folders**, **CLI & Scripts**, **Tools**, **Wiki**, **Core**, and **Bridge**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
+The Workbench spec's chapters are grouped into the navigation categories **Introduction**, **Root**, **Projects**, **Folders**, **CLI & Scripts**, **Core**, and **Bridge**. (Requirements, Tools Registry, Strands, and Memo History are core chapters and are linked from there.) The published sidebar lists each chapter under its category, so this overview names the category structure rather than re-listing every chapter — the on-disk chapter set and the sidebar are the authoritative per-chapter index.
 
-Three categories carry a meaning worth stating here:
+Two categories carry a meaning worth stating here:
 
-- **Core** is the config (`.workbench/`, the producing side), the hooks contract (the consuming side), the validation overview that indexes that enforcement, and the **Architecture** chapter (the two-level diagram together with the project repo-graph) — a mutually-defining policy/enforcement/structure core, distinct from the general CLI/Scripts. There is no separate **Reference** category: the architecture chapters that once stood there are merged into one and moved here.
-- **Folders** holds the registered-folder pages and the things that attach to folders: the folder contract, the per-folder pages, the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
-- **Wiki** is the project's discovery system as its own category. Its **storage formats** include OKF (the structured architecture format) and `design.md` (the design format); both therefore sit conceptually under the wiki rather than standing alone.
+- **Core** is the hooks contract (the consuming, enforcement side), the validation overview that indexes that enforcement, and the **Architecture** chapter (the two-level diagram together with the project repo-graph) — an enforcement/structure core, distinct from the general CLI/Scripts. The `.workbench/` **config** it reads is the producing side, now a registered **Folders** page ([12-folders.md](./12-folders.md)) rather than a Core chapter: config is the folder, enforcement and structure are Core. There is no separate **Reference** category: the architecture chapters that once stood there are merged into one and moved here.
+- **Folders** holds **every** registered-folder page — including `.browser/`, `.workbench/`, `design/`, and `.wiki/`, now consolidated here so all per-folder pages sit together — together with the things that attach to folders: the folder contract, the per-folder pages, the **convention model** (OKF and `design.md`, the named content formats a folder follows), the **custom folder model** (the tools that reserve a folder, reunited with the folder taxonomy that introduces them), and the trash policy.
 
 ---
 
