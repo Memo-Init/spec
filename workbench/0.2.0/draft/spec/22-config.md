@@ -132,7 +132,7 @@ The `remote` axis is declared per repository, but the configuration also carries
 
 ## Conformity Requirements
 
-The configuration is the contract surface enforcement reads, so its shape, its manual discipline, and the remote gate it carries are all checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how the configuration is authored, and each `check` faces the structure audit, the remote gate, and the no-auto-write discipline. They are the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The configuration is the contract surface enforcement reads, so its shape, its manual discipline, and the remote gate it carries are all checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how the configuration is authored, and each `check` faces the structure audit, the remote gate, and the no-auto-write discipline. They are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 That a status record carries all three axes is a structural fact about the file's shape:
 

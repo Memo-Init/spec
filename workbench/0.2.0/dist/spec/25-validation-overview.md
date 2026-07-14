@@ -6,7 +6,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T13:29:52.598Z"
+generated_at: "2026-07-14T14:39:14.663Z"
 generated_from: "workbench/0.2.0/draft/spec/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/25-validation-overview.md."
@@ -150,7 +150,7 @@ flowchart TD
 
 ## Conformity Requirements
 
-This page is the wayfinder, and it introduces no new *domain* rule — those stay normative in their home chapters. The blocks below encode only the wayfinder's **own upkeep discipline**, already stated above: that the set of validation families and codes never grows silently past what this index lists, and that severity stays distinct. As the workbench family's requirements anchor, this section is the entry point into the per-chapter blocks the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+This page is the wayfinder, and it introduces no new *domain* rule — those stay normative in their home chapters. The blocks below encode only the wayfinder's **own upkeep discipline**, already stated above: that the set of validation families and codes never grows silently past what this index lists, and that severity stays distinct. As the workbench family's requirements anchor, this section is the entry point into the per-chapter blocks the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 Every listed validation family must point at a chapter that actually specifies it — a hard yes/no over the index:
 

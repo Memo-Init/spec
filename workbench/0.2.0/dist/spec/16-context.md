@@ -6,7 +6,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T13:29:52.598Z"
+generated_at: "2026-07-14T14:39:14.663Z"
 generated_from: "workbench/0.2.0/draft/spec/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/16-context.md."
@@ -72,7 +72,7 @@ Content **MUST** be organized under a **per-topic sub-folder** of `context/` rat
 
 ## Conformity Requirements
 
-The `context/` organization rules are checkable against the folder's own shape. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how content is filed, and each `check` faces the structure audit and the write-time lint binding. They are the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The `context/` organization rules are checkable against the folder's own shape. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how content is filed, and each `check` faces the structure audit and the write-time lint binding. They are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 Per-topic organization is a structural fact about where content sits:
 

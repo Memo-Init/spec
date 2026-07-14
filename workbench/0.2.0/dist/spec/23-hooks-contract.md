@@ -6,7 +6,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T13:29:52.598Z"
+generated_at: "2026-07-14T14:39:14.663Z"
 generated_from: "workbench/0.2.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/23-hooks-contract.md."
@@ -248,7 +248,7 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ## Conformity Requirements
 
-The enforcement **mechanism** is not re-normalized here — its binding rules are single-sourced to [session · enforcement](/session/enforcement/) (the hard-block on a missing predecessor, the jq-structured signal, fail-open, the kill-switch, and the policy checkpoints). The workbench-scoped blocks below bind only the **declaration side** — the policy a hook *reads* (the declared per-repository facing status and the `folder-lints.json` map, both specified in [22-config.md](/workbench/config/)). Each `statement` faces how that policy is declared, and each `check` faces the built gate's behaviour against it. Because the hook *implementation* belongs to the deferred machine-tier spec, these blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The enforcement **mechanism** is not re-normalized here — its binding rules are single-sourced to [session · enforcement](/session/enforcement/) (the hard-block on a missing predecessor, the jq-structured signal, fail-open, the kill-switch, and the policy checkpoints). The workbench-scoped blocks below bind only the **declaration side** — the policy a hook *reads* (the declared per-repository facing status and the `folder-lints.json` map, both specified in [22-config.md](/workbench/config/)). Each `statement` faces how that policy is declared, and each `check` faces the built gate's behaviour against it. Because the hook *implementation* belongs to the deferred machine-tier spec, these blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 The five-step precondition-chain mechanism — intercept, look up the `when: "pre"` edges, scan the transcript, check each predecessor, and allow or hard-block the whole transitive chain — is the **enforcement mechanism**, and its binding rule is single-sourced to [session · enforcement](/session/enforcement/) (the gate hard-blocks a missing predecessor SOP; the signal is read jq-structured). This chapter does **not** carry a competing requirement block for it — it references the session contract rather than re-harvesting the same rule under a workbench id.
 

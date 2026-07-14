@@ -6,7 +6,7 @@ spec_file: "41-project-architecture.md"
 order: 41
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T13:29:52.598Z"
+generated_at: "2026-07-14T14:39:14.663Z"
 generated_from: "workbench/0.2.0/draft/spec/41-project-architecture.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/41-project-architecture.md."
@@ -56,7 +56,7 @@ A project's **architecture** is the answer to one question: *which repositories 
 Even a single-repo project has an architecture — a trivial one. As soon as a project holds more than one repository, the relationships between them carry real information: which repo is the source another is induced from, which repo consumes another's output, which dependency is externally visible. That graph is the architecture, and it is the **Soll** (the declared target state) against which the real repositories are measured.
 
 - **Nodes are repos.** One node per repository, each carrying its role: a human title, whether it faces inward or outward, and the source it is pinned to (`repos/<name> @ <commit>`).
-- **Edges are declared relationships** between repos — `set` (a real, justified edge), `justified-omit` (deliberately no edge, with a reason), or `blocked`. Each edge carries a provenance commit so drift from it is a *count*, not a guess (see [../../v0.2.0/33-maintenance.md](/specification/maintenance/)).
+- **Edges are declared relationships** between repos — `set` (a real, justified edge), `justified-omit` (deliberately no edge, with a reason), or `blocked`. Each edge carries a provenance commit so drift from it is a *count*, not a guess (see [33-maintenance.md](/specification/maintenance/)).
 - **The bundle is the Soll, the score is separate.** The architecture bundle carries the *structure*; the maintenance store carries the *score* taken against it. Keeping the two apart is what lets the structure be authored by hand and the score be measured in a fresh context.
 
 ---
@@ -85,7 +85,7 @@ Because the requirement is advisory and the check is non-blocking, presence beco
 
 ## Maintenance Keeps the Architecture Fresh
 
-Keeping the architecture current is one of maintenance's jobs, not a separate mechanism. The architecture bundle is itself a maintenance unit: each node pins its sources and edges to a commit, and the maintainer compares the **declared** architecture against the **real** one (`git log <pin>..HEAD`), flagging edges that have drifted from their pinned commit and edges that exist in reality but are absent or marked `justified-omit` in the node — the Soll itself can be stale. Re-verification re-stamps the provenance pin after a fresh-context check (see [../../v0.2.0/33-maintenance.md](/specification/maintenance/)). So the architecture is kept honest from two sides: the wiki flags absence when a memo starts, maintenance flags staleness and gaps periodically.
+Keeping the architecture current is one of maintenance's jobs, not a separate mechanism. The architecture bundle is itself a maintenance unit: each node pins its sources and edges to a commit, and the maintainer compares the **declared** architecture against the **real** one (`git log <pin>..HEAD`), flagging edges that have drifted from their pinned commit and edges that exist in reality but are absent or marked `justified-omit` in the node — the Soll itself can be stale. Re-verification re-stamps the provenance pin after a fresh-context check (see [33-maintenance.md](/specification/maintenance/)). So the architecture is kept honest from two sides: the wiki flags absence when a memo starts, maintenance flags staleness and gaps periodically.
 
 ---
 
@@ -110,7 +110,7 @@ The architecture is stored as an **OKF knowledge bundle** ([13-knowledge-format-
 
 ## Conformity Requirements
 
-The architecture is measured, not assumed, so its presence and its edge provenance are checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how an architecture bundle is authored, each `check` faces the bundle and the wiki health check. They are the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The architecture is measured, not assumed, so its presence and its edge provenance are checkable. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how an architecture bundle is authored, each `check` faces the bundle and the wiki health check. They are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 Presence is an advisory expectation — absence is an accepted state for a repo-light project — so this rule is `info`:
 
@@ -164,6 +164,6 @@ That each edge carries a provenance commit so drift is a count is a structural f
 - [00-overview.md](/workbench/overview/) — the sibling-spec framing the core diagram's lower group shows.
 - [13-knowledge-format-okf.md](/workbench/knowledge-format-okf/) — OKF, the storage format the architecture (and the wiki) is encoded in.
 - [30-wiki.md](/workbench/wiki/) — the wiki as the entry point that indexes the architecture among everything else.
-- [../../v0.2.0/33-maintenance.md](/specification/maintenance/) — maintenance scores the architecture bundle as a unit and keeps its provenance pins fresh.
-- [../../v0.2.0/23-requirements.md](/specification/requirements/) — the requirements layer the advisory presence requirement is expressed in.
+- [33-maintenance.md](/specification/maintenance/) — maintenance scores the architecture bundle as a unit and keeps its provenance pins fresh.
+- [23-requirements.md](/specification/requirements/) — the requirements layer the advisory presence requirement is expressed in.
 - [11-project-structure.md](/workbench/project-structure/) — `context/` as the primary immutable source, where the bundle lives.

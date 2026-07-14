@@ -6,7 +6,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T13:29:52.598Z"
+generated_at: "2026-07-14T14:39:14.663Z"
 generated_from: "workbench/0.2.0/draft/spec/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/20-cli.md."
@@ -185,7 +185,7 @@ So it is **one registry, one signal scan, two timings**. The seed first edge is 
 
 ## Conformity Requirements
 
-This chapter records the workbench-scoped CLI rules; the eight universal principles stay in the session doctrine and are not restated. The blocks below encode the workbench-specific `MUST`s prose-first — each `statement` faces how a CLI and its discovery source are built, each `check` faces the built tool. They are the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+This chapter records the workbench-scoped CLI rules; the eight universal principles stay in the session doctrine and are not restated. The blocks below encode the workbench-specific `MUST`s prose-first — each `statement` faces how a CLI and its discovery source are built, each `check` faces the built tool. They are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 That the registry is the single, declared discovery source is a structural fact about the file:
 

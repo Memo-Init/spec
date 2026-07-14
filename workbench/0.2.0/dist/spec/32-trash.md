@@ -6,7 +6,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T13:29:52.598Z"
+generated_at: "2026-07-14T14:39:14.663Z"
 generated_from: "workbench/0.2.0/draft/spec/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/32-trash.md."
@@ -87,7 +87,7 @@ This section states the guarantee prose-first; the block below is its machine-re
 
 ## Conformity Requirements
 
-The no-delete guarantee is a binding workbench-wide rule, so it is authored here prose-first as a checkable requirement. Its `statement` faces every act that removes material, and its `check` faces the structure audit and any tooling that discards; it is the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The no-delete guarantee is a binding workbench-wide rule, so it is authored here prose-first as a checkable requirement. Its `statement` faces every act that removes material, and its `check` faces the structure audit and any tooling that discards; it is the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 That a removal is always a recoverable move into `.trash/<memo-id>/`, never a hard delete, is a hard yes/no rule, so its `grade` is `binary`:
 

@@ -119,7 +119,7 @@ This is named as an aspiration so the spec is honest about where it points, **wi
 
 ## Conformity Requirements
 
-The script-folder rules are checkable, and the boot contract is judged against the declared-and-scripted path. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how scripts are laid out and how a project is booted, each `check` faces the structure audit and the boot path. The Workbench-Health folder-placement and repo-status tests are not restated here — they are owned as conformity rules on their home pages ([12-folders.md](./12-folders.md), [15-repos.md](./15-repos.md)). These blocks are the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The script-folder rules are checkable, and the boot contract is judged against the declared-and-scripted path. The blocks below encode this chapter's binding rules prose-first — each `statement` faces how scripts are laid out and how a project is booted, each `check` faces the structure audit and the boot path. The Workbench-Health folder-placement and repo-status tests are not restated here — they are owned as conformity rules on their home pages ([12-folders.md](./12-folders.md), [15-repos.md](./15-repos.md)). These blocks are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 That scripts live in meaningful subfolders is a structural fact:
 

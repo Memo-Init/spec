@@ -6,7 +6,7 @@ spec_file: "11-project-structure.md"
 order: 11
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T13:29:52.598Z"
+generated_at: "2026-07-14T14:39:14.663Z"
 generated_from: "workbench/0.2.0/draft/spec/11-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/11-project-structure.md."
@@ -53,7 +53,7 @@ A project **MUST** preserve all three. The guarantee is the precondition for wor
 
 ## Conformity Requirements
 
-The local guarantee above is structural, so its rules are checkable. The blocks below are the prose-first, machine-readable form of this chapter's binding `MUST`s — each `statement` faces generation (it shapes how a project is laid out) and each `check` faces the structure audit and the push gate. They are the source the workbench requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The local guarantee above is structural, so its rules are checkable. The blocks below are the prose-first, machine-readable form of this chapter's binding `MUST`s — each `statement` faces generation (it shapes how a project is laid out) and each `check` faces the structure audit and the push gate. They are the source the workbench requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 The root-is-local guarantee is a hard yes/no fact — a git remote outside `repos/` either exists or it does not — so its `check` is the whole story and its `grade` is `binary`:
 

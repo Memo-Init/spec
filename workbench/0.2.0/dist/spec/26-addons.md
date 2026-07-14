@@ -6,7 +6,7 @@ spec_file: "26-addons.md"
 order: 26
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T13:29:52.598Z"
+generated_at: "2026-07-14T14:39:14.663Z"
 generated_from: "workbench/0.2.0/draft/spec/26-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/26-addons.md."
@@ -31,7 +31,7 @@ The authoritative statement is in [session/15-addons.md](/session/addons/): the 
 
 ## Conformity Requirements
 
-The Add-on *model* is owned by the session glossary; this page records its project-scoped application, so its one conformity rule is about the folder reservation. The block below encodes that rule prose-first — its `statement` faces how an Add-on integrates into a project, its `check` faces the integrated result. It is the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The Add-on *model* is owned by the session glossary; this page records its project-scoped application, so its one conformity rule is about the folder reservation. The block below encodes that rule prose-first — its `statement` faces how an Add-on integrates into a project, its `check` faces the integrated result. It is the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 Whether a custom folder reserves only its small declared area, with bulk data project-bound, is judged against the integration:
 

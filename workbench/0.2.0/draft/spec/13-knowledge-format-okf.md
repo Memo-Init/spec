@@ -93,7 +93,7 @@ A bundle that passes these checks is, by construction, an OKF-conformant knowled
 
 ## Conformity Requirements
 
-The inward OKF-conformance check is the strict layer, and its rules are file-level facts. They apply to **every** OKF-adopting bundle, not only the wiki: per [16-context.md](./16-context.md) (REQ-958), OKF is adopted by exactly two folders — the project wiki **and** the `architecture-okf/` sub-folder of `context/` — so the conformance rules below MUST reach **both** bundles, and neither may be left silently un-checked. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a knowledge bundle is generated, each `check` faces the bundle on disk. They are the source the requirement store is harvested from ([../../v0.2.0/23-requirements.md](/specification/requirements/)).
+The inward OKF-conformance check is the strict layer, and its rules are file-level facts. They apply to **every** OKF-adopting bundle, not only the wiki: per [16-context.md](./16-context.md) (REQ-958), OKF is adopted by exactly two folders — the project wiki **and** the `architecture-okf/` sub-folder of `context/` — so the conformance rules below MUST reach **both** bundles, and neither may be left silently un-checked. The blocks below encode this chapter's binding `MUST`s prose-first — each `statement` faces how a knowledge bundle is generated, each `check` faces the bundle on disk. They are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
 The one rule a bundle cannot drop and stay conformant is a hard yes/no fact:
 
