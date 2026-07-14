@@ -6,7 +6,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T14:39:14.663Z"
+generated_at: "2026-07-14T17:27:22.814Z"
 generated_from: "workbench/0.2.0/draft/spec/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/10-root-and-projects.md."
@@ -23,10 +23,12 @@ The workbench root (for example a `ressources/` directory, or an equivalent work
 
 | Path | Purpose |
 |------|---------|
-| `projects/` | Contains every individual project, one directory each. |
+| `projects/` | Contains every individual project, one directory each — the root's most load-bearing folder, with its own page ([43-projects.md](/workbench/projects/)). |
 | `cli/` | CLIs and tools shared across all projects (for example `memo-view`). |
 | `context/` | Global documents shared across all projects — mental models, standards, cross-project specifications. |
 | `templates/` | Templates for new projects and for skills. |
+
+These four are the root's **authored** inventory. The workbench root is also, in practice, a **session root**: it carries the dot-prefixed `.session/` genesis marker whose presence marks where a session is rooted and whose `config.json` is the base of the config cascade. `.session/` is owned by the session specification ([session/01-genesis-root.md](/session/genesis-root/)) and registered as a folder in [12-folders.md](/workbench/folders/); it is machinery, not part of the authored root inventory above.
 
 The root level **organizes**; it does not develop code. Code lives inside the projects, under `repos/` (see [00-overview.md](/workbench/overview/)).
 

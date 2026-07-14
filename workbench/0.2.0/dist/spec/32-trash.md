@@ -6,7 +6,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T14:39:14.663Z"
+generated_at: "2026-07-14T17:16:26.035Z"
 generated_from: "workbench/0.2.0/draft/spec/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/32-trash.md."
@@ -19,18 +19,22 @@ Work in a project is exploratory and often half-formed. Material that looks disc
 
 ## Folder Contract
 
-| Field | Value |
-|-------|-------|
-| Name | `.trash/` |
-| Status | Mandatory |
-| Level | Project |
-| Entry-point | — |
-| Convention | — |
-| Purpose | The recoverable deletion target — the project-local folder removals route through instead of erasing. |
-| Goes in | Material being removed, moved here (timestamped) so it stays recoverable until a human empties it. |
-| Does not | Scratch that was never knowledge (that is `.tmp/`, see [19-tmp.md](/workbench/tmp/)); it is emptied only by a human, never automatically. |
+```folder
+{
+  "name":       ".trash/",
+  "status":     "mandatory",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "The recoverable deletion target — the project-local folder removals route through instead of erasing.",
+  "goesIn":     "Material being removed, moved here (timestamped) so it stays recoverable until a human empties it.",
+  "doesNot":    "Scratch that was never knowledge (that is .tmp/, see [19-tmp.md](/workbench/tmp/)); it is emptied only by a human, never automatically.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](/workbench/folders/)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

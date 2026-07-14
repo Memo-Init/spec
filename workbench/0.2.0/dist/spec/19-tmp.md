@@ -6,7 +6,7 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T14:39:14.663Z"
+generated_at: "2026-07-14T17:16:26.035Z"
 generated_from: "workbench/0.2.0/draft/spec/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/19-tmp.md."
@@ -19,18 +19,22 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/1
 
 ## Folder Contract
 
-| Field | Value |
-|-------|-------|
-| Name | `.tmp/` |
-| Status | Optional |
-| Level | Project |
-| Entry-point | — |
-| Convention | — |
-| Purpose | Ephemeral scratch — throwaway working files no part of the project depends on. |
-| Goes in | Transient, discardable working material: intermediate output, scratch copies, staging for a multi-step operation. |
-| Does not | The sole copy of anything that matters; durable knowledge; committed content (it is gitignored). |
+```folder
+{
+  "name":       ".tmp/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "Ephemeral scratch — throwaway working files no part of the project depends on.",
+  "goesIn":     "Transient, discardable working material: intermediate output, scratch copies, staging for a multi-step operation.",
+  "doesNot":    "The sole copy of anything that matters; durable knowledge; committed content (it is gitignored).",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](/workbench/folders/)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

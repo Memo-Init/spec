@@ -6,7 +6,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T14:39:14.663Z"
+generated_at: "2026-07-14T17:16:26.035Z"
 generated_from: "workbench/0.2.0/draft/spec/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/16-context.md."
@@ -19,18 +19,22 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/1
 
 ## Folder Contract
 
-| Field | Value |
-|-------|-------|
-| Name | `context/` |
-| Status | Mandatory |
-| Level | Both |
-| Entry-point | per-topic sub-folders |
-| Convention | plain Markdown; OKF opt-in for `architecture-okf/` |
-| Purpose | Processed, authored knowledge — specifications, distilled research, Markdown/PDF documents a memo draws on. |
-| Goes in | Processed, derived documents, organized under a per-topic sub-folder. |
-| Does not | Raw, unprocessed feeds (those go to `data/`); a generated artifact treated as the source it presents. |
+```folder
+{
+  "name":       "context/",
+  "status":     "mandatory",
+  "level":      "both",
+  "entryPoint": "per-topic sub-folders",
+  "convention": "plain Markdown; OKF opt-in for architecture-okf/",
+  "purpose":    "Processed, authored knowledge — specifications, distilled research, Markdown/PDF documents a memo draws on.",
+  "goesIn":     "Processed, derived documents, organized under a per-topic sub-folder.",
+  "doesNot":    "Raw, unprocessed feeds (those go to data/); a generated artifact treated as the source it presents.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](/workbench/folders/)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

@@ -6,7 +6,7 @@ spec_file: "09-root-detection.md"
 order: 9
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:43:03.086Z"
 generated_from: "session/0.2.0/draft/spec/09-root-detection.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/09-root-detection.md."
@@ -84,6 +84,18 @@ A global pin is the precise opposite of the genesis tier's **per-session, no-sil
 ## Pinned Once, Never Recomputed
 
 Root detection runs **once**, at SessionStart, and the resolved root is pinned alongside the session identity ([08-identity-pin.md](/session/identity-pin/)). Every hook reads the **pinned** root, never a value recomputed from the current cwd: a `cd` deeper into the tree (which the cd-soft-guard already warns about) MUST NOT silently re-anchor the session to a nested `.session/`. The SessionStart-Pin is the stable anchor that keeps the root — like the session id — from drifting over the session lifetime.
+
+---
+
+## Enforcement Is Scoped to the Resolved Root
+
+Root detection is not only how the config cascade is anchored — it is the **boundary of enforcement's authority**. A workbench gate's rules apply **inside** the resolved root and nowhere else: the permission model is *root-scoped*. This is the answer to "the permissions apply only within the workbench" — the `.session/` marker draws the enclosure, and enforcement lives inside it.
+
+- **A gate acts only within the root it resolves.** When a hook fires, it resolves the session/workbench root by the walk-up above and treats that directory as the **outer bound** of its authority. An action whose target lies **inside** the resolved root is subject to the workbench's rules — the folder-gate lint, the remote gate, the command→SOP preconditions ([02-enforcement.md](/session/enforcement/)); an action **outside** it, under no `.session/` root, is **not** the workbench's to govern, and the gate does not reach for it.
+- **The scope is the pinned root, not the mutated cwd.** The bound is the root pinned once at SessionStart ([Pinned Once, Never Recomputed](#pinned-once-never-recomputed)), so a `cd` deeper or sideways cannot widen or move the enclosure mid-session. A nested project `.session/` **refines** the active scope *within* the root; it never escapes it (the `root: true` stop-flag).
+- **No root, no reach — surfaced, not silent.** Where the walk-up resolves to `null` (no `.session/` above the anchor), there is no workbench enclosure to enforce within; the substrate reports this **loudly** ([02-enforcement.md](/session/enforcement/)) rather than inventing an implicit machine-wide scope. A missing root is a visible *unscoped* state, never an accidental global authority — the precise defense against a stale, absolute root path pointing enforcement at the wrong tree.
+
+This makes the root-detection design **enforcement-bearing**, not only cascade-anchoring: the same `.session/` walk-up that locates the config fixes where the gates may act. Shipping the walk-up resolver and arming the gates against it stays the deferred, user-gated step the resolver's `grade: todo` below records; this section fixes the **policy** — enforcement is bounded by the resolved root — that the armed gate realizes.
 
 ---
 

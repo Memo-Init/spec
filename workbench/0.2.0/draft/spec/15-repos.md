@@ -12,18 +12,22 @@
 
 ## Folder Contract
 
-| Field | Value |
-|-------|-------|
-| Name | `repos/` |
-| Status | Mandatory |
-| Level | Project |
-| Entry-point | — |
-| Convention | — |
-| Purpose | The project's git repositories — one domain per repository; the only **remote-bearing** git units in the project. |
-| Goes in | Git repositories under `repos/<name>/`, one per domain. |
-| Does not | Non-repository material; any **remote** attached outside `repos/` (the project root and `.memo/` MAY carry a local, remote-less git for versioning, but never a remote). |
+```folder
+{
+  "name":       "repos/",
+  "status":     "mandatory",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "The project's git repositories — one domain per repository; the only remote-bearing git units in the project.",
+  "goesIn":     "Git repositories under repos/<name>/, one per domain.",
+  "doesNot":    "Non-repository material; any remote attached outside repos/ (any folder MAY carry a local, remote-less git for versioning, but never a remote).",
+  "git":        "recommended",
+  "remote":     "allowed"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](./12-folders.md)) and the derived project config are generated from. `repos/` is the one folder whose `remote` is `allowed`: it is the sole home for a git remote, so a local git here is `recommended` and a remote may be attached.
 
 ---
 

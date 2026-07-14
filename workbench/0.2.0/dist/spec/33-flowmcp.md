@@ -6,7 +6,7 @@ spec_file: "33-flowmcp.md"
 order: 33
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T14:39:14.663Z"
+generated_at: "2026-07-14T17:16:26.035Z"
 generated_from: "workbench/0.2.0/draft/spec/33-flowmcp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/33-flowmcp.md."
@@ -19,18 +19,22 @@ edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/3
 
 ## Folder Contract
 
-| Field | Value |
-|-------|-------|
-| Name | `flowmcp/` |
-| Status | Optional |
-| Level | Both (root and project) |
-| Entry-point | — |
-| Convention | — |
-| Purpose | FlowMCP authored content and produced output — the footprint of the FlowMCP custom folder. It holds the material a project keeps and produces with FlowMCP (for example graded schema exports and reports), not the global CLI installation. |
-| Goes in | Authored FlowMCP content and produced output — schema grading exports, reports, produced artifacts. |
-| Does not | The global CLI installation (that lives in `~/.flowmcp/`, untouched); the regenerable namespace-index cache (that is `.flowmcp/`, gitignored). |
+```folder
+{
+  "name":       "flowmcp/",
+  "status":     "optional",
+  "level":      "both",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "FlowMCP authored content and produced output — the footprint of the FlowMCP custom folder. It holds the material a project keeps and produces with FlowMCP (for example graded schema exports and reports), not the global CLI installation.",
+  "goesIn":     "Authored FlowMCP content and produced output — schema grading exports, reports, produced artifacts.",
+  "doesNot":    "The global CLI installation (that lives in ~/.flowmcp/, untouched); the regenerable namespace-index cache (that is .flowmcp/, gitignored).",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](/workbench/folders/)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

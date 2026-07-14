@@ -12,18 +12,22 @@
 
 ## Folder Contract
 
-| Field | Value |
-|-------|-------|
-| Name | `.tmp/` |
-| Status | Optional |
-| Level | Project |
-| Entry-point | — |
-| Convention | — |
-| Purpose | Ephemeral scratch — throwaway working files no part of the project depends on. |
-| Goes in | Transient, discardable working material: intermediate output, scratch copies, staging for a multi-step operation. |
-| Does not | The sole copy of anything that matters; durable knowledge; committed content (it is gitignored). |
+```folder
+{
+  "name":       ".tmp/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "Ephemeral scratch — throwaway working files no part of the project depends on.",
+  "goesIn":     "Transient, discardable working material: intermediate output, scratch copies, staging for a multi-step operation.",
+  "doesNot":    "The sole copy of anything that matters; durable knowledge; committed content (it is gitignored).",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](./12-folders.md)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

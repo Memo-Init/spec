@@ -3507,6 +3507,100 @@
         },
         {
             "family": "workbench",
+            "id": "workbench/34-data",
+            "stem": "34-data",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "12-folders",
+                "16-context",
+                "36-research"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/35-proofs",
+            "stem": "35-proofs",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "12-folders",
+                "19-tmp",
+                "37-snapshots"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/36-research",
+            "stem": "36-research",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "12-folders",
+                "15-repos",
+                "34-data"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/37-snapshots",
+            "stem": "37-snapshots",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "12-folders",
+                "19-tmp",
+                "35-proofs"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/38-worktrees",
+            "stem": "38-worktrees",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "12-folders",
+                "15-repos"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "workbench",
             "id": "workbench/41-project-architecture",
             "stem": "41-project-architecture",
             "sopAnchor": "02-sop-entrypoint",
@@ -3557,6 +3651,25 @@
                 "workbench"
             ],
             "requirementCount": 2,
+            "internalCount": 0
+        },
+        {
+            "family": "workbench",
+            "id": "workbench/43-projects",
+            "stem": "43-projects",
+            "sopAnchor": "02-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "10-root-and-projects",
+                "11-project-structure",
+                "12-folders"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
             "internalCount": 0
         },
         {

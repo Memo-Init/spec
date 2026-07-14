@@ -6,7 +6,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T14:39:14.663Z"
+generated_at: "2026-07-14T17:16:26.035Z"
 generated_from: "workbench/0.2.0/draft/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/31-browser-automation.md."
@@ -27,18 +27,22 @@ Browser automation lives at the project level. Each project that uses it carries
 
 `.browser/` is a registered (conditional) folder — required when a project does browser automation — and this page is its per-folder entry:
 
-| Field | Value |
-|-------|-------|
-| Name | `.browser/` |
-| Status | Required (conditional) |
-| Level | Project |
-| Entry-point | `scripts/` (deprecated alias `.playwright/`) |
-| Convention | — |
-| Purpose | Browser-automation session, scripts, and output — present only when the project performs browser automation. |
-| Goes in | The captured session `auth.json`, reusable automation under `scripts/`, and produced `output/`. |
-| Does not | Committed material — `auth.json` and `output/` are local-only and never pushed; hardcoded credentials in scripts. |
+```folder
+{
+  "name":       ".browser/",
+  "status":     "conditional",
+  "level":      "project",
+  "entryPoint": "scripts/ (deprecated alias .playwright/)",
+  "convention": null,
+  "purpose":    "Browser-automation session, scripts, and output — present only when the project performs browser automation.",
+  "goesIn":     "The captured session auth.json, reusable automation under scripts/, and produced output/.",
+  "doesNot":    "Committed material — auth.json and output/ are local-only and never pushed; hardcoded credentials in scripts.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](/workbench/folders/)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

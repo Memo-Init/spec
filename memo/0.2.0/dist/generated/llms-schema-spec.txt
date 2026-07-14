@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the memo spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: memo@0.2.0:6a571cd
+Source: memo@0.2.0:e4782f0
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/00-overview.md."
@@ -123,7 +123,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Specification"
 normative: false
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/01-philosophy.md."
@@ -277,7 +277,7 @@ spec_file: "02-memo-sop-entrypoint.md"
 order: 2
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/02-memo-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/02-memo-sop-entrypoint.md."
@@ -463,7 +463,7 @@ spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/03-input-paths.md."
@@ -546,7 +546,7 @@ spec_file: "04-input-pipeline.md"
 order: 4
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/04-input-pipeline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/04-input-pipeline.md."
@@ -720,7 +720,7 @@ spec_file: "05-memo-strategies.md"
 order: 5
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/05-memo-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/05-memo-strategies.md."
@@ -791,7 +791,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/06-memo-structure.md."
@@ -990,7 +990,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/07-revisions-and-questions.md."
@@ -1303,7 +1303,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/08-phases-and-prds.md."
@@ -1673,7 +1673,7 @@ spec_file: "09-contamination-context-handover.md"
 order: 9
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/09-contamination-context-handover.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/09-contamination-context-handover.md."
@@ -1842,7 +1842,7 @@ spec_file: "10-proactive-research.md"
 order: 10
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/10-proactive-research.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/10-proactive-research.md."
@@ -2145,7 +2145,7 @@ spec_file: "11-quality-and-finalization.md"
 order: 11
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/11-quality-and-finalization.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/11-quality-and-finalization.md."
@@ -2531,7 +2531,7 @@ spec_file: "12-rollout.md"
 order: 12
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/12-rollout.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/12-rollout.md."
@@ -2683,7 +2683,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/13-orchestration.md."
@@ -2970,7 +2970,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/14-agents-skills-tasks.md."
@@ -3122,7 +3122,7 @@ spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/15-prompt-generator.md."
@@ -3246,7 +3246,7 @@ spec_file: "16-git-security-versioning.md"
 order: 16
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/16-git-security-versioning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/16-git-security-versioning.md."
@@ -3529,7 +3529,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/17-git-workflow-and-ids.md."
@@ -3838,7 +3838,7 @@ spec_file: "18-multidimensionality.md"
 order: 18
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/18-multidimensionality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/18-multidimensionality.md."
@@ -3901,7 +3901,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/19-internal-vs-external-communication.md."
@@ -4083,7 +4083,7 @@ spec_file: "20-flow-full-vs-update-revisions.md"
 order: 20
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/20-flow-full-vs-update-revisions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/20-flow-full-vs-update-revisions.md."
@@ -4157,7 +4157,7 @@ spec_file: "21-human-computer-interaction.md"
 order: 21
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/21-human-computer-interaction.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/21-human-computer-interaction.md."
@@ -4348,7 +4348,7 @@ spec_file: "22-tree-cli-recommended-way.md"
 order: 22
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/22-tree-cli-recommended-way.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/22-tree-cli-recommended-way.md."
@@ -4619,7 +4619,7 @@ spec_file: "23-requirements.md"
 order: 23
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/23-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/23-requirements.md."
@@ -4652,6 +4652,29 @@ flowchart LR
     GATE -->|BLOCKED| FIX["Resolve or override"]
     FIX --> WORK
 ```
+
+---
+
+## Where the Model Lives — Model, Mechanism, Policy
+
+The requirement system spans three namespaces, and keeping the split explicit is what stops it from drifting into one tangled layer. Each tier owns exactly one concern:
+
+| Concern | Tier (namespace) | Where |
+|---------|------------------|-------|
+| **Requirement MODEL** — the two-sided entry, the scope axes, the grade axis | **memo** | this chapter |
+| **Enforcement MECHANISM** — the always-on gate that reads the checks and decides ALLOW / DENY | **session** | [session/02-enforcement.md](/session/enforcement/) |
+| **Policy DECLARATION** — which repos face outward, which folders lint, which commands need which SOP | **workbench** | [workbench/22-config.md](/workbench/config/), [workbench/23-hooks-contract.md](/workbench/hooks-contract/) |
+
+The three tiers are **flat siblings** (both `memo` and `workbench` extend `session`), not a stack — but the requirement model **depends on** the session mechanism to be enforced: `memo requires session`. That dependency is the explicit form of the intuition that *requirements belong to the session*: the **mechanism** that enforces them lives in the session tier, while the **model** stays memo-tier and the **policy** stays workbench-tier. The connection is a declared dependency edge, not a merger — the model is not moved into the session and the session does not learn the model's schema; the model is authored here, harvested into the store, and read by the session gate.
+
+### Coding and Git Requirements Come From Elsewhere
+
+Some requirements are not authored in this chapter at all — they are **harvested** from the skills and standards that own them, and lifted into the store via `source:` plus a `skill`-kind check:
+
+- **Coding requirements** (4-space, no semicolons, `.mjs` modules) live in the core node skills and enter as entries whose `source` names the skill (for example `skill:node-formatting`).
+- **Git / security requirements** are pulled from the memo spec's git-security area ([16-git-security-versioning.md](/specification/git-security-versioning/)) and the core `git/*` skills.
+
+The harvest path is `memo req harvest`: a skill or standard declares the rule where it lives, and the harvest lifts it into the requirement store as a scoped, checkable entry — so a coding or git rule enforced by a skill becomes a first-class requirement without being re-authored here. The single source stays the skill that owns the rule; the requirement store is a **harvested projection** of it, never a divergent second copy.
 
 ---
 
@@ -4714,7 +4737,7 @@ A requirement entry is an English-language JSON file. The fields are:
 | `id` | yes | Stable identifier, canonical form `REQ-NNN` (three digits; natural beyond 999). Identity is the **numeric value** — zero-padding is cosmetic, NOT a namespace, so `REQ-050` and `REQ-0050` are the same id and never coexist. Allocate the next free id with `memo req next-id` (one past the highest active number); `memo req lint` fails on any numeric collision. |
 | `title` | yes | Short human name. |
 | `statement` | yes | One-line human-readable description of what is required. This text flows **into prompt generation**. |
-| `scope` | yes | Object with three array axes: `repos`, `categories`, `tags`. Decides which work the entry matches. |
+| `scope` | yes | Object deciding which work the entry matches. Carries the three **required** array axes `repos`, `categories`, `tags` (empty = wildcard), **plus** the additive restriction-level axes that raise the five levels to first class — `route`, `projects`, `project`, `path` (the location cascade) and `tool` (a trigger axis). See [The Five Restriction Levels](#the-five-restriction-levels). |
 | `when` | no | Trigger object: `worktype`, `effort`, `language`, `changetype` — each an array. Narrows applicability to specific working conditions. |
 | `check` | yes | Object that decides whether the requirement is met. Drives the **gate**. See below. |
 | `source` | yes | Where the requirement comes from, for example a skill reference such as `skill:node-formatting`. |
@@ -4741,7 +4764,7 @@ A `check` **MAY** also declare `artifact` (a machine artifact the check produces
 
 Requirements are selected for a piece of work by a **deterministic** scope cascade evaluated at the moment of writing — one matcher, run consistently, so the same work always selects the same set.
 
-The cascade runs from **broad to narrow**: global requirements first, then per-repo, then per-category and per-tag. Within a single scope axis, an empty array is a wildcard (matches everything on that axis) and a non-empty array matches by intersection. Across the three axes the result is an **AND**: an entry applies only when every populated axis matches the work.
+The cascade runs from **broad to narrow** along the location levels — **route** (all projects), then **projects** (a set), then a single **project**, then **path** — and within a project by **repo**, **category**, and **tag**; the **tool** axis composes orthogonally as a trigger ([The Five Restriction Levels](#the-five-restriction-levels)). Within a single scope axis, an empty array is a wildcard (matches everything on that axis) and a non-empty array matches by intersection. Across all populated axes the result is an **AND**: an entry applies only when every populated axis matches the work.
 
 When two requirements conflict, **specific beats general** — a repo-scoped requirement overrides a tag- or category-scoped one, which overrides a global one. The `when` triggers gate applicability further: a requirement with `when.changetype: ["readme"]` engages only when a README is being written, not on every edit. An override is **attribute-based** (declared on the entry), never position-dependent.
 
@@ -4777,20 +4800,29 @@ Requirements may be added or discussed at any earlier state; they become enforce
 
 ---
 
-## Multi-Level Requirements
+## The Five Restriction Levels
 
-Requirements apply at several granularities, selected through the same scope axes:
+A requirement's scope answers **where** and **on what** it applies, and the model raises **five restriction levels** to first-class scope axes — each declarable in the entry, none living only inside a hook matcher. They are the axes a project, a path, or a tool invocation is matched against:
 
-| Level | Example scope | Example requirement |
-|-------|---------------|---------------------|
-| Single repo | `scope.repos: ["spec"]` | A LICENSE file is present; CI is green on the default branch. |
-| Repo class | `scope.tags: ["public"]` | No secrets, including public tokens; an organization profile soll-set is satisfied. |
-| README | `scope.categories: ["readme"]` | Required README sections exist; badges resolve. |
-| Node module | `scope.categories: ["node-module"]`, `when.language: ["node"]` | 4-space indentation, no semicolons, `.mjs` ES modules. |
-| Diagram | `scope.categories: ["diagram"]` | Diagram labels are in the artifact's language; the diagram type fits the data flow. |
-| Blog-style text | `scope.categories: ["blog"]` | One language per artifact; a readable, structured prose style. |
+| Level | Scope axis | Applies to | Example |
+|-------|-----------|-----------|---------|
+| **Workbench / Route** | `route` | every project under the workbench root — the global tier | No secrets in any committed file. |
+| **Projects** (plural) | `projects: [ … ]` | a named *set* of projects | These client projects require a signed-off LICENSE. |
+| **Project** (singular) | `project` | exactly one project | In `memo-init`, every commit references a memo ID. |
+| **Path** | `path: [ glob … ]` | files under a path glob | Under `.env*`, no write without confirmation. |
+| **Tool** | `tool: [ name … ]` | a named tool invocation | A `Write` / `Edit` to a `.env` path is gated. |
 
-A higher-level requirement (global, or a repo class) sets a baseline; a narrower one **MAY** tighten it but **MUST NOT** silently weaken it. When both apply, the broad baseline is read first and the narrow entry layered on top.
+The first four form a **containment cascade** — route ⊇ projects ⊇ project ⊇ path — read broad-to-narrow: a narrower level **MAY** tighten a broader baseline but **MUST NOT** silently weaken it. The fifth, `tool`, is **orthogonal** — a trigger axis (which tool invocation the requirement gates), composed with the location axes by AND, the same way the `when` triggers narrow applicability. `path` and `tool` previously lived only inside hook matchers ([session/02-enforcement.md](/session/enforcement/)); raising them into the entry's `scope` makes them declarable, diffable requirements rather than logic buried in a script — while `projects` (plural) closes the gap where a *set* of projects had no expressible level at all.
+
+Within a single project, the existing axes refine further, composing **under** the location cascade:
+
+| Granularity | Example scope |
+|-------------|---------------|
+| Single repo | `repos: ["spec"]` — a LICENSE file is present; CI is green |
+| Repo class | `tags: ["public"]` — no secrets, including public tokens |
+| README / Node module / Diagram / Blog | `categories: ["readme" \| "node-module" \| "diagram" \| "blog"]` (with `when.language` where relevant) |
+
+A higher level (route, or a repo class) sets a baseline; a narrower one (a single project, a path, a repo) tightens it. When both apply, the broad baseline is read first and the narrow entry layered on top — **specific beats general**. The three within-project axes (`repos`, `categories`, `tags`) remain **required** on every entry (an empty array is the wildcard 'all'); the five restriction-level axes are **additive** and default to wildcard when absent, so existing entries keep matching exactly as before.
 
 ---
 
@@ -4992,7 +5024,7 @@ spec_file: "24-tools-registry.md"
 order: 24
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/24-tools-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/24-tools-registry.md."
@@ -5182,7 +5214,7 @@ spec_file: "25-strands.md"
 order: 25
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/25-strands.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/25-strands.md."
@@ -5256,7 +5288,7 @@ spec_file: "26-memo-history.md"
 order: 26
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/26-memo-history.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/26-memo-history.md."
@@ -5359,7 +5391,7 @@ spec_file: "27-landing-the-plane.md"
 order: 27
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/27-landing-the-plane.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/27-landing-the-plane.md."
@@ -5489,7 +5521,7 @@ spec_file: "28-drift.md"
 order: 28
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/28-drift.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/28-drift.md."
@@ -5578,7 +5610,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/29-behavioral-guardrails.md."
@@ -5722,7 +5754,7 @@ spec_file: "30-primitives.md"
 order: 30
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/30-primitives.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/30-primitives.md."
@@ -5943,7 +5975,7 @@ spec_file: "31-goals.md"
 order: 31
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/31-goals.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/31-goals.md."
@@ -6054,7 +6086,7 @@ spec_file: "32-prompt-governance.md"
 order: 32
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/32-prompt-governance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/32-prompt-governance.md."
@@ -6153,7 +6185,7 @@ spec_file: "33-maintenance.md"
 order: 33
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/33-maintenance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/33-maintenance.md."
@@ -6347,7 +6379,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/34-question-interface.md."
@@ -6492,7 +6524,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/35-memo-authoring.md."
@@ -6751,7 +6783,7 @@ spec_file: "36-agent-strategies.md"
 order: 36
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/36-agent-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/36-agent-strategies.md."
@@ -6788,7 +6820,7 @@ spec_file: "37-transcript-reliability.md"
 order: 37
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/37-transcript-reliability.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/37-transcript-reliability.md."
@@ -6886,7 +6918,7 @@ spec_file: "38-stage-model.md"
 order: 38
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/38-stage-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/38-stage-model.md."
@@ -6985,7 +7017,7 @@ spec_file: "39-release-and-pinning.md"
 order: 39
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/39-release-and-pinning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/39-release-and-pinning.md."
@@ -7074,7 +7106,7 @@ spec_file: "40-diagrams.md"
 order: 40
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/40-diagrams.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/40-diagrams.md."
@@ -7281,7 +7313,7 @@ spec_file: "41-mental-model.md"
 order: 41
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/41-mental-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/41-mental-model.md."
@@ -7380,7 +7412,7 @@ spec_file: "42-plans.md"
 order: 42
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/42-plans.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/42-plans.md."
@@ -7529,7 +7561,7 @@ spec_file: "43-skill-authoring-and-quality.md"
 order: 43
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/43-skill-authoring-and-quality.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/43-skill-authoring-and-quality.md."
@@ -7876,7 +7908,7 @@ spec_file: "44-repository-and-outward-docs.md"
 order: 44
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/44-repository-and-outward-docs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/44-repository-and-outward-docs.md."
@@ -8512,7 +8544,7 @@ spec_file: "45-implementation-fidelity-audit.md"
 order: 45
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "memo/0.2.0/draft/spec/45-implementation-fidelity-audit.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/45-implementation-fidelity-audit.md."
@@ -8609,7 +8641,7 @@ spec_file: "46-bridge.md"
 order: 46
 section: "Specification"
 normative: false
-generated_at: "2026-07-14T15:16:01.556Z"
+generated_at: "2026-07-14T17:56:56.997Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."

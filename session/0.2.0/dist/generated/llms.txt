@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the session spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: session@0.2.0:785604c
+Source: session@0.2.0:e4782f0
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/00-overview.md."
@@ -89,6 +89,18 @@ Progressive Disclosure (when a capability becomes *visible*) must not be conflat
 
 ---
 
+## Enforcing Progressive Disclosure
+
+Progressive Disclosure is stated above as the family's organizing principle; for it to be more than an aspiration it needs an **enforcement criterion** — a checkable statement of what it means for a session to *comply* with it, kept distinct from the Precondition-Gate it must not be conflated with. A session complies when three conditions hold:
+
+- **The always-present surface is bounded to the minimal base.** The only capability held open unconditionally is the genesis surface — `.session/` plus its `config.json`. Everything above it (workbench skills, memo capabilities, bundled resources) MUST be **disclosed by intent**, not baked into the always-loaded base. A base tier that eagerly carries a superset it does not need is a violation: *Session = minimal, Workbench = superset* is the checkable shape, not only a slogan.
+- **Every disclosed capability declares its intent trigger.** A registered capability MUST expose only its **disclosure surface** — its name, its one-line description, its intent trigger — until its intent shows up; its body and bundled resources load only when it is actually drawn. A capability that is unconditionally present, with no trigger that would let it stay latent, has nothing to disclose *progressively* and fails the criterion.
+- **Disclosure stays separate from the gate.** Making a capability *visible* on intent (disclosure) MUST NOT be conflated with deciding whether it *may run* (the Precondition-Gate, [02-enforcement.md](/session/enforcement/)). A capability may be fully disclosed and still refused by the gate; this criterion checks the **visibility** discipline only, and MUST NOT mark a correctly-disclosed capability non-compliant merely because a gate would block it.
+
+Made concrete this way, compliance is **inspectable**: the base surface can be measured against the minimal bound, and each registered capability checked for an intent trigger and for on-demand — not eager — loading of its body. The criterion is a **declared target**: a live disclosure lint that runs it is deferred, user-gated work (like the other enforcement arming steps, [02-enforcement.md](/session/enforcement/)); what this section fixes is the standard that lint checks against, so Progressive Disclosure is enforceable-in-principle rather than only admired.
+
+---
+
 ## The Push-Down Principle
 
 The family's organizing leitmotif is **push-down**: a concept shared across tiers is explained **once**, at the lowest tier that owns it — the session — and the tiers above (`workbench-sop`, `memo-sop`, and the Workbench folder pages) **reference down** into it rather than restating it. A reader meets the canonical definition here and finds pointers, not copies, higher up. The PreToolUse **Hook-Contract** is the worked example: its single source is this family's enforcement page ([02-enforcement.md](/session/enforcement/)), and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) references up to it rather than redefining the contract.
@@ -158,7 +170,7 @@ spec_file: "01-genesis-root.md"
 order: 1
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/01-genesis-root.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/01-genesis-root.md."
@@ -296,7 +308,7 @@ spec_file: "02-enforcement.md"
 order: 2
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/02-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/02-enforcement.md."
@@ -530,6 +542,25 @@ edge, to arm.
 
 ---
 
+## The Fail-Closed Target — Security-Critical Gates
+
+The fail-open substrate above is the **interim, unarmed** posture, and it is fail-open-**LOUD**, never silent: a missing store is reported with a loud SessionStart warning, not quietly tolerated ([Absence is fail-open and LOUD](#the-registry-is-the-entry-point--read-from-workbench-today-migrating-to-the-session-tier)). That loudness is what keeps a config gap from disabling enforcement unnoticed today. But *loud-and-permissive* is not the end state for the gates whose silent pass would be dangerous, and this section declares the **target** posture those gates take **once armed** — a declaration, like the other arming steps above; the arming itself stays deferred and user-gated.
+
+The enforcement gates split into two calibrated classes, and they do **not** share a fail direction when armed:
+
+| Gate class | On missing / malformed store, when armed | Why |
+|-----------|------------------------------------------|-----|
+| **SOP-read chain** (a `when:pre` edge, a command→SOP precondition) | **fail-open-LOUD** — ALLOW + loud warning | A config glitch must never lock the developer out of their own tree; the loud warning already prevents *silent* tolerance. |
+| **Security-critical gates** (secret scan; the remote gate refusing a remote outside `repos/`; an unconfirmed `.env` write) | **fail-CLOSED** — DENY | For these, a silent pass on a missing store is worse than a stop: it would let a secret-bearing commit, a stray remote, or an unreviewed `.env` write through. Absence of the store MUST NOT be a bypass. |
+
+- **Fail-closed means the absence of proof is a DENY, not an ALLOW.** When a security-critical gate cannot read the store that tells it whether an action is safe, the armed gate treats the missing answer as *unsafe* and refuses — the same three-state contract, but with the ERROR path routing to DENY rather than fail-open for this class. This is the precise sense of the memo's *no silent pass where a store is missing*: the loud interim warning becomes an armed refusal for the gates that guard secrets, remotes, and `.env`.
+- **The root is resolved relatively, never hardcoded.** A gate MUST resolve the workbench/session root through the relative `.session/` marker walk-up ([09-root-detection.md](/session/root-detection/)), and MUST NOT bake an absolute root path into its logic. A hardcoded absolute root is itself a security defect: it breaks the moment the tree is relocated and can silently point enforcement at the wrong directory — the failure mode a `.session/`-relative resolution removes by construction.
+- **Arming stays deferred and user-gated (F8).** Flipping a security gate to its fail-closed target is a named arming step under its own user gate, exactly like the warn→block flip above — never an implicit consequence of this declaration. The substrate reports; a human arms.
+
+This makes the *scalable security architecture* the memo asks for a **declared policy** — a fail-closed target for the security-critical class, a relative-root rule that removes the stale-hardcode failure mode — rather than only a list of today's gaps. Wiring it into a live hook is downstream, `~/.claude/`-touching work and stays user-gated (REQ-SS-NOWRITE).
+
+---
+
 ## Conformity Requirements
 
 This chapter is the session family's **`requirementsRef`** — the anchor the family manifest points at for its requirement standard ([23-requirements.md](/specification/requirements/)) — so it carries the family's **richest** inline set. The binding `MUST`s above are authored here **prose-first**: each block's `statement` faces generation (it shapes how a gate, a config, or a CLI leaf is built) and its `check` faces the finalization gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The structured blocks below are the machine-readable source the per-entry requirement store is **harvested** from. Several rules below describe the always-on PreToolUse hook, which is **spec'd-but-not-yet-armed-live**: those carry an honest `grade: todo` (the score belongs there but the target is not yet shipped), while the rules already enforced by a shipped CLI leaf carry a hard `binary` grade.
@@ -690,7 +721,7 @@ spec_file: "03-recovery.md"
 order: 3
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/03-recovery.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/03-recovery.md."
@@ -781,7 +812,7 @@ spec_file: "04-cli.md"
 order: 4
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/04-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/04-cli.md."
@@ -984,7 +1015,7 @@ spec_file: "05-config-cascade.md"
 order: 5
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/05-config-cascade.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/05-config-cascade.md."
@@ -1085,6 +1116,8 @@ block-beta
 ```
 
 The base tier carries identity and the chain; the overlays stay thin. The cascade MUST stay shallow — a project does not introduce a fourth authority, it only contributes its own specifics over the base.
+
+**Within the workbench tier, folder settings carry a generated base.** The workbench tier's per-folder configuration — the `git` / `remote` posture and other defaults each registered folder declares in its machine-readable block ([/workbench/folders/](/workbench/folders/)) — is not hand-authored: it is derived from those blocks into a generated file, `.workbench/folders.generated.json`, which the manual `.workbench/config.json` overrides per folder (`.session/config.json` → `.workbench/folders.generated.json` → `.workbench/config.json`). This is a **generated-defaults sub-tier beneath** the manual workbench tier, specified on the workbench side ([/workbench/config/](/workbench/config/)). It does **not** deepen this cascade's authority stack — the generated file is derived data, not a new authoring tier — so the *stay shallow* rule holds: a project introduces no fourth *authority*, only a generated projection its manual tier overrides.
 
 ---
 
@@ -1297,7 +1330,7 @@ spec_file: "06-namespace-registry.md"
 order: 6
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/06-namespace-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/06-namespace-registry.md."
@@ -1585,7 +1618,7 @@ spec_file: "07-doctor-init.md"
 order: 7
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/07-doctor-init.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/07-doctor-init.md."
@@ -1849,7 +1882,7 @@ spec_file: "08-identity-pin.md"
 order: 8
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/08-identity-pin.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/08-identity-pin.md."
@@ -2041,7 +2074,7 @@ spec_file: "09-root-detection.md"
 order: 9
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/09-root-detection.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/09-root-detection.md."
@@ -2119,6 +2152,18 @@ A global pin is the precise opposite of the genesis tier's **per-session, no-sil
 ## Pinned Once, Never Recomputed
 
 Root detection runs **once**, at SessionStart, and the resolved root is pinned alongside the session identity ([08-identity-pin.md](/session/identity-pin/)). Every hook reads the **pinned** root, never a value recomputed from the current cwd: a `cd` deeper into the tree (which the cd-soft-guard already warns about) MUST NOT silently re-anchor the session to a nested `.session/`. The SessionStart-Pin is the stable anchor that keeps the root — like the session id — from drifting over the session lifetime.
+
+---
+
+## Enforcement Is Scoped to the Resolved Root
+
+Root detection is not only how the config cascade is anchored — it is the **boundary of enforcement's authority**. A workbench gate's rules apply **inside** the resolved root and nowhere else: the permission model is *root-scoped*. This is the answer to "the permissions apply only within the workbench" — the `.session/` marker draws the enclosure, and enforcement lives inside it.
+
+- **A gate acts only within the root it resolves.** When a hook fires, it resolves the session/workbench root by the walk-up above and treats that directory as the **outer bound** of its authority. An action whose target lies **inside** the resolved root is subject to the workbench's rules — the folder-gate lint, the remote gate, the command→SOP preconditions ([02-enforcement.md](/session/enforcement/)); an action **outside** it, under no `.session/` root, is **not** the workbench's to govern, and the gate does not reach for it.
+- **The scope is the pinned root, not the mutated cwd.** The bound is the root pinned once at SessionStart ([Pinned Once, Never Recomputed](#pinned-once-never-recomputed)), so a `cd` deeper or sideways cannot widen or move the enclosure mid-session. A nested project `.session/` **refines** the active scope *within* the root; it never escapes it (the `root: true` stop-flag).
+- **No root, no reach — surfaced, not silent.** Where the walk-up resolves to `null` (no `.session/` above the anchor), there is no workbench enclosure to enforce within; the substrate reports this **loudly** ([02-enforcement.md](/session/enforcement/)) rather than inventing an implicit machine-wide scope. A missing root is a visible *unscoped* state, never an accidental global authority — the precise defense against a stale, absolute root path pointing enforcement at the wrong tree.
+
+This makes the root-detection design **enforcement-bearing**, not only cascade-anchoring: the same `.session/` walk-up that locates the config fixes where the gates may act. Shipping the walk-up resolver and arming the gates against it stays the deferred, user-gated step the resolver's `grade: todo` below records; this section fixes the **policy** — enforcement is bounded by the resolved root — that the armed gate realizes.
 
 ---
 
@@ -2202,7 +2247,7 @@ spec_file: "10-sop.md"
 order: 10
 section: "Session"
 normative: false
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/10-sop.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/10-sop.md."
@@ -2292,7 +2337,7 @@ spec_file: "11-common-denominator.md"
 order: 11
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/11-common-denominator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/11-common-denominator.md."
@@ -2390,7 +2435,7 @@ spec_file: "12-instances.md"
 order: 12
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/12-instances.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/12-instances.md."
@@ -2460,7 +2505,7 @@ spec_file: "13-conventions.md"
 order: 13
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/13-conventions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/13-conventions.md."
@@ -2505,27 +2550,50 @@ The session tier names the singular marker; the plural taxonomy lives one tier u
 
 ## The Folder-Page Contract
 
-A registered folder substantial enough to warrant its own page — a *per-folder page* — opens with a **Folder Contract**: a compact block, in a fixed shape, that states the folder's identity before its prose begins. The contract is defined once here, at the tier that owns naming and convention, so the per-folder pages above reference **down** into this shape rather than each inventing its own header (the push-down principle, [00-overview.md](/session/overview/)).
+A registered folder substantial enough to warrant its own page — a *per-folder page* — opens with a **Folder Contract**: a compact block, in a fixed shape, that states the folder's identity before its prose begins. The contract is defined once here, at the tier that owns naming and convention, so the per-folder pages reference **down** into this shape rather than each inventing its own header (the push-down principle, [00-overview.md](/session/overview/)).
 
-A per-folder page **MUST** open with a Folder Contract carrying these fields:
+The Folder Contract is **machine-readable**: a per-folder page **MUST** open with a fenced ` ```folder ` block — a small JSON object — that carries the folder's full identity. The block is the **authored source of truth** for that folder; the human-readable presentation, the central registry table in [workbench/12-folders.md](/workbench/folders/), and the derived project configuration are all **generated from** these blocks rather than hand-restated beside them — the same *derive, do not restate* discipline the folder registry already carries. Making the contract a parseable block — the move the requirement blocks already make on the folder registry — is what lets a generator assemble the overview and the config, and lets a completeness lint check that every registered folder is fully specified.
 
-```text
-Folder Contract
-  Name:         the registered folder name, with trailing slash (e.g. repos/)
-  Status:       Mandatory | Optional | reserved (custom folder, default-on)
-  Level:        Root | Project | Both
-  Entry-point:  the file or sub-folder opened first (— when there is none)
-  Convention:   the named content format the folder follows (— when none)
-  Purpose:      one line — what the folder is for
-  Goes in:      what belongs in the folder
-  Does not:     what does NOT belong in it
+A `folder` block carries these fields:
+
+```folder
+{
+  "name":       "repos/",
+  "status":     "mandatory",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "one line — what the folder is for",
+  "goesIn":     "what belongs in the folder",
+  "doesNot":    "what does NOT belong in it",
+  "git":        "recommended",
+  "remote":     "allowed"
+}
 ```
 
-The first six fields are exactly the columns of the Workbench folder-contract table ([workbench/12-folders.md](/workbench/folders/)), so a per-folder page and the central table state the same identity in the same vocabulary. The **Goes-in / Does-not** pair is the one addition a single table row cannot carry — the in/out boundary a dedicated page has room to state.
+| Field | Meaning | Values |
+|-------|---------|--------|
+| `name` | the registered folder name, with trailing slash | e.g. `repos/`, `.memo/` |
+| `status` | the required-or-optional status | `mandatory` \| `optional` \| `reserved-default-on` \| `conditional` |
+| `level` | where the name is expected | `root` \| `project` \| `both` |
+| `entryPoint` | the file or sub-folder opened first | string, or `null` when there is none |
+| `convention` | the named content format the folder follows | string, or `null` when none |
+| `purpose` | one line — what the folder is for | string |
+| `goesIn` | what belongs in the folder | string |
+| `doesNot` | what does NOT belong in it | string |
+| `git` | whether the folder is expected to carry its own local git history | `recommended` \| `discouraged` |
+| `remote` | whether a git remote may be attached to the folder | `allowed` \| `forbidden` |
+
+The first eight fields are the identity a page and the central table share: the first six are exactly the columns of the Workbench folder-contract table ([workbench/12-folders.md](/workbench/folders/)), and the **`goesIn` / `doesNot`** pair is the in/out boundary a dedicated page has room to state. The last two — **`git` and `remote`** — lift the folder's git posture out of scattered prose ([workbench/11-project-structure.md](/workbench/projects/) and the dot-prefix convention) into two explicit, checkable keys: `git` says whether a folder is expected to carry its own local history, `remote` whether a remote may ever be attached to it. These are the folder's **defaults**, and they are **user-overridable** through the project configuration ([workbench/22-config.md](/workbench/config/)): the block states the default posture, and a project may override it per folder without editing the spec. Together the ten keys fix the folder's *whole nature* — which is also exactly what a new folder must supply to attach through the custom-folder mechanism ([workbench/26-addons.md](/workbench/addons/)).
 
 ### The Lint-Gate
 
-The Folder Contract is **normative, not advisory** (the MUST above), and it is enforced by a **lint gate**: every per-folder page is checked against the contract, and a page that is missing a required field — or whose `Name`, `Status`, or `Level` disagrees with the central folder-contract table it mirrors — is reported as a violation. The gate is what stops the contract from drifting page by page: because the shape is checked, a new per-folder page cannot quietly omit its boundary or contradict the registry. It carries to the per-folder pages the spec's general posture — a static page is governed only when it is declared and checked, not when it is merely trusted ([02-enforcement.md](/session/enforcement/)).
+The Folder Contract is **normative, not advisory** (the MUST above), and it is enforced by a **lint gate**. Two checks act on the block, from two directions:
+
+- **Shape and agreement.** Every per-folder page is checked against the contract: a page missing a required field — or whose `name`, `status`, or `level` disagrees with the central folder-contract table it must agree with — is reported as a violation.
+- **Completeness.** Because the blocks are the source the registry and config are generated from, a second check verifies the reverse direction: **every registered folder that warrants a page carries a `folder` block, and every block fills every required key**. A registered folder with a missing or half-filled block is a completeness failure — the machine-readable form is precisely what makes this check trivial where the prose form could not.
+
+The gate is what stops the contract from drifting page by page: because the shape is checked and the set is checked for completeness, a new per-folder page cannot quietly omit its boundary, contradict the registry, or leave a key blank. It carries to the per-folder pages the spec's general posture — a static page is governed only when it is declared and checked, not when it is merely trusted ([02-enforcement.md](/session/enforcement/)).
 
 ---
 
@@ -2548,7 +2616,7 @@ spec_file: "14-migration.md"
 order: 14
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/14-migration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/14-migration.md."
@@ -2614,7 +2682,7 @@ spec_file: "15-addons.md"
 order: 15
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/15-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/15-addons.md."
@@ -2719,7 +2787,7 @@ spec_file: "16-bridge.md"
 order: 16
 section: "Session"
 normative: false
-generated_at: "2026-07-13T22:23:55.733Z"
+generated_at: "2026-07-14T17:56:56.995Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."
@@ -2821,7 +2889,7 @@ _(no skill dependencies declared in this family)_
 - [03-recovery](/session/recovery/) — `session-recovery`
 - [14-migration](/session/migration/) — `session-migration`
 
-### memory
+### Memory
 
 - [17-memory](/session/memory/) — _— no implementer skill yet —_
 
@@ -2835,7 +2903,7 @@ spec_file: "17-memory.md"
 order: 17
 section: "Session"
 normative: true
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:56:56.403Z"
 generated_from: "session/0.2.0/draft/spec/17-memory.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/17-memory.md."

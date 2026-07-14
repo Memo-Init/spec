@@ -12,18 +12,22 @@
 
 ## Folder Contract
 
-| Field | Value |
-|-------|-------|
-| Name | `context/` |
-| Status | Mandatory |
-| Level | Both |
-| Entry-point | per-topic sub-folders |
-| Convention | plain Markdown; OKF opt-in for `architecture-okf/` |
-| Purpose | Processed, authored knowledge — specifications, distilled research, Markdown/PDF documents a memo draws on. |
-| Goes in | Processed, derived documents, organized under a per-topic sub-folder. |
-| Does not | Raw, unprocessed feeds (those go to `data/`); a generated artifact treated as the source it presents. |
+```folder
+{
+  "name":       "context/",
+  "status":     "mandatory",
+  "level":      "both",
+  "entryPoint": "per-topic sub-folders",
+  "convention": "plain Markdown; OKF opt-in for architecture-okf/",
+  "purpose":    "Processed, authored knowledge — specifications, distilled research, Markdown/PDF documents a memo draws on.",
+  "goesIn":     "Processed, derived documents, organized under a per-topic sub-folder.",
+  "doesNot":    "Raw, unprocessed feeds (those go to data/); a generated artifact treated as the source it presents.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](./12-folders.md)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

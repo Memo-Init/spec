@@ -6,7 +6,7 @@ spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T14:39:14.663Z"
+generated_at: "2026-07-14T17:16:26.035Z"
 generated_from: "workbench/0.2.0/draft/spec/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/18-design.md."
@@ -23,18 +23,22 @@ Like OKF, design.md is one of the **storage formats the wiki reads through** ([3
 
 `design/` is a registered (optional) folder, and this page is its per-folder entry:
 
-| Field | Value |
-|-------|-------|
-| Name | `design/` |
-| Status | Optional |
-| Level | Project |
-| Entry-point | `design.md` |
-| Convention | design format |
-| Purpose | The project's design system and visual sources. |
-| Goes in | `design.md` (the active convention), design variants, and `.pen` / visual sources — organized under per-topic sub-folders once there is more than one surface. |
-| Does not | Captured view proofs (those live in `proofs/`); the project architecture, which is a separate concern. |
+```folder
+{
+  "name":       "design/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": "design.md",
+  "convention": "design format",
+  "purpose":    "The project's design system and visual sources.",
+  "goesIn":     "design.md (the active convention), design variants, and .pen / visual sources — organized under per-topic sub-folders once there is more than one surface.",
+  "doesNot":    "Captured view proofs (those live in proofs/); the project architecture, which is a separate concern.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](/workbench/folders/)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

@@ -1,6 +1,6 @@
 {
     "spec_version": "0.2.0",
-    "generated_at": "2026-07-14T15:17:37.387Z",
+    "generated_at": "2026-07-14T17:56:57.449Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -708,6 +708,56 @@
                 "sidebar_group": "folders"
             },
             {
+                "filename": "34-data.md",
+                "slug": "data",
+                "title": "data/",
+                "description": "`data/` is the project's **raw-input** folder: feeds and source material exactly as ingested, before any processing. It is the input side that `context/` is derived from. This page **owns** the...",
+                "order": 34,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "35-proofs.md",
+                "slug": "proofs",
+                "title": "proofs/",
+                "description": "`proofs/` holds the evidence that a **view change was verified** — proof artifacts captured when a view changes. This page owns the `proofs/` spec; [12-folders.md](./12-folders.md) owns the...",
+                "order": 35,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "36-research.md",
+                "slug": "research",
+                "title": "research/",
+                "description": "`research/` holds **cloned foreign / research repositories** the project reads but does not own — distinct from `repos/` (the project's own repos) and `data/` (raw feeds). This page owns the...",
+                "order": 36,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "37-snapshots.md",
+                "slug": "snapshots",
+                "title": "snapshots/",
+                "description": "`snapshots/` holds **application snapshots** — captured states of the running application, kept for reference or comparison. This page owns the `snapshots/` spec; [12-folders.md](./12-folders.md)...",
+                "order": 37,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
+                "filename": "38-worktrees.md",
+                "slug": "worktrees",
+                "title": ".worktrees/",
+                "description": "`.worktrees/` is the **one consistent location** for a project's git worktrees — a dot-prefixed, gitignored area of generated checkouts with mandatory cleanup. This page owns the `.worktrees/` spec;...",
+                "order": 38,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "folders"
+            },
+            {
                 "filename": "41-project-architecture.md",
                 "slug": "project-architecture",
                 "title": "Architecture",
@@ -726,6 +776,16 @@
                 "section": "Workbench",
                 "normative": false,
                 "sidebar_group": "bridge"
+            },
+            {
+                "filename": "43-projects.md",
+                "slug": "projects",
+                "title": "projects/",
+                "description": "`projects/` is the workbench root's **container of all projects** — one directory per project, each carrying its own project-level structure. It is a mandatory ROOT-level folder (a workbench root...",
+                "order": 43,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "root"
             }
         ]
     },
@@ -1030,12 +1090,12 @@
         ]
     },
     "stats": {
-        "total_files": 101,
+        "total_files": 107,
         "core_files": 47,
-        "workbench_files": 25,
+        "workbench_files": 31,
         "session_files": 18,
         "spec_files": 11,
-        "normative_files": 90,
+        "normative_files": 96,
         "informative_files": 11
     }
 }

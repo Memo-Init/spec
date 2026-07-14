@@ -75,6 +75,18 @@ Progressive Disclosure (when a capability becomes *visible*) must not be conflat
 
 ---
 
+## Enforcing Progressive Disclosure
+
+Progressive Disclosure is stated above as the family's organizing principle; for it to be more than an aspiration it needs an **enforcement criterion** — a checkable statement of what it means for a session to *comply* with it, kept distinct from the Precondition-Gate it must not be conflated with. A session complies when three conditions hold:
+
+- **The always-present surface is bounded to the minimal base.** The only capability held open unconditionally is the genesis surface — `.session/` plus its `config.json`. Everything above it (workbench skills, memo capabilities, bundled resources) MUST be **disclosed by intent**, not baked into the always-loaded base. A base tier that eagerly carries a superset it does not need is a violation: *Session = minimal, Workbench = superset* is the checkable shape, not only a slogan.
+- **Every disclosed capability declares its intent trigger.** A registered capability MUST expose only its **disclosure surface** — its name, its one-line description, its intent trigger — until its intent shows up; its body and bundled resources load only when it is actually drawn. A capability that is unconditionally present, with no trigger that would let it stay latent, has nothing to disclose *progressively* and fails the criterion.
+- **Disclosure stays separate from the gate.** Making a capability *visible* on intent (disclosure) MUST NOT be conflated with deciding whether it *may run* (the Precondition-Gate, [02-enforcement.md](./02-enforcement.md)). A capability may be fully disclosed and still refused by the gate; this criterion checks the **visibility** discipline only, and MUST NOT mark a correctly-disclosed capability non-compliant merely because a gate would block it.
+
+Made concrete this way, compliance is **inspectable**: the base surface can be measured against the minimal bound, and each registered capability checked for an intent trigger and for on-demand — not eager — loading of its body. The criterion is a **declared target**: a live disclosure lint that runs it is deferred, user-gated work (like the other enforcement arming steps, [02-enforcement.md](./02-enforcement.md)); what this section fixes is the standard that lint checks against, so Progressive Disclosure is enforceable-in-principle rather than only admired.
+
+---
+
 ## The Push-Down Principle
 
 The family's organizing leitmotif is **push-down**: a concept shared across tiers is explained **once**, at the lowest tier that owns it — the session — and the tiers above (`workbench-sop`, `memo-sop`, and the Workbench folder pages) **reference down** into it rather than restating it. A reader meets the canonical definition here and finds pointers, not copies, higher up. The PreToolUse **Hook-Contract** is the worked example: its single source is this family's enforcement page ([02-enforcement.md](./02-enforcement.md)), and [workbench/23-hooks-contract.md](/workbench/hooks-contract/) references up to it rather than redefining the contract.

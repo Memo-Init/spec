@@ -1,7 +1,7 @@
 # 32. .trash/
 
-| Field | Value |
-|-------|-------|
+| | |
+|---|---|
 | Status | Draft |
 | Depends on | [11-project-structure.md](./11-project-structure.md) |
 | Related | [00-overview.md](./00-overview.md) |
@@ -12,18 +12,22 @@ Work in a project is exploratory and often half-formed. Material that looks disc
 
 ## Folder Contract
 
-| Field | Value |
-|-------|-------|
-| Name | `.trash/` |
-| Status | Mandatory |
-| Level | Project |
-| Entry-point | — |
-| Convention | — |
-| Purpose | The recoverable deletion target — the project-local folder removals route through instead of erasing. |
-| Goes in | Material being removed, moved here (timestamped) so it stays recoverable until a human empties it. |
-| Does not | Scratch that was never knowledge (that is `.tmp/`, see [19-tmp.md](./19-tmp.md)); it is emptied only by a human, never automatically. |
+```folder
+{
+  "name":       ".trash/",
+  "status":     "mandatory",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "The recoverable deletion target — the project-local folder removals route through instead of erasing.",
+  "goesIn":     "Material being removed, moved here (timestamped) so it stays recoverable until a human empties it.",
+  "doesNot":    "Scratch that was never knowledge (that is .tmp/, see [19-tmp.md](./19-tmp.md)); it is emptied only by a human, never automatically.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](./12-folders.md)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

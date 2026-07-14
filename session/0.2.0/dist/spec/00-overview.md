@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Session"
 normative: false
-generated_at: "2026-07-13T22:23:54.820Z"
+generated_at: "2026-07-14T17:43:03.086Z"
 generated_from: "session/0.2.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.2.0/draft/spec/00-overview.md."
@@ -79,6 +79,18 @@ The Workbench spec applies the very same mechanism to its own skill set — a wo
 This is why the session is the right tier to be **minimal**. The always-present surface is small — `.session/` plus its `config.json` — and everything above it is a **superset** that the lower tier never has to carry. **Session = minimal, Workbench = superset**: the genesis root stays lean, and breadth is disclosed by intent rather than pre-loaded.
 
 Progressive Disclosure (when a capability becomes *visible*) must not be conflated with the **Precondition-Gate** (whether a capability is *allowed to run*). The driver's-licence rule — `memo-init` may run only once `memo-sop` has been read — is a Precondition-Gate: the deterministic SessionStart / PreToolUse chain (`REQ-SS-*`) specified in [02-enforcement.md](/session/enforcement/). The two are complementary: disclosure decides *when* a door appears; the gate decides *whether* you may walk through it. Someone who never intends to drive needs no licence — pure disclosure; the licence itself is the gate laid over the disclosure.
+
+---
+
+## Enforcing Progressive Disclosure
+
+Progressive Disclosure is stated above as the family's organizing principle; for it to be more than an aspiration it needs an **enforcement criterion** — a checkable statement of what it means for a session to *comply* with it, kept distinct from the Precondition-Gate it must not be conflated with. A session complies when three conditions hold:
+
+- **The always-present surface is bounded to the minimal base.** The only capability held open unconditionally is the genesis surface — `.session/` plus its `config.json`. Everything above it (workbench skills, memo capabilities, bundled resources) MUST be **disclosed by intent**, not baked into the always-loaded base. A base tier that eagerly carries a superset it does not need is a violation: *Session = minimal, Workbench = superset* is the checkable shape, not only a slogan.
+- **Every disclosed capability declares its intent trigger.** A registered capability MUST expose only its **disclosure surface** — its name, its one-line description, its intent trigger — until its intent shows up; its body and bundled resources load only when it is actually drawn. A capability that is unconditionally present, with no trigger that would let it stay latent, has nothing to disclose *progressively* and fails the criterion.
+- **Disclosure stays separate from the gate.** Making a capability *visible* on intent (disclosure) MUST NOT be conflated with deciding whether it *may run* (the Precondition-Gate, [02-enforcement.md](/session/enforcement/)). A capability may be fully disclosed and still refused by the gate; this criterion checks the **visibility** discipline only, and MUST NOT mark a correctly-disclosed capability non-compliant merely because a gate would block it.
+
+Made concrete this way, compliance is **inspectable**: the base surface can be measured against the minimal bound, and each registered capability checked for an intent trigger and for on-demand — not eager — loading of its body. The criterion is a **declared target**: a live disclosure lint that runs it is deferred, user-gated work (like the other enforcement arming steps, [02-enforcement.md](/session/enforcement/)); what this section fixes is the standard that lint checks against, so Progressive Disclosure is enforceable-in-principle rather than only admired.
 
 ---
 

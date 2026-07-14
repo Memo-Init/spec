@@ -233,6 +233,25 @@ edge, to arm.
 
 ---
 
+## The Fail-Closed Target — Security-Critical Gates
+
+The fail-open substrate above is the **interim, unarmed** posture, and it is fail-open-**LOUD**, never silent: a missing store is reported with a loud SessionStart warning, not quietly tolerated ([Absence is fail-open and LOUD](#the-registry-is-the-entry-point--read-from-workbench-today-migrating-to-the-session-tier)). That loudness is what keeps a config gap from disabling enforcement unnoticed today. But *loud-and-permissive* is not the end state for the gates whose silent pass would be dangerous, and this section declares the **target** posture those gates take **once armed** — a declaration, like the other arming steps above; the arming itself stays deferred and user-gated.
+
+The enforcement gates split into two calibrated classes, and they do **not** share a fail direction when armed:
+
+| Gate class | On missing / malformed store, when armed | Why |
+|-----------|------------------------------------------|-----|
+| **SOP-read chain** (a `when:pre` edge, a command→SOP precondition) | **fail-open-LOUD** — ALLOW + loud warning | A config glitch must never lock the developer out of their own tree; the loud warning already prevents *silent* tolerance. |
+| **Security-critical gates** (secret scan; the remote gate refusing a remote outside `repos/`; an unconfirmed `.env` write) | **fail-CLOSED** — DENY | For these, a silent pass on a missing store is worse than a stop: it would let a secret-bearing commit, a stray remote, or an unreviewed `.env` write through. Absence of the store MUST NOT be a bypass. |
+
+- **Fail-closed means the absence of proof is a DENY, not an ALLOW.** When a security-critical gate cannot read the store that tells it whether an action is safe, the armed gate treats the missing answer as *unsafe* and refuses — the same three-state contract, but with the ERROR path routing to DENY rather than fail-open for this class. This is the precise sense of the memo's *no silent pass where a store is missing*: the loud interim warning becomes an armed refusal for the gates that guard secrets, remotes, and `.env`.
+- **The root is resolved relatively, never hardcoded.** A gate MUST resolve the workbench/session root through the relative `.session/` marker walk-up ([09-root-detection.md](./09-root-detection.md)), and MUST NOT bake an absolute root path into its logic. A hardcoded absolute root is itself a security defect: it breaks the moment the tree is relocated and can silently point enforcement at the wrong directory — the failure mode a `.session/`-relative resolution removes by construction.
+- **Arming stays deferred and user-gated (F8).** Flipping a security gate to its fail-closed target is a named arming step under its own user gate, exactly like the warn→block flip above — never an implicit consequence of this declaration. The substrate reports; a human arms.
+
+This makes the *scalable security architecture* the memo asks for a **declared policy** — a fail-closed target for the security-critical class, a relative-root rule that removes the stale-hardcode failure mode — rather than only a list of today's gaps. Wiring it into a live hook is downstream, `~/.claude/`-touching work and stays user-gated (REQ-SS-NOWRITE).
+
+---
+
 ## Conformity Requirements
 
 This chapter is the session family's **`requirementsRef`** — the anchor the family manifest points at for its requirement standard ([23-requirements.md](/specification/requirements/)) — so it carries the family's **richest** inline set. The binding `MUST`s above are authored here **prose-first**: each block's `statement` faces generation (it shapes how a gate, a config, or a CLI leaf is built) and its `check` faces the finalization gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The structured blocks below are the machine-readable source the per-entry requirement store is **harvested** from. Several rules below describe the always-on PreToolUse hook, which is **spec'd-but-not-yet-armed-live**: those carry an honest `grade: todo` (the score belongs there but the target is not yet shipped), while the rules already enforced by a shipped CLI leaf carry a hard `binary` grade.

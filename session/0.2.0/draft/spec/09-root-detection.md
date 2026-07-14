@@ -80,6 +80,18 @@ Root detection runs **once**, at SessionStart, and the resolved root is pinned a
 
 ---
 
+## Enforcement Is Scoped to the Resolved Root
+
+Root detection is not only how the config cascade is anchored — it is the **boundary of enforcement's authority**. A workbench gate's rules apply **inside** the resolved root and nowhere else: the permission model is *root-scoped*. This is the answer to "the permissions apply only within the workbench" — the `.session/` marker draws the enclosure, and enforcement lives inside it.
+
+- **A gate acts only within the root it resolves.** When a hook fires, it resolves the session/workbench root by the walk-up above and treats that directory as the **outer bound** of its authority. An action whose target lies **inside** the resolved root is subject to the workbench's rules — the folder-gate lint, the remote gate, the command→SOP preconditions ([02-enforcement.md](./02-enforcement.md)); an action **outside** it, under no `.session/` root, is **not** the workbench's to govern, and the gate does not reach for it.
+- **The scope is the pinned root, not the mutated cwd.** The bound is the root pinned once at SessionStart ([Pinned Once, Never Recomputed](#pinned-once-never-recomputed)), so a `cd` deeper or sideways cannot widen or move the enclosure mid-session. A nested project `.session/` **refines** the active scope *within* the root; it never escapes it (the `root: true` stop-flag).
+- **No root, no reach — surfaced, not silent.** Where the walk-up resolves to `null` (no `.session/` above the anchor), there is no workbench enclosure to enforce within; the substrate reports this **loudly** ([02-enforcement.md](./02-enforcement.md)) rather than inventing an implicit machine-wide scope. A missing root is a visible *unscoped* state, never an accidental global authority — the precise defense against a stale, absolute root path pointing enforcement at the wrong tree.
+
+This makes the root-detection design **enforcement-bearing**, not only cascade-anchoring: the same `.session/` walk-up that locates the config fixes where the gates may act. Shipping the walk-up resolver and arming the gates against it stays the deferred, user-gated step the resolver's `grade: todo` below records; this section fixes the **policy** — enforcement is bounded by the resolved root — that the armed gate realizes.
+
+---
+
 ## The `memo session root` Leaf
 
 The resolved root is reported by a **read** CLI leaf, `memo session root`, under the CLI doctrine ([04-cli.md](./04-cli.md)). It is the reference resolver — the walk-up is implemented once and reported, not reimplemented per hook — and it surfaces both the resolved path and its source (`root:true` marker / `workbenchRoot` pointer / `none`), so the resolution is deterministic and testable. As a read leaf it is side-effect-free: it observes and reports, it never writes a marker or pins a root.

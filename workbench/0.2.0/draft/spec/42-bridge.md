@@ -45,8 +45,14 @@ _(no skill dependencies declared in this family)_
 | [31-browser-automation](./31-browser-automation.md) | ✓ | 4 | — |
 | [32-trash](./32-trash.md) | ✓ | 5 | 1 |
 | [33-flowmcp](./33-flowmcp.md) | — | 0 | — |
+| [34-data](./34-data.md) | — | 0 | — |
+| [35-proofs](./35-proofs.md) | — | 0 | — |
+| [36-research](./36-research.md) | — | 0 | — |
+| [37-snapshots](./37-snapshots.md) | — | 0 | — |
+| [38-worktrees](./38-worktrees.md) | — | 0 | — |
 | [41-project-architecture](./41-project-architecture.md) | ✓ | 6 | 2 |
-| **Summary** | **23 / 24** | — | 34 |
+| [43-projects](./43-projects.md) | — | 0 | — |
+| **Summary** | **23 / 30** | — | 34 |
 
 ## Skills by namespace
 
@@ -113,6 +119,7 @@ _(no skill dependencies declared in this family)_
 ### Root
 
 - [10-root-and-projects](./10-root-and-projects.md) — `workbench-root-projects`
+- [43-projects](./43-projects.md) — _— no implementer skill yet —_
 
 ### Projects
 
@@ -132,6 +139,11 @@ _(no skill dependencies declared in this family)_
 - [31-browser-automation](./31-browser-automation.md) — `memo-research-agent`, `research-best-practice-playwright`, `research-scrape-docs`, `research-workflow`
 - [32-trash](./32-trash.md) — `wiki-init`, `wiki-update`, `workbench-project-setup`, `workbench-tmp`, `workbench-validation`
 - [33-flowmcp](./33-flowmcp.md) — _— no implementer skill yet —_
+- [34-data](./34-data.md) — _— no implementer skill yet —_
+- [35-proofs](./35-proofs.md) — _— no implementer skill yet —_
+- [36-research](./36-research.md) — _— no implementer skill yet —_
+- [37-snapshots](./37-snapshots.md) — _— no implementer skill yet —_
+- [38-worktrees](./38-worktrees.md) — _— no implementer skill yet —_
 
 ### Conventions
 

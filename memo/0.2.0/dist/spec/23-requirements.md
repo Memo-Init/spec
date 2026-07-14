@@ -6,7 +6,7 @@ spec_file: "23-requirements.md"
 order: 23
 section: "Specification"
 normative: true
-generated_at: "2026-07-14T15:16:00.355Z"
+generated_at: "2026-07-14T17:40:21.230Z"
 generated_from: "memo/0.2.0/draft/spec/23-requirements.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.2.0/draft/spec/23-requirements.md."
@@ -39,6 +39,29 @@ flowchart LR
     GATE -->|BLOCKED| FIX["Resolve or override"]
     FIX --> WORK
 ```
+
+---
+
+## Where the Model Lives — Model, Mechanism, Policy
+
+The requirement system spans three namespaces, and keeping the split explicit is what stops it from drifting into one tangled layer. Each tier owns exactly one concern:
+
+| Concern | Tier (namespace) | Where |
+|---------|------------------|-------|
+| **Requirement MODEL** — the two-sided entry, the scope axes, the grade axis | **memo** | this chapter |
+| **Enforcement MECHANISM** — the always-on gate that reads the checks and decides ALLOW / DENY | **session** | [session/02-enforcement.md](/session/enforcement/) |
+| **Policy DECLARATION** — which repos face outward, which folders lint, which commands need which SOP | **workbench** | [workbench/22-config.md](/workbench/config/), [workbench/23-hooks-contract.md](/workbench/hooks-contract/) |
+
+The three tiers are **flat siblings** (both `memo` and `workbench` extend `session`), not a stack — but the requirement model **depends on** the session mechanism to be enforced: `memo requires session`. That dependency is the explicit form of the intuition that *requirements belong to the session*: the **mechanism** that enforces them lives in the session tier, while the **model** stays memo-tier and the **policy** stays workbench-tier. The connection is a declared dependency edge, not a merger — the model is not moved into the session and the session does not learn the model's schema; the model is authored here, harvested into the store, and read by the session gate.
+
+### Coding and Git Requirements Come From Elsewhere
+
+Some requirements are not authored in this chapter at all — they are **harvested** from the skills and standards that own them, and lifted into the store via `source:` plus a `skill`-kind check:
+
+- **Coding requirements** (4-space, no semicolons, `.mjs` modules) live in the core node skills and enter as entries whose `source` names the skill (for example `skill:node-formatting`).
+- **Git / security requirements** are pulled from the memo spec's git-security area ([16-git-security-versioning.md](/specification/git-security-versioning/)) and the core `git/*` skills.
+
+The harvest path is `memo req harvest`: a skill or standard declares the rule where it lives, and the harvest lifts it into the requirement store as a scoped, checkable entry — so a coding or git rule enforced by a skill becomes a first-class requirement without being re-authored here. The single source stays the skill that owns the rule; the requirement store is a **harvested projection** of it, never a divergent second copy.
 
 ---
 
@@ -101,7 +124,7 @@ A requirement entry is an English-language JSON file. The fields are:
 | `id` | yes | Stable identifier, canonical form `REQ-NNN` (three digits; natural beyond 999). Identity is the **numeric value** — zero-padding is cosmetic, NOT a namespace, so `REQ-050` and `REQ-0050` are the same id and never coexist. Allocate the next free id with `memo req next-id` (one past the highest active number); `memo req lint` fails on any numeric collision. |
 | `title` | yes | Short human name. |
 | `statement` | yes | One-line human-readable description of what is required. This text flows **into prompt generation**. |
-| `scope` | yes | Object with three array axes: `repos`, `categories`, `tags`. Decides which work the entry matches. |
+| `scope` | yes | Object deciding which work the entry matches. Carries the three **required** array axes `repos`, `categories`, `tags` (empty = wildcard), **plus** the additive restriction-level axes that raise the five levels to first class — `route`, `projects`, `project`, `path` (the location cascade) and `tool` (a trigger axis). See [The Five Restriction Levels](#the-five-restriction-levels). |
 | `when` | no | Trigger object: `worktype`, `effort`, `language`, `changetype` — each an array. Narrows applicability to specific working conditions. |
 | `check` | yes | Object that decides whether the requirement is met. Drives the **gate**. See below. |
 | `source` | yes | Where the requirement comes from, for example a skill reference such as `skill:node-formatting`. |
@@ -128,7 +151,7 @@ A `check` **MAY** also declare `artifact` (a machine artifact the check produces
 
 Requirements are selected for a piece of work by a **deterministic** scope cascade evaluated at the moment of writing — one matcher, run consistently, so the same work always selects the same set.
 
-The cascade runs from **broad to narrow**: global requirements first, then per-repo, then per-category and per-tag. Within a single scope axis, an empty array is a wildcard (matches everything on that axis) and a non-empty array matches by intersection. Across the three axes the result is an **AND**: an entry applies only when every populated axis matches the work.
+The cascade runs from **broad to narrow** along the location levels — **route** (all projects), then **projects** (a set), then a single **project**, then **path** — and within a project by **repo**, **category**, and **tag**; the **tool** axis composes orthogonally as a trigger ([The Five Restriction Levels](#the-five-restriction-levels)). Within a single scope axis, an empty array is a wildcard (matches everything on that axis) and a non-empty array matches by intersection. Across all populated axes the result is an **AND**: an entry applies only when every populated axis matches the work.
 
 When two requirements conflict, **specific beats general** — a repo-scoped requirement overrides a tag- or category-scoped one, which overrides a global one. The `when` triggers gate applicability further: a requirement with `when.changetype: ["readme"]` engages only when a README is being written, not on every edit. An override is **attribute-based** (declared on the entry), never position-dependent.
 
@@ -164,20 +187,29 @@ Requirements may be added or discussed at any earlier state; they become enforce
 
 ---
 
-## Multi-Level Requirements
+## The Five Restriction Levels
 
-Requirements apply at several granularities, selected through the same scope axes:
+A requirement's scope answers **where** and **on what** it applies, and the model raises **five restriction levels** to first-class scope axes — each declarable in the entry, none living only inside a hook matcher. They are the axes a project, a path, or a tool invocation is matched against:
 
-| Level | Example scope | Example requirement |
-|-------|---------------|---------------------|
-| Single repo | `scope.repos: ["spec"]` | A LICENSE file is present; CI is green on the default branch. |
-| Repo class | `scope.tags: ["public"]` | No secrets, including public tokens; an organization profile soll-set is satisfied. |
-| README | `scope.categories: ["readme"]` | Required README sections exist; badges resolve. |
-| Node module | `scope.categories: ["node-module"]`, `when.language: ["node"]` | 4-space indentation, no semicolons, `.mjs` ES modules. |
-| Diagram | `scope.categories: ["diagram"]` | Diagram labels are in the artifact's language; the diagram type fits the data flow. |
-| Blog-style text | `scope.categories: ["blog"]` | One language per artifact; a readable, structured prose style. |
+| Level | Scope axis | Applies to | Example |
+|-------|-----------|-----------|---------|
+| **Workbench / Route** | `route` | every project under the workbench root — the global tier | No secrets in any committed file. |
+| **Projects** (plural) | `projects: [ … ]` | a named *set* of projects | These client projects require a signed-off LICENSE. |
+| **Project** (singular) | `project` | exactly one project | In `memo-init`, every commit references a memo ID. |
+| **Path** | `path: [ glob … ]` | files under a path glob | Under `.env*`, no write without confirmation. |
+| **Tool** | `tool: [ name … ]` | a named tool invocation | A `Write` / `Edit` to a `.env` path is gated. |
 
-A higher-level requirement (global, or a repo class) sets a baseline; a narrower one **MAY** tighten it but **MUST NOT** silently weaken it. When both apply, the broad baseline is read first and the narrow entry layered on top.
+The first four form a **containment cascade** — route ⊇ projects ⊇ project ⊇ path — read broad-to-narrow: a narrower level **MAY** tighten a broader baseline but **MUST NOT** silently weaken it. The fifth, `tool`, is **orthogonal** — a trigger axis (which tool invocation the requirement gates), composed with the location axes by AND, the same way the `when` triggers narrow applicability. `path` and `tool` previously lived only inside hook matchers ([session/02-enforcement.md](/session/enforcement/)); raising them into the entry's `scope` makes them declarable, diffable requirements rather than logic buried in a script — while `projects` (plural) closes the gap where a *set* of projects had no expressible level at all.
+
+Within a single project, the existing axes refine further, composing **under** the location cascade:
+
+| Granularity | Example scope |
+|-------------|---------------|
+| Single repo | `repos: ["spec"]` — a LICENSE file is present; CI is green |
+| Repo class | `tags: ["public"]` — no secrets, including public tokens |
+| README / Node module / Diagram / Blog | `categories: ["readme" \| "node-module" \| "diagram" \| "blog"]` (with `when.language` where relevant) |
+
+A higher level (route, or a repo class) sets a baseline; a narrower one (a single project, a path, a repo) tightens it. When both apply, the broad baseline is read first and the narrow entry layered on top — **specific beats general**. The three within-project axes (`repos`, `categories`, `tags`) remain **required** on every entry (an empty array is the wildcard 'all'); the five restriction-level axes are **additive** and default to wildcard when absent, so existing entries keep matching exactly as before.
 
 ---
 

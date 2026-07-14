@@ -101,6 +101,8 @@ block-beta
 
 The base tier carries identity and the chain; the overlays stay thin. The cascade MUST stay shallow — a project does not introduce a fourth authority, it only contributes its own specifics over the base.
 
+**Within the workbench tier, folder settings carry a generated base.** The workbench tier's per-folder configuration — the `git` / `remote` posture and other defaults each registered folder declares in its machine-readable block ([/workbench/folders/](/workbench/folders/)) — is not hand-authored: it is derived from those blocks into a generated file, `.workbench/folders.generated.json`, which the manual `.workbench/config.json` overrides per folder (`.session/config.json` → `.workbench/folders.generated.json` → `.workbench/config.json`). This is a **generated-defaults sub-tier beneath** the manual workbench tier, specified on the workbench side ([/workbench/config/](/workbench/config/)). It does **not** deepen this cascade's authority stack — the generated file is derived data, not a new authoring tier — so the *stay shallow* rule holds: a project introduces no fourth *authority*, only a generated projection its manual tier overrides.
+
 ---
 
 ## Per-Concern Ownership — Two Structures, Two Merge Rules

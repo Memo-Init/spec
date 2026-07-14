@@ -16,18 +16,22 @@ The `.workbench/` configuration is the **producing side** of the workbench's con
 
 `.workbench/` is a registered (optional) folder, and this page is its per-folder entry:
 
-| Field | Value |
-|-------|-------|
-| Name | `.workbench/` |
-| Status | Optional |
-| Level | Project |
-| Entry-point | `config.json` · `registry.json` |
-| Convention | — |
-| Purpose | The manual project configuration the workbench core reads. |
-| Goes in | The hand-authored declared files — `config.json` (per-repository status), `folder-lints.json`, `registry.json`, and `command-sops.json`. |
-| Does not | Auto-generated or silently overwritten configuration; an `id` / `name` / `project-id` field (the folder name is the project id). |
+```folder
+{
+  "name":       ".workbench/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": "config.json · registry.json",
+  "convention": null,
+  "purpose":    "The manual project configuration the workbench core reads.",
+  "goesIn":     "The hand-authored declared files — config.json (per-repository status), folder-lints.json, registry.json, and command-sops.json.",
+  "doesNot":    "Auto-generated or silently overwritten configuration; an id / name / project-id field (the folder name is the project id).",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](./12-folders.md)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 
@@ -36,6 +40,36 @@ The `.workbench/` configuration is the **producing side** of the workbench's con
 The `.workbench/` configuration is **manual**: it is written and maintained by hand, **not** auto-generated. A configuration is a statement of intent — which repositories face the outside world, which stay local — and intent is something a developer declares, not something a tool infers. A process **MUST NOT** silently generate or overwrite the configuration; where tooling assists, it proposes changes for the developer to accept, consistent with the workbench's no-auto-write discipline.
 
 This is the project-level expression of the single-source principle ([01-philosophy.md](./01-philosophy.md)): rather than each tool guessing a repository's exposure, the project states it once, in one file, and everything else reads from there.
+
+---
+
+## Derived Folder Defaults — `folders.generated.json`
+
+The manual discipline above has exactly one deliberate exception, and it is marked as such. A folder's **default** posture — including the `git` and `remote` keys each registered folder declares in its machine-readable `folder` block ([12-folders.md](./12-folders.md), [session/13-conventions.md](/session/conventions/)) — is **derived**, not hand-declared. Those defaults are materialized into a **generated base tier**, `.workbench/folders.generated.json`, and the manual `.workbench/config.json` sits **above** it as an override layer.
+
+- **Generated, gitignored, never hand-edited.** `.workbench/folders.generated.json` is the output of the folder-registry generator, which reads the `folder` blocks and emits their defaults ([12-folders.md, "The Folder Contract Is Machine-Readable"](./12-folders.md)). It is the **one** generated file under `.workbench/`: it carries a `"generated": true` marker, is **gitignored**, and **MUST NOT** be edited by hand — a hand edit is overwritten by the next generation. This is why it does not breach the manual rule (REQ-960): that rule governs the **authored** files — `config.json`, `folder-lints.json`, `registry.json`, `command-sops.json` — and this file is explicitly the **generated** tier, not one of them.
+- **`config.json` overrides the defaults, per folder.** A project changes a folder's default posture by declaring an override in the **manual** `config.json` — never by editing the generated file. `config.json` carries an optional `folders` map keyed by folder name: a key present there **overrides** the generated default for that folder, and an absent key **inherits** it. The effective per-folder setting is therefore `generated default ← config.json override` — which is exactly what makes the block's defaults **user-overridable** without touching the spec.
+
+```jsonc
+// .workbench/config.json — the manual override layer over the generated folder defaults
+{
+  "repos": [ /* … */ ],
+  "folders": {
+    // override the derived default for one folder; absent folders inherit the generated default
+    "data/": { "git": "recommended" }
+  }
+}
+```
+
+This **extends** the existing two-tier config cascade — `.session/config.json` (genesis base) → `.workbench/config.json` (workbench tier) ([session/05-config-cascade.md](/session/config-cascade/)) — by inserting the generated defaults **beneath** the manual workbench tier:
+
+```
+.session/config.json               genesis base (identity, security, SOP chain)
+.workbench/folders.generated.json  generated folder defaults (from the folder blocks; gitignored)
+.workbench/config.json             manual overrides (repo facing/visibility/remote, folder overrides)
+```
+
+The generator writes **only** the generated tier; the manual tiers stay manual, so "manual stays manual" holds and REQ-960 is preserved. The runtime that merges the tiers into an effective configuration a hook reads is out of this specification's build scope — this chapter declares the tiers and their precedence; wiring the merge is downstream work.
 
 ---
 
@@ -76,6 +110,7 @@ The repository status above does not float free — it lives in a concrete file:
 | `repos[]` | array of status records | yes | Per-repository status — `visibility`, `remote`, `facing` (the per-repository status block above). |
 | `extraFolders[]` | array of `{ name, reason }` | no | Top-level folders this project uses that the registered layout does not list — declaring one **acknowledges** it, so the structure audit does not flag it as unknown. |
 | `folderPolicy.unknownFolder` | `"warn"` \| `"error"` | no (default `"warn"`) | The severity the structure audit raises for a top-level folder that is neither registered nor declared in `extraFolders[]`. |
+| `folders` | map of `{ folderName: overrides }` | no | Per-folder **overrides** of the generated defaults in `folders.generated.json` — a key overrides that folder's derived `git` / `remote` (or other) default; an absent folder inherits it (see [Derived Folder Defaults](#derived-folder-defaults--foldersgeneratedjson)). |
 
 ```jsonc
 // projects/{name}/.workbench/config.json — manual; the folder name IS the project id

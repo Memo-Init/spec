@@ -6,7 +6,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T14:39:14.663Z"
+generated_at: "2026-07-14T17:47:27.309Z"
 generated_from: "workbench/0.2.0/draft/spec/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/30-wiki.md."
@@ -19,20 +19,24 @@ The wiki is the project's **discovery system** — the **entry point**, the sing
 
 ## Folder Contract
 
-`.wiki/` is a registered (optional) folder, and this page is its per-folder entry:
+`.wiki/` is a **reserved, default-on** custom folder — present in every project like `.memo/`, not an opt-in extra — and this page is its per-folder entry:
 
-| Field | Value |
-|-------|-------|
-| Name | `.wiki/` |
-| Status | Optional |
-| Level | Project |
-| Entry-point | `index.md` (published as "overview") |
-| Convention | OKF |
-| Purpose | LLM-generated project wiki, an OKF-conformant knowledge bundle. |
-| Goes in | The generated wiki pages (OKF nodes + untyped links), including the `index.md` entry point published as "overview". |
-| Does not | A second, drifting copy of the architecture graph (the wiki points at `context/architecture-okf/`, never copies it); the chronicle / timeline. |
+```folder
+{
+  "name":       ".wiki/",
+  "status":     "reserved-default-on",
+  "level":      "project",
+  "entryPoint": "index.md (published as \"overview\")",
+  "convention": "OKF",
+  "purpose":    "LLM-generated project wiki, an OKF-conformant knowledge bundle; reserved default-on, present in every project.",
+  "goesIn":     "The generated wiki pages (OKF nodes + untyped links), including the index.md entry point published as \"overview\".",
+  "doesNot":    "A second, drifting copy of the architecture graph (the wiki points at context/architecture-okf/, never copies it); the chronicle / timeline.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](/workbench/folders/)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](/workbench/folders/)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 
@@ -76,7 +80,7 @@ The wiki answers in the **present tense**: a wiki page states what is understood
 
 ## Wiki for All, Enforced Architecture for Internal
 
-The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required:
+The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required. Because every project has a wiki, `.wiki/` is a **reserved, default-on** folder — present by default like `.memo/`, not an opt-in optional folder ([12-folders.md](/workbench/folders/)). This resolves the older tension in which the contract called `.wiki/` *optional* while this chapter called it universal: the universal intent wins, and the folder's status now matches it.
 
 - **Every project** — internal or foreign — gets a wiki, because every project has unstructured knowledge worth categorizing and querying. The wiki is the entry point for all of them.
 - **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([41-project-architecture.md](/workbench/project-architecture/)).
@@ -101,6 +105,18 @@ Write-time freshness keeps the wiki growing correctly; periodic staleness detect
 The wiki's discovery reach extends to the project's **scripts**. When something is written into a `scripts/` subfolder, that subfolder **SHOULD** carry an **`About`** — a short description of what the folder is for — and that `About` is **ingested into the wiki**. This is the third ingest source, alongside landing-time ingest and periodic staleness detection.
 
 The convention closes a loop with the meaningful-subfolder rule ([20-cli.md](/workbench/cli/)): a scripts subfolder already carries its meaning in its name; the `About` records that meaning in prose, and ingesting it means the wiki can **answer** for what a scripts folder does rather than leaving a reader to infer it from the name alone. The effect is that the discovery system reaches the project's operational scripts the same way it reaches its research and architecture — ask the wiki, and the answer is there.
+
+---
+
+## Configurable Sources — the `wiki-source` Key
+
+Which folders feed the wiki is a **configuration**, not a hardcoded list. A reserved `wiki-source` key declares the set of source stores the wiki ingests, so a project tunes what its discovery system draws on rather than accepting a fixed set baked into the ingest tool.
+
+- **A default set, deliberately chosen.** By default the wiki draws on the project's **present-state boards** — the chronicle (`chronic/`), the maintenance board (`maintenance/`), and the goals board (`goals/`) — alongside the authored `context/` material and the `scripts/` `About` reach already described. These are the stores whose *current* state is worth surfacing through a present-tense entry point.
+- **The memo store is not a default source.** The `.memo/` memo store is **excluded** from the default set: a finalized memo is a point-in-time, chronological record, and scraping the memo folder in bulk pulls stale, superseded detail into a present-tense wiki. A memo's *distilled* knowledge still reaches the wiki through **landing-time ingest** ([Keeping the Wiki Fresh](#keeping-the-wiki-fresh--two-triggers)) when it is finalized; what the default drops is treating the memo folder itself as a standing source. A project that wants the memo store in its wiki **MAY** add it to `wiki-source` explicitly.
+- **Declared as project policy, read at ingest.** `wiki-source` is a project-level setting — the source stores named as data the ingest reads, the same declare-then-read discipline the folder and config chapters follow ([22-config.md](/workbench/config/)). Reading the key at ingest time is downstream tooling work; this chapter fixes the key, its default set, and the memo-store exclusion.
+
+The `chronic/` source is read for its **current** content, not as a second chronicle: the wiki still answers in the present tense ([Present Tense, Not Chronology](#present-tense-not-chronology)), and the chronicle remains the authoritative timeline ([26-memo-history.md](/specification/memo-history/)). `wiki-source` decides *what the wiki draws on*; it does not blur the wiki/chronicle distinction.
 
 ---
 

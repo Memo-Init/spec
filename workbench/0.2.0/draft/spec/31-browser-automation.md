@@ -20,18 +20,22 @@ Browser automation lives at the project level. Each project that uses it carries
 
 `.browser/` is a registered (conditional) folder — required when a project does browser automation — and this page is its per-folder entry:
 
-| Field | Value |
-|-------|-------|
-| Name | `.browser/` |
-| Status | Required (conditional) |
-| Level | Project |
-| Entry-point | `scripts/` (deprecated alias `.playwright/`) |
-| Convention | — |
-| Purpose | Browser-automation session, scripts, and output — present only when the project performs browser automation. |
-| Goes in | The captured session `auth.json`, reusable automation under `scripts/`, and produced `output/`. |
-| Does not | Committed material — `auth.json` and `output/` are local-only and never pushed; hardcoded credentials in scripts. |
+```folder
+{
+  "name":       ".browser/",
+  "status":     "conditional",
+  "level":      "project",
+  "entryPoint": "scripts/ (deprecated alias .playwright/)",
+  "convention": null,
+  "purpose":    "Browser-automation session, scripts, and output — present only when the project performs browser automation.",
+  "goesIn":     "The captured session auth.json, reusable automation under scripts/, and produced output/.",
+  "doesNot":    "Committed material — auth.json and output/ are local-only and never pushed; hardcoded credentials in scripts.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
 
-> The Folder Contract follows the fixed per-folder shape defined in the session conventions ([session/13-conventions.md](/session/conventions/)); its first six fields mirror this folder's row in the central contract table ([12-folders.md](./12-folders.md)).
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](./12-folders.md)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---
 

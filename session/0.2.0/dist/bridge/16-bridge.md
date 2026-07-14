@@ -96,6 +96,6 @@ _(no skill dependencies declared in this family)_
 - [03-recovery](./03-recovery.md) — `session-recovery`
 - [14-migration](./14-migration.md) — `session-migration`
 
-### memory
+### Memory
 
 - [17-memory](./17-memory.md) — _— no implementer skill yet —_
