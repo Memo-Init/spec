@@ -6,7 +6,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-07-14T17:56:56.403Z"
+generated_at: "2026-07-14T18:29:14.197Z"
 generated_from: "workbench/0.2.0/draft/spec/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.2.0/draft/spec/12-folders.md."
@@ -50,7 +50,7 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `.wiki/` | reserved (custom folder, default-on) | Project | `index.md` (published as "overview") | OKF | LLM-generated project wiki, an OKF-conformant knowledge bundle; reserved default-on like `.memo/` (see [30-wiki.md](/workbench/wiki/)). |
 | `.browser/` | Required (conditional) | Project | — | — | Browser-automation session, scripts, and output — present **only when** the project does browser automation, but when present the name is **required**: `.browser/` is the canonical name and the only conforming one, and `.playwright/` is a **deprecated** alias projects **MUST** migrate now — not at their own pace (see [31-browser-automation.md](/workbench/browser-automation/)). |
 | `.flowmcp/` | Optional | Project | — | — | Regenerable FlowMCP `namespace-index.json` cache — generated machinery, **gitignored**; the local side of the FlowMCP custom folder (see [33-flowmcp.md](/workbench/flowmcp/)). |
-| `.session/` | Optional | Both | `config.json` | — | The session genesis-root marker — its presence marks where a session is rooted; holds `config.json`, the base of the config cascade. One per tree, a sibling of `.workbench/`. Owned by the session spec (see [`.session/` Marks the Session Root](#session-marks-the-session-root) and [session/01-genesis-root.md](/session/genesis-root/)). |
+| `.session/` | Optional | Both | `config.json` | — | The session genesis-root marker — its presence marks where a session is rooted; holds `config.json`, the base of the config cascade. One per tree, a sibling of `.workbench/`. Owned by the session spec (see [`.session/` Is Session-Owned](#session-is-session-owned) and [session/01-genesis-root.md](/session/genesis-root/)). |
 | `.tmp/` | Optional | Project | — | — | Scratch / temporary working area — transient material, not durable knowledge and not committed (see [19-tmp.md](/workbench/tmp/)). |
 | `.workbench/` | Optional | Project | `config.json` · `registry.json` | — | The manual project configuration the workbench core reads (see [22-config.md](/workbench/config/)). |
 | `.worktrees/` | Optional | Project | — | — | The consistent location for git worktrees — generated machinery, **gitignored**, with mandatory cleanup via `git worktree remove`/`prune` (see "Worktree Placement" below). |
@@ -248,29 +248,27 @@ In practice the two are rarely separated: reading and writing a project's work r
 
 ---
 
-## Specialized Folders May Live Under `.tmp/`
+## `proofs/` and `snapshots/` Are Specialized
 
-`proofs/` and `snapshots/` are **specialized**: they matter to projects that capture view proofs or application snapshots and are irrelevant to others. Such a project **MAY** keep them as top-level folders, or **MAY** place them under `.tmp/` when the captured material is ephemeral and need not persist. Either placement is conformant; the choice follows from whether the proofs and snapshots are kept as durable artifacts or as throwaway working material.
+`proofs/` (view-change proofs) and `snapshots/` (application snapshots) are **specialized** — a project keeps them top-level, or places them under `.tmp/` when the captured material is ephemeral and need not persist. Full contracts: [35-proofs.md](/workbench/proofs/), [37-snapshots.md](/workbench/snapshots/).
 
 ---
 
-## `.browser/` Is Required
+## `.browser/` Is Conditional
 
-Browser automation is not universal, so `.browser/` is **conditional on need**: a project carries it **only if** it actually performs browser automation, and a project that does none **MUST NOT** be expected to have it. But *when a project does browser automation, `.browser/` is required* — the name is not discretionary. `.browser/` is the **canonical, required** name and the only conforming one; `.playwright/` is a **deprecated** alias that projects **MUST** migrate to `.browser/` now — not at their own pace — and `.browser/` is the target the workbench cleanup points every project at. The folder follows the normative conventions in [31-browser-automation.md](/workbench/browser-automation/).
+`.browser/` is **conditional** — carried only when a project does browser automation, and then the **only** conforming name (`.playwright/` is a deprecated alias projects **MUST** migrate). Full contract: [31-browser-automation.md](/workbench/browser-automation/).
 
 ---
 
 ## `.workbench/` Carries the Configuration
 
-The optional `.workbench/` folder is where a project's **manual** configuration lives — the declaration of what is specific to the project, including the inward/outward-facing classification of its repositories. The configuration is manual, not auto-generated, and is the single source from which deterministic enforcement is derived. Its fields and derivation are specified in [22-config.md](/workbench/config/).
+`.workbench/` holds the project's **manual** configuration — the single source deterministic enforcement is derived from. Full contract: [22-config.md](/workbench/config/).
 
 ---
 
-## `.session/` Marks the Session Root
+## `.session/` Is Session-Owned
 
-Alongside `.workbench/` sits a second, dot-prefixed configuration folder: `.session/`. Where `.workbench/` carries the project's manual configuration, `.session/` is the **session genesis-root marker** — the single folder whose presence marks where a session is rooted. It is *one per tree*: exactly one `.session/` sits at the root of a session, holding a `config.json` that is the **base of the config cascade** the workbench tier extends ([22-config.md](/workbench/config/), [session/05-config-cascade.md](/session/config-cascade/)).
-
-`.session/` is **owned by the session specification**, not this one: the genesis-root walk-up that locates it, the identity it pins, and its `config.json` are specified there ([session/01-genesis-root.md](/session/genesis-root/), [session/09-root-detection.md](/session/root-detection/)). It is registered in the contract table above because it is a real, dot-prefixed machinery folder a folder-aware tool encounters on disk — a sibling of `.workbench/` that was previously absent from the registry, a gap this chapter now closes. The registry reserves its name and points at the session spec; the session spec says what it contains — the same division the folder contract draws for every custom-folder footprint: the workbench registry **names** the folder, the owning specification **defines** it.
+`.session/` is the **session genesis-root marker** — one per tree, holding the `config.json` at the **base of the config cascade** the workbench tier extends. It is **owned by the session spec**, not this one: the registry reserves the name, the session spec defines it — [session/01-genesis-root.md](/session/genesis-root/), [session/09-root-detection.md](/session/root-detection/).
 
 ---
 
@@ -313,13 +311,9 @@ Like every content contract, this one is **conformity-checkable**: it is a named
 
 ---
 
-## Worktree Placement
+## `.worktrees/`
 
-Git worktrees need **one consistent location** in every project. Left unplaced, worktrees scatter — created next to a repository here, inside `.tmp/` there — and the disk fills with orphaned checkouts. The workbench registers a single, dot-prefixed home for them: `.worktrees/`.
-
-- **One location.** A project's git worktrees live under `.worktrees/` at the project root, not next to individual repositories and not in ad-hoc paths. Because the name is the same in every project, tooling and an agent both know where a worktree is without searching.
-- **Machinery, gitignored.** `.worktrees/` holds generated checkouts, not authored content, so it carries a dot and is **gitignored** — its contents are never committed.
-- **Mandatory cleanup.** A worktree is transient: when the work on its branch is done, it **MUST** be removed via `git worktree remove` (and stale entries pruned via `git worktree prune`), so no disk debris is left behind. This is the same mandatory-cleanup rule the branch/worktree convention already carries; `.worktrees/` gives that rule a fixed, registered place to point at.
+`.worktrees/` is the **one consistent, gitignored** home for a project's git worktrees, with **mandatory cleanup** — a worktree is removed via `git worktree remove`/`prune` when its work is done, so no orphaned checkouts accrue. Full contract: [38-worktrees.md](/workbench/worktrees/).
 
 ---
 
