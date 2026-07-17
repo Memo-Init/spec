@@ -1,0 +1,171 @@
+{
+    "note": "Deterministic skill->spec map (source of truth for write-skill-specs.mjs). Generated from the Memo-039 research dataset; out-of-process skills (node-*/domain/external) carry primary:null + a scope marker by design. node-* code-pattern skills are decoupled and out-of-process: node house-style is governed by personal-brand/user-preferences, not the org spec (Memo 057 F5; ch47-node-standards removed).",
+    "totals": {
+        "skills": 16,
+        "register": 0,
+        "withGaps": 0,
+        "withPrimary": 16
+    },
+    "skills": [
+        {
+            "skill": "session-addons",
+            "category": "session",
+            "path": "repos/core/skills/session/session-addons/SKILL.md",
+            "primary": "session/15-addons",
+            "all": [
+                "session/15-addons"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-cli",
+            "category": "session",
+            "path": "repos/core/skills/session/session-cli/SKILL.md",
+            "primary": "session/04-cli",
+            "all": [
+                "session/04-cli"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-common-denominator",
+            "category": "session",
+            "path": "repos/core/skills/session/session-common-denominator/SKILL.md",
+            "primary": "session/11-common-denominator",
+            "all": [
+                "session/11-common-denominator"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-config-cascade",
+            "category": "session",
+            "path": "repos/core/skills/session/session-config-cascade/SKILL.md",
+            "primary": "session/05-config-cascade",
+            "all": [
+                "session/05-config-cascade"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-conventions",
+            "category": "session",
+            "path": "repos/core/skills/session/session-conventions/SKILL.md",
+            "primary": "session/13-conventions",
+            "all": [
+                "session/13-conventions"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-doctor-init",
+            "category": "session",
+            "path": "repos/core/skills/session/session-doctor-init/SKILL.md",
+            "primary": "session/07-doctor-init",
+            "all": [
+                "session/07-doctor-init"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-enforcement",
+            "category": "session",
+            "path": "repos/core/skills/session/session-enforcement/SKILL.md",
+            "primary": "session/02-enforcement",
+            "all": [
+                "session/02-enforcement"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-genesis-root",
+            "category": "session",
+            "path": "repos/core/skills/session/session-genesis-root/SKILL.md",
+            "primary": "session/01-genesis-root",
+            "all": [
+                "session/01-genesis-root"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-identity-pin",
+            "category": "session",
+            "path": "repos/core/skills/session/session-identity-pin/SKILL.md",
+            "primary": "session/08-identity-pin",
+            "all": [
+                "session/08-identity-pin"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-instances",
+            "category": "session",
+            "path": "repos/core/skills/session/session-instances/SKILL.md",
+            "primary": "session/12-instances",
+            "all": [
+                "session/12-instances"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-migration",
+            "category": "session",
+            "path": "repos/core/skills/session/session-migration/SKILL.md",
+            "primary": "session/14-migration",
+            "all": [
+                "session/14-migration"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-namespace-registry",
+            "category": "session",
+            "path": "repos/core/skills/session/session-namespace-registry/SKILL.md",
+            "primary": "session/06-namespace-registry",
+            "all": [
+                "session/06-namespace-registry"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-overview",
+            "category": "session",
+            "path": "repos/core/skills/session/session-overview/SKILL.md",
+            "primary": "session/00-overview",
+            "all": [
+                "session/00-overview"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-recovery",
+            "category": "session",
+            "path": "repos/core/skills/session/session-recovery/SKILL.md",
+            "primary": "session/03-recovery",
+            "all": [
+                "session/03-recovery"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-root-detection",
+            "category": "session",
+            "path": "repos/core/skills/session/session-root-detection/SKILL.md",
+            "primary": "session/09-root-detection",
+            "all": [
+                "session/09-root-detection"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "session-sop",
+            "category": "session",
+            "path": "repos/core/skills/session/session-sop/SKILL.md",
+            "primary": "session/10-sop",
+            "all": [
+                "session/10-sop"
+            ],
+            "visibility": "public"
+        }
+    ]
+}

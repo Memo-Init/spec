@@ -1,0 +1,150 @@
+# 14. Agents, Skills and Tasks
+
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Depends on | [13-orchestration.md](./13-orchestration.md) |
+| Related | [15-prompt-generator.md](./15-prompt-generator.md), [12-rollout.md](./12-rollout.md), [09-contamination-context-handover.md](./09-contamination-context-handover.md), [00-overview.md](./00-overview.md) |
+
+The system is moving toward **Agents as a base layer** on which skills build. This is not an abolition of skills: skills remain, and they remain the foundation for most procedures. Only the **beginning** — the foundation layer — is converted to agents. The guiding principle is "best result, not most efficient path": agents buy isolated context and standing operating rules where those matter most.
+
+Agents are already used in the system today — phase execution (Lead / Worker / Evaluator, worktrees, fresh context), rollout execution, phase generation, schema grading, and the persona audit all run as agent teams. This chapter formalizes the skill-vs-agent distinction and the first migration boundary.
+
+---
+
+## Skill vs Agent
+
+The two primitives differ in context and scope.
+
+| Aspect | Skill | Agent |
+|--------|-------|-------|
+| Definition | A procedure executed in the **caller's context** | A definition with **repo-scoped operating rules** and an **isolated context** |
+| Context | Shares the caller's context (and its contamination) | Fresh, isolated context per invocation |
+| Rules | A procedure to follow | `AGENTS.md` — standing operating rules for the repo |
+| Invocation | Loaded by tag/trigger into the current conversation | Spawned with a generated start-prompt as a per-invocation order |
+
+A **skill** is the right shape when the procedure should run inside the caller's reasoning and share its context — formatting rules, repository conventions, documentation style. An **agent** is the right shape when the work must run in a clean room — independent evaluation, grading, security scanning — where carry-over from the caller's context would compromise the result.
+
+`AGENTS.md` holds the **standing rules** (who the agent is, how it behaves, its repo-scoped constraints). The generated **start-prompt** (see [15-prompt-generator.md](./15-prompt-generator.md)) is the **per-invocation order** — the specific task for this run, composed deterministically. The two are complementary: standing rules plus a per-invocation order.
+
+---
+
+## Agent Execution Primitives
+
+"Agent" is run in **three** distinct forms. This is the canonical typology; the orchestration machinery ([13-orchestration.md](./13-orchestration.md)) and the deployment strategies ([36-agent-strategies.md](./36-agent-strategies.md)) refer back to these types rather than redefining them.
+
+| Type | Mechanism | Context | Return |
+|------|-----------|---------|--------|
+| **(a) Ephemeral sub-agent** | the `Agent` tool — spawns a fresh instance with its own system prompt, tools, and permissions; one-shot | fresh, isolated per invocation; sees no conversation history | only the final message |
+| **(b) Persistent agent** | an agent **id** returned on completion; continued via `SendMessage`, not a fresh `Agent` call | retains its full history; resumes exactly where it stopped | the final message of the resumed run; re-queryable |
+| **(c) Deterministic workflow** | a JavaScript **script** Claude writes; the runtime executes it; the *script* holds the loop, branching, and intermediate results | runs separate from Claude's context window; scales to dozens–hundreds of agents (up to ~1000/run) | only the final report reaches the context |
+
+The platform name for type (c) is **Dynamic Workflow** — the script-driven primitive. A model-driven *research fan-out* (the Lead spawning a few type-(a) sub-agents per turn) is a different thing and MUST NOT be called a dynamic workflow (see [13-orchestration.md](./13-orchestration.md)).
+
+**Nesting.** A sub-agent MAY spawn its own sub-agents, but the depth is **fixed at five** and is not configurable: a sub-agent at depth five does not receive the `Agent` tool and cannot spawn further. Only the top-level sub-agent's summary returns to the caller.
+
+---
+
+## The Word "Subagent" — Two Meanings
+
+The word "subagent" carries two readings that MUST be kept apart so they do not collide.
+
+- **User meaning (type-agnostic).** From the user's side a subagent is simply "**I delegate something and get a result back**" — it does not matter whether the work ran as an ephemeral sub-agent, a persistent agent, or a deterministic workflow. All three are "a subagent" in this sense.
+- **Technical meaning (precise).** Technically, "subagent" is **only type (a)** — the ephemeral, fresh-context, one-shot form. Types (b) and (c) are a persistent agent and a workflow, not subagents in the strict sense.
+
+When this spec says "subagent" in a mechanism context it means type (a); when it describes delegation from the user's perspective it means the broad, type-agnostic sense. The distinction is named here so the two never silently merge.
+
+---
+
+## Trajectory — the Runtime Action-History
+
+> A **trajectory** is the runtime action-history a session actually produced — the recorded sequence of steps, spawns, and tool calls a running context walked, over the tree of sessions and sub-agents it fanned out. It is **recorded, not computed**: it captures what happened, in order, so a later reader can trace a result backward to the step that produced it. This is the concept the session tree operationalizes; the tree is the shape, the trajectory is the walked path through it.
+
+A trajectory is **not a strand**: a strand is the *computed* dependency-closure structure over phases, derived by walking the depends-on graph and never traversed as a run, whereas a trajectory is the *runtime* action-history that was actually walked. Nor is it a plan — a plan sequences intended work forward, a trajectory records executed work as it happened. This chapter fixes the term on the concept side; the session tree that operationalizes it is built elsewhere.
+
+---
+
+## Primitives, Roles, and the Outer Boundary
+
+The three execution primitives above are *mechanisms*; the harness registry's `roles{}` contract ([meta-spec/10-harness-registry.md](/spec/harness-registry/)) is the *tool surface* those mechanisms run under. The two compose: a running context is one primitive **and** one role at once.
+
+| Running context | Primitive | Harness role (`roles{}`) |
+|-----------------|-----------|--------------------------|
+| The interactive top-level loop the user drives | — (the host session) | `user` |
+| The Lead / rollout orchestrator coordinating a team | persistent agent (b), or the host | `orchestrator` |
+| A Worker / fresh-context Evaluator on one scoped unit | ephemeral sub-agent (a) | `worker` |
+| A Dynamic Workflow runner script fanning out agents | deterministic workflow (c) | `orchestrator` (the script coordinates; each spawned unit is a `worker`) |
+
+**The single real outer boundary.** Every one of these runs **inside one harness process** and shares its trust envelope — an in-process sub-agent, however deeply nested (depth ≤ 5, above), is still the same harness invocation. The **only** place a genuinely external, separately-bounded session begins is an **external `claude -p` / SDK invocation**: a new harness process with its own genesis root and its own bounded profile ([session/01-genesis-root.md](/session/genesis-root/)). That boundary — not the sub-agent tree — is where role assignment stops and a fresh, independently-bounded session starts. How a running context is classified into a role, and how such an external session is detected as a non-role, is specified normatively in [meta-spec/10-harness-registry.md](/spec/harness-registry/).
+
+---
+
+## Non-Blocking User Thread
+
+The intent that the user's interactive thread stays free during a long autonomous run is **anchored**, but the *technical* non-blocking is not automatic — it depends entirely on **where the Lead runs**. The table above records the decisive freedom degree: the rollout Lead MAY be a persistent agent **or** the host session. That choice is the whole question.
+
+**Doctrine: rollout coordination never runs in the user thread.** When the Lead runs *in the host*, the host session IS the coordinator — and every turn it spends orchestrating is a turn the user cannot use. Coordination and user share one context, so the thread is blocked for the duration. The doctrine closes the freedom degree in one direction: **the coordinating Lead of an autonomous rollout MUST run on an off-thread carrier (a persistent agent or a workflow runner), never the host.** The host stays the user's — free to observe, redirect, or start unrelated work.
+
+Which carrier a coordination mechanism runs on decides whether it blocks:
+
+| Coordination mechanism | Carrier | Blocks the user thread? |
+|------------------------|---------|-------------------------|
+| Lead coordinates a team **from the host session** | host (`user` seat) | **Yes** — the host is busy orchestrating; the user waits |
+| Lead coordinates as a **persistent agent** (b) | off-thread agent | No — the host is free while the agent drives |
+| Fan-out driven by a **Dynamic Workflow** runner (c) | off-thread script | No — the runner coordinates outside the context window |
+| A **Worker / Evaluator** on one scoped unit | ephemeral sub-agent (a) | No — isolated context, returns only its summary |
+| **Status observation** of a running rollout | external watcher on session/task files | No — read-only, outside the session (see [12-rollout.md](./12-rollout.md)) |
+
+**Task timing is a MUST, its placement is not yet pinned.** The convention "always end with Tasks" fixes *that* Tasks are written — a MUST, because the state-file/Task record is the crash-recovery and hand-off surface — but not *when* within a turn they are written. Today the timing is emergent and occasionally drifts from the convention. The norm tightens it: the Task/state write happens at the **defined hand-off point** of the unit of work (phase end, rollout-stage boundary), not at an arbitrary moment — so an observer reading the task store off-thread always sees a consistent, hand-off-aligned state.
+
+---
+
+## Migration Boundary
+
+Evaluators are the natural first candidates for agent form because the empty-context rule already requires them to run in a fresh, isolated context (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)) — they are agents in everything but form.
+
+**Migrating to agent form (evaluators):**
+
+- the `*-evaluate` skills (`memo-revision-evaluate`, `memo-phase-evaluate`, `memo-rollout-evaluate`, `prd-evaluate`)
+- the quality evaluators `memo-evidence`, `memo-balance`, `memo-coherence`, `memo-references`
+- the grading skills `grade-score-single` / `grade-score-batch`
+- `git-security`
+- the persona audit (`workbench-persona-audit`)
+
+**Staying skills (the base layer they build on):**
+
+- the `node-*` family (formatting, class architecture, validation, error codes, testing, environment manager, server design)
+- `domain-dunesql`
+- `repo-readme` and `repo-docs-writing`
+- pointer skills (on-demand routers to vendored rules)
+
+These stay skills because they are procedures meant to run inside the caller's context — they shape how the caller writes code or docs, and an isolated context would sever them from the work they govern.
+
+---
+
+## Out-of-Scope Register
+
+Not every skill that exists in the system is governed by this process specification, and pretending otherwise would be dishonest. Two families of skills sit **deliberately outside** the process spec's scope and carry **no governing chapter** — they are acknowledged here, not mapped onto a forced home.
+
+- **Coding-standard skills** — the `node-*` family (formatting, class architecture, validation, error codes, testing, environment manager, server design). The Node.js coding standard is the property of the project's own house rules — a `CLAUDE.md`-style runbook — not of this specification. This spec governs the memo **process**, not code style; mapping these skills onto a process chapter would claim a coverage that does not and should not exist.
+- **Domain and external-tool skills** — blockchain-data query skills, the external API-CLI usage skill, and external-schema grading skills. Each encodes an **external domain** that is governed by its own external references (the data platform's query dialect, the API catalog's contract, the schema model's grading rules), not by this process spec. The process spec does not own those domains and makes no claim over them.
+
+To make the position machine-checkable and honest rather than implicit, such skills declare in their frontmatter:
+
+- `specs.primary: null` — an explicit, recorded statement that **no** chapter of this spec governs the skill, rather than an arbitrary mapping picked to satisfy a coverage tool, and
+- a `scope` marker — one of `coding-standard`, `domain`, or `external` — that names **why** the skill is out of scope.
+
+The `null` primary plus the `scope` marker is the honest signal: *acknowledged out-of-scope*, not *pretended coverage*. A coverage audit reads these markers and counts such skills as deliberately unmapped, never as gaps to be back-filled with a forced chapter reference.
+
+---
+
+
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
+## Related
+
+- [15-prompt-generator.md](./15-prompt-generator.md) — the deterministic compositor that produces an agent's per-invocation start-prompt.
+- [13-orchestration.md](./13-orchestration.md) — the machinery (team roles, dials, state) that runs the agent types defined here, and the model-driven-fan-out vs Dynamic-Workflow distinction.
+- [36-agent-strategies.md](./36-agent-strategies.md) — the agent deployment strategies that reference these types (Fan-Out by Unit); the distillate-fan-out research strategy mapped onto type (a)/(c) is in [10-proactive-research.md](./10-proactive-research.md).
+- [12-rollout.md](./12-rollout.md) — the rollout whose Evaluate phase is run by the migrated evaluators.
+- [09-contamination-context-handover.md](./09-contamination-context-handover.md) — the empty-context rule that makes evaluators the natural first migration.
+- [00-overview.md](./00-overview.md) — conformance language.

@@ -1,6 +1,6 @@
 {
-    "spec_version": "0.2.0",
-    "generated_at": "2026-07-14T18:29:15.683Z",
+    "spec_version": "0.3.0",
+    "generated_at": "2026-07-17T23:43:46.017Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -127,7 +127,7 @@
             "filename": "12-rollout.md",
             "slug": "rollout",
             "title": "Rollout",
-            "description": "The rollout turns a finalized memo into implemented code. It begins only **after** finalization (memo status \"Finalized\" or \"Conditionally finalized\") and only for memos of type Implementation —...",
+            "description": "The rollout turns a finalized memo into implemented code. It begins only **after** finalization — on the single binary \"Finalized\" verdict, there is no conditional intermediate verdict...",
             "order": 12,
             "section": "Specification",
             "normative": true,
@@ -472,10 +472,20 @@
             "section": "Specification",
             "normative": false,
             "sidebar_group": "bridge"
+        },
+        {
+            "filename": "47-memo-lifecycle.md",
+            "slug": "memo-lifecycle",
+            "title": "Memo Lifecycle",
+            "description": "\"Which memos are still open?\" is a question the system must answer with one command, deterministically, at any moment. For a long time it could not. There was no memo-level state at all — only five...",
+            "order": 47,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "execution"
         }
     ],
     "workbench": {
-        "version": "0.2.0",
+        "version": "0.3.0",
         "files": [
             {
                 "filename": "00-overview.md",
@@ -790,7 +800,7 @@
         ]
     },
     "session": {
-        "version": "0.2.0",
+        "version": "0.3.0",
         "files": [
             {
                 "filename": "00-overview.md",
@@ -971,11 +981,21 @@
                 "section": "Session",
                 "normative": true,
                 "sidebar_group": "memory"
+            },
+            {
+                "filename": "18-lineage.md",
+                "slug": "lineage",
+                "title": "Lineage — The Session Tree",
+                "description": "A single `sessionId` names one session and only one — a changed id is, by definition, a new session ([08-identity-pin.md](./08-identity-pin.md)). Real work, though, does not fit inside one session:...",
+                "order": 18,
+                "section": "Session",
+                "normative": true,
+                "sidebar_group": "lineage"
             }
         ]
     },
     "spec": {
-        "version": "0.2.0",
+        "version": "0.3.0",
         "files": [
             {
                 "filename": "00-overview.md",
@@ -1086,16 +1106,26 @@
                 "section": "Meta-Spec",
                 "normative": true,
                 "sidebar_group": "lifecycle"
+            },
+            {
+                "filename": "11-spec-authority.md",
+                "slug": "spec-authority",
+                "title": "Specification Authority",
+                "description": "A specification is not one implementation among many; it stands **above** the implementations that realize it and carries a higher authority than any single one. This chapter states what that...",
+                "order": 11,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "lifecycle"
             }
         ]
     },
     "stats": {
-        "total_files": 107,
-        "core_files": 47,
+        "total_files": 110,
+        "core_files": 48,
         "workbench_files": 31,
-        "session_files": 18,
-        "spec_files": 11,
-        "normative_files": 96,
+        "session_files": 19,
+        "spec_files": 12,
+        "normative_files": 99,
         "informative_files": 11
     }
 }

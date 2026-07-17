@@ -1,0 +1,356 @@
+{
+    "note": "Deterministic skill->spec map (source of truth for write-skill-specs.mjs). Generated from the Memo-039 research dataset; out-of-process skills (node-*/domain/external) carry primary:null + a scope marker by design. node-* code-pattern skills are decoupled and out-of-process: node house-style is governed by personal-brand/user-preferences, not the org spec (Memo 057 F5; ch47-node-standards removed).",
+    "totals": {
+        "skills": 25,
+        "register": 0,
+        "withGaps": 9,
+        "withPrimary": 25
+    },
+    "skills": [
+        {
+            "skill": "research-best-practice-playwright",
+            "category": "research",
+            "path": "repos/core/skills/research/research-best-practice-playwright/SKILL.md",
+            "primary": "workbench/31-browser-automation",
+            "all": [
+                "workbench/31-browser-automation",
+                "memo/10-proactive-research"
+            ],
+            "gaps": [
+                "browser-automation-method",
+                "playwright-operational-rules"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "research-scrape-docs",
+            "category": "research",
+            "path": "repos/core/skills/research/research-scrape-docs/SKILL.md",
+            "primary": "workbench/31-browser-automation",
+            "all": [
+                "workbench/31-browser-automation",
+                "memo/10-proactive-research"
+            ],
+            "gaps": [
+                "documentation-scraping-method",
+                "untrusted-web-content-banner",
+                "temp-cleanup-vs-trash"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "wiki-ingest",
+            "category": "wiki",
+            "path": "repos/core/skills/wiki/wiki-ingest/SKILL.md",
+            "primary": "workbench/30-wiki",
+            "all": [
+                "workbench/30-wiki",
+                "workbench/13-knowledge-format-okf",
+                "memo/26-memo-history",
+                "memo/10-proactive-research"
+            ],
+            "gaps": [
+                "Ingest extraction rules (summary caps, chunking, dedup)",
+                "Parallel sub-agent ingest threshold + central index rebuild"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "wiki-init",
+            "category": "wiki",
+            "path": "repos/core/skills/wiki/wiki-init/SKILL.md",
+            "primary": "workbench/30-wiki",
+            "all": [
+                "workbench/30-wiki",
+                "workbench/13-knowledge-format-okf",
+                "workbench/11-project-structure",
+                "workbench/32-trash"
+            ],
+            "gaps": [
+                "Wiki internal directory taxonomy",
+                "Wiki local-git + log.md store",
+                "CLAUDE.md auto-extension contract"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "wiki-lint",
+            "category": "wiki",
+            "path": "repos/core/skills/wiki/wiki-lint/SKILL.md",
+            "primary": "workbench/13-knowledge-format-okf",
+            "all": [
+                "workbench/13-knowledge-format-okf",
+                "workbench/30-wiki",
+                "workbench/41-project-architecture",
+                "memo/23-requirements"
+            ],
+            "gaps": [
+                "Non-OKF lint checks (orphans, contradictions, stubs, missing cross-refs)",
+                "Auto-run-before-memo-init coupling"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "wiki-query",
+            "category": "wiki",
+            "path": "repos/core/skills/wiki/wiki-query/SKILL.md",
+            "primary": "workbench/30-wiki",
+            "all": [
+                "workbench/30-wiki",
+                "memo/24-tools-registry",
+                "workbench/13-knowledge-format-okf"
+            ],
+            "gaps": [
+                "Query answer discipline (max-5-pages, mandatory citations, contradiction handling)"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "wiki-update",
+            "category": "wiki",
+            "path": "repos/core/skills/wiki/wiki-update/SKILL.md",
+            "primary": "workbench/30-wiki",
+            "all": [
+                "workbench/30-wiki",
+                "workbench/13-knowledge-format-okf",
+                "workbench/32-trash"
+            ],
+            "gaps": [
+                "Stale detection definition (mtime vs updated)"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-audit",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-audit/SKILL.md",
+            "primary": "workbench/11-project-structure",
+            "all": [
+                "workbench/11-project-structure",
+                "workbench/00-overview",
+                "workbench/41-project-architecture",
+                "memo/24-tools-registry",
+                "memo/16-git-security-versioning",
+                "memo/19-internal-vs-external-communication"
+            ],
+            "gaps": [
+                "eleven-corners review backlog pointer",
+                "audit-report-format",
+                "claude-md-runbook-required-sections"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-project-setup",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-project-setup/SKILL.md",
+            "primary": "workbench/11-project-structure",
+            "all": [
+                "workbench/11-project-structure",
+                "workbench/00-overview",
+                "memo/06-memo-structure",
+                "workbench/32-trash",
+                "workbench/30-wiki"
+            ],
+            "gaps": [
+                "five-step-installation-process",
+                "required-claude-md-sections-and-scripts"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-addons",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-addons/SKILL.md",
+            "primary": "workbench/26-addons",
+            "all": [
+                "workbench/26-addons",
+                "workbench/24-skills-scope",
+                "workbench/22-config",
+                "workbench/20-cli",
+                "workbench/02-sop-entrypoint"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-cli",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-cli/SKILL.md",
+            "primary": "workbench/20-cli",
+            "all": [
+                "workbench/20-cli",
+                "workbench/21-environment-scripts",
+                "workbench/23-hooks-contract",
+                "workbench/25-validation-overview",
+                "workbench/02-sop-entrypoint"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-config",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-config/SKILL.md",
+            "primary": "workbench/22-config",
+            "all": [
+                "workbench/22-config",
+                "workbench/23-hooks-contract",
+                "workbench/20-cli",
+                "workbench/02-sop-entrypoint",
+                "workbench/41-project-architecture"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-context",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-context/SKILL.md",
+            "primary": "workbench/16-context",
+            "all": [
+                "workbench/16-context"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-design",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-design/SKILL.md",
+            "primary": "workbench/18-design",
+            "all": [
+                "workbench/18-design"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-environment-scripts",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-environment-scripts/SKILL.md",
+            "primary": "workbench/21-environment-scripts",
+            "all": [
+                "workbench/21-environment-scripts",
+                "workbench/20-cli",
+                "workbench/22-config",
+                "workbench/23-hooks-contract",
+                "workbench/12-folders"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-folders",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-folders/SKILL.md",
+            "primary": "workbench/12-folders",
+            "all": [
+                "workbench/12-folders"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-hooks-contract",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-hooks-contract/SKILL.md",
+            "primary": "workbench/23-hooks-contract",
+            "all": [
+                "workbench/23-hooks-contract",
+                "workbench/22-config",
+                "workbench/20-cli",
+                "workbench/25-validation-overview",
+                "workbench/24-skills-scope",
+                "workbench/02-sop-entrypoint"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-memo-store",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-memo-store/SKILL.md",
+            "primary": "workbench/17-memo-store",
+            "all": [
+                "workbench/17-memo-store"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-philosophy",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-philosophy/SKILL.md",
+            "primary": "workbench/01-philosophy",
+            "all": [
+                "workbench/01-philosophy"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-repos",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-repos/SKILL.md",
+            "primary": "workbench/15-repos",
+            "all": [
+                "workbench/15-repos"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-root-projects",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-root-projects/SKILL.md",
+            "primary": "workbench/10-root-and-projects",
+            "all": [
+                "workbench/10-root-and-projects"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-skills-scope",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-skills-scope/SKILL.md",
+            "primary": "workbench/24-skills-scope",
+            "all": [
+                "workbench/24-skills-scope",
+                "workbench/21-environment-scripts",
+                "workbench/23-hooks-contract",
+                "workbench/20-cli",
+                "workbench/25-validation-overview",
+                "workbench/26-addons"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-sop",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-sop/SKILL.md",
+            "primary": "workbench/02-sop-entrypoint",
+            "all": [
+                "workbench/02-sop-entrypoint"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-tmp",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-tmp/SKILL.md",
+            "primary": "workbench/19-tmp",
+            "all": [
+                "workbench/19-tmp",
+                "workbench/12-folders",
+                "workbench/32-trash",
+                "workbench/16-context"
+            ],
+            "visibility": "public"
+        },
+        {
+            "skill": "workbench-validation",
+            "category": "workbench",
+            "path": "repos/core/skills/workbench/workbench-validation/SKILL.md",
+            "primary": "workbench/25-validation-overview",
+            "all": [
+                "workbench/25-validation-overview",
+                "workbench/23-hooks-contract",
+                "workbench/20-cli",
+                "workbench/22-config",
+                "workbench/21-environment-scripts",
+                "workbench/32-trash"
+            ],
+            "visibility": "public"
+        }
+    ]
+}

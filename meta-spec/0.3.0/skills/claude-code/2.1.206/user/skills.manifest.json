@@ -1,0 +1,10 @@
+{
+    "specId": "meta-spec@0.3.0",
+    "harnessRef": "claude-code@2.1.206",
+    "role": "user",
+    "compatibleRange": "^2.1",
+    "skills": [
+        "memo-finalize",
+        "memo-init"
+    ]
+}

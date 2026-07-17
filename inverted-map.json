@@ -2636,6 +2636,29 @@
             "internalCount": 0
         },
         {
+            "family": "memo",
+            "id": "memo/47-memo-lifecycle",
+            "stem": "47-memo-lifecycle",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-memo-sop-entrypoint",
+                "11-quality-and-finalization",
+                "12-rollout",
+                "13-orchestration",
+                "26-memo-history",
+                "31-goals",
+                "38-stage-model"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
             "family": "workbench",
             "id": "workbench/00-overview",
             "stem": "00-overview",
@@ -4148,6 +4171,26 @@
             "internalCount": 0
         },
         {
+            "family": "session",
+            "id": "session/18-lineage",
+            "stem": "18-lineage",
+            "sopAnchor": "10-sop",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "01-genesis-root",
+                "05-config-cascade",
+                "08-identity-pin",
+                "17-memory"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
             "family": "meta-spec",
             "id": "spec/00-overview",
             "stem": "00-overview",
@@ -4330,6 +4373,24 @@
                 "00-overview",
                 "05-publishing-principle",
                 "07-versioning",
+                "08-spec-lifecycle"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "meta-spec",
+            "id": "spec/11-spec-authority",
+            "stem": "11-spec-authority",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "05-publishing-principle",
                 "08-spec-lifecycle"
             ],
             "implementers": [],

@@ -197,13 +197,84 @@
             "version": "1.0.0",
             "owningFamily": "meta-spec",
             "owningChapter": "10-harness-registry"
+        },
+        {
+            "id": "AT-contamination",
+            "label": "Contamination",
+            "definition": "The umbrella condition of a context taking on content that mis-weights the output; a document written out of such a rotten context carries the mis-weighting forward. The common case is unconscious self-contamination, where the working context silently loads non-instruction material that then steers the result.",
+            "negativeDelimitation": "NOT a synonym for prompt injection — prompt injection (externally, maliciously supplied instructions) is the malicious special case, one bounded subtype; the general rule is unconscious self-contamination, not an outside attacker. And NOT the same as context rot, which is the cause (quality decay as input length grows) while contamination is the effect.",
+            "misLabels": [
+                "prompt injection",
+                "context poisoning",
+                "context rot"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "09-contamination-context-handover"
+        },
+        {
+            "id": "AT-trajectory",
+            "label": "Trajectory",
+            "definition": "The runtime action-history a session actually produced — the recorded, ordered sequence of steps, agent spawns, and tool calls a running context walked over its session-and-subagent tree, so a result can be traced backward to the step that produced it. It is the concept the session tree operationalizes.",
+            "negativeDelimitation": "NOT a Strand — a strand is the computed dependency-closure structure over phases, derived by walking the depends-on graph and never authored; a trajectory is the runtime action-history that was actually traversed, recorded not computed. And NOT a plan: a plan sequences intended work forward, a trajectory records executed work as it happened.",
+            "misLabels": [
+                "strand",
+                "path",
+                "history",
+                "run"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "14-agents-skills-tasks"
+        },
+        {
+            "id": "AT-back-pressure",
+            "label": "Back Pressure",
+            "definition": "The requirements practice seen from the generation side: in-scope requirement statements are surfaced before the work is done, constraining the doer up front, as the complement of the gate that checks the work afterward.",
+            "negativeDelimitation": "NOT infrastructure flow-control (queue throttling, rate limiting, TCP back-pressure) — it is the requirements-as-constraint discipline that pushes back on generation, not a runtime traffic mechanism.",
+            "misLabels": [
+                "throttling",
+                "rate limiting",
+                "flow control"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "23-requirements"
+        },
+        {
+            "id": "AT-inner-harness",
+            "label": "Inner Harness",
+            "definition": "The surface the agent harness itself exposes and the org does not control — the tool definitions, the agent/skill/task mechanics, and the versioned config surface a harness carries; the given layer, captured by the harness descriptor.",
+            "negativeDelimitation": "NOT the layer the org builds; the inner harness is the given, non-modifiable surface. And NOT the harness descriptor itself — the descriptor is the record OF the inner harness, not the harness.",
+            "misLabels": [
+                "harness",
+                "platform",
+                "runtime"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "meta-spec",
+            "owningChapter": "10-harness-registry"
+        },
+        {
+            "id": "AT-outer-harness",
+            "label": "Outer Harness",
+            "definition": "Everything the org builds around the given inner harness — the standing rules and hooks, the local memo convention, the viewer and its channels; the layer the org owns, shapes, and maintains on top of the harness.",
+            "negativeDelimitation": "NOT the given inner surface the harness exposes; the outer harness is the org-built layer, never the harness's own tool or config surface. And NOT a second harness process — it is the project layer running inside one harness invocation.",
+            "misLabels": [
+                "harness",
+                "wrapper",
+                "scaffold"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "meta-spec",
+            "owningChapter": "10-harness-registry"
         }
     ],
     "generated": {
-        "at": "2026-07-10T18:34:00.712Z",
-        "fromCommit": "317b4e88b69f94e8f0dd62b9ce621d549cf03377",
+        "at": "2026-07-16T22:30:33.862Z",
+        "fromCommit": "355983decd3c95e44b2302dd9b66925f21e7ed57",
         "generator": "scripts/generate-anchor-register.mjs",
-        "termCount": 14
+        "termCount": 19
     },
     "validation": {
         "passed": true,

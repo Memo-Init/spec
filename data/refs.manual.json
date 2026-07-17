@@ -1,27 +1,27 @@
 {
     "schemaVersion": "refs/1.0.0",
     "memo": {
-        "currentVersion": "0.2.0",
-        "recommendedRelease": "v0.2.0",
-        "historicalVersions": [ "0.2.0" ],
-        "specDir": "memo/0.2.0/draft/spec"
+        "currentVersion": "0.3.0",
+        "recommendedRelease": "v0.3.0",
+        "historicalVersions": [ "0.2.0", "0.3.0" ],
+        "specDir": "memo/0.3.0/draft/spec"
     },
     "workbench": {
-        "currentVersion": "0.2.0",
-        "recommendedRelease": "0.2.0",
-        "specDir": "workbench/0.2.0/draft/spec",
+        "currentVersion": "0.3.0",
+        "recommendedRelease": "0.3.0",
+        "specDir": "workbench/0.3.0/draft/spec",
         "url": "https://memo-init.github.io/workbench/overview/"
     },
     "session": {
-        "currentVersion": "0.2.0",
-        "recommendedRelease": "0.2.0",
-        "specDir": "session/0.2.0/draft/spec",
+        "currentVersion": "0.3.0",
+        "recommendedRelease": "0.3.0",
+        "specDir": "session/0.3.0/draft/spec",
         "url": "https://memo-init.github.io/session/overview/"
     },
     "meta-spec": {
-        "currentVersion": "0.2.0",
-        "recommendedRelease": "0.2.0",
-        "specDir": "meta-spec/0.2.0/draft/spec",
+        "currentVersion": "0.3.0",
+        "recommendedRelease": "0.3.0",
+        "specDir": "meta-spec/0.3.0/draft/spec",
         "url": "https://memo-init.github.io/spec/overview/"
     },
     "docs": {

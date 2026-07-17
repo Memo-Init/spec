@@ -1,0 +1,100 @@
+{
+    "namespace": "workbench",
+    "version": "0.3.0",
+    "namespaceToken": "WB",
+    "hasRequirements": true,
+    "hasGrading": false,
+    "requirementsRef": "25-validation-overview",
+    "gradingRef": null,
+    "groups": [
+        {
+            "id": "introduction",
+            "label": "Introduction",
+            "order": 1,
+            "pages": [
+                "00-overview",
+                "01-philosophy",
+                "02-sop-entrypoint"
+            ]
+        },
+        {
+            "id": "root",
+            "label": "Root",
+            "order": 2,
+            "pages": [
+                "10-root-and-projects",
+                "43-projects"
+            ]
+        },
+        {
+            "id": "projects",
+            "label": "Projects",
+            "order": 3,
+            "pages": [
+                "11-project-structure",
+                "12-folders"
+            ]
+        },
+        {
+            "id": "folders",
+            "label": "Folders",
+            "order": 4,
+            "sort": "alpha",
+            "pages": [
+                "15-repos",
+                "16-context",
+                "17-memo-store",
+                "18-design",
+                "19-tmp",
+                "21-environment-scripts",
+                "22-config",
+                "30-wiki",
+                "31-browser-automation",
+                "32-trash",
+                "33-flowmcp",
+                "34-data",
+                "35-proofs",
+                "36-research",
+                "37-snapshots",
+                "38-worktrees"
+            ]
+        },
+        {
+            "id": "conventions",
+            "label": "Conventions",
+            "order": 5,
+            "pages": [
+                "13-knowledge-format-okf",
+                "26-addons"
+            ]
+        },
+        {
+            "id": "cli",
+            "label": "CLI & Scripts",
+            "order": 6,
+            "pages": [
+                "20-cli",
+                "24-skills-scope"
+            ]
+        },
+        {
+            "id": "core",
+            "label": "Core",
+            "order": 7,
+            "pages": [
+                "23-hooks-contract",
+                "25-validation-overview",
+                "41-project-architecture"
+            ]
+        },
+        {
+            "id": "bridge",
+            "label": "Bridge",
+            "order": 8,
+            "pages": [
+                "42-bridge"
+            ]
+        }
+    ],
+    "fallback": "append-by-NN"
+}

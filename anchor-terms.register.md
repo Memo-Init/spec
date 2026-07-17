@@ -5,9 +5,9 @@
 > policy-block adjunct of the meta-spec anchor-term convention (`06-conventions-writing.md`),
 > not a new registry primitive.
 
-Provenance: generated from commit `317b4e88b69f94e8f0dd62b9ce621d549cf03377`.
+Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 
-**14** anchor terms, registered under `/session/namespace-registry/`.
+**19** anchor terms, registered under `/session/namespace-registry/`.
 
 | id | label | owning chapter | version |
 |----|-------|----------------|---------|
@@ -25,6 +25,11 @@ Provenance: generated from commit `317b4e88b69f94e8f0dd62b9ce621d549cf03377`.
 | `AT-role-user` | **User Role** | meta-spec / 10-harness-registry | 1.0.0 |
 | `AT-role-orchestrator` | **Orchestrator Role** | meta-spec / 10-harness-registry | 1.0.0 |
 | `AT-role-worker` | **Worker Role** | meta-spec / 10-harness-registry | 1.0.0 |
+| `AT-contamination` | **Contamination** | memo / 09-contamination-context-handover | 1.0.0 |
+| `AT-trajectory` | **Trajectory** | memo / 14-agents-skills-tasks | 1.0.0 |
+| `AT-back-pressure` | **Back Pressure** | memo / 23-requirements | 1.0.0 |
+| `AT-inner-harness` | **Inner Harness** | meta-spec / 10-harness-registry | 1.0.0 |
+| `AT-outer-harness` | **Outer Harness** | meta-spec / 10-harness-registry | 1.0.0 |
 
 ---
 
@@ -138,4 +143,44 @@ Provenance: generated from commit `317b4e88b69f94e8f0dd62b9ce621d549cf03377`.
 - **Not:** NOT an orchestrator — a worker cannot coordinate a team or spawn one; and NOT a persistent identity — a worker is a scoped, one-unit execution, bounded below the orchestrator that started it.
 - **Owning chapter:** meta-spec / 10-harness-registry (AT2)
 - **Known mis-labels:** `subagent`, `executor`, `agent`
+- **Version:** 1.0.0
+
+### Contamination — `AT-contamination`
+
+- **Definition:** The umbrella condition of a context taking on content that mis-weights the output; a document written out of such a rotten context carries the mis-weighting forward. The common case is unconscious self-contamination, where the working context silently loads non-instruction material that then steers the result.
+- **Not:** NOT a synonym for prompt injection — prompt injection (externally, maliciously supplied instructions) is the malicious special case, one bounded subtype; the general rule is unconscious self-contamination, not an outside attacker. And NOT the same as context rot, which is the cause (quality decay as input length grows) while contamination is the effect.
+- **Owning chapter:** memo / 09-contamination-context-handover (AT2)
+- **Known mis-labels:** `prompt injection`, `context poisoning`, `context rot`
+- **Version:** 1.0.0
+
+### Trajectory — `AT-trajectory`
+
+- **Definition:** The runtime action-history a session actually produced — the recorded, ordered sequence of steps, agent spawns, and tool calls a running context walked over its session-and-subagent tree, so a result can be traced backward to the step that produced it. It is the concept the session tree operationalizes.
+- **Not:** NOT a Strand — a strand is the computed dependency-closure structure over phases, derived by walking the depends-on graph and never authored; a trajectory is the runtime action-history that was actually traversed, recorded not computed. And NOT a plan: a plan sequences intended work forward, a trajectory records executed work as it happened.
+- **Owning chapter:** memo / 14-agents-skills-tasks (AT2)
+- **Known mis-labels:** `strand`, `path`, `history`, `run`
+- **Version:** 1.0.0
+
+### Back Pressure — `AT-back-pressure`
+
+- **Definition:** The requirements practice seen from the generation side: in-scope requirement statements are surfaced before the work is done, constraining the doer up front, as the complement of the gate that checks the work afterward.
+- **Not:** NOT infrastructure flow-control (queue throttling, rate limiting, TCP back-pressure) — it is the requirements-as-constraint discipline that pushes back on generation, not a runtime traffic mechanism.
+- **Owning chapter:** memo / 23-requirements (AT2)
+- **Known mis-labels:** `throttling`, `rate limiting`, `flow control`
+- **Version:** 1.0.0
+
+### Inner Harness — `AT-inner-harness`
+
+- **Definition:** The surface the agent harness itself exposes and the org does not control — the tool definitions, the agent/skill/task mechanics, and the versioned config surface a harness carries; the given layer, captured by the harness descriptor.
+- **Not:** NOT the layer the org builds; the inner harness is the given, non-modifiable surface. And NOT the harness descriptor itself — the descriptor is the record OF the inner harness, not the harness.
+- **Owning chapter:** meta-spec / 10-harness-registry (AT2)
+- **Known mis-labels:** `harness`, `platform`, `runtime`
+- **Version:** 1.0.0
+
+### Outer Harness — `AT-outer-harness`
+
+- **Definition:** Everything the org builds around the given inner harness — the standing rules and hooks, the local memo convention, the viewer and its channels; the layer the org owns, shapes, and maintains on top of the harness.
+- **Not:** NOT the given inner surface the harness exposes; the outer harness is the org-built layer, never the harness's own tool or config surface. And NOT a second harness process — it is the project layer running inside one harness invocation.
+- **Owning chapter:** meta-spec / 10-harness-registry (AT2)
+- **Known mis-labels:** `harness`, `wrapper`, `scaffold`
 - **Version:** 1.0.0

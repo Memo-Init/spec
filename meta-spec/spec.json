@@ -3,9 +3,9 @@
     "slug": "meta-spec",
     "title": "Meta-Spec",
     "namespaceToken": "META-SPEC",
-    "currentVersion": "0.2.0",
-    "version": "0.2.0",
-    "specDir": "meta-spec/0.2.0/draft/spec",
+    "currentVersion": "0.3.0",
+    "version": "0.3.0",
+    "specDir": "meta-spec/0.3.0/draft/spec",
     "prefix": "spec/",
     "sopAnchor": "00-overview",
     "docEntry": "/spec/overview/",
@@ -30,6 +30,6 @@
         }
     },
     "generated": {
-        "specId": "meta-spec@0.2.0:21bc03d"
+        "specId": "meta-spec@0.3.0:66b2294"
     }
 }

@@ -1,0 +1,19 @@
+{
+    "specId": "meta-spec@0.3.0",
+    "harnessRef": "claude-code@2.1.206",
+    "role": "orchestrator",
+    "compatibleRange": "=2.1.206",
+    "skills": [
+        "grade-score-batch",
+        "memo-chronic-build",
+        "memo-phase-execute",
+        "memo-phase-generate",
+        "memo-plan-execute",
+        "memo-research-agent",
+        "memo-rollout",
+        "memo-rollout-execute",
+        "memo-rollout-generate",
+        "memo-sop",
+        "wiki-ingest"
+    ]
+}

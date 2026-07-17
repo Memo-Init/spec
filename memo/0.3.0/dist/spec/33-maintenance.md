@@ -1,0 +1,191 @@
+---
+title: "Maintenance"
+description: "Maintenance is a first-class concern, not a side effect of building. A system that is only ever extended accretes surface faster than it sheds it, and every un-maintained unit eventually drifts from..."
+spec_version: "0.3.0"
+spec_file: "33-maintenance.md"
+order: 33
+section: "Specification"
+normative: true
+generated_at: "2026-07-17T23:43:43.034Z"
+generated_from: "memo/0.3.0/draft/spec/33-maintenance.md"
+generator: "scripts/generate-docs-payload.mjs"
+edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/33-maintenance.md."
+---
+
+
+Maintenance is a first-class concern, not a side effect of building. A system that is only ever extended accretes surface faster than it sheds it, and every un-maintained unit eventually drifts from the source it was derived from or from the better approach that has since arrived. This chapter names maintenance as a cross-cutting discipline and gives it the same measuring apparatus a goal has — a store, a lifecycle, a score object, a second deterministic axis, a board, and a gated acting path — so the backward view is as concrete as the forward one. It is the deliberate twin of [31-goals.md](/specification/goals/): the goal-scoring chapter read in reverse.
+
+## The Backward View — Goals Forward, Maintenance Backward
+
+A goal and a maintenance unit are the two poles of the same timeline, and the difference is direction.
+
+- **A goal points forward.** It is the bow that splits the water — new features, build-out, pushing the boundary out. It names an intent not yet reached, that several memos work toward. A goal arises from *wanting* (see [31-goals.md](/specification/goals/)).
+- **Maintenance points backward.** It *arises from what has already been delivered*. Before the first source existed there was no drift to find — without an original there is no copy that can diverge. Once something ships, more and more of it must be kept in sync: a growing field of recurring work that every delivered unit trails behind it. Maintenance arises from *what was delivered*.
+- **The coupling.** The more goals are met, the more maintenance is left behind (hopefully not too much). A fulfilled goal **migrates toward the stern** over time — what was "new build-out" yesterday is "a page to keep current" today. That migration *is* the triage rule: value lost because of something **new** is a goal; value lost because of **drift** of something existing is maintenance.
+
+This is why the chapter is structured as a mirror of [31-goals.md](/specification/goals/): every goal-scoring building block has a maintenance twin, so the two halves of the ship are measured the same way.
+
+## Maintenance Is Changing AND Reducing
+
+The instinct under maintenance pressure is to add — a flag, a branch, a compatibility shim. The cheaper instinct is almost always the wrong one. The more valuable and more expensive instinct is the **deletion question**: what can now be removed, retired, or collapsed. Reduction is maintenance in its highest form because it shrinks the surface that can drift, where addition grows it.
+
+The recurring anti-pattern is the **hybrid**: keeping both the old path and the new path "just in case." A hybrid doubles the maintained surface and guarantees the two halves will diverge, because no author updates both. Landing the plane ([27](/specification/landing-the-plane/)) is the discipline that closes this out — a change is not maintained until the thing it replaced is gone.
+
+## Drift Breaks in Two Directions
+
+Maintenance has to watch two independent kinds of movement:
+
+- **The world drifts (outward, loud).** An upstream source-of-truth moves — a dependency is renamed, a spec is re-published, an API changes. The local copy that pinned the old version is now stale. This is the drift that [28](/specification/drift/) models.
+- **The model improves (inward, quiet).** No external thing changed; a better approach simply arrived. The existing implementation is still "correct" but is no longer how the system would be built today. Nothing breaks, so nothing signals — which is exactly why it needs a deliberate measure.
+
+A maintenance discipline that only watches the first direction misses half the decay. This chapter names the second direction so it can be measured rather than merely felt.
+
+## The Maintenance Category — a Roof, Not a Twelfth Primitive
+
+Maintenance is a **cross-cutting concern** that sits above several existing chapters rather than beside them: Landing ([27](/specification/landing-the-plane/)), Drift ([28](/specification/drift/)), internal-vs-external communication ([19](/specification/internal-vs-external-communication/)), Goals ([31](/specification/goals/)), and Prompt Governance ([32](/specification/prompt-governance/)). What it adds is a **measuring organ** — a scorecard of freshness and blast-radius per unit, plus a maintainer role that reads change and reports decay.
+
+It is a cross-cutting **score**, not a new primitive. The primitives remain **exactly eleven** ([30](/specification/primitives/)); maintenance measures across them rather than joining them. Treating maintenance as a twelfth primitive would be a category error — it has no standalone artifact of its own, only a reading taken over the artifacts the primitives already define. This is the one place the maintenance mirror deliberately *breaks* symmetry with goals: a goal is a primitive, maintenance is a roof.
+
+## The Card-Store and Lifecycle
+
+The maintenance reading is kept in a **card store** under `.memo/maintenance/` — one **card** per repo, the maintenance unit (mirroring the goal store, which holds one entry per cross-memo intent). Card ids follow `M\d{3}`. Where the goal set is open and discovered, the card set is bound to the repo topology: there is one card per repo, so the set grows only when a repo is added.
+
+A card's lifecycle is a **three-level status**, carried in the score envelope as `maintStatus`:
+
+- `ok` — fresh enough; no action owed.
+- `stale` — drifted from its source; action owed when the blast-radius justifies it.
+- `critical` — drifted with wide blast; action owed now.
+
+Unlike a goal, a maintenance card never "completes" — there is no `abgeschlossen`. A repo is always being kept current; the status is a current reading, not a terminal state. That asymmetry is deliberate: the bow can reach a destination, the stern never does.
+
+## Scoring Mode
+
+Like a goal, a maintenance card is **measured against real state**, never against a self-report.
+
+- **Never in the working session.** A card is **never** scored in the same session that did the work — a session that built the change will report it healthy and hide the drift. Scoring runs in a **fresh context**, one agent per repo, an unbiased reader of the real diff. That is the *how*.
+- **Refreshed at landing — the *when*.** The canonical moment a card is re-scored is **Landing the Plane**: the L6 step of the landing checklist, run at the process end once the delivered change is real ([27-landing-the-plane.md](/specification/landing-the-plane/)). The refresh happens **at landing**, not first when the next rollout reads the board — the `releaseReady` flag a pre-rollout health check consumes (The Board, below) was computed at the previous landing, in the fresh context landing already provides. The *when* completes the fresh-context *how*: "never in the working session" names which session must not score, landing names which one does.
+- **Distrust PASS.** A green report is not evidence. The fresh-context reader inspects the actual commits since each edge's provenance pin, the real dependency graph, and the source heads — not a claim.
+- **A single score is a strict object.** One card's score is `{ pct, status, findings, signals, confidence, evidence }`: a freshness percentage, the `maintStatus`, the concrete drift findings, the machine signals behind them, the provenance of the judgement, and evidence pointers. `pct` is the fresh-context freshness reading; the blast-radius (below) is computed deterministically and auto-filled by the CLI.
+
+This fresh-context, distrust-PASS, strict-object posture is the **shared scoring head** specified once in [23-requirements.md](/specification/requirements/) (The Grading Model); maintenance scoring follows that head and adds only its domain axes (freshness `pct` + blast-radius), rather than restating the contract.
+
+## Blast-Radius — the Second Axis
+
+A card is scored on **two independent axes**, mirroring the goal split of a subjective and a deterministic axis ([31](/specification/goals/)).
+
+- **Freshness** — how current the unit is versus its source. Monotone: higher is fresher. This is the judgement axis (the `pct`), and it is the gap to be closed, not the trigger.
+- **Blast-radius** — how far the unit's drift would propagate if left to rot, computed **deterministically** from the dependency graph (who consumes it, transitively, and whether any consumer is externally visible). This is the cost axis, and it is the trigger.
+
+The two are independent: a unit can be very stale with a narrow blast (rot it later) or only mildly stale with a wide blast (fix it now). A **handelnder** maintenance action is therefore gated on the *pair* — act only when the card is not fresh **and** its blast-radius is at or above the gating threshold; otherwise report and move on. The threshold is the **same gating value used to gate goal optimization** ([31](/specification/goals/), "Readiness — the Second Axis"); the number is defined there and is deliberately **not restated here** — a second copy of the value would be a drift candidate from day one ([28](/specification/drift/), single-source-of-truth).
+
+## The Board
+
+Scoring all cards produces a **board** — the standard output, exactly as for goals. It is a table of `Repo | Freshness % | Blast | maintStatus | Missing`, sorted worst-first, followed by a summary line of the form `N ok · M stale · K critical · Ø Freshness X %`, plus a `worstStatus` (the worst card's status) and a `releaseReady` flag (true only when no card is `critical`). This board, not a single number, is the deliverable, and the `releaseReady` flag is what a pre-rollout health check reads (see [./26-memo-history.md](/specification/memo-history/) and the project-health projection). That flag is **refreshed at landing** — the L6 step of the landing checklist ([./27-landing-the-plane.md](/specification/landing-the-plane/)) re-scores every card in a fresh context, so a later pre-rollout read consumes a value computed at the previous landing rather than one invented on the spot.
+
+## The Forced Dashboard
+
+The maintenance board answers one axis — freshness across the repos — but a session opens against a wider readiness picture, and reading that picture one command at a time is exactly how a signal gets skipped. The init dashboard is therefore a **forced fusion**: the setup view **MUST** collapse the project's health signals into a single read-only projection rather than leaving them scattered across separate commands. This is a **MUST, not a SHOULD** — a health view that surfaces only some of the signals lets the unread one rot silently, which is precisely the decay this chapter exists to catch.
+
+The dashboard fuses **five** signals into one view:
+
+- **the sync-score board** — the project-health projection over the maintenance, goal, chronicle, and wiki boards, read as one Sync % against a threshold;
+- **the session readiness battery** — the deterministic session-scope health checks;
+- **the repo-structure health check** — the shell script that verifies the repo topology, the project files, and the runtime version are intact;
+- **the wiki lint** — advisory only, because wiki freshness is a skill pass with no deterministic measure: a present wiki bundle is a warning to run the lint, never an invented percentage;
+- **the per-memo session report** — the session, token, wall-time, and conflict reading, fused as the fifth signal.
+
+The dashboard is read-only, deterministic, and **fail-open**: a signal whose input is absent degrades to a neutral "not measurable" row, never an exception and never a block. It **MAY** exit non-zero so a script can gate on a failing signal, but it **MUST NOT** block the session itself — the finalized memo remains the authority, exactly as the pre-rollout health check is a warning and not a binary gate.
+
+### The Work-Item Stand Is Made Visible
+
+A store that is filled but never surfaced is invisible work: the state exists on disk yet no view renders it, so what the context holds and what the interface shows fall out of agreement. The dashboard closes that gap — it **MUST** render the work-item stand **visibly**, a summary count plus the item table, so the finer-grained work below each topic is read at a glance instead of remaining a silent store. Surfacing the stand is the discipline that keeps the recorded work and the displayed work in step; a populated store that no board renders is a maintenance blind spot by construction.
+
+### Auto-Registration, Not Auto-Login
+
+Surfacing has a supply side. The viewer that renders these boards **auto-registers** a project the moment it presents a valid structure — a memo directory holding at least one numbered memo with its revisions — rather than waiting for a manual add. This trigger is named **auto-registration**, deliberately *not* "auto-login". "Logged-in" is already the established status of a *transcript* inside the viewer, and reusing "login" for the project-level trigger would collide with that vocabulary and blur two unrelated states. The two concerns therefore stay lexically separate: a transcript is *logged in*, a valid-structure project is *auto-registered*.
+
+## Gated Re-Verification
+
+Every declared dependency edge carries a **provenance pin** — `verifiedAtSha`, the commit of the source at which the edge was last verified. With the pin, staleness is a *count* (commits on the source since the pin), not a guess; without it, staleness is unmeasurable. An explicit pin on every edge is a maintainability precondition, not an optional nicety.
+
+**Re-verification** is the gated *acting* path, the maintenance twin of llm-initiated goal optimization. It re-stamps `verifiedAtSha` after a fresh-context check that the edge still holds at the source's current head — but only when the gate qualifies (`status != ok` AND blast-radius at or above the threshold). It is git-centric and forward-only: it never rewrites history and never deletes. Marking an edge fresh without re-checking it would merely hide drift, so the stamp always follows a check, and a card that does not qualify is reported, not re-blessed.
+
+## Maintenance and the Chronicle
+
+Maintenance, like goals, derives from the **chronicle** ([26-memo-history.md](/specification/memo-history/)) — it is read backward where a goal is read forward. The chronicle is updated first; from its narrated timeline the project sorts each cluster of change with the **NEW/DRIFT triage**: value lost because of something **new** becomes a goal (the forward bow), value lost because of **drift** of something existing becomes maintenance (the backward stern). The chronicle is therefore the shared run-up to *both* derivations, which is why it SHOULD carry all of a memo's topics (the completeness its WARN-only coverage check guards). Because cards are bound to the repo topology rather than discovered open-endedly, the chronicle drives the *goal* set more than the *card* set; cross-repo drift clusters that the chronicle surfaces are findings on existing cards rather than new cards.
+
+## Coverage Beyond the LLM — Mechanism Assignment
+
+Not every drift class is best caught by an LLM reading code. Each class is assigned to the deterministic mechanism that covers it, so the LLM maintainer is the integrator of machine evidence rather than its sole source:
+
+| Drift class | Deterministic mechanism |
+|-------------|-------------------------|
+| Secret / credential exposure | secrets scan at the commit and push gate |
+| Dependency supply-chain rot | dependency-advisory watch over the lockfile |
+| Source-copy divergence | the idempotent lint/CI gate ([28](/specification/drift/)) |
+| Pinned-source staleness | provenance-pin compared against the source head (commit count) |
+| Behavioral regression | runtime guardrails ([29](/specification/behavioral-guardrails/)) plus local exit codes |
+
+A maintenance discipline must also keep an explicit **blind-spots list** — the drift classes for which no mechanism yet exists — declared openly rather than left as a silent gap, so coverage is honest about its own edges.
+
+## Autonomy Boundary
+
+The maintainer is **reporting-autonomous**: it reads the diff, clusters changes, traverses the affected graph, renders the board and an evidence trail, and *proposes* removals. It is **acting only behind a gate or human approval**: re-blessing an edge, deleting anything, or spawning new work all require the gate to qualify or a person to decide. The system never commits on its own, and deletion always goes to a recoverable trash, never a destructive remove. "When a human decides" is an explicit output of every maintenance run, not an implicit default.
+
+---
+
+## Conformity Requirements
+
+The maintenance mechanics above rest on two preconditions the prose states and that are authored here as declarative requirements ([23-requirements.md](/specification/requirements/)): every dependency edge is explicitly declared, and every edge carries a provenance pin. Both face the maintenance gate, and the doer is not the grader.
+
+A silent soft edge makes staleness unmeasurable, so an edge's declaration is a hard yes/no:
+
+```requirement
+{
+  "id": "REQ-053",
+  "title": "Every dependency edge is explicitly declared, never a silent soft edge",
+  "statement": "Every repo or node dependency edge in the maintenance graph is declared explicitly as set, justified-omit, or blocked — never left as a silent soft edge. A guessed or implicit edge is forbidden: an edge that cannot reach set is marked justified-omit or blocked with a stated reason.",
+  "scope": { "repos": [], "categories": ["repo"], "tags": [] },
+  "severity": "warning",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every dependency edge is declared as set, justified-omit, or blocked",
+      "No edge is left implicit or guessed"
+    ]
+  }
+}
+```
+
+Without a provenance pin staleness is a guess rather than a count, so the pin is required on every edge:
+
+```requirement
+{
+  "id": "REQ-054",
+  "title": "Every dependency edge carries a provenance pin",
+  "statement": "Every declared dependency edge in the maintenance store carries a provenance pin — verifiedAtSha, the commit of the source at which the edge was last verified — and the pin is re-stamped on every edge change. With the pin, staleness is a count of commits since the pin; without it, staleness is unmeasurable.",
+  "scope": { "repos": [], "categories": ["repo"], "tags": [] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "Every declared maintenance-store edge carries a verifiedAtSha provenance pin",
+      "The pin is re-stamped whenever the edge changes"
+    ]
+  }
+}
+```
+
+---
+
+
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
+## Related
+
+- [26-memo-history.md](/specification/memo-history/) — the chronicle, the shared run-up that maintenance is derived from (backward) just as goals are (forward).
+- [27-landing-the-plane.md](/specification/landing-the-plane/) — reduction and graceful completion; the deletion question this chapter builds on.
+- [28-drift.md](/specification/drift/) — the outward drift direction, the idempotent lint/CI gate, and the single-source-of-truth rule that keeps the gating threshold uncopied.
+- [19-internal-vs-external-communication.md](/specification/internal-vs-external-communication/) — the inward/outward axis that separates the two drift directions.
+- [30-primitives.md](/specification/primitives/) — the eleven primitives this chapter measures across but does not extend.
+- [31-goals.md](/specification/goals/) — the goal-scoring chapter this one mirrors: store, lifecycle, score object, second deterministic axis, board, gated acting path.
+- [32-prompt-governance.md](/specification/prompt-governance/) — the governed-default discipline maintenance also relies on.

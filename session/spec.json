@@ -3,9 +3,9 @@
     "slug": "session",
     "title": "Session Specification",
     "namespaceToken": "SE",
-    "currentVersion": "0.2.0",
-    "version": "0.2.0",
-    "specDir": "session/0.2.0/draft/spec",
+    "currentVersion": "0.3.0",
+    "version": "0.3.0",
+    "specDir": "session/0.3.0/draft/spec",
     "prefix": "session/",
     "sopAnchor": "10-sop",
     "docEntry": "/session/overview/",
@@ -32,6 +32,6 @@
         }
     },
     "generated": {
-        "specId": "session@0.2.0:21bc03d"
+        "specId": "session@0.3.0:66b2294"
     }
 }

@@ -1,0 +1,73 @@
+{
+    "namespace": "meta-spec",
+    "version": "0.3.0",
+    "namespaceToken": "META-SPEC",
+    "hasRequirements": true,
+    "hasGrading": false,
+    "requirementsRef": "02-per-chapter-format",
+    "gradingRef": null,
+    "groups": [
+        {
+            "id": "introduction",
+            "label": "Introduction",
+            "order": 1,
+            "pages": [
+                "00-overview"
+            ]
+        },
+        {
+            "id": "structure",
+            "label": "Structure",
+            "order": 2,
+            "pages": [
+                "02-per-chapter-format",
+                "03-categories",
+                "04-bridge-standard"
+            ]
+        },
+        {
+            "id": "publication",
+            "label": "Publication",
+            "order": 3,
+            "pages": [
+                "05-publishing-principle"
+            ]
+        },
+        {
+            "id": "versioning",
+            "label": "Versioning",
+            "order": 4,
+            "pages": [
+                "07-versioning"
+            ]
+        },
+        {
+            "id": "conventions",
+            "label": "Conventions",
+            "order": 5,
+            "pages": [
+                "06-conventions-writing"
+            ]
+        },
+        {
+            "id": "bridge",
+            "label": "Bridge",
+            "order": 6,
+            "pages": [
+                "01-bridge"
+            ]
+        },
+        {
+            "id": "lifecycle",
+            "label": "Lifecycle",
+            "order": 7,
+            "pages": [
+                "08-spec-lifecycle",
+                "09-current-state",
+                "10-harness-registry",
+                "11-spec-authority"
+            ]
+        }
+    ],
+    "fallback": "append-by-NN"
+}
