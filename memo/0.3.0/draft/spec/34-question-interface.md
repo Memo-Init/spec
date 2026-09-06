@@ -106,8 +106,93 @@ Each question object in the block is authored with **English** field names. Thes
 | `options` | object[] | The real options, each `{ key, label, kind }`. |
 | `preselected` | number[] | Optional explicit pre-selection by option index. |
 | `answered` | boolean | Whether the question has been answered. |
+| `status` | `open` \| `answered` \| `irrelevant` \| `replaced` | The lifecycle state ([07-revisions-and-questions.md](./07-revisions-and-questions.md)). It stands **beside** `answered`, which stays for every older reader; both are derived from the same state and can never disagree. |
+| `statusReason` | string \| null | The stated "why" of a retirement. Mandatory in the store for `irrelevant` and `replaced`. |
+| `replacedBy` | string \| null | The id of the superseding question, for `replaced`. |
+| `answeredBy` | `user` \| `ai-on-behalf` \| null | Who took the decision — the axis the on-behalf barrier reads. |
+| `answeredInRev` | string \| null | The revision the decision fell in, e.g. `REV-02`. |
+| `note` | string \| null | The remark that belongs to the decision. |
+| `dimension` | string | The ONE thing being decided, as a plain-language noun phrase. See "Balance Is a Predicate, Not an Adjective" below. |
+| `sharedPremise` | string \| null | The assumption all options rest on, when there is one. Optional; when set, exactly one option must deny it. |
+| `mentalModelCheck` | string | `aligned`, or a sentence naming the collision with the known user tendency. Advisory: it never answers the question and never removes it. |
 
-The parser is **tolerant**: for back-compat it still accepts the legacy German field names — `frage` (for `question`), `hintergrund` (for `background`), `typ` (for `type`), and `aiRecommendation`/`ai_recommendation` (for `recommendation`). When both spellings are present on the same object the German name wins, so existing blocks keep parsing unchanged. New blocks SHOULD use the English names above. The `custom` ("reject"), `topic` ("skip via topic"), and `reframe` ("re-formulate") options are injected by the parser and MUST NOT be authored as extra option rows.
+Each **real** option object (`kind: "option"`) additionally carries the fields the balance predicate is
+decided on:
+
+| Field | Type | Meaning |
+|-------|------|---------|
+| `value` | string | The value this option takes on the question's `dimension`. The values of one option set are pairwise distinct. |
+| `effect` | string | Half a sentence on what follows if the developer picks this option. |
+| `scope` | `smaller` \| `same` \| `larger` | How big this option's cut is against the question's full scope. The list is closed. |
+| `continues` | boolean | `true` marks a way forward — "keep working" / "do it all". |
+| `deniesPremise` | boolean | `true` on exactly one option when `sharedPremise` is set. |
+| `deferCost` | string \| null | The planning overhead of a postponement this option names. No flat penalty, but no concealed price either. |
+
+**The six lifecycle fields are emitted, not implied.** The block is not only a hand-off, it is also the form a generated revision is read back from, and reading it back replaces the whole question stock. A field the block does not carry is therefore **destroyed on the next read-back**: before these fields existed, a question retired as `irrelevant` came back as plain `open` and took its reason and its edge with it. A generated block MUST emit all six, and **absence is written as an explicit `null`** — never as a dropped key, because a dropped key changes the object shape and makes two renderings of the same state differ in bytes.
+
+An **unknown** `status` value is read defensively on the display side: it degrades to the reading derived from `answered`, and the document still renders. The closed list is enforced where the value is **written**, not where it is displayed — a viewer that refuses to draw a document helps nobody, and a store that accepts an unknown status corrupts the stock.
+
+The parser is **tolerant**: for back-compat it still accepts the legacy German field names — `frage` (for `question`), `hintergrund` (for `background`), `typ` (for `type`), and `aiRecommendation`/`ai_recommendation` (for `recommendation`). When both spellings are present on the same object the German name wins, so existing blocks keep parsing unchanged. New blocks SHOULD use the English names above. The `custom` ("reject"), `topic` ("skip via topic"), `reframe` ("re-formulate the question") and `reoption` ("re-formulate the answer options") options are injected by the parser and MUST NOT be authored as extra option rows.
+
+#### Balance Is a Predicate, Not an Adjective
+
+"A balanced option set" ([29-behavioral-guardrails.md](./29-behavioral-guardrails.md) C2) was a **sentence**
+for as long as no question object carried a field it could be decided on. A rule nobody can check is a rule
+nobody keeps, and the rule was in fact broken repeatedly — with option sets that offered nothing but ways to
+stop, which is precisely what C2 forbids. Balance is therefore defined as a **predicate over the fields
+above**, not as an adjective an author applies to their own work.
+
+An option set is balanced **exactly when both hold**:
+
+1. at least one real option carries `continues: true` **and** `scope !== "smaller"` — the way forward, and
+2. at least one real option carries `scope: "smaller"` — the smaller cut.
+
+A set in which every option is `smaller` and none continues consists of nothing but ways to stop, and is
+therefore not balanced. Only options with `kind: "option"` are counted; the four injected siblings
+(`custom`, `topic`, `reframe`, `reoption`) never count toward the predicate, exactly as they never count
+toward the two-real-option render minimum.
+
+Four further rules ride on the same fields, and each one is decidable rather than argued:
+
+- **One decision per question.** The question names one `dimension`; each real option names the `value` it
+  takes on it, and the values are pairwise distinct. An option set varying two dimensions at once is not
+  *representable* in this shape — the construction is the enforcement.
+- **Every option names its consequence.** A non-empty `effect` per real option.
+- **Rollout timing is not a subject-matter option.** No time expression in an option's `label` or `value`.
+  When to start belongs to the developer and is its own question; bundling it into a subject option forces a
+  timing decision along with the subject one.
+- **A postponement names its price.** An option that names deferring carries a non-empty `deferCost` — the
+  planning overhead, stated. No flat penalty against deferring, and no concealed price for it either.
+
+**The predicate states its own limits, and does not claim what it cannot decide.** Whether an author
+*noticed* a shared premise is not machine-decidable; what is checked is consistency — a declared
+`sharedPremise` needs exactly one option denying it. The same holds for `mentalModelCheck`: that the note
+exists is checkable, that it is true is not, which is why it is advisory and never blocking. Both duties
+therefore stay with the pre-revision planning step, named there, instead of being reported here as a green
+tick. And a run that examined **zero** open questions says so rather than reporting a clean result: a check
+without a comparison basis is not a pass.
+
+The rules apply to **open** questions. An answered question is a decision record, not a draft — rewriting
+the existing stock to satisfy a later rule would falsify the very record [41-mental-model.md](./41-mental-model.md)
+reads.
+
+They also apply only to questions that **carry** the fields. A question object holding none of them predates
+the standard, and there is nothing on it any rule could be decided against; it is **skipped, counted and
+named**, not graded. Grading it would report the same errors on every question object ever written, which is
+not a finding but the absence of a comparison basis — and the two are different statements, so the gap is
+stated rather than folded into a clean result. One field is enough to opt in, and an opted-in object is then
+measured in full: a half-filled object is loud, never quietly half-checked. The rules therefore bite from the
+first newly written question, without turning the existing stock red on the day they are introduced, and the
+skipped count falls to zero on its own as the writing path adopts the fields.
+
+**Naming the skipped questions is part of the rule, not a convenience.** A run that measured nothing says so;
+but a run that measured *something* can no longer make that statement, and a **mixed** block — one opted-in
+question beside one that predates the standard — is the shape the whole transition period consists of. The
+skip is therefore reported as its own finding, once per block, listing every ungraded question id, so a run
+can never report the question it measured and stay silent about the one next to it. It is **advisory**: it
+never changes the verdict, because the writing path has not adopted the fields yet. A count alone would not
+do, since a count only survives a caller that carries it; a named finding travels every channel a verdict
+travels.
 
 #### The Reframe Option
 
@@ -115,13 +200,23 @@ The parser injects a **third** standing sibling alongside `custom` and `topic`: 
 
 `reframe` therefore opens a **discussion turn, not a decision record**. It commits the developer to no option and is **not** written into the answered-questions split (the answered-by-developer / answered-on-behalf record above) as either kind of answer — recording a reframe as a decision would launder a broken premise into the canonical record. It is available on **every** question, a standing sibling exactly like `custom` and `topic`, because any question can turn out to rest on a mistaken assumption, and forcing a choice among options that all share that mistake would only hide the error.
 
-Like `custom` and `topic`, `reframe` is a **non-`option` kind**: it never counts toward the two-real-option minimum a question needs to render as an interactive card (that minimum counts only `kind: "option"` rows), and it carries no option key the recommendation could reference. It is one of the shared render-contract `kind` values — `{option, custom, topic, reframe}` — and an option whose `kind` is none of these is rejected fail-loud when the revision is registered, never silently dropped on the user's screen (the same render-contract gate the count-gate section below relies on).
+Like `custom` and `topic`, `reframe` is a **non-`option` kind**: it never counts toward the two-real-option minimum a question needs to render as an interactive card (that minimum counts only `kind: "option"` rows), and it carries no option key the recommendation could reference. It is one of the shared render-contract `kind` values — `{option, custom, topic, reframe, reoption}` — and an option whose `kind` is none of these is rejected fail-loud when the revision is registered, never silently dropped on the user's screen (the same render-contract gate the count-gate section below relies on).
+
+#### The Reoption Option
+
+The parser injects a **fourth** standing sibling: **`reoption`**. It answers a different fault from `reframe`. `reframe` says the **question** is wrong; `reoption` says the question is fine and the **answer options** go past the decision — the options bundle two decisions, share a premise the developer does not hold, or simply do not contain the answer they would give. That is the more common of the two faults, and before it existed there was no way to say it: the only available moves were to answer badly, to reject the question, or to claim a false premise that was not there.
+
+Like its three siblings `reoption` is a **non-`option` kind**: it is never pre-selected, it never counts toward the two-real-option render minimum, and it commits the developer to nothing. Choosing it **changes no status** — the question stays `open` under the same `F{N}` id, exactly as a re-formulation of the wording does.
+
+A re-formulation of the options MUST carry a **reason** — what was wrong with the discarded set — and the **discarded option set itself**, preserved verbatim including each option's `kind`. Both are recorded as a `reoptioned` event in the question journal of [07-revisions-and-questions.md](./07-revisions-and-questions.md); the reason is what turns a correction into a lesson, and the discarded set is what makes "what was wrong" readable later instead of merely "something was wrong".
+
+The write is **gated**, and the gate refuses fail-loud rather than recording a doubtful row: the **question wording MUST be unchanged** (re-writing the question under the cover of new options is a `reframed` event, not this one), the **option set MUST really differ** (a re-formulation that changes nothing is an error, not a no-op), the new set MUST retain at least **two real `option` rows** (the injected siblings are not an answer set), and no option may be written in the `- **A:**` form instead of a discrete `A) text` line.
 
 ### Interplay with the Question-Count Gate
 
 The **question-count lint gate (MEMO-025)** applies to the **markdown-only** path: when a memo carries no `questions-json` block, every `### F{N}` heading MUST parse into exactly one question and vice versa, so a heading the parser silently misses is still caught.
 
-When a `questions-json` block **is** present it is the single source (07's authority rule), and the count gate **does not** cross-check the `### F{N}` heading count against it. This is the single-source split defined in [07-revisions-and-questions.md](./07-revisions-and-questions.md): **open** questions live in the json block only — there is no hand-written `### F{N}` mirror, the human-readable form is generated by `renderQuestionsMarkdown` — while **answered** questions keep their `### F{N}` decision records (the `AI recommendation` vs `user decision` pair that [41-mental-model.md](./41-mental-model.md) reads). The two artefacts legitimately differ in count, so cross-checking them would misfire; the json is trusted instead. Authoring rule: **pose open questions only as `questions-json`, never as extra `### F{N}` headings.** What the renderer needs to draw a question as a card — including each option's `kind` ∈ `{option, custom, topic, reframe}` — is the one shared render contract; an invalid `kind` is rejected fail-loud at registration (MEMO-033), not silently dropped at the screen.
+When a `questions-json` block **is** present it is the single source (07's authority rule), and the count gate **does not** cross-check the `### F{N}` heading count against it. This is the single-source split defined in [07-revisions-and-questions.md](./07-revisions-and-questions.md): **open** questions live in the json block only — there is no hand-written `### F{N}` mirror, the human-readable form is generated by `renderQuestionsMarkdown` — while **answered** questions keep their `### F{N}` decision records (the `AI recommendation` vs `user decision` pair that [41-mental-model.md](./41-mental-model.md) reads). The two artefacts legitimately differ in count, so cross-checking them would misfire; the json is trusted instead. Authoring rule: **pose open questions only as `questions-json`, never as extra `### F{N}` headings.** What the renderer needs to draw a question as a card — including each option's `kind` ∈ `{option, custom, topic, reframe, reoption}` — is the one shared render contract; an invalid `kind` is rejected fail-loud at registration (MEMO-033), not silently dropped at the screen.
 
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->

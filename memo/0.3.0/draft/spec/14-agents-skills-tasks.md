@@ -41,6 +41,8 @@ A **skill** is the right shape when the procedure should run inside the caller's
 
 The platform name for type (c) is **Dynamic Workflow** — the script-driven primitive. A model-driven *research fan-out* (the Lead spawning a few type-(a) sub-agents per turn) is a different thing and MUST NOT be called a dynamic workflow (see [13-orchestration.md](./13-orchestration.md)).
 
+An **execution workflow** is the named *application* of type (c) to working a phase — a Dynamic Workflow whose script holds the per-unit sequence of build, verify, conditional fix and re-check (see [49-execution-workflow-guideline.md](./49-execution-workflow-guideline.md)). It is not a fourth primitive and not a counter-term to *Dynamic Workflow*: the primitive stays type (c), and *execution workflow* names what that primitive is being used for.
+
 **Nesting.** A sub-agent MAY spawn its own sub-agents, but the depth is **fixed at five** and is not configurable: a sub-agent at depth five does not receive the `Agent` tool and cannot spawn further. Only the top-level sub-agent's summary returns to the caller.
 
 ---

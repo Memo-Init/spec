@@ -50,9 +50,10 @@ _(no skill dependencies declared in this family)_
 | [36-research](./36-research.md) | — | 0 | — |
 | [37-snapshots](./37-snapshots.md) | — | 0 | — |
 | [38-worktrees](./38-worktrees.md) | — | 0 | — |
+| [39-n8n](./39-n8n.md) | — | 0 | — |
 | [41-project-architecture](./41-project-architecture.md) | ✓ | 6 | 2 |
 | [43-projects](./43-projects.md) | — | 0 | — |
-| **Summary** | **23 / 30** | — | 34 |
+| **Summary** | **23 / 31** | — | 34 |
 
 ## Skills by namespace
 
@@ -160,6 +161,10 @@ _(no skill dependencies declared in this family)_
 - [23-hooks-contract](./23-hooks-contract.md) — `workbench-cli`, `workbench-config`, `workbench-environment-scripts`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [25-validation-overview](./25-validation-overview.md) — `workbench-cli`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [41-project-architecture](./41-project-architecture.md) — `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `wiki-lint`, `workbench-audit`, `workbench-config`
+
+### Other
+
+- [39-n8n](./39-n8n.md) — _— no implementer skill yet —_
 
 ## Related
 

@@ -33,7 +33,7 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | Path | Status | Level | Entry-point | Format/Convention | Purpose |
 |------|--------|-------|-------------|-------------------|---------|
 | `.claude/` | Mandatory | Project | `settings.json` | — | Claude Code settings and project-local skills. |
-| `.trash/` | Mandatory | Project | — | — | Recoverable trash; the deletion target (see [32-trash.md](./32-trash.md)). |
+| `.trash/` | Mandatory | Both | — | — | Recoverable trash; the deletion target, segmented per memo as `.trash/<memo-id>/`. Also exists at the root, because the no-delete guarantee is workbench-wide (see [32-trash.md](./32-trash.md)). |
 | `ABOUT.md` | Mandatory | Project | — | — | Project documentation for humans. |
 | `CLAUDE.md` | Mandatory | Project | — | — | The runbook for the AI. |
 | `context/` | Mandatory | Both | per-topic sub-folders | plain Markdown; OKF opt-in for `architecture-okf/` | **Processed**, derived material — specifications, distilled research, Markdown/PDF documents. Also exists at the root for cross-project standards (see [10-root-and-projects.md](./10-root-and-projects.md)). |
@@ -44,12 +44,13 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `.browser/` | Required (conditional) | Project | — | — | Browser-automation session, scripts, and output — present **only when** the project does browser automation, but when present the name is **required**: `.browser/` is the canonical name and the only conforming one, and `.playwright/` is a **deprecated** alias projects **MUST** migrate now — not at their own pace (see [31-browser-automation.md](./31-browser-automation.md)). |
 | `.flowmcp/` | Optional | Project | — | — | Regenerable FlowMCP `namespace-index.json` cache — generated machinery, **gitignored**; the local side of the FlowMCP custom folder (see [33-flowmcp.md](./33-flowmcp.md)). |
 | `.session/` | Optional | Both | `config.json` | — | The session genesis-root marker — its presence marks where a session is rooted; holds `config.json`, the base of the config cascade. One per tree, a sibling of `.workbench/`. Owned by the session spec (see [`.session/` Is Session-Owned](#session-is-session-owned) and [session/01-genesis-root.md](/session/genesis-root/)). |
-| `.tmp/` | Optional | Project | — | — | Scratch / temporary working area — transient material, not durable knowledge and not committed (see [19-tmp.md](./19-tmp.md)). |
+| `.tmp/` | Optional | Both | — | — | Scratch / temporary working area — transient material, not durable knowledge and not committed, segmented per memo as `.tmp/<memo-id>/`. Also exists at the root, which needs scratch for the same reason a project does (see [19-tmp.md](./19-tmp.md)). |
 | `.workbench/` | Optional | Project | `config.json` · `registry.json` | — | The manual project configuration the workbench core reads (see [22-config.md](./22-config.md)). |
-| `.worktrees/` | Optional | Project | — | — | The consistent location for git worktrees — generated machinery, **gitignored**, with mandatory cleanup via `git worktree remove`/`prune` (see "Worktree Placement" below). |
+| `.worktrees/` | Optional | Project | — | — | The consistent location for git worktrees — generated machinery, **gitignored**, with mandatory cleanup via `git worktree remove`/`prune`, segmented per memo as `.worktrees/<memo-id>/` in the same shape as `.tmp/` and `.trash/` (see "Worktree Placement" below and [38-worktrees.md](./38-worktrees.md)). |
 | `data/` | Optional | Project | — | — | **Raw inputs** — feeds and source material, as ingested, before processing; the input side that `context/` is derived from. |
 | `design/` | Optional | Project | `design.md` | design format | Design system and visual sources — `design.md`, variants, and `.pen` files (see [18-design.md](./18-design.md)). |
 | `flowmcp/` | Optional | Both | — | — | FlowMCP authored content and produced output — the footprint of the FlowMCP custom folder (see [33-flowmcp.md](./33-flowmcp.md)). |
+| `n8n/` | Optional | Project | — | n8n-separation (naming-level) | Authored n8n content — exported workflow JSON and the project's n8n conventions; the footprint of the n8n custom folder on the one shared instance (see [39-n8n.md](./39-n8n.md)). |
 | `proofs/` | Optional | Project | — | — | Proofs captured when a view changes (see "Specialized folders" below). |
 | `research/` | Optional | Project | — | — | Cloned foreign / research repositories that are **not** the project's own domain repos (for example `dune`, spellbook) — distinct from `repos/` (own repos) and `data/` (raw inputs). |
 | `snapshots/` | Optional | Project | — | — | Application snapshots (see "Specialized folders" below). |
@@ -86,6 +87,7 @@ mindmap
       data/
       design/
       flowmcp/
+      n8n/
       proofs/
       research/
       snapshots/
@@ -325,6 +327,7 @@ Several registered folders carry enough depth to have their own page; this chapt
 | `.wiki/` | [30-wiki.md](./30-wiki.md) |
 | `.browser/` | [31-browser-automation.md](./31-browser-automation.md) |
 | `flowmcp/` | [33-flowmcp.md](./33-flowmcp.md) |
+| `n8n/` | [39-n8n.md](./39-n8n.md) |
 | `.trash/` | [32-trash.md](./32-trash.md) |
 | `.tmp/` | [19-tmp.md](./19-tmp.md) |
 | `data/` | [34-data.md](./34-data.md) |

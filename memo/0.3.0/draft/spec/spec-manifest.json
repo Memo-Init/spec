@@ -64,7 +64,8 @@
                 "32-prompt-governance",
                 "38-stage-model",
                 "42-plans",
-                "47-memo-lifecycle"
+                "47-memo-lifecycle",
+                "49-execution-workflow-guideline"
             ]
         },
         {

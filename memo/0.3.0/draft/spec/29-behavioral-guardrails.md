@@ -21,6 +21,8 @@ A question that only offers stop-options ("Should I pause here?", "Do you want m
 
 The rule: every question to the user MUST offer a balanced option set that includes "keep working" or "do it all", not only ways to stop. The default branch of any question is forward motion. This is the conversational expression of C3 — the option to continue must always be on the table, phrased as a first-class choice rather than an afterthought. The interaction model ([21-human-computer-interaction.md](./21-human-computer-interaction.md)) defines where such questions occur; this rule defines how they must be framed.
 
+**"Balanced" is a predicate, not an adjective.** For as long as this rule was only a sentence, it was broken repeatedly, and the breakage was found on the screen rather than at the door. An option set is balanced exactly when it carries **both** a way forward — a real option with `continues: true` and `scope !== "smaller"` — **and** a smaller cut, a real option with `scope: "smaller"`. Only real options count; the injected siblings never do. The full field set, the codes that decide it, and the two parts that are honestly not machine-decidable are defined in [34-question-interface.md](./34-question-interface.md) ("Balance Is a Predicate, Not an Adjective"). This rule states the obligation; that chapter states how it is measured.
+
 ## C3 — Default Posture Is Full Autonomy
 
 The finalized memo IS the authorization. Once a memo passes the finalization gate, the agent has been told what to build; it does not need to re-ask for permission at every step.

@@ -8,7 +8,7 @@
 
 A **controlled language** is a deliberately restricted subset of a natural language: a fixed vocabulary with one meaning per word, plus a small body of writing rules that bound sentence length, voice, and structure. The reference instance is ASD-STE100 (Simplified Technical English), the ASD's international standard for technical documentation, built from two parts — a Dictionary of approved words and a body of Writing Rules. This chapter registers the organization's own controlled-language profile: a curated, binding twelve-rule set in the STE spirit. It does **not** adopt STE wholesale, and it does **not** re-specify the anchor-term register that its vocabulary rules build on — that register is the Dictionary half and lives in [Writing Conventions](./06-conventions-writing.md); this chapter references it rather than restating it (No Double Normativity). The chapter reads under the RFC-2119 conformance interpretation the family establishes in its overview ([./00-overview.md](./00-overview.md)).
 
-The twelve rules are authored in German and reproduced here verbatim, because a controlled-language rule set is inseparable from the language it controls: STE controls English, this profile controls German. The rules govern German-language artifacts — terminal output and memo prose — so they appear below as a quoted normative specimen in German, framed by this chapter's English description.
+The twelve rules are authored in German and reproduced here verbatim, with one marked exception (`SR-04`, see ‡ below), because a controlled-language rule set is inseparable from the language it controls: STE controls English, this profile controls German. The rules govern German-language artifacts — terminal output and memo prose — so they appear below as a quoted normative specimen in German, framed by this chapter's English description.
 
 ---
 
@@ -36,9 +36,11 @@ The profile applies to **terminal output and memo prose** — the two German-lan
 | SR-01 | **Ein Begriff = eine Bedeutung.** Fuer jedes Konzept NUR das kanonische Anker-Label (Memo, Revision, Topic, Block, PRD, Phase, …), nie Synonyme („Dokument" fuer Memo, „Version" fuer Revision sind verboten). | one word, one meaning |
 | SR-02 | **Mis-Labels sind non-approved words.** Steht ein Wort in `misLabels` eines AT-Eintrags, wird es durch das approved Label ersetzt — mechanisch lintbar. | non-approved words + Ersetzung |
 | SR-03 | **Keine nackten IDs.** Jede ID (T043, B012, PRD-03, REQ-050) wird bei Erstnennung pro Ausgabe mit Typ + Klartext gefuehrt: „Topic T043 (ASD-STE100-Sprachstandard)". Eine ID ist nie alleiniges Satzsubjekt. | approved meaning explizit machen |
-| SR-04 | **Referenz-Kauderwelsch verboten.** Nie „in R1 war T4/5 falsch". Immer voll aufloesen. Kein Slash-Buendeln, keine Ad-hoc-Kuerzel (R1, T4/5, P2-3). | Dictionary statt Jargon |
+| SR-04 | **Referenz-Jargon verboten.** Nie „in R1 war T4/5 falsch". Immer voll aufloesen. Kein Slash-Buendeln, keine Ad-hoc-Kuerzel (R1, T4/5, P2-3). | Dictionary statt Jargon ‡ |
 | SR-05 | **Neue Fachbegriffe nur ueber das Register.** Dauerhafte neue Begriffe werden als AT-Eintrag vorgeschlagen (Definition + Not + misLabels) — nicht ad hoc eingefuehrt. | Technical Names/Verbs |
 | SR-06 | **Abkuerzungen nur wenn registriert.** Erste Nennung ausgeschrieben; nicht registrierte Abkuerzungen sind verboten. | approved words only |
+
+‡ The rule NAME of `SR-04` deviates from the source (Memo 079, REV-03 Kap 10) and is marked here so the chapter's verbatim claim stays checkable. Memo 080 (decision F25=A) renamed it to **Referenz-Jargon verboten**, together with the CLI command and the lint engine that carry the same name, so that rule, skill, specification chapter and command read alike — one subject, one name. The retired wording is recorded in Memo 080 and is deliberately **not** reproduced here: the decision was to retire it completely rather than leave a second name in circulation. Effect, patterns and the rule id `SR-04` are unchanged; the deviation is one of naming, not of normative content.
 
 ---
 

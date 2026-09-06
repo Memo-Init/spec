@@ -6,7 +6,9 @@
 | Depends on | [07-revisions-and-questions.md](./07-revisions-and-questions.md) |
 | Related | [12-rollout.md](./12-rollout.md), [11-quality-and-finalization.md](./11-quality-and-finalization.md), [00-overview.md](./00-overview.md) |
 
-The memo flow runs from the first input to the rollout in one continuous shape: input processing produces the seed, `memo-init` writes the first full revision, a revision loop iterates until the memo is settled, and finalization opens the gate to the rollout. This chapter fixes the **revision shape** within that loop — when a revision is a self-contained **Full** snapshot the user sees, and when it is an incremental **Update** delta — and how the two reconcile via consolidation.
+The memo flow runs from the first input to the rollout in one continuous shape: input processing produces the seed, `memo-init` writes the first full revision, a revision loop iterates until the memo is settled, and finalization opens the gate to the rollout. This chapter fixes the **revision shape** within that loop: every revision is a self-contained snapshot that carries its whole content itself, the earlier **Update** delta form is stock that is read but no longer written, and the completeness duty is enforced rather than merely stated.
+
+> **Chapter title.** The file name stays `20-flow-full-vs-update-revisions.md` — four skill frontmatter blocks, `skill-spec-map.json`, `inverted-map.json`, `46-bridge.md` and `README.md` bind to it. Only the content changed.
 
 ---
 
@@ -18,39 +20,48 @@ The following flowchart is the canonical reference for the flow.
 flowchart TD
     A[memo-input-processing] --> B[memo-init: REV-01 Full]
     B --> C{Revisions-Loop}
-    C -->|Full| D[REV-XX.md — full presentation to user]
-    C -->|Update| E[REV-XX-update.md — delta, explained to user]
-    E --> F[consolidate: Full + Updates -> new Full]
+    C -->|next revision| D[REV-XX.md — standalone presentation to user]
     D --> C
-    F --> C
-    C -->|complete| G[memo-finalize: Gate]
+    C -->|complete| G[memo-finalize: standalone gate]
     G --> H[Rollout: Generate -> Execute -> Evaluate]
     style D fill:#dff0d8
-    style E fill:#fcf8e3
 ```
 
 ---
 
-## Full vs. Update Definitions
+## The Completeness Duty
 
-A revision is one of exactly two shapes.
+A revision is one shape: a **Full** revision (`REV-XX.md`), a complete, standalone presentation of the entire memo. It is user-facing — it is the snapshot the user is shown, reasons about and releases.
 
-- A **Full** revision (`REV-XX.md`) is a complete, standalone presentation of the entire memo. It is self-contained: it can be read on its own without reference to any earlier revision. A Full revision is **user-facing** — it is the snapshot the user is shown and reasons about.
-- An **Update** revision (`REV-XX-update.md`) is a **delta** against the most recent Full revision. It records only what changed. An Update is **explained** to the user, but it is not itself a standalone presentation of the memo.
+> Every revision MUST carry its whole content itself. A reference to an earlier revision (`unveraendert aus REV-XX`, `wie REV-XX`, `siehe REV-XX`) MUST NOT stand in place of content. Naming an earlier revision as a **data object** — provenance, a measurement, a count ("lint run against REV-01: 36 findings") — remains allowed.
 
-> Only **Full** revisions MUST be presented to the user as the memo. An Update revision MUST be communicated as a delta (its changes explained) and MUST NOT be treated as a standalone presentation of the whole memo.
+> In particular, every chapter that once carried a `User-Auftrag` block MUST carry that block forward verbatim in every following revision. The user's own wording is the comparison basis of the fidelity audit and never leaves the document.
 
-The first revision (`REV-01`, written by `memo-init`) MUST be a Full revision. The revision loop may then produce any mix of Full and Update revisions.
+The duty mirrors the construction that is already normative for open questions (see [07-revisions-and-questions.md](./07-revisions-and-questions.md), "Open Questions Carry Forward"): the complete set is always carried, and an element leaves it by exactly one defined path.
+
+The first revision (`REV-01`, written by `memo-init`) is a Full revision, and so is every revision after it.
 
 ---
 
-## Consolidation
+## The Update Form Is Stock
 
-When the most recent revision is an Update, the standalone snapshot has drifted: the latest Full revision no longer reflects the current state. **Consolidation** folds the last Full revision plus all subsequent Update deltas into a **new Full** revision.
+Earlier revision loops also produced **Update** revisions (`REV-XX-update.md`) — deltas against the most recent Full revision, which recorded only what changed and referenced the rest. That form ended: its measured price was substance leaving the document (in one memo the `User-Auftrag` blocks fell from 18 to 1 and the evidence markers from 76 to 33 in a single revision, because the unchanged chapters were referenced instead of re-emitted).
 
-> Before finalization or PRD creation, if the most recent revision is an Update, the system MUST consolidate — producing a new Full revision that is a current, standalone snapshot — so that no downstream step (finalization, rollout) ever reads from a non-standalone state.
+> No new `REV-XX-update.md` is written. The existing update revisions are **stock**: they stay in place unchanged, they remain readable, and they are validated against their own (update) schema. They are never converted, renamed or removed.
 
-Consolidation is the `F` node in the diagram: `consolidate: Full + Updates -> new Full`. After consolidation, the loop continues from a clean Full baseline.
+Because no new update revision is produced, there is nothing left to consolidate; the former consolidation step is history and its skill is decommissioned rather than deleted.
+
+---
+
+## Enforcement
+
+The duty is enforced in three stages, none of which reaches into stock files:
+
+| Stage | Mechanism | Effect |
+|-------|-----------|--------|
+| Language check | Lint rule `SR-13` (`memo controlled-language check <revision> --rev-type full`) | Flags a back-reference that replaces content. A code fence, an inline code span and a markdown table row are exempt, so a revision named as a data object stays allowed. `--rev-type update` / `--rev-type prepare` switch the rule off. |
+| Viewer warning | `WARN-011` in the comparison banner | Non-blocking. Reports chapters that lost their `User-Auftrag` block, chapters below half their non-empty lines, and the evidence-marker balance — and always states how many chapters were compared. A result without a comparison basis is its own finding, never a pass. |
+| Finalization gate | The standalone gate in `memo-finalize` | Blocking. It judges the **content** of the revision to be finalized, not its file-name suffix — the suffix test never fired on a Full file that nevertheless delegated its substance. |
 
 ---
 
