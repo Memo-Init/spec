@@ -29,7 +29,7 @@ Canonical docs entry: `/workbench/overview/`. No entry-point skill flagged yet.
 | `wiki-update` | contributing | Update existing wiki pages after source changes |
 | `workbench-project-setup` | contributing | Project setup and installation pattern for the One-Pizza workbench |
 | `workbench-tmp` | contributing | Operate a project's `.tmp/` ephemeral scratch folder — the dot-prefixed, machine-local, gitignored area for throwaway working f… |
-| `workbench-validation` | contributing | The workbench validation wayfinder and requirements home — the single index of every validation family (WRITE-LINT, ENTRY-PRE,… |
+| `workbench-validation` | contributing | The workbench validation wayfinder and requirements home — the index of every validation family (WRITE-LINT, ENTRY-PRE, RUNTIME… |
 
 ## 5. Grading assignment
 

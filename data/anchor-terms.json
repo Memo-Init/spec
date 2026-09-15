@@ -1,202 +1,365 @@
 {
-    "schemaVersion": "anchor-terms/1.0.0",
-    "policyBlock": "/session/namespace-registry/",
-    "terms": [
-        {
-            "id": "AT-memo",
-            "label": "Memo",
-            "definition": "A versioned strategy document and the single highest authority over its own rollout; its content is local and MUST NOT be uploaded.",
-            "negativeDelimitation": "NOT a shareable or uploadable document, and NOT a cross-memo container — a memo has authority over its OWN rollout; the cross-memo span belongs to a goal or a plan.",
-            "misLabels": [
-                "document",
-                "spec doc",
-                "note"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "06-memo-structure"
-        },
-        {
-            "id": "AT-revision",
-            "label": "Revision",
-            "definition": "One immutable snapshot of a memo's content, stored as REV-XX.md; each change produces a new file, so the history is forward-only.",
-            "negativeDelimitation": "NOT an in-place edit — a revision is never mutated; a change is always a new REV-XX file.",
-            "misLabels": [
-                "version",
-                "edit",
-                "draft"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "07-revisions-and-questions"
-        },
-        {
-            "id": "AT-topic",
-            "label": "Topic",
-            "definition": "An atomic point extracted from the input during the five-step input pipeline; the complete topic list serves as a writing checklist and is the head of the Topic to Block to PRD chain.",
-            "negativeDelimitation": "NOT too small to omit and NOT cross-memo — extraction is exhaustive and topics are memo-scoped.",
-            "misLabels": [
-                "point",
-                "item",
-                "note"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "04-input-pipeline"
-        },
-        {
-            "id": "AT-goal",
-            "label": "Goal",
-            "definition": "A cross-memo intent (id G###) that spans several memos and outlives any one; defined by intent not surface, and scored in a fresh context against real state.",
-            "negativeDelimitation": "NOT scoped inside one memo and NOT surface-defined — a goal spans the memo sequence and is never scored in the session that did the work.",
-            "misLabels": [
-                "milestone",
-                "task",
-                "objective"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "31-goals"
-        },
-        {
-            "id": "AT-block",
-            "label": "Block",
-            "definition": "A structure node inside a memo carrying its own B### identifier; it references one or more topics and is the unit PRDs are derived from.",
-            "negativeDelimitation": "NOT a synonym for a context block — it is an addressable structure node with a B### id, not a chunk of prose context.",
-            "misLabels": [
-                "context block",
-                "section",
-                "chunk"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "08-phases-and-prds"
-        },
-        {
-            "id": "AT-prd",
-            "label": "PRD",
-            "definition": "A block-derived chunk of work sized so one PRD fits into one context (hard cap one third, smart-zone one quarter) and is implementable by one agent in one thread.",
-            "negativeDelimitation": "NOT a multi-thread or multi-context unit — if work needs a second thread, that is the signal to chunk into more PRDs, not to span one PRD across threads.",
-            "misLabels": [
-                "task",
-                "ticket",
-                "story"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "08-phases-and-prds"
-        },
-        {
-            "id": "AT-phase",
-            "label": "Phase",
-            "definition": "A sequential, mandatory unit of the rollout that bundles PRDs executed together and in order, carrying an orchestration role and a mandatory depends-on.",
-            "negativeDelimitation": "NOT optional and NOT parallel by default — a phase is mandatory and sequential; depends-on is a required characteristic, not decoration.",
-            "misLabels": [
-                "stage",
-                "step",
-                "milestone"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "08-phases-and-prds"
-        },
-        {
-            "id": "AT-strand",
-            "label": "Strand",
-            "definition": "The emergent dependency closure over phases — the transitive closure of the depends-on edges, derived by walking the graph, never authored.",
-            "negativeDelimitation": "NOT authored and NOT a thematic bundle — a strand is emergent, and it is a tag, never part of the numeric memo ID.",
-            "misLabels": [
-                "thread",
-                "track",
-                "theme"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "25-strands"
-        },
-        {
-            "id": "AT-requirement",
-            "label": "Requirement",
-            "definition": "A single addressable statement that must, should, or may hold; two-sided (statement faces generation, check faces the gate) with an optional grade axis, resolving to a ternary status.",
-            "negativeDelimitation": "NOT one-sided and NOT self-graded — a requirement faces both generation and the gate, a check that did not run MUST NOT report PASS, and the doer MUST NOT be the grader.",
-            "misLabels": [
-                "rule",
-                "constraint",
-                "spec"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "23-requirements"
-        },
-        {
-            "id": "AT-tool",
-            "label": "Tool",
-            "definition": "An external capability a phase or PRD depends on, recorded as a descriptor in the per-project tools registry that says that a tool exists, what it is for, and where it lives.",
-            "negativeDelimitation": "NOT a runtime and NOT an enforced gate — the registry is descriptive and a RECOMMENDATION; a memo MUST NOT be blocked solely because no registry is present.",
-            "misLabels": [
-                "service",
-                "dependency",
-                "integration"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "24-tools-registry"
-        },
-        {
-            "id": "AT-plan",
-            "label": "Plan",
-            "definition": "The execution-side primitive above the single memo: it spans one or more finalized memos and sequences their phases into a single ordered run (id PLAN-###-slug).",
-            "negativeDelimitation": "NOT a replacement for the per-memo stage model — a plan nests the four stages per carried memo; and phase order stays the memo's to decide (memo authority).",
-            "misLabels": [
-                "roadmap",
-                "project",
-                "backlog"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "memo",
-            "owningChapter": "42-plans"
-        },
-        {
-            "id": "AT-role-user",
-            "label": "User Role",
-            "definition": "The interactive role in the harness tool-contract roles{} (10-harness-registry): the surface a developer drives directly; it adds the interaction tool to core.required[] and is the top-level trust reference the other two roles are bounded under.",
-            "negativeDelimitation": "NOT the same as a 'User session' type — the role is the tool-contract delta in roles.user, while the session type is the session-tier classification that anchors trust; and NOT a self-granted privilege.",
-            "misLabels": [
-                "interactive agent",
-                "human",
-                "operator"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "meta-spec",
-            "owningChapter": "10-harness-registry"
-        },
-        {
-            "id": "AT-role-orchestrator",
-            "label": "Orchestrator Role",
-            "definition": "The coordinating role in the harness tool-contract roles{} (10-harness-registry): it adds the coordination tools to core.required[] and carries the gate-dependent taskCrud marker; it runs work on the user's behalf and MUST NOT exceed the user's trust level.",
-            "negativeDelimitation": "NOT a new authority — the orchestrator is the user's context continued into coordination, bounded by monotonicity, never a separate higher privilege; and NOT the same as the agent-team 'Lead' name (13-orchestration), which is one deployment of this role.",
-            "misLabels": [
-                "lead",
-                "coordinator",
-                "manager"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "meta-spec",
-            "owningChapter": "10-harness-registry"
-        },
-        {
-            "id": "AT-role-worker",
-            "label": "Worker Role",
-            "definition": "The scoped-execution role in the harness tool-contract roles{} (10-harness-registry): it adds structured-output and removes the coordination tools, executing one bounded unit of work in an isolated context.",
-            "negativeDelimitation": "NOT an orchestrator — a worker cannot coordinate a team or spawn one; and NOT a persistent identity — a worker is a scoped, one-unit execution, bounded below the orchestrator that started it.",
-            "misLabels": [
-                "subagent",
-                "executor",
-                "agent"
-            ],
-            "version": "1.0.0",
-            "owningFamily": "meta-spec",
-            "owningChapter": "10-harness-registry"
-        }
-    ]
+  "schemaVersion": "anchor-terms/1.0.0",
+  "policyBlock": "/session/namespace-registry/",
+  "terms": [
+    {
+      "id": "AT-memo",
+      "label": "Memo",
+      "definition": "A versioned strategy document and the single highest authority over its own rollout; its content is local and MUST NOT be uploaded.",
+      "negativeDelimitation": "NOT a shareable or uploadable document, and NOT a cross-memo container — a memo has authority over its OWN rollout; the cross-memo span belongs to a goal or a plan.",
+      "misLabels": [
+        "document",
+        "spec doc",
+        "note",
+        "Dokument",
+        "Notiz"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "06-memo-structure"
+    },
+    {
+      "id": "AT-revision",
+      "label": "Revision",
+      "definition": "One immutable snapshot of a memo's content, stored as REV-XX.md; each change produces a new file, so the history is forward-only.",
+      "negativeDelimitation": "NOT an in-place edit — a revision is never mutated; a change is always a new REV-XX file.",
+      "misLabels": [
+        "version",
+        "edit",
+        "draft",
+        "Bearbeitung",
+        "Entwurf"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "07-revisions-and-questions"
+    },
+    {
+      "id": "AT-topic",
+      "label": "Topic",
+      "definition": "An atomic point extracted from the input during the five-step input pipeline; the complete topic list serves as a writing checklist and is the head of the Topic to Block to PRD chain.",
+      "negativeDelimitation": "NOT too small to omit and NOT cross-memo — extraction is exhaustive and topics are memo-scoped.",
+      "misLabels": [
+        "point",
+        "item",
+        "note",
+        "Punkt",
+        "Eintrag",
+        "Notiz"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "04-input-pipeline"
+    },
+    {
+      "id": "AT-goal",
+      "label": "Goal",
+      "definition": "A cross-memo intent (id G###) that spans several memos and outlives any one; defined by intent not surface, and scored in a fresh context against real state.",
+      "negativeDelimitation": "NOT scoped inside one memo and NOT surface-defined — a goal spans the memo sequence and is never scored in the session that did the work.",
+      "misLabels": [
+        "milestone",
+        "task",
+        "objective",
+        "Meilenstein"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "31-goals"
+    },
+    {
+      "id": "AT-block",
+      "label": "Block",
+      "definition": "A structure node inside a memo carrying its own B### identifier; it references one or more topics and is the unit PRDs are derived from.",
+      "negativeDelimitation": "NOT a synonym for a context block — it is an addressable structure node with a B### id, not a chunk of prose context.",
+      "misLabels": [
+        "context block",
+        "section",
+        "chunk",
+        "Abschnitt"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "08-phases-and-prds"
+    },
+    {
+      "id": "AT-prd",
+      "label": "PRD",
+      "definition": "A block-derived chunk of work sized so one PRD fits into one context (hard cap one third, smart-zone one quarter) and is implementable by one agent in one thread.",
+      "negativeDelimitation": "NOT a multi-thread or multi-context unit — if work needs a second thread, that is the signal to chunk into more PRDs, not to span one PRD across threads.",
+      "misLabels": [
+        "task",
+        "ticket",
+        "story"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "08-phases-and-prds"
+    },
+    {
+      "id": "AT-phase",
+      "label": "Phase",
+      "definition": "A sequential, mandatory unit of the rollout that bundles PRDs executed together and in order, carrying an orchestration role and a mandatory depends-on.",
+      "negativeDelimitation": "NOT optional and NOT parallel by default — a phase is mandatory and sequential; depends-on is a required characteristic, not decoration.",
+      "misLabels": [
+        "stage",
+        "step",
+        "milestone",
+        "Stufe",
+        "Schritt",
+        "Meilenstein"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "08-phases-and-prds"
+    },
+    {
+      "id": "AT-strand",
+      "label": "Strand",
+      "definition": "The emergent dependency closure over phases — the transitive closure of the depends-on edges, derived by walking the graph, never authored.",
+      "negativeDelimitation": "NOT authored and NOT a thematic bundle — a strand is emergent, and it is a tag, never part of the numeric memo ID.",
+      "misLabels": [
+        "thread",
+        "track",
+        "theme",
+        "Spur",
+        "Thema"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "25-strands"
+    },
+    {
+      "id": "AT-requirement",
+      "label": "Requirement",
+      "definition": "A single addressable statement that must, should, or may hold; two-sided (statement faces generation, check faces the gate) with an optional grade axis, resolving to a ternary status.",
+      "negativeDelimitation": "NOT one-sided and NOT self-graded — a requirement faces both generation and the gate, a check that did not run MUST NOT report PASS, and the doer MUST NOT be the grader.",
+      "misLabels": [
+        "rule",
+        "constraint",
+        "spec",
+        "Regel",
+        "Einschränkung",
+        "Einschraenkung",
+        "Spezifikation"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "23-requirements"
+    },
+    {
+      "id": "AT-tool",
+      "label": "Tool",
+      "definition": "An external capability a phase or PRD depends on, recorded as a descriptor in the per-project tools registry that says that a tool exists, what it is for, and where it lives.",
+      "negativeDelimitation": "NOT a runtime and NOT an enforced gate — the registry is descriptive and a RECOMMENDATION; a memo MUST NOT be blocked solely because no registry is present.",
+      "misLabels": [
+        "service",
+        "dependency",
+        "integration",
+        "Dienst",
+        "Abhängigkeit",
+        "Abhaengigkeit"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "24-tools-registry"
+    },
+    {
+      "id": "AT-plan",
+      "label": "Plan",
+      "definition": "The execution-side primitive above the single memo: it spans one or more finalized memos and sequences their phases into a single ordered run (id PLAN-###-slug).",
+      "negativeDelimitation": "NOT a replacement for the per-memo stage model — a plan nests the four stages per carried memo; and phase order stays the memo's to decide (memo authority).",
+      "misLabels": [
+        "roadmap",
+        "project",
+        "backlog",
+        "Fahrplan",
+        "Projekt"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "42-plans"
+    },
+    {
+      "id": "AT-role-user",
+      "label": "User Role",
+      "definition": "The interactive role in the harness tool-contract roles{} (10-harness-registry): the surface a developer drives directly; it adds the interaction tool to core.required[] and is the top-level trust reference the other two roles are bounded under.",
+      "negativeDelimitation": "NOT the same as a 'User session' type — the role is the tool-contract delta in roles.user, while the session type is the session-tier classification that anchors trust; and NOT a self-granted privilege.",
+      "misLabels": [
+        "interactive agent",
+        "human",
+        "operator",
+        "Mensch",
+        "Bediener"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "meta-spec",
+      "owningChapter": "10-harness-registry"
+    },
+    {
+      "id": "AT-role-orchestrator",
+      "label": "Orchestrator Role",
+      "definition": "The coordinating role in the harness tool-contract roles{} (10-harness-registry): it adds the coordination tools to core.required[] and carries the gate-dependent taskCrud marker; it runs work on the user's behalf and MUST NOT exceed the user's trust level.",
+      "negativeDelimitation": "NOT a new authority — the orchestrator is the user's context continued into coordination, bounded by monotonicity, never a separate higher privilege; and NOT the same as the agent-team 'Lead' name (13-orchestration), which is one deployment of this role.",
+      "misLabels": [
+        "lead",
+        "coordinator",
+        "manager",
+        "Koordinator"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "meta-spec",
+      "owningChapter": "10-harness-registry"
+    },
+    {
+      "id": "AT-role-worker",
+      "label": "Worker Role",
+      "definition": "The scoped-execution role in the harness tool-contract roles{} (10-harness-registry): it adds structured-output and removes the coordination tools, executing one bounded unit of work in an isolated context.",
+      "negativeDelimitation": "NOT an orchestrator — a worker cannot coordinate a team or spawn one; and NOT a persistent identity — a worker is a scoped, one-unit execution, bounded below the orchestrator that started it.",
+      "misLabels": [
+        "subagent",
+        "executor",
+        "agent"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "meta-spec",
+      "owningChapter": "10-harness-registry"
+    },
+    {
+      "id": "AT-contamination",
+      "label": "Contamination",
+      "definition": "The umbrella condition of a context taking on content that mis-weights the output; a document written out of such a rotten context carries the mis-weighting forward. The common case is unconscious self-contamination, where the working context silently loads non-instruction material that then steers the result.",
+      "negativeDelimitation": "NOT a synonym for prompt injection — prompt injection (externally, maliciously supplied instructions) is the malicious special case, one bounded subtype; the general rule is unconscious self-contamination, not an outside attacker. And NOT the same as context rot, which is the cause (quality decay as input length grows) while contamination is the effect.",
+      "misLabels": [
+        "prompt injection",
+        "context poisoning",
+        "context rot"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "09-contamination-context-handover"
+    },
+    {
+      "id": "AT-trajectory",
+      "label": "Trajectory",
+      "definition": "The runtime action-history a session actually produced — the recorded, ordered sequence of steps, agent spawns, and tool calls a running context walked over its session-and-subagent tree, so a result can be traced backward to the step that produced it. It is the concept the session tree operationalizes.",
+      "negativeDelimitation": "NOT a Strand — a strand is the computed dependency-closure structure over phases, derived by walking the depends-on graph and never authored; a trajectory is the runtime action-history that was actually traversed, recorded not computed. And NOT a plan: a plan sequences intended work forward, a trajectory records executed work as it happened.",
+      "misLabels": [
+        "strand",
+        "path",
+        "history",
+        "run",
+        "Strang",
+        "Pfad",
+        "Verlauf",
+        "Lauf"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "14-agents-skills-tasks"
+    },
+    {
+      "id": "AT-back-pressure",
+      "label": "Back Pressure",
+      "definition": "The requirements practice seen from the generation side: in-scope requirement statements are surfaced before the work is done, constraining the doer up front, as the complement of the gate that checks the work afterward.",
+      "negativeDelimitation": "NOT infrastructure flow-control (queue throttling, rate limiting, TCP back-pressure) — it is the requirements-as-constraint discipline that pushes back on generation, not a runtime traffic mechanism.",
+      "misLabels": [
+        "throttling",
+        "rate limiting",
+        "flow control",
+        "Drosselung"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "23-requirements"
+    },
+    {
+      "id": "AT-inner-harness",
+      "label": "Inner Harness",
+      "definition": "The surface the agent harness itself exposes and the org does not control — the tool definitions, the agent/skill/task mechanics, and the versioned config surface a harness carries; the given layer, captured by the harness descriptor.",
+      "negativeDelimitation": "NOT the layer the org builds; the inner harness is the given, non-modifiable surface. And NOT the harness descriptor itself — the descriptor is the record OF the inner harness, not the harness.",
+      "misLabels": [
+        "harness",
+        "platform",
+        "runtime",
+        "Plattform",
+        "Laufzeit"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "meta-spec",
+      "owningChapter": "10-harness-registry"
+    },
+    {
+      "id": "AT-outer-harness",
+      "label": "Outer Harness",
+      "definition": "Everything the org builds around the given inner harness — the standing rules and hooks, the local memo convention, the viewer and its channels; the layer the org owns, shapes, and maintains on top of the harness.",
+      "negativeDelimitation": "NOT the given inner surface the harness exposes; the outer harness is the org-built layer, never the harness's own tool or config surface. And NOT a second harness process — it is the project layer running inside one harness invocation.",
+      "misLabels": [
+        "harness",
+        "wrapper",
+        "scaffold",
+        "Gerüst",
+        "Geruest"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "meta-spec",
+      "owningChapter": "10-harness-registry"
+    },
+    {
+      "id": "AT-sop",
+      "label": "SOP",
+      "definition": "A namespace's canonical entry document and read-gate: the minimal signpost a reader must load first, that names where other information lives and in what order the guardrails apply. It classifies every skill in its scope as either a public entry point or a private process step.",
+      "negativeDelimitation": "NOT a container of all rules (it points, it does not hoard); NOT a public skill; NOT the process it delegates to.",
+      "misLabels": [
+        "standard operating procedure document"
+      ],
+      "version": "0.1.0",
+      "owningFamily": "session",
+      "owningChapter": "10-sop"
+    },
+    {
+      "id": "AT-register",
+      "label": "Register",
+      "definition": "How something is written for its audience — the composed choice of direction (inward/outward), language (one per artifact), and formality (formal vs. working, NR1/NR2). A property of the written artifact, chosen deliberately per artifact.",
+      "negativeDelimitation": "NOT locality (where the bytes live); NOT secrecy (the test is direction, not what is hidden).",
+      "misLabels": [
+        "tone",
+        "Ton"
+      ],
+      "version": "0.1.0",
+      "owningFamily": "memo",
+      "owningChapter": "19-internal-vs-external-communication"
+    },
+    {
+      "id": "AT-tier",
+      "label": "Tier",
+      "definition": "The structural level a skill or rule lives on: sop (the namespace signpost), public (a validated entry point), or private (an internal process step). The tier decides the template a skill follows and how it is disclosed.",
+      "negativeDelimitation": "NOT the GEE role (generate/execute/evaluate/orchestrate, an orthogonal axis); NOT visibility alone.",
+      "misLabels": [
+        "level",
+        "layer",
+        "Ebene",
+        "Schicht"
+      ],
+      "version": "0.1.0",
+      "owningFamily": "meta-spec",
+      "owningChapter": "06-conventions-writing"
+    },
+    {
+      "id": "AT-evidence",
+      "label": "Evidence",
+      "definition": "The backing recorded for a substantive statement: exactly one of the six ordered level tags, assigned inline, naming how strongly the statement is supported and what would confirm it.",
+      "negativeDelimitation": "NOT the statement itself and NOT the source the statement cites — evidence is the graded backing attached to a claim, not the claim and not its reference. The machine token is the field name `evidence`; a rendered display label in the project working language is that same field shown to a reader, NOT a second term.",
+      "misLabels": [
+        "proof",
+        "citation",
+        "source",
+        "Beweis",
+        "Zitat",
+        "Quelle"
+      ],
+      "version": "1.0.0",
+      "owningFamily": "memo",
+      "owningChapter": "11-quality-and-finalization"
+    }
+  ]
 }

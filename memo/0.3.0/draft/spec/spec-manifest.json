@@ -65,7 +65,8 @@
                 "38-stage-model",
                 "42-plans",
                 "47-memo-lifecycle",
-                "49-execution-workflow-guideline"
+                "49-execution-workflow-guideline",
+                "50-orchestrator-role"
             ]
         },
         {

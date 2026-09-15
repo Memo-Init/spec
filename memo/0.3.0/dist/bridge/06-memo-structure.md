@@ -25,9 +25,9 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-init` | primary | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-plan-init` | contributing | Erstellt einen neuen Plan-Folder mit Skeleton (plan.md + plan-status.json) |
-| `memo-plan-status` | contributing | Zeigt Plan-Status (Phasen + Issues + HEAD-Commits + Budget) in Klartext-Terminal-Format |
+| `memo-init` | primary | Initialize a new memo when the user has complex tasks affecting multiple repos/files, needs design decisions, gives long multi-… |
+| `memo-plan-init` | contributing | — |
+| `memo-plan-status` | contributing | — |
 | `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
 | `memo-sub-init` | primary | Erzeugt Sub-Memos autonom aus den Sub-Memo-Zeilen der Triage-Tabelle eines Sortier-Memos |
 | `workbench-project-setup` | contributing | Project setup and installation pattern for the One-Pizza workbench |

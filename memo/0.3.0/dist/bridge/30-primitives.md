@@ -27,8 +27,9 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 |---|---|---|
 | `memo-req-registry` | contributing | Catalog of tools usable as requirements (Pencil, Playwright, get-sheet, getui, FlowMCP) with named validation tactics, plus a d… |
 | `memo-req-runner` | contributing | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
-| `memo-req-store` | contributing | Storage convention and entry schema for the requirements/eval calibration layer, plus the three-axis scoping/matching engine |
+| `memo-req-store` | contributing | Storage convention, entry schema and three-axis matching engine of the requirements/eval calibration layer |
 | `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
+| `memo-work-items` | primary | Authoring and managing work items — the finer granularity below a topic — via the `memo work-item` CLI |
 
 ## 5. Grading assignment
 

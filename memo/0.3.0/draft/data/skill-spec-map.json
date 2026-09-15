@@ -1,10 +1,10 @@
 {
   "note": "Deterministic skill->spec map (source of truth for write-skill-specs.mjs). Generated from the Memo-039 research dataset; out-of-process skills (node-*/domain/external) carry primary:null + a scope marker by design. node-* code-pattern skills are decoupled and out-of-process: node house-style is governed by personal-brand/user-preferences, not the org spec (Memo 057 F5; ch47-node-standards removed).",
   "totals": {
-    "skills": 86,
+    "skills": 87,
     "register": 14,
-    "withGaps": 68,
-    "withPrimary": 69
+    "withGaps": 69,
+    "withPrimary": 70
   },
   "skills": [
     {
@@ -397,7 +397,8 @@
         "memo/10-proactive-research",
         "memo/08-phases-and-prds",
         "memo/40-diagrams",
-        "memo/41-mental-model"
+        "memo/41-mental-model",
+        "meta-spec/06-conventions-writing"
       ],
       "gaps": [
         "Cross-memo status check / 'marked finalized but never built' trap",
@@ -517,6 +518,21 @@
       "visibility": "public"
     },
     {
+      "skill": "memo-work-items",
+      "category": "memo",
+      "path": "repos/core/skills/memo/memo-work-items/SKILL.md",
+      "primary": "memo/30-primitives",
+      "all": [
+        "memo/30-primitives",
+        "memo/08-phases-and-prds"
+      ],
+      "gaps": [
+        "Group inheritance render precedence (instance override vs group default)",
+        "Cross-memo work-item references"
+      ],
+      "visibility": "private"
+    },
+    {
       "skill": "memo-phase-evaluate",
       "category": "memo",
       "path": "repos/core/skills/memo/memo-phase-evaluate/SKILL.md",
@@ -548,7 +564,8 @@
         "memo/09-contamination-context-handover",
         "memo/29-behavioral-guardrails",
         "memo/08-phases-and-prds",
-        "memo/12-rollout"
+        "memo/12-rollout",
+        "memo/49-execution-workflow-guideline"
       ],
       "gaps": [
         "file-based contract negotiation protocol",
@@ -987,7 +1004,8 @@
         "memo/10-proactive-research",
         "memo/13-orchestration",
         "memo/01-philosophy",
-        "memo/41-mental-model"
+        "memo/41-mental-model",
+        "meta-spec/06-conventions-writing"
       ],
       "gaps": [
         "Prepare file as a primary artifact",
@@ -1411,6 +1429,7 @@
         "memo/13-orchestration",
         "memo/10-proactive-research",
         "memo/36-agent-strategies",
+        "memo/49-execution-workflow-guideline",
         "workbench/31-browser-automation"
       ],
       "gaps": [

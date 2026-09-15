@@ -29,7 +29,7 @@ This chapter is entered through the workbench SOP: [02-sop-entrypoint](./02-sop-
 | `workbench-config` | primary | Declare and maintain a project's `.workbench/` configuration — the MANUAL, never-auto-generated single source of policy |
 | `workbench-environment-scripts` | contributing | Operate a project's `scripts/` family (dev/staging/cleanup/health-check) under the declarative boot contract, and run Workbench… |
 | `workbench-hooks-contract` | contributing | Author and reason about the workbench hooks contract — the policy the workbench DECLARES for deterministic PreToolUse enforceme… |
-| `workbench-validation` | contributing | The workbench validation wayfinder and requirements home — the single index of every validation family (WRITE-LINT, ENTRY-PRE,… |
+| `workbench-validation` | contributing | The workbench validation wayfinder and requirements home — the index of every validation family (WRITE-LINT, ENTRY-PRE, RUNTIME… |
 
 ## 5. Grading assignment
 

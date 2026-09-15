@@ -39,8 +39,8 @@ flowchart TD
 | [04-input-pipeline](./04-input-pipeline.md) | ✓ | 2 | 2 |
 | [05-memo-strategies](./05-memo-strategies.md) | ✓ | 2 | — |
 | [06-memo-structure](./06-memo-structure.md) | ✓ | 6 | 4 |
-| [07-revisions-and-questions](./07-revisions-and-questions.md) | ✓ | 11 | 5 |
-| [08-phases-and-prds](./08-phases-and-prds.md) | ✓ | 19 | 6 |
+| [07-revisions-and-questions](./07-revisions-and-questions.md) | ✓ | 11 | 6 |
+| [08-phases-and-prds](./08-phases-and-prds.md) | ✓ | 20 | 6 |
 | [09-contamination-context-handover](./09-contamination-context-handover.md) | ✓ | 25 | — |
 | [10-proactive-research](./10-proactive-research.md) | ✓ | 9 | 8 |
 | [11-quality-and-finalization](./11-quality-and-finalization.md) | ✓ | 16 | 6 |
@@ -62,7 +62,7 @@ flowchart TD
 | [27-landing-the-plane](./27-landing-the-plane.md) | ✓ | 5 | 1 |
 | [28-drift](./28-drift.md) | ✓ | 4 | — |
 | [29-behavioral-guardrails](./29-behavioral-guardrails.md) | ✓ | 5 | 1 |
-| [30-primitives](./30-primitives.md) | ✓ | 4 | — |
+| [30-primitives](./30-primitives.md) | ✓ | 5 | — |
 | [31-goals](./31-goals.md) | ✓ | 6 | — |
 | [32-prompt-governance](./32-prompt-governance.md) | ✓ | 4 | — |
 | [33-maintenance](./33-maintenance.md) | ✓ | 6 | 2 |
@@ -79,7 +79,10 @@ flowchart TD
 | [44-repository-and-outward-docs](./44-repository-and-outward-docs.md) | — | 0 | 22 |
 | [45-implementation-fidelity-audit](./45-implementation-fidelity-audit.md) | ✓ | 1 | — |
 | [47-memo-lifecycle](./47-memo-lifecycle.md) | — | 0 | — |
-| **Summary** | **45 / 47** | — | 108 |
+| [48-research-waves-and-depth](./48-research-waves-and-depth.md) | — | 0 | 15 |
+| [49-execution-workflow-guideline](./49-execution-workflow-guideline.md) | ✓ | 2 | — |
+| [50-orchestrator-role](./50-orchestrator-role.md) | — | 0 | — |
+| **Summary** | **46 / 50** | — | 124 |
 
 ## Skills by namespace
 
@@ -107,7 +110,7 @@ flowchart TD
 | `git-security` | [16-git-security-versioning](./16-git-security-versioning.md) (primary), [11-quality-and-finalization](./11-quality-and-finalization.md), [19-internal-vs-external-communication](./19-internal-vs-external-communication.md), [23-requirements](./23-requirements.md) |
 | `release` | [39-release-and-pinning](./39-release-and-pinning.md) (primary), [16-git-security-versioning](./16-git-security-versioning.md), [29-behavioral-guardrails](./29-behavioral-guardrails.md), [33-maintenance](./33-maintenance.md), [38-stage-model](./38-stage-model.md) |
 
-### memo (42 skills)
+### memo (43 skills)
 
 | Skill | Chapters |
 |---|---|
@@ -130,7 +133,7 @@ flowchart TD
 | `memo-maintenance-verify` | [33-maintenance](./33-maintenance.md) (primary), [09-contamination-context-handover](./09-contamination-context-handover.md), [16-git-security-versioning](./16-git-security-versioning.md), [39-release-and-pinning](./39-release-and-pinning.md) |
 | `memo-mental-model-derive` | [41-mental-model](./41-mental-model.md) (primary), [01-philosophy](./01-philosophy.md), [07-revisions-and-questions](./07-revisions-and-questions.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [21-human-computer-interaction](./21-human-computer-interaction.md), [36-agent-strategies](./36-agent-strategies.md) |
 | `memo-phase-evaluate` | [13-orchestration](./13-orchestration.md) (primary), [08-phases-and-prds](./08-phases-and-prds.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [23-requirements](./23-requirements.md), [36-agent-strategies](./36-agent-strategies.md) |
-| `memo-phase-execute` | [13-orchestration](./13-orchestration.md) (primary), [08-phases-and-prds](./08-phases-and-prds.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [12-rollout](./12-rollout.md), [15-prompt-generator](./15-prompt-generator.md), [16-git-security-versioning](./16-git-security-versioning.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md), [23-requirements](./23-requirements.md), [29-behavioral-guardrails](./29-behavioral-guardrails.md) |
+| `memo-phase-execute` | [13-orchestration](./13-orchestration.md) (primary), [08-phases-and-prds](./08-phases-and-prds.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [12-rollout](./12-rollout.md), [15-prompt-generator](./15-prompt-generator.md), [16-git-security-versioning](./16-git-security-versioning.md), [17-git-workflow-and-ids](./17-git-workflow-and-ids.md), [23-requirements](./23-requirements.md), [29-behavioral-guardrails](./29-behavioral-guardrails.md), [49-execution-workflow-guideline](./49-execution-workflow-guideline.md) |
 | `memo-phase-generate` | [08-phases-and-prds](./08-phases-and-prds.md) (primary), [09-contamination-context-handover](./09-contamination-context-handover.md), [13-orchestration](./13-orchestration.md), [15-prompt-generator](./15-prompt-generator.md), [16-git-security-versioning](./16-git-security-versioning.md), [23-requirements](./23-requirements.md), [32-prompt-governance](./32-prompt-governance.md) |
 | `memo-plan-add` | [42-plans](./42-plans.md) (primary), [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md), [08-phases-and-prds](./08-phases-and-prds.md), [18-multidimensionality](./18-multidimensionality.md), [38-stage-model](./38-stage-model.md) |
 | `memo-plan-evaluate` | [42-plans](./42-plans.md) (primary), [08-phases-and-prds](./08-phases-and-prds.md), [09-contamination-context-handover](./09-contamination-context-handover.md), [14-agents-skills-tasks](./14-agents-skills-tasks.md), [38-stage-model](./38-stage-model.md) |
@@ -153,6 +156,7 @@ flowchart TD
 | `memo-rollout-generate` | [08-phases-and-prds](./08-phases-and-prds.md) (primary), [11-quality-and-finalization](./11-quality-and-finalization.md), [13-orchestration](./13-orchestration.md), [15-prompt-generator](./15-prompt-generator.md), [23-requirements](./23-requirements.md), [25-strands](./25-strands.md), [32-prompt-governance](./32-prompt-governance.md) |
 | `memo-sop` | [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md) (primary), [00-overview](./00-overview.md), [01-philosophy](./01-philosophy.md), [12-rollout](./12-rollout.md), [13-orchestration](./13-orchestration.md), [21-human-computer-interaction](./21-human-computer-interaction.md), [27-landing-the-plane](./27-landing-the-plane.md), [30-primitives](./30-primitives.md), [38-stage-model](./38-stage-model.md) |
 | `memo-sub-init` | [06-memo-structure](./06-memo-structure.md) (primary), [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md), [05-memo-strategies](./05-memo-strategies.md), [09-contamination-context-handover](./09-contamination-context-handover.md) |
+| `memo-work-items` | [30-primitives](./30-primitives.md) (primary), [08-phases-and-prds](./08-phases-and-prds.md) |
 
 ### prd (3 skills)
 
@@ -169,7 +173,7 @@ flowchart TD
 | `memo-research-agent` | [10-proactive-research](./10-proactive-research.md) (primary), [11-quality-and-finalization](./11-quality-and-finalization.md), [13-orchestration](./13-orchestration.md), [36-agent-strategies](./36-agent-strategies.md) |
 | `research-best-practice-playwright` | [10-proactive-research](./10-proactive-research.md) |
 | `research-scrape-docs` | [10-proactive-research](./10-proactive-research.md) |
-| `research-workflow` | [13-orchestration](./13-orchestration.md) (primary), [10-proactive-research](./10-proactive-research.md), [36-agent-strategies](./36-agent-strategies.md) |
+| `research-workflow` | [13-orchestration](./13-orchestration.md) (primary), [10-proactive-research](./10-proactive-research.md), [36-agent-strategies](./36-agent-strategies.md), [49-execution-workflow-guideline](./49-execution-workflow-guideline.md) |
 
 ### skill (2 skills)
 
@@ -195,7 +199,7 @@ flowchart TD
 | `workbench-persona-audit` | [14-agents-skills-tasks](./14-agents-skills-tasks.md) (primary), [09-contamination-context-handover](./09-contamination-context-handover.md), [11-quality-and-finalization](./11-quality-and-finalization.md), [19-internal-vs-external-communication](./19-internal-vs-external-communication.md), [36-agent-strategies](./36-agent-strategies.md) |
 | `workbench-project-setup` | [06-memo-structure](./06-memo-structure.md) |
 
-**Summary: 9 namespaces · 67 skills total**
+**Summary: 9 namespaces · 68 skills total**
 
 ## Chapters
 
@@ -204,7 +208,7 @@ flowchart TD
 - [00-overview](./00-overview.md) — `memo-sop`
 - [01-philosophy](./01-philosophy.md) — `memo-coherence`, `memo-mental-model-derive`, `memo-revision-generate`, `memo-sop`, `workbench-modes`
 - [02-memo-sop-entrypoint](./02-memo-sop-entrypoint.md) — `memo-finalize`, `memo-init`, `memo-plan-add`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-reset-recommend`, `memo-revision-generate`, `memo-sop`, `memo-sub-init`, `skill-testing`, `workbench-modes`
-- [30-primitives](./30-primitives.md) — `memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-sop`
+- [30-primitives](./30-primitives.md) — `memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-sop`, `memo-work-items`
 
 ### Input
 
@@ -229,7 +233,7 @@ flowchart TD
 
 ### Execution
 
-- [08-phases-and-prds](./08-phases-and-prds.md) — `drift-resolution`, `memo-finalize`, `memo-init`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-init`, `memo-prd-evaluate`, `memo-prd-generate`, `memo-prds-validate`, `memo-references`, `memo-reset-recommend`, `memo-revision-execute`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-rollout-generate`, `workbench-modes`
+- [08-phases-and-prds](./08-phases-and-prds.md) — `drift-resolution`, `memo-finalize`, `memo-init`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-init`, `memo-prd-evaluate`, `memo-prd-generate`, `memo-prds-validate`, `memo-references`, `memo-reset-recommend`, `memo-revision-execute`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-rollout-generate`, `memo-work-items`, `workbench-modes`
 - [12-rollout](./12-rollout.md) — `memo-fidelity-audit`, `memo-finalize`, `memo-phase-execute`, `memo-rollout`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-sop`
 - [13-orchestration](./13-orchestration.md) — `drift-resolution`, `git-merge-strategy`, `memo-chronic-build`, `memo-handover`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-plan-execute`, `memo-prd-evaluate`, `memo-prds-validate`, `memo-references`, `memo-research-agent`, `memo-revision-evaluate`, `memo-revision-generate`, `memo-rollout`, `memo-rollout-execute`, `memo-rollout-generate`, `memo-sop`, `research-workflow`
 - [25-strands](./25-strands.md) — `memo-finalize`, `memo-rollout-generate`
@@ -238,6 +242,8 @@ flowchart TD
 - [38-stage-model](./38-stage-model.md) — `git-merge-strategy`, `git-push`, `memo-fidelity-audit`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`, `memo-rollout`, `memo-rollout-evaluate`, `memo-rollout-execute`, `memo-sop`, `release`
 - [42-plans](./42-plans.md) — `memo-budget-paste`, `memo-handover`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`
 - [47-memo-lifecycle](./47-memo-lifecycle.md) — _— no implementer skill yet —_
+- [49-execution-workflow-guideline](./49-execution-workflow-guideline.md) — `memo-phase-execute`, `research-workflow`
+- [50-orchestrator-role](./50-orchestrator-role.md) — _— no implementer skill yet —_
 
 ### Procedure
 
@@ -278,3 +284,7 @@ flowchart TD
 ### Skills
 
 - [43-skill-authoring-and-quality](./43-skill-authoring-and-quality.md) — `skill-testing`, `specs-to-skills`
+
+### Other
+
+- [48-research-waves-and-depth](./48-research-waves-and-depth.md) — _— no implementer skill yet —_

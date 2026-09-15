@@ -6,7 +6,7 @@ spec_file: "35-proofs.md"
 order: 35
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/35-proofs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/35-proofs.md."

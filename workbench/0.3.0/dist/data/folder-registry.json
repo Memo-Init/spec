@@ -1,8 +1,8 @@
 {
-    "generated_at": "2026-07-17T23:43:46.606Z",
+    "generated_at": "2026-09-14T10:03:07.173Z",
     "generator": "scripts/generate-folder-registry.mjs",
     "source": "workbench/0.3.0/draft/spec (```folder blocks)",
-    "count": 17,
+    "count": 18,
     "folders": {
         "repos/": {
             "name": "repos/",
@@ -59,7 +59,7 @@
         ".tmp/": {
             "name": ".tmp/",
             "status": "optional",
-            "level": "project",
+            "level": "both",
             "entryPoint": null,
             "convention": null,
             "purpose": "Ephemeral scratch — throwaway working files no part of the project depends on.",
@@ -124,7 +124,7 @@
         ".trash/": {
             "name": ".trash/",
             "status": "mandatory",
-            "level": "project",
+            "level": "both",
             "entryPoint": null,
             "convention": null,
             "purpose": "The recoverable deletion target — the project-local folder removals route through instead of erasing.",
@@ -206,11 +206,24 @@
             "entryPoint": null,
             "convention": null,
             "purpose": "The one consistent location for git worktrees — generated machinery, gitignored, with mandatory cleanup.",
-            "goesIn": "Git worktrees of the project's repos/ repositories, one checkout per branch under .worktrees/.",
+            "goesIn": "Git worktrees of the project's repos/ repositories, one checkout per branch at .worktrees/<memo-id>/<slug>/.",
             "doesNot": "Authored content; a permanent home for a checkout (a worktree MUST be removed via git worktree remove/prune when its work is done).",
             "git": "discouraged",
             "remote": "forbidden",
             "sourcePage": "38-worktrees.md"
+        },
+        "n8n/": {
+            "name": "n8n/",
+            "status": "optional",
+            "level": "project",
+            "entryPoint": null,
+            "convention": "n8n-separation (naming-level)",
+            "purpose": "Authored n8n content for a project — exported workflow JSON (version-controlled backups) and the project's n8n conventions/docs. The live workflows run in the ONE shared n8n instance, not here.",
+            "goesIn": "Exported workflow JSON, Data-Table schema notes, credential names (not secrets), a project-n8n README.",
+            "doesNot": "The live workflows and credentials (they live in the shared n8n instance's database); any secret or API key (those stay in the parent .env, never in the repo).",
+            "git": "recommended",
+            "remote": "forbidden",
+            "sourcePage": "39-n8n.md"
         },
         "projects/": {
             "name": "projects/",

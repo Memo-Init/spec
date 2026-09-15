@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the workbench spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: workbench@0.3.0:66b2294
+Source: workbench@0.3.0:46deb52
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/00-overview.md."
@@ -148,7 +148,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Workbench"
 normative: false
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/01-philosophy.md."
@@ -203,7 +203,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/02-sop-entrypoint.md."
@@ -339,7 +339,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/10-root-and-projects.md."
@@ -450,7 +450,7 @@ spec_file: "11-project-structure.md"
 order: 11
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/11-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/11-project-structure.md."
@@ -563,7 +563,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/12-folders.md."
@@ -597,7 +597,7 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | Path | Status | Level | Entry-point | Format/Convention | Purpose |
 |------|--------|-------|-------------|-------------------|---------|
 | `.claude/` | Mandatory | Project | `settings.json` | — | Claude Code settings and project-local skills. |
-| `.trash/` | Mandatory | Project | — | — | Recoverable trash; the deletion target (see [32-trash.md](/workbench/trash/)). |
+| `.trash/` | Mandatory | Both | — | — | Recoverable trash; the deletion target, segmented per memo as `.trash/<memo-id>/`. Also exists at the root, because the no-delete guarantee is workbench-wide (see [32-trash.md](/workbench/trash/)). |
 | `ABOUT.md` | Mandatory | Project | — | — | Project documentation for humans. |
 | `CLAUDE.md` | Mandatory | Project | — | — | The runbook for the AI. |
 | `context/` | Mandatory | Both | per-topic sub-folders | plain Markdown; OKF opt-in for `architecture-okf/` | **Processed**, derived material — specifications, distilled research, Markdown/PDF documents. Also exists at the root for cross-project standards (see [10-root-and-projects.md](/workbench/root-and-projects/)). |
@@ -608,12 +608,13 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `.browser/` | Required (conditional) | Project | — | — | Browser-automation session, scripts, and output — present **only when** the project does browser automation, but when present the name is **required**: `.browser/` is the canonical name and the only conforming one, and `.playwright/` is a **deprecated** alias projects **MUST** migrate now — not at their own pace (see [31-browser-automation.md](/workbench/browser-automation/)). |
 | `.flowmcp/` | Optional | Project | — | — | Regenerable FlowMCP `namespace-index.json` cache — generated machinery, **gitignored**; the local side of the FlowMCP custom folder (see [33-flowmcp.md](/workbench/flowmcp/)). |
 | `.session/` | Optional | Both | `config.json` | — | The session genesis-root marker — its presence marks where a session is rooted; holds `config.json`, the base of the config cascade. One per tree, a sibling of `.workbench/`. Owned by the session spec (see [`.session/` Is Session-Owned](#session-is-session-owned) and [session/01-genesis-root.md](/session/genesis-root/)). |
-| `.tmp/` | Optional | Project | — | — | Scratch / temporary working area — transient material, not durable knowledge and not committed (see [19-tmp.md](/workbench/tmp/)). |
+| `.tmp/` | Optional | Both | — | — | Scratch / temporary working area — transient material, not durable knowledge and not committed, segmented per memo as `.tmp/<memo-id>/`. Also exists at the root, which needs scratch for the same reason a project does (see [19-tmp.md](/workbench/tmp/)). |
 | `.workbench/` | Optional | Project | `config.json` · `registry.json` | — | The manual project configuration the workbench core reads (see [22-config.md](/workbench/config/)). |
-| `.worktrees/` | Optional | Project | — | — | The consistent location for git worktrees — generated machinery, **gitignored**, with mandatory cleanup via `git worktree remove`/`prune` (see "Worktree Placement" below). |
+| `.worktrees/` | Optional | Project | — | — | The consistent location for git worktrees — generated machinery, **gitignored**, with mandatory cleanup via `git worktree remove`/`prune`, segmented per memo as `.worktrees/<memo-id>/` in the same shape as `.tmp/` and `.trash/` (see "Worktree Placement" below and [38-worktrees.md](/workbench/worktrees/)). |
 | `data/` | Optional | Project | — | — | **Raw inputs** — feeds and source material, as ingested, before processing; the input side that `context/` is derived from. |
 | `design/` | Optional | Project | `design.md` | design format | Design system and visual sources — `design.md`, variants, and `.pen` files (see [18-design.md](/workbench/design/)). |
 | `flowmcp/` | Optional | Both | — | — | FlowMCP authored content and produced output — the footprint of the FlowMCP custom folder (see [33-flowmcp.md](/workbench/flowmcp/)). |
+| `n8n/` | Optional | Project | — | n8n-separation (naming-level) | Authored n8n content — exported workflow JSON and the project's n8n conventions; the footprint of the n8n custom folder on the one shared instance (see [39-n8n.md](/workbench/n8n/)). |
 | `proofs/` | Optional | Project | — | — | Proofs captured when a view changes (see "Specialized folders" below). |
 | `research/` | Optional | Project | — | — | Cloned foreign / research repositories that are **not** the project's own domain repos (for example `dune`, spellbook) — distinct from `repos/` (own repos) and `data/` (raw inputs). |
 | `snapshots/` | Optional | Project | — | — | Application snapshots (see "Specialized folders" below). |
@@ -650,6 +651,7 @@ mindmap
       data/
       design/
       flowmcp/
+      n8n/
       proofs/
       research/
       snapshots/
@@ -889,6 +891,7 @@ Several registered folders carry enough depth to have their own page; this chapt
 | `.wiki/` | [30-wiki.md](/workbench/wiki/) |
 | `.browser/` | [31-browser-automation.md](/workbench/browser-automation/) |
 | `flowmcp/` | [33-flowmcp.md](/workbench/flowmcp/) |
+| `n8n/` | [39-n8n.md](/workbench/n8n/) |
 | `.trash/` | [32-trash.md](/workbench/trash/) |
 | `.tmp/` | [19-tmp.md](/workbench/tmp/) |
 | `data/` | [34-data.md](/workbench/data/) |
@@ -1017,7 +1020,7 @@ spec_file: "13-knowledge-format-okf.md"
 order: 13
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/13-knowledge-format-okf.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/13-knowledge-format-okf.md."
@@ -1218,7 +1221,7 @@ spec_file: "15-repos.md"
 order: 15
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/15-repos.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/15-repos.md."
@@ -1344,7 +1347,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/16-context.md."
@@ -1480,7 +1483,7 @@ spec_file: "17-memo-store.md"
 order: 17
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/17-memo-store.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/17-memo-store.md."
@@ -1558,7 +1561,7 @@ spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/18-design.md."
@@ -1713,7 +1716,7 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/19-tmp.md."
@@ -1730,7 +1733,7 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/1
 {
   "name":       ".tmp/",
   "status":     "optional",
-  "level":      "project",
+  "level":      "both",
   "entryPoint": null,
   "convention": null,
   "purpose":    "Ephemeral scratch — throwaway working files no part of the project depends on.",
@@ -1750,6 +1753,8 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/1
 `.tmp/` holds intermediate output that a tool or an agent produces while doing work and does not need afterwards — a half-rendered artifact, a scratch copy, a staging area for a multi-step operation. It is the right home for "I need somewhere to put this for a moment" so that such files do not litter the authored folders (`context/`, `repos/`, `design/`).
 
 It carries a **leading dot** because it holds machine-generated, non-authored content — the same rule that dots `.trash/`, `.wiki/`, and `.memo/` and leaves `repos/`, `context/`, and `design/` undotted ([12-folders.md](/workbench/folders/)). It is **gitignored**: nothing in `.tmp/` is ever committed.
+
+`.tmp/` occurs at **both levels** — at the workbench root and inside a project — which is why its level is `both` and not `project`. Root-level work needs scratch for the same reason project-level work does, and the two areas are separate: root scratch belongs to the root, project scratch to the project, and neither reaches into the other. Everything on this page applies unchanged at either level.
 
 ---
 
@@ -1793,7 +1798,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/20-cli.md."
@@ -2041,7 +2046,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/21-environment-scripts.md."
@@ -2232,7 +2237,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/22-config.md."
@@ -2486,7 +2491,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/23-hooks-contract.md."
@@ -2797,7 +2802,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/24-skills-scope.md."
@@ -2952,7 +2957,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/25-validation-overview.md."
@@ -3184,7 +3189,7 @@ spec_file: "26-addons.md"
 order: 26
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/26-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/26-addons.md."
@@ -3255,7 +3260,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/30-wiki.md."
@@ -3436,7 +3441,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/31-browser-automation.md."
@@ -3634,7 +3639,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/32-trash.md."
@@ -3651,7 +3656,7 @@ Work in a project is exploratory and often half-formed. Material that looks disc
 {
   "name":       ".trash/",
   "status":     "mandatory",
-  "level":      "project",
+  "level":      "both",
   "entryPoint": null,
   "convention": null,
   "purpose":    "The recoverable deletion target — the project-local folder removals route through instead of erasing.",
@@ -3673,6 +3678,8 @@ Removing material from a project **MUST** route through the project-local `.tras
 - "Removing" a file or folder means **moving** it into `.trash/`, not erasing it. The material remains on disk, recoverable, until a human decides otherwise.
 - `.trash/` is **manual**. It is emptied by a person, deliberately — never automatically by a script, a cleanup routine, or an autonomous loop. Automatic emptying would re-create the irreversible-loss risk the policy exists to remove.
 - Because `.trash/` lives inside the local project (under the local guarantee of [11-project-structure.md](/workbench/project-structure/)), trashed material never leaves the machine and is never pushed.
+
+`.trash/` occurs at **both levels** — at the workbench root and inside a project — which is why its level is `both` and not `project`. The no-delete guarantee below is workbench-wide, so root-level material needs the same recoverable target project-level material has. A discard stays at its own level: a removal inside a project routes into that project's `.trash/`, never into the root's.
 
 Superseded knowledge — for example, an outdated wiki page — is trashed, not deleted, so its provenance can still be recovered if needed.
 
@@ -3764,7 +3771,7 @@ spec_file: "33-flowmcp.md"
 order: 33
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/33-flowmcp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/33-flowmcp.md."
@@ -3837,7 +3844,7 @@ spec_file: "34-data.md"
 order: 34
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/34-data.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/34-data.md."
@@ -3903,7 +3910,7 @@ spec_file: "35-proofs.md"
 order: 35
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/35-proofs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/35-proofs.md."
@@ -3969,7 +3976,7 @@ spec_file: "36-research.md"
 order: 36
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/36-research.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/36-research.md."
@@ -4030,7 +4037,7 @@ spec_file: "37-snapshots.md"
 order: 37
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/37-snapshots.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/37-snapshots.md."
@@ -4092,7 +4099,7 @@ spec_file: "38-worktrees.md"
 order: 38
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/38-worktrees.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/38-worktrees.md."
@@ -4113,7 +4120,7 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/3
   "entryPoint": null,
   "convention": null,
   "purpose":    "The one consistent location for git worktrees — generated machinery, gitignored, with mandatory cleanup.",
-  "goesIn":     "Git worktrees of the project's repos/ repositories, one checkout per branch under .worktrees/.",
+  "goesIn":     "Git worktrees of the project's repos/ repositories, one checkout per branch at .worktrees/<memo-id>/<slug>/.",
   "doesNot":    "Authored content; a permanent home for a checkout (a worktree MUST be removed via git worktree remove/prune when its work is done).",
   "git":        "discouraged",
   "remote":     "forbidden"
@@ -4134,6 +4141,37 @@ Git worktrees need one consistent home in every project; left unplaced they scat
 
 A worktree is transient. When work on its branch is done it MUST be removed via `git worktree remove`, and stale entries pruned via `git worktree prune`, so no disk debris is left behind. `.worktrees/` gives that mandatory-cleanup rule a fixed, registered place to point at.
 
+**Merging and dissolving are part of the job, not a user decision.** Work is not finished when a worktree holds a result; it is finished when that result has been merged into its target branch and the worktree is gone. Neither the merge nor the removal is ever framed as an option, a question or a proposal to the user — the only user gate in this area is the **push** (Stage 4), and pushing is a different act from merging locally. A worktree still standing after its work is merged is an **open end**, and it stays one until it is either removed or carries a stated reason for remaining.
+
+**Quiesce before merging.** A worktree's output MUST NOT be committed or merged while its worker may still be writing. Before the merge, the worker is stopped or verified idle; only then does the merge run. Skipping this produces a commit race whose symptoms are orphaned pointers and a half-committed state — a class of damage that is cheap to prevent here and expensive to diagnose afterwards. A clean `git status --porcelain` does not settle the question: it says the tree is clean at this instant, not that nobody is about to write to it.
+
+---
+
+## Per-Memo Subfolders
+
+`.worktrees/` segments its contents by the active memo id, mirroring `.tmp/` ([19-tmp.md](/workbench/tmp/)) and `.trash/` ([32-trash.md](/workbench/trash/)): a checkout lives under `.worktrees/<memo-id>/`, one subfolder per memo. The three machine-local folders therefore share **one** structure, so what a memo left behind is read off the same shape in all three places.
+
+- **`<memo-id>` is the id of the memo currently being worked on.** A tool or an agent creating a worktree while a memo is active MUST place it under that memo's subfolder — `.worktrees/<memo-id>/…` — never in the `.worktrees/` root directly.
+- **`undefined/` is the fallback.** When no memo is active, `<memo-id>` is the literal `undefined`, so such checkouts land in `.worktrees/undefined/`. There is always a valid target: work never has to decide whether a memo happens to be active before it can pick a worktree path.
+
+Segmentation does not soften the mandatory-cleanup rule above. Every subfolder, `.worktrees/undefined/` included, still holds transient checkouts that MUST be removed via `git worktree remove`/`prune` when their work is done.
+
+### The Full Address: `.worktrees/<memo-id>/<slug>/`
+
+A checkout does not lie in the memo folder directly; it occupies a named subfolder of it. The address has exactly **three** levels — the root, the memo id, and a `<slug>` naming the piece of work:
+
+```
+.worktrees/<memo-id>/<slug>/
+```
+
+`<slug>` is the same kebab-case slug that the branch carries (`{PREFIX}-{NNN}-<slug>`), so a folder on disk and a branch in git are readable off one another without a lookup table. **The path and the branch are two separate things and are recorded in two separate fields.** A single field holding "the worktree" cannot answer both *where is it* and *what is it called*, and a tool that needs the location must not have to parse a branch name to guess it.
+
+Three levels are the point. A memo folder holding checkouts directly can say which memo left something behind but not *what* was left; with the slug, an unmerged leftover names its own piece of work.
+
+### Repositories, and the One That Is Never a Target
+
+A worktree is a checkout of a repository under `repos/`. A project may hold a **local, remote-less git root outside `repos/`** — a spec workshop is the standing example. Such a root is **never a worktree target**: it exists to be authored in directly, it has no remote to merge toward, and a checkout of it would put authored text in a generated, gitignored area. The exclusion is against that root specifically, not against its name: a repository under `repos/` that happens to be called the same thing is an ordinary target and is not caught by it.
+
 ---
 
 
@@ -4146,6 +4184,92 @@ A worktree is transient. When work on its branch is done it MUST be removed via 
 ---
 
 ---
+title: "n8n/"
+description: "`n8n/` is the on-disk footprint of the **n8n** custom folder — a globally-shared, self-hosted **n8n automation instance** whose per-project authored content lives in a declared per-project area, in..."
+workbench_version: "0.3.0"
+spec_file: "39-n8n.md"
+order: 39
+section: "Workbench"
+normative: true
+generated_at: "2026-09-14T10:03:05.162Z"
+generated_from: "workbench/0.3.0/draft/spec/39-n8n.md"
+generator: "scripts/generate-docs-payload.mjs"
+edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/39-n8n.md."
+---
+
+
+`n8n/` is the on-disk footprint of the **n8n** custom folder — a globally-shared, self-hosted **n8n automation instance** whose per-project authored content lives in a declared per-project area, in the pattern every custom folder follows ([26-addons.md](/workbench/addons/)). This is the per-folder page for `n8n/`: it specifies the folder's *role* and the **one-instance-many-projects model** that keeps the single shared instance apart from each project's version-controlled workflow exports. The n8n *tool* itself — its nodes, credentials, and workflow engine — is owned by n8n and is not restated here. This page closely mirrors the FlowMCP folder ([33-flowmcp.md](/workbench/flowmcp/)); the difference is that n8n's "global truth" is a **shared remote service**, not a local `~/.` home.
+
+---
+
+## Folder Contract
+
+```folder
+{
+  "name":       "n8n/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": "n8n-separation (naming-level)",
+  "purpose":    "Authored n8n content for a project — exported workflow JSON (version-controlled backups) and the project's n8n conventions/docs. The live workflows run in the ONE shared n8n instance, not here.",
+  "goesIn":     "Exported workflow JSON, Data-Table schema notes, credential names (not secrets), a project-n8n README.",
+  "doesNot":    "The live workflows and credentials (they live in the shared n8n instance's database); any secret or API key (those stay in the parent .env, never in the repo).",
+  "git":        "recommended",
+  "remote":     "forbidden"
+}
+```
+
+> The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](/workbench/folders/)) and the derived project config are generated from. Unlike `flowmcp/`, a local git history is **recommended** (`git: recommended`): workflow exports are the project's version-controlled backup of automations that otherwise live only in the shared instance's database. Outside `repos/` no remote may be attached, so `remote` is `forbidden`.
+
+---
+
+## The One-Instance-Many-Projects Model
+
+n8n is a custom folder whose data spreads across **two locations** — and the first is not a file at all. Keeping them apart is the whole point of this page: the live automations and their encrypted credentials live in **one shared instance**, while each project keeps only a version-controlled *export* of its own workflows.
+
+| Location | Role | Dot? | git |
+|----------|------|------|-----|
+| The **shared n8n instance** (self-hosted, e.g. one DigitalOcean droplet) | The **live truth** — the running workflows and the encrypted credential store, in the instance's own database. **One instance for the whole workbench**; every project's workflows live here, not in per-project files. It is a **remote shared service**, the analogue of FlowMCP's `~/.flowmcp/` global home, and is **never** a project folder. | — | outside the workbench (a service) |
+| `n8n/` | The **authored content** folder — the workbench-registered, non-dot folder that holds the material a project actually keeps: **exported workflow JSON**, Data-Table schema notes, the project's n8n conventions, a README. Version-controlled so the automations survive independently of the instance. | no dot (authored content) | local, recommended |
+
+This is the same **"Tool Global, Data Project-Bound"** discipline every Add-on follows ([26-addons.md](/workbench/addons/)), with n8n's twist that the "global" tier is a **shared network service** rather than a local home: the instance is run once and shared; each project's durable, authored export sits in a registered non-dot folder (`n8n/`). There is deliberately **no** `.n8n/` cache folder in the contract — n8n writes no per-project local machinery, so no dot-prefixed sibling is reserved.
+
+### One Shared Instance — Never One Per Project
+
+There is exactly **one** shared n8n instance for the whole workbench; a project **MUST NOT** stand up its own separate instance. All projects' workflows are stored in that single instance and are separated by **convention**, not by isolation (below). This keeps interop trivial — one workflow can call another across projects via the Execute-Sub-workflow node — at the cost of soft, naming-level separation.
+
+---
+
+## The Separation Convention — Naming-Level on One Instance
+
+Because the free self-hosted **Community edition provides only a single (Personal) project** — team projects, role-based access control, and workflow/credential sharing are **paid-tier** features — projects on one shared Community instance are separated by **naming discipline**, not by access control. The convention is deliberately minimal:
+
+1. **Register** the Community edition (free license key) to unlock nested **Folders**.
+2. **One top-level folder per project** inside the Personal project — `trading/`, `personal-brand/`, ….
+3. **Prefix every workflow name** with a short project token in brackets — `[trading] …`.
+4. **One tag per project** on every workflow — for Overview filtering.
+5. **Prefix Data-Table and credential names** with the same token — `trading_*`, `[trading] …`.
+
+This is **naming-level, not security-level** isolation: with no RBAC on Community, every workflow, credential, and Data Table on the instance is owner-accessible. True per-project isolation with scoped credentials begins only at the paid tiers. A project that needs hard isolation states that requirement explicitly rather than assuming the naming convention provides it.
+
+### Secrets Live in the Parent `.env`, Never in `n8n/`
+
+Exported workflow JSON **MUST NOT** carry secrets. API keys and tokens live in the **parent-directory `.env`** and are injected into the shared instance as environment variables, then created **once** as n8n credentials and referenced by name across workflows (the central, encrypted credential store). The `n8n/` folder may record credential **names** for documentation, never their values. This is the standing rule that a tool's secrets are never committed.
+
+---
+
+
+<!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
+## Related
+
+- [12-folders.md](/workbench/folders/) — the folder contract and the dot-prefix convention this page's non-dot `n8n/` reads off.
+- [26-addons.md](/workbench/addons/) — the custom folder (Add-on) model `n8n/` is an instance of ("Tool Global, Data Project-Bound").
+- [33-flowmcp.md](/workbench/flowmcp/) — the closest analogue: another tool-backed custom folder, with a local global home instead of a shared service.
+- [11-project-structure.md](/workbench/project-structure/) — the local guarantee that keeps `n8n/` on the machine.
+
+---
+
+---
 title: "Architecture"
 description: "This chapter holds the workbench's architecture at two scales: the **core diagram** that summarizes the system's overall structure — the two-level model and the four sibling spec families — and the..."
 workbench_version: "0.3.0"
@@ -4153,7 +4277,7 @@ spec_file: "41-project-architecture.md"
 order: 41
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/41-project-architecture.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/41-project-architecture.md."
@@ -4325,7 +4449,7 @@ spec_file: "42-bridge.md"
 order: 42
 section: "Workbench"
 normative: false
-generated_at: "2026-07-17T23:43:44.669Z"
+generated_at: "2026-09-14T10:03:05.999Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."
@@ -4375,9 +4499,10 @@ _(no skill dependencies declared in this family)_
 | [36-research](/workbench/research/) | — | 0 | — |
 | [37-snapshots](/workbench/snapshots/) | — | 0 | — |
 | [38-worktrees](/workbench/worktrees/) | — | 0 | — |
+| [39-n8n](/workbench/n8n/) | — | 0 | — |
 | [41-project-architecture](/workbench/project-architecture/) | ✓ | 6 | 2 |
 | [43-projects](/workbench/projects/) | — | 0 | — |
-| **Summary** | **23 / 30** | — | 34 |
+| **Summary** | **23 / 31** | — | 34 |
 
 ## Skills by namespace
 
@@ -4486,6 +4611,10 @@ _(no skill dependencies declared in this family)_
 - [25-validation-overview](/workbench/validation-overview/) — `workbench-cli`, `workbench-hooks-contract`, `workbench-skills-scope`, `workbench-validation`
 - [41-project-architecture](/workbench/project-architecture/) — `memo-maintenance-score`, `memo-maintenance-score-all`, `memo-maintenance-verify`, `wiki-lint`, `workbench-audit`, `workbench-config`
 
+### Other
+
+- [39-n8n](/workbench/n8n/) — _— no implementer skill yet —_
+
 ---
 
 ---
@@ -4496,7 +4625,7 @@ spec_file: "43-projects.md"
 order: 43
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/43-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/43-projects.md."

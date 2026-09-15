@@ -30,16 +30,16 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 | `memo-finalize` | contributing | Final readiness gate check before PRD creation |
 | `memo-phase-evaluate` | contributing | Prueft das Zusammenspiel aller PRDs innerhalb einer Phase |
 | `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
+| `memo-phase-generate` | contributing | Erzeugt die Arbeitsauftraege — die PRDs — EINER Phase, kurz vor deren Ausfuehrung |
 | `memo-prd-evaluate` | contributing | Validate PRDs against the source memo |
 | `memo-prd-generate` | contributing | Create PRDs (Product Requirement Documents) from a finalized memo |
 | `memo-prds-validate` | contributing | Bidirectional validation of Memo vs |
 | `memo-req-registry` | primary | Catalog of tools usable as requirements (Pencil, Playwright, get-sheet, getui, FlowMCP) with named validation tactics, plus a d… |
 | `memo-req-runner` | primary | Anti-cheat principles and a check runner for the requirements/eval calibration layer |
-| `memo-req-store` | primary | Storage convention and entry schema for the requirements/eval calibration layer, plus the three-axis scoping/matching engine |
-| `memo-req-template` | primary | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements (eval-styl… |
+| `memo-req-store` | primary | Storage convention, entry schema and three-axis matching engine of the requirements/eval calibration layer |
+| `memo-req-template` | primary | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements — an eval-… |
 | `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
-| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
+| `memo-rollout-generate` | contributing | Erstellt den PHASENPLAN aus einem finalisierten Memo — Phasen vorab, Arbeitsauftraege NICHT |
 | `specs-to-skills` | contributing | Scaffold skill skeletons from the spec-to-skill map and grade skill quality against the three authoring dimensions |
 | `wiki-lint` | contributing | Health-check the wiki |
 

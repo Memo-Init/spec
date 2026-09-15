@@ -25,8 +25,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization pipeline |
-| `memo-input-processing` | primary | Strict 5-step input processing pipeline for voice memos, text, and linked files |
+| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization — turn an OPEN, well-grounded goal into a full follow-up memo autonomously |
+| `memo-input-processing` | primary | Strict 5-step input processing pipeline for voice memos, text and linked files — completeness, transcription error correction,… |
 
 ## 5. Grading assignment
 

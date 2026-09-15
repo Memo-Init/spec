@@ -25,20 +25,20 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `git-merge-strategy` | primary | Deterministic, reproducible local merge strategy for phase-based rollouts |
+| `git-merge-strategy` | primary | Deterministic, reproducible local merge strategy for phase-based rollouts — the merge mechanism of Stage 3 (Merge-Vorbereitung) |
 | `git-push` | primary | Pre-push checklist — update docs, security check, run tests locally, push, verify CI passes, check coverage and overview page |
-| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
-| `memo-plan-add` | contributing | Fuegt ein finalisiertes Memo zu einem bestehenden Plan hinzu |
-| `memo-plan-evaluate` | contributing | Bidirektionale Konformitaetspruefung Plan vs Memos |
-| `memo-plan-execute` | contributing | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
-| `memo-plan-finalize` | contributing | Archiviert einen abgeschlossenen Plan |
-| `memo-plan-init` | contributing | Erstellt einen neuen Plan-Folder mit Skeleton (plan.md + plan-status.json) |
-| `memo-plan-status` | contributing | Zeigt Plan-Status (Phasen + Issues + HEAD-Commits + Budget) in Klartext-Terminal-Format |
-| `memo-plan-stop` | contributing | Externer Stop-Befehl (/memo-plan-stop) |
-| `memo-plan-update-checkbox` | contributing | Setzt einzelne Phasen-Task-Checkboxen in plan.md programmatisch |
+| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented, in a FRESH context (never the working session) |
+| `memo-plan-add` | contributing | — |
+| `memo-plan-evaluate` | contributing | — |
+| `memo-plan-execute` | contributing | — |
+| `memo-plan-finalize` | contributing | — |
+| `memo-plan-init` | contributing | — |
+| `memo-plan-status` | contributing | — |
+| `memo-plan-stop` | contributing | — |
+| `memo-plan-update-checkbox` | contributing | — |
 | `memo-rollout` | contributing | Orchestrator fuer den kompletten Rollout |
 | `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
-| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
+| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines geplanten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber die Phasen des Phasenpla… |
 | `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
 | `release` | contributing | Two-stage release and pinning policy |
 

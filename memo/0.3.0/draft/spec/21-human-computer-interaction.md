@@ -144,7 +144,7 @@ These six columns, in this order, are the standard for every rollout / stage ove
 
 Domain boards keep their own subject-matter columns — the goal board uses `Goal | Kind | % | Status | Missing`, the maintenance board uses `Repo | Freshness % | Blast | maintStatus | Missing` — but they render the same way: as markdown in the reply, on the R1 channel. The stage table is the shared layout; the domain boards are specializations of the same presentation rule. The cells of every such table carry plain-language subjects, never bare codes or unresolved hashes.
 
-The status tables are part of a small, fixed set of communication points during the autonomous rollout: a one-line phase start, a compact phase-end post, the hard-stop signal, and the bundled open questions at landing. There are no mid-phase "shall I continue?" questions — concerns go into the preface channel, not into a prompt that stops the run.
+The status tables are part of a small, fixed set of communication points during the autonomous rollout: a one-line phase start, a compact phase-end post, the hard-stop signal, the bundled open questions at landing, and the timed interval update the orchestrator posts of its own accord while a phase runs. There are no mid-phase "shall I continue?" questions — concerns go into the preface channel, not into a prompt that stops the run. The interval update does not breach that rule: it reports, it does not ask, so it neither seeks permission nor halts the run.
 
 ---
 

@@ -26,7 +26,7 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 | Skill | Role | Purpose |
 |---|---|---|
 | `memo-finalize` | contributing | Final readiness gate check before PRD creation |
-| `memo-revision-consolidate` | primary | Merges the last Full revision plus all subsequent Update revisions into a new Full revision |
+| `memo-revision-consolidate` | primary | DECOMMISSIONED with |
 | `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
 | `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
 

@@ -25,10 +25,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-score-all` | contributing | Score EVERY goal in a fresh context and render the goal board — the standard output of the goal-scoring system |
+| `memo-goal-score-all` | contributing | Score EVERY goal in a fresh context and render the goal board |
 | `memo-maintenance-score` | primary | Score ONE repo card in a FRESH context (never the working session) |
-| `memo-maintenance-score-all` | primary | Score EVERY repo card in a fresh context and render the maintenance board — the standard output of the maintenance system |
-| `memo-maintenance-verify` | primary | The gated re-bless of the maintenance system — the handelnde pendant to memo-goal-optimize |
+| `memo-maintenance-score-all` | primary | Score EVERY repo card in a fresh context and render the maintenance board |
+| `memo-maintenance-verify` | primary | The gated re-bless of the maintenance system |
 | `memo-rollout` | contributing | Orchestrator fuer den kompletten Rollout |
 | `release` | contributing | Two-stage release and pinning policy |
 

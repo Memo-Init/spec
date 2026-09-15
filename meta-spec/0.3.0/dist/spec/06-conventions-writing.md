@@ -6,7 +6,7 @@ spec_file: "06-conventions-writing.md"
 order: 6
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "meta-spec/0.3.0/draft/spec/06-conventions-writing.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.3.0/draft/spec/06-conventions-writing.md."
@@ -83,6 +83,19 @@ Outward-facing text — specifications, skills, and published docs — uses a **
 | "smart / dumb zone" | "a curve, not two zones" |
 
 The register applies to the written artifact only; a spoken or in-conversation framing is unaffected — the rule governs what reaches the page, not how a point is made aloud. Like the other conventions in this chapter, `NR1` reuses the existing policy-block mechanism (above) rather than a new registry primitive: its readable rule lives here in its owning chapter, its activation is tracked as a policy-block member, and the two do not restate each other (No Double Normativity).
+
+---
+
+
+---
+
+## Formality Register — NR2
+
+`NR1` fixes that outward text stays neutral; `NR2` fixes the orthogonal **formality axis** — how formal or colloquial the wording is, scaled by audience. The written artifact defaults to a **formal, precise register**. A **working register** — the way one writes among colleagues in an internal note — is permitted only in inward-facing working artifacts (memos, working notes) and **never crosses to an outward artifact** (spec, skill, published doc); when inward substance is promoted outward, it is rewritten to the formal register in the same move.
+
+The formality axis is orthogonal to *locality* (where the bytes live) and to *direction* (who the reader is). A note inside `.memo/` may use the working register; the moment its substance is promoted to a spec or a skill it is re-registered as formal. The failure `NR2` prevents is the colloquial phrase carried verbatim onto the page — content-correct, register-wrong.
+
+`NR2` composes with, and does not restate, the axes owned elsewhere: the inward/outward direction and the `J1`–`J12` trust layer live in the communication chapter ([/specification/internal-vs-external-communication/](/specification/internal-vs-external-communication/)), and one-language-per-artifact likewise. `NR2` adds only the formality dimension. Like the other conventions in this chapter, `NR2` reuses the policy-block mechanism rather than a new registry primitive: its readable rule is single-source in this section, its activation is tracked as a policy-block member, and the two do not restate each other (No Double Normativity).
 
 ---
 

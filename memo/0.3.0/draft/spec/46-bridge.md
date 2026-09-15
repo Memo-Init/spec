@@ -87,7 +87,8 @@ flowchart TD
 | [47-memo-lifecycle](./47-memo-lifecycle.md) | — | 0 | — |
 | [48-research-waves-and-depth](./48-research-waves-and-depth.md) | — | 0 | 15 |
 | [49-execution-workflow-guideline](./49-execution-workflow-guideline.md) | ✓ | 2 | — |
-| **Summary** | **46 / 49** | — | 124 |
+| [50-orchestrator-role](./50-orchestrator-role.md) | — | 0 | — |
+| **Summary** | **46 / 50** | — | 124 |
 
 ## Skills by namespace
 
@@ -248,6 +249,7 @@ flowchart TD
 - [42-plans](./42-plans.md) — `memo-budget-paste`, `memo-handover`, `memo-plan-add`, `memo-plan-evaluate`, `memo-plan-execute`, `memo-plan-finalize`, `memo-plan-init`, `memo-plan-status`, `memo-plan-stop`, `memo-plan-update-checkbox`
 - [47-memo-lifecycle](./47-memo-lifecycle.md) — _— no implementer skill yet —_
 - [49-execution-workflow-guideline](./49-execution-workflow-guideline.md) — `memo-phase-execute`, `research-workflow`
+- [50-orchestrator-role](./50-orchestrator-role.md) — _— no implementer skill yet —_
 
 ### Procedure
 

@@ -6,7 +6,7 @@ spec_file: "45-implementation-fidelity-audit.md"
 order: 45
 section: "Specification"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "memo/0.3.0/draft/spec/45-implementation-fidelity-audit.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/45-implementation-fidelity-audit.md."
@@ -67,7 +67,9 @@ The audit's posture — fresh context, distrust every conformity report, a stric
 
 ## Persistence
 
-The score object is persisted through a deterministic CLI leaf, modeled on the goal-score persistence split ([31-goals.md](/specification/goals/)): the **judgement is computed by the fresh-context LLM**, the **CLI only stores the finished object**. The store is the per-memo append-only **findings channel** ([13-orchestration.md](/specification/orchestration/), the inter-agent shared memory): the fidelity result is written as a finding under a dedicated `fidelity` thread tag, append-only and dedup-keyed, so successive audits of the same memo accumulate rather than clobber. The audit never writes the memo or the revisions directly.
+The score object is persisted through a deterministic CLI leaf, modeled on the goal-score persistence split ([31-goals.md](/specification/goals/)): the **judgement is computed by the fresh-context LLM**, the **CLI only stores the finished object**. The store is the memo's own **appending score history** — one row per audit in the shared memo database, never an overwrite — so successive audits of the same memo accumulate and every earlier reading stays readable. The audit never writes the memo or the revisions directly.
+
+The score does **not** live in the inter-agent channel ([13-orchestration.md](/specification/orchestration/)). The dividing criterion is the one the storage model uses everywhere: a **memo-bound** stock belongs to the memo, a **project-wide process** stock to the project. A fidelity score judges exactly one memo, so it is memo-bound — but the channel carries the *volatile in-flight traffic of a single phase run*, while a fidelity score is a *durable statement about a finished memo*. The two are different instruments. A written score MUST carry both its score object and a **reference to its loss-table report**; a write missing either fails loud. That requirement is not decoration: the one fidelity result the volatile channel ever held carried an empty payload next to a report that did not exist.
 
 ---
 

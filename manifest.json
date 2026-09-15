@@ -1,6 +1,6 @@
 {
     "spec_version": "0.3.0",
-    "generated_at": "2026-07-17T23:43:46.017Z",
+    "generated_at": "2026-09-14T10:03:06.745Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -482,6 +482,36 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "execution"
+        },
+        {
+            "filename": "48-research-waves-and-depth.md",
+            "slug": "research-waves-and-depth",
+            "title": "Research Waves and Root-Cause Depth",
+            "description": "The research discipline already says **when** to research and **where** to file the result ([10-proactive-research.md](./10-proactive-research.md)) and **how** to deploy the agents that carry it...",
+            "order": 48,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "introduction"
+        },
+        {
+            "filename": "49-execution-workflow-guideline.md",
+            "slug": "execution-workflow-guideline",
+            "title": "Execution Workflow Guideline",
+            "description": "[13-orchestration.md](./13-orchestration.md) says **who** runs a phase — the roles, the dials, the state files, the three worker exits. What it has never said is **how a unit of work is actually...",
+            "order": 49,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "execution"
+        },
+        {
+            "filename": "50-orchestrator-role.md",
+            "slug": "orchestrator-role",
+            "title": "Orchestrator Role",
+            "description": "[13-orchestration.md](./13-orchestration.md) describes the machinery a run is executed with — the roles, the parallelism dials, the state files, the worker exits....",
+            "order": 50,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "execution"
         }
     ],
     "workbench": {
@@ -766,6 +796,16 @@
                 "section": "Workbench",
                 "normative": true,
                 "sidebar_group": "folders"
+            },
+            {
+                "filename": "39-n8n.md",
+                "slug": "n8n",
+                "title": "n8n/",
+                "description": "`n8n/` is the on-disk footprint of the **n8n** custom folder — a globally-shared, self-hosted **n8n automation instance** whose per-project authored content lives in a declared per-project area, in...",
+                "order": 39,
+                "section": "Workbench",
+                "normative": true,
+                "sidebar_group": "introduction"
             },
             {
                 "filename": "41-project-architecture.md",
@@ -1116,16 +1156,26 @@
                 "section": "Meta-Spec",
                 "normative": true,
                 "sidebar_group": "lifecycle"
+            },
+            {
+                "filename": "12-controlled-language.md",
+                "slug": "controlled-language",
+                "title": "Controlled Language",
+                "description": "A **controlled language** is a deliberately restricted subset of a natural language: a fixed vocabulary with one meaning per word, plus a small body of writing rules that bound sentence length,...",
+                "order": 12,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "introduction"
             }
         ]
     },
     "stats": {
-        "total_files": 110,
-        "core_files": 48,
-        "workbench_files": 31,
+        "total_files": 115,
+        "core_files": 51,
+        "workbench_files": 32,
         "session_files": 19,
-        "spec_files": 12,
-        "normative_files": 99,
+        "spec_files": 13,
+        "normative_files": 104,
         "informative_files": 11
     }
 }

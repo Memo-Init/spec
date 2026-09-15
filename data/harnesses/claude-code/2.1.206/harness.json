@@ -32,6 +32,8 @@
     "adapter": {
         "kind": "cli",
         "entrypoint": "claude",
-        "notes": "Claude Code CLI harness, driven as a local CLI process."
+        "model": "claude-opus-5[1m]",
+        "effort": "xhigh",
+        "notes": "Claude Code CLI harness, driven as a local CLI process. This model/effort pair is the execution tier the harness itself stands on: it is the ground-truth the session-config gate holds a running session against, and a mismatch there is a warning, never a hard stop. Condensation points are staffed one tier above and are deliberately not pinned by this descriptor."
     }
 }

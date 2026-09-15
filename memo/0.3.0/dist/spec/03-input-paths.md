@@ -6,7 +6,7 @@ spec_file: "03-input-paths.md"
 order: 3
 section: "Specification"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "memo/0.3.0/draft/spec/03-input-paths.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/03-input-paths.md."
@@ -24,15 +24,15 @@ Every input to the memo system arrives as a **transcript**. The transcript serve
 | `memo-init` | Start a new memo. | Input pipeline → `memo-init` (a new memo; its location is determined there). |
 | `revision` | Feedback on an existing revision. | Input pipeline → `memo-revision-*` (generate → execute → evaluate). |
 | `free` | Attached input bound to a specific memo — not a standalone work order. | Input pipeline only. No revision, no memo. |
-| `plan-start` | Start or extend a plan. | Input pipeline → `memo-plan-*` (create plan, select memos). |
+| `rollout` | Start the rollout of a finalized memo. | Input pipeline → `memo-rollout` (the one public entry point into a rollout). |
 
 ---
 
 ## Type Identity
 
-Only the `revision` type carries a memo number and revision fields, because only a revision is bound to an existing memo. The other three types — `memo-init`, `free`, and `plan-start` — deliberately carry **no** memo number and **no** revision field.
+Only the `revision` type carries a memo number and revision fields, because only a revision is bound to an existing memo. The other three types — `memo-init`, `free`, and `rollout` — deliberately carry **no** memo number and **no** revision field.
 
-The absence of those fields for `memo-init`, `free`, and `plan-start` is correct and MUST NOT trigger a hard error. An implementation MUST extract memo number, memo name, revision id, and memo path **only** for the `revision` type.
+The absence of those fields for `memo-init`, `free`, and `rollout` is correct and MUST NOT trigger a hard error. An implementation MUST extract memo number, memo name, revision id, and memo path **only** for the `revision` type.
 
 ---
 
@@ -45,7 +45,7 @@ Each type implies a context mode — whether the follow-up runs in the current c
 | `memo-init` | empty context | A new memo starts unbiased; its place is decided fresh. |
 | `revision` | in-thread | Feedback is applied to a memo already under discussion. |
 | `free` | in-thread | A free transcription is consumed where it was spoken. |
-| `plan-start` | empty context | A plan is assembled from finalized memos without prior bias. |
+| `rollout` | empty context | A rollout starts from the finalized memo without the authoring context's bias. |
 
 As a rule of thumb the **Create** arc a `memo-init` transcript opens — authoring and the revision loop up to finalization (defined in [02-memo-sop-entrypoint.md](/specification/memo-sop-entrypoint/)) — runs to completion inside a **single session** the large majority of the time, on the order of nine cases in ten. This is a qualitative tendency, not a hard limit: it is why an empty starting context is normally enough to keep a new memo unbiased, and why a memo that outgrows one session is the exception the handover machinery ([09-contamination-context-handover.md](/specification/contamination-context-handover/)) exists for.
 

@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "memo/0.3.0/draft/spec/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/19-internal-vs-external-communication.md."
@@ -131,13 +131,27 @@ A single artifact is written in **one language** and does not mix two inside it 
 | Artifact | Language |
 |----------|----------|
 | Code and code comments | the project's publication language, one consistent choice |
+| **Machine tokens** — field names, enum values, identifiers, CLI verbs | the publication language, without exception, **including in inward-only stores** |
 | Commits, issues, pull requests, READMEs, published docs, website | the publication language |
 | Inward memo material (`.memo/`) | the project's **working** language — **MAY** differ from the publication language |
+| **Rendered display text** — terminal output, viewer labels, report headings | follows the reader: an inward-facing surface **MAY** use the working language **even when the machine token beneath it is in the publication language** |
 | Conversation with the user | the user's language |
 
 - An **outward-facing** artifact **MUST** be written in the publication language; an inward-language label on an outward page is a leak (see *Leak Prohibition* above).
 - An **inward-facing** artifact **MAY** use a working language different from the publication language — the inward register is calibrated for the author, not for a stranger.
 - The **specific** languages are a **project choice**, recorded in the project's own configuration / house rules, not fixed by this specification. A project that writes its memos in one natural language and publishes in another conforms as long as each artifact stays single-language. The consistency check that enforces single-language-per-artifact at finalization is specified in [11-quality-and-finalization.md](/specification/quality-and-finalization/).
+
+### A display label and the machine token beneath it are two artifacts, not one
+
+The single-language rule binds **within** an artifact. A rendered label in the working language sitting above a field named in the publication language is therefore **not** a mixed-language artifact: it is two artifacts, each internally consistent, that happen to appear on one screen. The violation the rule aims at is a mixture *inside* one of the two — a single identifier assembled from both languages, or one rendered surface that switches language mid-sentence.
+
+This is why the machine-token row admits **no** exception, not even for a store no stranger will ever open. A token is a contract: it outlives the surface that renders it, it is what a search matches on, and it is what a later reader must guess correctly without the surface present. A display label carries none of that weight — it is re-rendered whenever the reader changes, which is exactly why it is allowed to follow the reader.
+
+The rule this resolves is the recurring one: a reader who sees a working-language heading over a publication-language field **MUST NOT** report it as a single-language violation, and an author **MUST NOT** rename the field to match the heading. The correct reading is that the two belong to different rows of the table above.
+
+**This does not loosen the *Leak Prohibition*.** That prohibition governs **outward-facing** pages, where a label in the inward working language is insider noise for the intended reader; the display-text row governs **inward-facing** surfaces, whose intended reader is the author. The test is the same as everywhere in this chapter — direction, not secrecy. On an outward-facing surface, label and machine token are both in the publication language.
+
+**Consequence for the anchor-term register.** A term's register entry lists its known **mis-labels** — the wrong wordings a reader's prior supplies. A working-language word that is simply the **display label of the term itself** is therefore **NOT** a mis-label: it names the *same* concept in the other language, which the display-text row above expressly permits. A mis-label always names a **neighbouring, wrong** concept. Registering a term's own display label as its mis-label would make the register contradict this section, and would flag correct writing as an error. The same word **MAY** legitimately be a mis-label of a *different* term, precisely because it is the wrong neighbour there.
 
 ---
 

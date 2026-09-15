@@ -6,7 +6,7 @@ spec_file: "02-per-chapter-format.md"
 order: 2
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "meta-spec/0.3.0/draft/spec/02-per-chapter-format.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.3.0/draft/spec/02-per-chapter-format.md."
@@ -126,6 +126,8 @@ The `spec.json` (per-family) carries the family's identity, published route, and
 | `sidebarMeta` | The derived sidebar `order` + `labels` view (single-sourced from `groups[]`, [Navigation Categories](/spec/categories/)). |
 
 **Conflict rule.** The two heads together are the family head, and where a field appears in **both** — today only `namespaceToken` — the two **MUST** agree; a divergence is a build failure, never a silent pick. For a shared field the canonical source is by responsibility: `spec.json` is canonical for family-identity fields (`slug`, `title`, `namespaceToken`, `currentVersion`, route), and `spec-manifest.json` is canonical for per-version structure (`hasRequirements`, `hasGrading`, `requirementsRef`, `gradingRef`, `groups[]`). A reader that wants the whole family reads the head first and the chapters second.
+
+> **SOP definition — owned by the session family (reference, not restatement).** The `sopAnchor` field above names *which* chapter is a family's SOP entry. *What an SOP is* — a canonical entry document and single source of truth, a re-entry point after context loss, classifying every skill as either a public entry point or a private process step — is defined once by the session family ([/session/sop/](/session/sop/)) and referenced from here. This meta-spec does not restate that definition: one subject, one owning family (Single-Owner, [./00-overview.md](/spec/overview/)).
 
 ---
 

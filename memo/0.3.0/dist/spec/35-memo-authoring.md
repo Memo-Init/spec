@@ -6,7 +6,7 @@ spec_file: "35-memo-authoring.md"
 order: 35
 section: "Specification"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "memo/0.3.0/draft/spec/35-memo-authoring.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/35-memo-authoring.md."
@@ -67,6 +67,38 @@ When the set reaches **eight or more entries**, stop hand-typing the table. Inst
 - When the dataset is the **evidence a block argues from**, register it on that block as a `tables` entry with a **block-local handle** (`B001.D1`) rather than only as a loose file: the block then carries the data alongside the prose it supports, and the revision's table is snapshotted from the block payload (see the Block primitive in [30-primitives.md](/specification/primitives/)).
 
 Two properties make this worth the small upfront cost. First, **determinism**: a script-rendered table cannot drift from its data the way a hand-typed one does, and re-rendering is free. Second, the same structured payload is the **seed for sub-agent spawn** — one record maps to one sub-agent's brief, so the dataset that produced the table also fans the work out (see [10-proactive-research.md](/specification/proactive-research/) and [36-agent-strategies.md](/specification/agent-strategies/)). Because research output is naturally a dataset, **research agents generate their tables this way by default**, regardless of the row count.
+
+### The Payload's Shape — `meta` and `data` as Siblings
+
+The rule above says a payload is a JSON dataset; it does not say what that JSON looks like inside, and an unspecified inner shape is what lets every payload invent its own. A **new** JSON payload under a memo's `context/` folder therefore carries exactly **two top-level keys, as siblings**:
+
+- **`data`** holds the payload's content. The records live **under** `data`, never beside it. A bare top-level **array is no longer admissible** for a new payload — the array moves under `data`.
+- **`meta`** holds everything that describes the payload rather than being it: where it came from, when it was taken, by what. `meta` **MUST** be an object and **MUST NOT** be empty — a payload that cannot say where it came from is an assertion, not evidence.
+
+```json
+{
+  "meta": {
+    "schemaVersion": "1.0.0",
+    "memo": "081",
+    "topic": "T113",
+    "generatedAt": "2026-09-05",
+    "generatedBy": "memo-research-agent",
+    "source": "context/research-json-datenstruktur-konvention.md"
+  },
+  "data": {
+    "records": []
+  }
+}
+```
+
+The key is spelled **`meta`, without a leading underscore**. The underscore is worth naming explicitly because a well-known precedent uses it: OpenLineage prefixes its facet metadata (`_producer`, `_schemaURL`) and states the reason in the definition itself — to avoid **name collisions with the facet's own fields**, which sit in the *same object*. That reason does not carry here. Separating `meta` from `data` gives the payload's content its own namespace, so there is no collision left for a prefix to solve; adding one would import the sigil without the problem it answers.
+
+The cut follows **JSON:API**, where `data` and `meta` are top-level members and `meta` is the container for non-standard meta-information. It borrows the shape only: the rest of that apparatus — `links`, `included`, resource identifiers, relationships — is **not** adopted.
+
+Two boundaries keep this from spreading further than it was decided:
+
+- **Scope is `<memoDir>/context/`.** The convention binds **new** evidence payloads deposited there. The CLI envelope and the flat store records (topics, work items, `.memo/config.json`) stay flat and are explicitly out of scope; existing payloads are **not** migrated.
+- **The field list inside `meta` is deliberately left open here.** This chapter fixes the *envelope* — two keys, `meta` a non-empty object — and nothing else. Which provenance fields `meta` must carry is settled where provenance is settled, and no JSON Schema enforcement is introduced with this rule.
 
 ### Reference-Table Numbering — Revision-Stable IDs
 

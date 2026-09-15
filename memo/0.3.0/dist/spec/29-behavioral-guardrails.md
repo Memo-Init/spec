@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "memo/0.3.0/draft/spec/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/29-behavioral-guardrails.md."
@@ -28,6 +28,8 @@ The rule: write plainly and act. State what will be done and do it. Reserve qual
 A question that only offers stop-options ("Should I pause here?", "Do you want me to halt?") quietly pushes the decision toward stopping. The user is then forced to fight the framing to get continued work.
 
 The rule: every question to the user MUST offer a balanced option set that includes "keep working" or "do it all", not only ways to stop. The default branch of any question is forward motion. This is the conversational expression of C3 — the option to continue must always be on the table, phrased as a first-class choice rather than an afterthought. The interaction model ([21-human-computer-interaction.md](/specification/human-computer-interaction/)) defines where such questions occur; this rule defines how they must be framed.
+
+**"Balanced" is a predicate, not an adjective.** For as long as this rule was only a sentence, it was broken repeatedly, and the breakage was found on the screen rather than at the door. An option set is balanced exactly when it carries **both** a way forward — a real option with `continues: true` and `scope !== "smaller"` — **and** a smaller cut, a real option with `scope: "smaller"`. Only real options count; the injected siblings never do. The full field set, the codes that decide it, and the two parts that are honestly not machine-decidable are defined in [34-question-interface.md](/specification/question-interface/) ("Balance Is a Predicate, Not an Adjective"). This rule states the obligation; that chapter states how it is measured.
 
 ## C3 — Default Posture Is Full Autonomy
 

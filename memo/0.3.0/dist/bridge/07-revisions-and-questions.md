@@ -28,11 +28,11 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 | `memo-balance` | contributing | Check memo chapters for over-engineering and under-engineering |
 | `memo-coherence` | contributing | Provide honest, critical feedback on a memo — find gaps, contradictions, redundancies, and logical issues |
 | `memo-evidence` | contributing | Tag all statements in a memo by evidence level (FAKT/ANNAHME/VERMUTUNG) |
-| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-mental-model-derive` | contributing | Derive the project-global User Mental Model in a FRESH context (never the working session) by walking the finalized memos chron… |
+| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented, in a FRESH context (never the working session) |
+| `memo-init` | contributing | Initialize a new memo when the user has complex tasks affecting multiple repos/files, needs design decisions, gives long multi-… |
+| `memo-mental-model-derive` | contributing | Derive the project-global User Mental Model in a FRESH context by walking the finalized memos N->N-1 and reading each `## Beant… |
 | `memo-references` | contributing | Verify all code references in a memo (file paths, line numbers, code snippets) |
-| `memo-revision-consolidate` | contributing | Merges the last Full revision plus all subsequent Update revisions into a new Full revision |
+| `memo-revision-consolidate` | contributing | DECOMMISSIONED with |
 | `memo-revision-evaluate` | primary | Mandatory auto-check after each revision |
 | `memo-revision-execute` | primary | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
 | `memo-revision-generate` | primary | Pre-revision reflection and planning step |

@@ -26,8 +26,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 | Skill | Role | Purpose |
 |---|---|---|
 | `memo-evidence` | contributing | Tag all statements in a memo by evidence level (FAKT/ANNAHME/VERMUTUNG) |
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
-| `memo-input-processing` | contributing | Strict 5-step input processing pipeline for voice memos, text, and linked files |
+| `memo-init` | contributing | Initialize a new memo when the user has complex tasks affecting multiple repos/files, needs design decisions, gives long multi-… |
+| `memo-input-processing` | contributing | Strict 5-step input processing pipeline for voice memos, text and linked files — completeness, transcription error correction,… |
 | `memo-research-agent` | primary | Research agent with a fixed output format and a fixed storage location |
 | `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
 | `research-best-practice-playwright` | contributing | Playwright CLI vs MCP Server decision framework |

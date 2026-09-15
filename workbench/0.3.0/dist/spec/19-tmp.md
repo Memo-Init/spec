@@ -6,7 +6,7 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/19-tmp.md."
@@ -23,7 +23,7 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/1
 {
   "name":       ".tmp/",
   "status":     "optional",
-  "level":      "project",
+  "level":      "both",
   "entryPoint": null,
   "convention": null,
   "purpose":    "Ephemeral scratch — throwaway working files no part of the project depends on.",
@@ -43,6 +43,8 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/1
 `.tmp/` holds intermediate output that a tool or an agent produces while doing work and does not need afterwards — a half-rendered artifact, a scratch copy, a staging area for a multi-step operation. It is the right home for "I need somewhere to put this for a moment" so that such files do not litter the authored folders (`context/`, `repos/`, `design/`).
 
 It carries a **leading dot** because it holds machine-generated, non-authored content — the same rule that dots `.trash/`, `.wiki/`, and `.memo/` and leaves `repos/`, `context/`, and `design/` undotted ([12-folders.md](/workbench/folders/)). It is **gitignored**: nothing in `.tmp/` is ever committed.
+
+`.tmp/` occurs at **both levels** — at the workbench root and inside a project — which is why its level is `both` and not `project`. Root-level work needs scratch for the same reason project-level work does, and the two areas are separate: root scratch belongs to the root, project scratch to the project, and neither reaches into the other. Everything on this page applies unchanged at either level.
 
 ---
 

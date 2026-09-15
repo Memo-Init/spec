@@ -25,8 +25,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization pipeline |
-| `memo-init` | contributing | Initialize a new memo when user has complex tasks affecting multiple repos/files, needs design decisions, provides long multi-t… |
+| `memo-goal-optimize` | contributing | LLM-initiated goal-optimization — turn an OPEN, well-grounded goal into a full follow-up memo autonomously |
+| `memo-init` | contributing | Initialize a new memo when the user has complex tasks affecting multiple repos/files, needs design decisions, gives long multi-… |
 | `memo-revision-evaluate` | contributing | Mandatory auto-check after each revision |
 | `memo-revision-execute` | contributing | Write a new revision file (REV-XX.md) after memo-revision-generate has completed without blockers |
 | `memo-revision-generate` | contributing | Pre-revision reflection and planning step |

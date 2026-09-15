@@ -7,5 +7,6 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `memo-req-runner` — contributing
 - `memo-req-store` — contributing
 - `memo-sop` — contributing
+- `memo-work-items` — primary
 
 <!-- BRIDGE:IMPLEMENTED-BY END -->

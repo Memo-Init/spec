@@ -22,6 +22,7 @@ Every skill is a file (`SKILL.md`) whose frontmatter is its machine-readable con
 | `description` | yes | The trigger surface (see below). One line that states when the skill fires. |
 | `metadata.memo.category` | yes | The skill's category within the catalog, so it can be grouped and reasoned about as a set. |
 | `metadata.memo.specs` | yes | The skill-to-spec link. The block that makes the skill's specification dependency explicit and inspectable. |
+| `metadata.memo.writes` | no | The write declaration. Which store tables the skill writes, through which command, and on what occasion. Optional: a skill with no write path carries no entry at all. |
 
 The `specs` block is the heart of the contract. It declares which chapters govern the skill:
 
@@ -31,6 +32,38 @@ The `specs` block is the heart of the contract. It declares which chapters gover
 - **`scope`** (optional) — a marker for skills that sit *outside* the process specification's reach. Set only when `primary` is `null`; it records *why* the skill carries no mapping rather than leaving the absence unexplained.
 
 The contract is deliberately small. It does not try to encode the procedure itself — the body of the skill does that — only the metadata that makes the skill addressable, categorizable, and traceable back to the chapters that justify it.
+
+---
+
+## The `writes` Declaration
+
+A skill that writes into the store says so. Without a declaration the bookkeeping is invisible: a skill can claim a write it never performed, and nothing holds that claim against the store. `metadata.memo.writes` is where the claim becomes data — an optional subkey of `metadata.memo` carrying one entry per store table the skill writes into.
+
+Each entry carries exactly three fields, and no more:
+
+| Field | Contains | Language |
+|---|---|---|
+| `table` | The store table written into. | English — a machine token. |
+| `verb` | The **complete** invocation that performs the write, in the form `memo <group> <verb>`. | English — a machine token. |
+| `when` | The occasion on which the write happens, phrased for a human reader. | German display text. |
+
+The value of `verb` is the whole invocation, never a lone token: an entry reads `memo research register`, not `register` and not some invented store-level operation. Naming the full call is what keeps the entry portable — a collector command still names the same obligation, where a bare token would leave the reader guessing which group it belonged to.
+
+```yaml
+metadata:
+  memo:
+    writes:
+      - table: research
+        verb: memo research register
+        when: je beauftragtem Thema
+      - table: research_files
+        verb: memo research add-file
+        when: je abgelegtem Payload
+```
+
+The language break in `when` is deliberate and is **not** a Denglish violation. A field name and the text displayed beneath it are two artifacts, and the language matrix expressly permits German display text above an English field. Saying so on this page matters: a reader who meets `when` without this paragraph takes the German for a defect and "corrects" it into English, erasing the distinction the matrix draws.
+
+The field is optional because the obligation it records is not universal. A skill with no write path carries no `metadata.memo.writes` entry at all, and a manual one-off access stays undeclared — it is a thing someone did once, not a standing obligation of the procedure.
 
 ---
 

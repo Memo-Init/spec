@@ -25,14 +25,14 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 
 | Skill | Role | Purpose |
 |---|---|---|
-| `drift-resolution` | contributing | Detect and resolve DRIFT — a knowledge-unit (a statement, command, number, or convention) replicated across many artifacts that… |
-| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts |
+| `drift-resolution` | contributing | Detect and resolve DRIFT — a statement, command, number or convention copied into many artifacts that diverged from its source-… |
+| `git-merge-strategy` | contributing | Deterministic, reproducible local merge strategy for phase-based rollouts — the merge mechanism of Stage 3 (Merge-Vorbereitung) |
 | `memo-chronic-build` | contributing | Orchestrate the chronicle over ALL memos in.memo/ in one run |
 | `memo-handover` | contributing | Zwei-Stufen-Handover-Skill fuer kontaminierte Session-Uebergaben |
 | `memo-phase-evaluate` | primary | Prueft das Zusammenspiel aller PRDs innerhalb einer Phase |
 | `memo-phase-execute` | primary | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
-| `memo-plan-execute` | contributing | Fuehrt die naechste ausfuehrbare Phase eines Plans aus |
+| `memo-phase-generate` | contributing | Erzeugt die Arbeitsauftraege — die PRDs — EINER Phase, kurz vor deren Ausfuehrung |
+| `memo-plan-execute` | contributing | — |
 | `memo-prd-evaluate` | contributing | Validate PRDs against the source memo |
 | `memo-prds-validate` | contributing | Bidirectional validation of Memo vs |
 | `memo-references` | contributing | Verify all code references in a memo (file paths, line numbers, code snippets) |
@@ -40,8 +40,8 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 | `memo-revision-evaluate` | contributing | Mandatory auto-check after each revision |
 | `memo-revision-generate` | contributing | Pre-revision reflection and planning step |
 | `memo-rollout` | contributing | Orchestrator fuer den kompletten Rollout |
-| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines bereits generierten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber Phasen, ruft m… |
-| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
+| `memo-rollout-execute` | contributing | Fuehrt alle Phasen eines geplanten Rollouts aus (starte Umsetzung, execute all phases): iteriert ueber die Phasen des Phasenpla… |
+| `memo-rollout-generate` | contributing | Erstellt den PHASENPLAN aus einem finalisierten Memo — Phasen vorab, Arbeitsauftraege NICHT |
 | `memo-sop` | contributing | Parent-Skill for the complete Memo-Workflow SOP |
 | `research-workflow` | primary | Research orchestration for choosing the right information gathering tool |
 

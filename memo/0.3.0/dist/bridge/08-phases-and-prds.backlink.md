@@ -21,6 +21,7 @@ The skills below implement this chapter (primary owner first). The full per-page
 - `memo-rollout-evaluate` — contributing
 - `memo-rollout-execute` — contributing
 - `memo-rollout-generate` — primary
+- `memo-work-items` — contributing
 - `workbench-modes` — contributing
 
 <!-- BRIDGE:IMPLEMENTED-BY END -->

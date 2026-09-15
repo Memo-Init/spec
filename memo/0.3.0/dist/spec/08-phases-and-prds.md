@@ -6,7 +6,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "memo/0.3.0/draft/spec/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/08-phases-and-prds.md."
@@ -24,7 +24,7 @@ A finalized memo is decomposed in two steps.
 1. **Topics → Blocks → PRDs.** The memo's topics are **captured in blocks** — each block references one or more topics — and **PRDs are derived from those blocks** (product requirement documents). The governing constraint is that **one PRD fits into one context**: a PRD MUST be self-contained and sized so that a single agent working in a fresh, empty context can implement it without needing to hold the rest of the memo in mind.
 2. **PRDs → Phases.** PRDs are grouped into **phases**. A phase is a **sequential, mandatory unit** of the rollout: it bundles PRDs that **MUST** be executed together and in order, and it **MUST** declare its dependencies on other phases. The `depends-on` relation is not optional decoration — it is a **mandatory characteristic** of a phase, because a phase that depends on another may not start until that other has completed (the `## Phase-Hints` dependency tree below). A phase is therefore not merely a "batch": it is a sequenced, dependency-bearing unit.
 
-This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the sequential, dependency-bearing execution units. Following the `depends-on` edges across phases traces out the **strands** of the memo — a strand is the **dependency closure over phases**, the chain that *emerges* when the `## Phase-Hints` edges are walked transitively (see [25-strands.md](/specification/strands/)). Strands are derived from these phase dependencies, never assigned thematically; many phases typically resolve into one or two large strands.
+This decomposition is what makes a long memo executable: the memo is the authority, the PRDs are the discrete units, and the phases are the sequential, dependency-bearing execution units. Following the `depends-on` edges across phases traces out the **strands** of the memo — a strand is the **dependency closure over phases and PRDs**, the chain that *emerges* when the `## Phase-Hints` edges **and** the per-PRD `depends-on` edges are walked transitively (see [25-strands.md](/specification/strands/)). The phase edge stays authoritative for the phase order; the PRD edge orders within and across phases, and it exists because a phase-only closure cannot see a conflict that lives one level below it. Strands are derived from these phase dependencies, never assigned thematically; many phases typically resolve into one or two large strands.
 
 ### Work items — the finding-level granularity below a block
 
@@ -298,7 +298,9 @@ The phase dependency graph is checked deterministically over the `depends-on` ed
     "assertions": [
       "The `depends-on` relation over phases contains no cycle (A -> B -> A is rejected)",
       "No PRD in phase N declares a dependency on a phase M with M greater than N",
-      "A topological order of the phase graph exists and matches the planned execution order"
+      "A topological order of the phase graph exists and matches the planned execution order",
+      "The `depends-on` relation over PRDs contains no cycle",
+      "No PRD depends on a PRD that belongs to a phase running later than its own"
     ]
   },
   "grade": "binary"

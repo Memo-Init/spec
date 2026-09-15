@@ -6,7 +6,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "workbench/0.3.0/draft/spec/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/32-trash.md."
@@ -23,7 +23,7 @@ Work in a project is exploratory and often half-formed. Material that looks disc
 {
   "name":       ".trash/",
   "status":     "mandatory",
-  "level":      "project",
+  "level":      "both",
   "entryPoint": null,
   "convention": null,
   "purpose":    "The recoverable deletion target — the project-local folder removals route through instead of erasing.",
@@ -45,6 +45,8 @@ Removing material from a project **MUST** route through the project-local `.tras
 - "Removing" a file or folder means **moving** it into `.trash/`, not erasing it. The material remains on disk, recoverable, until a human decides otherwise.
 - `.trash/` is **manual**. It is emptied by a person, deliberately — never automatically by a script, a cleanup routine, or an autonomous loop. Automatic emptying would re-create the irreversible-loss risk the policy exists to remove.
 - Because `.trash/` lives inside the local project (under the local guarantee of [11-project-structure.md](/workbench/project-structure/)), trashed material never leaves the machine and is never pushed.
+
+`.trash/` occurs at **both levels** — at the workbench root and inside a project — which is why its level is `both` and not `project`. The no-delete guarantee below is workbench-wide, so root-level material needs the same recoverable target project-level material has. A discard stays at its own level: a removal inside a project routes into that project's `.trash/`, never into the root's.
 
 Superseded knowledge — for example, an outdated wiki page — is trashed, not deleted, so its provenance can still be recovered if needed.
 

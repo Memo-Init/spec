@@ -1,0 +1,75 @@
+{
+    "generated_at": "2026-09-14T10:03:06.359Z",
+    "generator": "scripts/generate-execution-dispositions.mjs",
+    "source": "memo/0.3.0/draft/spec/49-execution-workflow-guideline.md (```dispositions block)",
+    "id": "execution-dispositions",
+    "rule": "Every unit of work that is put down carries exactly one disposition from this register. A hold without a disposition is inadmissible: an unnamed suspended state cannot be distinguished from forgotten work, and neither the resume step nor the landing step can see it.",
+    "count": 6,
+    "dispositions": {
+        "done": {
+            "id": "done",
+            "label": "Done",
+            "meaning": "The unit is finished and was verified in a fresh context; the verdict and its evidence exist.",
+            "requires": [
+                "verdict",
+                "evidence",
+                "commit-id"
+            ],
+            "sourcePage": "49-execution-workflow-guideline.md"
+        },
+        "partial": {
+            "id": "partial",
+            "label": "Partially done",
+            "meaning": "A finished partial state: a nameable part of the unit holds and is verified, the remaining scope is named and is carried on as its own unit.",
+            "requires": [
+                "what-holds",
+                "remaining-scope",
+                "carrier-of-the-remainder"
+            ],
+            "sourcePage": "49-execution-workflow-guideline.md"
+        },
+        "deferred": {
+            "id": "deferred",
+            "label": "Deferred by decision",
+            "meaning": "The unit is put down deliberately although it could be worked, because another unit goes first. Deferral is a decision, not a pause.",
+            "requires": [
+                "reason",
+                "resume-condition"
+            ],
+            "sourcePage": "49-execution-workflow-guideline.md"
+        },
+        "blocked": {
+            "id": "blocked",
+            "label": "Blocked on an external dependency",
+            "meaning": "The unit cannot proceed because something outside the run holds it — a foreign uncommitted change in the target file, a missing tool, an unavailable dependency.",
+            "requires": [
+                "blocker",
+                "owner-or-source",
+                "resume-condition"
+            ],
+            "sourcePage": "49-execution-workflow-guideline.md"
+        },
+        "user-gated": {
+            "id": "user-gated",
+            "label": "Held for a user decision",
+            "meaning": "The unit touches an area only the user may release. It is prepared as a reversible proposal with a backup and presented bundled at the end of the run, never applied mid-run.",
+            "requires": [
+                "proposal-diff",
+                "backup",
+                "rollback-path"
+            ],
+            "sourcePage": "49-execution-workflow-guideline.md"
+        },
+        "no-with-snag": {
+            "id": "no-with-snag",
+            "label": "Deliberate no, recorded as a snag",
+            "meaning": "The unit is deliberately not built. This is a decision, not a suspended state, and it is only valid as a recorded snag — the reason why it was refused and the condition under which it would be taken up again.",
+            "requires": [
+                "reason",
+                "resume-condition",
+                "snag-record"
+            ],
+            "sourcePage": "49-execution-workflow-guideline.md"
+        }
+    }
+}

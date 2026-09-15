@@ -8,7 +8,6 @@
         "memo-chronic-build",
         "memo-phase-execute",
         "memo-phase-generate",
-        "memo-plan-execute",
         "memo-research-agent",
         "memo-rollout",
         "memo-rollout-execute",

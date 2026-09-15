@@ -6,7 +6,7 @@ spec_file: "10-harness-registry.md"
 order: 10
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "meta-spec/0.3.0/draft/spec/10-harness-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.3.0/draft/spec/10-harness-registry.md."
@@ -134,6 +134,69 @@ This mirrors the session-tier monotonicity of [session/01-genesis-root.md](/sess
 ## Adding a Harness Version is Maintenance, not a Release
 
 Registering a new harness version — a new `data/harnesses/<harnessId>/<version>/` instance and its `harnesses.manual.json` line — is a **maintenance act**, not a spec release. It re-blesses the affected pins and clears the `dist → skills` DriftSensor WARN; it does **not** bump a spec family's version or cut a release. The two-tier release strategy ([./07-versioning.md](/spec/versioning/) references the memo family's release chapter) is untouched by harness churn: harnesses version on their own cadence, under the registry, without moving any spec version.
+
+---
+
+## Harness Portability — the Adapter Cut
+
+The orchestrator architecture these families describe is, today, specific to one harness. That is a
+finding to be recorded at **one** data point, rather than a flaw to be abstracted away in fifty
+places of prose. This section states where the seam runs, what a second harness costs, which rule
+admits it, and the ten precautions that hold that cost at zero.
+
+### The cut
+
+| Layer | Harness-bound? | What sits there |
+|-------|----------------|-----------------|
+| Renderer | yes | the stdin field schema, the eight refresh triggers, the 300 ms debounce that cancels a still-running script, multi-line output with ANSI, the `COLUMNS` / `LINES` the harness sets |
+| Data | no | the tee file, the flat aggregate returned by the read leaf, the reader that consumes it |
+
+A port therefore swaps a renderer, never a data model. It is an adapter, not a reconstruction.
+
+### The registry rule
+
+A second harness arrives as a curated data row, never as a rebuild of these chapters. The rule that
+governs what such a row may assert — `not registered = not built` — stands earlier on this page and
+is **referenced** here, never restated: two homes for one rule is how two rules begin.
+
+### The ten precautions
+
+| # | Precaution | Rule |
+|---|------------|------|
+| V1 | Descriptor slot, never prose | A role chapter carries no tool name in its body text, and no model name either; the naming belongs to the descriptor, where it is versioned. |
+| V2 | Event intents, never event names | Skills and spec name what a hook fires *for* — session start, after compaction, human attention needed, worker finished. The descriptor maps that intent onto whatever event name a harness offers. This matters most on the alert path, where an event may have no counterpart at all while its intent always does. |
+| V3 | Hook scripts stay one-liners | A hook holds no logic. It calls a CLI leaf, so porting a hook is renaming a trigger. |
+| V4 | Tee file plus read leaf as the only status source | One source, read by everyone. The renderer is then an exchangeable leaf layer, as V1 asserts. |
+| V5 | Split status-line content in two | Budget and context on one axis, the position axis this project owns on the other. A harness may render the first natively while it can show nothing of the second. |
+| V6 | Steering between runs, never inside a run | The intervention grammar is a between-run control loop. Any step that reaches into a running agent carries the note "harness-dependent". |
+| V7 | Skill bodies carry no harness paths | No harness home path in skill text. Where skills live is descriptor business; a second symlink into the same skill tree would then be the whole port. |
+| V8 | Keep instruction-file size in view | At least one harness caps an instruction file at 32 KiB and silently appends nothing beyond that cap. Size therefore belongs in every audit of those files. |
+| V9 | Name an external run generically | The external-session boundary covers any non-interactive entry point, whichever binary opens it. |
+| V10 | Never build on a deprecated event | An alert path takes a supported stop or permission event. A legacy event that carries a removal note in its own source is a dependency with a published expiry date. |
+
+### The honest counter-calculation
+
+Writing a descriptor for a second harness would expose something uncomfortable: `roles.orchestrator.add`
+would be close to empty there today, because the coordination tools that axis assumes have no
+counterpart. The registry form survives that. It states what a harness offers and asserts nothing
+beyond it, so an empty slot reads as an empty slot rather than as a failure.
+
+### Codex and Pi
+
+**Codex** is the harness this cut was computed against. Its configuration, hooks, MCP servers,
+sub-agents, skills, instruction file and compaction controls all have counterparts, so the cost
+there is a mapping of names. Two gaps are real: a status line with a closed item set and no command
+interface, and no addressable coordination between agents.
+
+**Pi** is a confirmed second target harness and is, deliberately, marked **unverified**: the
+research behind this section covered Codex only. The ten precautions above are phrased
+harness-generically, yet no measurement supports them against Pi. That is a named gap, not a claim.
+
+### What this section does not license
+
+No second descriptor, no second renderer layer, no abstraction layer built "for later". Values that
+are guessed today would enter the registry as facts tomorrow, and `not registered = not built` is
+what keeps that from happening.
 
 ---
 

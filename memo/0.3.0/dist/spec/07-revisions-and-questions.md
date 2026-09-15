@@ -6,7 +6,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "memo/0.3.0/draft/spec/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/07-revisions-and-questions.md."
@@ -87,36 +87,23 @@ The question handover uses a **hybrid**: a lenient human-readable markdown F-for
 
 Authority rule — **single source (open questions):** when a `questions-json` block is present, it is the **single authored source** for the open questions. The parser (`parseQuestionJsonBlock`) treats it as the source of truth, and the human-readable markdown is **generated** from it deterministically (`renderQuestionsMarkdown`) — it is **not** written by hand, so the two cannot drift and the whole render-vs-validate mismatch class disappears structurally. An open question therefore carries **no** `### F{N}` mirror; it lives in the json block only. A malformed block never crashes the parse path: it yields a not-found result with an error string that the validator translates into a validation code, rather than throwing. When no `questions-json` block exists, the lenient markdown parse applies.
 
-Consequently the question-count cross-check (`MEMO-025`) applies only to the **markdown-only** path. When a json block is present it is authoritative and the heading count is not cross-checked against it — because **answered** questions keep their `### F{N}` records (the answered-pair below, read by [41-mental-model.md](/specification/mental-model/)) while **open** questions have no heading, so the two counts legitimately differ. What the renderer needs to draw a card — including each option's `kind` ∈ `{option, custom, topic, reframe}` — is one shared render contract; an invalid `kind` (e.g. `normal`) is rejected fail-loud when the revision is registered (`MEMO-033`), not silently dropped on the user's screen.
+Consequently the question-count cross-check (`MEMO-025`) applies only to the **markdown-only** path. When a json block is present it is authoritative and the heading count is not cross-checked against it — because **answered** questions keep their `### F{N}` records (the answered-pair below, read by [41-mental-model.md](/specification/mental-model/)) while **open** questions have no heading, so the two counts legitimately differ. What the renderer needs to draw a card — including each option's `kind` ∈ `{option, custom, topic, reframe, reoption}` — is one shared render contract; an invalid `kind` (e.g. `normal`) is rejected fail-loud when the revision is registered (`MEMO-033`), not silently dropped on the user's screen.
 
 The JSON block delivers a machine-authoritative question set for the AI→software handover while keeping the markdown layer human-readable.
 
 ---
 
-## Full-Revision vs. Update-Revision Modes
+## Revision Authoring Mode
 
-When generating or updating a revision, the implementation MUST choose between two authoring modes based on the scope of changes.
+There is one authoring mode. Every revision regenerates all chapter sections in their entirety; the resulting `REV-XX.md` is a complete, standalone document.
 
-### Full-Revision Mode
+> A revision MUST carry its whole content itself. Unchanged sections, answered questions and prior preamble content are carried forward **verbatim**. Content MUST NOT be replaced by a reference to an earlier revision. Naming an earlier revision as a **data object** — provenance, a measurement, a count — remains allowed.
 
-The implementation MUST use Full-Revision mode when:
+The rule that a reference may replace content is the normative root of a measured loss: in the revision that exercised it, the `User-Auftrag` blocks fell from 18 to 1 and the evidence markers from 76 to 33, while the line diff stayed green. See [20-flow-full-vs-update-revisions.md](/specification/flow-full-vs-update-revisions/) for the completeness duty and its three enforcement stages.
 
-- The prior revision is structurally incomplete or requires significant restructuring.
-- More than half of the existing chapter sections need substantive rewrites.
-- A finalization gate requires a clean, self-contained document for review.
-- The revision is the first in a new memo (no prior REV exists).
+### The Update-Revision Form Is Stock
 
-In Full-Revision mode, the implementation regenerates all chapter sections in their entirety. The resulting `REV-XX.md` is a complete, standalone document.
-
-### Update-Revision Mode
-
-The implementation MUST use Update-Revision mode when:
-
-- The prior revision is structurally sound and only a bounded set of items changes.
-- New questions must be appended without altering already-answered or stable sections.
-- The dataset is large enough that full regeneration would produce an unwieldy document (practical threshold: when unchanged sections exceed 80% of the prior revision's content).
-
-In Update-Revision mode, the implementation appends or replaces only the affected items. Unchanged sections, answered questions, and prior preamble content are carried forward verbatim or referenced by revision number rather than re-emitted.
+Earlier loops also produced `REV-XX-update.md` files, which appended or replaced only the affected items. That form is **read, not written**: the existing files stay in place unchanged and are validated against their own schema, and no new one is produced.
 
 ### Open Questions Carry Forward in Full
 
@@ -124,18 +111,7 @@ An Update-Revision appends or replaces *chapter* content, but it MUST NOT thin o
 
 Because the current block is thus always complete, the viewer keeps rendering "the newest block" and is correct. A **non-blocking viewer-lint (`WARN-010`)** guards the rule: when a revision's open-question set shrinks relative to its predecessor **without** a matching gain in answered questions, the shrink is unaccounted for and the viewer surfaces a warning. The lint never blocks; it makes a broken carry-forward visible rather than letting open questions vanish quietly.
 
-### Decision Criteria Summary
-
-| Signal | Mode |
-|--------|------|
-| First revision in memo | Full |
-| Structural rework needed | Full |
-| Finalization gate | Full |
-| Bounded new questions only | Update |
-| Large stable prior revision | Update |
-| Appending to answered-questions log | Update |
-
-The revision number increments regardless of mode. An Update-Revision's preamble MUST state which prior revision it builds on and summarize what was added or changed.
+There is no mode choice left to make, so there is no decision table. The revision number increments with every revision, and each revision's preamble MUST state which prior revision it builds on and summarize what was added or changed.
 
 ---
 
@@ -161,6 +137,64 @@ The rule: **you have to accept what the memo demands — including what arrives 
 
 ---
 
+## The Question Lifecycle
+
+A memo's question stock grows over time. Questions get answered, some turn out to be irrelevant, some are superseded by a better-put question, some are re-formulated, and some are re-opened because the answer did not hold. Six things can happen to a question; a status axis that knows only "open" and "answered" can express two of them, and the other four then live in prose or not at all.
+
+The lifecycle is therefore **data**, on two carriers.
+
+### Status Is a Closed List of Four
+
+A question's status MUST be one of exactly four values:
+
+| Status | Meaning |
+|--------|---------|
+| `open` | The question stands and is waiting for a decision. |
+| `answered` | A decision was taken and is recorded as the answered-question pair below. |
+| `irrelevant` | The question stopped counting without ever being decided. |
+| `replaced` | A different question supersedes it; the edge to the successor is recorded. |
+
+A value outside this list MUST be rejected fail-loud when it is written — never normalized to a neighbouring value, because a normalized typo silently changes what a question means.
+
+**`reframed` is NOT a status.** A re-formulated question keeps its `F{N}` id and stays `open`; only its wording changes. It is therefore recorded as an *event* (below), and the discarded wording is preserved there. Giving it a status of its own would mean every widget filter, every count and the blocker gate needed an exception for a question that is, in fact, simply still open.
+
+**`reoptioned` is not a status either.** The second re-formulation — the one that re-writes the **answer options** rather than the question — leaves the question just as `open`, under the same `F{N}` id, and is recorded as its own event with the discarded option set. The two are kept apart because they preserve different data and are gated differently, not because they sit at different points of the lifecycle.
+
+### Retirement Demands a Reason
+
+`irrelevant` and `replaced` are the two states that take a question out of the active stock. Both MUST carry a non-empty reason, and the write MUST be refused when it is missing. There is no default reason and no silent retirement: a question that stops counting without a stated "why" is indistinguishable from a question that was quietly deleted, and deleting questions is exactly what this lifecycle exists to prevent.
+
+`replaced` additionally MUST name its successor as an **edge** — the id of the question that supersedes it, and that id MUST resolve to a question of the same memo. Recorded as data rather than as prose, the genealogy of a question stays navigable backwards.
+
+### Every Transition Leaves an Event
+
+Beside the question itself an **appending event journal** records the transitions. It only ever grows: no row is updated and no row is deleted, which is what lets it survive a re-projection that rewrites the question stock wholesale.
+
+Seven event kinds are defined, one per thing that can happen: `asked`, `answered`, `reframed`, `replaced`, `irrelevant`, `reopened`, `reoptioned`. Each event records the status it came from, the status it went to, and — for `replaced`, `irrelevant`, `reopened` and `reoptioned` — a non-empty reason. A `reframed` event carries the **discarded wording** of the question, and a `reoptioned` event the **discarded option set**, preserved verbatim including each option's `kind` — so neither kind of re-formulation destroys what stood before it.
+
+`reopened` is the transition that the two-value axis could not express at all: an answer that did not hold takes the question back to `open`, with the reason on the record rather than in somebody's memory.
+
+`reoptioned` is the event for the fault that has no status at all: the question stands, and its **answer options** go past the decision. Its write is **gated** — the question wording MUST be unchanged (re-writing the question under the cover of new options is a `reframed` event), the option set MUST really differ (a re-formulation that changes nothing is refused, not journalled as a no-op), the new set MUST retain at least two real `option` rows, and no option may be written in the `- **A:**` form instead of a discrete `A) text` line. The gate refuses fail-loud; it never records a doubtful row.
+
+### Nothing Is Deleted
+
+The rule these carriers serve is one sentence: **a question never disappears from the stock.** It changes status and leaves an event with a reason. A stock that shrinks without a matching event is a loss, not a cleanup — the same principle the carry-forward-in-full rule above applies to the open set.
+
+---
+
+## Deferred Questions
+
+Retired questions — `irrelevant` and `replaced` — are rendered in a section of their own, `## Deferred Questions`, **beside** the answered-questions area and never inside it. Two reasons, and both are structural rather than cosmetic:
+
+- The answered area is the **decision record** the cross-memo preference model reads. A question that was retired was never decided; folding it in would put a non-decision into the record the model learns from.
+- The alternative form — striking the question through in the open list — carries **no reason**. Styling cannot state why something stopped counting, and the reason is the whole point of a retirement.
+
+Each entry states its **mark** (`irrelevant`, or `replaced by F{N}` when the edge resolves) and its **reason**, each on a line of its own. The section is **conditional**: with an empty retired stock it is omitted entirely, with no heading and no placeholder body — an empty section would claim a stock that does not exist.
+
+A retired question also leaves the interactive surface: it gets no answer widget and no pre-fill row, and the question counter reports it as its own third figure rather than letting it vanish out of "open". Count and parse must agree; a question that leaves one figure without entering another is a silent difference.
+
+---
+
 ## The Answered-Question Pair
 
 When a question is answered, the answered-questions area records more than the decision — it records the **pairing** of what the AI recommended against what the developer actually decided. This pairing is a first-class artefact, and its on-disk format is two literal field lines:
@@ -171,6 +205,10 @@ When a question is answered, the answered-questions area records more than the d
 ```
 
 The two German labels `**AI-Empfehlung war:**` and `**User-Entscheidung:**` are the literal artefact format — they are written verbatim, in exactly this form, as the answered-question pair. The value on the first line is the AI's prior recommendation; the value on the second line is the developer's actual choice, which may agree with the recommendation or overrule it.
+
+Two further field lines are **optional and are written only when they carry something**: `**Beantwortet in:**` names the revision the decision fell in, and `**Anmerkung:**` carries the remark that belongs to it. An unfilled field produces **no line at all** — a label over an empty value states a datum that does not exist. Together with the pair they are the decision's context; without them the record shrinks to the bare pair and a reader can no longer tell when, or under which caveat, the decision was taken.
+
+The answered area is additionally **split by the provenance of the answer** into two H3 subsections — `### Vom User beantwortet` and `### Von der KI im Namen des Users beantwortet`. Every `### F{N}` block inherits the provenance of the nearest preceding subsection heading; without a split every block reads as answered by the developer. A subsection is written **only when it holds at least one question**, so an empty heading never claims a group that does not exist. The split is what keeps the on-behalf barrier of the finalization gate effective ([34-question-interface.md](/specification/question-interface/)): an answer the agent gave in the developer's name MUST be recognizable as such after the roundtrip through the file, or the barrier has nothing to bite on.
 
 The pairing is what makes a memo's answered questions more than a decision log. Read across many memos, the accumulated `AI-Empfehlung war` ↔ `User-Entscheidung` pairs are the raw material from which a cross-memo preference model is later derived — the systematic record of where the developer tends to follow the AI and where they tend to overrule it. A bare decision without its paired recommendation cannot feed that model; the pairing is the point. The downstream model that consumes these pairs is defined in its own chapter ([41-mental-model.md](/specification/mental-model/)).
 
@@ -201,6 +239,28 @@ The gate is **auto-iterating within a bound**: if it finds feedback points that 
 ## Conformity Requirements
 
 The revision and question-format rules above are authored **prose-first** as declarative requirements (the prose-first guard, [35-memo-authoring.md](/specification/memo-authoring/) and [23-requirements.md](/specification/requirements/)): each rule's `statement` faces generation and its `check` faces the finalization/push gate, resolving to a ternary `PASS` / `BLOCKED` / `INCONCLUSIVE`. The blocks below are the machine-readable source the requirement store is **harvested** from. The lifts here are the parse-and-structure rules — a section being present, a question parsing, a file never overwritten — each a hard rule with a `binary` grade.
+
+```requirement
+{
+  "id": "REQ-1015",
+  "title": "A retired question states its reason and its edge",
+  "statement": "A question's status MUST be one of the four values `open`, `answered`, `irrelevant`, `replaced`; any other value MUST be refused fail-loud and MUST NOT be normalized. `irrelevant` and `replaced` MUST carry a non-empty reason, and `replaced` MUST additionally name a successor question id that resolves within the same memo. Every transition MUST append exactly one event row (`asked`, `answered`, `reframed`, `replaced`, `irrelevant`, `reopened`, `reoptioned`), a `reframed` event MUST preserve the discarded wording and a `reoptioned` event MUST preserve the discarded option set together with a non-empty reason. A `reoptioned` write MUST be refused when the question wording changed, when the option set did not change, or when fewer than two real `option` rows remain. No question row is ever deleted. `reframed` and `reoptioned` are events, not statuses: a re-formulated question keeps its id and stays `open`.",
+  "scope": { "repos": [], "categories": ["memo"], "tags": ["revisions", "question-lifecycle"] },
+  "severity": "blocker",
+  "check": {
+    "kind": "assertion",
+    "assertions": [
+      "A status outside {open, answered, irrelevant, replaced} is refused with a naming error",
+      "A status of irrelevant or replaced without a reason is refused",
+      "A status of replaced without a successor id that resolves in the same memo is refused",
+      "Every status transition appends exactly one event row carrying from-status and to-status",
+      "A reframed event preserves the previous question wording and leaves the status at open",
+      "A reoptioned event preserves the discarded option set with its reason, leaves the status at open, and is refused when the wording changed or the option set did not"
+    ]
+  },
+  "grade": "binary"
+}
+```
 
 ```requirement
 {
@@ -264,14 +324,15 @@ The revision and question-format rules above are authored **prose-first** as dec
 {
   "id": "REQ-823",
   "title": "Revisions are append-only",
-  "statement": "A revision MUST NOT be edited in place: every change produces a new file — `REV-XX.md` (Full) or `REV-XX-update.md` (Update), zero-padded two digits — and the first revision MUST be a Full `REV-01.md` with no suffix. An existing revision file is never overwritten; the full on-disk history of states is what makes a contaminated revision recoverable by a clean fresh-context rewrite.",
+  "statement": "A revision MUST NOT be edited in place: every change produces a new `REV-XX.md`, zero-padded two digits, no suffix, standalone — and the first revision MUST be `REV-01.md`. The historical `REV-XX-update.md` form stays readable stock and is never written again, never converted and never removed. An existing revision file is never overwritten; the full on-disk history of states is what makes a contaminated revision recoverable by a clean fresh-context rewrite.",
   "scope": { "repos": [], "categories": ["memo"], "tags": ["revisions", "append-only"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
     "assertions": [
-      "No existing revision file is modified in place; each change adds a new REV-XX.md or REV-XX-update.md",
-      "The first revision is a Full REV-01.md with no suffix"
+      "No existing revision file is modified in place; each change adds a new REV-XX.md",
+      "No new REV-XX-update.md is written; the existing update files stay unchanged",
+      "The first revision is REV-01.md with no suffix"
     ]
   },
   "grade": "binary"

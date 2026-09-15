@@ -10,7 +10,9 @@
             "misLabels": [
                 "document",
                 "spec doc",
-                "note"
+                "note",
+                "Dokument",
+                "Notiz"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -24,7 +26,9 @@
             "misLabels": [
                 "version",
                 "edit",
-                "draft"
+                "draft",
+                "Bearbeitung",
+                "Entwurf"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -38,7 +42,10 @@
             "misLabels": [
                 "point",
                 "item",
-                "note"
+                "note",
+                "Punkt",
+                "Eintrag",
+                "Notiz"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -52,7 +59,8 @@
             "misLabels": [
                 "milestone",
                 "task",
-                "objective"
+                "objective",
+                "Meilenstein"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -66,7 +74,8 @@
             "misLabels": [
                 "context block",
                 "section",
-                "chunk"
+                "chunk",
+                "Abschnitt"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -94,7 +103,10 @@
             "misLabels": [
                 "stage",
                 "step",
-                "milestone"
+                "milestone",
+                "Stufe",
+                "Schritt",
+                "Meilenstein"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -108,7 +120,9 @@
             "misLabels": [
                 "thread",
                 "track",
-                "theme"
+                "theme",
+                "Spur",
+                "Thema"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -122,7 +136,11 @@
             "misLabels": [
                 "rule",
                 "constraint",
-                "spec"
+                "spec",
+                "Regel",
+                "Einschränkung",
+                "Einschraenkung",
+                "Spezifikation"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -136,7 +154,10 @@
             "misLabels": [
                 "service",
                 "dependency",
-                "integration"
+                "integration",
+                "Dienst",
+                "Abhängigkeit",
+                "Abhaengigkeit"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -150,7 +171,9 @@
             "misLabels": [
                 "roadmap",
                 "project",
-                "backlog"
+                "backlog",
+                "Fahrplan",
+                "Projekt"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -164,7 +187,9 @@
             "misLabels": [
                 "interactive agent",
                 "human",
-                "operator"
+                "operator",
+                "Mensch",
+                "Bediener"
             ],
             "version": "1.0.0",
             "owningFamily": "meta-spec",
@@ -178,7 +203,8 @@
             "misLabels": [
                 "lead",
                 "coordinator",
-                "manager"
+                "manager",
+                "Koordinator"
             ],
             "version": "1.0.0",
             "owningFamily": "meta-spec",
@@ -221,7 +247,11 @@
                 "strand",
                 "path",
                 "history",
-                "run"
+                "run",
+                "Strang",
+                "Pfad",
+                "Verlauf",
+                "Lauf"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -235,7 +265,8 @@
             "misLabels": [
                 "throttling",
                 "rate limiting",
-                "flow control"
+                "flow control",
+                "Drosselung"
             ],
             "version": "1.0.0",
             "owningFamily": "memo",
@@ -249,7 +280,9 @@
             "misLabels": [
                 "harness",
                 "platform",
-                "runtime"
+                "runtime",
+                "Plattform",
+                "Laufzeit"
             ],
             "version": "1.0.0",
             "owningFamily": "meta-spec",
@@ -263,18 +296,77 @@
             "misLabels": [
                 "harness",
                 "wrapper",
-                "scaffold"
+                "scaffold",
+                "Gerüst",
+                "Geruest"
             ],
             "version": "1.0.0",
             "owningFamily": "meta-spec",
             "owningChapter": "10-harness-registry"
+        },
+        {
+            "id": "AT-sop",
+            "label": "SOP",
+            "definition": "A namespace's canonical entry document and read-gate: the minimal signpost a reader must load first, that names where other information lives and in what order the guardrails apply. It classifies every skill in its scope as either a public entry point or a private process step.",
+            "negativeDelimitation": "NOT a container of all rules (it points, it does not hoard); NOT a public skill; NOT the process it delegates to.",
+            "misLabels": [
+                "standard operating procedure document"
+            ],
+            "version": "0.1.0",
+            "owningFamily": "session",
+            "owningChapter": "10-sop"
+        },
+        {
+            "id": "AT-register",
+            "label": "Register",
+            "definition": "How something is written for its audience — the composed choice of direction (inward/outward), language (one per artifact), and formality (formal vs. working, NR1/NR2). A property of the written artifact, chosen deliberately per artifact.",
+            "negativeDelimitation": "NOT locality (where the bytes live); NOT secrecy (the test is direction, not what is hidden).",
+            "misLabels": [
+                "tone",
+                "Ton"
+            ],
+            "version": "0.1.0",
+            "owningFamily": "memo",
+            "owningChapter": "19-internal-vs-external-communication"
+        },
+        {
+            "id": "AT-tier",
+            "label": "Tier",
+            "definition": "The structural level a skill or rule lives on: sop (the namespace signpost), public (a validated entry point), or private (an internal process step). The tier decides the template a skill follows and how it is disclosed.",
+            "negativeDelimitation": "NOT the GEE role (generate/execute/evaluate/orchestrate, an orthogonal axis); NOT visibility alone.",
+            "misLabels": [
+                "level",
+                "layer",
+                "Ebene",
+                "Schicht"
+            ],
+            "version": "0.1.0",
+            "owningFamily": "meta-spec",
+            "owningChapter": "06-conventions-writing"
+        },
+        {
+            "id": "AT-evidence",
+            "label": "Evidence",
+            "definition": "The backing recorded for a substantive statement: exactly one of the six ordered level tags, assigned inline, naming how strongly the statement is supported and what would confirm it.",
+            "negativeDelimitation": "NOT the statement itself and NOT the source the statement cites — evidence is the graded backing attached to a claim, not the claim and not its reference. The machine token is the field name `evidence`; a rendered display label in the project working language is that same field shown to a reader, NOT a second term.",
+            "misLabels": [
+                "proof",
+                "citation",
+                "source",
+                "Beweis",
+                "Zitat",
+                "Quelle"
+            ],
+            "version": "1.0.0",
+            "owningFamily": "memo",
+            "owningChapter": "11-quality-and-finalization"
         }
     ],
     "generated": {
-        "at": "2026-07-16T22:30:33.862Z",
-        "fromCommit": "355983decd3c95e44b2302dd9b66925f21e7ed57",
+        "at": "2026-09-14T10:03:08.194Z",
+        "fromCommit": "46deb52aabde560311e79db9f0a977fc77b1583d",
         "generator": "scripts/generate-anchor-register.mjs",
-        "termCount": 19
+        "termCount": 23
     },
     "validation": {
         "passed": true,

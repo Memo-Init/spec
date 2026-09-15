@@ -26,10 +26,10 @@ This chapter is entered through the memo SOP: [02-memo-sop-entrypoint](./02-memo
 | Skill | Role | Purpose |
 |---|---|---|
 | `memo-chronic-add` | contributing | Append exactly ONE narrated chronicle entry per memo to a flat Markdown file in.memo/chronic/ |
-| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented end to end, in a FRESH context (never the working session) |
-| `memo-goal-optimize` | primary | LLM-initiated goal-optimization pipeline |
+| `memo-fidelity-audit` | contributing | Audit how faithfully a FINISHED memo was implemented, in a FRESH context (never the working session) |
+| `memo-goal-optimize` | primary | LLM-initiated goal-optimization — turn an OPEN, well-grounded goal into a full follow-up memo autonomously |
 | `memo-goal-score` | primary | Score ONE goal in a FRESH context (never the working session) |
-| `memo-goal-score-all` | primary | Score EVERY goal in a fresh context and render the goal board — the standard output of the goal-scoring system |
+| `memo-goal-score-all` | primary | Score EVERY goal in a fresh context and render the goal board |
 | `memo-rollout-evaluate` | contributing | Validiert das Gesamtergebnis eines Rollouts bidirektional gegen das Original-Memo |
 
 ## 5. Grading assignment

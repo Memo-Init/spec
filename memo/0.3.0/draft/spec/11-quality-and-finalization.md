@@ -49,6 +49,10 @@ The four memo-* quality skills run **autonomously** — they MUST NOT ask follow
 
 `memo-evidence` produces a classification summary (count and share per level) and a research-needs section deriving how each `[ASSUMPTION]`, `[CONJECTURE]`, and `[UNKNOWN]` could be verified. The three handover zones (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)) reuse these tags.
 
+**Evidence is the backing — it is NOT the claim, and it is NOT the source.** A level tag records *how strongly* a statement is supported and *what would confirm it*. It is **NOT** the statement it sits on, and it is **NOT** the document, link, or measurement that statement cites; those are what the backing points *at*. The distinction is load-bearing rather than pedantic, because the three weak levels drive the research-needs section: name a claim's backing wrongly and the derived research is aimed at the wrong thing.
+
+The machine token for this concept is the field name `evidence`. A rendered display label in the project's working language is that same field shown to a reader — **NOT** a second concept, and **NOT** a language violation (see [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md), rows *Machine tokens* and *Rendered display text*).
+
 ---
 
 ## The Finalization Gates

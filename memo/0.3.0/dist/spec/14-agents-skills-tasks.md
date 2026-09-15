@@ -6,7 +6,7 @@ spec_file: "14-agents-skills-tasks.md"
 order: 14
 section: "Specification"
 normative: true
-generated_at: "2026-07-17T23:43:43.034Z"
+generated_at: "2026-09-14T10:03:05.162Z"
 generated_from: "memo/0.3.0/draft/spec/14-agents-skills-tasks.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/14-agents-skills-tasks.md."
@@ -47,6 +47,8 @@ A **skill** is the right shape when the procedure should run inside the caller's
 | **(c) Deterministic workflow** | a JavaScript **script** Claude writes; the runtime executes it; the *script* holds the loop, branching, and intermediate results | runs separate from Claude's context window; scales to dozens–hundreds of agents (up to ~1000/run) | only the final report reaches the context |
 
 The platform name for type (c) is **Dynamic Workflow** — the script-driven primitive. A model-driven *research fan-out* (the Lead spawning a few type-(a) sub-agents per turn) is a different thing and MUST NOT be called a dynamic workflow (see [13-orchestration.md](/specification/orchestration/)).
+
+An **execution workflow** is the named *application* of type (c) to working a phase — a Dynamic Workflow whose script holds the per-unit sequence of build, verify, conditional fix and re-check (see [49-execution-workflow-guideline.md](/specification/execution-workflow-guideline/)). It is not a fourth primitive and not a counter-term to *Dynamic Workflow*: the primitive stays type (c), and *execution workflow* names what that primitive is being used for.
 
 **Nesting.** A sub-agent MAY spawn its own sub-agents, but the depth is **fixed at five** and is not configurable: a sub-agent at depth five does not receive the `Agent` tool and cannot spawn further. Only the top-level sub-agent's summary returns to the caller.
 

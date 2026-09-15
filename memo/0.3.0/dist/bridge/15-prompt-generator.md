@@ -26,10 +26,10 @@ Canonical docs entry: `/specification/overview/`. No entry-point skill flagged y
 | Skill | Role | Purpose |
 |---|---|---|
 | `memo-phase-execute` | contributing | Fuehrt eine einzelne Phase aus mit Agent Team |
-| `memo-phase-generate` | contributing | Erstellt eine einzelne Phase mit PRDs |
+| `memo-phase-generate` | contributing | Erzeugt die Arbeitsauftraege — die PRDs — EINER Phase, kurz vor deren Ausfuehrung |
 | `memo-prd-generate` | contributing | Create PRDs (Product Requirement Documents) from a finalized memo |
-| `memo-req-template` | contributing | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements (eval-styl… |
-| `memo-rollout-generate` | contributing | Erstellt alle Phasen und PRDs aus einem finalisierten Memo |
+| `memo-req-template` | contributing | Declarative format and intake flow for wiring tools (Pencil, Playwright, get-sheet, getui, FlowMCP) and requirements — an eval-… |
+| `memo-rollout-generate` | contributing | Erstellt den PHASENPLAN aus einem finalisierten Memo — Phasen vorab, Arbeitsauftraege NICHT |
 
 ## 5. Grading assignment
 

@@ -5,9 +5,9 @@
 > policy-block adjunct of the meta-spec anchor-term convention (`06-conventions-writing.md`),
 > not a new registry primitive.
 
-Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
+Provenance: generated from commit `46deb52aabde560311e79db9f0a977fc77b1583d`.
 
-**19** anchor terms, registered under `/session/namespace-registry/`.
+**23** anchor terms, registered under `/session/namespace-registry/`.
 
 | id | label | owning chapter | version |
 |----|-------|----------------|---------|
@@ -30,6 +30,10 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 | `AT-back-pressure` | **Back Pressure** | memo / 23-requirements | 1.0.0 |
 | `AT-inner-harness` | **Inner Harness** | meta-spec / 10-harness-registry | 1.0.0 |
 | `AT-outer-harness` | **Outer Harness** | meta-spec / 10-harness-registry | 1.0.0 |
+| `AT-sop` | **SOP** | session / 10-sop | 0.1.0 |
+| `AT-register` | **Register** | memo / 19-internal-vs-external-communication | 0.1.0 |
+| `AT-tier` | **Tier** | meta-spec / 06-conventions-writing | 0.1.0 |
+| `AT-evidence` | **Evidence** | memo / 11-quality-and-finalization | 1.0.0 |
 
 ---
 
@@ -38,7 +42,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** A versioned strategy document and the single highest authority over its own rollout; its content is local and MUST NOT be uploaded.
 - **Not:** NOT a shareable or uploadable document, and NOT a cross-memo container — a memo has authority over its OWN rollout; the cross-memo span belongs to a goal or a plan.
 - **Owning chapter:** memo / 06-memo-structure (AT2)
-- **Known mis-labels:** `document`, `spec doc`, `note`
+- **Known mis-labels:** `document`, `spec doc`, `note`, `Dokument`, `Notiz`
 - **Version:** 1.0.0
 
 ### Revision — `AT-revision`
@@ -46,7 +50,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** One immutable snapshot of a memo's content, stored as REV-XX.md; each change produces a new file, so the history is forward-only.
 - **Not:** NOT an in-place edit — a revision is never mutated; a change is always a new REV-XX file.
 - **Owning chapter:** memo / 07-revisions-and-questions (AT2)
-- **Known mis-labels:** `version`, `edit`, `draft`
+- **Known mis-labels:** `version`, `edit`, `draft`, `Bearbeitung`, `Entwurf`
 - **Version:** 1.0.0
 
 ### Topic — `AT-topic`
@@ -54,7 +58,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** An atomic point extracted from the input during the five-step input pipeline; the complete topic list serves as a writing checklist and is the head of the Topic to Block to PRD chain.
 - **Not:** NOT too small to omit and NOT cross-memo — extraction is exhaustive and topics are memo-scoped.
 - **Owning chapter:** memo / 04-input-pipeline (AT2)
-- **Known mis-labels:** `point`, `item`, `note`
+- **Known mis-labels:** `point`, `item`, `note`, `Punkt`, `Eintrag`, `Notiz`
 - **Version:** 1.0.0
 
 ### Goal — `AT-goal`
@@ -62,7 +66,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** A cross-memo intent (id G###) that spans several memos and outlives any one; defined by intent not surface, and scored in a fresh context against real state.
 - **Not:** NOT scoped inside one memo and NOT surface-defined — a goal spans the memo sequence and is never scored in the session that did the work.
 - **Owning chapter:** memo / 31-goals (AT2)
-- **Known mis-labels:** `milestone`, `task`, `objective`
+- **Known mis-labels:** `milestone`, `task`, `objective`, `Meilenstein`
 - **Version:** 1.0.0
 
 ### Block — `AT-block`
@@ -70,7 +74,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** A structure node inside a memo carrying its own B### identifier; it references one or more topics and is the unit PRDs are derived from.
 - **Not:** NOT a synonym for a context block — it is an addressable structure node with a B### id, not a chunk of prose context.
 - **Owning chapter:** memo / 08-phases-and-prds (AT2)
-- **Known mis-labels:** `context block`, `section`, `chunk`
+- **Known mis-labels:** `context block`, `section`, `chunk`, `Abschnitt`
 - **Version:** 1.0.0
 
 ### PRD — `AT-prd`
@@ -86,7 +90,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** A sequential, mandatory unit of the rollout that bundles PRDs executed together and in order, carrying an orchestration role and a mandatory depends-on.
 - **Not:** NOT optional and NOT parallel by default — a phase is mandatory and sequential; depends-on is a required characteristic, not decoration.
 - **Owning chapter:** memo / 08-phases-and-prds (AT2)
-- **Known mis-labels:** `stage`, `step`, `milestone`
+- **Known mis-labels:** `stage`, `step`, `milestone`, `Stufe`, `Schritt`, `Meilenstein`
 - **Version:** 1.0.0
 
 ### Strand — `AT-strand`
@@ -94,7 +98,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** The emergent dependency closure over phases — the transitive closure of the depends-on edges, derived by walking the graph, never authored.
 - **Not:** NOT authored and NOT a thematic bundle — a strand is emergent, and it is a tag, never part of the numeric memo ID.
 - **Owning chapter:** memo / 25-strands (AT2)
-- **Known mis-labels:** `thread`, `track`, `theme`
+- **Known mis-labels:** `thread`, `track`, `theme`, `Spur`, `Thema`
 - **Version:** 1.0.0
 
 ### Requirement — `AT-requirement`
@@ -102,7 +106,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** A single addressable statement that must, should, or may hold; two-sided (statement faces generation, check faces the gate) with an optional grade axis, resolving to a ternary status.
 - **Not:** NOT one-sided and NOT self-graded — a requirement faces both generation and the gate, a check that did not run MUST NOT report PASS, and the doer MUST NOT be the grader.
 - **Owning chapter:** memo / 23-requirements (AT2)
-- **Known mis-labels:** `rule`, `constraint`, `spec`
+- **Known mis-labels:** `rule`, `constraint`, `spec`, `Regel`, `Einschränkung`, `Einschraenkung`, `Spezifikation`
 - **Version:** 1.0.0
 
 ### Tool — `AT-tool`
@@ -110,7 +114,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** An external capability a phase or PRD depends on, recorded as a descriptor in the per-project tools registry that says that a tool exists, what it is for, and where it lives.
 - **Not:** NOT a runtime and NOT an enforced gate — the registry is descriptive and a RECOMMENDATION; a memo MUST NOT be blocked solely because no registry is present.
 - **Owning chapter:** memo / 24-tools-registry (AT2)
-- **Known mis-labels:** `service`, `dependency`, `integration`
+- **Known mis-labels:** `service`, `dependency`, `integration`, `Dienst`, `Abhängigkeit`, `Abhaengigkeit`
 - **Version:** 1.0.0
 
 ### Plan — `AT-plan`
@@ -118,7 +122,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** The execution-side primitive above the single memo: it spans one or more finalized memos and sequences their phases into a single ordered run (id PLAN-###-slug).
 - **Not:** NOT a replacement for the per-memo stage model — a plan nests the four stages per carried memo; and phase order stays the memo's to decide (memo authority).
 - **Owning chapter:** memo / 42-plans (AT2)
-- **Known mis-labels:** `roadmap`, `project`, `backlog`
+- **Known mis-labels:** `roadmap`, `project`, `backlog`, `Fahrplan`, `Projekt`
 - **Version:** 1.0.0
 
 ### User Role — `AT-role-user`
@@ -126,7 +130,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** The interactive role in the harness tool-contract roles{} (10-harness-registry): the surface a developer drives directly; it adds the interaction tool to core.required[] and is the top-level trust reference the other two roles are bounded under.
 - **Not:** NOT the same as a 'User session' type — the role is the tool-contract delta in roles.user, while the session type is the session-tier classification that anchors trust; and NOT a self-granted privilege.
 - **Owning chapter:** meta-spec / 10-harness-registry (AT2)
-- **Known mis-labels:** `interactive agent`, `human`, `operator`
+- **Known mis-labels:** `interactive agent`, `human`, `operator`, `Mensch`, `Bediener`
 - **Version:** 1.0.0
 
 ### Orchestrator Role — `AT-role-orchestrator`
@@ -134,7 +138,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** The coordinating role in the harness tool-contract roles{} (10-harness-registry): it adds the coordination tools to core.required[] and carries the gate-dependent taskCrud marker; it runs work on the user's behalf and MUST NOT exceed the user's trust level.
 - **Not:** NOT a new authority — the orchestrator is the user's context continued into coordination, bounded by monotonicity, never a separate higher privilege; and NOT the same as the agent-team 'Lead' name (13-orchestration), which is one deployment of this role.
 - **Owning chapter:** meta-spec / 10-harness-registry (AT2)
-- **Known mis-labels:** `lead`, `coordinator`, `manager`
+- **Known mis-labels:** `lead`, `coordinator`, `manager`, `Koordinator`
 - **Version:** 1.0.0
 
 ### Worker Role — `AT-role-worker`
@@ -158,7 +162,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** The runtime action-history a session actually produced — the recorded, ordered sequence of steps, agent spawns, and tool calls a running context walked over its session-and-subagent tree, so a result can be traced backward to the step that produced it. It is the concept the session tree operationalizes.
 - **Not:** NOT a Strand — a strand is the computed dependency-closure structure over phases, derived by walking the depends-on graph and never authored; a trajectory is the runtime action-history that was actually traversed, recorded not computed. And NOT a plan: a plan sequences intended work forward, a trajectory records executed work as it happened.
 - **Owning chapter:** memo / 14-agents-skills-tasks (AT2)
-- **Known mis-labels:** `strand`, `path`, `history`, `run`
+- **Known mis-labels:** `strand`, `path`, `history`, `run`, `Strang`, `Pfad`, `Verlauf`, `Lauf`
 - **Version:** 1.0.0
 
 ### Back Pressure — `AT-back-pressure`
@@ -166,7 +170,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** The requirements practice seen from the generation side: in-scope requirement statements are surfaced before the work is done, constraining the doer up front, as the complement of the gate that checks the work afterward.
 - **Not:** NOT infrastructure flow-control (queue throttling, rate limiting, TCP back-pressure) — it is the requirements-as-constraint discipline that pushes back on generation, not a runtime traffic mechanism.
 - **Owning chapter:** memo / 23-requirements (AT2)
-- **Known mis-labels:** `throttling`, `rate limiting`, `flow control`
+- **Known mis-labels:** `throttling`, `rate limiting`, `flow control`, `Drosselung`
 - **Version:** 1.0.0
 
 ### Inner Harness — `AT-inner-harness`
@@ -174,7 +178,7 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** The surface the agent harness itself exposes and the org does not control — the tool definitions, the agent/skill/task mechanics, and the versioned config surface a harness carries; the given layer, captured by the harness descriptor.
 - **Not:** NOT the layer the org builds; the inner harness is the given, non-modifiable surface. And NOT the harness descriptor itself — the descriptor is the record OF the inner harness, not the harness.
 - **Owning chapter:** meta-spec / 10-harness-registry (AT2)
-- **Known mis-labels:** `harness`, `platform`, `runtime`
+- **Known mis-labels:** `harness`, `platform`, `runtime`, `Plattform`, `Laufzeit`
 - **Version:** 1.0.0
 
 ### Outer Harness — `AT-outer-harness`
@@ -182,5 +186,37 @@ Provenance: generated from commit `355983decd3c95e44b2302dd9b66925f21e7ed57`.
 - **Definition:** Everything the org builds around the given inner harness — the standing rules and hooks, the local memo convention, the viewer and its channels; the layer the org owns, shapes, and maintains on top of the harness.
 - **Not:** NOT the given inner surface the harness exposes; the outer harness is the org-built layer, never the harness's own tool or config surface. And NOT a second harness process — it is the project layer running inside one harness invocation.
 - **Owning chapter:** meta-spec / 10-harness-registry (AT2)
-- **Known mis-labels:** `harness`, `wrapper`, `scaffold`
+- **Known mis-labels:** `harness`, `wrapper`, `scaffold`, `Gerüst`, `Geruest`
+- **Version:** 1.0.0
+
+### SOP — `AT-sop`
+
+- **Definition:** A namespace's canonical entry document and read-gate: the minimal signpost a reader must load first, that names where other information lives and in what order the guardrails apply. It classifies every skill in its scope as either a public entry point or a private process step.
+- **Not:** NOT a container of all rules (it points, it does not hoard); NOT a public skill; NOT the process it delegates to.
+- **Owning chapter:** session / 10-sop (AT2)
+- **Known mis-labels:** `standard operating procedure document`
+- **Version:** 0.1.0
+
+### Register — `AT-register`
+
+- **Definition:** How something is written for its audience — the composed choice of direction (inward/outward), language (one per artifact), and formality (formal vs. working, NR1/NR2). A property of the written artifact, chosen deliberately per artifact.
+- **Not:** NOT locality (where the bytes live); NOT secrecy (the test is direction, not what is hidden).
+- **Owning chapter:** memo / 19-internal-vs-external-communication (AT2)
+- **Known mis-labels:** `tone`, `Ton`
+- **Version:** 0.1.0
+
+### Tier — `AT-tier`
+
+- **Definition:** The structural level a skill or rule lives on: sop (the namespace signpost), public (a validated entry point), or private (an internal process step). The tier decides the template a skill follows and how it is disclosed.
+- **Not:** NOT the GEE role (generate/execute/evaluate/orchestrate, an orthogonal axis); NOT visibility alone.
+- **Owning chapter:** meta-spec / 06-conventions-writing (AT2)
+- **Known mis-labels:** `level`, `layer`, `Ebene`, `Schicht`
+- **Version:** 0.1.0
+
+### Evidence — `AT-evidence`
+
+- **Definition:** The backing recorded for a substantive statement: exactly one of the six ordered level tags, assigned inline, naming how strongly the statement is supported and what would confirm it.
+- **Not:** NOT the statement itself and NOT the source the statement cites — evidence is the graded backing attached to a claim, not the claim and not its reference. The machine token is the field name `evidence`; a rendered display label in the project working language is that same field shown to a reader, NOT a second term.
+- **Owning chapter:** memo / 11-quality-and-finalization (AT2)
+- **Known mis-labels:** `proof`, `citation`, `source`, `Beweis`, `Zitat`, `Quelle`
 - **Version:** 1.0.0

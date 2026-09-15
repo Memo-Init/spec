@@ -27,7 +27,8 @@ _(no skill dependencies declared in this family)_
 | [09-current-state](./09-current-state.md) | — | 0 | — |
 | [10-harness-registry](./10-harness-registry.md) | — | 0 | — |
 | [11-spec-authority](./11-spec-authority.md) | — | 0 | — |
-| **Summary** | **0 / 11** | — | 7 |
+| [12-controlled-language](./12-controlled-language.md) | — | 0 | — |
+| **Summary** | **0 / 12** | — | 7 |
 
 ## Skills by namespace
 
@@ -63,3 +64,7 @@ _(no skill dependencies declared in this family)_
 - [09-current-state](./09-current-state.md) — _— no implementer skill yet —_
 - [10-harness-registry](./10-harness-registry.md) — _— no implementer skill yet —_
 - [11-spec-authority](./11-spec-authority.md) — _— no implementer skill yet —_
+
+### Other
+
+- [12-controlled-language](./12-controlled-language.md) — _— no implementer skill yet —_
