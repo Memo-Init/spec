@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // generate-bridge.mjs — per-page "Bridge" projection generator (one read-projection of the
-// single skill->spec edge — split per family in repos/spec/draft/*/0.1.0/data/ — no second data store).
+// single skill->spec edge — split per family in repos/spec/draft/*/0.3.0/data/ — no second data store).
 //
 // Emits, across all four spec families, ONE per-page bridge for every non-bridge chapter
 // (the NN-bridge.md hub pages are excluded — they are the in-nav output hubs). The PUBLIC
@@ -51,7 +51,7 @@ const REPO = resolve( __dirname, '..' )
 // not resolve( REPO, '..', '..' ). Logic is otherwise verbatim from repos/spec.
 const PROJECT_ROOT = resolve( REPO, '..' )
 // Sentinel file: presence of any family map confirms the split map is available.
-const SENTINEL_MAP = join( REPO, draftDataDirRel( { repoRoot: REPO, name: 'memo', version: '0.1.0' } ), 'skill-spec-map.json' )
+const SENTINEL_MAP = join( REPO, draftDataDirRel( { repoRoot: REPO, name: 'memo', version: '0.3.0' } ), 'skill-spec-map.json' )
 
 const GENERATOR = 'scripts/generate-bridge.mjs'
 const NN_RE = /^\d{2}-.*\.md$/
@@ -741,7 +741,7 @@ const rewriteLinks = ( { content, routeBase } ) => {
 // sync-spec.mjs consume it without surprises. normative=false (the hub is Informative).
 const buildHubFrontmatter = ( { nn, family } ) => {
     const meta = FAMILY_META[ family ] ?? { versionField: `${ family }_version`, section: family }
-    const version = FAMILIES.find( ( f ) => f.name === family )?.version ?? '0.1.0'
+    const version = FAMILIES.find( ( f ) => f.name === family )?.version ?? '0.3.0'
     const desc = escapeYaml( {
         value: `Bridge hub for the ${ family } specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.`
     } )

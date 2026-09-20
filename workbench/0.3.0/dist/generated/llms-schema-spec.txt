@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the workbench spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: workbench@0.3.0:46deb52
+Source: workbench@0.3.0:75dfb4f
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/00-overview.md."
@@ -148,7 +148,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Workbench"
 normative: false
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/01-philosophy.md."
@@ -203,7 +203,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/02-sop-entrypoint.md."
@@ -339,7 +339,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/10-root-and-projects.md."
@@ -450,7 +450,7 @@ spec_file: "11-project-structure.md"
 order: 11
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/11-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/11-project-structure.md."
@@ -563,7 +563,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/12-folders.md."
@@ -1020,7 +1020,7 @@ spec_file: "13-knowledge-format-okf.md"
 order: 13
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/13-knowledge-format-okf.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/13-knowledge-format-okf.md."
@@ -1221,7 +1221,7 @@ spec_file: "15-repos.md"
 order: 15
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/15-repos.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/15-repos.md."
@@ -1347,7 +1347,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/16-context.md."
@@ -1483,7 +1483,7 @@ spec_file: "17-memo-store.md"
 order: 17
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/17-memo-store.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/17-memo-store.md."
@@ -1561,7 +1561,7 @@ spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/18-design.md."
@@ -1716,7 +1716,7 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/19-tmp.md."
@@ -1798,7 +1798,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/20-cli.md."
@@ -2046,7 +2046,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/21-environment-scripts.md."
@@ -2237,7 +2237,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/22-config.md."
@@ -2491,7 +2491,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/23-hooks-contract.md."
@@ -2802,7 +2802,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/24-skills-scope.md."
@@ -2957,7 +2957,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/25-validation-overview.md."
@@ -3189,7 +3189,7 @@ spec_file: "26-addons.md"
 order: 26
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/26-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/26-addons.md."
@@ -3260,7 +3260,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/30-wiki.md."
@@ -3441,7 +3441,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/31-browser-automation.md."
@@ -3639,7 +3639,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/32-trash.md."
@@ -3771,7 +3771,7 @@ spec_file: "33-flowmcp.md"
 order: 33
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/33-flowmcp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/33-flowmcp.md."
@@ -3844,7 +3844,7 @@ spec_file: "34-data.md"
 order: 34
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/34-data.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/34-data.md."
@@ -3910,7 +3910,7 @@ spec_file: "35-proofs.md"
 order: 35
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/35-proofs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/35-proofs.md."
@@ -3976,7 +3976,7 @@ spec_file: "36-research.md"
 order: 36
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/36-research.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/36-research.md."
@@ -4037,7 +4037,7 @@ spec_file: "37-snapshots.md"
 order: 37
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/37-snapshots.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/37-snapshots.md."
@@ -4099,7 +4099,7 @@ spec_file: "38-worktrees.md"
 order: 38
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/38-worktrees.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/38-worktrees.md."
@@ -4191,7 +4191,7 @@ spec_file: "39-n8n.md"
 order: 39
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/39-n8n.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/39-n8n.md."
@@ -4277,7 +4277,7 @@ spec_file: "41-project-architecture.md"
 order: 41
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/41-project-architecture.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/41-project-architecture.md."
@@ -4449,7 +4449,7 @@ spec_file: "42-bridge.md"
 order: 42
 section: "Workbench"
 normative: false
-generated_at: "2026-09-14T10:03:05.999Z"
+generated_at: "2026-09-20T07:42:01.025Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."
@@ -4625,7 +4625,7 @@ spec_file: "43-projects.md"
 order: 43
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/43-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/43-projects.md."

@@ -6,7 +6,7 @@ spec_file: "50-orchestrator-role.md"
 order: 50
 section: "Specification"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "memo/0.3.0/draft/spec/50-orchestrator-role.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/50-orchestrator-role.md."
@@ -122,6 +122,37 @@ Four duties follow, and they are duties of the role, not advice:
 - **Bundle questions and hand them to a runner.** Foreign reading stays entirely outside the orchestrator's window; only results are evaluated.
 
 These are the cheapest measures available, and they are also the most effective: keeping the window small outstrips every later remedy for a window that already filled. The condensation of an over-full context is recovery, not hygiene — and a role that relies on recovery has already lost the material it would have needed to recover well.
+
+---
+
+## The Usage Window
+
+The usage window is the second resource a run cannot renew, and it differs from the context window in one decisive way: it does not run down because of what the role does, it runs down on a clock the role does not own. It is therefore **read, never estimated**. The reset moment is taken from the reading the harness publishes; a run that infers its own reset moment from how busy it has felt has replaced a measurement with a hope, and will set every provision that follows to the wrong hour. *The Decision Matrix* below counts this clock among the externally fixed thresholds the role reads rather than judges — this section states what the role owes while that particular clock runs down.
+
+**The orderly descent.** Above the high-water mark of the window the patrol tightens and the run begins to wind down rather than continue at full width. Three things happen together, and their order is not free:
+
+- **No new work is dispatched.** The queue stops at the mark. A unit of work not yet started stays not started, and it stays in the plan rather than being dropped from it.
+- **Work already in flight is brought to its end.** A worker cut off mid-write leaves a state nobody can resume from, so the cheapest moment to stop is after the current unit of work, never during it.
+- **The state is written down** — the ledger, the decision record, the handover — while there is still budget left to write it with. A record that was going to be written after the limit is a record that does not exist.
+
+This is a **descent, not an abort**. Nothing is discarded, and the run is not halted while work is still in flight. The two are worth separating by name because for the first minutes they look alike from the outside and are opposite in what they leave behind: a descent leaves a run that can be taken up again, an abort leaves a tree in the middle of a write.
+
+**The restart.** Once the window has reset, the run takes itself up again; the role does not wait for a human to notice that it may continue. The restart carries forward **only what was approved** — the same run, the same scope — and it **never** carries a publishing verb: uploading, merging and releasing remain a user gate and are not reachable from an automatic restart. A mechanism that can both resume work and publish it is not a restart, it is an unattended release.
+
+**The reach of the alarm.** The self-restart alarm is set **at the start of a run, not at its landing**: a session that tears into the limit has no turn left in which to set one. Its reach, however, is narrower than its name suggests, and saying so plainly is the purpose of this paragraph. **The alarm reaches a session that is waiting; it does not reach a session that is working.** A scheduled one-shot job fires while a session sits idle at its prompt, and a session in the middle of a turn is by construction not idle — so the alarm cannot fire in exactly the situation it appears to insure against. Whoever runs into the limit while working is **not** rescued by it. That is a boundary, not a residual risk, and it has a named counter-measure: the descent above is the protection, the alarm is only the recovery afterwards.
+
+**The four limits of the automatic restart.** Every limit is written together with its consequence for the role, because a limit without a consequence is a footnote rather than a sentence anyone can act on.
+
+| Limit | Consequence for the role |
+|-------|--------------------------|
+| A **minimum version** of the runtime gates the feature; below it the automatic wait does not exist at all | below the gate the orderly descent is the **only** provision; the run does not lean on a wait that is not there |
+| After **two consecutive** limit hits the automatic continuation ends | the second hit is a situation of its own rather than a repetition of the first: it is reported, and it closes unattended operation |
+| If the machine falls **asleep** past its threshold, the restart needs a keystroke | a run meant to carry on overnight needs a machine held awake; that is a precondition of the run, never a surprise in the night |
+| **Delegated teammates and remote control do not start the wait themselves** | the duty to wait stays with the leading session; a delegated run is collected in before the limit rather than left to itself |
+
+The concrete version number is deliberately **not** carried here. What belongs in a specification is the mechanism — that a minimum version gates the feature — while the value itself belongs with the procedure that acts on it, where it can be raised on the day the runtime moves without this chapter being rewritten.
+
+**A recorded alarm whose wake time lies in the past is a finding.** It means the alarm did not fire, or that nobody re-armed it; it is never an empty answer to be passed over. Every statement about the alarm therefore names whether a record was read at all, because *no alarm is set* and *there is no record at all* are two different answers. Collapsing them hides the one case worth catching — a run that has been without its airbag for hours and does not know it.
 
 ---
 
@@ -320,7 +351,11 @@ A fourth word, `worker`, is deliberately **not** a memo role: a `worker` builds 
 
 ## Table Assignment Matrix
 
-The schema declares 57 tables. This matrix names, for every one of them, which area of a memo's life it belongs to, which role writes it, and at which event. A table with two writers is not a defect; a table with **none** is — an unassigned carrier is an open question, not an empty table.
+The schema declares **60** tables as measured on 2026-09-15. This matrix names, for every one of them, which area of a memo's life it belongs to, which role writes it, and at which event. A table with two writers is not a defect; a table with **none** is — an unassigned carrier is an open question, not an empty table.
+
+**The counting basis, stated because a number without one is an assertion.** The figure above is measured at the moment this section is written and never carried forward from an earlier reading. Measured file: `cli/src/DoltSchema.mjs` of the command-line package. File state: 122,410 bytes over 1,908 lines, SHA-256 `97e39eca0d3120d90827a44be02423cbf6ed243769ec51cbd9243f8ecfa8c116`. Raw lines carrying the declaration literal: 67. Discarded with their reason: 7 — six occurrences inside prose comments, and one regular expression in the applier that reads the declared name back out. What remains: 60 declarations carrying 60 distinct names, none declared twice.
+
+Two older readings of the same count are on record and are kept as readings rather than corrected away: 57 on this page, measured 2026-09-14, and 56 in the chapter this matrix was cut from, measured 2026-09-06. Four carriers have been declared since that first reading. The growth is a continuation of the same count, not a contradiction between two counts — which is the reason a figure here is written together with the day it was taken.
 
 This is not *The Decision Matrix* above, and confusing the two costs a level: the Decision Matrix classifies **actions** the orchestrator takes at run time, this one assigns **writes** to roles. An entry here never resolves to a quadrant there.
 
@@ -371,6 +406,8 @@ Three reading notes:
 | `finding` | Execution | `orchestrator` + `worker` | per interim finding in the traffic of a phase |
 | `fidelity_score` | Execution | `orchestrator`, after the run, in a fresh context | at the fidelity audit after the landing |
 | `interval_status` | Execution | `orchestrator` | at every breakpoint, at every phase boundary, after every anomaly intervention, and at the latest every 60 minutes |
+| `decision` | Execution | `orchestrator` | per steering decision, with its matrix classification in the same row. `superseded_by` is written on the REVISING row and names the predecessor it replaces — a correction is a new row, never an edit of the old one |
+| `receipt_event` | Execution | `worker` writes the delivery · `orchestrator` writes the check | one row per event in the life of a work receipt: `written` when a worker lands its receipt, `verified` once per checking run over a phase. `compared_count` is mandatory, which is the machine form of the rule that a check comparing nothing is red |
 | `work_item` | Cross-cutting | all three memo roles | `author` on registration; `planner` on the cut and the grouping; `orchestrator` on status and disposition changes |
 | `work_item_group` | Cross-cutting | `author` + `planner` | on bundling by root cause or by action |
 | `question_event` | Cross-cutting | `author` on a status change, `user` on an answer | per event in the life of a question: asked, replaced, answered, reopened |
@@ -386,13 +423,15 @@ Three reading notes:
 | `session_tool_call` | Cross-cutting | harness (import) | per recorded tool call |
 | `session_ingest_mark` | Cross-cutting | harness (import) | per import progress mark: byte offset, last identifier |
 | `session_breakpoints` | Cross-cutting | harness hook | per breakpoint event |
+| `compaction_event` | Cross-cutting | harness hook | per compaction of a session, once before and once after. The carrier belongs to no memo area: a compaction is an event of the runtime, not a step in a memo's life, which is what the cross-cutting column exists for |
 | `url_calls` | Cross-cutting | `worker`, while researching | per external fetch |
 | `provenance` | Cross-cutting | the funnel itself (`ContentWriteThrough`) | per write, automatically |
 | `history_journal` | Cross-cutting | the funnel itself | per write, automatically |
 
-The area sizes are the sum check: `Authoring` 20 · `Planning` 12 · `Execution` 7 · `Cross-cutting` 18 = 57. No table is filed twice and none is missing; the matrix is complete rather than illustrative, and that completeness is the point — a carrier nobody was assigned is the case this section exists to make impossible.
+The area sizes are the sum check: `Authoring` 20 · `Planning` 12 · `Execution` 9 · `Cross-cutting` 19 = 60, measured on 2026-09-15. The two rows whose responsibility is split by column count under `Planning`, where their structure half is created. **The comparison set of this check is named, because a sum that does not say what it was compared against is not a check:** the 60 rows of the matrix above were compared, in both directions, against the 60 distinct names measured out of the schema file named in the counting basis. Both difference sets are empty — no declared table is missing from the matrix, and no matrix row names a table the schema does not declare. No table is filed twice; the matrix is complete rather than illustrative, and that completeness is the point — a carrier nobody was assigned is the case this section exists to make impossible.
 
-Two properties of the distribution are worth naming, because they are only visible once the rows are grouped. The two carriers that fill themselves — `provenance` and `history_journal` — hang off the write funnel and need no caller, and they are also the two with the largest share of columns that never receive a value; a high row count is the absence of the loudest symptom, not a quality signal. And six of the session and evidence carriers — `sessions`, `session_tool_call`, `session_ingest_mark`, `url_calls`, `agents` and `commits` — are fed **through the harness session trace** rather than written directly by a memo role, which means they depend on an import step somebody has to trigger. That names the channel, not the assignment: the `Writer role` column above keeps naming the memo role that owes each of those rows, and the two levels are held apart in *The Bookkeeping Contract* below. Only `session_breakpoints` is written by a harness hook; the other three session carriers are not, and treating the two as interchangeable is why the import step goes unnoticed.
+Two properties of the distribution are worth naming, because they are only visible once the rows are grouped. The two carriers that fill themselves — `provenance` and `history_journal` — hang off the write funnel and need no caller, and they are also the two with the largest share of columns that never receive a value; a high row count is the absence of the loudest symptom, not a quality signal. And six of the session and evidence carriers — `sessions`, `session_tool_call`, `session_ingest_mark`, `url_calls`, `agents` and `commits` — are fed **through the harness session trace** rather than written directly by a memo role, which means they depend on an import step somebody has to trigger. That names the channel, not the assignment: the `Writer role` column above keeps naming the memo role that owes each of those rows, and the two levels are held apart in *The Bookkeeping Contract* below. Two carriers are written by a harness **hook** rather than through that import — `session_breakpoints` and `compaction_event`; the other three session carriers are not, and treating a hook write and an import as interchangeable is why the import step goes unnoticed.
+
 ---
 
 ## The Model Gradient

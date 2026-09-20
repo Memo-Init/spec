@@ -76,7 +76,8 @@
             "pages": [
                 "22-tree-cli-recommended-way",
                 "23-requirements",
-                "24-tools-registry"
+                "24-tools-registry",
+                "51-memo-database"
             ]
         },
         {

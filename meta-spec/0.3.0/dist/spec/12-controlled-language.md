@@ -6,7 +6,7 @@ spec_file: "12-controlled-language.md"
 order: 12
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "meta-spec/0.3.0/draft/spec/12-controlled-language.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.3.0/draft/spec/12-controlled-language.md."
@@ -47,7 +47,7 @@ The profile applies to **terminal output and memo prose** — the two German-lan
 | SR-05 | **Neue Fachbegriffe nur ueber das Register.** Dauerhafte neue Begriffe werden als AT-Eintrag vorgeschlagen (Definition + Not + misLabels) — nicht ad hoc eingefuehrt. | Technical Names/Verbs |
 | SR-06 | **Abkuerzungen nur wenn registriert.** Erste Nennung ausgeschrieben; nicht registrierte Abkuerzungen sind verboten. | approved words only |
 
-‡ The rule NAME of `SR-04` deviates from the source (Memo 079, REV-03 Kap 10) and is marked here so the chapter's verbatim claim stays checkable. Memo 080 (decision F25=A) renamed it to **Referenz-Jargon verboten**, together with the CLI command and the lint engine that carry the same name, so that rule, skill, specification chapter and command read alike — one subject, one name. The retired wording is recorded in Memo 080 and is deliberately **not** reproduced here: the decision was to retire it completely rather than leave a second name in circulation. Effect, patterns and the rule id `SR-04` are unchanged; the deviation is one of naming, not of normative content.
+‡ The rule NAME of `SR-04` deviates from the source chapter it was taken from and is marked here so this chapter's verbatim claim stays checkable. A later decision renamed it to **Referenz-Jargon verboten**, together with the CLI command and the lint engine that carry the same name, so that rule, skill, specification chapter and command read alike — one subject, one name. The retired wording is recorded where that decision was taken and is deliberately **not** reproduced here: the decision was to retire it completely rather than leave a second name in circulation. Effect, patterns and the rule id `SR-04` are unchanged; the deviation is one of naming, not of normative content.
 
 ---
 

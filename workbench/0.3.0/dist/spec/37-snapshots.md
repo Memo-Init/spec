@@ -6,7 +6,7 @@ spec_file: "37-snapshots.md"
 order: 37
 section: "Workbench"
 normative: true
-generated_at: "2026-09-14T10:03:05.162Z"
+generated_at: "2026-09-20T07:42:00.285Z"
 generated_from: "workbench/0.3.0/draft/spec/37-snapshots.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/37-snapshots.md."

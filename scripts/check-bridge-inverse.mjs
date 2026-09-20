@@ -24,7 +24,7 @@ import { distBridgeDir, distSpecDir, draftDataDirRel, aggregatePath } from './li
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
 // Sentinel file: presence confirms the split map is available (replaces the old MAP_PATH check).
-const SENTINEL_MAP = join( REPO, draftDataDirRel( { repoRoot: REPO, name: 'memo', version: '0.1.0' } ), 'skill-spec-map.json' )
+const SENTINEL_MAP = join( REPO, draftDataDirRel( { repoRoot: REPO, name: 'memo', version: '0.3.0' } ), 'skill-spec-map.json' )
 const REFS = JSON.parse( readFileSync( join( REPO, 'data/refs.manual.json' ), 'utf-8' ) )
 const INVERTED_PATH = aggregatePath( { repoRoot: REPO, file: 'inverted-map.json' } )
 // Per-family dist bridge dir (layout-resolved).

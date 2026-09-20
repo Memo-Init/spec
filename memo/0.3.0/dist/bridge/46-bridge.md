@@ -82,7 +82,8 @@ flowchart TD
 | [48-research-waves-and-depth](./48-research-waves-and-depth.md) | — | 0 | 15 |
 | [49-execution-workflow-guideline](./49-execution-workflow-guideline.md) | ✓ | 2 | — |
 | [50-orchestrator-role](./50-orchestrator-role.md) | — | 0 | — |
-| **Summary** | **46 / 50** | — | 124 |
+| [51-memo-database](./51-memo-database.md) | — | 0 | — |
+| **Summary** | **46 / 51** | — | 124 |
 
 ## Skills by namespace
 
@@ -250,6 +251,7 @@ flowchart TD
 - [22-tree-cli-recommended-way](./22-tree-cli-recommended-way.md) — `memo-goal-score`, `memo-maintenance-score`, `memo-plan-status`, `memo-plan-update-checkbox`
 - [23-requirements](./23-requirements.md) — `git-push`, `git-security`, `memo-finalize`, `memo-phase-evaluate`, `memo-phase-execute`, `memo-phase-generate`, `memo-prd-evaluate`, `memo-prd-generate`, `memo-prds-validate`, `memo-req-registry`, `memo-req-runner`, `memo-req-store`, `memo-req-template`, `memo-rollout-evaluate`, `memo-rollout-generate`, `specs-to-skills`, `wiki-lint`
 - [24-tools-registry](./24-tools-registry.md) — `memo-req-registry`, `memo-req-store`, `memo-req-template`, `wiki-query`, `workbench-audit`
+- [51-memo-database](./51-memo-database.md) — _— no implementer skill yet —_
 
 ### Behavior
 

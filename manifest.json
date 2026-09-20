@@ -1,6 +1,6 @@
 {
     "spec_version": "0.3.0",
-    "generated_at": "2026-09-14T10:03:06.745Z",
+    "generated_at": "2026-09-20T07:42:01.847Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -512,6 +512,16 @@
             "section": "Specification",
             "normative": true,
             "sidebar_group": "execution"
+        },
+        {
+            "filename": "51-memo-database.md",
+            "slug": "memo-database",
+            "title": "The Memo Database",
+            "description": "A memo produces facts for as long as it lives — topics, work items, questions and their answers, research payloads, decisions, evidence of what was checked against what. This chapter says where those...",
+            "order": 51,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "procedure"
         }
     ],
     "workbench": {
@@ -1170,12 +1180,12 @@
         ]
     },
     "stats": {
-        "total_files": 115,
-        "core_files": 51,
+        "total_files": 116,
+        "core_files": 52,
         "workbench_files": 32,
         "session_files": 19,
         "spec_files": 13,
-        "normative_files": 104,
+        "normative_files": 105,
         "informative_files": 11
     }
 }

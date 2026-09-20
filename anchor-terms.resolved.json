@@ -363,8 +363,8 @@
         }
     ],
     "generated": {
-        "at": "2026-09-14T10:03:08.194Z",
-        "fromCommit": "46deb52aabde560311e79db9f0a977fc77b1583d",
+        "at": "2026-09-20T07:42:03.235Z",
+        "fromCommit": "75dfb4fe70a7b75885c7cef8e8da9d0a4fd87f06",
         "generator": "scripts/generate-anchor-register.mjs",
         "termCount": 23
     },

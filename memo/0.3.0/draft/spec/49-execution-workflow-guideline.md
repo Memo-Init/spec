@@ -48,6 +48,22 @@ Choosing the execution workflow changes **nothing** about the bounds that alread
 
 ---
 
+## Small Runs, Steered Between Them
+
+Dynamic does not mean starting a script and **letting it work through blindly**. It means a steered run: begin, check at an interval, and on a deviation pause, insert, drop or **amend**. The verb is *amend*, not re-plan. The orchestrator takes the planner's plan unchanged as the starting constellation and becomes free only from the start of the run; what it may decide from that point on, and against what occasion, is the planner-orchestrator contract of [50-orchestrator-role.md](./50-orchestrator-role.md) and is not repeated here. What this section describes is the **steering**, not the platform primitive — *Dynamic Workflow* keeps the script-primitive meaning [13-orchestration.md](./13-orchestration.md) reserves for it, and nothing here widens that term.
+
+Three limits of the harness force that shape, and they are the mirror image of the three things only an agent team can do:
+
+- A script cannot be changed while its own run is in flight.
+- A running agent cannot be held in a dialogue.
+- A script cannot put a question to the user.
+
+A run is therefore cut **small** and steered **between** runs, never inside one. The measured practice is five waves of forty to fifty minutes, each closed by a self-remeasurement before the next wave is cut — not one monolithic script for a whole day. The seam between two waves is the only place where all three limits above lift at once, which is why the steering lives there and nowhere else.
+
+Build and verification are separate stations: the same object is **never built and verified at the same time**. The status **drives the cadence as a control loop**: context level, the usage windows and the age of the last snapshot shorten or stretch the patrol and the update cadence. A status one tick out of date is tolerated; an invisible snapshot age is not — what has to be visible is how old the reading is, not that it is current. The table that maps a status reading to a cadence response is **not** reproduced here, because the cadence is a decision of the role: [50-orchestrator-role.md](./50-orchestrator-role.md) states where that decision sits and which guard rail bounds it. How many units may share a moment stays the dependency-gated bound of [13-orchestration.md](./13-orchestration.md) in the same way — named here, set there.
+
+---
+
 ## The Sequence of a Unit of Work
 
 The sequence below is the course of **one** unit of work that does not run cleanly. Every step is a step that occurred in a real run; none is constructed. The steps are in order, and each names its **actor** and the **context** that actor runs in.
@@ -70,6 +86,23 @@ The sequence below is the course of **one** unit of work that does not run clean
 | 14 | `landing` | Name the open ends honestly, write the chronicle and the handover, clean up the worktrees. Landing is not optional; the stages are defined in [38-stage-model.md](./38-stage-model.md) and are not restated here | Orchestrator, lean context |
 
 Two properties of the sequence are load-bearing. It is **not a happy path**: steps 4 through 8 and step 11 exist only because a run went sideways, and a guideline that omits them describes a run nobody has. And its fresh-context steps are **fresh on purpose** — the actor that built a thing cannot grade whether it is faithful, so steps 3 and 4 never run in the building context.
+
+---
+
+## The Intervention Grammar
+
+The grammar below is a **threshold rule**. It does not say what happens to a unit of work — the sequence above says that. It says from when the orchestrator intervenes at all, and its whole point is that a single failure is not yet an occasion.
+
+| Observation | Response |
+|-------------|----------|
+| **One failure** | observe and restart — a single agent failing is not an occasion to intervene |
+| **Two failures of the same cause** | intervene: pause, fix the cause, then continue |
+| **A verifier returning red repeatedly** | the repair cap governs, then a deliberate **no** recorded as a snag; its value and its consequence are stated in [50-orchestrator-role.md](./50-orchestrator-role.md) and are not restated here |
+| **An agent that goes silent** | ask back over the in-run message channel; on renewed silence change the mechanism rather than asking a third time |
+
+> **Harness-dependent — the silent-agent row.** The in-run message to a running agent is the one element of this grammar a second runtime may not provide.
+
+Every other row is an observation the orchestrator makes from the outside — a count of failures, a repeated red verdict, a delivery that never arrived — and an observation carries onto any runtime. Where the message channel is missing, the fallback is the change of mechanism the same row already names, so the grammar degrades by one step instead of breaking. The row was written from a measured case: two background agents reported idle five times without ever delivering, and the work only moved again once the mechanism changed.
 
 ---
 
@@ -178,6 +211,7 @@ The reason is one-directional and cheap to state: work accepted under the weaker
 ## Related
 
 - [13-orchestration.md](./13-orchestration.md) — the roles, the parallelism dials, the state files, the worker exits and the crash recovery this sequence runs inside; the mechanism policy this chapter is the fit half of.
+- [50-orchestrator-role.md](./50-orchestrator-role.md) — the orchestrator's contract: what the role decides alone, the repair cap and its consequence, and the cadence decision this chapter points at instead of tabulating.
 - [14-agents-skills-tasks.md](./14-agents-skills-tasks.md) — the three agent-execution primitives; the execution workflow is the type-(c) Dynamic Workflow applied to a phase.
 - [08-phases-and-prds.md](./08-phases-and-prds.md) — the dependency tree that decides which units may share a moment.
 - [12-rollout.md](./12-rollout.md) — the Generate→Execute→Evaluate rollout the sequence above is one unit of.

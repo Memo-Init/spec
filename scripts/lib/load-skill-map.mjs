@@ -1,7 +1,7 @@
 // load-skill-map.mjs — Canonical per-family skill-spec-map loader (Memo 058 PRD-002).
 //
 // The skill-to-spec map is now split into per-family files living alongside the spec:
-//   draft/<family>/0.1.0/data/skill-spec-map.json
+//   draft/<family>/0.3.0/data/skill-spec-map.json
 // This module merges them into a single { note, totals, skills: [] } object, preserving
 // the family order memo → workbench → session → spec (stable, matches file order). The
 // spec meta-family carries an intentionally EMPTY map (0 implementers by design); its file
@@ -30,7 +30,7 @@ const computeTotals = ( { skills } ) => ( {
 export const loadSkillMap = async ( { repoRoot } ) => {
     const parts = await Promise.all(
         FAMILIES.map( async ( family ) => {
-            const path = join( repoRoot, draftDataDirRel( { repoRoot, name: family, version: '0.1.0' } ), 'skill-spec-map.json' )
+            const path = join( repoRoot, draftDataDirRel( { repoRoot, name: family, version: '0.3.0' } ), 'skill-spec-map.json' )
             const raw = await readFile( path, 'utf-8' )
 
             return JSON.parse( raw )

@@ -13,12 +13,15 @@
         "generate-docs-payload": "node scripts/generate-docs-payload.mjs",
         "generate-bridge": "node scripts/generate-bridge.mjs",
         "generate-manifest": "node scripts/generate-manifest.mjs",
+        "generate-folder-registry": "node scripts/generate-folder-registry.mjs",
+        "generate-execution-dispositions": "node scripts/generate-execution-dispositions.mjs",
         "generate-harness-skills": "node scripts/generate-harness-skills-manifest.mjs",
+        "generate-anchor-register": "node scripts/generate-anchor-register.mjs",
         "generate-llms-txt": "node scripts/generate-llms-txt.mjs",
         "check-bridge-inverse": "node scripts/check-bridge-inverse.mjs",
         "audit-spec-quality": "node scripts/audit-spec-quality.mjs",
         "test": "node scripts/audit-spec-quality.mjs && node scripts/check-bridge-inverse.mjs",
-        "build": "npm run generate-refs && npm run generate-docs-payload && npm run generate-bridge && npm run generate-manifest && npm run generate-harness-skills && npm run check-bridge-inverse && npm run generate-llms-txt"
+        "build": "npm run generate-refs && npm run generate-docs-payload && npm run generate-bridge && npm run generate-execution-dispositions && npm run generate-manifest && npm run generate-folder-registry && npm run generate-harness-skills && npm run generate-anchor-register && npm run check-bridge-inverse && npm run generate-llms-txt"
     },
     "devDependencies": {
         "ajv": "^8.20.0"

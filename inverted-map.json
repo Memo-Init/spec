@@ -2746,6 +2746,27 @@
             "internalCount": 0
         },
         {
+            "family": "memo",
+            "id": "memo/51-memo-database",
+            "stem": "51-memo-database",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "12-rollout",
+                "22-tree-cli-recommended-way",
+                "26-memo-history",
+                "47-memo-lifecycle",
+                "50-orchestrator-role"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
             "family": "workbench",
             "id": "workbench/00-overview",
             "stem": "00-overview",
