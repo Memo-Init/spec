@@ -6,7 +6,7 @@ spec_file: "01-entry-points.md"
 order: 1
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/01-entry-points.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/01-entry-points.md."

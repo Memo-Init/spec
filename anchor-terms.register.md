@@ -5,7 +5,7 @@
 > policy-block adjunct of the meta-spec anchor-term convention (`06-conventions-writing.md`),
 > not a new registry primitive.
 
-Provenance: generated from commit `5b86619737fb1279c23bb78671815fd70ca75fff`.
+Provenance: generated from commit `2bdd21e1611bf486c922dd74e6df44d56666242f`.
 
 **36** anchor terms, registered under `/session/namespace-registry/`.
 

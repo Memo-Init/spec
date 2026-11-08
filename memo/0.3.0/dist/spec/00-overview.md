@@ -6,7 +6,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Specification"
 normative: false
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "memo/0.3.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/00-overview.md."

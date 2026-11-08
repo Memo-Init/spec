@@ -6,7 +6,7 @@ spec_file: "12-controlled-language.md"
 order: 12
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "meta-spec/0.3.0/draft/spec/12-controlled-language.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.3.0/draft/spec/12-controlled-language.md."

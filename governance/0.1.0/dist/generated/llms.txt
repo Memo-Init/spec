@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the governance spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: governance@0.1.0:5b86619
+Source: governance@0.1.0:2bdd21e
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/00-overview.md."
@@ -135,7 +135,7 @@ spec_file: "01-entry-points.md"
 order: 1
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/01-entry-points.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/01-entry-points.md."
@@ -194,7 +194,7 @@ spec_file: "02-sop-system.md"
 order: 2
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/02-sop-system.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/02-sop-system.md."
@@ -275,7 +275,7 @@ spec_file: "03-permits.md"
 order: 3
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/03-permits.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/03-permits.md."
@@ -457,7 +457,7 @@ spec_file: "04-permit-validity.md"
 order: 4
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/04-permit-validity.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/04-permit-validity.md."
@@ -560,7 +560,7 @@ spec_file: "05-roles.md"
 order: 5
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/05-roles.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/05-roles.md."
@@ -983,7 +983,7 @@ spec_file: "06-subagents.md"
 order: 6
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/06-subagents.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/06-subagents.md."
@@ -1095,7 +1095,7 @@ spec_file: "07-break-glass.md"
 order: 7
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/07-break-glass.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/07-break-glass.md."
@@ -1219,7 +1219,7 @@ spec_file: "08-runtime-enforcement.md"
 order: 8
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/08-runtime-enforcement.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/08-runtime-enforcement.md."
@@ -1288,7 +1288,7 @@ spec_file: "09-progressive-disclosure.md"
 order: 9
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/09-progressive-disclosure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/09-progressive-disclosure.md."
@@ -1340,7 +1340,7 @@ spec_file: "10-spirit.md"
 order: 10
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/10-spirit.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/10-spirit.md."
@@ -1565,7 +1565,7 @@ spec_file: "11-risk-surface.md"
 order: 11
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/11-risk-surface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/11-risk-surface.md."
@@ -1691,7 +1691,7 @@ spec_file: "12-contamination.md"
 order: 12
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/12-contamination.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/12-contamination.md."
@@ -1914,7 +1914,7 @@ spec_file: "13-practice.md"
 order: 13
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/13-practice.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/13-practice.md."
@@ -2064,7 +2064,7 @@ spec_file: "14-standing-clearance.md"
 order: 14
 section: "Governance"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "governance/0.1.0/draft/spec/14-standing-clearance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: governance/0.1.0/draft/spec/14-standing-clearance.md."
@@ -2141,7 +2141,7 @@ spec_file: "15-bridge.md"
 order: 15
 section: "Governance"
 normative: false
-generated_at: "2026-11-08T15:43:23.068Z"
+generated_at: "2026-11-08T20:57:05.832Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."

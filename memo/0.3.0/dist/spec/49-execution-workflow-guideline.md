@@ -6,7 +6,7 @@ spec_file: "49-execution-workflow-guideline.md"
 order: 49
 section: "Specification"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "memo/0.3.0/draft/spec/49-execution-workflow-guideline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/49-execution-workflow-guideline.md."
@@ -260,7 +260,7 @@ The five statements below were measured on the run this chapter was written for,
 
 ## The Gap That Was Named, and What Has Since Closed Half of It
 
-The invariant gate carries its checks under stable ids. **`C11` checks the ordering topologically at the level of the phase only**: it reads the phase numbers from the ordering line and the dependencies per phase (`scripts/memo-invariants.py`, check `C11`). A level below the phase does not appear in it. That is why the five conflicts above — ordering and file collisions **between units inside a phase** — passed the gate unseen: on the phase level the graph was sound, and one level down nobody was looking.
+The invariant gate carries its checks under stable ids. **`C11` checks the ordering topologically at the level of the phase only**: it reads the phase numbers from the ordering line and the dependencies per phase (`scripts/memo/memo-invariants.py`, check `C11`). A level below the phase does not appear in it. That is why the five conflicts above — ordering and file collisions **between units inside a phase** — passed the gate unseen: on the phase level the graph was sound, and one level down nobody was looking.
 
 The reference above names the check by its **id**, not by a line range and not by a count of checks. Both of those move: the gate grows a check whenever a run finds a class it missed, and a line number is stale the moment anything above it changes. A guideline that pins a volatile number teaches the next reader a fact that has already expired.
 

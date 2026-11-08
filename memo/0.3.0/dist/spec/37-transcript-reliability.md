@@ -6,7 +6,7 @@ spec_file: "37-transcript-reliability.md"
 order: 37
 section: "Specification"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "memo/0.3.0/draft/spec/37-transcript-reliability.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/37-transcript-reliability.md."

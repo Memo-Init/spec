@@ -6,7 +6,7 @@ spec_file: "18-lineage.md"
 order: 18
 section: "Session"
 normative: true
-generated_at: "2026-11-08T15:43:20.872Z"
+generated_at: "2026-11-08T20:57:05.189Z"
 generated_from: "session/0.3.0/draft/spec/18-lineage.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: session/0.3.0/draft/spec/18-lineage.md."

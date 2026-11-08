@@ -4,7 +4,7 @@
 > `scripts/generate-anchor-register.mjs`. Do not hand-edit — edit the store and re-render. It is a view on the
 > anchor-term register, not a second vocabulary.
 
-Provenance: generated from commit `5b86619737fb1279c23bb78671815fd70ca75fff`.
+Provenance: generated from commit `2bdd21e1611bf486c922dd74e6df44d56666242f`.
 
 **36** approved words.
 

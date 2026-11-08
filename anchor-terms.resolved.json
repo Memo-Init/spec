@@ -691,8 +691,8 @@
         }
     ],
     "generated": {
-        "at": "2026-11-08T15:43:28.072Z",
-        "fromCommit": "5b86619737fb1279c23bb78671815fd70ca75fff",
+        "at": "2026-11-08T20:57:07.676Z",
+        "fromCommit": "2bdd21e1611bf486c922dd74e6df44d56666242f",
         "generator": "scripts/generate-anchor-register.mjs",
         "termCount": 36
     },
