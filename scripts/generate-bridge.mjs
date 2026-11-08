@@ -68,7 +68,8 @@ const FAMILY_META = {
     memo: { versionField: 'spec_version', section: 'Specification' },
     workbench: { versionField: 'workbench_version', section: 'Workbench' },
     session: { versionField: 'session_version', section: 'Session' },
-    'meta-spec': { versionField: 'spec_meta_version', section: 'Meta-Spec' }
+    'meta-spec': { versionField: 'spec_meta_version', section: 'Meta-Spec' },
+    governance: { versionField: 'governance_version', section: 'Governance' }
 }
 
 // dist spec dir — the directory sync-spec.mjs reads to serve site content (layout-resolved).
@@ -881,10 +882,13 @@ const main = async () => {
         // marker, intro, `## Related`) is kept so the source page still satisfies the
         // spec-quality structural invariants. The former ALT renderer (renderOverviewAndViews) is
         // removed.
+        // Only an EXISTING draft hub is reshaped: the generator never creates a new file in the
+        // authored tree. A family that carries no authored hub (governance) gets its hub in the
+        // dist only (dist hub + spec hub above), so its draft keeps exactly its authored chapters.
         const hubPath = join( specDirAbs, `${ nn }-bridge.md` )
         const hubContent = renderHubPage( { nn, family: family.name, records: recordList, relatedRefs: family.relatedRefs, skills, groups } )
         const prevHub = await readFile( hubPath, 'utf-8' ).catch( () => null )
-        if( prevHub !== hubContent ) await writeFile( hubPath, hubContent, 'utf-8' )
+        if( prevHub !== null && prevHub !== hubContent ) await writeFile( hubPath, hubContent, 'utf-8' )
 
         const readme = family.name === 'memo'
             ? await updateReadmeCluster( { specDirAbs, records: recordList } )
@@ -897,7 +901,7 @@ const main = async () => {
             nn,
             records: recordList,
             backlinkChanges: records.filter( ( r ) => r.backlinkChanged === true ).length,
-            hubChanged: prevHub !== hubContent,
+            hubChanged: prevHub !== null && prevHub !== hubContent,
             distHubChanged: prevDistHub !== distHubContent,
             specHubChanged,
             readmeChanged: readme.changed

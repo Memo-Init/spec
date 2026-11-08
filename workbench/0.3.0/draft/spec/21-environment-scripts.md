@@ -168,6 +168,12 @@ Whether a project boots through its declared script rather than an inline sequen
 
 ---
 
+## A Precondition Names Its Provider
+
+A precondition that an order relies on **MUST** name its provider — the order or the step that supplies it. When two orders each assume that the other supplies a callable wrapper, the precondition refers back to itself and nobody builds it. A precondition without a named provider is a finding at the time the orders are cut, and a circular assignment is resolved by giving the precondition to exactly one order.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

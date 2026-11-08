@@ -6,7 +6,7 @@ spec_file: "37-transcript-reliability.md"
 order: 37
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/37-transcript-reliability.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/37-transcript-reliability.md."
@@ -59,6 +59,12 @@ The lowering signals combine into `reliability ∈ [0,1]`; `lengthWords` and `cr
 
 ---
 
+## The First Transcript Is Binding
+
+A low reliability score asks for a re-confirmation of single spots; it never lowers the weight of what the user said. The content of the first transcript is **binding**, not a suggestion. The user writes it sentence by sentence, and every sentence of it is either implemented or put forward for approval. An omission needs an approval, and that approval runs as a question in a revision, never as a subordinate clause in running text that declares a part not to be done. The threshold below which an omission needs approval, and the measurement of the degree of implementation behind it, are set by rule C13 ([29-behavioral-guardrails.md](/specification/behavioral-guardrails/)); the form of the question is set in [07-revisions-and-questions.md](/specification/revisions-and-questions/).
+
+---
+
 ## The Dictionary and Its CLI
 
 Recurring mis-hearings are corrected once in a shared **transcription dictionary** (`.memo/_references/transcription-dictionary.md`): a flat `Falsch | Richtig | Notiz` table, consulted before topic extraction and applied as non-content-changing, word-bounded replacements. Two minimal CLI surfaces back it deterministically (minimal by intent — only what is needed):
@@ -67,6 +73,22 @@ Recurring mis-hearings are corrected once in a shared **transcription dictionary
 - `memo dictionary add "<wrong>" "<right>" --note "<evidence>"` — append a proven mis-hearing to the table rather than hand-editing it.
 
 The dictionary's parser and applier are a shared primitive (one module both the cross-memo check and these commands use), not a detail buried in one caller.
+
+---
+
+## Terminal Channel: Minimum Record
+
+Not every input is spoken. What the developer only **types** into the terminal reaches the memo as a recording of its own, `REV-NN--terminal--KK.md` in the memo's `transcripts/` folder, and it has an art of its own in the capture chain: `voice-terminal`, captured, mapped to the input kind `terminal-feedback`. A typed input has **no duration** — there was no speech to time — so a duration of zero is never reported for it; a viewer shows the word count where it would show minutes.
+
+The **minimum record** of a terminal recording in the database is its **word count**:
+
+| Field | Value |
+|-------|-------|
+| `word_count` | the whitespace-separated tokens of the **whole** file, the same reading the viewer takes on the raw text |
+| `payload_sha256` | the checksum of the file — one row identifies exactly one recording, and a second capture run finds it again |
+| `complete` | 1 — nothing of the input was lost; a documented lost input keeps its own row with 0 |
+
+The word count MUST be stored for every captured terminal recording; it makes the input countable, comparable and displayable without loading the text. Whether the **full text** is stored in the database as well is deliberately **left open**: it is neither required nor ruled out. Until a later decision, the verbatim text stays in the recording file and the database row carries no payload.
 
 ---
 

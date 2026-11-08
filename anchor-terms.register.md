@@ -5,9 +5,9 @@
 > policy-block adjunct of the meta-spec anchor-term convention (`06-conventions-writing.md`),
 > not a new registry primitive.
 
-Provenance: generated from commit `75dfb4fe70a7b75885c7cef8e8da9d0a4fd87f06`.
+Provenance: generated from commit `5b86619737fb1279c23bb78671815fd70ca75fff`.
 
-**23** anchor terms, registered under `/session/namespace-registry/`.
+**36** anchor terms, registered under `/session/namespace-registry/`.
 
 | id | label | owning chapter | version |
 |----|-------|----------------|---------|
@@ -24,6 +24,7 @@ Provenance: generated from commit `75dfb4fe70a7b75885c7cef8e8da9d0a4fd87f06`.
 | `AT-plan` | **Plan** | memo / 42-plans | 1.0.0 |
 | `AT-role-user` | **User Role** | meta-spec / 10-harness-registry | 1.0.0 |
 | `AT-role-orchestrator` | **Orchestrator Role** | meta-spec / 10-harness-registry | 1.0.0 |
+| `AT-role-lead` | **Lead Role** | governance / 05-roles | 1.0.0 |
 | `AT-role-worker` | **Worker Role** | meta-spec / 10-harness-registry | 1.0.0 |
 | `AT-contamination` | **Contamination** | memo / 09-contamination-context-handover | 1.0.0 |
 | `AT-trajectory` | **Trajectory** | memo / 14-agents-skills-tasks | 1.0.0 |
@@ -34,6 +35,39 @@ Provenance: generated from commit `75dfb4fe70a7b75885c7cef8e8da9d0a4fd87f06`.
 | `AT-register` | **Register** | memo / 19-internal-vs-external-communication | 0.1.0 |
 | `AT-tier` | **Tier** | meta-spec / 06-conventions-writing | 0.1.0 |
 | `AT-evidence` | **Evidence** | memo / 11-quality-and-finalization | 1.0.0 |
+| `AT-state-open` | **OPEN** | memo / 47-memo-lifecycle | 1.0.0 |
+| `AT-state-in-progress` | **IN PROGRESS** | memo / 47-memo-lifecycle | 1.0.0 |
+| `AT-state-built` | **BUILT** | memo / 13-orchestration | 1.0.0 |
+| `AT-state-wired` | **WIRED** | memo / 13-orchestration | 1.0.0 |
+| `AT-state-completed` | **COMPLETED** | memo / 11-quality-and-finalization | 1.0.0 |
+| `AT-state-named` | **NAMED** | session / 02-enforcement | 1.0.0 |
+| `AT-state-armed-warns` | **ARMED-WARNS** | session / 02-enforcement | 1.0.0 |
+| `AT-state-armed-blocks` | **ARMED-BLOCKS** | session / 02-enforcement | 1.0.0 |
+| `AT-state-reversible` | **REVERSIBLE** | memo / 38-stage-model | 1.0.0 |
+| `AT-state-final` | **FINAL** | memo / 38-stage-model | 1.0.0 |
+| `AT-verb-make-sure` | **MAKE SURE** | meta-spec / 12-controlled-language | 1.0.0 |
+| `AT-health` | **Health** | workbench / 21-environment-scripts | 0.1.0 |
+
+---
+
+## State Axes
+
+| axis | monotone | order |
+|------|----------|-------|
+| `completeness` | yes | `AT-state-open` → `AT-state-in-progress` → `AT-state-built` → `AT-state-wired` → `AT-state-completed` |
+| `effectiveness` | no | `AT-state-named` → `AT-state-armed-warns` → `AT-state-armed-blocks` |
+| `reversibility` | no | `AT-state-reversible` → `AT-state-final` |
+
+---
+
+## Mandatory Clauses
+
+| id | rule | reason |
+|----|------|--------|
+| `MC-1` | Whoever reports a state names its carrier — the thing the state refers to. | A state word without a carrier cannot be checked. |
+| `MC-2` | From WIRED upward the evidence is named with the value. Without it, the next lower value holds. | The speaker binding comes from the duty of evidence, not from a prohibition. |
+| `MC-3` | When the register holds no word for the state reached, the state is reported as NOT FULLY COMPLETED and the missing word is reported. | An unnamed state invites inventing a word. |
+| `MC-4` | The information comes before the calibration. A state word is corrected, not negotiated. | A register that makes people talk about words instead of the state would not abolish the debating club but give it a rulebook (user correction in conversation, memo 083 revision REV-04, line 1106). |
 
 ---
 
@@ -50,7 +84,7 @@ Provenance: generated from commit `75dfb4fe70a7b75885c7cef8e8da9d0a4fd87f06`.
 - **Definition:** One immutable snapshot of a memo's content, stored as REV-XX.md; each change produces a new file, so the history is forward-only.
 - **Not:** NOT an in-place edit — a revision is never mutated; a change is always a new REV-XX file.
 - **Owning chapter:** memo / 07-revisions-and-questions (AT2)
-- **Known mis-labels:** `version`, `edit`, `draft`, `Bearbeitung`, `Entwurf`
+- **Known mis-labels:** `version`, `edit`, `draft`, `Bearbeitung`
 - **Version:** 1.0.0
 
 ### Topic — `AT-topic`
@@ -136,9 +170,17 @@ Provenance: generated from commit `75dfb4fe70a7b75885c7cef8e8da9d0a4fd87f06`.
 ### Orchestrator Role — `AT-role-orchestrator`
 
 - **Definition:** The coordinating role in the harness tool-contract roles{} (10-harness-registry): it adds the coordination tools to core.required[] and carries the gate-dependent taskCrud marker; it runs work on the user's behalf and MUST NOT exceed the user's trust level.
-- **Not:** NOT a new authority — the orchestrator is the user's context continued into coordination, bounded by monotonicity, never a separate higher privilege; and NOT the same as the agent-team 'Lead' name (13-orchestration), which is one deployment of this role.
+- **Not:** NOT a new authority — the orchestrator is the user's context continued into coordination, bounded by monotonicity, never a separate higher privilege; and NOT the lead role (governance 05-roles), which is a role of its own that runs under this contract role.
 - **Owning chapter:** meta-spec / 10-harness-registry (AT2)
-- **Known mis-labels:** `lead`, `coordinator`, `manager`, `Koordinator`
+- **Known mis-labels:** `coordinator`, `manager`, `Koordinator`
+- **Version:** 1.0.0
+
+### Lead Role — `AT-role-lead`
+
+- **Definition:** The role (governance 05-roles) that may create worker sub-agents, and only with fewer rights than it holds itself; it communicates only with the orchestrator and runs under the orchestrator contract role.
+- **Not:** NOT the orchestrator role — a lead never talks to the user and never ascends to the orchestrator; and NOT a worker — a worker creates no sub-agents, a lead does.
+- **Owning chapter:** governance / 05-roles (AT2)
+- **Known mis-labels:** `team lead`, `sub-orchestrator`
 - **Version:** 1.0.0
 
 ### Worker Role — `AT-role-worker`
@@ -220,3 +262,99 @@ Provenance: generated from commit `75dfb4fe70a7b75885c7cef8e8da9d0a4fd87f06`.
 - **Owning chapter:** memo / 11-quality-and-finalization (AT2)
 - **Known mis-labels:** `proof`, `citation`, `source`, `Beweis`, `Zitat`, `Quelle`
 - **Version:** 1.0.0
+
+### OPEN — `AT-state-open`
+
+- **Definition:** The work on this carrier has not started. No artifact exists for it yet.
+- **Not:** NOT a state that carries any partial result — the moment a first artifact exists the value is IN PROGRESS.
+- **Owning chapter:** memo / 47-memo-lifecycle (AT2)
+- **Known mis-labels:** `todo`, `offen`, `pending`, `new`, `backlog`, `geplant`
+- **Version:** 1.0.0
+
+### IN PROGRESS — `AT-state-in-progress`
+
+- **Definition:** Work on this carrier has started and a partial artifact exists. The artifact does not yet do what it is for.
+- **Not:** NOT a claim that anything works — it states only that work began.
+- **Owning chapter:** memo / 47-memo-lifecycle (AT2)
+- **Known mis-labels:** `wip`, `in arbeit`, `started`, `laeuft`, `angefangen`, `ongoing`
+- **Version:** 1.0.0
+
+### BUILT — `AT-state-built`
+
+- **Definition:** The artifact exists and is internally finished, but nothing calls it and no gate enforces it. It does not act on the system.
+- **Not:** NOT a claim of effect. An artifact that exists but has no caller is BUILT, never WIRED and never COMPLETED. This is the value that the sentence "I have implemented it" MUST resolve to.
+- **Owning chapter:** memo / 13-orchestration (AT2)
+- **Known mis-labels:** `implementiert`, `implemented`, `gebaut`, `coded`, `written`, `geschrieben`, `done coding`, `fertig gebaut`
+- **Version:** 1.0.0
+
+### WIRED — `AT-state-wired`
+
+- **Definition:** The artifact is reached by a named caller on a call path that was followed from a fresh context. The caller MUST be named with the evidence.
+- **Not:** NOT a claim that the artifact is enforced — an artifact can be reached and still only report. Effectiveness is the separate axis. Without a named caller the value falls back to BUILT.
+- **Owning chapter:** memo / 13-orchestration (AT2)
+- **Known mis-labels:** `armiert`, `armed`, `angeschlossen`, `aktiviert`, `activated`, `enabled`, `hooked up`, `verdrahtet ohne Beleg`, `scharf`
+- **Version:** 1.0.0
+
+### COMPLETED — `AT-state-completed`
+
+- **Definition:** Successfully brought to an end, confirmed by a check that the reporter did not run. The check and its comparison count MUST be named with the evidence.
+- **Not:** NOT sayable by the instance that did the work — a builder has no independent evidence and therefore cannot reach this value. A state value read out of a generate-state file is not evidence of finished work.
+- **Owning chapter:** memo / 11-quality-and-finalization (AT2)
+- **Known mis-labels:** `done`, `complete`, `completed ohne Beleg`, `erledigt`, `abgeschlossen`, `fertig`, `finished`, `ready`, `abgenommen`, `selbst abgenommen`
+- **Version:** 1.0.0
+
+### NAMED — `AT-state-named`
+
+- **Definition:** The rule or gate exists in writing and is findable, but it does not act on any run.
+- **Not:** NOT a degree of enforcement — it is the absence of enforcement with a written carrier.
+- **Owning chapter:** session / 02-enforcement (AT2)
+- **Known mis-labels:** `declared`, `deklariert`, `benannt`, `documented`, `beschrieben`, `spec'd`
+- **Version:** 1.0.0
+
+### ARMED-WARNS — `AT-state-armed-warns`
+
+- **Definition:** The gate runs on every relevant event and reports a finding. It does not stop the run. The event that triggers it MUST be named.
+- **Not:** NOT a block. A warning that is dismissed by habit has the effect of NAMED, and its false-positive rate belongs to the evidence.
+- **Owning chapter:** session / 02-enforcement (AT2)
+- **Known mis-labels:** `armiert`, `armed`, `aktiv`, `active`, `scharf`, `enforced`, `live`
+- **Version:** 1.0.0
+
+### ARMED-BLOCKS — `AT-state-armed-blocks`
+
+- **Definition:** The gate runs on every relevant event and stops the run on a finding. The event and the exit behaviour MUST be named.
+- **Not:** NOT to be used where a fallback swallows the failure. A path that ends in a tolerated failure is ARMED-WARNS at most.
+- **Owning chapter:** session / 02-enforcement (AT2)
+- **Known mis-labels:** `armiert`, `armed`, `blockiert`, `hard gate`, `enforced`, `scharf geschaltet`
+- **Version:** 1.0.0
+
+### REVERSIBLE — `AT-state-reversible`
+
+- **Definition:** The state can be taken back by a named operation without loss.
+- **Not:** NOT a judgement about difficulty — it states that a take-back path exists and is named.
+- **Owning chapter:** memo / 38-stage-model (AT2)
+- **Known mis-labels:** `umkehrbar`, `undoable`, `rollback-able`, `temporary`, `vorlaeufig`
+- **Version:** 1.0.0
+
+### FINAL — `AT-state-final`
+
+- **Definition:** The state cannot be taken back. A push, a publication and a deletion outside the trash are final.
+- **Not:** NOT the same as COMPLETED — a state can be final and still not finished.
+- **Owning chapter:** memo / 38-stage-model (AT2)
+- **Known mis-labels:** `endgueltig`, `permanent`, `irreversible`, `terminal`, `abgeschlossen`
+- **Version:** 1.0.0
+
+### MAKE SURE — `AT-verb-make-sure`
+
+- **Definition:** The single approved verb for a check. It names what was compared and how many items the comparison covered.
+- **Not:** NOT a scale. The thirteen measured variants imply a hardness ranking that nobody defined and that lets a reporter claim rigour it did not spend. ENSURE is refused in particular because it grammatically asserts the result instead of the action.
+- **Owning chapter:** meta-spec / 12-controlled-language (AT2)
+- **Known mis-labels:** `ensure`, `verify`, `validate`, `confirm`, `assert`, `check`, `test`, `pruefen`, `sicherstellen`, `bestaetigen`, `gewaehrleisten`, `absichern`, `verifizieren`
+- **Version:** 1.0.0
+
+### Health — `AT-health`
+
+- **Definition:** The state in which a project, the setup of its workbench and its test suite are in working order, as answered by the scripts of the health family in the scripts/ folder of a project — a deterministic check with an exit code, not a judgement.
+- **Not:** NOT the maintenance score of a repository and NOT the liveness probe of a running service; a health script verifies a setup, it neither grades quality nor keeps a service alive.
+- **Owning chapter:** workbench / 21-environment-scripts (AT2)
+- **Known mis-labels:** `sanity check`, `Gesundheit`
+- **Version:** 0.1.0

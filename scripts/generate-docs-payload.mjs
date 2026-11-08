@@ -48,15 +48,18 @@ const SPEC_VERSION = readFamilyVersion( { family: 'memo' } )
 const WORKBENCH_VERSION = readFamilyVersion( { family: 'workbench' } )
 const SESSION_VERSION = readFamilyVersion( { family: 'session' } )
 const SPEC_META_VERSION = readFamilyVersion( { family: 'meta-spec' } )
+const GOVERNANCE_VERSION = readFamilyVersion( { family: 'governance' } )
 
 const SPEC_DIR = join( REPO, REFS_MANUAL.memo.specDir )
 const WORKBENCH_DIR = join( REPO, REFS_MANUAL.workbench.specDir )
 const SESSION_DIR = join( REPO, REFS_MANUAL.session.specDir )
 const SPEC_META_DIR = join( REPO, REFS_MANUAL[ 'meta-spec' ].specDir )
+const GOVERNANCE_DIR = join( REPO, REFS_MANUAL.governance.specDir )
 const PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'memo', version: SPEC_VERSION } )
 const WORKBENCH_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'workbench', version: WORKBENCH_VERSION } )
 const SESSION_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'session', version: SESSION_VERSION } )
 const SPEC_META_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'meta-spec', version: SPEC_META_VERSION } )
+const GOVERNANCE_PAYLOAD_DIR = distSpecDir( { repoRoot: REPO, name: 'governance', version: GOVERNANCE_VERSION } )
 const GENERATOR = 'scripts/generate-docs-payload.mjs'
 
 
@@ -81,6 +84,7 @@ const MEMO_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 
 const WORKBENCH_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'workbench' } ).docEntry } )
 const SESSION_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'session' } ).docEntry } )
 const SPEC_META_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'meta-spec' } ).docEntry } )
+const GOVERNANCE_ROUTE = routeBaseFromDocEntry( { docEntry: readFamilyHead( { family: 'governance' } ).docEntry } )
 
 
 // Strip the top metadata table (Status / Depends on / Related) that each source
@@ -401,13 +405,30 @@ const main = async () => {
     } )
     reportPass( { label: 'meta-spec', results: specMetaResults, targetDir: SPEC_META_PAYLOAD_DIR } )
 
+    // Fifth family: governance. Its own version line rides in the governance_version
+    // frontmatter field; its published route is docEntry-derived (/governance/).
+    const governanceResults = await generatePass( {
+        label: 'governance',
+        sourceDir: GOVERNANCE_DIR,
+        targetDir: GOVERNANCE_PAYLOAD_DIR,
+        section: 'Governance',
+        routeBase: GOVERNANCE_ROUTE,
+        versionField: 'governance_version',
+        versionValue: GOVERNANCE_VERSION,
+        sourceRelBase: REFS_MANUAL.governance.specDir,
+        sourceCommit,
+        now
+    } )
+    reportPass( { label: 'governance', results: governanceResults, targetDir: GOVERNANCE_PAYLOAD_DIR } )
+
     // WI-023: verify the same-family rewrite landed in each family's OWN route (route gate).
     await assertSameFamilyRoutes( {
         families: [
             { family: 'memo', label: 'memo', sourceDir: SPEC_DIR, targetDir: PAYLOAD_DIR },
             { family: 'workbench', label: 'workbench', sourceDir: WORKBENCH_DIR, targetDir: WORKBENCH_PAYLOAD_DIR },
             { family: 'session', label: 'session', sourceDir: SESSION_DIR, targetDir: SESSION_PAYLOAD_DIR },
-            { family: 'meta-spec', label: 'meta-spec', sourceDir: SPEC_META_DIR, targetDir: SPEC_META_PAYLOAD_DIR }
+            { family: 'meta-spec', label: 'meta-spec', sourceDir: SPEC_META_DIR, targetDir: SPEC_META_PAYLOAD_DIR },
+            { family: 'governance', label: 'governance', sourceDir: GOVERNANCE_DIR, targetDir: GOVERNANCE_PAYLOAD_DIR }
         ]
     } )
 }

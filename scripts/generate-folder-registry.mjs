@@ -11,7 +11,12 @@
 // and is out of this build's scope). This script also lints:
 //   - completeness of each block   — every required key present, every value in range (HARD FAIL)
 //   - agreement block vs table      — a block's status/level matches its registry-table row (HARD FAIL)
-//   - coverage of the registry      — every registered folder that warrants a page has a block (WARN)
+//   - coverage of the registry      — every registered folder has a block (WARN)
+//
+// ORDER. `folders` follows the row order of the contract table in 12-folders.md (the stable,
+// reproducible order that page defines); blocks without a table row — such as the root-level
+// `projects/` — follow after, in page order. A project-side list materialized from this registry
+// therefore reads in the same order as the table.
 //
 // House style: 4-space, no semicolons, single quotes, object params, object returns.
 
@@ -42,11 +47,10 @@ const ENUMS = {
     remote: [ 'allowed', 'forbidden' ]
 }
 
-// Registered folders that are exempt from the coverage check because they warrant no per-folder
-// block by design: two are authored files, `.claude/` is Claude-Code settings, `.session/` is owned
-// by the session spec, `.flowmcp/` shares 33-flowmcp's page (its block names `flowmcp/`), and `spec/`
-// is specified by its own sections in 12-folders.md rather than a spoke page.
-const COVERAGE_EXEMPT = [ 'ABOUT.md', 'CLAUDE.md', '.claude/', '.session/', '.flowmcp/', 'spec/' ]
+// Registered entries that are exempt from the coverage check: the two authored FILES of the table,
+// which a ```folder block (a name ending in "/") cannot describe. Every registered folder carries a
+// block — a page-less one in 12-folders.md itself.
+const COVERAGE_EXEMPT = [ 'ABOUT.md', 'CLAUDE.md' ]
 
 
 const extractFolderBlocks = ( { content, filename } ) => {
@@ -148,14 +152,25 @@ const main = async () => {
         process.exit( 1 )
     }
 
-    const folders = {}
+    const byName = {}
     validated.forEach( ( result, index ) => {
-        folders[ result.parsed.name ] = { ...result.parsed, sourcePage: blocks[ index ].filename }
+        byName[ result.parsed.name ] = { ...result.parsed, sourcePage: blocks[ index ].filename }
     } )
 
     const foldersContent = await readFile( join( DRAFT_DIR, '12-folders.md' ), 'utf-8' )
     const registered = readRegisteredRows( { content: foldersContent } )
     const covered = new Set( names )
+
+    // Table order first, then the blocks without a table row in page order (see ORDER above).
+    const tableOrder = registered
+        .map( ( row ) => row.name )
+        .filter( ( name ) => name in byName )
+    const rest = Object.keys( byName )
+        .filter( ( name ) => tableOrder.includes( name ) !== true )
+    const folders = {}
+    tableOrder
+        .concat( rest )
+        .forEach( ( name ) => { folders[ name ] = byName[ name ] } )
 
     // Agreement (HARD FAIL): a block whose status/level disagrees with its registry-table row —
     // the "shape and agreement" half of the Folder-Page Contract lint (session/13-conventions.md).

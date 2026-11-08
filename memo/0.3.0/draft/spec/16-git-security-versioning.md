@@ -263,6 +263,12 @@ A broad destructive git operation over a dirty tree is an irreversible data-loss
 
 ---
 
+## Every Git Tree That Receives Text Carries the Commit-Message Hook
+
+Every git tree that receives authored text **MUST** carry the commit-message hook that strips attribution trailers. The specification workshop, where all specification text is authored, is such a tree; a tree without the hook leaves the trailer rule enforced on fewer levels exactly where the text is written. The hook is installed when the tree is created, and its presence is checked as part of the health of the tree.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

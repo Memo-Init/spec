@@ -6,7 +6,7 @@ spec_file: "15-prompt-generator.md"
 order: 15
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/15-prompt-generator.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/15-prompt-generator.md."
@@ -106,6 +106,8 @@ The prompt generator does not operate in isolation: it couples bidirectionally t
 The generator is a pure function over its payload: no silent defaults, no LLM call, fully hashable. Because the composed prompt and every placeholder carry a sha256 in the metadata, a start-prompt is auditable — two runs with the same payload are provably identical.
 
 This is exactly what the agent layer needs: the generator produces the **deterministic initial prompt** of an `AGENTS.md` agent (see [14-agents-skills-tasks.md](/specification/agents-skills-tasks/)). The `AGENTS.md` file holds the standing operating rules; the generated start-prompt is the per-invocation order. The starting point is essential — and the generator makes it reproducible.
+
+**A handover names its expected errors.** A composed prompt carries, beside its content, the errors its receiver can expect: the hooks that can stop the receiver's commands, where their table lives and the behaviour each of them expects ([/governance/sop-system/](/governance/sop-system/)). The template carries this as a fixed section of the order structure, so no composed prompt leaves a hidden hook unnamed.
 
 ---
 

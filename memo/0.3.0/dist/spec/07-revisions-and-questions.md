@@ -6,7 +6,7 @@ spec_file: "07-revisions-and-questions.md"
 order: 7
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/07-revisions-and-questions.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/07-revisions-and-questions.md."
@@ -20,7 +20,7 @@ A memo evolves through revisions, and each revision carries the strict handover 
 A revision file (`REV-XX.md`) is organized into three areas. An implementation MUST produce all three.
 
 1. **`## Preamble`** — what changed since the previous revision and what the reader should watch next. The preamble is the human-facing summary of the delta.
-2. **Chapters** — the body of the memo, one `##`-level chapter per topic, each carrying its category tag.
+2. **Chapters** — the body of the memo, one `##`-level chapter per topic. The heading carries the chapter number, the plain title and the category tag, in that order; the **stored** fields keep them apart — the number in `chapter`, the title in `block.title`, the category in `block.category`. A stored title that repeats the number or the tag is a defect, because a title is a search field: it must carry the words someone would search for and nothing else. See [52-field-contract.md](/specification/field-contract/).
 3. **`## Open Questions` / `## Answered Questions`** — the machine-readable question areas. Open questions are the strict handover surface from the AI to the downstream machinery; answered questions record the decisions and where they were made.
 
 The question areas are the **strict AI→software handover**: this is the defined transition from a human-readable revision to machine processing in the plan. Because they are parsed, their format is normative.
@@ -129,11 +129,42 @@ Context is also driven up **from the outside**, not only by the memo's own growt
 
 ---
 
+## New Revision Versus Amendment
+
+Append-only says how a new state is written; it does not say **when** a new state is due. Without that criterion every correction becomes a revision number, and the numbers stop meaning "the memo moved". The decision follows what triggered the change:
+
+| Trigger | Outcome |
+|---|---|
+| New content from the user — an answer, a new request, a new area | **New revision** (`REV-XX+1`) |
+| A promise the current revision made and did not keep — a chapter it announced, a section it left empty, a figure it owes | **Amendment** of the current revision — no new number |
+| A change that does not raise the form level of the revision — wording, a typo, a link, a table layout | **No number** — corrected as an amendment, or not at all |
+| A single question of the user that changes nothing in the memo | **Terminal** — answered in the conversation, no revision |
+
+An amendment never overwrites the frozen revision file: append-only stays intact. It corrects the revision's rows in the per-memo database (`memo block amend` with a named revision and a reason), and every corrected section leaves an amendment note in `revision_amendment` — revision, block, section, time, reason, agent. The note is what makes an amendment findable and checkable; a block that carries notes renders them under `### Nachbesserungen`, a block without notes renders no such section. A user who reads the memo therefore sees that a state was amended, by whom and why, without a new revision number pretending that the memo moved.
+
+When in doubt between the first two rows, the source decides: what comes **from the user** is a new revision, what the revision **owed itself** is an amendment.
+
+---
+
 ## Scope May Grow Across Revisions
 
 A memo's scope is allowed to **grow** while it is being revised. When the user adds a new request mid-revision — a topic, a fix, a whole extra part — that request is **taken into the same memo and worked through there**. It is never unilaterally exported into a follow-up memo, a sub-memo, or a "later" container.
 
 The rule: **you have to accept what the memo demands — including what arrives in a revision.** The well-known "accept the multi-topic input, do not split it" instinct is anchored at the *initial* input ([01-philosophy.md](/specification/philosophy/), [05-memo-strategies.md](/specification/memo-strategies/)); this is its revision-time companion. Mechanically a revision is still append-only (a new `REV-XX.md`, never an in-place edit), and the added scope becomes new chapters and new `### F{N}` questions in that next revision. The only sanctioned way to split off work is an explicit user question (per C7, [29-behavioral-guardrails.md](/specification/behavioral-guardrails/)); absent that recorded decision the work stays in the current memo. Deferring a genuinely out-of-scope finding is likewise a parked research note in the memo's `context/` (memo-scoped), not a follow-up memo (C8).
+
+---
+
+## Appending Is the Default, Creating the Exception
+
+When a remark arrives in a revision, the default is to **append** it to what already exists, and creating something new is the exception. A new topic arises only when the remark opens a new area; otherwise the remark is appended to the existing topic as a work item. Registering a topic with the phase `revision` is therefore reserved for a new area.
+
+The rule is the same for topic, block and chapter. A new block arises only where the remark opens an area that no existing block gathers; a new chapter arises only where it opens an area that no existing chapter covers. In each case the search of the existing stock comes before the creation, and a remark that merely adds to an area is appended to it.
+
+---
+
+## Open Ambiguities Are Routed
+
+An agent that meets an ambiguity in its material does not resolve it by guessing. It routes the unclear point to one of two places: to the user, as a question in the next revision, or into the documentation, where it stays visible. Both places make the point something that can be evaluated later — a question demands an answer and keeps it, a documented point can be counted and checked. A routed ambiguity is a record; a silent one turns into a defect that is found only later, and then without its origin.
 
 ---
 
@@ -211,6 +242,20 @@ Two further field lines are **optional and are written only when they carry some
 The answered area is additionally **split by the provenance of the answer** into two H3 subsections — `### Vom User beantwortet` and `### Von der KI im Namen des Users beantwortet`. Every `### F{N}` block inherits the provenance of the nearest preceding subsection heading; without a split every block reads as answered by the developer. A subsection is written **only when it holds at least one question**, so an empty heading never claims a group that does not exist. The split is what keeps the on-behalf barrier of the finalization gate effective ([34-question-interface.md](/specification/question-interface/)): an answer the agent gave in the developer's name MUST be recognizable as such after the roundtrip through the file, or the barrier has nothing to bite on.
 
 The pairing is what makes a memo's answered questions more than a decision log. Read across many memos, the accumulated `AI-Empfehlung war` ↔ `User-Entscheidung` pairs are the raw material from which a cross-memo preference model is later derived — the systematic record of where the developer tends to follow the AI and where they tend to overrule it. A bare decision without its paired recommendation cannot feed that model; the pairing is the point. The downstream model that consumes these pairs is defined in its own chapter ([41-mental-model.md](/specification/mental-model/)).
+
+---
+
+## Approval Runs Through a Question
+
+An approval runs through a question in a revision, never through a subordinate clause. An approval mentioned in passing, as an aside in running text, forces no answer and has no place where the answer is kept. A question has both: it demands an answer, and the answer is recorded.
+
+Nothing new is needed for this, because the existing question machinery already carries it. The question is written in the required format of the valid question format (`questions-json`); when it is answered it moves into the area `Answered Questions`; and at finalization the blocker gate `memo revision blockers` holds back a memo whose question is still open. An approval that has not been answered therefore stays a blocker until the answer is on record.
+
+---
+
+## Omitting Content of the First Transcript Needs a Question
+
+The content of the first transcript is binding ([37-transcript-reliability.md](/specification/transcript-reliability/)). An agent that wants to omit a part of it does not decide that alone: the omission is put to the user as a question in a revision, in the valid question format, and the approval is the recorded answer to that question. Until the answer is on record, the open question is a blocker of the finalization, exactly as for any other approval. The threshold above which the agent may answer for a smaller deviation itself is set by rule C13 ([29-behavioral-guardrails.md](/specification/behavioral-guardrails/)).
 
 ---
 

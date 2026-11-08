@@ -20,7 +20,11 @@
         "generate-llms-txt": "node scripts/generate-llms-txt.mjs",
         "check-bridge-inverse": "node scripts/check-bridge-inverse.mjs",
         "audit-spec-quality": "node scripts/audit-spec-quality.mjs",
-        "test": "node scripts/audit-spec-quality.mjs && node scripts/check-bridge-inverse.mjs",
+        "lint-internal-language": "node scripts/lint-internal-language.mjs",
+        "lint-anchor-usage": "node scripts/lint-anchor-usage.mjs",
+        "grade-normative-duplication": "node scripts/grade-normative-duplication.mjs",
+        "lint-bypass-hints": "node ../repos/core/scripts/check-bypass-hints.mjs --class 3 --root .",
+        "test": "node scripts/audit-spec-quality.mjs && node scripts/check-bridge-inverse.mjs && node scripts/lint-internal-language.mjs && node scripts/lint-anchor-usage.mjs && node scripts/grade-normative-duplication.mjs && npm run lint-bypass-hints",
         "build": "npm run generate-refs && npm run generate-docs-payload && npm run generate-bridge && npm run generate-execution-dispositions && npm run generate-manifest && npm run generate-folder-registry && npm run generate-harness-skills && npm run generate-anchor-register && npm run check-bridge-inverse && npm run generate-llms-txt"
     },
     "devDependencies": {

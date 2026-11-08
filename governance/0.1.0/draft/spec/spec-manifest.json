@@ -1,0 +1,62 @@
+{
+    "namespace": "governance",
+    "version": "0.1.0",
+    "namespaceToken": "GV",
+    "hasRequirements": false,
+    "hasGrading": false,
+    "requirementsRef": null,
+    "gradingRef": null,
+    "groups": [
+        {
+            "id": "introduction",
+            "label": "Introduction",
+            "order": 1,
+            "pages": [
+                "00-overview"
+            ]
+        },
+        {
+            "id": "permits",
+            "label": "Permits",
+            "order": 2,
+            "pages": [
+                "03-permits",
+                "04-permit-validity"
+            ]
+        },
+        {
+            "id": "roles",
+            "label": "Roles",
+            "order": 3,
+            "pages": [
+                "05-roles",
+                "06-subagents",
+                "07-break-glass",
+                "14-standing-clearance"
+            ]
+        },
+        {
+            "id": "enforcement",
+            "label": "Enforcement",
+            "order": 4,
+            "pages": [
+                "01-entry-points",
+                "02-sop-system",
+                "08-runtime-enforcement",
+                "09-progressive-disclosure"
+            ]
+        },
+        {
+            "id": "spirit",
+            "label": "Spirit",
+            "order": 5,
+            "pages": [
+                "10-spirit",
+                "11-risk-surface",
+                "12-contamination",
+                "13-practice"
+            ]
+        }
+    ],
+    "fallback": "append-by-NN"
+}

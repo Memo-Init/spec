@@ -66,9 +66,21 @@ Destructive recursive removal is **forbidden**.
 `.trash/` segments its contents by the active memo id, mirroring `.tmp/` ([19-tmp.md](./19-tmp.md)): discarded material lands under `.trash/<memo-id>/`, one subfolder per memo, so recovery can be reasoned about one memo at a time.
 
 - **Discarding routes into the memo's subfolder.** Consistent with the move-not-delete rule above, "removing" material while a memo is active means **moving** it into that memo's subfolder — `.trash/<memo-id>/` — not erasing it. The material stays recoverable there until a human empties it.
-- **`undefined/` is the fallback.** When no memo is active, `<memo-id>` is the literal `undefined`, so discards land in `.trash/undefined/`. A removal always has a valid target and never has to fall back to erasing.
+- **`UNDEFINED-{N}` is the fallback.** When no memo is active, a new entry takes the name `UNDEFINED-{N}`, where `{N}` is the smallest free number from 1 upward in the target folder, so discards land in `.trash/UNDEFINED-1/` and so on. Folders named `undefined` that already exist stay valid. A removal always has a valid target and never has to fall back to erasing.
 
 Segmentation is purely organizational: it changes *where under* `.trash/` a discard lands, never *whether* it is recoverable. Every subfolder, `.trash/undefined/` included, stays under the manual-empty guarantee — emptied only by a human, never automatically.
+
+---
+
+## Worktrees in the Trash
+
+A git worktree whose work is merged is filed here, not erased ([38-worktrees.md](./38-worktrees.md)). The rules are short:
+
+- **A tree arrives only by `git worktree move`**, at `.trash/<memo-id>/worktrees/<name>/`. The registration follows the tree, so nothing is orphaned and nothing is lost.
+- **The ledger line carries arrival and expiry.** Each move appends one line to the worktree ledger of the owning memo: when the tree arrived and when it expires.
+- **The expiry is the project key `worktreeTrashExpiryDays`** in `.memo/config.json`, an integer with no default value. When the key is missing, no tree expires, and a report says "not set".
+- **A report only lists expired trees.** It never acts on them.
+- **Removing an expired tree stays a human act**, like emptying any other part of `.trash/`: for example `git worktree remove` on the path inside the trash, which ends the registration at the same time. No script, cleanup routine or autonomous loop does it.
 
 ---
 
@@ -76,7 +88,7 @@ Segmentation is purely organizational: it changes *where under* `.trash/` a disc
 
 The move-not-delete rule is not a local convenience of one folder — it is a **workbench-wide guarantee**. Across the whole workbench, root and every project, **nothing is hard-deleted**. Discarding material means **moving** it into `.trash/<memo-id>/`; it is never erased in place.
 
-- **Every discard has a valid target, coupled to the active session.** The `<memo-id>` segment is the active session's memo id, so a removal is always attributable to the work that made it. When no memo is active the segment is the literal `undefined` (`.trash/undefined/`, above), so a discard **always** has a valid target and never has to fall back to erasing. The guarantee is coupled to a valid session precisely so that the target is always well-defined.
+- **Every discard has a valid target, coupled to the active session.** The `<memo-id>` segment is the active session's memo id, so a removal is always attributable to the work that made it. When no memo is active the segment is the fallback `UNDEFINED-{N}` (above; existing `undefined` folders stay valid), so a discard **always** has a valid target and never has to fall back to erasing. The guarantee is coupled to a valid session precisely so that the target is always well-defined.
 - **The guarantee spans the workbench.** It is the universal discipline over all workbench work; the mechanism is the project-local `.trash/<memo-id>/` (aligned with the `.tmp/<memo-id>/` scratch convention, [19-tmp.md](./19-tmp.md)). No cleanup routine, autonomous loop, or tool may bypass it with an in-place delete.
 - **`.trash/` is the only home for a removal.** A tool that needs to "delete" moves the target into `.trash/<memo-id>/`; the irreversible recursive delete (`rm -rf`) forbidden above has no exception anywhere in the workbench.
 
@@ -94,14 +106,14 @@ That a removal is always a recoverable move into `.trash/<memo-id>/`, never a ha
 {
   "id": "REQ-982",
   "title": "Removal is a recoverable move into .trash/<memo-id>/, never a hard delete",
-  "statement": "Across the workbench — root and every project — material MUST NOT be hard-deleted; removing it means MOVING it into `.trash/<memo-id>/`, where `<memo-id>` is the active session's memo id (or the literal `undefined` when none is active, so a discard always has a valid target). `.trash/` MUST be emptied only by a human, never automatically by a script, cleanup routine, or autonomous loop, and the irreversible recursive delete (`rm -rf`) MUST NOT be used on workbench material.",
+  "statement": "Across the workbench — root and every project — material MUST NOT be hard-deleted; removing it means MOVING it into `.trash/<memo-id>/`, where `<memo-id>` is the active session's memo id (or, when none is active, `UNDEFINED-{N}`, so a discard always has a valid target). `.trash/` MUST be emptied only by a human, never automatically by a script, cleanup routine, or autonomous loop, and the irreversible recursive delete (`rm -rf`) MUST NOT be used on workbench material.",
   "scope": { "repos": [], "categories": ["workbench"], "tags": ["trash", "no-delete", "recoverability"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
     "assertions": [
       "A discard lands under `.trash/<memo-id>/`, never erased in place",
-      "The `<memo-id>` target is the active memo id, or the literal `undefined` when none is active",
+      "The `<memo-id>` target is the active memo id; without one, a new entry claims `UNDEFINED-{N}`, and existing `undefined` folders stay valid",
       "`.trash/` is emptied only by a human, never automatically",
       "No tool performs an irreversible recursive delete (`rm -rf`) on workbench material"
     ]
@@ -109,6 +121,12 @@ That a removal is always a recoverable move into `.trash/<memo-id>/`, never a ha
   "grade": "binary"
 }
 ```
+
+---
+
+## Removal Leaves Proof in the Trash
+
+A removal **MUST** leave proof in the trash of the project: the removed material itself, in recoverable form, in the folder of the memo that caused the removal. A removal that leaves no trace in the trash cannot be told apart from a loss, and leftover companion files show that something was taken outside the prescribed way. Every tool that removes material moves it, and the move is the evidence.
 
 ---
 

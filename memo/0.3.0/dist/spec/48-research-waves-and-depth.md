@@ -6,7 +6,7 @@ spec_file: "48-research-waves-and-depth.md"
 order: 48
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/48-research-waves-and-depth.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/48-research-waves-and-depth.md."
@@ -393,6 +393,12 @@ A crashed carrier must not discard a written result, so auto-retry reads the dis
   "grade": "binary"
 }
 ```
+
+---
+
+## A Measurement Over Older Memos States Its Span
+
+A measurement over older memos **MUST** state its span — from which memo to which memo, and how many — and say that the stock it measured is an older one. The stock has changed since: earlier memos were written when parts of the system were not yet built, so a number taken over them describes a different system than the current one. Without the span and the statement that the stock is older, the number cannot be read. The user, in the role of the reader, accepts such a measurement only with both statements.
 
 ---
 

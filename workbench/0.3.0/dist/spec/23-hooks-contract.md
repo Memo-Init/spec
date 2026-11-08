@@ -6,7 +6,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/23-hooks-contract.md."
@@ -246,7 +246,29 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ---
 
+## The Hot Path — No Hook Opens a Database
+
+This section exists because a hook runs under a deadline the session waits on, and a database open does not fit that deadline. A hook on a session event — before or after a tool call, at an agent's start or stop, at a session's start or end — **MUST NOT open a database**, not for writing and not for reading. It appends exactly one line to the session sidecar of its project, `<project>/.session/sidecar/<hook>.ndjson`, in the shape `{ hook, at, sessionId, memo, payload }`: `payload` carries the arguments the writer the hook stands in for would have taken, `at` is stamped by the hook, `memo` names the memo when the hook can resolve it and is `null` otherwise.
+
+A separate run folds the lines into the carriers: `memo session sidecar-fold` reads every hook file from its resume mark `<hook>.offset.json`, opens each memo database once, writes all lines of that memo inside one SQL bracket, freezes one commit, and moves the mark only after the commit. A line the fold cannot place (no memo, no carrier) stays in the sidecar, which is append-only and never truncated.
+
+A hook never writes into the folder of a memo and never below `.claude/`; the sidecar is the one place it writes. The rule is held in the source: every hook script on the hot path is listed in `hot-path-hooks.json` beside the scripts, and a test follows the relative imports of each one and refuses any that reaches the database adapter, the write funnel or the engine package.
+
+One hook on that list writes elsewhere, and only it: the protocol appender for tool writes outside the project root (`write-outside-root.mjs`) appends its line to `<project>/.tmp/<memo>/write-outside-root.ndjson` instead of `.session/sidecar/` — never into the folder of a memo and never into a database — because its line is for a human reader and is never folded into a carrier.
+
+Why the rule is drawn at the open and not at the write:
+
+| Measurement | Value | What it means for a hook |
+|---|---|---|
+| Opening a 593 MB memo database read-only | about 24 s | more than twice the 10 s a hook entry is granted — the hook is killed before it does anything |
+| One agent start booked into the carrier by a hook | about 27 kB per start (3 starts grew one carrier by 80,649 B) | every spawn grows the carrier, unbracketed, on the hot path |
+| Folding the same lines later, bracketed | one tree state per memo and run instead of one per row | the cost moves to a run nobody waits on |
+
+---
+
 ## Conformity Requirements
+
+- **The hot path holds:** no hook script listed in `hot-path-hooks.json` reaches a database through its imports, and each of them writes only its line to `.session/sidecar/` — the protocol appender to `.tmp/<memo>/` (see [The Hot Path — No Hook Opens a Database](#the-hot-path--no-hook-opens-a-database)).
 
 The enforcement **mechanism** is not re-normalized here — its binding rules are single-sourced to [session · enforcement](/session/enforcement/) (the hard-block on a missing predecessor, the jq-structured signal, fail-open, the kill-switch, and the policy checkpoints). The workbench-scoped blocks below bind only the **declaration side** — the policy a hook *reads* (the declared per-repository facing status and the `folder-lints.json` map, both specified in [22-config.md](/workbench/config/)). Each `statement` faces how that policy is declared, and each `check` faces the built gate's behaviour against it. Because the hook *implementation* belongs to the deferred machine-tier spec, these blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
@@ -293,6 +315,24 @@ The write-time content lint is bound by a project-local map and its honest limit
   "grade": "todo"
 }
 ```
+
+---
+
+## A Self-Description Is Measured Against the Event It Denies
+
+A self-description that denies the existence of a hook event **MUST** be measured against that event before anything is planned on it. A description which says that the protocol carries no end event, while the event can be observed to fire and to carry a reason, contradicts the measurement, and a procedure built on either reading inherits the contradiction. The measured state wins, and the self-description is corrected to it.
+
+---
+
+## A Rule Builds Only on a Measured Event
+
+A rule or a procedure **MUST** build only on an event whose existence was measured before the rule is written. The measurement carries a positive control: the same search that finds no trace of the event is shown to find a known, existing event, so that a zero means absence and not a blind search. A rule built on an unmeasured event rests on an open question.
+
+---
+
+## One File Name and One Field Name for the Command Policy
+
+The command policy **MUST** have one file name and one field name across all pages of the specification. When two chapters of the same family name the same file differently, or the field inside it, every reader reads another file, and the hook reads a third variant on disk. The page that owns the command policy sets both names, and every other page refers to that page instead of naming them again.
 
 ---
 

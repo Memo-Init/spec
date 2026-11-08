@@ -6,7 +6,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/10-root-and-projects.md."
@@ -93,6 +93,12 @@ The following categories of content **MUST** move out of `CLAUDE.md` into their 
 | Inward/outward repo routing (rule C1) | the `.workbench/` configuration ([22-config.md](/workbench/config/)) |
 
 Once a convention lives in its authoritative home, a `CLAUDE.md` adds value only as a **signpost** to it — never as a second, divergent copy. This keeps a single source for each rule and confines `CLAUDE.md` to orientation.
+
+---
+
+## The Working Tree of the State Repository Is Declared
+
+The working tree of the state repository **MUST** be declared in the specification and enforced by the tools that use it, not only stated in the source of one script. A state repository whose working tree is known only to the code that calls it can be pointed at the wrong tree, and a wrong tree turns every file outside it into a deletion. Every tool that writes to the state repository resolves the working tree from the one declaration and refuses when the tree it is given differs.
 
 ---
 

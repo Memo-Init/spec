@@ -172,6 +172,17 @@ const crossFamilyRelativeLinks = ( { content } ) => {
 }
 
 
+// A link that hardcodes a spec version in a relative path — e.g. the legacy display TEXT
+// `[../../v0.2.0/26-memo-history.md](/specification/memo-history/)` the SPEC-REQ-002 href
+// migration left behind. The crossFamilyRelativeLinks gate above only inspects the href
+// `](…)`, so a hardcoded-version LINK TEXT slips past it. Version numbers MUST NOT be
+// hardcoded in prose or links (they live in the refs data, 00-overview) — this counts any
+// `../../vX.Y.Z/` occurrence, in text or href, so a reintroduced one fails the gate.
+const hardcodedVersionLinks = ( { content } ) => {
+    return [ ...content.matchAll( /\.\.\/\.\.\/v\d+\.\d+\.\d+\//g ) ].length
+}
+
+
 // Head-token consistency (F3 / Z2-02, Z3-04): a family's spec.json namespaceToken MUST match its
 // spec-manifest.json namespaceToken. The short manifest token (MC / SE / WB) is canonical; a
 // diverging spec.json token (the legacy long form MEMO / SESSION) is a defect, because GR-codes and
@@ -237,6 +248,11 @@ const auditPage = async ( { specDirAbs, filename, family, leakOnly = false } ) =
         // link fails the gate (WI-119 / Z7-07 — mirrors the generator's fail-loud assertion).
         const crossRel = crossFamilyRelativeLinks( { content } )
         if( crossRel > 0 ) blocking.push( `LINK_FORM:${ crossRel } cross-family relative link(s)` )
+
+        // Hardcoded-version link text (the SPEC-REQ-002 companion gap): a `../../vX.Y.Z/` path in
+        // a link — text or href — hardcodes a version and MUST NOT appear. BLOCKING.
+        const hardVer = hardcodedVersionLinks( { content } )
+        if( hardVer > 0 ) blocking.push( `HARDCODED_VERSION_LINK:${ hardVer } link(s) with a hardcoded ../../vX.Y.Z/ path` )
     }
 
     const internalRefs = findInternalRefs( { content } )

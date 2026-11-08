@@ -6,7 +6,7 @@ spec_file: "17-git-workflow-and-ids.md"
 order: 17
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/17-git-workflow-and-ids.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/17-git-workflow-and-ids.md."
@@ -292,6 +292,12 @@ The unit of a pull request is the affected repo, not the memo, and no single rep
   "grade": "binary"
 }
 ```
+
+---
+
+## Work Without an Order Carries Its Own Reference
+
+Work that is done without an order, such as the repair of a gate between two orders, **MUST** carry its own reference in its commit and never borrow the reference of a neighbouring commit. A reference that two commits share makes the assignment of commit to order ambiguous. Every reference therefore points to exactly one order or to exactly one declared piece of orderless work; when no reference exists yet, one is assigned before the commit is written.
 
 ---
 

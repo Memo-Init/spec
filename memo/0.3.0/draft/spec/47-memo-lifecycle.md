@@ -12,9 +12,9 @@ The lifecycle sits **above** the phase-level state of a rollout. It is not the p
 
 ---
 
-## The Ten States
+## The Eleven States
 
-The lifecycle has exactly ten states. Their order is the natural progression of a memo; the branches (abandonment, the research end, the reopen) are the deviations from that line. The state identifiers are stable tokens — the same strings the store, the CLI, and the board use — so the vocabulary never drifts into free text again.
+The lifecycle has exactly eleven states. Their order is the natural progression of a memo; the branches (abandonment, the research end, the not-continued end, the reopen) are the deviations from that line. The state identifiers are stable tokens — the same strings the store, the CLI, and the board use — so the vocabulary never drifts into free text again.
 
 | # | State | Set when | Kind |
 |---|-------|----------|------|
@@ -28,8 +28,11 @@ The lifecycle has exactly ten states. Their order is the natural progression of 
 | 8 | `gemerged` | Stage 3 local merge up to `main` (not yet pushed) | open |
 | 9 | `abgeschlossen` | Stage 4 push after the user's authorization | **terminal** |
 | 10 | `abgebrochen` | an explicit decision to abandon, from any non-terminal state | **terminal** |
+| 11 | `nicht-weitergefuehrt` | an explicit decision not to continue a memo that was thought through, from any non-terminal state; a ground (evidence) is required | **terminal** |
 
-The **terminal** set is `{ finalisiert-research, abgeschlossen, abgebrochen }`. The **open** set is the seven non-terminal states. This is the whole answer to the user question: a memo is **open** exactly when its state is non-terminal. `finalisiert-research` counts as done because a Strategy memo ends at finalization ([05-memo-strategies.md](./05-memo-strategies.md)); `abgeschlossen` is done-and-pushed; `abgebrochen` is deliberately given up. Everything else is still open.
+The **terminal** set is `{ finalisiert-research, abgeschlossen, abgebrochen, nicht-weitergefuehrt }`. The **open** set is the seven non-terminal states. This is the whole answer to the user question: a memo is **open** exactly when its state is non-terminal. `finalisiert-research` counts as done because a Strategy memo ends at finalization ([05-memo-strategies.md](./05-memo-strategies.md)); `abgeschlossen` is done-and-pushed; `abgebrochen` is deliberately given up; `nicht-weitergefuehrt` is thought through but deliberately not carried on. Everything else is still open.
+
+**The name of the eleventh state.** The identifier follows the wording of the user, "not continued" (German: *nicht weitergeführt*), and the consistently German vocabulary of the state enum. It deviates openly from the word `deprecated`, which the user named only as a tentative example while rejecting coinages of our own; the German enum value is the choice that follows the existing vocabulary. The state requires a ground: the reason is the only thing that later explains why a well-considered memo was not carried on, so a transition into it without `evidence` is refused, as a revocation is.
 
 The split of the finalized state into `finalisiert-research` and `finalisiert-implementation` is what lets the system tell a correctly-finished research memo from an implementation memo that stalled before rollout — the distinction that the old header-plus-folder heuristic could not make and that made it flag a finished research memo as critically incomplete.
 
@@ -41,18 +44,19 @@ A move between states is legal only if the matrix permits it. An illegal move (f
 
 | From | Legal targets |
 |------|---------------|
-| `angelegt` | `in-revision`, `abgebrochen` |
-| `in-revision` | `in-revision` (a further revision), `finalisiert-research`, `finalisiert-implementation`, `abgebrochen` |
+| `angelegt` | `in-revision`, `abgebrochen`, `nicht-weitergefuehrt` |
+| `in-revision` | `in-revision` (a further revision), `finalisiert-research`, `finalisiert-implementation`, `abgebrochen`, `nicht-weitergefuehrt` |
 | `finalisiert-research` | — (only `in-revision` via reopen) |
-| `finalisiert-implementation` | `rollout`, `abgebrochen` (re-revision via reopen) |
-| `rollout` | `pausiert`, `gelandet`, `abgebrochen` |
-| `pausiert` | `rollout`, `abgebrochen` |
-| `gelandet` | `gemerged`, `abgebrochen` |
-| `gemerged` | `abgeschlossen`, `abgebrochen` |
+| `finalisiert-implementation` | `rollout`, `abgebrochen`, `nicht-weitergefuehrt` (re-revision via reopen) |
+| `rollout` | `pausiert`, `gelandet`, `abgebrochen`, `nicht-weitergefuehrt` |
+| `pausiert` | `rollout`, `abgebrochen`, `nicht-weitergefuehrt` |
+| `gelandet` | `gemerged`, `abgebrochen`, `nicht-weitergefuehrt` |
+| `gemerged` | `abgeschlossen`, `abgebrochen`, `nicht-weitergefuehrt` |
 | `abgeschlossen` | — (only `in-revision` via reopen) |
 | `abgebrochen` | — (only `in-revision` via reopen) |
+| `nicht-weitergefuehrt` | — (only `in-revision` via reopen) |
 
-Three rules govern the matrix. First, `abgebrochen` is reachable from **every** non-terminal state — a memo can be abandoned at any point before it terminates. Second, terminal states have **no** regular outgoing edges; the only way back is an explicit **reopen** (below). Third, `in-revision` self-loops, because a further revision is a legal same-state event, not a no-op.
+Three rules govern the matrix. First, `abgebrochen` and `nicht-weitergefuehrt` are reachable from **every** non-terminal state — a memo can be abandoned or deliberately not continued at any point before it terminates. Second, terminal states have **no** regular outgoing edges; the only way back is an explicit **reopen** (below). Third, `in-revision` self-loops, because a further revision is a legal same-state event, not a no-op.
 
 ### The Reopen Escape
 
@@ -68,7 +72,7 @@ The lifecycle is stored as a memo-local append-only event log at `<memoDir>/life
 { state, at, by, evidence, kind }
 ```
 
-`state` is one of the ten; `at` is the ISO timestamp; `by` names who or what set it; `evidence` is a short note (a skill name, a gate verdict); `kind` is `transition` or `reopen`. The current state is **re-derived from the log on every read** — the last event wins. Nothing is ever mutated in place, and a second event is a second line, never a rewrite. A memo with no event yet derives to a null state (an explicit "no state established"), never a guessed one.
+`state` is one of the eleven; `at` is the ISO timestamp; `by` names who or what set it; `evidence` is a short note (a skill name, a gate verdict); `kind` is `transition` or `reopen`. The current state is **re-derived from the log on every read** — the last event wins. Nothing is ever mutated in place, and a second event is a second line, never a rewrite. A memo with no event yet derives to a null state (an explicit "no state established"), never a guessed one.
 
 There is exactly **one write path** for the machine state: the lifecycle-set CLI leaf. The enum guard and the transition matrix live on that write path, so an illegal or misspelled state cannot enter the log. What ends is the practice of treating a revision's Status header as the *authoritative* lifecycle marker and flipping it in place after the fact — the pattern that let the header say one thing while a marker said another. The revision's human-readable `Status` field does not disappear: it remains the document's own status line, authored as part of the revision it belongs to (a finalization revision carries `Finalisiert`). The two are coherent by construction — the ledger is the machine truth, the header is the reader-facing status — because they are set together when the revision is written, not patched onto an older file later.
 
@@ -102,6 +106,7 @@ The lifecycle must not add a hand-step. Every skill that already writes an artif
 | Stage 3 local merge up to `main` | `gemerged` |
 | the push, after the user authorizes it | `abgeschlossen` |
 | an explicit decision to give up | `abgebrochen` |
+| an explicit decision not to continue, with a ground | `nicht-weitergefuehrt` |
 
 The finalize transition adds a machine-authoritative record of the finalized fact, so it no longer rests on a hand-flipped header alone — the step that was demonstrably skipped. The finalization revision still carries its human-readable `Finalisiert` status header; the lifecycle event is set alongside it, and the two agree. The type branch (`finalisiert-research` versus `finalisiert-implementation`) follows the memo type, so the research end and the pre-rollout state are distinguished automatically.
 
@@ -121,7 +126,7 @@ The hard/warn split is deliberate and follows the gate discipline of the rest of
 
 ## Backfill
 
-The store starts empty, so the existing memos need an initial state derived from their pre-store signals. The migration derives a best-effort state per memo through the same single write path — never a hand-written log — under one rule: **no silent guessing**. A memo whose signals are known to contradict, or whose completion cannot be told from the memo's own data (a rolled-out memo whose push lives only in git history), is proposed as **undetermined** and left for a human decision, not written. The migration is idempotent and offers a dry run that writes nothing. The undetermined marker is not one of the ten states — it is a rendered "needs a decision" label, never appended to a log.
+The store starts empty, so the existing memos need an initial state derived from their pre-store signals. The migration derives a best-effort state per memo through the same single write path — never a hand-written log — under one rule: **no silent guessing**. A memo whose signals are known to contradict, or whose completion cannot be told from the memo's own data (a rolled-out memo whose push lives only in git history), is proposed as **undetermined** and left for a human decision, not written. The migration is idempotent and offers a dry run that writes nothing. The undetermined marker is not one of the eleven states — it is a rendered "needs a decision" label, never appended to a log.
 
 ---
 

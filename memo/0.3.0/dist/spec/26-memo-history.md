@@ -6,7 +6,7 @@ spec_file: "26-memo-history.md"
 order: 26
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/26-memo-history.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/26-memo-history.md."
@@ -85,6 +85,12 @@ The chronicle is not the project wiki, and the two MUST NOT be conflated.
 - The **chronicle** is a *chronological, narrated record of breakpoints*: it answers "when did the project decide X, and has that decision been turned since?" It is organized by time and reflects the sequence of change.
 
 A topic in the wiki tells you the current answer; the chronicle tells you how that answer came to be and whether an older form of it is still valid. The two are complementary: the wiki is consulted for the present, the chronicle for the temporal validity of the past. Each refers to the other rather than duplicating it — the wiki does not carry the breakpoint timeline, and the chronicle does not carry consolidated topic pages.
+
+---
+
+## A Superseded Entry Has a Correction Path
+
+A history entry that a later event has superseded **MUST** have a write path through which it can be corrected or withdrawn. A store that allows one entry per memo and offers no correction path leaves a superseded entry asserting the opposite of what happened, permanently. Marking an entry as invalid is not enough when no command can write the mark: the correction is an appended entry that names the entry it revokes, so the original stays readable and the reader sees which of the two holds.
 
 ---
 

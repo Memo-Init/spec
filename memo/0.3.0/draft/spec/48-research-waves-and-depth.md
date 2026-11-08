@@ -389,6 +389,12 @@ A crashed carrier must not discard a written result, so auto-retry reads the dis
 
 ---
 
+## A Measurement Over Older Memos States Its Span
+
+A measurement over older memos **MUST** state its span — from which memo to which memo, and how many — and say that the stock it measured is an older one. The stock has changed since: earlier memos were written when parts of the system were not yet built, so a number taken over them describes a different system than the current one. Without the span and the statement that the stock is older, the number cannot be read. The user, in the role of the reader, accepts such a measurement only with both statements.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

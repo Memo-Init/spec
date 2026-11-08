@@ -6,7 +6,7 @@ spec_file: "11-spec-authority.md"
 order: 11
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "meta-spec/0.3.0/draft/spec/11-spec-authority.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.3.0/draft/spec/11-spec-authority.md."
@@ -36,6 +36,13 @@ This is also where the spec's reach ends cleanly. A specification has authority 
 A spec is written forward and then kept current, and those two motions are the same forward/backward dynamic specified elsewhere. The forward creation (a goal splitting new water) and the trailing maintenance (the wake that must be kept in sync), together with the hybrid risk that appears when too many changes are pushed at once and both the old and the new path are kept "just in case", are specified in the maintenance chapter ([/specification/maintenance/](/specification/maintenance/)) and referenced, not restated, here. The point for this chapter is only that a specification is subject to that same dynamic: its authority does not exempt it from maintenance, and an unmaintained spec drifts from the system exactly as any other delivered unit does.
 
 ---
+
+## A Gate Runs Against a Real Spec Root
+
+A gate that reads the specification **MUST** run against a real spec root and fail loudly when the root it is given does not exist in the form it expects. A gate whose preloader looks for a hardwired version and path form crashes on every real root and has had no effect for an unknown time. Before such a root is corrected, every caller of the gate is checked, because a caller that writes into many files on the strength of the root would then start writing on a mass scale.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

@@ -24,6 +24,12 @@
         "specDir": "meta-spec/0.3.0/draft/spec",
         "url": "https://memo-init.github.io/spec/overview/"
     },
+    "governance": {
+        "currentVersion": "0.1.0",
+        "recommendedRelease": "0.1.0",
+        "specDir": "governance/0.1.0/draft/spec",
+        "url": "https://memo-init.github.io/governance/overview/"
+    },
     "docs": {
         "canonical": "https://memo-init.github.io",
         "entryPoints": {

@@ -6,7 +6,7 @@
 | Depends on | [10-proactive-research.md](./10-proactive-research.md) |
 | Related | [12-rollout.md](./12-rollout.md), [09-contamination-context-handover.md](./09-contamination-context-handover.md), [16-git-security-versioning.md](./16-git-security-versioning.md), [23-requirements.md](./23-requirements.md), [00-overview.md](./00-overview.md) |
 
-Quality is enforced by gates, and finalization is the readiness gate between strategy and implementation. This chapter defines the five quality skills, the six evidence levels, the finalization gate set (grouped into Block A/B/C, including the completeness gate that guards the revision-to-finalization transition and the decision-extractor gate that feeds the rollout-handover document), the binary verdict logic, and how requirement-derived checks bind as finalization gates.
+Quality is enforced by gates, and finalization is the readiness gate between strategy and implementation. This chapter defines the five quality skills, the eight evidence levels, the finalization gate set (grouped into Block A/B/C, including the completeness gate that guards the revision-to-finalization transition and the decision-extractor gate that feeds the rollout-handover document), the binary verdict logic, and how requirement-derived checks bind as finalization gates.
 
 ---
 
@@ -24,7 +24,7 @@ Five quality skills back the gates. Four run autonomously over the memo body; th
 
 | Quality skill | Checks |
 |---------------|--------|
-| `memo-evidence` | Tags every substantive statement by evidence level (six levels, below); derives research needs |
+| `memo-evidence` | Tags every substantive statement by evidence level (eight levels, below); derives research needs |
 | `memo-balance` | Detects over-engineering (+2) and under-engineering (−2) per chapter |
 | `memo-coherence` | Finds gaps, contradictions, redundancies, and logical issues across chapters |
 | `memo-references` | Verifies every file path, line number, and code snippet; fixes broken references |
@@ -34,9 +34,9 @@ The four memo-* quality skills run **autonomously** — they MUST NOT ask follow
 
 ---
 
-## The Six Evidence Levels
+## The Eight Evidence Levels
 
-`memo-evidence` assigns exactly one tag per substantive statement. The six levels are ordered from strongest to weakest evidence:
+`memo-evidence` assigns exactly one tag per substantive statement. The eight levels form a closed list:
 
 | Tag | Level | Meaning | Requires |
 |-----|-------|---------|----------|
@@ -46,12 +46,48 @@ The four memo-* quality skills run **autonomously** — they MUST NOT ask follow
 | `[DERIVED]` | Derived | Logical conclusion from verified facts | A clear logical chain from verified premises |
 | `[CONJECTURE]` | Conjecture | Hypothesis without evidence | Nothing — the default for unsubstantiated claims |
 | `[UNKNOWN]` | Unknown | No data available, cannot even hypothesize | An acknowledged knowledge gap |
+| `[EXPECTATION]` | Expectation | A statement about a result made before the measurement that settles it | The measurement that will settle it, named |
+| `[OPINION]` | Opinion | A judgement or recommendation, not a claim about the present state | The author named (second position) |
 
-`memo-evidence` produces a classification summary (count and share per level) and a research-needs section deriving how each `[ASSUMPTION]`, `[CONJECTURE]`, and `[UNKNOWN]` could be verified. The three handover zones (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)) reuse these tags.
+The first six are ordered from strongest to weakest evidence; the two added levels stand outside that order, because they make no claim about the present state.
 
-**Evidence is the backing — it is NOT the claim, and it is NOT the source.** A level tag records *how strongly* a statement is supported and *what would confirm it*. It is **NOT** the statement it sits on, and it is **NOT** the document, link, or measurement that statement cites; those are what the backing points *at*. The distinction is load-bearing rather than pedantic, because the three weak levels drive the research-needs section: name a claim's backing wrongly and the derived research is aimed at the wrong thing.
+`memo-evidence` produces a classification summary (count and share per level) and a research-needs section deriving how each `[ASSUMPTION]`, `[CONJECTURE]`, `[UNKNOWN]` and `[EXPECTATION]` could be verified. An `[OPINION]` never creates a research need, and neither does a statement with origin `User` (see [The Origin Axis](#the-origin-axis)). A weak-level statement whose check effort is cheap is checked before it is listed as a research need; the check effort is defined in the labelling duty of the meta-specification ([Controlled Language](/spec/controlled-language/)). The three handover zones (see [09-contamination-context-handover.md](./09-contamination-context-handover.md)) reuse these tags.
+
+**Evidence is the backing — it is NOT the claim, and it is NOT the source.** A level tag records *how strongly* a statement is supported and *what would confirm it*. It is **NOT** the statement it sits on, and it is **NOT** the document, link, or measurement that statement cites; those are what the backing points *at*. The distinction is load-bearing rather than pedantic, because the weak levels drive the research-needs section: name a claim's backing wrongly and the derived research is aimed at the wrong thing.
 
 The machine token for this concept is the field name `evidence`. A rendered display label in the project's working language is that same field shown to a reader — **NOT** a second concept, and **NOT** a language violation (see [19-internal-vs-external-communication.md](./19-internal-vs-external-communication.md), rows *Machine tokens* and *Rendered display text*).
+
+---
+
+## The Origin Axis
+
+Origin is an axis of its own and is never folded into the level list. `capture` says how a statement came into being (`spoken`, `written`, `measured`, `derived`, `cited`, `pasted` — the closed list of the evidence carrier in [51-memo-database.md](./51-memo-database.md)), `author` says who contributed it (`user`, `agent`, `tool`).
+
+A level that glues an origin to a grade ("user fact", "user opinion") **MUST NOT** be added to the level list — not as a seventh value, not as an eighth. A user fact is `author = user` with `grade = fact`; a user opinion is `author = user` with `grade = opinion` (the level `[OPINION]` exists since the list became eight).
+
+Exactly one origin value carries a decision: `author = user`. Such a statement creates **no research need**, is not re-measured, and is not refuted by a measurement of the author's own. Every other origin leaves the research-need rule of the level untouched.
+
+On the Markdown surface the field `author` appears as the second position beside the grade (see the labelling duty in [Controlled Language](/spec/controlled-language/) of the meta-specification): `[ASSUMPTION]`-grade text written by the user carries the German label of that level followed by `[Herkunft: User]` in a German memo. The grade stays the first bracket, and the form rules read only that one.
+
+---
+
+## Changing the Closed Level List
+
+The level list is a schema, not a writing habit. A change follows five steps, in this order:
+
+1. **Decide the axis.** Origin is not a grade; a new value belongs to the level list only when it states how certain a statement is.
+2. **Inventory every carrier and write the path down** — measured at the head that is changed, never copied from an earlier count.
+3. **Change the normative carriers** — the lint constant, the specification text, the skill — and pull every copy along.
+4. **Union the frozen word list `scripts/enum-language-baseline.json` by hand.** `--write-baseline` **MUST NOT** be used, because a re-freeze drops frozen legacy values.
+5. **Use the new level in text** — only after step 4.
+
+The carrier roles are: **normative** (the lint constant, the specification text, the skill), **copy** (a second list in code, a neighbouring skill, an agent file, a viewer), **machine-token spelling** (the English token of the evidence carrier and the places that list it), **partial carrier** (a subset, such as the research-need levels — not a closed list) and **consumer without a list of its own** (a module that imports the list). A copy that does not move along produces two valid lists; step 5 waits for every carrier.
+
+---
+
+## The Transition Rule for a New Level
+
+Until step 4 of the change path is done, a new level is **specified and not used**. Step 4 is done for a text only when the command-line tool that lints that text carries the extended list; for `.memo/` texts that is the globally linked `memo` tool, i.e. after the core change is merged into `main`. Until then a statement that the new level would carry is written with an existing level — typically `[ASSUMPTION]` — plus an explicit origin note in the sentence, the form a revision uses for a user statement that was not measured on the user's instruction. Using the level earlier lets the revision fail its own gate (FR-03 is an error).
 
 ---
 
@@ -74,7 +110,7 @@ The machine token for this concept is the field name `evidence`. A rendered disp
 | Third-party software veto (token-tracking) | PASS / WARN | Forbidden token-tracking packages appear only in an anti-pattern context, never as a positive recommendation. |
 | Rollout entry points | PASS / WARN / FAIL | The `## Rollout Entry Points` section exists with at least one concrete (non-placeholder) numbered path entry; filesystem existence is a WARN, not a FAIL, because some paths are created by the rollout itself. |
 | Completeness across revisions | PASS / FAIL | Every information item and topic present in any preceding revision (Rev 1..N) is preserved in the finalized revision; no topic is silently lost during the revision-to-finalization transition. See [The Completeness Gate](#the-completeness-gate). |
-| Topic-to-block coverage (`memo block coverage`) | PASS / FAIL | Every registered topic is bound to at least one block via that block's `topicIds`; the union of all blocks' `topicIds` leaves no registered topic uncovered. An uncovered topic is a **HARD-FAIL**, not a warning. See [The Block-Coverage Gate](#the-block-coverage-gate). |
+| Topic-to-block coverage (`memo block coverage`) | PASS / FAIL | Every registered topic is bound to at least one block via that block's `topicIds`; the union of all blocks' `topicIds` leaves no registered topic uncovered. An uncovered topic is a **HARD-FAIL**, not a warning. This is the **only hard precondition for planning**: below full coverage the planner cuts from an incomplete set, so the cut is not merely less precise but non-deterministic. The coverage also spans the **topic-to-work-item edge** — a topic without a work item is invisible to the cut in the same way a topic without a block is. Every other maturity measure (evidence binding, chapter contract) lowers quality without blocking. See [The Block-Coverage Gate](#the-block-coverage-gate) and [52-field-contract.md](./52-field-contract.md). |
 | `git-security` | PASS / FAIL | Real run over the memo body and the planned artifacts; secrets, absolute paths, mock credentials, `.env` files, or personal data make it FAIL. |
 | `repo-readme` (advisory) | PASS / WARN | Affected repos carry a README; missing README is a WARN here (hard enforcement lives in the git-push gate). |
 
@@ -131,6 +167,95 @@ This gate is the read/verify counterpart of the topic-store write side ([06-memo
 
 ---
 
+## The Maturity Matrix
+
+The block-coverage gate answers one question. Whether a memo is ready to be planned is a wider one, and the maturity matrix answers it: **the matrix is the gate before planning.** Readiness is defined against the consumer of the memo — the planner, who cuts work orders from its topics — and not against the form of the document. A form metric that asks whether an existing chapter carries its sections counts *forward*; it cannot see a topic that has no chapter at all and still reports the contract as fulfilled. The matrix counts each edge from the side of the object that must be carried, and holds the edges that can be measured today beside each other:
+
+| Edge | Measured by | Threshold |
+|------|-------------|-----------|
+| Topic carries block | `memo block coverage` | hard, 100 % |
+| Topic carries work item | `memo topic item-coverage` | soft |
+| Block carries chapter row | `block_chapter` per block | soft |
+| Work item carries provenance | `work_item.provenance` | soft |
+| Chapter carries user mandate | `memo revision score`, K7 | soft |
+| Statement carries evidence | `memo revision score`, K3 | soft |
+
+Below 100 % on the hard edge the planner MUST NOT cut; soft edges lower the quality and never block.
+
+The hard edge is hard because a planner that cuts from an incomplete topic set produces a cut nobody can reproduce. A soft edge is held against the same 100 %; below it, the edge is a finding that lowers the quality of the memo and is reported with its figure and its comparison set — it never stops the planner. This holds for the evidence binding degree too, which may stand far below the other edges and stays a figure, not a gate.
+
+The deterministic form is the `memo block maturity` CLI leaf. It reports one row per edge — the members that carry the edge, the comparison set, the share, the kind (hard or soft), the threshold and the verdict — and exits non-zero exactly when the hard edge is below 100 %. The verdict is decided on the counts, never on a rounded share. An edge whose comparison set is empty has no share: it is reported as unmeasured, never as 0 % and never as 100 %, and a hard edge without a comparison set is not a pass.
+
+**Thresholds checked against real cuts.** The thresholds were held against the first five real phase cuts of a memo that was planned and built under them: 22 work orders carrying 31, 54, 98, 39 and 168 work items, 390 in total. For every work item of a cut, three edges were counted: its topic carries a block (390 of 390), that block carries a chapter row (390 of 390), and the work item carries a provenance (390 of 390). Every cut stood at 100 % on all three edges, so the hard threshold of 100 % and the two soft thresholds are confirmed: they are attainable on real cuts and would have blocked none of them. Two limits belong beside the figure. The count was taken on the stock as it stands after the cuts, not at the moment of each cut, so an edge repaired afterwards counts as carried. And a stock that is full everywhere does not yet show what the thresholds separate; the first gap will become visible at a later cut.
+
+---
+
+## The Block Metric Tree
+
+A memo is measured per block, not per memo: a memo-wide figure lets one good block hide a weak one. The block metric tree is a list of rules, each a yes/no question about a block or about the memo as a whole, and every block is counted into its own fulfilment quota — the number of counted rules it holds out of the number of counted rules. **There is no sum over blocks**: every block stands with its own quota, and a reader who wants a memo figure has to say which blocks he folds together.
+
+| Rule | Level | Question | Judged by |
+|------|-------|----------|-----------|
+| M-R1 | memo | No work item without a topic | the living work items |
+| M-R2 | memo | No topic without a block | the registered topics |
+| M-R3 | block | No block without a topic | the registered topics that name the block |
+| M-R4 | block | At least one verbatim quote in the user mandate | the quote pattern of the section register |
+| M-R5 | block | The assessment is present | the heading with a non-empty body |
+| M-R6 | block | The conclusion is present | the heading with a non-empty body |
+| M-R7 | block | The title is searchable: not the identifier, no leading chapter number, no category tag | the title rules of the field-correctness gate |
+| M-R8 | block | The quote carries its filter status | pending — no column carries the filter status yet |
+
+Each rule is judged by the instrument that already owns the question; the tree re-implements none of them. The memo-level rules each name their own comparison set and are reported beside the block rows, never folded into them.
+
+**The tree grows by appending.** The rules are held as data, not as code paths. A rule that becomes checkable is appended; it lowers measured values, and both comparison sets are named. A rule that has no carrier yet is listed as pending, with its reason, and is not counted — a rule that could not be measured never counts as held.
+
+The deterministic form is the `memo block metric-tree` CLI leaf: one row per block with its chapter, every rule and its verdict, the fulfilled count, the counted rules and the quota.
+
+---
+
+## The Chapter Metric Set and the Acceptance Threshold
+
+Beside the block metric tree, every numbered chapter of a revision is graded on a fixed set of eight metrics. Three hold the document against itself, four hold it against the database of the memo — the connections the chapter claims — and the eighth reports an identifier standing where a title belongs.
+
+| Metric | Measures | Held against |
+|--------|----------|--------------|
+| M1 | The chapter is valid under the chapter rule: a user mandate with a verbatim quote and its derivation, placed before every other contract section except the context | the chapter validity rule and the section register |
+| M2 | No quote of the user mandate stands away from where its reference points | the quote-reference probe |
+| M3 | No mandatory section of the chapter contract is missing | the chapter contract |
+| M4 | Every topic identifier the chapter names exists | the `topic` table |
+| M5 | Every work-item identifier the chapter names exists | the `work_item` table |
+| M6 | Every named topic that exists carries at least one living work item | the `work_item` table (`topic`, `deregistration`) |
+| M7 | A block is bound to the chapter | the `block_chapter` table |
+| M8 | The bound block carries a title that is neither empty nor its own identifier | the `block_chapter` and `block` tables |
+
+**Three grades, one threshold.** A chapter is `invalid` when M1, M2 or M3 is not met; it is `complete` when all eight are met; otherwise it is `accepted`. **The verdict of a revision is its worst chapter.** **A metric that could not be measured never counts as met**: without the database M4 to M8 are not measured, and the chapter can then reach `accepted` at best, never `complete`.
+
+**An identifier as a title is a finding, not a display state.** Where the title of a block equals its identifier, the title counts as unfilled and is reported — except when the block is demonstrably unbound to any chapter; then the identifier is its honest name and no finding. M8 judges the bound block; the unbound ones are listed beside the chapters and are not counted against them.
+
+The metric set is the stage `chapter-metrics` of `memo blindspot run`. M1 and M3 come from the chapter validity rule, run in the same process; M2 comes from the quote-reference probe, run as a child process; M4 to M8 are read from the memo database through a read-only handle. A stage whose reference probe gives no answer has not run and has no basis.
+
+---
+
+## The Two Gates
+
+Two gates stand on the measured blocks. They answer different questions and are kept apart.
+
+**The conversation threshold** answers *may a question about this block be asked?* Its verdict is binary per block: the block is open when every mandatory heading of the chapter contract stands in its chapter with a non-empty body, and closed otherwise. There is no percentage — the question has two answers. A question about a closed block is not asked; it is recorded in the preface of the revision as a held-back question, with the note that the content is complete but the form is not, and the sections that are missing. A block whose chapter does not stand in the revision is closed with its reason. The deterministic form is the `memo block conversation-gate` CLI leaf.
+
+**The planner gate** answers *may this memo be planned and finalized?* It holds the fulfilment quota of every block over the rules of the block metric tree against **80**: a single block below 80 blocks the start of the rollout and the finalization. The verdict is decided on the counts, never on a rounded quota. Beside the gate, the form target rises with the revision number — **30** from the first revision, **50** from the second, **70** from the third and **80** from the fourth revision on; from the fourth revision the target stays 80. The form target says how far a revision is expected to have come; the gate says whether planning may begin. The deterministic form is the `memo block planner-gate` CLI leaf: exit 0 when every block stands at 80 or above, exit 1 when a block is below, exit 3 when there is nothing to judge.
+
+### Equal Care for Every Block
+
+Both gates judge one block at a time, and the care they presuppose is owed to every block alike. Every block MUST be worked with the same care, in every revision; an omission does not lapse. A block does not become finished because other blocks are finished, and it does not become less due because an earlier revision passed it over.
+
+No figure over all blocks MAY be read as fulfilment; every block carries its own verdict. The form metric behind `memo revision score` already refuses an overall grade, and for a measured reason: eight green structural values outvoted a collapse of the evidence, so that a weaker revision looked better than a stronger one. An average hides the one empty block; the rule lifts that refusal from a property of one tool to an obligation of every reader.
+
+Blocks left unworked in an earlier revision MUST be worked before new blocks are raised; the order of work MUST NOT follow ease. A revision that raises new blocks while an old one stays unworked does not meet the rule, however high its figures climb. The memo viewer therefore lists, per revision, the blocks that are closed and since which revision they have stood closed without a break — a list that only grows shorter when those blocks are worked.
+
+Before this rule was written, the specification carried no rule of this kind: a keyword search for five terms over 1,782 Markdown files found none.
+
+---
+
 ## Requirement-Derived Gates
 
 Requirement-derived checks bind as finalization gates: a requirement **MAY** declare its own quality gate, which is then checked at finalization alongside the standard gates, letting a project bind a reproducible, data-backed constraint to finalization instead of leaving it as prose. The requirement model — scoping, the entry schema, and how a requirement names a check — is defined in its own chapter: see [Requirements](./23-requirements.md).
@@ -169,7 +294,7 @@ The review names the single biggest strength and the single biggest weakness, re
 
 ### Evidence — the level tags, the inline format, and the language check
 
-`memo-evidence` assigns exactly one of the six evidence tags (the `[FACT]` … `[UNKNOWN]` set defined above) to every substantive statement. The tag is inserted **inline** at the start of the statement, in the form `[TAG] original statement text`; headings are not tagged, only content statements. From the tagged body the skill derives two artifacts: a classification summary (count and share per level) and a research-needs section that, for each `[ASSUMPTION]`, `[CONJECTURE]`, and `[UNKNOWN]`, names how the claim could be verified or what data would confirm it. The skill runs autonomously: the default disposition is to accept an `[ASSUMPTION]` as a working hypothesis and to keep a `[CONJECTURE]` while flagging it in research needs; only critical unverified items are surfaced.
+`memo-evidence` assigns exactly one of the eight evidence tags (the `[FACT]` … `[OPINION]` set defined above) to every substantive statement. The tag is inserted **inline** at the start of the statement, in the form `[TAG] original statement text`; headings are not tagged, only content statements. From the tagged body the skill derives two artifacts: a classification summary (count and share per level) and a research-needs section that, for each `[ASSUMPTION]`, `[CONJECTURE]`, and `[UNKNOWN]`, names how the claim could be verified or what data would confirm it (likewise for each `[EXPECTATION]`: the measurement that will settle it). The skill runs autonomously: the default disposition is to accept an `[ASSUMPTION]` as a working hypothesis and to keep a `[CONJECTURE]` while flagging it in research needs; only critical unverified items are surfaced.
 
 This skill also carries the **one-language-per-artefact** consistency check. A single artifact stays in one language and does not mix: code and code comments are English, the memo body is written in its memo language throughout. A statement that mixes two languages inside one artifact is a consistency finding — the surrounding language is the reference, and the off-language fragment is corrected toward it.
 

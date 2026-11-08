@@ -44,7 +44,7 @@ Each entry carries exactly three fields, and no more:
 | Field | Contains | Language |
 |---|---|---|
 | `table` | The store table written into. | English — a machine token. |
-| `verb` | The **complete** invocation that performs the write, in the form `memo <group> <verb>`. | English — a machine token. |
+| `verb` | The **complete** invocation that triggers the write, in the form `memo <group> <verb>`. Where a flat record and its projected table are two steps, this is the verb of the procedure, not necessarily the call that lands the row (see below). | English — a machine token. |
 | `when` | The occasion on which the write happens, phrased for a human reader. | German display text. |
 
 The value of `verb` is the whole invocation, never a lone token: an entry reads `memo research register`, not `register` and not some invented store-level operation. Naming the full call is what keeps the entry portable — a collector command still names the same obligation, where a bare token would leave the reader guessing which group it belonged to.
@@ -60,6 +60,12 @@ metadata:
         verb: memo research add-file
         when: je abgelegtem Payload
 ```
+
+**A verb may trigger a write it does not itself land, and the example above is exactly that case.** Several stores write a **flat record** first and project it into its **table** in a second, later step: `memo research register` writes the research record, and the row in `research` arrives with `memo revision project`; `memo chronic add` writes the chronicle file, and the row in `chronicle_entry` arrives with `memo chronic ingest`. The entry names the table together with the verb of the **procedure** that obliges it — the verb a reader would run — because that is the obligation worth declaring. Which internal call lands the row is an implementation detail and moves; the procedure does not.
+
+This paragraph replaces a narrower wording of the `verb` field, "the complete invocation that *performs* the write", which the corpus could not satisfy and which this page's own example contradicted. Measured over the skill corpus, **9 of 85** declared lines name a verb that writes a file or triggers a projection rather than landing the row itself: three times `memo chronic add` → `chronicle_entry` (in `memo-chronic-add`, `memo-chronic-build` and `memo-rollout-execute`), and six times in `memo-revision-generate` — `memo research register` → `research` and `research_entry`, `memo research link` → `research_topics` and `research_entry_work_item`, `memo research add-file` → `research_files` and `research_entry_file`. **Two of those nine are the worked example above**, which offers `memo research register` → `research` and `memo research add-file` → `research_files` as the model entries: the rule forbade what its own example prescribed. The gate sides with the example, not with the old rule — `memo ledger check` measures every line on both sides, disk first and table second, and reports a pending projection as `stale`, which is expressly **not** red and carries the catch-up command.
+
+The boundary of the same rule is what keeps the declaration worth making: an entry whose verb reaches the table on **no** path, neither directly nor through a projection, is still false. That is the claim the store never receives, and catching it is why the field exists.
 
 The language break in `when` is deliberate and is **not** a Denglish violation. A field name and the text displayed beneath it are two artifacts, and the language matrix expressly permits German display text above an English field. Saying so on this page matters: a reader who meets `when` without this paragraph takes the German for a defect and "corrects" it into English, erasing the distinction the matrix draws.
 
@@ -179,6 +185,20 @@ This reframes spec-lag from a failure to hide into a signal to act on. The skill
 The classification chapter ([14-agents-skills-tasks.md](./14-agents-skills-tasks.md)) decides *what a skill is* against an agent and a task; this chapter governs *how good a skill is*. The two do not overlap, and one consequence of the boundary must be stated honestly: **not every skill belongs to the process specification at all.**
 
 Some skills encode a coding standard, a documentation style, or an external/domain procedure that this specification deliberately does not own. Forcing such a skill to name a governing chapter would invent a mapping that is not real. These skills carry `primary: null` and a `scope` marker that records the reason — they are *out of process scope*, not *missing a mapping*. The distinction matters: a `null` primary with a scope marker is a correct, complete declaration, whereas a `null` primary with no explanation is an unfinished one. Naming the out-of-scope skills as a legitimate category keeps the coverage gate honest — it measures the skills the specification actually governs, and openly excuses the ones it does not, rather than pretending universal coverage that was never true.
+
+---
+
+## Expectability and the Weakest Skill
+
+Every skill keeps its mandatory information in predictable places, so a reader who has understood one skill knows where to look in the next. The mandatory places are the fields of the frontmatter contract above, read at their fixed paths — `name` equal to the skill's folder name, `description`, `metadata.memo.category`, `metadata.memo.specs.primary`, `metadata.memo.specs.all` and `metadata.memo.visibility` — and a level-one title as the first heading of the body. Expectability is measured over the whole stock of skills, never over a sample, and the measurement names the size of the stock it compared.
+
+The strength of the skill system is the score of its **weakest** skill, not the mean of all skills. A system that works as a whole stands or falls with the skill an agent reads at the wrong moment; an average hides exactly that skill. A measurement of expectability therefore reports its minimum and names the skill that holds it.
+
+---
+
+## Deviation From the Norm
+
+A skill **MAY** deviate from the norm of this chapter: the deviation is allowed, but it is not aimed for. A deviation **MUST** be documented in the skill itself, as `metadata.memo.normDeviation` with the place it deviates from and the reason, so the measurement can tell a documented exception from a defect. An undocumented deviation is a defect. Using the documented exception to evade the norm rather than to meet a real need is an attack on the system and is treated as a defect, not as an exception.
 
 ---
 

@@ -1,0 +1,35 @@
+{
+    "schemaVersion": "spec/1.0.0",
+    "slug": "governance",
+    "title": "Governance Specification",
+    "namespaceToken": "GV",
+    "currentVersion": "0.1.0",
+    "version": "0.1.0",
+    "specDir": "governance/0.1.0/draft/spec",
+    "prefix": "governance/",
+    "sopAnchor": "00-overview",
+    "docEntry": "/governance/overview/",
+    "relatedRefs": [
+        "00-overview"
+    ],
+    "edges": [],
+    "sidebarMeta": {
+        "order": [
+            "introduction",
+            "permits",
+            "roles",
+            "enforcement",
+            "spirit"
+        ],
+        "labels": {
+            "introduction": "Introduction",
+            "permits": "Permits",
+            "roles": "Roles",
+            "enforcement": "Enforcement",
+            "spirit": "Spirit"
+        }
+    },
+    "generated": {
+        "specId": "governance@0.1.0:5b86619"
+    }
+}

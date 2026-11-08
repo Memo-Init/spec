@@ -42,6 +42,15 @@ The ID addresses three reference levels:
 
 The 3-digit memo number is the `{NNN}` segment; an old `P{N}` phase becomes `M{NNN}-{PP}` with a leading zero; an old `PRD-{NNN}` becomes the full `M{NNN}-{PP}-{RR}`. Addressing work by ID rather than by absolute path also reduces path exposure (see [16-git-security-versioning.md](./16-git-security-versioning.md)).
 
+### One Spelling, Including in the Database
+
+The memo identifier has one spelling everywhere, and the database is no exception: `M` followed by the three-digit memo number (`M084`). The form is not written down a second time anywhere; it is **derived from the identifier inventory**, where the memo identifier stands as one row with its prefix and its digit width.
+
+- **The write funnel writes only the canonical form.** Every projected insert passes one funnel, and the funnel stores `M{NNN}` in every `memo_id` column, whatever spelling the caller hands in. A value that carries no memo digits is refused there, never written as it came.
+- **Every read site resolves by digits.** A read of a memo-scoped row matches both the canonical form and the bare digits, and every comparison of two memo identifiers compares their digits. Rows written before the funnel canonicalised carry the bare digits and stay readable — the bridge for the existing stock.
+- **Every memo-filtered delete resolves by digits.** A reset of a memo's rows finds the spellings that stand on the table and clears each one that names the same memo, and only those.
+- **A digitless identifier is refused** at the funnel, at the delete and at every helper that derives the spelling: it names no memo, and two such values never compare equal.
+
 ## Tables and Generated Data
 
 Repetition in a memo's content has two thresholds, and crossing each one changes how the content is authored. The thresholds are deliberate, low, and meant to be applied without agonizing over the exact count.
@@ -286,6 +295,10 @@ Finally, the way a requirement statement itself is worded is checkable — the p
   "grade": "binary"
 }
 ```
+
+## A Verb Does What Its Name Promises
+
+A verb **MUST** do what its name promises. A verb named to attach or append that replaces the whole list instead loses the earlier entries silently, on exactly the path that carries the evidence. Where a verb has to replace, its name says so and it warns before it overwrites; where its name promises appending, it appends and leaves every existing entry in place.
 
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->

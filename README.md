@@ -1,147 +1,60 @@
-<!-- TODO on publication: swap the static badges for a live generate.yml status badge once the repo has a remote -->
-![Status: v0.1.0 Draft](https://img.shields.io/badge/Status-v0.1.0%20Draft-orange.svg) ![Conformance: RFC 2119](https://img.shields.io/badge/Conformance-RFC%202119-blue.svg) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+# memo-init spec workshop — private authoring home
 
-# memo-init / spec
+This is the **project-local, private authoring home** for the memo-init specification (Memo 064).
+It is the WORKBENCH-sphere counterpart of the public promotion target `repos/spec`: the five spec
+namespaces are developed here and promoted (copied) to the public container once ready. Modeled on
+`projects/flowmcp/spec`.
 
-The **memo-init specification** — an inductive, RFC-style description of the
-memo-system (memo-driven, agentic software engineering) as four sibling families:
-**memo**, **workbench**, **session**, and the **meta-specification** (`spec`, the
-family that specifies spec structure itself).
-
-The spec is not invented top-down: it is **induced** from the live memo-toolkit,
-so it documents the real, verified system rather than an idealized model. It uses
-RFC 2119 / BCP 14 conformance language and is versioned per family and version.
-
-| | |
-|---|---|
-| **Status** | v0.1.0 Draft |
-| **Conformance** | RFC 2119 / BCP 14 (each family's `00-overview` carries its conformance anchor) |
-| **Versioning** | per family + version: `<family>/<version>/draft/spec/` — active version in `data/refs.manual.json` (never hardcoded) |
-
-## Quickstart
-
-Clone the repository and start reading from the overview chapter:
-
-```bash
-git clone https://github.com/memo-init/spec.git
-cd spec
-```
-
-Begin with `memo/0.1.0/draft/spec/00-overview.md`, then read the numbered chapters
-in order. Generated artifacts under each family's `dist/` are produced by the build:
-
-```bash
-npm i
-npm run build
-```
+- **Not published, not pushed.** It carries an opt-in local git with **no remote** (F7=A). The git
+  exists so the build can stamp a real short SHA as provenance instead of `unknown`.
+- **Two-commit pattern (like `../flowmcp/spec`).** Commit 1 lands the sources + tooling; then
+  `npm run build` runs (stamping the artifacts with commit 1's SHA); then commit 2 lands the built
+  artifacts. `.gitignore` excludes only `node_modules/` and `.DS_Store` — the built `dist/` and the
+  root aggregates ARE committed.
 
 ## Layout
 
-This repository **is** the namespace-first spec container: each family (namespace)
-lives directly at the repo root as `<name>/<version>/{draft,dist,skills}/`. The
-`dist/` subtree and the root-level cross-family aggregates are **auto-generated**
-from the source spec under each family's `draft/` and the `data/` refs. Do not edit
-the generated files by hand — they are overwritten on the next `npm run build`. Edit
-the sources instead:
-
-- Spec chapters: `<name>/<version>/draft/spec/*.md`
-- Refs / metadata: `data/refs.manual.json` (validated by `data/refs.schema.json`)
-
 ```
-<name>/<version>/draft/spec/    — authored chapters (source of truth)
-<name>/<version>/draft/data/    — authored data (skill-spec-map.json, spec-manifest.json)
-<name>/<version>/dist/spec/     — rendered chapters with YAML frontmatter (source → site payload)
-<name>/<version>/dist/bridge/   — per-page bridge projection (*.md) + dist backlinks (*.backlink.md)
-<name>/<version>/dist/data/     — spec-manifest.json (sidebar group metadata for the site)
-<name>/<version>/dist/generated/ — llms.txt spec bundles (copied to the docs site)
-<name>/<version>/skills/        — convention slot (F6 = C), no generator
-<name>/spec.json                — per-family head: identity, route, sidebar metadata, edges
-manifest.json                   — cross-family payload manifest (consumed by sync-spec.mjs)
-inverted-map.json               — cross-family inverted skill→spec projection (read-only)
-refs.resolved.json              — validated + stamped refs (from data/refs.manual.json)
-data/                           — refs.manual.json (source of truth) + refs.schema.json (AJV)
-scripts/                        — generate-refs / -docs-payload / -bridge / -manifest / -llms-txt + gates (.mjs)
-personas/                       — audience personas + entry-points + tone-guide
-.github/workflows/              — generate + cross-repo dispatch (spec-updated / refs-updated)
+<ns>/<version>/draft/spec/    — authored chapters (source of truth)
+<ns>/<version>/draft/data/    — authored data (skill-spec-map.json, spec-manifest.json)
+<ns>/<version>/dist/          — built payload, bridges, data, generated llms bundles (committed)
+<ns>/<version>/skills/        — convention slot
+<ns>/spec.json               — per-namespace head: identity, route, sidebar metadata, edges
+scripts/                     — the generator (node built-ins + ajv), copied from repos/spec
+data/                        — refs.manual.json (source of truth) + refs.schema.json (AJV)
+refs.resolved.json           — validated + stamped refs (committed)
+manifest.json / inverted-map.json — cross-namespace aggregates (committed)
 ```
 
-Families: `memo`, `workbench`, `session`, `spec` (the meta-specification, internal
-namespace `meta-spec`, route `/spec/`). Current version for each: `0.1.0`.
-
-- **Four families:** `memo` (a single memo's lifecycle), `workbench` (project
-  structure, folders, CLI, config, wiki), `session` (the session genesis layer
-  and SOP area), and `spec` — the **meta-specification** that specifies spec
-  structure itself. Each is authored under `<family>/<version>/draft/spec/` and
-  published to `<family>/<version>/dist/`.
-- **References:** `data/refs.manual.json` is the source of truth (validated by
-  `data/refs.schema.json`); the active version per family is resolved there,
-  never hardcoded.
-- **Generated layer:** each family's `dist/` holds the rendered chapter payload,
-  the per-page bridges + backlinks and the llms.txt bundle; the root-level
-  `manifest.json` and `inverted-map.json` are the cross-family aggregates — do not
-  edit by hand; run `npm run build` instead.
-- **Personas:** `personas/` holds the audience personas, entry-points and a
-  tone-guide.
-
-## Artifacts and their generators
-
-| Artifact | Generator | Source |
-|----------|-----------|--------|
-| `refs.resolved.json` | `scripts/generate-refs.mjs` | `data/refs.manual.json` + `data/refs.schema.json` |
-| `<name>/<v>/dist/bridge/` | `scripts/generate-bridge.mjs` | `<name>/<v>/draft/data/skill-spec-map.json` |
-| `inverted-map.json` | `scripts/generate-bridge.mjs` | skill-spec-map across all families |
-| `<name>/<v>/dist/spec/<NN-name>.md` | `scripts/generate-docs-payload.mjs` | `<name>/<v>/draft/spec/*.md` |
-| `manifest.json` | `scripts/generate-manifest.mjs` | `<name>/<v>/dist/spec/**/*.md` |
-| `<name>/<v>/dist/data/spec-manifest.json` | `scripts/generate-manifest.mjs` | `<name>/<v>/draft/spec/spec-manifest.json` |
-| `<name>/<v>/dist/generated/llms.txt` | `scripts/generate-llms-txt.mjs` | `<name>/<v>/dist/spec/*.md` |
+Namespaces and their current versions: `memo` `0.3.0`, `workbench` `0.3.0`, `session` `0.3.0`,
+`meta-spec` `0.3.0`, `governance` `0.1.0`.
+The per-namespace llms bundles land at `<ns>/<version>/dist/generated/llms.txt`.
 
 ## Build
 
 ```bash
+npm install    # one dependency: ajv (schema validation in generate-refs)
 npm run build
+npm test       # audit-spec-quality + check-bridge-inverse
 ```
 
-Runs the generators in sequence: `generate-refs` → `generate-docs-payload` →
-`generate-bridge` → `generate-manifest` → `generate-llms-txt` →
-`check-bridge-inverse`. This order is mandatory (docs-payload before bridge, both
-before manifest). The build aborts with a non-zero exit code if the refs manual
-fails schema validation, a same-family link resolves into a foreign family's route,
-or the bridge inverse check detects drift.
+Runs the generator chain: `generate-refs` → `generate-docs-payload` → `generate-bridge` →
+`generate-manifest` → `check-bridge-inverse` → `generate-llms-txt`. This mirrors the public
+`repos/spec` build minus its `spec-drift` gate (which needs the global `memo` CLI).
 
-## Payload format
+The skill↔spec bridge reads the sibling `repos/core` skills for the per-chapter Purpose cells. Since
+this workshop sits one level higher than `repos/spec` (`<project>/spec` vs `<project>/repos/spec`),
+`generate-bridge` resolves the project root as `resolve(REPO, '..')` (the one line adapted from the
+verbatim copy) so `repos/core` is found and the bridge hubs match the public repo exactly.
 
-Each `<name>/<version>/dist/spec/*.md` file is its source chapter with:
+## Documentation Files
 
-- YAML frontmatter prepended (`title`, `description`, `spec_version`,
-  `spec_file`, `order`, `section`, `normative`, `generated_at`,
-  `generated_from`, `generator`, `edit_warning`).
-- The leading H1 stripped (the docs site renders the title from frontmatter).
-- Same-family links `./NN-name.md` rewritten to the family's own published route
-  (`/specification/`, `/workbench/`, `/session/`, `/spec/`), derived from the
-  family head.
+Markdown files outside the product folders (the chapters under `<ns>/<version>/` and the fixtures under
+`scripts/data/`), each with the reason it exists beside this README:
 
-## Provenance
-
-The spec is **induced** from the live memo-toolkit (`memo-toolkit`). It documents
-the real, verified system; the model-to-code deviations remain internal docs.
-
-## Table of Contents
-
-- [memo-init / spec](#memo-init--spec)
-  - [Quickstart](#quickstart)
-  - [Layout](#layout)
-  - [Artifacts and their generators](#artifacts-and-their-generators)
-  - [Build](#build)
-  - [Payload format](#payload-format)
-  - [Provenance](#provenance)
-  - [Contributing](#contributing)
-  - [License](#license)
-
-## Contributing
-
-Contributions are welcome! Please open an issue first to discuss what you would
-like to change.
-
-## License
-
-[MIT](LICENSE)
+| File | Reason |
+|------|--------|
+| `anchor-grounding-baseline.md` | Measured baseline of how well each anchor term is understood from the spec text alone |
+| `anchor-terms.register.md` | Generated view of the anchor-term store, rendered by a script and never edited by hand |
+| `anchor-terms.dictionary.md` | Generated dictionary view of the same anchor-term store, rendered by the same script |
+| `data/tool-contract-maintenance.md` | Maintenance procedure for the tool-contract snapshot, so it does not drift silently |

@@ -171,6 +171,12 @@ Without a provenance pin staleness is a guess rather than a count, so the pin is
 
 ---
 
+## A Backward Chain Can Be Rebuilt Step by Step
+
+A backward chain of derived records **MUST** be rebuildable step by step, so that every step has an executable way out. When one step of the chain cannot be rebuilt and the unlock path that the tool itself names is refused, the score refresh is blocked and the boards keep stale numbers that look like a degree of completion. A stale board is labelled as due for refresh and is not read as a percentage until the chain is rebuilt.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

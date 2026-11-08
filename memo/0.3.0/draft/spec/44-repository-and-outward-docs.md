@@ -117,6 +117,7 @@ The style's working rules:
 
 | Rule | What it means |
 |------|---------------|
+| State the why | Every document and every passage names the goal it serves before it says anything else. |
 | Lead with the concrete | Open a paragraph with a specific fact, number, or example before explaining why it matters. |
 | Short sentences carry weight | Key statements are short and declarative; longer sentences only connect them. |
 | Numbers, not adjectives | Replace vague qualifiers with an actual count or a concrete comparison. |

@@ -30,6 +30,13 @@ A spec is written forward and then kept current, and those two motions are the s
 
 ---
 
+## A Gate Runs Against a Real Spec Root
+
+A gate that reads the specification **MUST** run against a real spec root and fail loudly when the root it is given does not exist in the form it expects. A gate whose preloader looks for a hardwired version and path form crashes on every real root and has had no effect for an unknown time. Before such a root is corrected, every caller of the gate is checked, because a caller that writes into many files on the strength of the root would then start writing on a mass scale.
+
+---
+
+
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 

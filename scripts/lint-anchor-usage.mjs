@@ -23,7 +23,7 @@ import { draftSpecDirRel, familyHeadPath } from './lib/layout.mjs'
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO_ROOT = join( __dirname, '..' )
 const STORE_PATH = join( REPO_ROOT, 'data/anchor-terms.json' )
-const FAMILIES = [ 'memo', 'meta-spec', 'session', 'workbench' ]
+const FAMILIES = [ 'memo', 'meta-spec', 'session', 'workbench', 'governance' ]
 const USAGE_MIN_CHAPTERS = 2
 const NEGATION_RE = /\b(not a\b|not an\b|is not\b|are not\b|NOT\b|never\b|rather than\b|MUST NOT\b|instead of\b)/
 

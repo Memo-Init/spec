@@ -6,7 +6,7 @@ spec_file: "50-orchestrator-role.md"
 order: 50
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/50-orchestrator-role.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/50-orchestrator-role.md."
@@ -42,7 +42,7 @@ The role has exactly **two** duties, and they point in opposite directions: one 
 
 Autonomy is defined positively, so that neither side has to infer it.
 
-**The orchestrator decides alone:** the order of work within the plan; how waves and workflows are cut; repair iterations up to the cap (two rounds, then a deliberate **no** recorded as a snag); the patrol cadence; the update frequency within the stated guard rail; and the classification of every impulse into the matrix.
+**The orchestrator decides alone:** the order of work within the plan; how waves and workflows are cut; repair iterations up to the cap (one round, then a deliberate **no**, recorded as a build instruction or on the work item with its disposition — the item stays counted and goes into the escalation phase of the run ([08-phases-and-prds.md](/specification/phases-and-prds/#the-escalation-phase)); a snag is the last resort for an object outside the run and needs the counter-clarification of the highest level, the user); the patrol cadence; the update frequency within the stated guard rail; and the classification of every impulse into the matrix.
 
 **The user decides alone**, and the orchestrator never decides these for them:
 
@@ -55,6 +55,8 @@ Autonomy is defined positively, so that neither side has to infer it.
 | **Aborting the run** | Ending work the user commissioned is the user's call |
 
 **Everything third is a collected question.** It is not a stop, and it is not a silent decision either: it goes into the queue, it is announced in the next update, and it is put in a bundle. The point of the three-way split is that there is no fourth bucket — nothing in a run is allowed to be neither decided, nor reserved, nor queued.
+
+A standing clearance never covers a reserved decision: it widens where work may happen, never what is decided (governance specification, chapter *The Standing Clearance*).
 
 ---
 
@@ -104,9 +106,24 @@ Escalation to the user is reserved for a **closed** catalog. Everything not in i
 
 The self-help barrier is a class in its own right, and it is the one most easily missed. The rule that blocks the fix is usually **correct** and stays; it simply has one case where it cannot solve the problem it created. The answer is not to soften the rule but to make the message precise — the signal names the action only the user may take.
 
+**When the orchestrator may wait for the user.** The orchestrator waits only when three conditions hold together: (1) the run stands at one of the seven breakpoints — `mark`, `commit`, `tool-call-threshold`, `workflow-agent-done`, `teammate-idle`, `phase-done`, `session-quiet`; (2) the occasion is an entry of this catalog or one of the reserved decisions; (3) a counterpart is named — who has to act and which action. If one is missing, the orchestrator does not wait: it collects the question and keeps working.
+
 **Explicitly not extraordinary:** a phase finishing (that is an interval update), a problem the role can solve itself (that is an intervention), a verifier returning red (that is the repair cap), a single agent failing (that is a restart or a change of mechanism). Each of these has been escalated in a real run, and each escalation cost the user an interruption that bought nothing.
 
-**Foreseeable need is announced in advance.** When the orchestrator can see that it will need a decision, it says so in the interval update *before* it needs it — "after the current phase, in roughly ten to sixty minutes, I will need your decision on X". That is a line in an existing format, not a new channel, and it is what lets a user schedule their own attention.
+**Foreseeable need is announced in advance.** When the orchestrator can see that it will need a decision, it says so in the interval update *before* it needs it — "after the current phase, in roughly ten to sixty minutes, I will need your decision on X". That is a line in an existing format, not a new channel, and it is what lets a user schedule their own attention. When the user is going to be away, the announcement names a clock time instead of a span; announcing never makes a halt — waiting stays bound to the breakpoints.
+
+---
+
+## Unattended Runs: Two Ways
+
+A run without the user at the machine has exactly two ways to reach a decision that only the user may take.
+
+| Way | What it is | Precondition |
+|-----|------------|--------------|
+| **Waiting at a breakpoint** | The orchestrator stops at one of the seven breakpoints and waits on the answer channel until the user answers or the ceiling of one day runs out | The channel passes the reachability probe; the wait stands against an entry of the extraordinary catalog or a reserved decision with a named counterpart (see *When the orchestrator may wait for the user*); it falls on a breakpoint, never inside a phase |
+| **Standing clearance** | Before leaving, the user grants a clearance for one place outside the workbench; the run works there without asking | It names the place, the holder, the expiry and the recorded user input it rests on; it is in force and not revoked (chapter *The Standing Clearance* of the governance specification) |
+
+Everything else is a collected question. Overnight, the first way does not reach into a phase: an unattended run never waits in the middle of a phase, and at a breakpoint the ceiling of 86 400 seconds covers exactly one night.
 
 ---
 
@@ -114,12 +131,13 @@ The self-help barrier is a class in its own right, and it is the one most easily
 
 The context window is the orchestrator's one non-renewable resource within a run, and the role is specified to protect it rather than to spend it and then ask for a reset.
 
-Four duties follow, and they are duties of the role, not advice:
+Five duties follow, and they are duties of the role, not advice:
 
 - **Stay short.** The orchestrator writes compactly and reads sparingly. Its output is a verdict and a pointer, never a reproduction of what it just read.
 - **Load nothing unnecessary.** It does not pull whole files, reports or diffs into its own window when a pointer, a count or an exit code answers the question. Briefs it hands out are pointer-based: the recipient reads the source itself.
 - **Document decisions traceably.** Every judgement call — an intervention, a deferral, a deliberate no — is written down with its reason at the moment it is made. A decision recovered later from memory is a reconstruction, not a record.
 - **Bundle questions and hand them to a runner.** Foreign reading stays entirely outside the orchestrator's window; only results are evaluated.
+- **Read the level before every wave.** Before it cuts a wave, the orchestrator reads its own context level — the reading the harness leaves in the session transcript, never an estimate — and sizes the wave against what remains. A wave that does not fit is cut narrower or handed to runners, instead of being started at full width and abandoned halfway. A reading that does not succeed is named as missing and is never replaced by a guess.
 
 These are the cheapest measures available, and they are also the most effective: keeping the window small outstrips every later remedy for a window that already filled. The condensation of an over-full context is recovery, not hygiene — and a role that relies on recovery has already lost the material it would have needed to recover well.
 
@@ -235,7 +253,7 @@ Operationally the partition is measured against a **progress-event stream** — 
 | Value | Means |
 |-------|-------|
 | `user-input` | a question has been asked and is open |
-| `user-gate` | an approval is outstanding (a push, an acceptance) |
+| `user-gate` | an approval is outstanding (a push, an acceptance) — admissible only against an entry of the extraordinary catalog or a reserved decision with a named counterpart (see *When the orchestrator may wait for the user*); without both, the stretch counts as `idle` |
 | `external` | a foreign run is holding things up (CI, a foreign build) |
 | `resource` | a resource is holding things up (disk, a rate limit) |
 | `idle` | nothing is running and no counterpart is named — the defect case |
@@ -245,7 +263,7 @@ Operationally the partition is measured against a **progress-event stream** — 
 
 **The idle self-catch.** At every patrol tick the orchestrator checks whether **15 minutes** have passed since the last progress event. On a hit it does three things in the *same* turn: it names the stretch with its start and its duration in the next update, it names the cause, and it acts — it starts the next step, or it moves the state into a waiting reason with a named counterpart. Detecting without acting is the defect, not the remedy.
 
-The rule fires only on `idle` and `unknown`. Waiting with a named counterpart is not idleness — but it still appears in the update with its clock time, because waiting is never a silent state.
+The rule fires only on `idle` and `unknown` — and on a `user-gate` without catalog entry or named counterpart, which is `idle` under another name. Waiting with a named counterpart is not idleness — but it still appears in the update with its clock time, because waiting is never a silent state.
 
 The 15 minutes are measured rather than chosen: stretches of 7 h 36 and 4 h 44 passed unnoticed, while the one stretch the patrol caught itself was 15 minutes long. The patrol tick stays as it is; 15 minutes is the threshold, which puts the guaranteed detection latency at half an hour.
 
@@ -275,7 +293,7 @@ Both axes are deliberately **not** the human pair they replace. "Importance" is 
 | **Q3** | low effect, tight window | **collect and delegate** | bundle for at most one patrol cycle, then dispatch |
 | **Q4** | low effect, wide window | **book it** | **a reason is mandatory** and is enforced by the tool that records it; never "eliminate" |
 
-**Q4 books, it does not discard.** The fourth quadrant is a file reference, not a wastebasket, and the reason is empirical rather than sentimental: intangible work that is dropped has a documented tendency to return as an expedited item. A quadrant that discards would therefore systematically throw away precisely the items that come back as Q1. It is also not representable in this system — a decision not to fix something cannot be recorded without its reason.
+**Q4 books, it does not discard.** The fourth quadrant is a file reference, not a wastebasket, and the reason is empirical rather than sentimental: intangible work that is dropped has a documented tendency to return as an expedited item. A quadrant that discards would therefore systematically throw away precisely the items that come back as Q1. It is also not representable in this system — a decision not to fix something cannot be recorded without its reason. Booking stays on the plan: a Q4 item of the run remains a counted work item or goes into the escalation phase; the snag store is not a booking place for the run's own objects.
 
 **Thresholds are fixed externally and tied to clocks the role already reads.** This is the load-bearing design choice of the whole section. Measurement of exactly this capability — deciding before execution what to take on, in what order, under what budget — is **negative** for models left to their own discretion: once they must hold to their own budget allocations, self-planned ordering performs worse than chance, and the weakness improves neither with a larger model nor with longer deliberation. A frame the role fills in freely per case therefore runs straight into the measured weakness. The tractable direction is the opposite one: **few thresholds, fixed externally, bound to clocks the orchestrator reads rather than estimates** — the phase boundary, the patrol cadence, the usage window, the staleness horizon of a cached reading, the calendar behind a retention deadline.
 
@@ -331,15 +349,18 @@ The reason sharpens the rule beyond the case it was written for. The orchestrato
 
 ## Role Vocabulary
 
-A memo is carried by three roles, and each role has exactly **one** word. The word is binding on four surfaces at once — spec text, skill text, the database column that stores it, and terminal output — so that a reader who meets it on one surface recognises it on the next.
+The one role list is the role table of `governance/05-roles`; the roles below are the ones that carry a memo, taken from that list, and each role has exactly **one** word. The word is binding on four surfaces at once — spec text, skill text, the database column that stores it, and terminal output — so that a reader who meets it on one surface recognises it on the next.
 
-| Role | Word | What it does | Span |
-|------|------|--------------|------|
-| The authoring role | `author` | processes the transcript, captures topics and work items, writes the chapters, asks questions and moves answered ones, commissions and files research, finalizes | from `memo new` to finalized |
-| The planning role | `planner` | phase plan, work assignments, strands, requirements, dependencies; settles on **one** constellation and hands it over | from finalized to the first dispatch |
-| The executing role | `orchestrator` | adopts the plan, dispatches, supervises, amends, books status and evidence | from the start of the run |
+| Role | Word | Group | What it does | Span |
+|------|------|-------|--------------|------|
+| The authoring role | `author` | — | processes the transcript, captures topics and work items, writes the chapters, asks questions and moves answered ones, commissions and files research, finalizes | from `memo new` to finalized |
+| The planning function | `planner` | `worker` | phase plan, work assignments, strands, requirements, dependencies; settles on **one** constellation and hands it over; a function of the worker group, booked as `worker` | from finalized to the first dispatch |
+| The executing role | `orchestrator` | `orchestrator` | adopts the plan, dispatches, supervises, amends, books status and evidence | from the start of the run |
+| The phase role | `lead` | `lead` | owns one phase: cuts its orders, distributes the work items, merges at the phase end; may create sub-agents | one phase of the run |
 
-A fourth word, `worker`, is deliberately **not** a memo role: a `worker` builds a single unit of work and writes the evidence of its own work. It is defined here because the assignment matrix below hands tables to it, and a word that appears in an assignment has to be defined where the vocabulary is.
+The *Group* column follows the role group tree of `governance/05-roles`; a dash marks a group the role table does not decide.
+
+The word `worker` names the group the planner belongs to, and it is the booking value of every worker function. A `worker` builds a single unit of work and writes the evidence of its own work; it carries no span of a memo of its own, which is why it has no row above. It is defined here because the assignment matrix below hands tables to it, and a word that appears in an assignment has to be defined where the vocabulary is.
 
 **The word is a machine token and stays English on all four surfaces.** A translated display label may sit above it — a label rendered over a column whose stored value is `author` is a rendering, not a second word. What is forbidden is a **second machine token** for the same role: one role, one word, in the schema, in a skill and in a message alike. A surface that carries no word for a role yet adopts this one the first time it needs one; it does not coin its own.
 
@@ -351,11 +372,11 @@ A fourth word, `worker`, is deliberately **not** a memo role: a `worker` builds 
 
 ## Table Assignment Matrix
 
-The schema declares **60** tables as measured on 2026-09-15. This matrix names, for every one of them, which area of a memo's life it belongs to, which role writes it, and at which event. A table with two writers is not a defect; a table with **none** is — an unassigned carrier is an open question, not an empty table.
+The schema declares **67** tables as measured on 2026-10-11. This matrix names, for every one of them, which area of a memo's life it belongs to, which role writes it, and at which event. A table with two writers is not a defect; a table with **none** is — an unassigned carrier is an open question, not an empty table.
 
-**The counting basis, stated because a number without one is an assertion.** The figure above is measured at the moment this section is written and never carried forward from an earlier reading. Measured file: `cli/src/DoltSchema.mjs` of the command-line package. File state: 122,410 bytes over 1,908 lines, SHA-256 `97e39eca0d3120d90827a44be02423cbf6ed243769ec51cbd9243f8ecfa8c116`. Raw lines carrying the declaration literal: 67. Discarded with their reason: 7 — six occurrences inside prose comments, and one regular expression in the applier that reads the declared name back out. What remains: 60 declarations carrying 60 distinct names, none declared twice.
+**The counting basis, stated because a number without one is an assertion.** The figure above is measured at the moment this section is written and never carried forward from an earlier reading. Measured file: `cli/src/DoltSchema.mjs` of the command-line package, in the state that carries the four carriers of the bookkeeper. File state: `cli/src/DoltSchema.mjs` @ `9a20eaa`, 311,703 bytes over 3,698 lines, SHA-256 `a9a19850886c177337c4cc901d6ed7b485b31754aa1927109b77e05e00a4204a`. It carries one more declaration than the older reading below: the table `clearance`, the standing clearance. What remains: 67 declarations carrying 67 distinct names, none declared twice. The older reading of 66 stays on record: measured 2026-10-05 over a state of 309,577 bytes over 3,676 lines with SHA-256 `873a0d16790aaf602d4bbb45902a579091e91b8e9ba88d781768c42f7b67b32b`, with 76 raw lines carrying the declaration literal, 10 discarded (seven occurrences inside prose comments, three regular expressions in the appliers that read the declared name back out) and 66 declarations carrying 66 distinct names.
 
-Two older readings of the same count are on record and are kept as readings rather than corrected away: 57 on this page, measured 2026-09-14, and 56 in the chapter this matrix was cut from, measured 2026-09-06. Four carriers have been declared since that first reading. The growth is a continuation of the same count, not a contradiction between two counts — which is the reason a figure here is written together with the day it was taken.
+Four older readings of the same count (besides the 66 above) are on record and are kept as readings rather than corrected away: 62 on this page, measured 2026-09-27 over a state of 291,712 bytes over 3,502 lines with SHA-256 `cf9a6d4ed6ba3281d5cf3d7e5621e3176fc3c870a627bd71b91195e314feb560`; 60 on this page, measured 2026-09-15 over a state of 122,410 bytes with SHA-256 `97e39eca0d3120d90827a44be02423cbf6ed243769ec51cbd9243f8ecfa8c116`; 57, measured 2026-09-14; and 56 in the chapter this matrix was cut from, measured 2026-09-06. Ten carriers have been declared since that first reading, the four newest being the carriers of the bookkeeper — `bookkeeper_queue`, `bookkeeper_run`, `break_glass` and `referral`. The growth is a continuation of the same count, not a contradiction between two counts — which is the reason a figure here is written together with the day it was taken.
 
 This is not *The Decision Matrix* above, and confusing the two costs a level: the Decision Matrix classifies **actions** the orchestrator takes at run time, this one assigns **writes** to roles. An entry here never resolves to a quadrant there.
 
@@ -400,7 +421,7 @@ Three reading notes:
 | `rollout_phase_plan` | Planning | `planner` | on the phase plan: budget, worktree, breakpoint, strand, handover pointer |
 | `rollout_work_item` | Planning (structure) · Execution (state) | `planner` creates · `orchestrator` sets `status` / `commit_hash` | created at the phase cut; carried forward per acceptance |
 | `plan_mutation` | Execution | `orchestrator` | per run-time change to the plan: pause, insert, recut, reorder |
-| `rollout_worktree` | Execution | `orchestrator` | on creating, quiescing or dissolving a worktree |
+| `rollout_worktree` | Execution | `orchestrator` | on creating (`memo git worktree-add`), quiescing or dissolving a worktree |
 | `agents` | Execution | `orchestrator` (through `memo session import`) | after every wave, and at every breakpoint |
 | `commits` | Execution | `orchestrator`, or the `worker` that commits | per commit in the rollout |
 | `finding` | Execution | `orchestrator` + `worker` | per interim finding in the traffic of a phase |
@@ -408,6 +429,11 @@ Three reading notes:
 | `interval_status` | Execution | `orchestrator` | at every breakpoint, at every phase boundary, after every anomaly intervention, and at the latest every 60 minutes |
 | `decision` | Execution | `orchestrator` | per steering decision, with its matrix classification in the same row. `superseded_by` is written on the REVISING row and names the predecessor it replaces — a correction is a new row, never an edit of the old one |
 | `receipt_event` | Execution | `worker` writes the delivery · `orchestrator` writes the check | one row per event in the life of a work receipt: `written` when a worker lands its receipt, `verified` once per checking run over a phase. `compared_count` is mandatory, which is the machine form of the rule that a check comparing nothing is red |
+| `bookkeeper_queue` | Execution | the funnel enqueues · `bookkeeper` sets the state | per write through the funnel; per calculation at the cadence |
+| `referral` | Execution | `bookkeeper` opens · `lead` resolves | per finding at a block; per resolution |
+| `bookkeeper_run` | Execution | `bookkeeper` | per run at the cadence, at the phase gate or on demand |
+| `break_glass` | Execution | `orchestrator` opens, closes and rotates · `bookkeeper` closes at the hard cap | per exception |
+| `clearance` | Execution | `orchestrator` grants and revokes | per standing clearance, against a recorded user input (`memo clearance grant`, `memo clearance revoke`) |
 | `work_item` | Cross-cutting | all three memo roles | `author` on registration; `planner` on the cut and the grouping; `orchestrator` on status and disposition changes |
 | `work_item_group` | Cross-cutting | `author` + `planner` | on bundling by root cause or by action |
 | `question_event` | Cross-cutting | `author` on a status change, `user` on an answer | per event in the life of a question: asked, replaced, answered, reopened |
@@ -424,13 +450,56 @@ Three reading notes:
 | `session_ingest_mark` | Cross-cutting | harness (import) | per import progress mark: byte offset, last identifier |
 | `session_breakpoints` | Cross-cutting | harness hook | per breakpoint event |
 | `compaction_event` | Cross-cutting | harness hook | per compaction of a session, once before and once after. The carrier belongs to no memo area: a compaction is an event of the runtime, not a step in a memo's life, which is what the cross-cutting column exists for |
+| `agent_parent_check` | Cross-cutting | harness hook (`PostToolUse` on a spawn), through `memo agents parent-check` | per spawn of an agent: the three statements about its parent — prompt header, harness payload, sidecar — held against each other and booked with the comparison count they were decided over. A divergence is booked as `mismatch` with all three statements verbatim; nothing is corrected into one |
 | `url_calls` | Cross-cutting | `worker`, while researching | per external fetch |
+| `reversal` | Cross-cutting | all three memo roles — whoever withdraws something | per counter-operation of the delete contract, at both granularities: `commit` scope through `memo db revert`, `row` scope for a single carrier row. The row carries the reason, the predecessor and the discarded content itself, because nothing is ever removed physically |
 | `provenance` | Cross-cutting | the funnel itself (`ContentWriteThrough`) | per write, automatically |
 | `history_journal` | Cross-cutting | the funnel itself | per write, automatically |
 
-The area sizes are the sum check: `Authoring` 20 · `Planning` 12 · `Execution` 9 · `Cross-cutting` 19 = 60, measured on 2026-09-15. The two rows whose responsibility is split by column count under `Planning`, where their structure half is created. **The comparison set of this check is named, because a sum that does not say what it was compared against is not a check:** the 60 rows of the matrix above were compared, in both directions, against the 60 distinct names measured out of the schema file named in the counting basis. Both difference sets are empty — no declared table is missing from the matrix, and no matrix row names a table the schema does not declare. No table is filed twice; the matrix is complete rather than illustrative, and that completeness is the point — a carrier nobody was assigned is the case this section exists to make impossible.
+The area sizes are the sum check: `Authoring` 20 · `Planning` 12 · `Execution` 14 · `Cross-cutting` 21 = 67, measured on 2026-10-11. The two rows whose responsibility is split by column count under `Planning`, where their structure half is created. **The comparison set of this check is named, because a sum that does not say what it was compared against is not a check:** the 67 rows of the matrix above were compared, in both directions, against the 67 distinct names measured out of the schema file named in the counting basis. Both difference sets are empty — no declared table is missing from the matrix, and no matrix row names a table the schema does not declare. No table is filed twice; the matrix is complete rather than illustrative, and that completeness is the point — a carrier nobody was assigned is the case this section exists to make impossible.
 
-Two properties of the distribution are worth naming, because they are only visible once the rows are grouped. The two carriers that fill themselves — `provenance` and `history_journal` — hang off the write funnel and need no caller, and they are also the two with the largest share of columns that never receive a value; a high row count is the absence of the loudest symptom, not a quality signal. And six of the session and evidence carriers — `sessions`, `session_tool_call`, `session_ingest_mark`, `url_calls`, `agents` and `commits` — are fed **through the harness session trace** rather than written directly by a memo role, which means they depend on an import step somebody has to trigger. That names the channel, not the assignment: the `Writer role` column above keeps naming the memo role that owes each of those rows, and the two levels are held apart in *The Bookkeeping Contract* below. Two carriers are written by a harness **hook** rather than through that import — `session_breakpoints` and `compaction_event`; the other three session carriers are not, and treating a hook write and an import as interchangeable is why the import step goes unnoticed.
+Two properties of the distribution are worth naming, because they are only visible once the rows are grouped. The two carriers that fill themselves — `provenance` and `history_journal` — hang off the write funnel and need no caller, and they are also the two with the largest share of columns that never receive a value; a high row count is the absence of the loudest symptom, not a quality signal. And six of the session and evidence carriers — `sessions`, `session_tool_call`, `session_ingest_mark`, `url_calls`, `agents` and `commits` — are fed **through the harness session trace** rather than written directly by a memo role, which means they depend on an import step somebody has to trigger. That names the channel, not the assignment: the `Writer role` column above keeps naming the memo role that owes each of those rows, and the two levels are held apart in *The Bookkeeping Contract* below. Three carriers are written by a harness **hook** rather than through that import — `session_breakpoints`, `compaction_event` and `agent_parent_check`; the other three session carriers are not, and treating a hook write and an import as interchangeable is why the import step goes unnoticed.
+
+---
+
+## The Phase Matrix
+
+The bookkeeper calculates over the rows that were written. A row that was never written leaves it nothing to calculate over, so a second instrument covers that side: the phase matrix holds every order of a running phase against the carriers it has to fill and against five figures, and it names what is missing.
+
+### Mandatory Carriers of a Running Phase
+
+A running phase fills six carriers, each through its own command:
+
+| Carrier | Written through |
+|---|---|
+| `rollout_phase` | `memo planner phases`; its state through `memo orchestrator start` and `memo orchestrator phase-close` |
+| `rollout_phase_plan` | `memo planner phases` |
+| `rollout_work_item` | `memo planner orders`; its state through `memo orchestrator dispatch` and `memo orchestrator accept` |
+| `rollout_worktree` | `memo git worktree-add` at creation; `memo orchestrator dispatch`; dissolved through `memo orchestrator phase-close` |
+| `prd` | `memo planner orders` |
+| `prd_work_items` | `memo planner orders` |
+
+A running phase that leaves one of them empty is not measurable. The matrix names the empty carrier together with the command that writes it, so the gap is the next step, not a riddle.
+
+### The Five Metrics
+
+- `status-set` — the order carries a status in the rollout carrier of its phase.
+- `work-items-bound` — at least one work item is bound to the order.
+- `worktree-registered` — a worktree of the phase carries the branch label of the order, derived from its reference.
+- `commit-chain` — at least one commit row carries the order.
+- `no-open-referral` — no referral is open at a block of the work items of the order.
+
+### Rising Demand Along the Phase
+
+The demand on a phase rises while it is worked off, the way the demand on a memo rises with its revisions. The axis is the progress within the phase; it takes the place of the revision number. This is a transfer of the principle, not a literal copy. Which figures are required at which progress is a calibration that is stated in the project configuration, and without it all five figures are required only at the end of the phase. The thresholds are calibration and are not set here.
+
+### The Vacuum Lock
+
+Every figure names its comparison set, and an empty comparison set is red. A phase with no order at all is not measurable, never valid.
+
+### Division of Labour With the Bookkeeper
+
+The bookkeeper covers what was entered; the matrix covers what is missing. Neither replaces the other: the bookkeeper cannot see an absent row, and the matrix does not judge the rows that are there. The bookkeeper and its blind spot are specified in [/governance/roles/](/governance/roles/).
 
 ---
 
@@ -446,7 +515,7 @@ That the lower tier **suffices** for the orchestrator role is an explicit **`ass
 
 **What the gradient is not.** It is not a `model router` — nothing selects per request. It is not an `automatic downgrade` within a run: a tier is fixed when a role is staffed and does not drift while work is in flight. It is not a claim about any product, and it names no tier by name. What is anchored here is the **role axis** — which kind of work sits above which — and nothing underneath it.
 
-**Where the values live.** Which tier a role actually receives is registered in the harness descriptor under the registry ([meta-spec/10-harness-registry.md](/spec/harness-registry/)), as data. Restaffing is therefore a **data change** and never a change to this prose. It is the same split the registry already draws for tools: the intent is specified here, the values are registered there, and the two are kept from drifting by never stating one in the other's place.
+**Where the values live.** What the harness descriptor registers as data is **one** `adapter.model` / `adapter.effort` pair under the registry ([meta-spec/10-harness-registry.md](/spec/harness-registry/)) — the tier the harness itself stands on, which is the **execution** tier. Measured over the **one** descriptor instance the registry currently holds, under `data/harnesses/<harnessId>/<version>/harness.json` (1,856 bytes, read 2026-09-27): the pair stands **once**, on `adapter`; the three role deltas under `toolContract.roles` carry tool membership and **no** model or effort; and the working-role names `author` and `planner` occur **0** times in the file. No role therefore receives a tier of its own as data. The **head** tier is the tier one above the registered one, derived by the gradient above rather than pinned — and the descriptor states that exemption itself, in its own `adapter.notes`. Restaffing is therefore a **data change** to that one pair and never a change to this prose. It is the same split the registry already draws for tools: the intent is specified here, the values are registered there, and the two are kept from drifting by never stating one in the other's place.
 
 ---
 
@@ -470,20 +539,21 @@ The role above is commissioned by a **work order**. Today that hand-over is free
 
 ## The Bookkeeping Contract
 
-The six rows below are the **bookkeeping parties** — everyone who touches the record during a memo's life. Four of them are the working roles this chapter defines (`author`, `planner`, `orchestrator`, `worker`); the other two are not roles at all — `user` is the human as a source of rows, and `harness` is the channel session traces arrive through. *Role Projection* below therefore counts four working roles and not six: `user` and `harness` are parties here, never working roles. The contract states, per party, what each of them owes.
+The seven rows below are the **bookkeeping parties** — everyone who touches the record during a memo's life. Five of them are working roles: the four this chapter defines (`author`, `planner`, `orchestrator`, `worker`) and `bookkeeper`, defined in [/governance/roles/](/governance/roles/); the other two are not roles at all — `user` is the human as a source of rows, and `harness` is the channel session traces arrive through. *Role Projection* below therefore lists working roles only and neither of these two: `user` and `harness` are parties here, never working roles. The contract states, per party, what each of them owes.
 
 | Role | Writes | Reads | Updates | Primary responsibility |
 |------|--------|-------|---------|------------------------|
 | `author` | the authoring tables — topics, work items, blocks, questions, research assignments and their pointers, transcript bindings, lessons | its own stock: topics, work items, earlier research, answered questions | topic status, question status, work-item registration, chapter binding | That no authoring table is left empty without a named reason when authoring ends |
 | `planner` | the planning tables, plus the **structure** columns of `rollout_phase` and `rollout_work_item` | the authoring tables in full — they are its input | its own plan up to the hand-over, and nothing after it | That every plan row traces back to an authoring row, checkable as a set difference |
-| `orchestrator` | the execution tables and the run-time carriers: interval status, decisions, plan mutations; it triggers the session import | **everything** — the only role with full access, because it has to report the overall state | the **state** columns of the planning tables, `status` and `commit_hash`, never their structure; a structural change is a plan mutation | The bookkeeping as a whole — it does not keep the most rows, it supervises that the others keep theirs |
+| `orchestrator` | the execution tables and the run-time carriers: interval status, decisions, plan mutations; it triggers the session import | **everything** — the only role with full access, because it has to report the overall state | the **state** columns of the planning tables, `status` and `commit_hash`, never their structure; a structural change is a plan mutation | That the machine keeps running — commissioned work flows to acceptance, and a stop that nobody resolves is its failure |
 | `worker` | the receipt of its own work (`comparedCount`), a `url_calls` row per external fetch, a `documents` row per stored file | its own work assignment and the sources named in it | nothing outside its own receipt | That the receipt is part of the delivery rather than an appendix to it — a delivery without a receipt row is not bookable |
+| `bookkeeper` | the state of a queue item, the referrals, the run ledger, and the closing of an exception at its hard cap | the record it calculates over | the state of a queue item, and nothing else | The bookkeeping as a whole — it keeps no rows of the work, it calculates that the others keep theirs |
 | `user` | `user_inputs` and `user_input_answers`, through `recordInput()` and `recordAnswer()` | the viewer, as the surface a run is supervised from | its own inputs, append-only — a correction is a new row, never an overwrite | `none`. The user is a source, not an obligor; the row stands here so that the expectation does not migrate to them in silence |
 | `harness` | session traces — `sessions`, `session_tool_call`, `session_ingest_mark`, `agents`, `commits` — and hook events | — | — | Rests with the trigger. The harness writes only when someone imports, and the duty to import is the orchestrator's |
 
 **The `Writes` column names the channel; the matrix names the memo role.** Three carriers are named on both levels, and that is one assignment seen twice rather than two competing ones. `agents` and `commits` stand in the `harness` row because their rows arrive through the harness session trace; `url_calls` arrives the same way even though it stands in the `worker` row, which is why *The Table Assignment Matrix* counts it among the harness-fed carriers. That matrix files all three by memo role — `agents` under the `orchestrator`, `commits` under the `orchestrator` or the `worker` that commits, `url_calls` under the `worker` — and that filing is the binding one for **who owes the write**. The harness writes only when someone imports; it is a channel with a trigger, never a role that decides.
 
-**`user` here is the human party, not the contract role of the same name.** The row above names the person who supplies input and supervises the run — the source of `user_inputs` and `user_input_answers`. The `user` that *Role Projection* below projects `author` and `planner` onto is the descriptor's contract role for the interactive top-level context: a tool delta a running context executes under, not a party that owes rows. The word therefore carries one meaning per vocabulary, and every row in this table belongs to the bookkeeping one.
+**`user` here is the human party, not the contract role of the same name.** The row above names the person who supplies input and supervises the run — the source of `user_inputs` and `user_input_answers`. The `user` that *Role Projection* below projects `author` onto is the descriptor's contract role for the interactive top-level context: a tool delta a running context executes under, not a party that owes rows. The word therefore carries one meaning per vocabulary, and every row in this table belongs to the bookkeeping one.
 
 **Several parties may write; exactly one owes the result.** That is why every row carries exactly one entry in the last column and never two: the moment two parties are answerable for the same outcome, there are excuses instead of an owner. This does not contradict the multiple writers assigned above — `work_item` has three writers, and that is correct. The difference is what the last column names: not who may touch a carrier, but who is answerable for its state.
 
@@ -513,8 +583,8 @@ Author and Planner share a staffing class; they are not thereby merged into one 
 
 | Descriptor field | How the line is written |
 |------------------|-------------------------|
-| `adapter.model` | The tier that belongs to the form the role carries — condensation point or execution stretch — never one entry per role name |
-| `adapter.effort` | The deliberation belonging to that same form, set with it and read with it |
+| `adapter.model` | The tier that belongs to the form the harness itself runs — the execution stretch — never one entry per role name. The condensation form is the tier one above it and is deliberately left unregistered |
+| `adapter.effort` | The deliberation belonging to that same registered form, set with it and read with it |
 
 A line cut by role name has to be extended every time the role set changes, and every extension is a fresh judgement made at the moment of least information. A line cut by form is answered by a question the role already has an answer to: does this work condense, or does it run a stretch? What is prescribed here is the shape of that line. The values themselves are registered as data and are not stated in this prose.
 
@@ -522,18 +592,22 @@ A line cut by role name has to be extended every time the role set changes, and 
 
 ## Role Projection — Working Roles onto Contract Roles
 
-This chapter carries four working roles; the harness descriptor ([meta-spec/10-harness-registry.md](/spec/harness-registry/)) carries three contract roles. The four project onto the three, and the projection is written down here so that a fourth role is not read as a fourth vocabulary.
+Every role of the role table in `governance/05-roles` whose contract role is decided projects onto one of the three contract roles the harness descriptor ([meta-spec/10-harness-registry.md](/spec/harness-registry/)) carries, and the planner function does the same. The projection is written down here so that a further working role is not read as a further vocabulary.
 
 | Working role | Contract role |
 |--------------|---------------|
-| `author` | `user` |
-| `planner` | `user` |
 | `orchestrator` | `orchestrator` |
+| `author` | `user` |
+| `lead` | `orchestrator` |
 | `worker` | `worker` |
+| `bookkeeper` | `worker` |
+| `evaluator` | `worker` |
+| `research` | `worker` |
+| `planner` | `worker` |
 
 **The projection defines no fourth axis.** It is the move the registry already makes for the agent-team roles and for the agent-execution primitives: those project onto the three contract roles rather than defining a fourth axis, and the working roles above do the same. Three vocabularies are in play — the contract vocabulary of the descriptor, the agent-name label a running context carries, and the working form this chapter is written in — and a projection is what keeps them at three instead of making them four.
 
-**`author` and `planner` share `user`, and the shared cell is not a defect.** Both sit at a condensation point, and both act through the interactive top-level context that the descriptor assigns the `user` role. Where the names coincide — `orchestrator` onto `orchestrator`, `worker` onto `worker` — the coincidence is identity of the mapping, not identity of the axis: a working role names which part of a memo's life the role carries, a contract role names which tool delta a running context runs under. The `user` row in *The Bookkeeping Contract* above is not this cell either: that row names the human party who supplies input, this cell names the contract role a running context executes under.
+**`planner` projects onto `worker`, because it belongs to the worker group; `lead` projects onto `orchestrator`, because it runs under the coordinating tool contract.** The author is the one working role that projects onto `user`: it acts through the interactive top-level context that the descriptor assigns the `user` role. Where the names coincide — `orchestrator` onto `orchestrator`, `worker` onto `worker` — the coincidence is identity of the mapping, not identity of the axis: a working role names which part of a memo's life the role carries, a contract role names which tool delta a running context runs under. The `user` row in *The Bookkeeping Contract* above is not this cell either: that row names the human party who supplies input, this cell names the contract role a running context executes under.
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

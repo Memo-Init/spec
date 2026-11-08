@@ -1,6 +1,6 @@
 {
     "spec_version": "0.3.0",
-    "generated_at": "2026-09-20T07:42:01.847Z",
+    "generated_at": "2026-11-08T15:43:25.052Z",
     "generator": "scripts/generate-manifest.mjs",
     "files": [
         {
@@ -117,7 +117,7 @@
             "filename": "11-quality-and-finalization.md",
             "slug": "quality-and-finalization",
             "title": "Quality Gates & Finalization",
-            "description": "Quality is enforced by gates, and finalization is the readiness gate between strategy and implementation. This chapter defines the five quality skills, the six evidence levels, the finalization gate...",
+            "description": "Quality is enforced by gates, and finalization is the readiness gate between strategy and implementation. This chapter defines the five quality skills, the eight evidence levels, the finalization...",
             "order": 11,
             "section": "Specification",
             "normative": true,
@@ -519,6 +519,16 @@
             "title": "The Memo Database",
             "description": "A memo produces facts for as long as it lives — topics, work items, questions and their answers, research payloads, decisions, evidence of what was checked against what. This chapter says where those...",
             "order": 51,
+            "section": "Specification",
+            "normative": true,
+            "sidebar_group": "procedure"
+        },
+        {
+            "filename": "52-field-contract.md",
+            "slug": "field-contract",
+            "title": "The Field Contract",
+            "description": "The memo database stores a block, the chapter it is bound to, its sections, its tables and diagrams, the topics it carries and the work items filed under them. This chapter says what belongs in which...",
+            "order": 52,
             "section": "Specification",
             "normative": true,
             "sidebar_group": "procedure"
@@ -1176,16 +1186,192 @@
                 "section": "Meta-Spec",
                 "normative": true,
                 "sidebar_group": "introduction"
+            },
+            {
+                "filename": "13-styleguide.md",
+                "slug": "styleguide",
+                "title": "Styleguide",
+                "description": "The **styleguide** fixes the written form of the documents the organization authors and generates. It classifies every Markdown construct in use as required, allowed, restricted or forbidden, it...",
+                "order": 13,
+                "section": "Meta-Spec",
+                "normative": true,
+                "sidebar_group": "introduction"
+            }
+        ]
+    },
+    "governance": {
+        "version": "0.1.0",
+        "files": [
+            {
+                "filename": "00-overview.md",
+                "slug": "overview",
+                "title": "Overview",
+                "description": "This is the entry point of the **Governance Specification** (Draft). Where the memo, workbench, session and meta-specification families describe the work, the place it happens, the session it runs in...",
+                "order": 0,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "introduction"
+            },
+            {
+                "filename": "01-entry-points.md",
+                "slug": "entry-points",
+                "title": "Entry Points and Controlled Prompt Injection",
+                "description": "This chapter specifies how work enters the system. The user is the only entry point from outside: a small number of user-facing commands open the system, and inside it every command hands over to the...",
+                "order": 1,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "enforcement"
+            },
+            {
+                "filename": "02-sop-system.md",
+                "slug": "sop-system",
+                "title": "The SOP System",
+                "description": "This chapter specifies the SOP mechanics that roles and permits use. The project has many rules that are essential for some kinds of work and useless for others; the SOP system loads each rule only...",
+                "order": 2,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "enforcement"
+            },
+            {
+                "filename": "03-permits.md",
+                "slug": "permits",
+                "title": "Permits",
+                "description": "A **permit** is the smallest named unit of the permission system. It sits below the roles and gives a name to a collection of SOPs and skills that several roles need for the same kind of work. This...",
+                "order": 3,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "permits"
+            },
+            {
+                "filename": "04-permit-validity.md",
+                "slug": "permit-validity",
+                "title": "Permit Validity, Renewal and Expiry",
+                "description": "This chapter specifies the life of a permit over time. A permit is renewed like a driving licence and is never valid forever, so that a context that degrades over a long session is met with a fresh...",
+                "order": 4,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "permits"
+            },
+            {
+                "filename": "05-roles.md",
+                "slug": "roles",
+                "title": "Roles and Role Groups",
+                "description": "A **role** sits above the permits. It collects permits and skills, and it holds the one capability a permit never holds: it may create sub-agents. This chapter first states the criterion that makes...",
+                "order": 5,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "roles"
+            },
+            {
+                "filename": "06-subagents.md",
+                "slug": "subagents",
+                "title": "Sub-Agents and Attenuation",
+                "description": "This chapter specifies how a role creates sub-agents and what they receive. The criterion that only a role creates sub-agents is stated in the roles chapter; how that right is enforced, and how the...",
+                "order": 6,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "roles"
+            },
+            {
+                "filename": "07-break-glass.md",
+                "slug": "break-glass",
+                "title": "The Exception Role",
+                "description": "This chapter specifies the way out of the rules. From the top of the system there must always be a way to intervene: the orchestrator can, through an exception role, suspend the strict rules for one...",
+                "order": 7,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "roles"
+            },
+            {
+                "filename": "08-runtime-enforcement.md",
+                "slug": "runtime-enforcement",
+                "title": "Hooks, Runtime and Enforcement",
+                "description": "This chapter specifies the deterministic base under the permission system. Dependencies between SOPs, permits and roles only work when a deterministic layer manages the permissions and checks the...",
+                "order": 8,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "enforcement"
+            },
+            {
+                "filename": "09-progressive-disclosure.md",
+                "slug": "progressive-disclosure",
+                "title": "Progressive Disclosure",
+                "description": "This chapter specifies how knowledge and rights are loaded in stages. Through the role SOPs, agents can be assembled dynamically: every capability and every permission is acquired by loading the...",
+                "order": 9,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "enforcement"
+            },
+            {
+                "filename": "10-spirit.md",
+                "slug": "spirit",
+                "title": "The Spirit and the Own Constitution",
+                "description": "This chapter is the one place in the family that orders little and justifies much. It states why the permission system is built at all, which view of the world lies in it, and how the cut of roles...",
+                "order": 10,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "spirit"
+            },
+            {
+                "filename": "11-risk-surface.md",
+                "slug": "risk-surface",
+                "title": "Risks and Estimates",
+                "description": "This chapter specifies the risk that remains in a closed system and how it is carried. A given workbench, prompts that point the direction and deterministic boundaries reduce risk, but a residue...",
+                "order": 11,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "spirit"
+            },
+            {
+                "filename": "12-contamination.md",
+                "slug": "contamination",
+                "title": "Contamination Symptoms and Countermeasures",
+                "description": "This chapter states how the system weighs sources that the user has classified as contaminated, how it treats an earlier position of the user that a later one contradicts, and how material adopted...",
+                "order": 12,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "spirit"
+            },
+            {
+                "filename": "13-practice.md",
+                "slug": "practice",
+                "title": "Best Practice and Bad Practice",
+                "description": "This chapter names the patterns and anti-patterns of the system. Behaviour can be steered by the options a skill writes out, and some behaviours are known to help while others are known to hurt....",
+                "order": 13,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "spirit"
+            },
+            {
+                "filename": "14-standing-clearance.md",
+                "slug": "standing-clearance",
+                "title": "The Standing Clearance",
+                "description": "This chapter specifies the way a run without the user at the machine may work outside the workbench: a clearance the user grants before leaving. It is the safer sibling of the exception role, because...",
+                "order": 14,
+                "section": "Governance",
+                "normative": true,
+                "sidebar_group": "roles"
+            },
+            {
+                "filename": "15-bridge.md",
+                "slug": "bridge",
+                "title": "Bridge",
+                "description": "Bridge hub for the governance specification: per-chapter skill coverage, Mermaid graph views, and by-skill namespace grouping.",
+                "order": 15,
+                "section": "Governance",
+                "normative": false,
+                "sidebar_group": "introduction"
             }
         ]
     },
     "stats": {
-        "total_files": 116,
-        "core_files": 52,
+        "total_files": 134,
+        "core_files": 53,
         "workbench_files": 32,
         "session_files": 19,
-        "spec_files": 13,
-        "normative_files": 105,
-        "informative_files": 11
+        "spec_files": 14,
+        "governance_files": 16,
+        "normative_files": 122,
+        "informative_files": 12
     }
 }

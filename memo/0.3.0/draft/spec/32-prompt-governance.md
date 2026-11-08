@@ -77,6 +77,12 @@ Because the generator is both a lever and a single point of failure, it MUST be 
 
 ---
 
+## A Default Nobody Follows Is Removed or Made Usable
+
+A default path that nobody follows **MUST** be either made usable or removed, together with every claim that it is followed. A repaired prompt path that produces no manifest for any started agent, while preparation files claim to be composed through it, is a default plus a false claim. Whether a default is used is measured by its traces — here the manifest that each composed prompt leaves — and a measured zero leads to one of the two decisions, never to a third claim.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

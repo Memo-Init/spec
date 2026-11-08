@@ -57,7 +57,9 @@ The distinction from `.trash/` is the point: a deletion routed to `.trash/` is a
 `.tmp/` segments its contents by the active memo id: transient files live under `.tmp/<memo-id>/`, one subfolder per memo. This keeps one memo's scratch from colliding with another's and lets cleanup reason about the ephemeral material one memo at a time.
 
 - **`<memo-id>` is the id of the memo currently being worked on.** A tool or an agent writing scratch while a memo is active MUST place it under that memo's subfolder — `.tmp/<memo-id>/…` — never in the `.tmp/` root directly.
-- **`undefined/` is the fallback.** When no memo is active, `<memo-id>` is the literal `undefined`, so such files land in `.tmp/undefined/`. There is always a valid target: work never has to decide whether a memo happens to be active before it can pick a scratch path.
+- **`UNDEFINED-{N}` is the fallback.** When no memo is active, a new entry takes the name `UNDEFINED-{N}`, where `{N}` is the smallest free number from 1 upward in the target folder, so such files land in `.tmp/UNDEFINED-1/` and so on. Folders named `undefined` that already exist stay valid. There is always a valid target: work never has to decide whether a memo happens to be active before it can pick a scratch path.
+- **The segment form is `<NNN>`** — the zero-padded memo number, for example `.tmp/084/`. It deliberately differs from the earlier example form `M{NNN}`; the folders on disk use the bare number.
+- **The project location wins.** A project's per-memo scratch location takes precedence over a scratch location assigned by an agent harness: a tool that is handed both uses the project location.
 
 Segmentation does not soften the throwaway guarantee above. Every subfolder, `.tmp/undefined/` included, is still volatile scratch that any process MAY empty at any time and that MUST NOT hold the sole copy of anything that matters.
 

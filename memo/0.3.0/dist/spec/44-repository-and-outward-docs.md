@@ -6,7 +6,7 @@ spec_file: "44-repository-and-outward-docs.md"
 order: 44
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/44-repository-and-outward-docs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/44-repository-and-outward-docs.md."
@@ -124,6 +124,7 @@ The style's working rules:
 
 | Rule | What it means |
 |------|---------------|
+| State the why | Every document and every passage names the goal it serves before it says anything else. |
 | Lead with the concrete | Open a paragraph with a specific fact, number, or example before explaining why it matters. |
 | Short sentences carry weight | Key statements are short and declarative; longer sentences only connect them. |
 | Numbers, not adjectives | Replace vague qualifiers with an actual count or a concrete comparison. |

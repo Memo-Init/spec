@@ -6,7 +6,7 @@ spec_file: "38-stage-model.md"
 order: 38
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/38-stage-model.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/38-stage-model.md."
@@ -24,17 +24,32 @@ The process end is a fixed, ordered sequence. Each stage has a single job and a 
 | Stage | Name | Content | Ends when |
 |-------|------|---------|-----------|
 | 1 | Rollout | Generate → Execute → Evaluate | Evaluate PASS |
-| 2 | Landing the Plane | clean up, name open ends honestly, chronicle + handover, worktree cleanup | the workspace is "next-morning" startable |
+| 2 | Landing the Plane | clean up, name open ends honestly, chronicle + handover, worktrees filed into the trash after their merge is proven | the workspace is "next-morning" startable |
 | 3 | Merge Preparation | branches ID-named, locally merged up to `main`, commits prepared and presented | clean and conflict-free, push-ready |
 | 4 | Merge / Push Gate | the user authorizes the push (push is never automatic) | the user pushes and the thread is done |
 
 **Stage 1 — Rollout.** The autonomous half: Generate produces the work orders, Execute implements them across phases, Evaluate checks memo conformity. The stage ends on a green Evaluate. Its full specification is [12-rollout.md](/specification/rollout/). A green Evaluate ends the rollout — it does not end the memo.
 
-**Stage 2 — Landing the Plane.** Landing renders the end-state legible and resumable: it cleans worktrees, names open ends honestly (including a `verdict: OPEN` where that is the truth), writes the chronicle entry and the handover, and leaves the workspace in a state a fresh context can pick up the next morning without questions. Its full specification is [27-landing-the-plane.md](/specification/landing-the-plane/). **Landing is always mandatory** — it is never skipped, regardless of whether the merge stages run immediately or later, because a thread left without a landing is a thread the next session has to reconstruct.
+**Stage 2 — Landing the Plane.** Landing renders the end-state legible and resumable: it files merged worktrees into the trash, names open ends honestly (including a `verdict: OPEN` where that is the truth), writes the chronicle entry and the handover, and leaves the workspace in a state a fresh context can pick up the next morning without questions. Its full specification is [27-landing-the-plane.md](/specification/landing-the-plane/). **Landing is always mandatory** — it is never skipped, regardless of whether the merge stages run immediately or later, because a thread left without a landing is a thread the next session has to reconstruct.
 
 **Stage 3 — Merge Preparation.** With the workspace landed, the branches are named by their memo ID (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)), the system performs the **local merge up to `main`** deterministically, and the commits are prepared and presented. The stage ends when the result is clean and conflict-free — push-ready, with nothing left to resolve before release.
 
 **Stage 4 — Merge / Push Gate.** The final boundary is the user's. The user authorizes the push; the push is never automatic. The stage — and the thread — ends when the user pushes.
+
+---
+
+## Two Merge Levels
+
+Merging happens on two levels, and the two are not interchangeable.
+
+- **Level 1 — per phase, onto the phase line.** Within stage one, every phase merges its order branches onto that phase's line before the phase is evaluated. The next phase branches off this line. Nothing reaches `main` at this level.
+- **Level 2 — once per memo, in stage three.** The last phase line is merged into `main`, once, during merge preparation. This is the only merge into `main`; the push that follows stays the user's gate.
+
+The earlier wording "after each passed phase the line merges into `main`" is withdrawn; it contradicted the single merge in stage three. The canonical procedure for both levels is kept in one place, the merge strategy skill, and not repeated elsewhere.
+
+### Switching a running memo
+
+What a line has already merged into `main` stays history. From the switch on, no line goes to `main` before stage three. A phase that is already running keeps its base, its branches and its worktree names; the new naming form and the booking at creation apply to worktrees created after the rules reach `main`. No running worktree is renamed.
 
 ---
 

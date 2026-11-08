@@ -6,7 +6,7 @@ spec_file: "16-git-security-versioning.md"
 order: 16
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/16-git-security-versioning.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/16-git-security-versioning.md."
@@ -267,6 +267,12 @@ A broad destructive git operation over a dirty tree is an irreversible data-loss
   "grade": "binary"
 }
 ```
+
+---
+
+## Every Git Tree That Receives Text Carries the Commit-Message Hook
+
+Every git tree that receives authored text **MUST** carry the commit-message hook that strips attribution trailers. The specification workshop, where all specification text is authored, is such a tree; a tree without the hook leaves the trailer rule enforced on fewer levels exactly where the text is written. The hook is installed when the tree is created, and its presence is checked as part of the health of the tree.
 
 ---
 

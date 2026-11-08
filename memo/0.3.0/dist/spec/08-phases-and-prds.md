@@ -6,7 +6,7 @@ spec_file: "08-phases-and-prds.md"
 order: 8
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/08-phases-and-prds.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/08-phases-and-prds.md."
@@ -40,7 +40,7 @@ A work item is stored **deterministically as one JSON file per item** under the 
 |-------|----------|---------|
 | `id` | yes | `WI-NNN`, unique within the memo. |
 | `topicId` | yes | `T###` back-reference to an existing topic. The binding is **two-way**: the topic records the item under its own `workItemIds`, so a work item can never float free of a topic. |
-| `title` | yes | The finding text. |
+| `title` | yes | The finding text — **what was found**, as a plain-language statement. The **activity** that follows from it is not stored here: it lives in the group's `action` field. A title that reads as an instruction belongs in `action`; a title that names a subject matter belongs in the topic. See [52-field-contract.md](/specification/field-contract/). |
 | `provenance` | yes | A **structured** array of `{ path, lines }` file:line evidence — never a flat string and never omitted, so every item's acceptance is grep-checkable at the exact location it claims. |
 | `status` | default `offen` | One of `offen` · `in-arbeit` · `erledigt`. Changed **only** through the deterministic write path (`set-status`), never by hand. |
 | `disposition` | optional | One of `verifizieren` · `kein-defekt` · `behalten` · `dokumentiert` · `auffaellig`. |
@@ -97,6 +97,7 @@ The "one PRD fits into one context" rule above is qualitative; this section make
 
 - **Cap = one third (1/3) of the context window, per PRD.** A PRD's declared context plus its working headroom MUST stay within **1/3 of the context window**. The cap is measured **per PRD, not per phase**: a phase may bundle several PRDs whose combined size far exceeds 1/3, because each PRD is implemented in its own fresh, empty thread — the cap applies to each thread's PRD individually.
 - **Smart-Zone = one quarter (1/4) of the context window.** Below roughly **1/4** of the window, attention has not yet degraded — this is the **smart zone**, the band a PRD SHOULD aim to sit inside. The cap (1/3) is the hard ceiling; the smart-zone (1/4) is the target band where the agent works at full quality. The headroom between 1/4 and 1/3 is deliberate slack, not budget to plan against.
+- **Read cap = 200,000 tokens, per PRD.** The declared context of a PRD (the entries of its Required-Context table) plus the PRD text itself MUST stay at or below **200,000 tokens**, counted as bytes ÷ 4. This is the number the cut computes its read-cap reason against (S3 in "The Cut" below). The read cap is not the budget of a PRD: executing a PRD costs a multiple of reading it, and the cap of one third (≈ 333,333 tokens at a 1M window) stays the bound for reading plus working. The value 200,000 is a trial value; it is re-decided after the next measured phase.
 
 At a 1M context window these fractions are concretely:
 
@@ -104,8 +105,33 @@ At a 1M context window these fractions are concretely:
 |--------|----------|--------------|---------|
 | Smart-Zone | 1/4 | ~250k | target band — attention not yet degraded |
 | Cap | 1/3 | ~333k | hard ceiling per PRD — must not be exceeded |
+| Read cap | — | 200,000 | declared context plus PRD text — the bound the cut computes S3 against |
 
 The smart-zone (1/4) marker is also the heuristic that `memo-reset-recommend` uses as the *reason* behind its token threshold: when context fill leaves the smart zone, a reset becomes worth recommending at a phase boundary. The reset algorithm itself lives in `memo-reset-recommend` (see [13-orchestration.md](/specification/orchestration/)); this chapter only declares the smart-zone marker it consumes.
+
+---
+
+## The Cut — From Work Items to PRDs
+
+The cut decides how the living work-item stock of a phase is split into PRDs. It is made per phase, shortly before the phase runs, and its result is the share of each PRD: the work items and topics that PRD builds.
+
+- **Lower bound: one work item.** Every PRD MUST carry at least one work item in its share; a PRD with an empty share MUST NOT be created. When something exceptional has to be built without a recorded finding, a work item is registered for it first (`memo work-item register`) — the exception is an additional write, never a PRD without a work item. The rule binds newly cut PRDs; the existing stock is not back-filled.
+- **No count rule.** The number of PRDs of a phase is derived, not chosen: it is the number of bundles the stock falls into without a separation reason. It is not the size of the pulled stock, and it has neither an upper nor a lower bound per phase.
+- **Bundling is the default.** A PRD takes as many work items as it can without triggering one of the four separation reasons below; only one of them opens a separate PRD.
+- **The partition.** The shares of the PRDs of one phase are pairwise disjoint, and together they equal the living stock of the phase.
+
+| Reason | Name | Triggered when |
+|--------|------|----------------|
+| S1 | Repository boundary | each of the two PRDs writes a repository root the other does not write; a one-sided difference does not count |
+| S2 | Dependency edge | a `depends-on` edge connects the two PRDs |
+| S3 | Read cap | the union of both declared contexts plus both PRD texts exceeds the read cap of 200,000 tokens (bytes ÷ 4) |
+| S4 | Role boundary | the two PRDs require different roles or zones, for example `user-gated` beside `autonom` |
+
+- **The violation criterion.** For every pair (A, B) of PRDs of one phase: if the union of A and B triggers none of S1–S4, the separation is unjustified. That is a finding which names the pair and the four computed reasons, not a matter of opinion. A reason that cannot be computed from the plan data is named as such; the pair is then reported as undecided, never as justified.
+- **The bundling ratio is stated, never checked against a threshold.** The ratio of living work items to PRDs is reported together with its denominator. A numeric bundling threshold would be the abolished per-phase maximum under a new name; a ratio of exactly 1.0 makes the pair check mandatory.
+- **The price of a PRD.** Bundling trades throughput for scaffolding: one PRD is one agent with a fresh context, and every PRD costs one worktree per repository it writes, one branch, one receipt, one evaluation report and one commit per repository. The cut shows this cost per PRD.
+
+The machine checks of this section are `memo planner orders`, which refuses an order list in which an order carries no work item, and `memo prd conformance`, which reports per PRD the work-item count, the lower bound and the pair check. **Rationale (not normative):** the causal chain from the former count rule to the number of worktrees, and the variance decomposition behind the trade of throughput against scaffolding, are recorded as memo-bound research in `.memo/memos/084-berechtigungsscheine-rollen-systemgeist/context/research-schnitt-kausalkette.md`.
 
 ---
 
@@ -212,6 +238,16 @@ The step is bounded by three rules so it composes with the dependency tree:
 - **After, never mid-phase.** The in-flight phase finishes coherently; only then does the elimination run. This guarantees the still-wrong source is repaired before the next phase can read it and spawn another copy.
 - **Its own fresh context.** The elimination is a separate work unit in a clean context (the empty-context principle), so the contaminated session that surfaced the drift does not carry the wrong value into the fix.
 - **Fix-at-source, then gate.** The step resolves the drift at its source-of-truth (the [28-drift.md](/specification/drift/) protocol) and leaves the idempotent lint/CI gate — owned by [13-orchestration.md](/specification/orchestration/) — in place so the eliminated drift cannot re-enter. A discovered drift is therefore closed at a real point in the dependency tree, not deferred as a standing note.
+
+## The Escalation Phase
+
+Work that a rollout cannot finish inside its planned phases has to go somewhere that is counted. This section owns that place: the **escalation phase**. It replaces the habit of filing the leftover as a pile of snags — a pile that leaves the books, is not planned, and is not added up.
+
+1. **What it replaces.** Work deferred during a rollout whose object lies within the memo's scope MUST stay a counted work item; it MUST NOT be filed as a snag. A phase is counted, a snag is not.
+2. **Threshold and point in time.** As soon as one such deferred item exists at a phase boundary, the plan MUST gain an escalation phase, booked by the planner role as a plan mutation at that boundary; it is scheduled after the last regular phase, or earlier when a later regular phase depends on the deferred item through a hard edge. Thresholds are fixed externally and tied to the phase boundary, a clock the orchestrator already reads.
+3. **How it runs.** The escalation phase is planned, cut into orders, executed and evaluated like every other phase; its stock is the deferred items of the run, bundled. Stage 1 (Rollout) does not end while an escalation phase is open.
+4. **The snag remains the last resort** — only for an object outside the run (another memo's scope, another repository, outside the workbench), laid down by the orchestrator role with the counter-clarification of the highest level (see [50-orchestrator-role.md](/specification/orchestrator-role/#autonomy)), and counted in the closing report's snag balance ([27-landing-the-plane.md](/specification/landing-the-plane/)).
+5. **Deactivating stays allowed.** Deactivating a work item at run time is not deferring it: the item keeps its identifier and its place in the balance.
 
 ---
 

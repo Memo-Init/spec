@@ -6,7 +6,7 @@ spec_file: "33-flowmcp.md"
 order: 33
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/33-flowmcp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/33-flowmcp.md."
@@ -29,6 +29,23 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/3
   "purpose":    "FlowMCP authored content and produced output — the footprint of the FlowMCP custom folder. It holds the material a project keeps and produces with FlowMCP (for example graded schema exports and reports), not the global CLI installation.",
   "goesIn":     "Authored FlowMCP content and produced output — schema grading exports, reports, produced artifacts.",
   "doesNot":    "The global CLI installation (that lives in ~/.flowmcp/, untouched); the regenerable namespace-index cache (that is .flowmcp/, gitignored).",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
+
+The local cache beside it is registered as a folder of its own and shares this page:
+
+```folder
+{
+  "name":       ".flowmcp/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "Regenerable FlowMCP namespace-index.json cache — generated machinery, gitignored; the local side of the FlowMCP custom folder.",
+  "goesIn":     "The namespace-index.json the FlowMCP CLI writes so it can resolve tools fast.",
+  "doesNot":    "Authored FlowMCP content or output (that is flowmcp/); the global CLI installation (that is ~/.flowmcp/); obsolete tools/ or prompts/ sub-trees.",
   "git":        "discouraged",
   "remote":     "forbidden"
 }

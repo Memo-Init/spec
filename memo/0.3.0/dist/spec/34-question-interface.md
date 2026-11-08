@@ -6,7 +6,7 @@ spec_file: "34-question-interface.md"
 order: 34
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/34-question-interface.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/34-question-interface.md."
@@ -84,6 +84,18 @@ The answered-questions record a memo carries is not a single undifferentiated li
 
 The agent MAY pre-answer on the developer's behalf **only above a high confidence bar** — the finalize guard. The bar exists because pre-answering is a delegation of the developer's decision right, and that delegation is only safe when the agent is highly confident the developer would have decided the same way (most often because a mental-model axis points strongly and consistently in one direction). **Below the bar, the question is not pre-answered — it is surfaced to the developer** as an open question. There is no silent middle ground: either the confidence clears the finalize guard and the on-behalf answer is recorded as on-behalf, or the question is shown. This is the mechanism that lets the agent pre-think more without ever quietly taking a decision that was the developer's to make.
 
+## A Question Stands on Its Own
+
+A question is asked in its own words. It may carry a reference, but it never hands its reasoning over to another question or to another memo, and two rules make that checkable on every memo instead of on a single case.
+
+**A question text MUST NOT consist of a reference.** A question whose whole text points at another question — "superseded by another question, answer there" — asks nothing; it is a dead entry that fills the open set without being a question. The reference to the superseding question is data and lives in the edge of the question object, `replacedBy` (`replaced_by_id` in the store), and the superseded question is retired as `replaced` with its reason, as the question lifecycle of [07-revisions-and-questions.md](/specification/revisions-and-questions/) defines. Keeping a number from being given out again is not a reason to leave such an entry in the open set.
+
+**A memo-local identifier in a question text MUST carry its memo.** Question, topic and work-item identifiers are local to the memo that allocated them, and an identifier that resolves is not yet a correct identifier. In a question text the identifier is therefore written together with its memo, as `M{NNN}/F{N}` or `M{NNN}/WI-{NNN}`, never as the bare `F{N}`.
+
+## Who May Ask
+
+This chapter settles how a question has to look. Whether a role may put a question at all is settled by the question permit of the permission system — governance specification, chapter *Permits*, section *The Question Permit*. The two places point at each other and neither repeats the other, so no second authority over the same channel arises.
+
 ## The Deterministic Question Format
 
 The memo-question channel rendered incorrectly often enough to be a recurring defect, and the fix is to make the format deterministic rather than to keep patching a fragile parser.
@@ -111,7 +123,7 @@ Each question object in the block is authored with **English** field names. Thes
 | `recommendation` | string | The agent's recommendation plus its one-line reasoning. |
 | `type` | `single` \| `multi` | Single-choice or multiple-choice. |
 | `options` | object[] | The real options, each `{ key, label, kind }`. |
-| `preselected` | number[] | Optional explicit pre-selection by option index. |
+| `preselected` | number[] | Optional explicit pre-selection by option index. Authored only, and never a selection — see "A Pre-selection Seeds the Display, Never the Selection" below. |
 | `answered` | boolean | Whether the question has been answered. |
 | `status` | `open` \| `answered` \| `irrelevant` \| `replaced` | The lifecycle state ([07-revisions-and-questions.md](/specification/revisions-and-questions/)). It stands **beside** `answered`, which stays for every older reader; both are derived from the same state and can never disagree. |
 | `statusReason` | string \| null | The stated "why" of a retirement. Mandatory in the store for `irrelevant` and `replaced`. |
@@ -140,6 +152,33 @@ decided on:
 An **unknown** `status` value is read defensively on the display side: it degrades to the reading derived from `answered`, and the document still renders. The closed list is enforced where the value is **written**, not where it is displayed — a viewer that refuses to draw a document helps nobody, and a store that accepts an unknown status corrupts the stock.
 
 The parser is **tolerant**: for back-compat it still accepts the legacy German field names — `frage` (for `question`), `hintergrund` (for `background`), `typ` (for `type`), and `aiRecommendation`/`ai_recommendation` (for `recommendation`). When both spellings are present on the same object the German name wins, so existing blocks keep parsing unchanged. New blocks SHOULD use the English names above. The `custom` ("reject"), `topic` ("skip via topic"), `reframe` ("re-formulate the question") and `reoption` ("re-formulate the answer options") options are injected by the parser and MUST NOT be authored as extra option rows.
+
+#### A Pre-selection Seeds the Display, Never the Selection
+
+`preselected` is an **authored** field. It carries only what the author of the question block put there,
+and it MUST NOT be derived from the recommendation the question carries — neither by the writing path
+that produces a block nor by a client that renders one. A derived pre-selection makes the recommendation
+and the decision indistinguishable at the one point where they have to stay apart, and it does so without
+anybody having chosen it.
+
+Carrying the recommendation in a field of its own is intended, and it is a **display** concern: the
+recommendation is shown beside the option it argues for, and it MUST NOT reach the stored answer state as
+a selection.
+
+A pre-selection has **no effect on the stored state**. It seeds what the interface shows before the
+developer has acted; the selection a question records MUST stay empty until the developer acts. A decision
+is therefore an **act of the developer**, distinguishable from the state the question was opened in — never
+the absence of a correction. This is the read that makes the answered-by-developer / answered-on-behalf
+split above decidable at all: without it, every unanswered question with a pre-selection would already be
+carrying an answer nobody gave.
+
+A pre-selection **confirmed unchanged** is a confirmed recommendation, and it MUST be recorded as such
+rather than as an independent decision of the developer. The two are different evidence: a developer who
+picks an option other than the recommended one has decided against it, while a developer who leaves a
+pre-selection standing may merely have agreed with it, and a record that cannot tell the two apart reports
+an agreement it never observed. That this provenance is visible in the decision record is REQUIRED; how it
+is shown, and what the field carrying it is called, is an implementation choice this chapter deliberately
+leaves open.
 
 #### Balance Is a Predicate, Not an Adjective
 
@@ -224,6 +263,14 @@ The write is **gated**, and the gate refuses fail-loud rather than recording a d
 The **question-count lint gate (MEMO-025)** applies to the **markdown-only** path: when a memo carries no `questions-json` block, every `### F{N}` heading MUST parse into exactly one question and vice versa, so a heading the parser silently misses is still caught.
 
 When a `questions-json` block **is** present it is the single source (07's authority rule), and the count gate **does not** cross-check the `### F{N}` heading count against it. This is the single-source split defined in [07-revisions-and-questions.md](/specification/revisions-and-questions/): **open** questions live in the json block only — there is no hand-written `### F{N}` mirror, the human-readable form is generated by `renderQuestionsMarkdown` — while **answered** questions keep their `### F{N}` decision records (the `AI recommendation` vs `user decision` pair that [41-mental-model.md](/specification/mental-model/) reads). The two artefacts legitimately differ in count, so cross-checking them would misfire; the json is trusted instead. Authoring rule: **pose open questions only as `questions-json`, never as extra `### F{N}` headings.** What the renderer needs to draw a question as a card — including each option's `kind` ∈ `{option, custom, topic, reframe, reoption}` — is the one shared render contract; an invalid `kind` is rejected fail-loud at registration (MEMO-033), not silently dropped at the screen.
+
+## A Recommendation Is Never Booked as the User's Decision
+
+An interface **MUST NOT** book the recommendation of the AI as the user's decision. When the interface seeds the recommended option as a preselected answer, a single confirming keystroke turns a machine recommendation into a recorded decision that cannot be told apart from a deliberate choice. Every recorded answer therefore carries its provenance — preselected and accepted unchanged, or chosen by the user — and the interface shows that provenance before the answer is booked. The distinction matters because recorded decisions are the source from which the tendencies of the user are derived.
+
+## Question State Has One Carrier or a Named Arbiter
+
+The question state — the options, the preselection and the confirmed answer — **MUST** live in one carrier, or, where several carriers hold it, a named arbiter decides which of them holds. Question state spread over several carriers without an arbiter yields different answers depending on which carrier a reader opens, and a carrier that only one tool knows is evaluated by nobody. Each carrier of question state is therefore declared with its role: the carrier of record, or a derived view that is rebuilt from it and cleared by a named owner.
 
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->

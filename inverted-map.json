@@ -2763,6 +2763,26 @@
             "grader": null,
             "outOfScope": [],
             "clusters": [],
+            "requirementCount": 3,
+            "internalCount": 0
+        },
+        {
+            "family": "memo",
+            "id": "memo/52-field-contract",
+            "stem": "52-field-contract",
+            "sopAnchor": "02-memo-sop-entrypoint",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "06-memo-structure",
+                "11-quality-and-finalization",
+                "30-primitives",
+                "51-memo-database"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
             "requirementCount": 0,
             "internalCount": 0
         },
@@ -4539,6 +4559,326 @@
                 "00-overview",
                 "02-per-chapter-format",
                 "06-conventions-writing"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "meta-spec",
+            "id": "spec/13-styleguide",
+            "stem": "13-styleguide",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "02-per-chapter-format",
+                "06-conventions-writing",
+                "12-controlled-language"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/00-overview",
+            "stem": "00-overview",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "03-permits",
+                "05-roles",
+                "10-spirit",
+                "12-contamination"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/01-entry-points",
+            "stem": "01-entry-points",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-sop-system",
+                "09-progressive-disclosure"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/02-sop-system",
+            "stem": "02-sop-system",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "01-entry-points",
+                "03-permits",
+                "08-runtime-enforcement"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/03-permits",
+            "stem": "03-permits",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "04-permit-validity",
+                "05-roles",
+                "06-subagents",
+                "08-runtime-enforcement"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/04-permit-validity",
+            "stem": "04-permit-validity",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "03-permits",
+                "08-runtime-enforcement"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/05-roles",
+            "stem": "05-roles",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "03-permits",
+                "06-subagents",
+                "10-spirit",
+                "11-risk-surface"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/06-subagents",
+            "stem": "06-subagents",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "03-permits",
+                "05-roles",
+                "11-risk-surface"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/07-break-glass",
+            "stem": "07-break-glass",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "05-roles",
+                "10-spirit",
+                "13-practice"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/08-runtime-enforcement",
+            "stem": "08-runtime-enforcement",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "02-sop-system",
+                "04-permit-validity",
+                "09-progressive-disclosure"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/09-progressive-disclosure",
+            "stem": "09-progressive-disclosure",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "01-entry-points",
+                "08-runtime-enforcement"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/10-spirit",
+            "stem": "10-spirit",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "03-permits",
+                "05-roles",
+                "11-risk-surface",
+                "12-contamination"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/11-risk-surface",
+            "stem": "11-risk-surface",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "05-roles",
+                "06-subagents",
+                "07-break-glass",
+                "12-contamination"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/12-contamination",
+            "stem": "12-contamination",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "10-spirit",
+                "11-risk-surface",
+                "13-practice"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/13-practice",
+            "stem": "13-practice",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "07-break-glass",
+                "10-spirit",
+                "12-contamination"
+            ],
+            "implementers": [],
+            "grader": null,
+            "outOfScope": [],
+            "clusters": [],
+            "requirementCount": 0,
+            "internalCount": 0
+        },
+        {
+            "family": "governance",
+            "id": "governance/14-standing-clearance",
+            "stem": "14-standing-clearance",
+            "sopAnchor": "00-overview",
+            "publicEntries": [],
+            "publicEntriesInferred": true,
+            "detailPages": [
+                "00-overview",
+                "03-permits",
+                "05-roles",
+                "07-break-glass"
             ],
             "implementers": [],
             "grader": null,

@@ -60,6 +60,8 @@ A term qualifies as an anchor term only when it carries all of the following **f
 
 **The register is an adjunct, never a new primitive.** Consistent with this chapter's opening rule, grounding a term **MUST** register through the existing `kind:"policy"` block; it **MUST NOT** spawn a parallel registry machine. The register store is rendered deterministically from its authored source by the shared generation-script line, and a warning-only usage lint reports drift — a term defined twice, a term never used, a missing negative delimitation, a known mis-label appearing in prose. Enforcement is warn-not-block: the convention guides authoring, it never gates a build.
 
+**Form of a term.** How a term is written is fixed in the [Styleguide](./13-styleguide.md): the word-formation rule (a coined word is written out in full, a compound is built from the full word) and the character strings of internal identifiers.
+
 **Deliberately out of scope.** The convention grounds *terms*; it does **not** add a glyph or sigil notation for marking them in prose (the words carry the grounding, not a decoration), and it does not import the single-token framing, the consciousness reading, or the triple-store machinery from the research that motivated it.
 
 ---
@@ -92,11 +94,86 @@ The formality axis is orthogonal to *locality* (where the bytes live) and to *di
 
 ---
 
+## An Identifier Is Unique Along the Reading Path
+
+A normative identifier **MUST** be unique along the reading path on which it is used. When a document assigns an identifier that a specification page on the same reading path already carries normatively, a reader who follows the path meets two rules under one name. Before a new identifier is assigned, the pages on its reading path are searched for it; a hit calls for a new identifier, not for a second meaning.
+
+---
+
+## The Right to Comment
+
+A comment about a unit MUST NOT be written by a reader who has not read the unit in full. The unit is set by what the comment speaks about — a method, a class, or the whole file for a comment in the head of a file — and the right reaches exactly as far as the reading.
+
+A comment is in this respect the same act as a quotation: a quotation requires the quoted document read in full, and a comment requires the code unit it describes read in full. The condition is the same; the object differs — the document for the quotation, the unit of code for the comment. The limit is placed inside an existing permit and is specified in the permit chapter of the governance family ([/governance/permits/](/governance/permits/)); this section states the right, that chapter states where it sits.
+
+---
+
+## Where the Comment Rule Holds
+
+The rule of the previous section holds under three conditions, and it is stated together with them so that a first counter-case does not switch it off as a whole:
+
+- It holds in a project that keeps a **database** as a second store beside the code, so that the reasoning a comment leaves out has a place to live.
+- It holds for comments whose scope reaches **beyond the changed** place — a comment on a class or a file head, not the line next to a one-line change.
+- It becomes stricter the more agents work in **parallel** on the same code, because every orphaned comment then reaches every context it is loaded into.
+
+The counter-conditions are part of the rule. Without a database, many comments are useful, because the comment is the only store and a text search finds it; the rule would be harmful there. For a small change, reading only part of the file is not critical. Context loss on a large scale appears only under scale and time pressure. Outside the three conditions above, the rule **does not apply**.
+
+---
+
+## Comment Form
+
+A comment unit has a fixed form in four parts:
+
+1. **Delimitation.** A unit that spans more than one line is a block `/* ... */`. A run of `//` lines over two or more lines is not a unit, because it marks neither its beginning nor its end; a single line may use `//`.
+2. **Length.** A unit is at most 500 characters long. Longer reasoning moves out of the code and is reached through the identifier.
+3. **Rewriting.** An agent that rewrites the comment of another agent ends it with `(rewritten: <agent id>)`, where the agent id is the `<role>:<name>` form the agent naming assigns.
+4. **Identifier.** A work-item identifier stands in the qualified form `M{NNN}-WI-{NNN}`; where a comment names a step of a memo as a time anchor, it uses the canonical form `M{NNN}-{PP}-{RR}`. The admission of the one internal reference in a code comment is specified in the communication chapter ([/specification/internal-vs-external-communication/](/specification/internal-vs-external-communication/)).
+
+---
+
+## The Described Reference
+
+A **described reference** is a comment that carries an identifier and a short factual statement, and nothing else. The identifier makes the full reasoning findable in the database; the statement is readable without that background. Identifier and brevity are **one rule**, not two: the comments that carry an identifier today are also the longest ones, so a rule that asked for the identifier without the length cap would make comments longer, and a cap without the identifier would cut reasoning without leaving a way back to it.
+
+A comment that states behaviour and has a body of 40 characters or more MUST carry the qualified work-item identifier `M{NNN}-WI-{NNN}`. The threshold of 40 characters separates a statement from a marker; a bare `WI-{NNN}` names a work item of no memo in particular and does not satisfy the rule.
+
+| It carries | It does not carry |
+|---|---|
+| the qualified work-item identifier, through which the reasoning resolves | the reasoning itself |
+| a short factual statement of what holds here | the derivation of how it was found |
+| where needed, the memo step identifier as a coarse time anchor | a narrated history of earlier versions |
+| the deviation, where the code deliberately departs from the norm | a repetition of the norm itself |
+| a clear beginning and end mark | doubt about where it begins and ends |
+| — | a summary of what the code beside it already says |
+| — | a description of units the writer has not read |
+
+---
+
+## The Comment Chain as an Audit Object
+
+The path from a partial reading to a propagated error is an audit object of its own. Laid out, it has six steps, and the layout shows where a rule can take hold:
+
+| Step | What happens | Where a rule takes hold |
+|---|---|---|
+| 1 | An agent searches a very large file by text and reads its first thousand lines | full reading of the unit that is written about |
+| 2 | It places two comments inside one method, based on what it has read | permitted: the method has been read |
+| 3 | It also writes a text about the whole class at the top, based on the thousand lines | the break: the unit of the comment is larger than the unit that was read |
+| 4 | The text about the class grows longer and more technical than the knowledge supports | an evidence level per statement |
+| 5 | Months later a second agent reaches another place and sees only part of the comment | the comment carries no date, so its age cannot be seen |
+| 6 | It reads the comment as a valid description and builds on it | an identifier through which the statement resolves in the database |
+
+The break lies at step 3, not at step 1: reading a thousand lines is not an error as long as the writing stays within them. The right of [The Right to Comment](#the-right-to-comment) is the rule placed at that step. The phenomena along the chain are named only: blind searching at steps 1 and 5, self-sustaining elaboration at step 4, and repetition drift at step 6.
+
+The chain has a computable feature: **the newest commit on the code right below a comment is younger than the newest commit on the comment itself.** A comment with that feature may describe code that has changed since it was written. A check measures the feature over the history of the repository and reports it; it does not fail on it, because no threshold has been set.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [./05-publishing-principle.md](./05-publishing-principle.md) — what of the conventions and their implementation is published versus kept private.
 - [./02-per-chapter-format.md](./02-per-chapter-format.md) — the chapter format a convention's readable body is authored in.
+- [./13-styleguide.md](./13-styleguide.md) — the styleguide that fixes the written form of terms and identifiers.
 - [/session/namespace-registry/](/session/namespace-registry/) — the policy block (`kind:"policy"`, `REQ-SS-POLICY`) a convention set registers as.
 - [/specification/internal-vs-external-communication/](/specification/internal-vs-external-communication/) — the communication chapter that owns the readable `J1`–`J12` table.

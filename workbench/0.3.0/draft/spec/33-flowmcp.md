@@ -27,6 +27,23 @@
 }
 ```
 
+The local cache beside it is registered as a folder of its own and shares this page:
+
+```folder
+{
+  "name":       ".flowmcp/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "Regenerable FlowMCP namespace-index.json cache — generated machinery, gitignored; the local side of the FlowMCP custom folder.",
+  "goesIn":     "The namespace-index.json the FlowMCP CLI writes so it can resolve tools fast.",
+  "doesNot":    "Authored FlowMCP content or output (that is flowmcp/); the global CLI installation (that is ~/.flowmcp/); obsolete tools/ or prompts/ sub-trees.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
+
 > The Folder Contract is the machine-readable ` ```folder ` block defined in the session conventions ([session/13-conventions.md](/session/conventions/)) — the authored source this folder's row in the central registry ([12-folders.md](./12-folders.md)) and the derived project config are generated from. Outside `repos/` no remote may be attached, so `remote` is `forbidden` and a local, own git is `discouraged`.
 
 ---

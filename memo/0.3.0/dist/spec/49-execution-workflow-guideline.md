@@ -6,7 +6,7 @@ spec_file: "49-execution-workflow-guideline.md"
 order: 49
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/49-execution-workflow-guideline.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/49-execution-workflow-guideline.md."
@@ -71,6 +71,21 @@ Build and verification are separate stations: the same object is **never built a
 
 ---
 
+## Scope — Which Work Pulls Which Mechanism
+
+The fit rule above decides one kind of work: running a **phase of a rollout**. Four other kinds run just as regularly — writing a revision, finalizing a memo, landing a run, and maintaining the repo cards — and none of them carried an assignment, so each was decided again from scratch every time it came up. The table below closes that by naming, per kind of work, the one mechanism it pulls. It writes on the same footing as the fit rule: a row says what a run of that kind MAY use, and none of them adds an obligation the chapter did not already carry.
+
+The vocabulary is closed and has **four** values — the three mechanisms of this chapter (`research fan-out`, `agent team`, `execution workflow`) plus `single actor`. **`single actor` is not a fourth orchestration mechanism.** It is the named absence of one: work that a single actor carries end to end, written down so the gap does not reopen as silence. Where a row points at a chapter, that chapter keeps its own rules — the fresh-context rule the two scoring poles carry at landing ([27-landing-the-plane.md](/specification/landing-the-plane/)) and the one-reader-per-card rule of maintenance scoring ([33-maintenance.md](/specification/maintenance/)) are referenced here rather than restated, because a second place stating the same rule becomes a second authority for it.
+
+| Work type | Mechanism | Why | Owning chapter |
+|-----------|-----------|-----|----------------|
+| **revision work** | `single actor`, with `research fan-out` for the open questions a revision raises | the units emerge while the text is being written, so a script has nothing to hold, and a second writer on the same revision file produces two voices | [07-revisions-and-questions.md](/specification/revisions-and-questions/) |
+| **finalization** | `execution workflow` | the set of checks stands before the run starts, and each check reads in a fresh context because the author cannot grade their own fidelity | [11-quality-and-finalization.md](/specification/quality-and-finalization/) |
+| **landing** | `execution workflow` | the step list of the landing stands before the run starts, while the two scoring poles keep the fresh-context rule their own chapter sets | [27-landing-the-plane.md](/specification/landing-the-plane/) |
+| **maintenance** | `execution workflow` | the card set is known before the run starts — one unit per card, each read in a fresh context | [33-maintenance.md](/specification/maintenance/) |
+
+---
+
 ## The Sequence of a Unit of Work
 
 The sequence below is the course of **one** unit of work that does not run cleanly. Every step is a step that occurred in a real run; none is constructed. The steps are in order, and each names its **actor** and the **context** that actor runs in.
@@ -93,6 +108,27 @@ The sequence below is the course of **one** unit of work that does not run clean
 | 14 | `landing` | Name the open ends honestly, write the chronicle and the handover, clean up the worktrees. Landing is not optional; the stages are defined in [38-stage-model.md](/specification/stage-model/) and are not restated here | Orchestrator, lean context |
 
 Two properties of the sequence are load-bearing. It is **not a happy path**: steps 4 through 8 and step 11 exist only because a run went sideways, and a guideline that omits them describes a run nobody has. And its fresh-context steps are **fresh on purpose** — the actor that built a thing cannot grade whether it is faithful, so steps 3 and 4 never run in the building context.
+
+---
+
+## Every Cold Start Composes Its Prompt
+
+A **cold start** is a point at which an agent begins with an empty context. The sequence above contains **five** of them — `build`, the two checking steps `verify` and `verify-fail`, the pulled-forward unit in `reorder`, and the re-admitted unit in `resume`. Step 5 `fix` is deliberately not one: it goes back into the worker's existing build context, and composing a fresh prompt there would replace the very state the fix depends on. That distinction carries the rule — a cold start is the one moment at which everything the agent will ever know has to be put in front of it at once.
+
+**At every cold start the starting prompt is composed by the prompt compositor ([15-prompt-generator.md](/specification/prompt-generator/)); it is not written out by hand.** The obligation attaches to the cold start, not to the mechanism that produced it, and it therefore holds in **both** of the places this chapter names:
+
+| Where the cold start happens | Who composes, and when |
+|------------------------------|------------------------|
+| **execution workflow** — a script step that spawns an agent | the step itself, before it spawns. A hand-written brief inside a script step is a defect of the step, not a style of it |
+| **agent team** — the Lead spawning a Worker, a Verifier or an adversarial reviewer | the Lead, before it spawns. This side already carried the rule; it is named here so the two sides read as one obligation rather than two |
+
+Naming only one of the two reproduces the gap this section was written to close. That gap was never a missing rule — it was a rule only one side knew, and a run that had a workflow was taken to have settled its starting state along with it.
+
+**A workflow step and an agent spawn are two different things.** *The workflow carries the cadence* — when a unit starts, in which order, and what may be steered between two runs. *The compositor carries the starting state* — what the agent knows at the instant it begins. The cadence is the subject of *Small Runs, Steered Between Them* and of the grammar below; the starting state is the subject of this section. Neither substitutes for the other, and the failure is one-directional: a run that gets the cadence right and hands its agents hand-written briefs has done half the job, and it is the half no later step repairs, because an agent that started without its brief cannot be told afterwards what it should have been reading.
+
+**The rule is checked at the artifact, not at the report.** A run that states it composed is not evidence; the composed prompt and its manifest entry are. A composition run writes one manifest entry per unit, and an entry carries, per block it placed, the source that block came from, its length and its hash — so compliance is readable off the manifest without opening a single prompt file. A claim in a report that no manifest backs is an unchecked claim, and it is graded as one.
+
+**A refusal is a correct outcome, not an exemption.** A plan that names the chapters its phases work on composes; a plan that names none is **rejected with its count** rather than composed from a guess. What this section requires is that the cold start goes through the compositor — not that every plan comes out the other side.
 
 ---
 
@@ -168,6 +204,37 @@ These dispositions describe a **unit of work over the run**. They are not the pe
 
 ---
 
+## What Separates the Two Stations
+
+The rule that keeps the two apart is stated in *Small Runs, Steered Between Them* above and is not repeated here; what this section states is what a station is **made of**. The occasion for writing it down was measured, not imagined: in one run the building and the checking shared a tree, and the reading the check compared against had already been moved by the build that was still writing into it. Nothing there was done in bad faith — the two stations simply had no named properties, so nothing marked the moment they collapsed into one.
+
+| Property | What it demands | Where it is normative |
+|----------|-----------------|-----------------------|
+| **Separate actors** | the actor that built a unit never grades it — the doer is not the grader | [23-requirements.md](/specification/requirements/); named here, fixed there |
+| **Separate contexts** | the checking station reads in a fresh context, with nothing carried over from the build | the fresh-context rule for evaluators in [13-orchestration.md](/specification/orchestration/) |
+| **A starting stance of FAIL** | the verdict begins red and is earned | **here** — this section is its home |
+| **Separate steps of the run** | the two stations never occupy the same step for the same object | the rule in *Small Runs, Steered Between Them*; the sequence above shows it step by step |
+
+**The starting stance.** The first two properties are named here and settled elsewhere; this one has no other home, so it is stated in full:
+
+> A verification station **starts at FAIL**: the verdict is not a default the work loses, it is a result the work has to earn.
+
+Two neighbouring rules say something adjacent and different, and the difference is worth stating so a later reader does not read three rules as one. *Distrust PASS* ([31-goals.md](/specification/goals/), [33-maintenance.md](/specification/maintenance/)) is about the **report**: a green report is not evidence of anything. The ternary rule that governs a check's status — the one the first row above points at — is about the **check that never ran**: it reports `INCONCLUSIVE` rather than quietly reporting green. The starting stance is about the **verdict itself**: an object is not green because nobody found anything, it is green because something was compared and found right.
+
+**What the station measures against.** The second rule without another home is the standing of the expectation the unit was given before it was built:
+
+> The frozen expectation is the **floor of the check, not its ceiling**: every frozen assertion must hold, and the station may add checks of its own — what it must not do is replace a frozen assertion with a weaker one it prefers.
+
+Two precisions belong with it. **Which artifact carries the frozen expectation is not decided here**: it is the negotiated contract where one exists, and otherwise the unit's own acceptance criteria — [13-orchestration.md](/specification/orchestration/) settles that and this section does not restate it. And the sentence **does not contradict** the rule there that an evaluator grades against the agreed contract rather than the original prose: that rule forbids re-interpreting the prose in place of the agreed target, it does not forbid adding checks. The floor stays mandatory; the ceiling stays open.
+
+**What invalidates a baseline.** The occasion named at the top of this section has one measurable consequence, and it is the only new claim this paragraph makes:
+
+> A baseline holds only as long as **nothing is being built in the tree it was read from**.
+
+The worktree **lifecycle** — creating one, resolving it, the cleanup that may not be skipped — stays in [16-git-security-versioning.md](/specification/git-security-versioning/), and the **UI baseline** captured at phase-start stays in [13-orchestration.md](/specification/orchestration/); this section names both and restates neither. What is new is the measuring claim alone: a tree that is being built in is not a basis of comparison, so a reading taken from it expires with the next write rather than at the end of the run.
+
+---
+
 ## One Consolidated Verifier per Unit of Work
 
 The verification effort per unit settled at a value that was reached from both sides, and both error margins are worth naming because both were paid for.
@@ -220,6 +287,8 @@ The reason is one-directional and cheap to state: work accepted under the weaker
 - [13-orchestration.md](/specification/orchestration/) — the roles, the parallelism dials, the state files, the worker exits and the crash recovery this sequence runs inside; the mechanism policy this chapter is the fit half of.
 - [50-orchestrator-role.md](/specification/orchestrator-role/) — the orchestrator's contract: what the role decides alone, the repair cap and its consequence, and the cadence decision this chapter points at instead of tabulating.
 - [14-agents-skills-tasks.md](/specification/agents-skills-tasks/) — the three agent-execution primitives; the execution workflow is the type-(c) Dynamic Workflow applied to a phase.
+- [15-prompt-generator.md](/specification/prompt-generator/) — the compositor the cold-start rule above points at, and the manifest that makes compliance with it readable at the artifact.
+- [23-requirements.md](/specification/requirements/) — the home of the separation of actors that the station table above points at, and of the ternary states a check may report when it could not run.
 - [08-phases-and-prds.md](/specification/phases-and-prds/) — the dependency tree that decides which units may share a moment.
 - [12-rollout.md](/specification/rollout/) — the Generate→Execute→Evaluate rollout the sequence above is one unit of.
 - [27-landing-the-plane.md](/specification/landing-the-plane/) — the OPEN ENDS categories of the landing step, distinct from the dispositions here.

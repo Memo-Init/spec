@@ -15,6 +15,16 @@
             "description": "The kind:policy block this register registers under — the register is an adjunct of that block, never a parallel machine.",
             "pattern": "^/session/namespace-registry/$"
         },
+        "axes": {
+            "type": "array",
+            "description": "Optional state axes (memo 083 state-word register): each axis names the order of the term ids that sit on it.",
+            "items": { "$ref": "#/definitions/axis" }
+        },
+        "mandatoryClauses": {
+            "type": "array",
+            "description": "Optional mandatory clauses that bind every report of a state word.",
+            "items": { "$ref": "#/definitions/mandatoryClause" }
+        },
         "terms": {
             "type": "array",
             "minItems": 1,
@@ -22,6 +32,33 @@
         }
     },
     "definitions": {
+        "axis": {
+            "type": "object",
+            "required": [ "id", "order" ],
+            "additionalProperties": false,
+            "properties": {
+                "id": { "type": "string", "enum": [ "completeness", "effectiveness", "reversibility", "verb" ] },
+                "label": { "type": "string", "minLength": 1 },
+                "monotone": { "type": "boolean" },
+                "rule": { "type": "string", "minLength": 1 },
+                "order": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": { "type": "string", "pattern": "^AT-[a-z0-9][a-z0-9-]*$" },
+                    "description": "Term ids in axis order; every id MUST hit a term of the store (checked by the generator)."
+                }
+            }
+        },
+        "mandatoryClause": {
+            "type": "object",
+            "required": [ "id", "rule", "reason" ],
+            "additionalProperties": false,
+            "properties": {
+                "id": { "type": "string", "pattern": "^MC-[0-9]+$" },
+                "rule": { "type": "string", "minLength": 1 },
+                "reason": { "type": "string", "minLength": 1 }
+            }
+        },
         "anchorTerm": {
             "type": "object",
             "required": [ "id", "label", "definition", "negativeDelimitation", "misLabels", "version", "owningFamily", "owningChapter" ],
@@ -59,7 +96,7 @@
                 },
                 "owningFamily": {
                     "type": "string",
-                    "enum": [ "memo", "meta-spec", "session", "workbench" ],
+                    "enum": [ "memo", "meta-spec", "session", "workbench", "governance" ],
                     "description": "The family whose chapter owns the in-document definition (AT2)."
                 },
                 "owningChapter": {
@@ -70,6 +107,23 @@
                 "namespaceToken": {
                     "type": "string",
                     "description": "Optional cross-family qualifier for the same label used in different namespaces."
+                },
+                "axis": {
+                    "type": "string",
+                    "enum": [ "completeness", "effectiveness", "reversibility", "verb" ],
+                    "description": "Optional state axis the term sits on."
+                },
+                "ordinal": {
+                    "type": [ "integer", "null" ],
+                    "description": "Position on a monotone axis; null on the other axes."
+                },
+                "evidenceRequired": {
+                    "type": "boolean",
+                    "description": "true: the value MUST NOT be claimed without named evidence; without it the fallback holds."
+                },
+                "fallbackTo": {
+                    "type": [ "string", "null" ],
+                    "description": "The term id that holds when the evidence is missing; it MUST hit a term of the store (checked by the generator)."
                 }
             }
         }

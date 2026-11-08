@@ -6,7 +6,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/30-wiki.md."
@@ -19,16 +19,16 @@ The wiki is the project's **discovery system** — the **entry point**, the sing
 
 ## Folder Contract
 
-`.wiki/` is a **reserved, default-on** custom folder — present in every project like `.memo/`, not an opt-in extra — and this page is its per-folder entry:
+`.wiki/` is an **optional** custom folder — a project adds it when it uses the wiki — and this page is its per-folder entry:
 
 ```folder
 {
   "name":       ".wiki/",
-  "status":     "reserved-default-on",
+  "status":     "optional",
   "level":      "project",
   "entryPoint": "index.md (published as \"overview\")",
   "convention": "OKF",
-  "purpose":    "LLM-generated project wiki, an OKF-conformant knowledge bundle; reserved default-on, present in every project.",
+  "purpose":    "LLM-generated project wiki, an OKF-conformant knowledge bundle; optional, added by a project that uses the wiki.",
   "goesIn":     "The generated wiki pages (OKF nodes + untyped links), including the index.md entry point published as \"overview\".",
   "doesNot":    "A second, drifting copy of the architecture graph (the wiki points at context/architecture-okf/, never copies it); the chronicle / timeline.",
   "git":        "discouraged",
@@ -80,9 +80,9 @@ The wiki answers in the **present tense**: a wiki page states what is understood
 
 ## Wiki for All, Enforced Architecture for Internal
 
-The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required. Because every project has a wiki, `.wiki/` is a **reserved, default-on** folder — present by default like `.memo/`, not an opt-in optional folder ([12-folders.md](/workbench/folders/)). This resolves the older tension in which the contract called `.wiki/` *optional* while this chapter called it universal: the universal intent wins, and the folder's status now matches it.
+The wiki is the entry point wherever a project carries one, but the structured architecture beneath it is not universally required. `.wiki/` is an **optional** folder ([12-folders.md](/workbench/folders/)): a project adds it when it uses the wiki, and a project without one is conforming — the contract table, this chapter and the folder block say the same.
 
-- **Every project** — internal or foreign — gets a wiki, because every project has unstructured knowledge worth categorizing and querying. The wiki is the entry point for all of them.
+- **Any project** — internal or foreign — may carry a wiki, because every project has unstructured knowledge worth categorizing and querying. Where it exists, the wiki is the entry point for that knowledge.
 - **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([41-project-architecture.md](/workbench/project-architecture/)).
 
 So "the wiki finds everything" holds for all projects; "the project has a structured architecture" holds for the internal ones.

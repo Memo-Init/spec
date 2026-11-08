@@ -6,7 +6,7 @@ spec_file: "22-tree-cli-recommended-way.md"
 order: 22
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/22-tree-cli-recommended-way.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/22-tree-cli-recommended-way.md."
@@ -162,6 +162,23 @@ This pattern is not only for exposing third-party tools — it is the **recommen
 - **It scales by adding a row, not a branch of code.** A new capability is a new leaf in the right domain folder; the tree, the help, and the `--describe` rendering pick it up for free.
 
 How to build one, in short: **one folder per domain**, a branch per domain with `children`, a leaf per action carrying behaviour-encoding Zod `input`/`output` descriptions and an `execute`; return the shared envelope; register the domain in the tree and let `describe()` render the help. A new internal CLI follows this shape so that, from day one, its help is a specification and its commands are discoverable the same way every other project tool is.
+
+---
+
+## The Search Entry — Four Channels
+
+This section exists so that a search over the project's own knowledge has one entry and a fixed order, instead of a different grep for every question. `memo search <text>` searches **four channels**, and it searches them **database first**: every search starts in the memo databases, because that is where the facts of a memo live with their identifiers; the three text channels follow.
+
+| Channel | Entry | What a hit carries |
+|---------|-------|--------------------|
+| `db` | every memo database of the project (without `--memo`: all of them, read through the central read path), a `LIKE` match over the text columns of topics, work items, block sections, transcripts, decisions and research | the qualified identifier (`M{NNN}-WI-{NNN}`, `M{NNN}-T{NNN}`), the table and an excerpt of the matching text |
+| `git` | the commit subjects of every repository (`git log --all --grep`), whose `[PREFIX M{NNN}-{PP}-{RR}]` form ties a commit to its memo, phase and order, then the tracked text (`git grep`) | the commit or the file and line |
+| `header` | the header lines (the first twenty lines) of the Markdown documents of the memos and the repositories, where the `Agent-IDs` and `Work-Items` fields stand | the document and the line |
+| `comment` | the code comments of the `.mjs` files of the repositories, where a work item is named only in its qualified form | the file, the line and the qualified identifier |
+
+Without `--channel` all four run, the database channel first; `--channel db|git|header|comment` runs one. The result names the channels in the order they ran, the hits, and the comparison basis per channel (`compared.databases` is the number of memo databases searched); a search that compared zero databases is not a pass.
+
+The neighbour read belongs to the same entry: `memo db neighbors --memo <NNN> --id <identifier>` resolves, in one call, every record the jump edges connect to an identifier — its blocks, its chapter, its work items and their evidence.
 
 ---
 

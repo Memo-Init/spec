@@ -27,6 +27,7 @@ const STORE_PATH = join( REPO_ROOT, 'data/anchor-terms.json' )
 const SCHEMA_PATH = join( REPO_ROOT, 'data/anchor-terms.schema.json' )
 const RESOLVED_PATH = aggregatePath( { repoRoot: REPO_ROOT, file: 'anchor-terms.resolved.json' } )
 const REGISTER_PATH = aggregatePath( { repoRoot: REPO_ROOT, file: 'anchor-terms.register.md' } )
+const DICTIONARY_PATH = aggregatePath( { repoRoot: REPO_ROOT, file: 'anchor-terms.dictionary.md' } )
 const GENERATOR = 'scripts/generate-anchor-register.mjs'
 
 
@@ -90,6 +91,32 @@ const renderRegister = ( { store, fromCommit } ) => {
         } )
         .join( '\n\n' )
 
+    const axes = ( store.axes || [] ).length > 0
+        ? [
+            '## State Axes',
+            '',
+            '| axis | monotone | order |',
+            '|------|----------|-------|',
+            ...store.axes.map( ( a ) => `| \`${ a.id }\` | ${ a.monotone === true ? 'yes' : 'no' } | ${ a.order.map( ( id ) => `\`${ id }\`` ).join( ' → ' ) } |` ),
+            '',
+            '---',
+            ''
+        ]
+        : []
+
+    const clauses = ( store.mandatoryClauses || [] ).length > 0
+        ? [
+            '## Mandatory Clauses',
+            '',
+            '| id | rule | reason |',
+            '|----|------|--------|',
+            ...store.mandatoryClauses.map( ( c ) => `| \`${ c.id }\` | ${ cell( { text: c.rule } ) } | ${ cell( { text: c.reason } ) } |` ),
+            '',
+            '---',
+            ''
+        ]
+        : []
+
     return [
         '# Anchor-Term Register',
         '',
@@ -108,7 +135,53 @@ const renderRegister = ( { store, fromCommit } ) => {
         '',
         '---',
         '',
+        ...axes,
+        ...clauses,
         details,
+        ''
+    ].join( '\n' )
+}
+
+
+// A table cell never carries a raw pipe.
+const cell = ( { text } ) => text.replace( /\|/g, '\\|' )
+
+
+// The first sentence of a definition: text up to the first sentence mark that ends the text or precedes a blank.
+const firstSentence = ( { text } ) => {
+    const match = text.match( /^.*?[.!?](?=\s|$)/ )
+
+    return match === null ? text : match[ 0 ]
+}
+
+
+// The dictionary view (WI-154): the approved words of the register and the words not to use, one row per
+// entry in store order. A view on the one store, never a second vocabulary.
+const renderDictionary = ( { store, fromCommit } ) => {
+    const rows = store.terms
+        .map( ( t ) => {
+            const doNotUse = t.misLabels.length > 0
+                ? t.misLabels.map( ( m ) => `\`${ m }\`` ).join( ', ' )
+                : '—'
+
+            return `| \`${ t.id }\` | **${ t.label }** | ${ doNotUse } | ${ cell( { text: firstSentence( { text: t.definition } ) } ) } | ${ t.owningFamily } / ${ t.owningChapter } |`
+        } )
+        .join( '\n' )
+
+    return [
+        '# Anchor-Term Dictionary',
+        '',
+        '> **Informative.** This page is generated from `data/anchor-terms.json` by',
+        `> \`${ GENERATOR }\`. Do not hand-edit — edit the store and re-render. It is a view on the`,
+        '> anchor-term register, not a second vocabulary.',
+        '',
+        `Provenance: generated from commit \`${ fromCommit }\`.`,
+        '',
+        `**${ store.terms.length }** approved words.`,
+        '',
+        '| id | approved word | do not use | meaning | owning chapter |',
+        '|----|---------------|------------|---------|----------------|',
+        rows,
         ''
     ].join( '\n' )
 }
@@ -156,6 +229,21 @@ const main = async () => {
         abort( { errors } )
     }
 
+    // Every fallbackTo and every id in axes[].order MUST hit a term of the store (reported like AT2).
+    const idSet = new Set( ids )
+    const danglingRefs = [
+        ...store.terms
+            .filter( ( t ) => typeof t.fallbackTo === 'string' && idSet.has( t.fallbackTo ) === false )
+            .map( ( t ) => `[ERROR] ${ t.id }: fallbackTo "${ t.fallbackTo }" hits no term of the store` ),
+        ...( store.axes || [] )
+            .flatMap( ( a ) => a.order
+                .filter( ( id ) => idSet.has( id ) === false )
+                .map( ( id ) => `[ERROR] axis ${ a.id }: order entry "${ id }" hits no term of the store` ) )
+    ]
+    if( danglingRefs.length > 0 ) {
+        abort( { errors: danglingRefs } )
+    }
+
     const fromCommit = resolveCommit( { cwd: REPO_ROOT } )
 
     const resolved = {
@@ -176,10 +264,12 @@ const main = async () => {
 
     await writeFile( RESOLVED_PATH, `${ JSON.stringify( resolved, null, 4 ) }\n`, 'utf-8' )
     await writeFile( REGISTER_PATH, renderRegister( { store, fromCommit } ), 'utf-8' )
+    await writeFile( DICTIONARY_PATH, renderDictionary( { store, fromCommit } ), 'utf-8' )
 
     console.log( `[OK] anchor-register: ${ store.terms.length } terms validated (AJV + AT1 + AT2).` )
     console.log( `[OK] wrote ${ RESOLVED_PATH.replace( REPO_ROOT + '/', '' ) }` )
     console.log( `[OK] wrote ${ REGISTER_PATH.replace( REPO_ROOT + '/', '' ) }` )
+    console.log( `[OK] wrote ${ DICTIONARY_PATH.replace( REPO_ROOT + '/', '' ) }` )
 }
 
 

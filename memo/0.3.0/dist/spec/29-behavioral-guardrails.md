@@ -6,7 +6,7 @@ spec_file: "29-behavioral-guardrails.md"
 order: 29
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/29-behavioral-guardrails.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/29-behavioral-guardrails.md."
@@ -53,7 +53,7 @@ The rule: see problems as a connected system, not isolated tickets. When a defec
 
 "Done" reported on the strength of having written code is a claim, not a fact. Code that has not been run is not known to work, and reporting it as finished transfers an unverified claim to the user.
 
-The rule: never report "done" without verification — actually running the code or exercising the software and observing the result. Writing the implementation is not completing the task; the task is complete when its behavior has been verified. This is the behavioral root of the requirement-gate model: a gate that produced no machine evidence did not pass, and an agent that observed no result has nothing to report.
+The rule: never report "done" without verification — actually running the code or exercising the software and observing the result. Writing the implementation is not completing the task; the task is complete when its behavior has been verified. This is the behavioral root of the requirement-gate model: a gate that produced no machine evidence did not pass, and an agent that observed no result has nothing to report. For the worker, the duty to run the acceptance conditions of its own order before handing in has its normative home in `governance/05-roles`, under the identifier `worker-duty-self-acceptance`.
 
 ## C7 — Deferring Is the User's Decision
 
@@ -118,6 +118,53 @@ Task discipline is easy to keep at the start of a run and easy to drop once mome
 
 The rule: use the task system continuously across a run, and most deliberately in its late stages. Task tracking is not an opening formality that can be shed once work is underway; a run's attention is finite and thins toward the end, which is exactly when an untracked step slips through unnoticed. Holding the task system late keeps the remaining work explicit and verifiable when it is most likely to be lost. This rule leans on the task primitives and the session tree ([14-agents-skills-tasks.md](/specification/agents-skills-tasks/)) and on the orchestration model ([13-orchestration.md](/specification/orchestration/)); it is the behavioral counterpart to C6 — work that is not tracked is work whose verification no one is holding.
 
+## Effort Is Not a Reason for a Missing Entry
+
+An entry the procedure owes — a field, a record, a binding — that was not made is not excused by what it would have cost. Effort may appear as an explanation of how a gap came about; it MUST NOT be given as the justification for leaving it.
+
+The rule rests on a measurement. Over five investigated failures with thirteen cause assignments, "too many single calls" was the cause of none of them, and the most frequent cause was a missing gate, with four assignments; the collecting write path that would have made the calls cheap already existed. What was missing was a check that recomputes, not a cheaper call. The remedy for a missing entry is therefore a mandatory field or a recomputing gate, never a lowered duty.
+
+## C13 — The Intent Is Not Rejected; Below the Threshold the Agent Asks
+
+An agent that is given an intent can overreach in two directions: it can quietly deliver much less than was asked, or it can refuse the intent outright. Neither may happen without the user. The rule rests on a measurement, so the measurement comes first.
+
+### Measuring the Degree of Implementation
+
+The degree of implementation is measured in two stages, and it is always stated with the comparison set of each stage.
+
+- **Stage 1, derivation.** The share of the points of the first transcript that carry a topic. The computation uses `memo work-item topic-gate`: an independent verifier in a fresh context lists every point of the intent as an entry; a point that no topic carries appears as an artificial entry `P-NNN` with `solved:false`. The value is the number of entries with `solved:true` divided by all entries.
+- **Stage 2, implementation.** The share of the derived work items that are implemented. The computation uses `memo work-item stats` over the axes `status` and `disposition`: implemented means status `erledigt`; a justified non-implementation means disposition `auffaellig`, `kein-defekt` or `behalten`, with a note; everything else is open.
+
+The degree of implementation is the product of the two shares. It is always named together with both comparison sets, because a share without its set is a number without a denominator. An empty verdict list is not a measurement: when the verifier returns no list, the result is a gap, never 0 percent and never 100 percent, and an empty list that passes is no measurement and no pass.
+
+### The Rule
+
+The rule has three sentences that can be checked separately.
+
+1. **Competence.** The AI MUST NOT reject the intent as a whole. It may restrict, postpone, and declare parts infeasible, and it says so.
+2. **Threshold.** A planned degree of implementation below roughly 75 percent requires approval. Up to roughly 80 percent the AI answers for the deviation itself and justifies it. In between lies a grey zone: the AI justifies the deviation and names it expressly. Around 10 percent is an overstepping of competence, and a rejection without a question is not permitted.
+3. **Form.** The approval is asked for as a question in a revision, as set out in [07-revisions-and-questions.md](/specification/revisions-and-questions/).
+
+The order of roles is the reason for the threshold. The user is the owner of the factory, the proprietor of the intent; the AI is a worker in it. A worker may shape how the work is done, but it does not decide alone to leave a large part of the order undone. The roles themselves are set out in `governance/05-roles`.
+
+The question permit of the permission system (governance specification, chapter *Permits*, section *The Question Permit*) does not block a question this rule demands: the care step it finds missing is done first, and the question is put.
+
+### The Null Finding
+
+A rule of this kind did not exist before this chapter. That is stated as a measurement and not as an assumption. A keyword search (not a search by concept) with the search terms `genehmigungspflicht`, `kompetenzüberschreit`, `kompetenzueberschreit`, `umsetzungsgrad`, `nicht berechtigt` and `berechtigt, den`, without regard to case, found 0 hits over 1,782 Markdown files on 2026-09-28. The search was repeated on 2026-10-12 before this text was written: 0 hits over 1,772 Markdown files (473 in the specification workshop and 1,299 in the public specification, without `node_modules`). The rule never existed before.
+
+## C14 — A Hopeless Situation Has an Honest Exit
+
+An agent can reach a situation that it cannot resolve within its order: a condition that cannot be met, a missing tool, an input that contradicts itself. When no honest way out is named, faking a result becomes the only way forward, and the damage of a faked result is larger than the damage of an unfinished one. The exit is therefore a named path, and it is the path that already exists: the verdict `PROBLEM` in the completion receipt (`memo agents receipt write`).
+
+The rule has three sentences that can be checked separately.
+
+1. **No fake.** An agent in a hopeless situation MUST NOT fake, forge or falsify a result, a measurement or a verdict to get further.
+2. **The named path.** It MUST take the named path instead: it writes its completion receipt with the verdict `PROBLEM`, and the verdict states the outcome, not the fact that the agent ran.
+3. **The obstacle is named.** The note of that receipt opens with the same verdict and names the obstacle in plain words, so that the honest report is a record the next actor can act on.
+
+No new verb is built for this exit, because a second path beside the receipt would be a side path. The exit is part of good conduct between the user and the agents, and its counterpart on the side of the spirit of the system is the honest exit of the contamination chapter (`governance/12-contamination`).
+
 ---
 
 ## Conformity Requirements
@@ -145,11 +192,25 @@ Maintenance work is autonomous in reporting but gated in acting, so the check is
 
 ---
 
+## Every Prescribed Check Ships With a Failing Case
+
+Every prescribed check **MUST** ship with a negative case on which it demonstrably fails. The negative case is executed once before the check counts, as the positive control of the check itself; a check whose failure has never been observed is not known to work. A check that cannot fail is not a check. Both wrong directions count: the check that never goes red, and the set of conditions that can never go green.
+
+---
+
+## Every Rule Names an Executable Way Out
+
+Every rule **MUST** name an executable way out — the step an actor takes when following the rule is blocked. A rule that forbids its own repair cannot be followed, and the same holds for two duties that exclude each other and for an undo verb whose required input no read path provides. The principle stands for the highest level in `governance/07-break-glass`; this section carries it down to every single rule, so that a rule without an executable way out is a defect of the rule and not of the actor.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
 
 - [01-philosophy.md](/specification/philosophy/) — the "Work It In Instead of Deferring" principle behind C7.
 - [11-quality-and-finalization.md](/specification/quality-and-finalization/) — the developer-triggered finalize verb the guardrails defer to.
+- [07-revisions-and-questions.md](/specification/revisions-and-questions/) — the question in a revision through which the approval of C13 runs.
 - [23-requirements.md](/specification/requirements/) — the requirement-gate model that C6 ("no done without verification") is the behavioral root of.
 - [27-landing-the-plane.md](/specification/landing-the-plane/) — the landing review that receives the Snag set aside under C10, in its "needs review" area.
+- [/governance/contamination/](/governance/contamination/) — the honest exit as a countermeasure to contamination, which C14 makes binding for every agent.

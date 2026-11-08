@@ -6,7 +6,7 @@ spec_file: "02-per-chapter-format.md"
 order: 2
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "meta-spec/0.3.0/draft/spec/02-per-chapter-format.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.3.0/draft/spec/02-per-chapter-format.md."
@@ -68,6 +68,10 @@ The bottom `## Related` section is an annotated map, not a bare link list, and i
 ### The Load-Art Marker
 
 A chapter **MAY** declare a **load-art** — when it applies during a session — surfaced as a column on the family's chapter-index and, where useful, in the chapter's own metadata. There are two kinds: **always-on**, a chapter that applies to every interaction and is part of the permanent baseline, and **conditional**, a chapter that applies only when its trigger context is present (files of a given kind are in play, error codes are being defined, push time). A chapter **MAY** be mixed — a discipline part always-on, a setup part conditional — and states which part is which in its intro. The load-art is a reading aid projected onto the chapter index; it does not change the RFC-2119 conformance of a chapter's rules, which is governed by the normative/informative marking above.
+
+### The Standards Declaration
+
+Every document the memo system generates states in its header which standards it follows: one row `Standards` in the header table. The value names the key-word standard (`BCP 14 (RFC 2119, RFC 8174)`) and the language profile (`SR-01 to SR-12, meta-spec/12`). A specification chapter inherits the declaration of its family overview and MAY repeat it. A document that follows no standard is written in freestyle; its `Standards` row then reads `Freistil` with the reason. Freestyle is the exception; a missing row is a defect, not freestyle.
 
 ---
 

@@ -44,6 +44,8 @@
 | Path | Holds |
 |------|-------|
 | `memos/<NNN-slug>/` | One memo each — its revisions, topics, context, transcripts, validation, and rollout working files. |
+| `memos/<NNN-slug>/memo-<NNN>.db` | The memo database — the per-memo half of the two-part split: everything of that memo's own life. |
+| `project.db` | The project database — the cross-memo half: the mental model, maintenance, goals, the chronicle, snags and research. |
 | `_requirements/` | The requirements store — registry, schema, and reports. |
 | `_references/` | Shared reference material cited across memos. |
 | `transcripts/` | Staged input transcripts before they become a memo or a revision. |

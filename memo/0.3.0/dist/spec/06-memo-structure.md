@@ -6,7 +6,7 @@ spec_file: "06-memo-structure.md"
 order: 6
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/06-memo-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/06-memo-structure.md."
@@ -81,7 +81,7 @@ Two handling rules are structural and apply regardless of the creative craft:
 
 ## The Topic Store Write-Side
 
-The topic store at `<memoDir>/_topics/` has two sides. Its read/coverage side — how derived topics are surveyed and how coverage is checked — is specified with the input pipeline ([04-input-pipeline.md](/specification/input-pipeline/)). This section adds the **write side**.
+The topic store at `<memoDir>/_topics/` has two sides. Its read side — how derived topics are surveyed — is specified with the input pipeline ([04-input-pipeline.md](/specification/input-pipeline/)). How **coverage** is checked is specified with the finalization gate ([11-quality-and-finalization.md](/specification/quality-and-finalization/), *Topic-to-block coverage*), which holds the only hard precondition for planning. This section adds the **write side**.
 
 The topic store is **written during input processing**: as topics are extracted from the dictated transcripts and linked material, each one is **registered** into `_topics/` at the moment it is identified. Registration is therefore not a later bookkeeping step — it is part of input processing itself, and it runs before the memo body is authored. This matters because the topic store is the **head of the executable chain**: the registered topics are what the downstream machinery later expands into research, chapters, and rollout units. If a topic is never registered on the write side, nothing downstream can pick it up, so the write side existing and running inside input processing is what makes the rest of the chain reachable.
 
@@ -101,6 +101,27 @@ This section specifies only the on-disk placement and the parent→child index. 
 ## Building On a Prior Memo
 
 When a memo builds on an earlier memo — continuing its work, depending on a decision it made, or extending a primitive it introduced — that dependency is **recorded** so it can later be verified rather than inferred. The record is a small, explicit pointer from the dependent memo to the one it builds on; it is enough to re-check, at any later point, that the thing being built on still holds. The broader cross-memo timeline — how memos relate over the whole life of a project — is kept in the history chapter ([26-memo-history.md](/specification/memo-history/)); here the point is only that the per-memo build-on dependency is captured at the structure level.
+
+---
+
+## The Chapter Contract
+
+Every numbered chapter of a revision carries the same mandatory sections, as level-three headings and in this order:
+
+1. `### Kontext`
+2. `### User-Auftrag`
+3. `### Ist-Zustand`
+4. `### Soll-Zustand`
+5. `### Bewertung`
+6. `### Conclusion`
+7. `### Belege`
+8. `### Topics`
+9. `### Work-Items`
+10. `### Abhaengigkeiten`
+
+The list is closed and it is checked: a chapter MUST carry each of the ten headings, in this order, and a check of the mandatory sections holds a chapter against exactly this list. The order is the order a chapter is read in — the context and the mandate of the user first, then the measured state and the target, then the judgement that refers to both the intent and the measurement, and the conclusion that follows from it, and only then the generated evidence, topics, work items and dependencies. In the database each mandatory section is stored under its machine value, never under its heading; the field contract ([52-field-contract.md](/specification/field-contract/)) names those values and states that additional sections a block carries are kept and not checked against this list.
+
+The user mandate names the source of every quote in parentheses, in one of two forms: `(file.ext:line)` or `(file.ext#S4)`. The second form names one contribution of a transcript by a stable identifier instead of a line, so the reference does not go stale when the source grows. The identifier is derived from the contribution heading of the recording, never written a second time: `S<n>` for a heading `### Beitrag S<n>`, `B<n>` for a heading `### Beitrag <n>`, `F<n>` for an answer block `## Antwort auf F<n>`. A quote referenced by identifier is verified against the span of that contribution — from its heading to the next heading of the same or a higher level. Any other suffix after the hash is not a source reference.
 
 ---
 

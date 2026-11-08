@@ -28,8 +28,26 @@ import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname( fileURLToPath( import.meta.url ) )
 const REPO = resolve( __dirname, '..' )
-// Skills live cross-repo: repos/spec/scripts → repos/spec → repos → repos/core/skills
-const SKILLS_DIR = resolve( __dirname, '..', '..', 'core', 'skills' )
+// Skills live cross-repo, and WHERE depends on which copy of this script is running. The promotion
+// copy resolves repos/spec/scripts → repos → repos/core/skills; the authoring copy in the
+// project-local spec workshop resolves <project>/spec/scripts → <project> → <project>/repos/core/skills.
+// One hardcoded hop therefore found nothing at all from the workshop and ALWAYS the living main tree
+// from the promotion copy — a worktree that ADDS skills was structurally invisible to the check, and
+// it reported "0 violations over 120 SKILL.md" over a tree that carried 124 (Memo 082, P13 A).
+//
+// Three properties fix that: the caller may name the directory outright (MEMO_SKILLS_DIR, the same
+// override shape MEMO_SPEC_DIR already has); otherwise the known layouts are tried IN ORDER; and the
+// directory that answered is printed with every verdict, so the comparison set is never implicit.
+const SKILLS_CANDIDATES = [
+    resolve( __dirname, '..', '..', 'core', 'skills' ),
+    resolve( __dirname, '..', '..', 'repos', 'core', 'skills' )
+]
+const SKILLS_FROM_ENV = process.env.MEMO_SKILLS_DIR === undefined || process.env.MEMO_SKILLS_DIR === ''
+    ? null
+    : resolve( process.env.MEMO_SKILLS_DIR )
+const SKILLS_DIR = SKILLS_FROM_ENV !== null
+    ? SKILLS_FROM_ENV
+    : SKILLS_CANDIDATES.find( ( candidate ) => existsSync( candidate ) === true ) ?? null
 
 
 // Family root that holds the <version> dirs (flat namespace-first: <repo>/<name>/).
@@ -101,10 +119,17 @@ const specFileFor = ( { id } ) => `${ id }.md`
 
 
 const main = async () => {
+    // A directory the CALLER NAMED and that is not there is a caller error, never an absent sibling
+    // repo: skipping over a comparison set somebody asked for would read as a pass over that set.
+    if( SKILLS_FROM_ENV !== null && existsSync( SKILLS_FROM_ENV ) === false ) {
+        console.error( `check-skill-specs: 1 violation — MEMO_SKILLS_DIR names ${ SKILLS_FROM_ENV }, which does not exist; the comparison set was named by the caller and is empty` )
+        process.exit( 1 )
+    }
     // Graceful skip when the core repo (where SKILL.md files live) is not checked out.
-    // Mirrors the old core-side gate's skip when the spec repo was absent.
-    if( existsSync( SKILLS_DIR ) === false ) {
-        console.log( 'check-skill-specs: core repo not reachable — skill-completeness check skipped.' )
+    // Mirrors the old core-side gate's skip when the spec repo was absent — but it NAMES what it
+    // looked for, so an absence is readable instead of being a green over nothing.
+    if( SKILLS_DIR === null ) {
+        console.log( `check-skill-specs: core repo not reachable — skill-completeness check skipped. Tried: ${ SKILLS_CANDIDATES.join( ', ' ) }. Name the tree to check with MEMO_SKILLS_DIR.` )
         process.exit( 0 )
     }
 
@@ -143,10 +168,12 @@ const main = async () => {
         const specChapters = ( await readdir( specDir ) )
             .filter( ( f ) => /^\d{2}-.*\.md$/.test( f ) )
             .map( ( f ) => `memo/${ f }` )
-        // Sibling families (workbench, session, meta-spec) resolve via the same layout-aware helper.
-        // The meta-spec family has no implementer skills, so its chapters only surface in the
-        // (non-blocking) orphan report.
-        const families = [ 'workbench', 'session', 'meta-spec' ]
+        // Sibling families (workbench, session, meta-spec, governance) resolve via the same layout-aware
+        // helper. The meta-spec family has no implementer skills, so its chapters only surface in the
+        // (non-blocking) orphan report. The governance family joined with the role and permit skills that
+        // name its chapters (Memo 084, P3): without it a reference like `governance/05-roles` was reported
+        // as missing although the chapter stands in governance/<ver>/draft/spec.
+        const families = [ 'workbench', 'session', 'meta-spec', 'governance' ]
             .map( ( prefix ) => ( { prefix, dir: latestSpecDir( { name: prefix } ) } ) )
         const familyChapters = ( await Promise.all( families.map( async ( { prefix, dir } ) => {
             if( dir === null ) return []
@@ -168,11 +195,11 @@ const main = async () => {
     }
 
     if( violations.length > 0 ) {
-        console.error( `check-skill-specs: ${ violations.length } violation(s) over ${ skillFiles.length } SKILL.md` )
+        console.error( `check-skill-specs: ${ violations.length } violation(s) over ${ skillFiles.length } SKILL.md — measured over ${ SKILLS_DIR }` )
         violations.forEach( ( v ) => console.error( `  ✗ ${ v }` ) )
         process.exit( 1 )
     }
-    console.log( `check-skill-specs: 0 violations over ${ skillFiles.length } SKILL.md (${ referenced.size } specs referenced).` )
+    console.log( `check-skill-specs: 0 violations over ${ skillFiles.length } SKILL.md (${ referenced.size } specs referenced) — measured over ${ SKILLS_DIR }.` )
     if( orphans.length > 0 ) {
         console.log( `  ⚠ ${ orphans.length } orphan chapter(s) referenced by no skill: ${ orphans.join( ', ' ) }` )
     }

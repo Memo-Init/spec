@@ -24,7 +24,7 @@ Until now those shared conventions lived only as tribal knowledge inside the gen
 
 ## Conformance
 
-The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** in the chapters of this family are to be interpreted as described in RFC 2119 and RFC 8174 (BCP 14), and only when they appear in all capitals. This chapter is the **conformance anchor** the other chapters refer to when they assume the RFC-2119 interpretation.
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in the chapters of this family are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here. This chapter is the **conformance anchor** the other chapters refer to when they assume the RFC-2119 interpretation (RFC 2119, RFC 8174).
 
 A chapter that is motivation or index prose rather than binding rules marks itself non-normative with a short blockquote near its top whose bold lead word is `Informative.` ([02-per-chapter-format.md](./02-per-chapter-format.md)); every chapter without that marker is normative and is read under this interpretation. The machine-checkable invariants this family asserts are authored as inline `SPEC-REQ` requirement blocks and harvested into the requirement store ([02-per-chapter-format.md](./02-per-chapter-format.md), section *Conformity Requirements*).
 

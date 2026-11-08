@@ -6,7 +6,7 @@ spec_file: "13-orchestration.md"
 order: 13
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/13-orchestration.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/13-orchestration.md."
@@ -37,14 +37,14 @@ Each phase is run by a team with four roles. The Lead is the coordinator; no age
 
 | Role | Task | Context | Tools | Model capability |
 |------|------|---------|-------|-----------------|
-| Lead | Coordinates the phase, creates Tasks, monitors, stops on problems | Memo + phase + PRDs | Task create/update, SendMessage | Strongest reasoning model available |
+| Lead | Coordinates the phase, creates Tasks, monitors, stops on problems | Memo + phase + PRDs | Task create/update, SendMessage | See [50-orchestrator-role.md](/specification/orchestrator-role/) § The Model Follows the Condensation |
 | Worker (1 per PRD) | Implements one PRD in its own worktree; loads skills via tags | Own context + PRD | Edit, Write, Bash, Git | Standard capable model; upgrade to strongest for complex PRDs |
 | Evaluator | Checks a Worker result with **fresh context** | Fresh + PRD + output | Read, Bash (tests), Grep | Validated model; a lighter model is acceptable for straightforward validation |
 | Phase Evaluator | Checks the interplay of all PRDs after all Workers finish | Fresh + all outputs | Read, Bash, Grep | Validated model; a lighter model is acceptable for straightforward validation |
 
 The Lead starts Workers in parallel where PRD dependencies allow, runs an Evaluator (fresh context, no carry-over) per finished Worker, iterates Worker↔Evaluator at most twice on FAIL, then runs the Phase Evaluator on the integrated result. Evaluators **MUST** receive a fresh context — they know nothing of the implementation process and see only the PRD plus the produced files (the empty-context rule, see [09-contamination-context-handover.md](/specification/contamination-context-handover/)). The first roles to migrate to repo-scoped agents are exactly these evaluators (see [14-agents-skills-tasks.md](/specification/agents-skills-tasks/)).
 
-The **Model capability** column expresses role requirements, not product names. The Lead requires the strongest reasoning model because it holds the most context and makes coordination decisions. Workers default to a standard capable model; complex or highly interdependent PRDs warrant the strongest available. Evaluators and Phase Evaluators need a validated, capable model — a lighter option is permissible when the validation task is clearly bounded. Model selection is the operator's responsibility and is governed by resource budget; the harness does not enforce a specific product.
+The **Model capability** column expresses role requirements, not product names. The Lead is the `orchestrator` coordinating a phase — not a second role ([50-orchestrator-role.md](/specification/orchestrator-role/) § Role Vocabulary) — and the tier that staffs it is settled once, in [50-orchestrator-role.md](/specification/orchestrator-role/) § The Model Follows the Condensation; this column does not restate it. Workers default to a standard capable model; complex or highly interdependent PRDs warrant the strongest available. Evaluators and Phase Evaluators need a validated, capable model — a lighter option is permissible when the validation task is clearly bounded. Model selection is the operator's responsibility and is governed by resource budget; the harness does not enforce a specific product.
 
 **Inside an agent phase the Worker default is wired, not opt-in.** The default execution path is for the Lead to **spawn one Worker per PRD** in its own context — this is the wired default of an agent phase, not an optional "may use agents" suggestion; there is no inline path in which the Lead works PRDs itself without Workers. The model-driven fan-out (the Lead deciding per turn over a handful of parallel sub-agents) stays reserved for **research** (see *Orchestration Mechanisms and Their Fit* below). Whether a phase runs as this agent team at all, or as a script-driven **execution workflow**, is decided by the fit rule in that section rather than by preference; when it runs as an agent team, it runs as the full Lead/Worker/Evaluator/Phase-Evaluator team.
 

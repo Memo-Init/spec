@@ -132,6 +132,95 @@ This chapter fixes the typed contract **spec-side now**; the implementation is *
 
 ---
 
+## Skill Payload — Where It Lives, How It Is Called, Who Owns It
+
+A skill is not always a single file. Beside `SKILL.md` a skill may carry **payload**: an executable check, reference prose a reader pulls in only when the task needs it, a template. Payload is what makes a rule repeatable — a check that runs can report red over an empty comparison set, and a prose instruction cannot. The gain is **repeatability**, not speed.
+
+Three questions decide whether payload is placed well: **where it lives**, **how it is called**, and **who owns it**. This section answers them in that order, and then states the one cut that settles all three.
+
+### The Corpus Is Smaller Than It Looks
+
+Every figure below was counted over a single comparison set — the **tracked** `SKILL.md` files of this workbench's skill corpus, `skills/**/SKILL.md` of the command-line package, measured on 2026-09-27 over the integrated state of the corpus. The basis is *tracked* files rather than a directory listing on purpose: an untracked editor or filesystem artefact beside a `SKILL.md` would otherwise promote a single-file skill into a payload-carrying one, and one such artefact was measured doing exactly that.
+
+| Size | Count |
+|------|-------|
+| `SKILL.md` files — the comparison set | 124 |
+| skills that are a single `SKILL.md`, with no further file | 53 |
+| skills carrying any further file | 71 |
+| …whose further files are **only** `evals/` | 53 |
+| **skills carrying payload of their own** | **18** |
+| …holding at least one non-test `.mjs` | 11 (28 files, 17 of them in three skills) |
+| …with a `references/` folder | 6 |
+| …with a `templates/` folder | 2 |
+
+An earlier reading of the same comparison set is on record and is kept as a reading rather than corrected away: 120 / 49 / 71 / 54 / **17**, with 10 skills holding 26 non-test `.mjs`, measured on 2026-09-15. Four skills have been added since — the four role skills of the role vocabulary, each a single `SKILL.md`, which is the whole of the 120 → 124 and 49 → 53 growth — and one skill that until then carried nothing but eval fixtures gained a check of its own, which is the whole of the 54 → 53 and 17 → 18 move. The shape of the argument is unchanged by either; the figures carry the day they were taken because that is the only way a later reader can tell the two readings apart.
+
+**`evals/` is not the skill's.** It holds fixtures that the central eval runner owns and reads; the skill is their subject, not their owner. That single distinction decides how widespread the payload idea really is. Counted as "71 skills with payload", it looks like the norm — but 53 of those 71 carry nothing except eval fixtures, and the honest figure is **18**.
+
+### Where Payload Lives
+
+| Place | What belongs there | Owner |
+|-------|--------------------|-------|
+| `<skill>/scripts/` | a check or helper that computes over exactly the artifacts this skill touches anyway | the skill, as **caller** |
+| `<skill>/references/` | prose the skill pulls in on demand — the progressive-disclosure tier below `SKILL.md` | the skill |
+| `<skill>/templates/`, `<skill>/data/`, `<skill>/examples/` | fixed inputs the skill's own steps read | the skill |
+| `<skill>/evals/` | fixtures for the central eval runner | **the eval runner, not the skill** |
+| `skills/_shared/` | text that several skills reference, each passage with exactly one definitions home | shared — referenced from skill bodies, read by the repository's guards |
+| `skills/_lint/` | two corpus-wide checks | **nobody today** — see the disposition below |
+| the repository's own `scripts/` folder (here `repos/core/scripts/`) | a check that computes over a **corpus** | the repository, through its `npm run lint` chain |
+| a CLI leaf | anything that **writes** | the CLI |
+
+### How Payload Is Called
+
+Payload is reached through the step that owns it, never by a reader guessing at a path:
+
+- **The call names the path in full, relative to the repository root.** The same line then reads the same from a checkout, from a worktree, and in a reader's head.
+- **The call sits in the step that is responsible for it**, not in an appendix. A script named nowhere is a script nobody runs.
+- **The caller relation is machine-checked.** A declared relation between a step and its script carries a minimum number of callers, so a script that loses its caller turns the lint chain red instead of quietly becoming an orphan.
+
+### Who Owns Payload — the Cut Is the Write Right
+
+> **Does it write into the database? Then it is a CLI leaf. Does it compute over a corpus? Then it belongs in the repository's `scripts/` folder, on `npm run lint`. Does it compute over exactly the artifacts a skill touches anyway? Then it MAY live with the skill — as a caller of existing logic, never as a second carrier of the rule.**
+
+The cut is the **write right, not the file form**. A *writing* skill script would open a second write path beside the CLI, a step back behind the single write edge the CLI exists to be. A *computing* script that returns a verdict together with its comparison set collides with nothing. That is why the same file form is admissible in the one case and excluded in the other.
+
+Two consequences are normative here:
+
+- A skill script **MUST NOT** write into a store the CLI owns.
+- A skill script **MUST** call existing logic rather than restate a rule that already has a home. A rule written out twice has two truths from the moment one copy is edited.
+
+### The Folder Names an Owner, It Does Not Encapsulate
+
+Of the 28 non-test `.mjs` files placed inside skill folders, **24** import upward out of the skill and into the repository — `../../../../lib/…` and `../../../../scripts/lib/…`, with the more deeply nested ones climbing five levels rather than four. The depth follows the nesting; it does not mark a package boundary, because there is none.
+
+Payload of this kind is therefore a **repository tool with skill-shaped placement**, not a transportable add-on. Copying a skill folder elsewhere carries the caller and leaves the callee behind. Reading a `scripts/` folder beside a `SKILL.md` as a self-contained bundle builds on an encapsulation that does not exist: the folder states **who is responsible**, and that is all it states.
+
+### `skills/_lint/` — the Third Placement, and Its Disposition
+
+Beside the skill-owned placement and the eval-runner placement there is a third one, and until now it was written down nowhere. `skills/_lint/` sits next to the skill categories rather than inside one. Measured over that folder:
+
+| Property | Finding |
+|----------|---------|
+| files | 2, both `.mjs` |
+| what they read | the **whole** skill corpus — each walks `skills/` and collects every `SKILL.md` |
+| what they write | nothing but an exit code |
+| callers | **none** in the repository — no lint-chain entry, no test, no skill step |
+| owning skill | none |
+| current verdict when run by hand | both pass, each over all 124 `SKILL.md` — measured 2026-09-27, `status: true` and no problem on either, over the same comparison set as the corpus table above |
+
+Both are corpus-computing checks without a write right, so the rule above already names their home: the repository's `scripts/` folder, wired into `npm run lint`. **`skills/_lint/` is therefore to be dissolved**, and the two files leave by different doors:
+
+- The **visibility** check states a rule that a chain member already enforces, and enforces it more weakly: the chain member requires that exactly the canonical entry points are public and every other skill is private, while the orphan only forbids a non-canonical skill from being public. It carries the same list of entry points as a second copy, which is precisely the *second carrier of the rule* the cut above forbids. It is **retired**, not moved.
+- The **single-source** check over the server-operation block has no equivalent on the chain — no chain member names that rule at all. It **moves** into the repository's `scripts/` folder and is wired in, so that the rule it carries gets the one home it has been missing.
+
+Until both moves happen the folder is at least stated here, instead of remaining a placement model that no page accounts for.
+
+`skills/_shared/` is **not** in the same position and is **not** proposed for dissolution: its files are referenced from skill bodies and read by the repository's own guards, so it has a working owner even though no single skill holds it.
+
+**Spec before mechanism**: this section fixes the placement, the call form, and the ownership. Relocating existing payload and enforcing the caller relation are separate steps, and this chapter claims neither is finished.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

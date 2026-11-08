@@ -6,7 +6,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/21-environment-scripts.md."
@@ -172,6 +172,12 @@ Whether a project boots through its declared script rather than an inline sequen
   "grade": { "dimension": "boot-contract adherence", "weight": 100 }
 }
 ```
+
+---
+
+## A Precondition Names Its Provider
+
+A precondition that an order relies on **MUST** name its provider — the order or the step that supplies it. When two orders each assume that the other supplies a callable wrapper, the precondition refers back to itself and nobody builds it. A precondition without a named provider is a finding at the time the orders are cut, and a circular assignment is resolved by giving the precondition to exactly one order.
 
 ---
 

@@ -34,7 +34,8 @@ _(no skill dependencies declared in this family)_
 | [10-harness-registry](./10-harness-registry.md) | — | 0 | — |
 | [11-spec-authority](./11-spec-authority.md) | — | 0 | — |
 | [12-controlled-language](./12-controlled-language.md) | — | 0 | — |
-| **Summary** | **0 / 12** | — | 7 |
+| [13-styleguide](./13-styleguide.md) | — | 0 | — |
+| **Summary** | **0 / 13** | — | 7 |
 
 ## Skills by namespace
 
@@ -74,6 +75,7 @@ _(no skill dependencies declared in this family)_
 ### Other
 
 - [12-controlled-language](./12-controlled-language.md) — _— no implementer skill yet —_
+- [13-styleguide](./13-styleguide.md) — _— no implementer skill yet —_
 
 ## Related
 

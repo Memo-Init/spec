@@ -3,7 +3,7 @@
 Spec-only concatenation of every chapter of the workbench spec family, in NN order.
 The docs site receives this bundle by copy — it never re-synthesizes it.
 
-Source: workbench@0.3.0:75dfb4f
+Source: workbench@0.3.0:5b86619
 
 ---
 title: "Overview"
@@ -13,7 +13,7 @@ spec_file: "00-overview.md"
 order: 0
 section: "Workbench"
 normative: false
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/00-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/00-overview.md."
@@ -148,7 +148,7 @@ spec_file: "01-philosophy.md"
 order: 1
 section: "Workbench"
 normative: false
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/01-philosophy.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/01-philosophy.md."
@@ -203,7 +203,7 @@ spec_file: "02-sop-entrypoint.md"
 order: 2
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/02-sop-entrypoint.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/02-sop-entrypoint.md."
@@ -339,7 +339,7 @@ spec_file: "10-root-and-projects.md"
 order: 10
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/10-root-and-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/10-root-and-projects.md."
@@ -429,6 +429,12 @@ Once a convention lives in its authoritative home, a `CLAUDE.md` adds value only
 
 ---
 
+## The Working Tree of the State Repository Is Declared
+
+The working tree of the state repository **MUST** be declared in the specification and enforced by the tools that use it, not only stated in the source of one script. A state repository whose working tree is known only to the code that calls it can be pointed at the wrong tree, and a wrong tree turns every file outside it into a deletion. Every tool that writes to the state repository resolves the working tree from the one declaration and refuses when the tree it is given differs.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
@@ -450,7 +456,7 @@ spec_file: "11-project-structure.md"
 order: 11
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/11-project-structure.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/11-project-structure.md."
@@ -563,7 +569,7 @@ spec_file: "12-folders.md"
 order: 12
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/12-folders.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/12-folders.md."
@@ -592,7 +598,7 @@ The contract table in the next section **is** this registry: the single, authori
 
 ## The Folder Contract
 
-Folder names are load-bearing identifiers and are reproduced verbatim. The workbench audit reports any missing mandatory path as a structural finding and any unexpected top-level entry for review. The rows are kept in a **stable, reproducible order**: by status — mandatory entries first, then the default-on reservations (`.memo/`, `.wiki/`), then the conditional `.browser/`, then optional entries — and in ascending path order within each group, so the registry reads the same way every time and a new entry has one correct place.
+Folder names are load-bearing identifiers and are reproduced verbatim. The workbench audit reports any missing mandatory path as a structural finding and any unexpected top-level entry for review. The rows are kept in a **stable, reproducible order**: by status — mandatory entries first, then the default-on reservation (`.memo/`), then the conditional `.browser/`, then optional entries — and in ascending path order within each group, so the registry reads the same way every time and a new entry has one correct place.
 
 | Path | Status | Level | Entry-point | Format/Convention | Purpose |
 |------|--------|-------|-------------|-------------------|---------|
@@ -604,11 +610,13 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `repos/` | Mandatory | Project | — | — | The project's git repositories (one domain per repository). |
 | `scripts/` | Mandatory | Project | meaningful sub-folders | startup-script convention | Environment and health scripts (see [21-environment-scripts.md](/workbench/environment-scripts/)). |
 | `.memo/` | reserved (custom folder, default-on) | Project | `config.json` + `memos/` | — | Memos and their shared stores, generated by `memo-init`; the on-disk footprint of the memo Add-on (see [17-memo-store.md](/workbench/memo-store/)). |
-| `.wiki/` | reserved (custom folder, default-on) | Project | `index.md` (published as "overview") | OKF | LLM-generated project wiki, an OKF-conformant knowledge bundle; reserved default-on like `.memo/` (see [30-wiki.md](/workbench/wiki/)). |
 | `.browser/` | Required (conditional) | Project | — | — | Browser-automation session, scripts, and output — present **only when** the project does browser automation, but when present the name is **required**: `.browser/` is the canonical name and the only conforming one, and `.playwright/` is a **deprecated** alias projects **MUST** migrate now — not at their own pace (see [31-browser-automation.md](/workbench/browser-automation/)). |
 | `.flowmcp/` | Optional | Project | — | — | Regenerable FlowMCP `namespace-index.json` cache — generated machinery, **gitignored**; the local side of the FlowMCP custom folder (see [33-flowmcp.md](/workbench/flowmcp/)). |
+| `.git/` | Optional | Project | — | — | A local git without a remote at the project root — for example the anchor of an outer workspace tool. Exclusions go only into `.git/info/exclude`, never into a `.gitignore`. |
+| `.playwright-mcp/` | Optional | Project | — | — | Output folder of the Playwright MCP server — generated machinery, **gitignored**; no substitute for `.browser/` (see [31-browser-automation.md](/workbench/browser-automation/)). |
 | `.session/` | Optional | Both | `config.json` | — | The session genesis-root marker — its presence marks where a session is rooted; holds `config.json`, the base of the config cascade. One per tree, a sibling of `.workbench/`. Owned by the session spec (see [`.session/` Is Session-Owned](#session-is-session-owned) and [session/01-genesis-root.md](/session/genesis-root/)). |
 | `.tmp/` | Optional | Both | — | — | Scratch / temporary working area — transient material, not durable knowledge and not committed, segmented per memo as `.tmp/<memo-id>/`. Also exists at the root, which needs scratch for the same reason a project does (see [19-tmp.md](/workbench/tmp/)). |
+| `.wiki/` | Optional | Project | `index.md` (published as "overview") | OKF | LLM-generated project wiki, an OKF-conformant knowledge bundle; a project adds it when it uses the wiki (see [30-wiki.md](/workbench/wiki/)). |
 | `.workbench/` | Optional | Project | `config.json` · `registry.json` | — | The manual project configuration the workbench core reads (see [22-config.md](/workbench/config/)). |
 | `.worktrees/` | Optional | Project | — | — | The consistent location for git worktrees — generated machinery, **gitignored**, with mandatory cleanup via `git worktree remove`/`prune`, segmented per memo as `.worktrees/<memo-id>/` in the same shape as `.tmp/` and `.trash/` (see "Worktree Placement" below and [38-worktrees.md](/workbench/worktrees/)). |
 | `data/` | Optional | Project | — | — | **Raw inputs** — feeds and source material, as ingested, before processing; the input side that `context/` is derived from. |
@@ -620,11 +628,58 @@ Folder names are load-bearing identifiers and are reproduced verbatim. The workb
 | `snapshots/` | Optional | Project | — | — | Application snapshots (see "Specialized folders" below). |
 | `spec/` | Optional | Project | `<namespace>/<version>/{draft,dist,skills}/` | namespace-first spec container | The project-local, private-first **plural container** for authored specs, structured `spec/<namespace>/<version>/{draft,dist,skills}/` (see "`spec/` Is the Namespace-First Spec Container" below). |
 
-A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it. `.memo/` carries a third status — **reserved (custom folder, default-on)**: it is the on-disk footprint of the memo system, the recommended, default-on custom folder, so it is present in every real project but is a *reservation of that custom folder* rather than a requirement of the bare workbench core ([26-addons.md](/workbench/addons/)). `.wiki/` carries the **same** reserved (custom folder, default-on) status — the wiki is a default-on custom folder, present in every project ([30-wiki.md](/workbench/wiki/)). `.browser/` carries a **conditional** status — it is *required when* a project does browser automation and absent otherwise; when present, `.browser/` is the only conforming name and `.playwright/` is a deprecated alias that **MUST** be migrated (see [31-browser-automation.md](/workbench/browser-automation/)). The `.wiki/` entry point is the OKF-reserved `index.md`, **published under the label "overview"** — a published navigation label, not a file rename (renaming `index.md` would break OKF).
+A registered folder without a page of its own carries its Folder Contract here, behind the table:
+
+```folder
+{
+  "name":       ".claude/",
+  "status":     "mandatory",
+  "level":      "project",
+  "entryPoint": "settings.json",
+  "convention": null,
+  "purpose":    "Claude Code settings and project-local skills.",
+  "goesIn":     "The project's Claude Code settings (settings.json) and its project-local skills and agent configuration.",
+  "doesNot":    "The user's global Claude Code configuration (that lives in ~/.claude/, outside the project); hook and skill sources a repository carries (they stay in that repository).",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
+
+```folder
+{
+  "name":       ".git/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "A local git without a remote at the project root — for example the anchor of an outer workspace tool.",
+  "goesIn":     "The local history of the project root itself; exclusions only in .git/info/exclude.",
+  "doesNot":    "A remote of any kind; a .gitignore at the project root; the history of a repository under repos/ (each carries its own).",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
+
+```folder
+{
+  "name":       ".playwright-mcp/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "Output folder of the Playwright MCP server — generated machinery, gitignored.",
+  "goesIn":     "What the Playwright MCP server writes on its own: snapshots, screenshots and traces of its runs.",
+  "doesNot":    "The browser-automation session, scripts and output of the project (that is .browser/); proofs or snapshots that must persist.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
+
+A project **MUST NOT** omit a mandatory folder. A project **MAY** add any optional folder when it needs it. `.memo/` carries a third status — **reserved (custom folder, default-on)**: it is the on-disk footprint of the memo system, the recommended, default-on custom folder, so it is present in every real project but is a *reservation of that custom folder* rather than a requirement of the bare workbench core ([26-addons.md](/workbench/addons/)). `.wiki/` is **optional** — a project adds the wiki when it uses it, and a project without one is conforming ([30-wiki.md](/workbench/wiki/)). `.browser/` carries a **conditional** status — it is *required when* a project does browser automation and absent otherwise; when present, `.browser/` is the only conforming name and `.playwright/` is a deprecated alias that **MUST** be migrated (see [31-browser-automation.md](/workbench/browser-automation/)). The `.wiki/` entry point is the OKF-reserved `index.md`, **published under the label "overview"** — a published navigation label, not a file rename (renaming `index.md` would break OKF).
 
 The **Level** column records where each name is expected. The rows above are the **project-level** contract for folders under `projects/{name}/`; `context/` is marked **Both** because the same name is also a registered folder at the workbench root, where it holds cross-project standards. The root-only folders — `cli/`, `projects/`, `templates/`, and the root `context/` — are registered in [10-root-and-projects.md](/workbench/root-and-projects/), not restated here.
 
-The same registry reads as a **taxonomy by status**. A folder tree is a hierarchy, so a mindmap shows it at a glance — mandatory names first, the default-on reservations (`.memo/`, `.wiki/`), then the optional folders a project adds when it needs them:
+The same registry reads as a **taxonomy by status**. A folder tree is a hierarchy, so a mindmap shows it at a glance — mandatory names first, the default-on reservation (`.memo/`), then the optional folders a project adds when it needs them:
 
 ```mermaid
 mindmap
@@ -639,13 +694,15 @@ mindmap
       scripts/
     Reserved default-on
       .memo/
-      .wiki/
     Conditional
       .browser/
     Optional
       .flowmcp/
+      .git/
+      .playwright-mcp/
       .session/
       .tmp/
+      .wiki/
       .workbench/
       .worktrees/
       data/
@@ -811,6 +868,8 @@ In practice the two are rarely separated: reading and writing a project's work r
 
 `proofs/` (view-change proofs) and `snapshots/` (application snapshots) are **specialized** — a project keeps them top-level, or places them under `.tmp/` when the captured material is ephemeral and need not persist. Full contracts: [35-proofs.md](/workbench/proofs/), [37-snapshots.md](/workbench/snapshots/).
 
+A wish exists to place `proofs/`, `snapshots/` and the `.browser/` session all under the per-memo scratch location instead of keeping them as folders of their own. This page deliberately departs from it: `proofs/` and `snapshots/` are authored content, `.browser/` holds a session that must survive, and `.tmp/` may be emptied at any time and never holds the only copy ([19-tmp.md](/workbench/tmp/)). The three stay where they are.
+
 ---
 
 ## `.browser/` Is Conditional
@@ -829,11 +888,41 @@ In practice the two are rarely separated: reading and writing a project's work r
 
 `.session/` is the **session genesis-root marker** — one per tree, holding the `config.json` at the **base of the config cascade** the workbench tier extends. It is **owned by the session spec**, not this one: the registry reserves the name, the session spec defines it — [session/01-genesis-root.md](/session/genesis-root/), [session/09-root-detection.md](/session/root-detection/).
 
+```folder
+{
+  "name":       ".session/",
+  "status":     "optional",
+  "level":      "both",
+  "entryPoint": "config.json",
+  "convention": null,
+  "purpose":    "The session genesis-root marker — its presence marks where a session is rooted; holds config.json, the base of the config cascade. One per tree, a sibling of .workbench/; owned by the session spec.",
+  "goesIn":     "config.json, the base tier of the config cascade, and what the session spec places beside it.",
+  "doesNot":    "The workbench's manual configuration (that is .workbench/); a second marker deeper in the same tree.",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
+
 ---
 
 ## `spec/` Is the Namespace-First Spec Container
 
 A project that authors its own specifications carries a `spec/` folder — the **plural container** for one or more specs, structured **namespace-first**. It is optional and authored content (no dot): a project that writes no specs of its own does not have it.
+
+```folder
+{
+  "name":       "spec/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": "<namespace>/<version>/{draft,dist,skills}/",
+  "convention": "namespace-first spec container",
+  "purpose":    "The project-local, private-first plural container for authored specs, structured spec/<namespace>/<version>/{draft,dist,skills}/ — the authoring workshop of the spec pipeline.",
+  "goesIn":     "The authored draft chapters, their built dist and the derived skills of each namespace and version.",
+  "doesNot":    "The public promotion copy (that is a separate repos/<x>-spec repository); specs authored anywhere else.",
+  "git":        "recommended",
+  "remote":     "forbidden"
+}
+```
 
 - **Namespace-first level ordering.** A spec lives at `spec/<namespace>/<version>/{draft,dist,skills}/` — the container first, then the namespace, then the version, and only inside the version the `draft`, `dist`, and `skills` layout. The version sits *outside* that layout, one level in from the namespace, so a newer version is authored beside an existing one without disturbing it.
 - **Consistent with the `generated/` funnel.** The build output nests under the same hierarchy: `spec/<ns>/<version>/dist/generated/` — the exact placement the meta-spec lifecycle's `generated/` definition declares. The `spec/` container and the `generated/` funnel are the *same* namespace-first hierarchy read from opposite ends.
@@ -900,7 +989,7 @@ Several registered folders carry enough depth to have their own page; this chapt
 | `snapshots/` | [37-snapshots.md](/workbench/snapshots/) |
 | `.worktrees/` | [38-worktrees.md](/workbench/worktrees/) |
 
-Every registered folder that warrants its own depth now carries a page — the coverage is complete, which is exactly what the machine-readable [completeness lint](#the-folder-contract-is-machine-readable--overview-and-config-are-derived) checks. The registered entries that remain page-less are specified by their row in the contract above: `.claude/` (Claude Code settings) and the two authored files `ABOUT.md` / `CLAUDE.md`. `scripts/` is covered by [21-environment-scripts.md](/workbench/environment-scripts/), and `spec/` by its own sections in this chapter above. The root-level `projects/` folder carries its own page one level up ([43-projects.md](/workbench/projects/), registered in [10-root-and-projects.md](/workbench/root-and-projects/)). The **wiki sits one level above the folders** as the search engine across all of them: it indexes the separated domains so a reader can find material without first knowing which folder holds it ([30-wiki.md](/workbench/wiki/)).
+Every registered folder that warrants its own depth now carries a page — the coverage is complete, which is exactly what the machine-readable [completeness lint](#the-folder-contract-is-machine-readable--overview-and-config-are-derived) checks. The registered entries that remain page-less are specified by their row in the contract above: `.claude/` (Claude Code settings), `.git/` and `.playwright-mcp/` — each with its Folder Contract block behind the table — and the two authored files `ABOUT.md` / `CLAUDE.md`. `scripts/` is covered by [21-environment-scripts.md](/workbench/environment-scripts/), and `spec/` by its own sections in this chapter above. The root-level `projects/` folder carries its own page one level up ([43-projects.md](/workbench/projects/), registered in [10-root-and-projects.md](/workbench/root-and-projects/)). The **wiki sits one level above the folders** as the search engine across all of them: it indexes the separated domains so a reader can find material without first knowing which folder holds it ([30-wiki.md](/workbench/wiki/)).
 
 **The registry is authoritative for tooling.** Where a tool — the project-setup helper, the structure audit — carries its own list of folders, that list **MUST** agree with this registry. A tool that treats an *optional* folder (`proofs/`, `snapshots/`) as mandatory has drifted from the registry and is the copy to reconcile, not the source. (`.browser/` is **conditional**, not optional — a tool that requires it *when a project does browser automation* is correct, not drifted.)
 
@@ -957,7 +1046,7 @@ Whether a tool's folder list has drifted from the registry is judged against the
 {
   "id": "REQ-954",
   "title": "A tool's folder list agrees with the registry",
-  "statement": "Where a tool — the project-setup helper, the structure audit — carries its own list of folders, that list MUST agree with this chapter's contract registry and SHOULD be derived from it rather than restated. A tool that treats an optional folder (`proofs/`, `snapshots/`) as mandatory has drifted from the registry and is the copy to reconcile, not the source. `.wiki/` and `.memo/` are reserved default-on (present by default), and `.browser/` is conditional, not optional: a tool that treats these as present by default, or requires `.browser/` when the project does browser automation, is correct.",
+  "statement": "Where a tool — the project-setup helper, the structure audit — carries its own list of folders, that list MUST agree with this chapter's contract registry and SHOULD be derived from it rather than restated. A tool that treats an optional folder (`proofs/`, `snapshots/`) as mandatory has drifted from the registry and is the copy to reconcile, not the source. `.memo/` is reserved default-on (present by default), and `.browser/` is conditional, not optional: a tool that treats `.memo/` as present by default, or requires `.browser/` when the project does browser automation, is correct.",
   "scope": { "repos": [], "categories": ["workbench"], "tags": ["folders", "registry", "drift"] },
   "severity": "warning",
   "check": {
@@ -1020,7 +1109,7 @@ spec_file: "13-knowledge-format-okf.md"
 order: 13
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/13-knowledge-format-okf.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/13-knowledge-format-okf.md."
@@ -1221,7 +1310,7 @@ spec_file: "15-repos.md"
 order: 15
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/15-repos.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/15-repos.md."
@@ -1259,6 +1348,21 @@ A repository under `repos/<name>/` is a **single-domain code unit**. A project i
 
 ---
 
+## Repository Layout
+
+The target layout of a Node.js repository is the one fixed in [A Fixed and Expectable Repository Structure](#a-fixed-and-expectable-repository-structure): `src/` for the sources, `dist/` for the build output, `tests/` for the tests. This section does not restate that norm; it records, per repository of the organization, where the layout is met and where it deviates, with the reason. Every test file stands in `tests/`, so a repository that keeps a test elsewhere lists that place in the table. A deviation that is not listed here is a finding.
+
+| Repository | `src/` | `dist/` | `tests/` | Deviation |
+|---|---|---|---|---|
+| `core` | none | none | yes, every test file | a command-line and skill repository: the code lives in `cli/`, `lib/`, `scripts/`, `skills/` and `templates/` instead of `src/`; nothing is built, so there is no `dist/`; a test fixture that only sits in a folder named `test/` is data, not a test, and stays beside the test that loads it |
+| `viewer` | yes | none | yes, every test file | the server runs from its sources, so there is no build output and no `dist/` |
+| `spec` | none | per family, under each version | none | a document repository without runtime code: the chapters are the product, and the build output of each family version is its `dist/` |
+| `prompt-generator` | yes | none | yes | the module is used from its sources, so there is no `dist/` |
+| `memo-init.github.io` | yes | built, not versioned | none | a website: `dist/` is produced by the site build and ignored by git, static assets live in `public/`, and the site has no test suite |
+| `.github` | yes | built, not versioned | none | the organization profile: a small generator in `src/` renders the profile text; it has no test suite |
+
+---
+
 ## Git Everywhere, Remote Only in `repos/`
 
 Versioning and publication are two different acts, and the workbench draws its boundary at **publication**, not at git itself.
@@ -1277,6 +1381,42 @@ The consequence is still sharp, but re-grounded: material that needs to be share
 A repository declares its **status** — three axes, all stated once in the project configuration ([22-config.md](/workbench/config/)): **visibility** (`private` or `public`), **remote** (`none` or a named URL), and **facing** (`inward` or `outward`). The facing axis drives the coordination convention (rule C1): an **outward** repository routes coordination through public **Issues**; an **inward** repository routes it through the **memo ID**. Visibility and remote are declared the same way and read by the **same enforcement** — the push gate consumes all three rather than inferring exposure from git state. The `facing` attribute is also the one the project-architecture bundle records per repository ([41-project-architecture.md](/workbench/project-architecture/)), so a repository's role is stated in one vocabulary and read consistently by both the configuration and the architecture graph.
 
 The declared status is not taken on trust. The workbench **health-check** and **git-security** verify it — the declared visibility, remote, and facing **MUST** match the repository's actual state — and a push is **gated** by the declared status (a push to a repository declared `inward` is blocked; see [23-hooks-contract.md](/workbench/hooks-contract/)).
+
+---
+
+## A Fixed and Expectable Repository Structure
+
+A repository has a fixed structure that is the same across the different repositories, so that a reader who knows one knows where to look in the next. For a Node.js repository that structure has `src/`, `dist/` and `tests/` at its root. All tests live in `tests/`, and none stays behind elsewhere. `src/` holds no test files, or the repository states a strategy that decides exactly where a test file may stand instead. What matters is a structure that stays expectable; the expectable part is kept, and a deviation from it is documented as a deviation in the correct form.
+
+---
+
+## Data That Belongs Outside Repositories
+
+Storing data in a repository that belongs outside repositories is forbidden. Memo material, plans, scratch output and torn-down working files have their own folders in the project ([12-folders.md](/workbench/folders/)); a repository holds only what belongs to its one domain.
+
+---
+
+## Documentation in a Repository
+
+A repository carries as little documentation as possible. The documentation is either a separate project or held locally, never both and never spread across the repository. The README introduces the repository in neutral, outward-facing language, and a template is worked through for the README so that every README has the same structure. Storing further Markdown files in a repository is discouraged from now on. Such files are regarded as a security risk, because they carry statements that nobody checks against the code; communication with agents runs through identifier references and short comments in the code, and documentation that is needed is moved out to keep the separation clear.
+
+---
+
+## Comments in Code
+
+A comment is short and is a described reference, not documentation moved into the code. A comment marked with `//` instead of `/* */` leaves unclear where it begins and where it ends, so the block form is preferred where a comment spans more than a line. In the time of agents, each agent writes its own comment, or it makes visible that it has rewritten an existing one. A comment that carries a memo or work-item identifier in a fixed form can be found by a pattern search; a long comment loses its value through its length.
+
+---
+
+## Where Repository Architecture Is Specified
+
+The architecture of repositories — the structure, the comments and the documentation rules above in their detail — is specified in the architecture area of the specification from now on. This page states the rules that apply to every repository under `repos/`; the architecture area holds their elaboration.
+
+---
+
+## Environment Variables Through an Environment Manager
+
+In a large project all environment variables are introduced through an environment manager. The variables are loaded into the module with `.get()`, and a missing variable fails loud. The environment manager is the shield that keeps null values out of the module. When the data is read through a query and a value is missing, the manager throws an error instead of returning an empty value. A proven reference implementation exists in another project of the organization, and its structure is studied closely and defined here in a general sense, so that every project follows the same pattern.
 
 ---
 
@@ -1347,7 +1487,7 @@ spec_file: "16-context.md"
 order: 16
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/16-context.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/16-context.md."
@@ -1483,7 +1623,7 @@ spec_file: "17-memo-store.md"
 order: 17
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/17-memo-store.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/17-memo-store.md."
@@ -1528,6 +1668,8 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/1
 | Path | Holds |
 |------|-------|
 | `memos/<NNN-slug>/` | One memo each — its revisions, topics, context, transcripts, validation, and rollout working files. |
+| `memos/<NNN-slug>/memo-<NNN>.db` | The memo database — the per-memo half of the two-part split: everything of that memo's own life. |
+| `project.db` | The project database — the cross-memo half: the mental model, maintenance, goals, the chronicle, snags and research. |
 | `_requirements/` | The requirements store — registry, schema, and reports. |
 | `_references/` | Shared reference material cited across memos. |
 | `transcripts/` | Staged input transcripts before they become a memo or a revision. |
@@ -1561,7 +1703,7 @@ spec_file: "18-design.md"
 order: 18
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/18-design.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/18-design.md."
@@ -1716,7 +1858,7 @@ spec_file: "19-tmp.md"
 order: 19
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/19-tmp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/19-tmp.md."
@@ -1774,7 +1916,9 @@ The distinction from `.trash/` is the point: a deletion routed to `.trash/` is a
 `.tmp/` segments its contents by the active memo id: transient files live under `.tmp/<memo-id>/`, one subfolder per memo. This keeps one memo's scratch from colliding with another's and lets cleanup reason about the ephemeral material one memo at a time.
 
 - **`<memo-id>` is the id of the memo currently being worked on.** A tool or an agent writing scratch while a memo is active MUST place it under that memo's subfolder — `.tmp/<memo-id>/…` — never in the `.tmp/` root directly.
-- **`undefined/` is the fallback.** When no memo is active, `<memo-id>` is the literal `undefined`, so such files land in `.tmp/undefined/`. There is always a valid target: work never has to decide whether a memo happens to be active before it can pick a scratch path.
+- **`UNDEFINED-{N}` is the fallback.** When no memo is active, a new entry takes the name `UNDEFINED-{N}`, where `{N}` is the smallest free number from 1 upward in the target folder, so such files land in `.tmp/UNDEFINED-1/` and so on. Folders named `undefined` that already exist stay valid. There is always a valid target: work never has to decide whether a memo happens to be active before it can pick a scratch path.
+- **The segment form is `<NNN>`** — the zero-padded memo number, for example `.tmp/084/`. It deliberately differs from the earlier example form `M{NNN}`; the folders on disk use the bare number.
+- **The project location wins.** A project's per-memo scratch location takes precedence over a scratch location assigned by an agent harness: a tool that is handed both uses the project location.
 
 Segmentation does not soften the throwaway guarantee above. Every subfolder, `.tmp/undefined/` included, is still volatile scratch that any process MAY empty at any time and that MUST NOT hold the sole copy of anything that matters.
 
@@ -1798,7 +1942,7 @@ spec_file: "20-cli.md"
 order: 20
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/20-cli.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/20-cli.md."
@@ -2046,7 +2190,7 @@ spec_file: "21-environment-scripts.md"
 order: 21
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/21-environment-scripts.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/21-environment-scripts.md."
@@ -2215,6 +2359,12 @@ Whether a project boots through its declared script rather than an inline sequen
 
 ---
 
+## A Precondition Names Its Provider
+
+A precondition that an order relies on **MUST** name its provider — the order or the step that supplies it. When two orders each assume that the other supplies a callable wrapper, the precondition refers back to itself and nobody builds it. A precondition without a named provider is a finding at the time the orders are cut, and a circular assignment is resolved by giving the precondition to exactly one order.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
@@ -2237,7 +2387,7 @@ spec_file: "22-config.md"
 order: 22
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/22-config.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/22-config.md."
@@ -2491,7 +2641,7 @@ spec_file: "23-hooks-contract.md"
 order: 23
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/23-hooks-contract.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/23-hooks-contract.md."
@@ -2731,7 +2881,29 @@ Locating enforcement at the machine tier lets it apply where it must apply globa
 
 ---
 
+## The Hot Path — No Hook Opens a Database
+
+This section exists because a hook runs under a deadline the session waits on, and a database open does not fit that deadline. A hook on a session event — before or after a tool call, at an agent's start or stop, at a session's start or end — **MUST NOT open a database**, not for writing and not for reading. It appends exactly one line to the session sidecar of its project, `<project>/.session/sidecar/<hook>.ndjson`, in the shape `{ hook, at, sessionId, memo, payload }`: `payload` carries the arguments the writer the hook stands in for would have taken, `at` is stamped by the hook, `memo` names the memo when the hook can resolve it and is `null` otherwise.
+
+A separate run folds the lines into the carriers: `memo session sidecar-fold` reads every hook file from its resume mark `<hook>.offset.json`, opens each memo database once, writes all lines of that memo inside one SQL bracket, freezes one commit, and moves the mark only after the commit. A line the fold cannot place (no memo, no carrier) stays in the sidecar, which is append-only and never truncated.
+
+A hook never writes into the folder of a memo and never below `.claude/`; the sidecar is the one place it writes. The rule is held in the source: every hook script on the hot path is listed in `hot-path-hooks.json` beside the scripts, and a test follows the relative imports of each one and refuses any that reaches the database adapter, the write funnel or the engine package.
+
+One hook on that list writes elsewhere, and only it: the protocol appender for tool writes outside the project root (`write-outside-root.mjs`) appends its line to `<project>/.tmp/<memo>/write-outside-root.ndjson` instead of `.session/sidecar/` — never into the folder of a memo and never into a database — because its line is for a human reader and is never folded into a carrier.
+
+Why the rule is drawn at the open and not at the write:
+
+| Measurement | Value | What it means for a hook |
+|---|---|---|
+| Opening a 593 MB memo database read-only | about 24 s | more than twice the 10 s a hook entry is granted — the hook is killed before it does anything |
+| One agent start booked into the carrier by a hook | about 27 kB per start (3 starts grew one carrier by 80,649 B) | every spawn grows the carrier, unbracketed, on the hot path |
+| Folding the same lines later, bracketed | one tree state per memo and run instead of one per row | the cost moves to a run nobody waits on |
+
+---
+
 ## Conformity Requirements
+
+- **The hot path holds:** no hook script listed in `hot-path-hooks.json` reaches a database through its imports, and each of them writes only its line to `.session/sidecar/` — the protocol appender to `.tmp/<memo>/` (see [The Hot Path — No Hook Opens a Database](#the-hot-path--no-hook-opens-a-database)).
 
 The enforcement **mechanism** is not re-normalized here — its binding rules are single-sourced to [session · enforcement](/session/enforcement/) (the hard-block on a missing predecessor, the jq-structured signal, fail-open, the kill-switch, and the policy checkpoints). The workbench-scoped blocks below bind only the **declaration side** — the policy a hook *reads* (the declared per-repository facing status and the `folder-lints.json` map, both specified in [22-config.md](/workbench/config/)). Each `statement` faces how that policy is declared, and each `check` faces the built gate's behaviour against it. Because the hook *implementation* belongs to the deferred machine-tier spec, these blocks carry a `todo` grade — a score is owed once the behaviour is buildable, not feigned now. They are the source the requirement store is harvested from ([23-requirements.md](/specification/requirements/)).
 
@@ -2781,6 +2953,24 @@ The write-time content lint is bound by a project-local map and its honest limit
 
 ---
 
+## A Self-Description Is Measured Against the Event It Denies
+
+A self-description that denies the existence of a hook event **MUST** be measured against that event before anything is planned on it. A description which says that the protocol carries no end event, while the event can be observed to fire and to carry a reason, contradicts the measurement, and a procedure built on either reading inherits the contradiction. The measured state wins, and the self-description is corrected to it.
+
+---
+
+## A Rule Builds Only on a Measured Event
+
+A rule or a procedure **MUST** build only on an event whose existence was measured before the rule is written. The measurement carries a positive control: the same search that finds no trace of the event is shown to find a known, existing event, so that a zero means absence and not a blind search. A rule built on an unmeasured event rests on an open question.
+
+---
+
+## One File Name and One Field Name for the Command Policy
+
+The command policy **MUST** have one file name and one field name across all pages of the specification. When two chapters of the same family name the same file differently, or the field inside it, every reader reads another file, and the hook reads a third variant on disk. The page that owns the command policy sets both names, and every other page refers to that page instead of naming them again.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
@@ -2802,7 +2992,7 @@ spec_file: "24-skills-scope.md"
 order: 24
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/24-skills-scope.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/24-skills-scope.md."
@@ -2935,6 +3125,95 @@ This chapter fixes the typed contract **spec-side now**; the implementation is *
 
 ---
 
+## Skill Payload — Where It Lives, How It Is Called, Who Owns It
+
+A skill is not always a single file. Beside `SKILL.md` a skill may carry **payload**: an executable check, reference prose a reader pulls in only when the task needs it, a template. Payload is what makes a rule repeatable — a check that runs can report red over an empty comparison set, and a prose instruction cannot. The gain is **repeatability**, not speed.
+
+Three questions decide whether payload is placed well: **where it lives**, **how it is called**, and **who owns it**. This section answers them in that order, and then states the one cut that settles all three.
+
+### The Corpus Is Smaller Than It Looks
+
+Every figure below was counted over a single comparison set — the **tracked** `SKILL.md` files of this workbench's skill corpus, `skills/**/SKILL.md` of the command-line package, measured on 2026-09-27 over the integrated state of the corpus. The basis is *tracked* files rather than a directory listing on purpose: an untracked editor or filesystem artefact beside a `SKILL.md` would otherwise promote a single-file skill into a payload-carrying one, and one such artefact was measured doing exactly that.
+
+| Size | Count |
+|------|-------|
+| `SKILL.md` files — the comparison set | 124 |
+| skills that are a single `SKILL.md`, with no further file | 53 |
+| skills carrying any further file | 71 |
+| …whose further files are **only** `evals/` | 53 |
+| **skills carrying payload of their own** | **18** |
+| …holding at least one non-test `.mjs` | 11 (28 files, 17 of them in three skills) |
+| …with a `references/` folder | 6 |
+| …with a `templates/` folder | 2 |
+
+An earlier reading of the same comparison set is on record and is kept as a reading rather than corrected away: 120 / 49 / 71 / 54 / **17**, with 10 skills holding 26 non-test `.mjs`, measured on 2026-09-15. Four skills have been added since — the four role skills of the role vocabulary, each a single `SKILL.md`, which is the whole of the 120 → 124 and 49 → 53 growth — and one skill that until then carried nothing but eval fixtures gained a check of its own, which is the whole of the 54 → 53 and 17 → 18 move. The shape of the argument is unchanged by either; the figures carry the day they were taken because that is the only way a later reader can tell the two readings apart.
+
+**`evals/` is not the skill's.** It holds fixtures that the central eval runner owns and reads; the skill is their subject, not their owner. That single distinction decides how widespread the payload idea really is. Counted as "71 skills with payload", it looks like the norm — but 53 of those 71 carry nothing except eval fixtures, and the honest figure is **18**.
+
+### Where Payload Lives
+
+| Place | What belongs there | Owner |
+|-------|--------------------|-------|
+| `<skill>/scripts/` | a check or helper that computes over exactly the artifacts this skill touches anyway | the skill, as **caller** |
+| `<skill>/references/` | prose the skill pulls in on demand — the progressive-disclosure tier below `SKILL.md` | the skill |
+| `<skill>/templates/`, `<skill>/data/`, `<skill>/examples/` | fixed inputs the skill's own steps read | the skill |
+| `<skill>/evals/` | fixtures for the central eval runner | **the eval runner, not the skill** |
+| `skills/_shared/` | text that several skills reference, each passage with exactly one definitions home | shared — referenced from skill bodies, read by the repository's guards |
+| `skills/_lint/` | two corpus-wide checks | **nobody today** — see the disposition below |
+| the repository's own `scripts/` folder (here `repos/core/scripts/`) | a check that computes over a **corpus** | the repository, through its `npm run lint` chain |
+| a CLI leaf | anything that **writes** | the CLI |
+
+### How Payload Is Called
+
+Payload is reached through the step that owns it, never by a reader guessing at a path:
+
+- **The call names the path in full, relative to the repository root.** The same line then reads the same from a checkout, from a worktree, and in a reader's head.
+- **The call sits in the step that is responsible for it**, not in an appendix. A script named nowhere is a script nobody runs.
+- **The caller relation is machine-checked.** A declared relation between a step and its script carries a minimum number of callers, so a script that loses its caller turns the lint chain red instead of quietly becoming an orphan.
+
+### Who Owns Payload — the Cut Is the Write Right
+
+> **Does it write into the database? Then it is a CLI leaf. Does it compute over a corpus? Then it belongs in the repository's `scripts/` folder, on `npm run lint`. Does it compute over exactly the artifacts a skill touches anyway? Then it MAY live with the skill — as a caller of existing logic, never as a second carrier of the rule.**
+
+The cut is the **write right, not the file form**. A *writing* skill script would open a second write path beside the CLI, a step back behind the single write edge the CLI exists to be. A *computing* script that returns a verdict together with its comparison set collides with nothing. That is why the same file form is admissible in the one case and excluded in the other.
+
+Two consequences are normative here:
+
+- A skill script **MUST NOT** write into a store the CLI owns.
+- A skill script **MUST** call existing logic rather than restate a rule that already has a home. A rule written out twice has two truths from the moment one copy is edited.
+
+### The Folder Names an Owner, It Does Not Encapsulate
+
+Of the 28 non-test `.mjs` files placed inside skill folders, **24** import upward out of the skill and into the repository — `../../../../lib/…` and `../../../../scripts/lib/…`, with the more deeply nested ones climbing five levels rather than four. The depth follows the nesting; it does not mark a package boundary, because there is none.
+
+Payload of this kind is therefore a **repository tool with skill-shaped placement**, not a transportable add-on. Copying a skill folder elsewhere carries the caller and leaves the callee behind. Reading a `scripts/` folder beside a `SKILL.md` as a self-contained bundle builds on an encapsulation that does not exist: the folder states **who is responsible**, and that is all it states.
+
+### `skills/_lint/` — the Third Placement, and Its Disposition
+
+Beside the skill-owned placement and the eval-runner placement there is a third one, and until now it was written down nowhere. `skills/_lint/` sits next to the skill categories rather than inside one. Measured over that folder:
+
+| Property | Finding |
+|----------|---------|
+| files | 2, both `.mjs` |
+| what they read | the **whole** skill corpus — each walks `skills/` and collects every `SKILL.md` |
+| what they write | nothing but an exit code |
+| callers | **none** in the repository — no lint-chain entry, no test, no skill step |
+| owning skill | none |
+| current verdict when run by hand | both pass, each over all 124 `SKILL.md` — measured 2026-09-27, `status: true` and no problem on either, over the same comparison set as the corpus table above |
+
+Both are corpus-computing checks without a write right, so the rule above already names their home: the repository's `scripts/` folder, wired into `npm run lint`. **`skills/_lint/` is therefore to be dissolved**, and the two files leave by different doors:
+
+- The **visibility** check states a rule that a chain member already enforces, and enforces it more weakly: the chain member requires that exactly the canonical entry points are public and every other skill is private, while the orphan only forbids a non-canonical skill from being public. It carries the same list of entry points as a second copy, which is precisely the *second carrier of the rule* the cut above forbids. It is **retired**, not moved.
+- The **single-source** check over the server-operation block has no equivalent on the chain — no chain member names that rule at all. It **moves** into the repository's `scripts/` folder and is wired in, so that the rule it carries gets the one home it has been missing.
+
+Until both moves happen the folder is at least stated here, instead of remaining a placement model that no page accounts for.
+
+`skills/_shared/` is **not** in the same position and is **not** proposed for dissolution: its files are referenced from skill bodies and read by the repository's own guards, so it has a working owner even though no single skill holds it.
+
+**Spec before mechanism**: this section fixes the placement, the call form, and the ownership. Relocating existing payload and enforcing the caller relation are separate steps, and this chapter claims neither is finished.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related
@@ -2957,7 +3236,7 @@ spec_file: "25-validation-overview.md"
 order: 25
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/25-validation-overview.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/25-validation-overview.md."
@@ -3189,7 +3468,7 @@ spec_file: "26-addons.md"
 order: 26
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/26-addons.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/26-addons.md."
@@ -3260,7 +3539,7 @@ spec_file: "30-wiki.md"
 order: 30
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/30-wiki.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/30-wiki.md."
@@ -3273,16 +3552,16 @@ The wiki is the project's **discovery system** — the **entry point**, the sing
 
 ## Folder Contract
 
-`.wiki/` is a **reserved, default-on** custom folder — present in every project like `.memo/`, not an opt-in extra — and this page is its per-folder entry:
+`.wiki/` is an **optional** custom folder — a project adds it when it uses the wiki — and this page is its per-folder entry:
 
 ```folder
 {
   "name":       ".wiki/",
-  "status":     "reserved-default-on",
+  "status":     "optional",
   "level":      "project",
   "entryPoint": "index.md (published as \"overview\")",
   "convention": "OKF",
-  "purpose":    "LLM-generated project wiki, an OKF-conformant knowledge bundle; reserved default-on, present in every project.",
+  "purpose":    "LLM-generated project wiki, an OKF-conformant knowledge bundle; optional, added by a project that uses the wiki.",
   "goesIn":     "The generated wiki pages (OKF nodes + untyped links), including the index.md entry point published as \"overview\".",
   "doesNot":    "A second, drifting copy of the architecture graph (the wiki points at context/architecture-okf/, never copies it); the chronicle / timeline.",
   "git":        "discouraged",
@@ -3334,9 +3613,9 @@ The wiki answers in the **present tense**: a wiki page states what is understood
 
 ## Wiki for All, Enforced Architecture for Internal
 
-The wiki is the **universal** entry point, but the structured architecture beneath it is not universally required. Because every project has a wiki, `.wiki/` is a **reserved, default-on** folder — present by default like `.memo/`, not an opt-in optional folder ([12-folders.md](/workbench/folders/)). This resolves the older tension in which the contract called `.wiki/` *optional* while this chapter called it universal: the universal intent wins, and the folder's status now matches it.
+The wiki is the entry point wherever a project carries one, but the structured architecture beneath it is not universally required. `.wiki/` is an **optional** folder ([12-folders.md](/workbench/folders/)): a project adds it when it uses the wiki, and a project without one is conforming — the contract table, this chapter and the folder block say the same.
 
-- **Every project** — internal or foreign — gets a wiki, because every project has unstructured knowledge worth categorizing and querying. The wiki is the entry point for all of them.
+- **Any project** — internal or foreign — may carry a wiki, because every project has unstructured knowledge worth categorizing and querying. Where it exists, the wiki is the entry point for that knowledge.
 - **Only internal projects** are expected to carry a full project architecture beneath the wiki. A foreign, research-heavy project (piles of material, little repo structure of its own) uses the wiki for its unstructured data and is **not** forced into a complex architecture bundle — its absence is an accepted state, not a failure ([41-project-architecture.md](/workbench/project-architecture/)).
 
 So "the wiki finds everything" holds for all projects; "the project has a structured architecture" holds for the internal ones.
@@ -3441,7 +3720,7 @@ spec_file: "31-browser-automation.md"
 order: 31
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/31-browser-automation.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/31-browser-automation.md."
@@ -3639,7 +3918,7 @@ spec_file: "32-trash.md"
 order: 32
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/32-trash.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/32-trash.md."
@@ -3706,9 +3985,21 @@ Destructive recursive removal is **forbidden**.
 `.trash/` segments its contents by the active memo id, mirroring `.tmp/` ([19-tmp.md](/workbench/tmp/)): discarded material lands under `.trash/<memo-id>/`, one subfolder per memo, so recovery can be reasoned about one memo at a time.
 
 - **Discarding routes into the memo's subfolder.** Consistent with the move-not-delete rule above, "removing" material while a memo is active means **moving** it into that memo's subfolder — `.trash/<memo-id>/` — not erasing it. The material stays recoverable there until a human empties it.
-- **`undefined/` is the fallback.** When no memo is active, `<memo-id>` is the literal `undefined`, so discards land in `.trash/undefined/`. A removal always has a valid target and never has to fall back to erasing.
+- **`UNDEFINED-{N}` is the fallback.** When no memo is active, a new entry takes the name `UNDEFINED-{N}`, where `{N}` is the smallest free number from 1 upward in the target folder, so discards land in `.trash/UNDEFINED-1/` and so on. Folders named `undefined` that already exist stay valid. A removal always has a valid target and never has to fall back to erasing.
 
 Segmentation is purely organizational: it changes *where under* `.trash/` a discard lands, never *whether* it is recoverable. Every subfolder, `.trash/undefined/` included, stays under the manual-empty guarantee — emptied only by a human, never automatically.
+
+---
+
+## Worktrees in the Trash
+
+A git worktree whose work is merged is filed here, not erased ([38-worktrees.md](/workbench/worktrees/)). The rules are short:
+
+- **A tree arrives only by `git worktree move`**, at `.trash/<memo-id>/worktrees/<name>/`. The registration follows the tree, so nothing is orphaned and nothing is lost.
+- **The ledger line carries arrival and expiry.** Each move appends one line to the worktree ledger of the owning memo: when the tree arrived and when it expires.
+- **The expiry is the project key `worktreeTrashExpiryDays`** in `.memo/config.json`, an integer with no default value. When the key is missing, no tree expires, and a report says "not set".
+- **A report only lists expired trees.** It never acts on them.
+- **Removing an expired tree stays a human act**, like emptying any other part of `.trash/`: for example `git worktree remove` on the path inside the trash, which ends the registration at the same time. No script, cleanup routine or autonomous loop does it.
 
 ---
 
@@ -3716,7 +4007,7 @@ Segmentation is purely organizational: it changes *where under* `.trash/` a disc
 
 The move-not-delete rule is not a local convenience of one folder — it is a **workbench-wide guarantee**. Across the whole workbench, root and every project, **nothing is hard-deleted**. Discarding material means **moving** it into `.trash/<memo-id>/`; it is never erased in place.
 
-- **Every discard has a valid target, coupled to the active session.** The `<memo-id>` segment is the active session's memo id, so a removal is always attributable to the work that made it. When no memo is active the segment is the literal `undefined` (`.trash/undefined/`, above), so a discard **always** has a valid target and never has to fall back to erasing. The guarantee is coupled to a valid session precisely so that the target is always well-defined.
+- **Every discard has a valid target, coupled to the active session.** The `<memo-id>` segment is the active session's memo id, so a removal is always attributable to the work that made it. When no memo is active the segment is the fallback `UNDEFINED-{N}` (above; existing `undefined` folders stay valid), so a discard **always** has a valid target and never has to fall back to erasing. The guarantee is coupled to a valid session precisely so that the target is always well-defined.
 - **The guarantee spans the workbench.** It is the universal discipline over all workbench work; the mechanism is the project-local `.trash/<memo-id>/` (aligned with the `.tmp/<memo-id>/` scratch convention, [19-tmp.md](/workbench/tmp/)). No cleanup routine, autonomous loop, or tool may bypass it with an in-place delete.
 - **`.trash/` is the only home for a removal.** A tool that needs to "delete" moves the target into `.trash/<memo-id>/`; the irreversible recursive delete (`rm -rf`) forbidden above has no exception anywhere in the workbench.
 
@@ -3734,14 +4025,14 @@ That a removal is always a recoverable move into `.trash/<memo-id>/`, never a ha
 {
   "id": "REQ-982",
   "title": "Removal is a recoverable move into .trash/<memo-id>/, never a hard delete",
-  "statement": "Across the workbench — root and every project — material MUST NOT be hard-deleted; removing it means MOVING it into `.trash/<memo-id>/`, where `<memo-id>` is the active session's memo id (or the literal `undefined` when none is active, so a discard always has a valid target). `.trash/` MUST be emptied only by a human, never automatically by a script, cleanup routine, or autonomous loop, and the irreversible recursive delete (`rm -rf`) MUST NOT be used on workbench material.",
+  "statement": "Across the workbench — root and every project — material MUST NOT be hard-deleted; removing it means MOVING it into `.trash/<memo-id>/`, where `<memo-id>` is the active session's memo id (or, when none is active, `UNDEFINED-{N}`, so a discard always has a valid target). `.trash/` MUST be emptied only by a human, never automatically by a script, cleanup routine, or autonomous loop, and the irreversible recursive delete (`rm -rf`) MUST NOT be used on workbench material.",
   "scope": { "repos": [], "categories": ["workbench"], "tags": ["trash", "no-delete", "recoverability"] },
   "severity": "blocker",
   "check": {
     "kind": "assertion",
     "assertions": [
       "A discard lands under `.trash/<memo-id>/`, never erased in place",
-      "The `<memo-id>` target is the active memo id, or the literal `undefined` when none is active",
+      "The `<memo-id>` target is the active memo id; without one, a new entry claims `UNDEFINED-{N}`, and existing `undefined` folders stay valid",
       "`.trash/` is emptied only by a human, never automatically",
       "No tool performs an irreversible recursive delete (`rm -rf`) on workbench material"
     ]
@@ -3749,6 +4040,12 @@ That a removal is always a recoverable move into `.trash/<memo-id>/`, never a ha
   "grade": "binary"
 }
 ```
+
+---
+
+## Removal Leaves Proof in the Trash
+
+A removal **MUST** leave proof in the trash of the project: the removed material itself, in recoverable form, in the folder of the memo that caused the removal. A removal that leaves no trace in the trash cannot be told apart from a loss, and leftover companion files show that something was taken outside the prescribed way. Every tool that removes material moves it, and the move is the evidence.
 
 ---
 
@@ -3771,7 +4068,7 @@ spec_file: "33-flowmcp.md"
 order: 33
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/33-flowmcp.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/33-flowmcp.md."
@@ -3794,6 +4091,23 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/3
   "purpose":    "FlowMCP authored content and produced output — the footprint of the FlowMCP custom folder. It holds the material a project keeps and produces with FlowMCP (for example graded schema exports and reports), not the global CLI installation.",
   "goesIn":     "Authored FlowMCP content and produced output — schema grading exports, reports, produced artifacts.",
   "doesNot":    "The global CLI installation (that lives in ~/.flowmcp/, untouched); the regenerable namespace-index cache (that is .flowmcp/, gitignored).",
+  "git":        "discouraged",
+  "remote":     "forbidden"
+}
+```
+
+The local cache beside it is registered as a folder of its own and shares this page:
+
+```folder
+{
+  "name":       ".flowmcp/",
+  "status":     "optional",
+  "level":      "project",
+  "entryPoint": null,
+  "convention": null,
+  "purpose":    "Regenerable FlowMCP namespace-index.json cache — generated machinery, gitignored; the local side of the FlowMCP custom folder.",
+  "goesIn":     "The namespace-index.json the FlowMCP CLI writes so it can resolve tools fast.",
+  "doesNot":    "Authored FlowMCP content or output (that is flowmcp/); the global CLI installation (that is ~/.flowmcp/); obsolete tools/ or prompts/ sub-trees.",
   "git":        "discouraged",
   "remote":     "forbidden"
 }
@@ -3844,7 +4158,7 @@ spec_file: "34-data.md"
 order: 34
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/34-data.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/34-data.md."
@@ -3910,7 +4224,7 @@ spec_file: "35-proofs.md"
 order: 35
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/35-proofs.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/35-proofs.md."
@@ -3976,7 +4290,7 @@ spec_file: "36-research.md"
 order: 36
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/36-research.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/36-research.md."
@@ -4037,7 +4351,7 @@ spec_file: "37-snapshots.md"
 order: 37
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/37-snapshots.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/37-snapshots.md."
@@ -4099,7 +4413,7 @@ spec_file: "38-worktrees.md"
 order: 38
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/38-worktrees.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/38-worktrees.md."
@@ -4120,8 +4434,8 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/3
   "entryPoint": null,
   "convention": null,
   "purpose":    "The one consistent location for git worktrees — generated machinery, gitignored, with mandatory cleanup.",
-  "goesIn":     "Git worktrees of the project's repos/ repositories, one checkout per branch at .worktrees/<memo-id>/<slug>/.",
-  "doesNot":    "Authored content; a permanent home for a checkout (a worktree MUST be removed via git worktree remove/prune when its work is done).",
+  "goesIn":     "Git worktrees of the project's repos/ repositories, one checkout per branch at .worktrees/<memo-id>/<name>/.",
+  "doesNot":    "Authored content; a permanent home for a checkout (a worktree whose work is merged MUST be moved into .trash/<memo-id>/worktrees/, see Mandatory Cleanup).",
   "git":        "discouraged",
   "remote":     "forbidden"
 }
@@ -4133,15 +4447,19 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/3
 
 ## One Location, Machinery, Gitignored
 
-Git worktrees need one consistent home in every project; left unplaced they scatter and the disk fills with orphaned checkouts. A project's worktrees live under `.worktrees/` at the project root — not next to individual repositories, not in ad-hoc paths — so tooling and an agent both know where a worktree is without searching. `.worktrees/` holds generated checkouts, not authored content, so it carries a dot and is gitignored: its contents are never committed.
+Git worktrees need one consistent home in every project; left unplaced they scatter and the disk fills with orphaned checkouts. A project's worktrees live under `.worktrees/` at the project root — not next to individual repositories, not in ad-hoc paths — so tooling and an agent both know where a worktree is without searching. A worktree found next to the repositories is moved under `.worktrees/<memo-id>/`; there is no exception for a tree declared open. `.worktrees/` holds generated checkouts, not authored content, so it carries a dot and is gitignored: its contents are never committed.
 
 ---
 
 ## Mandatory Cleanup
 
-A worktree is transient. When work on its branch is done it MUST be removed via `git worktree remove`, and stale entries pruned via `git worktree prune`, so no disk debris is left behind. `.worktrees/` gives that mandatory-cleanup rule a fixed, registered place to point at.
+A worktree is transient. When its branch is contained in its merge target, a worktree MUST be moved into `.trash/<memo-id>/worktrees/` with `git worktree move`, so its registration follows it and no orphaned entry is left behind. `.worktrees/` gives that mandatory-cleanup rule a fixed, registered place to point at.
 
-**Merging and dissolving are part of the job, not a user decision.** Work is not finished when a worktree holds a result; it is finished when that result has been merged into its target branch and the worktree is gone. Neither the merge nor the removal is ever framed as an option, a question or a proposal to the user — the only user gate in this area is the **push** (Stage 4), and pushing is a different act from merging locally. A worktree still standing after its work is merged is an **open end**, and it stays one until it is either removed or carries a stated reason for remaining.
+The system never runs `git worktree remove` or `git worktree prune`. `remove` deletes the tree together with every file git does not track, and `prune` acts on all orphaned registrations of a repository, including ones that belong to somebody else. A move loses nothing and orphans nothing.
+
+Each move appends one line to the worktree ledger of the owning memo, including the moment the tree expires. The expiry is the project key `worktreeTrashExpiryDays` ([32-trash.md](/workbench/trash/)). Removing an expired worktree is a human act, exactly like emptying any other part of `.trash/`.
+
+**Merging and filing are part of the job, not a user decision.** Work is not finished when a worktree holds a result; it is finished when that result has been merged into its target branch and the worktree is filed into the trash. Neither the merge nor the filing is ever framed as an option, a question or a proposal to the user — the only user gate in this area is the **push** (Stage 4), and pushing is a different act from merging locally. A worktree still standing after its work is merged is an **open end**, and it stays one until it is either filed or carries a stated reason for remaining.
 
 **Quiesce before merging.** A worktree's output MUST NOT be committed or merged while its worker may still be writing. Before the merge, the worker is stopped or verified idle; only then does the merge run. Skipping this produces a commit race whose symptoms are orphaned pointers and a half-committed state — a class of damage that is cheap to prevent here and expensive to diagnose afterwards. A clean `git status --porcelain` does not settle the question: it says the tree is clean at this instant, not that nobody is about to write to it.
 
@@ -4152,25 +4470,43 @@ A worktree is transient. When work on its branch is done it MUST be removed via 
 `.worktrees/` segments its contents by the active memo id, mirroring `.tmp/` ([19-tmp.md](/workbench/tmp/)) and `.trash/` ([32-trash.md](/workbench/trash/)): a checkout lives under `.worktrees/<memo-id>/`, one subfolder per memo. The three machine-local folders therefore share **one** structure, so what a memo left behind is read off the same shape in all three places.
 
 - **`<memo-id>` is the id of the memo currently being worked on.** A tool or an agent creating a worktree while a memo is active MUST place it under that memo's subfolder — `.worktrees/<memo-id>/…` — never in the `.worktrees/` root directly.
-- **`undefined/` is the fallback.** When no memo is active, `<memo-id>` is the literal `undefined`, so such checkouts land in `.worktrees/undefined/`. There is always a valid target: work never has to decide whether a memo happens to be active before it can pick a worktree path.
+- **`UNDEFINED-{N}` is the fallback.** When no memo is active, a new entry takes the name `UNDEFINED-{N}`, where `{N}` is the smallest free number from 1 upward in the target folder, so such checkouts land in `.worktrees/UNDEFINED-1/`, `.worktrees/UNDEFINED-2/` and so on. Folders named `undefined` that already exist stay valid. There is always a valid target: work never has to decide whether a memo happens to be active before it can pick a worktree path.
 
-Segmentation does not soften the mandatory-cleanup rule above. Every subfolder, `.worktrees/undefined/` included, still holds transient checkouts that MUST be removed via `git worktree remove`/`prune` when their work is done.
+Segmentation does not soften the mandatory-cleanup rule above. Every subfolder, including the fallback ones, still holds transient checkouts that MUST be filed into `.trash/<memo-id>/worktrees/` when their work is merged.
 
-### The Full Address: `.worktrees/<memo-id>/<slug>/`
+### The Full Address: `.worktrees/<memo-id>/<name>/`
 
-A checkout does not lie in the memo folder directly; it occupies a named subfolder of it. The address has exactly **three** levels — the root, the memo id, and a `<slug>` naming the piece of work:
+A checkout does not lie in the memo folder directly; it occupies a named subfolder of it. The address has exactly **three** levels — the root, the memo id, and a folder name identifying the piece of work:
 
 ```
-.worktrees/<memo-id>/<slug>/
+.worktrees/<memo-id>/pha{NN}[-prd{NN}][-{purpose}]--{repository}/
 ```
 
-`<slug>` is the same kebab-case slug that the branch carries (`{PREFIX}-{NNN}-<slug>`), so a folder on disk and a branch in git are readable off one another without a lookup table. **The path and the branch are two separate things and are recorded in two separate fields.** A single field holding "the worktree" cannot answer both *where is it* and *what is it called*, and a tool that needs the location must not have to parse a branch name to guess it.
+The level below `<memo-id>` is named `pha{NN}[-prd{NN}][-{purpose}]--{repository}` — phase and order first, then the repository name. `{NN}` is a two-digit number, `{purpose}` an optional kebab-case word such as `eval` or `line`, and at least one of the order or the purpose is present. Examples: `pha04-prd03--core`, `pha08-prd01-eval--core`, `pha04-line--core`.
 
-Three levels are the point. A memo folder holding checkouts directly can say which memo left something behind but not *what* was left; with the slug, an unmerged leftover names its own piece of work.
+The folder name and the branch are derived from the same identity — memo, phase, order or purpose, repository — and recorded in two fields; neither is parsed out of the other. **The path and the branch are two separate things and are recorded in two separate fields.** A single field holding "the worktree" cannot answer both *where is it* and *what is it called*, and a tool that needs the location must not have to parse a branch name to guess it.
+
+Three levels are the point. A memo folder holding checkouts directly can say which memo left something behind but not *what* was left; with the phase, the order and the repository in the name, an unmerged leftover names its own piece of work.
+
+**Existing worktrees keep their names.** A worktree that already exists is never renamed to fit this form; the form applies to newly created worktrees, and a move may establish it.
 
 ### Repositories, and the One That Is Never a Target
 
 A worktree is a checkout of a repository under `repos/`. A project may hold a **local, remote-less git root outside `repos/`** — a spec workshop is the standing example. Such a root is **never a worktree target**: it exists to be authored in directly, it has no remote to merge toward, and a checkout of it would put authored text in a generated, gitignored area. The exclusion is against that root specifically, not against its name: a repository under `repos/` that happens to be called the same thing is an ordinary target and is not caught by it.
+
+---
+
+## References Into the Store
+
+A rule that says where things are filed needs a rule for everything that points at them. No lasting wiring — hook commands, settings files, scripts, or symbolic links outside the tree — points into `.worktrees/` or `.trash/`. Before a tree is moved, its references are listed: the symbolic links inside the tree, the links that point at the tree, and the configured paths that name it. After the move, each of them resolves or is named — never broken in silence.
+
+The reason is measured, not theoretical: an earlier mass rename left hard-wired hook paths pointing at nothing, and an appended `|| true` reported success while the hooks did not run.
+
+---
+
+## A Worktree Detector Has a Claim Side
+
+A detector that reports undeclared worktrees **MUST** compare them against a claim side: the booked list of the worktrees that each order has claimed. Without that booking the detector holds every worktree against nothing to compare and reports all of them, which is a gate without a basis of comparison. Booking a worktree is therefore part of creating it, and the detector reports an empty claim side as a gap, not as a finding about each tree.
 
 ---
 
@@ -4191,7 +4527,7 @@ spec_file: "39-n8n.md"
 order: 39
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/39-n8n.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/39-n8n.md."
@@ -4277,7 +4613,7 @@ spec_file: "41-project-architecture.md"
 order: 41
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/41-project-architecture.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/41-project-architecture.md."
@@ -4449,7 +4785,7 @@ spec_file: "42-bridge.md"
 order: 42
 section: "Workbench"
 normative: false
-generated_at: "2026-09-20T07:42:01.025Z"
+generated_at: "2026-11-08T15:43:23.068Z"
 generated_from: "generated (bridge dist-hub)"
 generator: "scripts/generate-bridge.mjs"
 edit_warning: "This file is auto-generated by scripts/generate-bridge.mjs. Do not edit by hand."
@@ -4625,7 +4961,7 @@ spec_file: "43-projects.md"
 order: 43
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/43-projects.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/43-projects.md."

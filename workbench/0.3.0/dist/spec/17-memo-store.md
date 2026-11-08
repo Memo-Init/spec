@@ -6,7 +6,7 @@ spec_file: "17-memo-store.md"
 order: 17
 section: "Workbench"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "workbench/0.3.0/draft/spec/17-memo-store.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/17-memo-store.md."
@@ -51,6 +51,8 @@ edit_warning: "This file is auto-generated. Source: workbench/0.3.0/draft/spec/1
 | Path | Holds |
 |------|-------|
 | `memos/<NNN-slug>/` | One memo each — its revisions, topics, context, transcripts, validation, and rollout working files. |
+| `memos/<NNN-slug>/memo-<NNN>.db` | The memo database — the per-memo half of the two-part split: everything of that memo's own life. |
+| `project.db` | The project database — the cross-memo half: the mental model, maintenance, goals, the chronicle, snags and research. |
 | `_requirements/` | The requirements store — registry, schema, and reports. |
 | `_references/` | Shared reference material cited across memos. |
 | `transcripts/` | Staged input transcripts before they become a memo or a revision. |

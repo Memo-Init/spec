@@ -89,6 +89,12 @@ Once a convention lives in its authoritative home, a `CLAUDE.md` adds value only
 
 ---
 
+## The Working Tree of the State Repository Is Declared
+
+The working tree of the state repository **MUST** be declared in the specification and enforced by the tools that use it, not only stated in the source of one script. A state repository whose working tree is known only to the code that calls it can be pointed at the wrong tree, and a wrong tree turns every file outside it into a deletion. Every tool that writes to the state repository resolves the working tree from the one declaration and refuses when the tree it is given differs.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

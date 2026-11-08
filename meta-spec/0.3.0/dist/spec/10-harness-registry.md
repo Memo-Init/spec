@@ -6,7 +6,7 @@ spec_file: "10-harness-registry.md"
 order: 10
 section: "Meta-Spec"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "meta-spec/0.3.0/draft/spec/10-harness-registry.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: meta-spec/0.3.0/draft/spec/10-harness-registry.md."
@@ -114,6 +114,8 @@ The three roles above are a **tool contract**; this section says how a **running
 - **A scoped-execution context** — a **Worker**, a fresh-context **Evaluator**, or any unit a workflow spawns to do one thing — is the `worker` role, with the coordination tools removed.
 
 The agent-team roles ([memo/13-orchestration.md](/specification/orchestration/)) and the three agent-execution primitives ([memo/14-agents-skills-tasks.md](/specification/agents-skills-tasks/)) both project onto these three contract roles rather than defining a fourth axis: a Lead is an `orchestrator` and a Worker is a `worker`, regardless of whether it runs as an ephemeral sub-agent, a persistent agent, or inside a workflow script.
+
+**Checker and checked share a contract, never a label.** A Worker and the fresh-context Evaluator that checks it both run under the `worker` tool contract, because the contract describes which tools a context holds and both hold the same. Their **booking values** differ: a Worker is booked as `worker`, an Evaluator as `evaluator`, so their labels differ as well, and a check is never booked under the label of what it checks. The contract role answers "which tools", the booking value answers "who did it"; folding the second into the first would let an evaluation stand in the record as the work it evaluated.
 
 **The external-session boundary.** Every in-process context — however deeply the sub-agent tree nests — belongs to **one harness invocation** and is assigned one of the three roles within it. An **external `claude -p` / SDK invocation** is *not* a role: it is a **separate harness process** that opens its own genesis root and its own bounded trust profile ([session/01-genesis-root.md](/session/genesis-root/)). It is detected as an outer-boundary session — a new `(harness, config)` context — rather than mapped onto `orchestrator` / `worker` / `user`. This detection is deliberately **descriptive**: the registry records *that* an external session is a distinct harness context, and does **not** assert a hard tool set for it. An external harness runs under whatever contract *its own* descriptor carries; claiming a fixed tool surface for a session this registry did not start would be a guess, and the registry does not guess across the boundary.
 

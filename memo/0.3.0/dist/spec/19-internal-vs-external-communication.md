@@ -6,7 +6,7 @@ spec_file: "19-internal-vs-external-communication.md"
 order: 19
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/19-internal-vs-external-communication.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/19-internal-vs-external-communication.md."
@@ -69,10 +69,16 @@ The test is direction, not secrecy: an internal name is not removed because it i
 
 Code is, by definition, outward-facing: it is published the moment the repository is. Code comments therefore follow the same rule as any other outward-facing artifact.
 
-- A code comment **MUST NOT** carry internal references — question IDs (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)), memo references, or process metadata that only resolves inside the working session.
+- A code comment **MUST NOT** carry internal references — question IDs (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)), memo references, or process metadata that only resolves inside the working session — with the one exception below.
 - Handover information for a later step does **not** belong in a code comment. It belongs in the memo system, where the inward-facing material lives. A comment that says "see the decision in &lt;internal reference&gt;" is calibrated for an audience the code does not address, and it leaks the inward direction into published text.
 
 A comment **MAY** explain *what the code does and why*, for the next reader of the code — that is outward-facing and legitimate. It **MUST NOT** be used as a back-channel into the internal process.
+
+A code comment **MAY** carry exactly one internal reference — the qualified work-item identifier `M{NNN}-WI-{NNN}` — as a described pointer: the identifier plus one sentence on what it points to. The qualified form resolves on its own (memo number and work-item number together), so the search over code comments finds the work item without a second lookup; a bare `WI-{NNN}` names a work item of no memo in particular and is not allowed. A comment stays short — at most three lines — and the longer reasoning belongs to the specification or the memo the identifier points to.
+
+### Names Are Findable
+
+A name is the first thing a search over the code finds, so a name says what it is about. A variable that switches a feature is named after the feature — `hubTokenEnabled`, not `flag` or `enabled2` — because a regular-expression search for the feature must land on the switch, and a generic name is invisible to it.
 
 ---
 
@@ -94,6 +100,14 @@ Handover information for a *later* PRD — a concern, a caveat, a note that the 
 The mechanism is: a commit corresponds to one PRD (see [17-git-workflow-and-ids.md](/specification/git-workflow-and-ids/)), so the commit ID is the anchor that ties a later reader back to the inward-facing record where the concern was deposited. A future session that reads the commit trail reaches the concern through that anchor — not through a comment scattered in the code. This keeps the inward channel (concerns, handover notes) separate from the outward channel (the code itself).
 
 This is one concept, not two: the "PRD message channel" and the "concern channel" name the same dedicated, commit-ID-anchored place in the memo system.
+
+---
+
+## The Message Differs per Role
+
+A different message reaches a worker than reaches an orchestrator, and that is intended. To the worker the message comes practical and tied to its job, without a theory of the system; to the orchestrator it comes with more of the theory and the form of the whole. The gradient is deliberate: the further down a role stands, the more practical its message, and the further up, the more theoretical.
+
+This is not unequal treatment and not a breach of the equal standing of the roles; it is the application of that equal standing. The needs of the roles differ, and a message that misses the role it is meant for makes that role's work worse. Equal standing means equal care in finding the right message for each role, not the same message for all of them. The equal standing itself is stated at the role level in `governance/05-roles`, which refers back to this section and repeats nothing of it.
 
 ---
 

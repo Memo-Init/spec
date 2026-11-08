@@ -81,6 +81,12 @@ A topic in the wiki tells you the current answer; the chronicle tells you how th
 
 ---
 
+## A Superseded Entry Has a Correction Path
+
+A history entry that a later event has superseded **MUST** have a write path through which it can be corrected or withdrawn. A store that allows one entry per memo and offers no correction path leaves a superseded entry asserting the opposite of what happened, permanently. Marking an entry as invalid is not enough when no command can write the mark: the correction is an appended entry that names the entry it revokes, so the original stays readable and the reader sees which of the two holds.
+
+---
+
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
 ## Related

@@ -6,7 +6,7 @@ spec_file: "32-prompt-governance.md"
 order: 32
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/32-prompt-governance.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/32-prompt-governance.md."
@@ -81,6 +81,12 @@ Because the generator is both a lever and a single point of failure, it MUST be 
 
 - **A goal that names the mechanism.** A goal — **Prompt Governance / Initial-Prompt Harness** — asserts that the initial prompts of all spawned agents run through a controlled harness with a guaranteed minimum quality floor — deterministic, driven by the LLM through the CLI, with room for necessary additions — across both cases (PRD homogeneous, research heterogeneous). It is the application side of the requirements goal and is kept **separate** from it; the only coupling is the injection placeholder.
 - **Measured in a fresh context.** Like every goal ([31-goals.md](/specification/goals/)), this goal is scored against real state in a fresh context, never in the session that built the wiring. A green report is not evidence that the bottleneck is actually the default path; the fresh-context reader inspects whether the composed path is genuinely used.
+
+---
+
+## A Default Nobody Follows Is Removed or Made Usable
+
+A default path that nobody follows **MUST** be either made usable or removed, together with every claim that it is followed. A repaired prompt path that produces no manifest for any started agent, while preparation files claim to be composed through it, is a default plus a false claim. Whether a default is used is measured by its traces — here the manifest that each composed prompt leaves — and a measured zero leads to one of the two decisions, never to a third claim.
 
 ---
 

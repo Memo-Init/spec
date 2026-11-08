@@ -6,7 +6,7 @@ spec_file: "36-agent-strategies.md"
 order: 36
 section: "Specification"
 normative: true
-generated_at: "2026-09-20T07:42:00.285Z"
+generated_at: "2026-11-08T15:43:20.872Z"
 generated_from: "memo/0.3.0/draft/spec/36-agent-strategies.md"
 generator: "scripts/generate-docs-payload.mjs"
 edit_warning: "This file is auto-generated. Source: memo/0.3.0/draft/spec/36-agent-strategies.md."
@@ -22,6 +22,10 @@ When work decomposes into independent units — one repo, one file, one chapter,
 ## Fresh-Context Evaluation
 
 Measurement and grading are **never** done by the session that did the work — a working session reports "all done" and hides the gap. The strategy is to evaluate in a **fresh context**: a separate, unbiased reader that inspects the real artifacts rather than trusting a PASS-report. This is the operating principle behind goal scoring and maintenance scoring ([31-goals.md](/specification/goals/)); as a general agent strategy it applies wherever a result must be judged honestly — spawn a clean reader, hand it the artifacts and the intent, and let it measure against reality. The contamination boundary that makes a context "fresh" is defined in [09-contamination-context-handover.md](/specification/contamination-context-handover/).
+
+## A Worker's Deliverable Is a File
+
+The deliverable of a worker or a research agent **MUST** be a file it writes to disk, not the return value of its call. A returned value travels through a channel that can arrive empty, truncated or not at all, while a file on disk can be read, measured and checked after the agent has ended. The commissioning side therefore reads the file and treats a reply without a file as a failure, not as a result; the reply only reports that the work is done and where the file lies.
 
 
 <!-- IMPLEMENTED-BY — rendered backlink lives in the dist (generated/bridge/<family>/<stem>.backlink.md); source stays authored-only (F2 Dist-Split) -->
