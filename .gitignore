@@ -1,13 +1,12 @@
-# Opt-in local provenance git (Memo 064, mirrors ../flowmcp/spec): no remote, never pushed — it
-# exists only so resolveCommit() can stamp a real short SHA into the built artifacts. Following the
-# flowmcp/spec workshop model, the built artifacts (per-namespace dist/ + the root aggregates) ARE
-# committed (two-commit pattern: sources first, then the rebuilt artifacts). Only node_modules and
-# OS cruft stay out of git.
 node_modules/
 .DS_Store
+*.log
+npm-debug.log*
+.env
+.env.*
+!.env.example
+coverage/
+.astro/
+.cache/
 
-# regenerable grade --emit-prompts artifact (env-specific paths)
-normative-duplication-prompts.json
-
-# Retired material never leaves the machine (the trash folder is local only).
 .trash/
